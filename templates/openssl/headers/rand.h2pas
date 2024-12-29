@@ -1,0 +1,73 @@
+{
+    This file is part of the MWA Software Pascal API for OpenSSL .
+
+    The MWA Software Pascal API for OpenSSL is free software: you can redistribute it
+    and/or modify it under the terms of the Apache License Version 2.0 (the "License").
+
+    You may not use this file except in compliance with the License.  You can obtain a copy
+    in the file LICENSE.txt in the source distribution or at https://www.openssl.org/source/license.html.
+
+    The MWA Software Pascal API for OpenSSL is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the License for more details.
+
+    This file includes software copied from the Indy (Internet Direct) project, and which is offered
+    under the dual-licensing agreement described on the Indy website. (https://www.indyproject.org/license/)
+    }
+
+
+unit rand;
+
+interface
+
+// Headers for OpenSSL 1.1.1
+// rand.h
+
+
+uses
+  OpenSSLAPI,
+  ossl_typ;
+
+type
+  rand_meth_st_seed = function (const buf: Pointer; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  rand_meth_st_bytes = function (buf: PByte; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  rand_meth_st_cleanup = procedure; cdecl;
+  rand_meth_st_add = function (const buf: Pointer; num: TOpenSSL_C_INT; randomness: TOpenSSL_C_DOUBLE): TOpenSSL_C_INT; cdecl;
+  rand_meth_st_pseudorand = function (buf: PByte; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  rand_meth_st_status = function: TOpenSSL_C_INT; cdecl;
+
+  rand_meth_st = record
+    seed: rand_meth_st_seed;
+    bytes: rand_meth_st_bytes;
+    cleanup: rand_meth_st_cleanup;
+    add: rand_meth_st_add;
+    pseudorand: rand_meth_st_pseudorand;
+    status: rand_meth_st_status;
+  end;
+
+  function RAND_set_rand_method(const meth: PRAND_METHOD): TOpenSSL_C_INT;
+  function RAND_get_rand_method: PRAND_METHOD;
+  function RAND_set_rand_engine(engine: PENGINE): TOpenSSL_C_INT;
+
+  function RAND_OpenSSL: PRAND_METHOD;
+
+  function RAND_bytes(buf: PByte; num: TOpenSSL_C_INT): TOpenSSL_C_INT;
+  function RAND_priv_bytes(buf: PByte; num: TOpenSSL_C_INT): TOpenSSL_C_INT;
+
+  procedure RAND_seed(const buf: Pointer; num: TOpenSSL_C_INT);
+  procedure RAND_keep_random_devices_open(keep: TOpenSSL_C_INT);
+
+  procedure RAND_add(const buf: Pointer; num: TOpenSSL_C_INT; randomness: TOpenSSL_C_DOUBLE);
+  function RAND_load_file(const file_: PAnsiChar; max_bytes: TOpenSSL_C_LONG): TOpenSSL_C_INT;
+  function RAND_write_file(const file_: PAnsiChar): TOpenSSL_C_INT;
+  function RAND_status: TOpenSSL_C_INT;
+
+  function RAND_query_egd_bytes(const path: PAnsiChar; buf: PByte; bytes: TOpenSSL_C_INT): TOpenSSL_C_INT;
+  function RAND_egd(const path: PAnsiChar): TOpenSSL_C_INT;
+  function RAND_egd_bytes(const path: PAnsiChar; bytes: TOpenSSL_C_INT): TOpenSSL_C_INT;
+
+  function RAND_poll: TOpenSSL_C_INT;
+
+implementation
+
+end.

@@ -1,0 +1,84 @@
+{
+    This file is part of the MWA Software Pascal API for OpenSSL .
+
+    The MWA Software Pascal API for OpenSSL is free software: you can redistribute it
+    and/or modify it under the terms of the Apache License Version 2.0 (the "License").
+
+    You may not use this file except in compliance with the License.  You can obtain a copy
+    in the file LICENSE.txt in the source distribution or at https://www.openssl.org/source/license.html.
+
+    The MWA Software Pascal API for OpenSSL is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the License for more details.
+
+    This file includes software copied from the Indy (Internet Direct) project, and which is offered
+    under the dual-licensing agreement described on the Indy website. (https://www.indyproject.org/license/)
+    }
+
+
+unit provider;
+
+interface
+
+{
+  Automatically converted by H2Pas 1.0.0 from provider.h
+  The following command line parameters were used:
+    provider.h
+}
+
+uses
+  OpenSSLAPI,
+  ossl_typ,
+  core;
+
+{$IFDEF FPC}
+{$PACKRECORDS C}
+{$ENDIF}
+
+type
+    POSSL_ALGORITHM  = ^OSSL_ALGORITHM;
+    POSSL_CALLBACK  = ^OSSL_CALLBACK;
+    POSSL_DISPATCH  = ^OSSL_DISPATCH;
+    POSSL_PARAM  = ^OSSL_PARAM;
+    POSSL_PROVIDER  = pointer;
+    POSSL_provider_init_fn  = ^OSSL_provider_init_fn;
+
+    TDo_AllCallback = function (provider:POSSL_PROVIDER; cbdata:pointer):TOpenSSL_C_LONG; cdecl;
+
+  {
+   * Copyright 2019-2023 The OpenSSL Project Authors. All Rights Reserved.
+   *
+   * Licensed under the Apache License 2.0 (the "License").  You may not use
+   * this file except in compliance with the License.  You can obtain a copy
+   * in the file LICENSE in the source distribution or at
+   * https://www.openssl.org/source/license.html
+    }
+  { Set and Get a library context search path  }
+    function OSSL_PROVIDER_set_default_search_path(ctx: POSSL_LIB_CTX; path: PAnsiChar): TOpenSSL_C_INT; {introduced 3.0.0}
+    { Load and unload a provider  }
+    function OSSL_PROVIDER_load(_para1:POSSL_LIB_CTX; name: PAnsiChar):POSSL_PROVIDER; {introduced 3.0.0}
+    function OSSL_PROVIDER_try_load(_para1:POSSL_LIB_CTX; name: PAnsiChar; retain_fallbacks: TOpenSSL_C_LONG):POSSL_PROVIDER; {introduced 3.0.0}
+    function OSSL_PROVIDER_unload(prov:POSSL_PROVIDER):TOpenSSL_C_LONG; {introduced 3.0.0}
+    function OSSL_PROVIDER_available(_para1:POSSL_LIB_CTX; name:PAnsiChar):TOpenSSL_C_LONG; {introduced 3.0.0}
+    function OSSL_PROVIDER_do_all(ctx:POSSL_LIB_CTX; cb:TDo_AllCallback; cbdata:pointer):TOpenSSL_C_LONG; {introduced 3.0.0}
+    function OSSL_PROVIDER_gettable_params(prov:POSSL_PROVIDER):POSSL_PARAM; {introduced 3.0.0}
+    function OSSL_PROVIDER_get_params(prov:POSSL_PROVIDER; params:POSSL_PARAM):TOpenSSL_C_LONG; {introduced 3.0.0}
+    function OSSL_PROVIDER_self_test(prov:POSSL_PROVIDER):TOpenSSL_C_LONG;{introduced 3.0.0}
+    function OSSL_PROVIDER_get_capabilities(prov:POSSL_PROVIDER; capability:PAnsiChar; cb:POSSL_CALLBACK; arg:pointer):TOpenSSL_C_LONG;{introduced 3.0.0}
+    function OSSL_PROVIDER_query_operation(prov:POSSL_PROVIDER; operation_id:TOpenSSL_C_LONG; no_cache:POpenSSL_C_LONG):POSSL_ALGORITHM; {introduced 3.0.0}
+    procedure OSSL_PROVIDER_unquery_operation(prov:POSSL_PROVIDER; operation_id:TOpenSSL_C_LONG; algs:POSSL_ALGORITHM); {introduced 3.0.0}
+    function OSSL_PROVIDER_get0_provider_ctx(prov:POSSL_PROVIDER):pointer; {introduced 3.0.0}
+    function OSSL_PROVIDER_get0_dispatch(prov:POSSL_PROVIDER):POSSL_DISPATCH; {introduced 3.0.0}
+    { Add a built in providers  }
+    function OSSL_PROVIDER_add_builtin(_para1:POSSL_LIB_CTX; name:PAnsiChar; init_fn:POSSL_provider_init_fn):TOpenSSL_C_LONG; {introduced 3.0.0}
+
+    { Information  }
+    function OSSL_PROVIDER_get0_name(prov:POSSL_PROVIDER):PAnsiChar; {introduced 3.0.0}
+    {$IFDEF OPENSSL_3_2_ORLATER}
+    function OSSL_PROVIDER_get0_default_search_path(libctx: POSSL_LIB_CTX): PAnsiChar; {introduced 3.2.0}
+    function OSSL_PROVIDER_try_load_ex(_para1:POSSL_LIB_CTX; name: PAnsiChar; params:POSSL_PARAM; retain_fallbacks:TOpenSSL_C_LONG):POSSL_PROVIDER; {introduced 3.2.0}
+    function OSSL_PROVIDER_load_ex(_para1:POSSL_LIB_CTX; name: PAnsiChar; params: POSSL_PARAM):POSSL_PROVIDER; {introduced 3.2.0}
+    {$ENDIF}
+
+implementation
+end.

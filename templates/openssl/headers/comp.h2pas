@@ -1,0 +1,48 @@
+{
+    This file is part of the MWA Software Pascal API for OpenSSL .
+
+    The MWA Software Pascal API for OpenSSL is free software: you can redistribute it
+    and/or modify it under the terms of the Apache License Version 2.0 (the "License").
+
+    You may not use this file except in compliance with the License.  You can obtain a copy
+    in the file LICENSE.txt in the source distribution or at https://www.openssl.org/source/license.html.
+
+    The MWA Software Pascal API for OpenSSL is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the License for more details.
+
+    This file includes software copied from the Indy (Internet Direct) project, and which is offered
+    under the dual-licensing agreement described on the Indy website. (https://www.indyproject.org/license/)
+    }
+
+
+unit comp;
+
+interface
+
+// Headers for OpenSSL 1.1.1
+// comp.h
+
+
+uses
+  OpenSSLAPI,
+  bio,
+  ossl_typ;
+
+  function COMP_CTX_new(meth: PCOMP_METHOD): PCOMP_CTX;
+  function COMP_CTX_get_method(const ctx: PCOMP_CTX): PCOMP_METHOD;
+  function COMP_CTX_get_type(const comp: PCOMP_CTX): TOpenSSL_C_INT;
+  function COMP_get_type(const meth: PCOMP_METHOD): TOpenSSL_C_INT;
+  function COMP_get_name(const meth: PCOMP_METHOD): PAnsiChar;
+  procedure COMP_CTX_free(ctx: PCOMP_CTX);
+
+  function COMP_compress_block(ctx: PCOMP_CTX; out_: PByte; olen: TOpenSSL_C_INT; in_: PByte; ilen: TOpenSSL_C_INT): TOpenSSL_C_INT;
+  function COMP_expand_block(ctx: PCOMP_CTX; out_: PByte; olen: TOpenSSL_C_INT; in_: PByte; ilen: TOpenSSL_C_INT): TOpenSSL_C_INT;
+
+  function COMP_zlib: PCOMP_METHOD;
+
+  function BIO_f_zlib: PBIO_METHOD;
+
+implementation
+
+end.

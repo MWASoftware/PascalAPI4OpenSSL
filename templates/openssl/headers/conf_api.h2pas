@@ -1,0 +1,49 @@
+{
+    This file is part of the MWA Software Pascal API for OpenSSL .
+
+    The MWA Software Pascal API for OpenSSL is free software: you can redistribute it
+    and/or modify it under the terms of the Apache License Version 2.0 (the "License").
+
+    You may not use this file except in compliance with the License.  You can obtain a copy
+    in the file LICENSE.txt in the source distribution or at https://www.openssl.org/source/license.html.
+
+    The MWA Software Pascal API for OpenSSL is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the License for more details.
+
+    This file includes software copied from the Indy (Internet Direct) project, and which is offered
+    under the dual-licensing agreement described on the Indy website. (https://www.indyproject.org/license/)
+    }
+
+
+unit conf_api;
+
+interface
+
+// Headers for OpenSSL 1.1.1
+// conf_api.h
+
+
+uses
+  OpenSSLAPI,
+  conf;
+
+  //* Up until OpenSSL 0.9.5a, this was new_section */
+  function _CONF_new_section(conf: PCONF; const section: PAnsiChar): PCONF_VALUE;
+  //* Up until OpenSSL 0.9.5a, this was get_section */
+  function _CONF_get_section(const conf: PCONF; const section: PAnsiChar): PCONF_VALUE;
+  //* Up until OpenSSL 0.9.5a, this was CONF_get_section */
+  //STACK_OF(CONF_VALUE) *_CONF_get_section_values(const CONF *conf,
+  //                                               const char *section);
+
+  function _CONF_add_string(conf: PCONF; section: PCONF_VALUE; value: PCONF_VALUE): TOpenSSL_C_INT;
+  function _CONF_get_string(const conf: PCONF; const section: PAnsiChar; const name: PAnsiChar): PAnsiChar;
+  function _CONF_get_number(const conf: PCONF; const section: PAnsiChar; const name: PAnsiChar): TOpenSSL_C_LONG;
+
+  function _CONF_new_data(conf: PCONF): TOpenSSL_C_INT;
+  procedure _CONF_free_data(conf: PCONF);
+
+
+implementation
+
+end.

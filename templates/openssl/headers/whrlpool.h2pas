@@ -1,0 +1,58 @@
+{
+    This file is part of the MWA Software Pascal API for OpenSSL .
+
+    The MWA Software Pascal API for OpenSSL is free software: you can redistribute it
+    and/or modify it under the terms of the Apache License Version 2.0 (the "License").
+
+    You may not use this file except in compliance with the License.  You can obtain a copy
+    in the file LICENSE.txt in the source distribution or at https://www.openssl.org/source/license.html.
+
+    The MWA Software Pascal API for OpenSSL is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the License for more details.
+
+    This file includes software copied from the Indy (Internet Direct) project, and which is offered
+    under the dual-licensing agreement described on the Indy website. (https://www.indyproject.org/license/)
+    }
+
+
+unit whrlpool;
+
+interface
+
+// Headers for OpenSSL 1.1.1
+// whrlpool.h
+
+
+uses
+  OpenSSLAPI;
+
+const
+  WHIRLPOOL_DIGEST_LENGTH = 512 div 8;
+  WHIRLPOOL_BBLOCK = 512;
+  WHIRLPOOL_COUNTER = 256 div 8;
+
+type
+  WHIRLPOOL_CTX_union = record
+    case Byte of
+      0: (c: array[0 .. WHIRLPOOL_DIGEST_LENGTH -1] of Byte);
+      (* double q is here to ensure 64-bit alignment *)
+      1: (q: array[0 .. (WHIRLPOOL_DIGEST_LENGTH div SizeOf(TOpenSSL_C_DOUBLE)) -1] of TOpenSSL_C_DOUBLE);
+  end;
+  WHIRLPOOL_CTX = record
+    H: WHIRLPOOL_CTX_union;
+    data: array[0 .. (WHIRLPOOL_BBLOCK div 8) -1] of Byte;
+    bitoff: TOpenSSL_C_UINT;
+    bitlen: array[0 .. (WHIRLPOOL_COUNTER div SizeOf(TOpenSSL_C_SIZET)) -1] of TOpenSSL_C_SIZET;
+  end;
+  PWHIRLPOOL_CTX = ^WHIRLPOOL_CTX;
+
+  function WHIRLPOOL_Init(c: PWHIRLPOOL_CTX): TOpenSSL_C_INT;
+  function WHIRLPOOL_Update(c: PWHIRLPOOL_CTX; inp: Pointer; bytes: TOpenSSL_C_SIZET): TOpenSSL_C_INT;
+  procedure WHIRLPOOL_BitUpdate(c: PWHIRLPOOL_CTX; inp: Pointer; bits: TOpenSSL_C_SIZET);
+  function WHIRLPOOL_Final(md: PByte; c: PWHIRLPOOL_CTX): TOpenSSL_C_INT;
+  function WHIRLPOOL(inp: Pointer; bytes: TOpenSSL_C_SIZET; md: PByte): PByte;
+
+implementation
+
+end.

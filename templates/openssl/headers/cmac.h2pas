@@ -1,0 +1,50 @@
+{
+    This file is part of the MWA Software Pascal API for OpenSSL .
+
+    The MWA Software Pascal API for OpenSSL is free software: you can redistribute it
+    and/or modify it under the terms of the Apache License Version 2.0 (the "License").
+
+    You may not use this file except in compliance with the License.  You can obtain a copy
+    in the file LICENSE.txt in the source distribution or at https://www.openssl.org/source/license.html.
+
+    The MWA Software Pascal API for OpenSSL is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the License for more details.
+
+    This file includes software copied from the Indy (Internet Direct) project, and which is offered
+    under the dual-licensing agreement described on the Indy website. (https://www.indyproject.org/license/)
+    }
+
+
+unit cmac;
+
+interface
+
+// Headers for OpenSSL 1.1.1
+// cmac.h
+
+
+uses
+  OpenSSLAPI,
+  evp,
+  ossl_typ;
+
+//* Opaque */
+type
+  CMAC_CTX_st = type Pointer;
+  CMAC_CTX = CMAC_CTX_st;
+  PCMAC_CTX = ^CMAC_CTX;
+
+  function CMAC_CTX_new: PCMAC_CTX;
+  procedure CMAC_CTX_cleanup(ctx: PCMAC_CTX);
+  procedure CMAC_CTX_free(ctx: PCMAC_CTX);
+  function CMAC_CTX_get0_cipher_ctx(ctx: PCMAC_CTX): PEVP_CIPHER_CTX;
+  function CMAC_CTX_copy(out_: PCMAC_CTX; const in_: PCMAC_CTX): TOpenSSL_C_INT;
+  function CMAC_Init(ctx: PCMAC_CTX; const key: Pointer; keylen: TOpenSSL_C_SIZET; const cipher: PEVP_Cipher; impl: PENGINe): TOpenSSL_C_INT;
+  function CMAC_Update(ctx: PCMAC_CTX; const data: Pointer; dlen: TOpenSSL_C_SIZET): TOpenSSL_C_INT;
+  function CMAC_Final(ctx: PCMAC_CTX; out_: PByte; poutlen: POpenSSL_C_SIZET): TOpenSSL_C_INT;
+  function CMAC_resume(ctx: PCMAC_CTX): TOpenSSL_C_INT;
+
+implementation
+
+end.

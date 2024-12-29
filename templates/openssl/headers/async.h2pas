@@ -1,0 +1,76 @@
+{
+    This file is part of the MWA Software Pascal API for OpenSSL .
+
+    The MWA Software Pascal API for OpenSSL is free software: you can redistribute it
+    and/or modify it under the terms of the Apache License Version 2.0 (the "License").
+
+    You may not use this file except in compliance with the License.  You can obtain a copy
+    in the file LICENSE.txt in the source distribution or at https://www.openssl.org/source/license.html.
+
+    The MWA Software Pascal API for OpenSSL is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the License for more details.
+
+    This file includes software copied from the Indy (Internet Direct) project, and which is offered
+    under the dual-licensing agreement described on the Indy website. (https://www.indyproject.org/license/)
+    }
+
+
+unit async;
+
+interface
+
+// Headers for OpenSSL 1.1.1
+// async.h
+
+
+uses
+  OpenSSLAPI;
+
+const
+  ASYNC_ERR = 0;
+  ASYNC_NO_JOBS = 0;
+  ASYNC_PAUSE = 2;
+  ASYNC_FINISH = 3;
+
+type
+  async_job_st = type Pointer;
+  ASYNC_JOB = async_job_st;
+  PASYNC_JOB = ^ASYNC_JOB;
+  PPASYNC_JOB = ^PASYNC_JOB;
+  
+  async_wait_ctx_st = type Pointer;
+  ASYNC_WAIT_CTX = async_wait_ctx_st;
+  PASYNC_WAIT_CTX = ^ASYNC_WAIT_CTX;
+  
+  OSSL_ASYNC_FD = type TOpenSSL_C_INT;
+  POSSL_ASYNC_FD = ^OSSL_ASYNC_FD;
+
+  ASYNC_WAIT_CTX_set_wait_fd_cleanup = procedure(v1: PASYNC_WAIT_CTX;
+    const v2: Pointer; v3: OSSL_ASYNC_FD; v4: Pointer);
+  ASYNC_start_job_cb = function(v1: Pointer): TOpenSSL_C_INT;
+
+  function ASYNC_init_thread(max_size: TOpenSSL_C_SIZET; init_size: TOpenSSL_C_SIZET): TOpenSSL_C_INT; {introduced 1.1.0}
+  procedure ASYNC_cleanup_thread; {introduced 1.1.0}
+
+  function ASYNC_WAIT_CTX_new: PASYNC_WAIT_CTX; {introduced 1.1.0}
+  procedure ASYNC_WAIT_CTX_free(ctx: PASYNC_WAIT_CTX); {introduced 1.1.0}
+  function ASYNC_WAIT_CTX_set_wait_fd(ctx: PASYNC_WAIT_CTX; const key: Pointer; fd: OSSL_ASYNC_FD; custom_data: Pointer; cleanup_cb: ASYNC_WAIT_CTX_set_wait_fd_cleanup): TOpenSSL_C_INT; {introduced 1.1.0}
+  function ASYNC_WAIT_CTX_get_fd(ctx: PASYNC_WAIT_CTX; const key: Pointer; fd: POSSL_ASYNC_FD; custom_data: PPointer): TOpenSSL_C_INT; {introduced 1.1.0}
+  function ASYNC_WAIT_CTX_get_all_fds(ctx: PASYNC_WAIT_CTX; fd: POSSL_ASYNC_FD; numfds: POpenSSL_C_SIZET): TOpenSSL_C_INT; {introduced 1.1.0}
+  function ASYNC_WAIT_CTX_get_changed_fds(ctx: PASYNC_WAIT_CTX; addfd: POSSL_ASYNC_FD; numaddfds: POpenSSL_C_SIZET; delfd: POSSL_ASYNC_FD; numdelfds: POpenSSL_C_SIZET): TOpenSSL_C_INT; {introduced 1.1.0}
+  function ASYNC_WAIT_CTX_clear_fd(ctx: PASYNC_WAIT_CTX; const key: Pointer): TOpenSSL_C_INT; {introduced 1.1.0}
+
+  function ASYNC_is_capable: TOpenSSL_C_INT; {introduced 1.1.0}
+
+  function ASYNC_start_job(job: PPASYNC_JOB; ctx: PASYNC_WAIT_CTX; ret: POpenSSL_C_INT; func: ASYNC_start_job_cb; args: Pointer; size: TOpenSSL_C_SIZET): TOpenSSL_C_INT; {introduced 1.1.0}
+  function ASYNC_pause_job: TOpenSSL_C_INT; {introduced 1.1.0}
+
+  function ASYNC_get_current_job: PASYNC_JOB; {introduced 1.1.0}
+  function ASYNC_get_wait_ctx(job: PASYNC_JOB): PASYNC_WAIT_CTX; {introduced 1.1.0}
+  procedure ASYNC_block_pause; {introduced 1.1.0}
+  procedure ASYNC_unblock_pause; {introduced 1.1.0}
+
+implementation
+
+end.

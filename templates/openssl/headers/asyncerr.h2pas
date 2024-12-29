@@ -1,0 +1,54 @@
+{
+    This file is part of the MWA Software Pascal API for OpenSSL .
+
+    The MWA Software Pascal API for OpenSSL is free software: you can redistribute it
+    and/or modify it under the terms of the Apache License Version 2.0 (the "License").
+
+    You may not use this file except in compliance with the License.  You can obtain a copy
+    in the file LICENSE.txt in the source distribution or at https://www.openssl.org/source/license.html.
+
+    The MWA Software Pascal API for OpenSSL is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the License for more details.
+
+    This file includes software copied from the Indy (Internet Direct) project, and which is offered
+    under the dual-licensing agreement described on the Indy website. (https://www.indyproject.org/license/)
+    }
+
+
+unit asyncerr;
+
+interface
+
+// Headers for OpenSSL 1.1.1
+// asyncerr.h
+
+
+uses
+  OpenSSLAPI;
+
+const
+  //
+  // ASYNC function codes.
+  //
+  ASYNC_F_ASYNC_CTX_NEW                            = 100;
+  ASYNC_F_ASYNC_INIT_THREAD                        = 101;
+  ASYNC_F_ASYNC_JOB_NEW                            = 102;
+  ASYNC_F_ASYNC_PAUSE_JOB                          = 103;
+  ASYNC_F_ASYNC_START_FUNC                         = 104;
+  ASYNC_F_ASYNC_START_JOB                          = 105;
+  ASYNC_F_ASYNC_WAIT_CTX_SET_WAIT_FD               = 106;
+
+  //
+  // ASYNC reason codes.
+  //
+  ASYNC_R_FAILED_TO_SET_POOL                       = 101;
+  ASYNC_R_FAILED_TO_SWAP_CONTEXT                   = 102;
+  ASYNC_R_INIT_FAILED                              = 105;
+  ASYNC_R_INVALID_POOL_SIZE                        = 103;
+
+  function ERR_load_ASYNC_strings: TOpenSSL_C_INT;
+
+implementation
+
+end.

@@ -1,0 +1,59 @@
+{
+    This file is part of the MWA Software Pascal API for OpenSSL .
+
+    The MWA Software Pascal API for OpenSSL is free software: you can redistribute it
+    and/or modify it under the terms of the Apache License Version 2.0 (the "License").
+
+    You may not use this file except in compliance with the License.  You can obtain a copy
+    in the file LICENSE.txt in the source distribution or at https://www.openssl.org/source/license.html.
+
+    The MWA Software Pascal API for OpenSSL is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the License for more details.
+
+    This file includes software copied from the Indy (Internet Direct) project, and which is offered
+    under the dual-licensing agreement described on the Indy website. (https://www.indyproject.org/license/)
+    }
+
+
+unit idea;
+
+interface
+
+// Headers for OpenSSL 1.1.1
+// idea.h
+
+
+uses
+  OpenSSLAPI;
+
+const
+  // Added '_CONST' to avoid name clashes
+  IDEA_ENCRYPT_CONST = 1;
+  // Added '_CONST' to avoid name clashes
+  IDEA_DECRYPT_CONST = 0;
+
+  IDEA_BLOCK      = 8;
+  IDEA_KEY_LENGTH = 16;
+
+type
+  IDEA_INT = type TOpenSSL_C_INT;
+
+  idea_key_st = record
+    data: array[0..8, 0..5] of IDEA_INT;
+  end;
+  IDEA_KEY_SCHEDULE = idea_key_st;
+  PIDEA_KEY_SCHEDULE = ^IDEA_KEY_SCHEDULE;
+
+  function IDEA_options: PAnsiChar;
+  procedure IDEA_ecb_encrypt(const in_: PByte; out_: PByte; ks: PIDEA_KEY_SCHEDULE);
+  procedure IDEA_set_encrypt_key(const key: PByte; ks: PIDEA_KEY_SCHEDULE);
+  procedure IDEA_set_decrypt_key(ek: PIDEA_KEY_SCHEDULE; dk: PIDEA_KEY_SCHEDULE);
+  procedure IDEA_cbc_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE; iv: PByte; enc: TOpenSSL_C_INT);
+  procedure IDEA_cfb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE; iv: PByte; num: POpenSSL_C_INT; enc: TOpenSSL_C_INT);
+  procedure IDEA_ofb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE; iv: PByte; num: POpenSSL_C_INT);
+  procedure IDEA_encrypt(in_: POpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE);
+
+implementation
+
+end.

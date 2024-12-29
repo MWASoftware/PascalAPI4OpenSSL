@@ -1,0 +1,64 @@
+{
+    This file is part of the MWA Software Pascal API for OpenSSL .
+
+    The MWA Software Pascal API for OpenSSL is free software: you can redistribute it
+    and/or modify it under the terms of the Apache License Version 2.0 (the "License").
+
+    You may not use this file except in compliance with the License.  You can obtain a copy
+    in the file LICENSE.txt in the source distribution or at https://www.openssl.org/source/license.html.
+
+    The MWA Software Pascal API for OpenSSL is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the License for more details.
+
+    This file includes software copied from the Indy (Internet Direct) project, and which is offered
+    under the dual-licensing agreement described on the Indy website. (https://www.indyproject.org/license/)
+    }
+
+
+unit blowfish;
+
+interface
+
+// Headers for OpenSSL 1.1.1
+// blowfish.h
+
+
+uses
+  OpenSSLAPI;
+
+const
+  // Added '_CONST' to avoid name clashes
+  BF_ENCRYPT_CONST = 1;
+  // Added '_CONST' to avoid name clashes
+  BF_DECRYPT_CONST = 0;
+
+  BF_ROUNDS = 16;
+  BF_BLOCK  = 8;
+
+type
+  BF_LONG = TOpenSSL_C_UINT;
+  PBF_LONG = ^BF_LONG;
+
+  bf_key_st = record
+    p: array[0 .. BF_ROUNDS + 2 - 1] of BF_LONG;
+    s: array[0 .. 4 * 256 - 1] of BF_LONG;
+  end;
+  BF_KEY = bf_key_st;
+  PBF_KEY = ^BF_KEY;
+
+  procedure BF_set_key(key: PBF_KEY; len: TOpenSSL_C_INT; const data: PByte);
+
+  procedure BF_encrypt(data: PBF_LONG; const key: PBF_KEY);
+  procedure BF_decrypt(data: PBF_LONG; const key: PBF_KEY);
+
+  procedure BF_ecb_encrypt(const in_: PByte; out_: PByte; key: PBF_KEY; enc: TOpenSSL_C_INT);
+  procedure BF_cbc_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; schedule: PBF_KEY; ivec: PByte; enc: TOpenSSL_C_INT);
+  procedure BF_cfb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; schedule: PBF_KEY; ivec: PByte; num: POpenSSL_C_INT; enc: TOpenSSL_C_INT);
+  procedure BF_ofb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; schedule: PBF_KEY; ivec: PByte; num: POpenSSL_C_INT);
+
+  function BF_options: PAnsiChar;
+
+implementation
+
+end.
