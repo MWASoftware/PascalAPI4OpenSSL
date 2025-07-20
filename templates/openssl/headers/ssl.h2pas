@@ -3176,4 +3176,9 @@ begin
   Result := SSL_CTX_use_certificate_file(ctx, file_, SSL_FILETYPE_PEM);
 end;
 
+function SSL_new_session_ticket(s: PSSL):TOpenSSL_C_INT;
+begin
+// no op
+end;
+
 end.

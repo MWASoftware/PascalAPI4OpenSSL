@@ -5186,6 +5186,14 @@ end;
 
 
 
+function COMPAT_SSL_new_session_ticket(s: PSSL): TOpenSSL_C_INT; cdecl;
+
+begin
+// no op
+end;
+
+
+
 
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
@@ -7934,7 +7942,11 @@ function Load_SSL_new_session_ticket(s: PSSL): TOpenSSL_C_INT; cdecl;
 begin
   SSL_new_session_ticket := LoadLibSSLFunction('SSL_new_session_ticket');
   if not assigned(SSL_new_session_ticket) then
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+    SSL_new_session_ticket := @COMPAT_SSL_new_session_ticket;
+{$ELSE}
     EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_new_session_ticket');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
   Result := SSL_new_session_ticket(s);
 end;
 
