@@ -1756,6 +1756,7 @@ function SSL_get0_ec_point_formats(s: PSSL; plst: Pointer): TOpenSSL_C_LONG; {re
   function SSL_get_key_update_type(const s: PSSL): TOpenSSL_C_INT; {introduced 1.1.0}
   function SSL_renegotiate(s: PSSL): TOpenSSL_C_INT;
   function SSL_renegotiate_abbreviated(s: PSSL): TOpenSSL_C_INT;
+  function SSL_new_session_ticket(s: PSSL):TOpenSSL_C_INT; {introduced 3.0.0}
   function SSL_shutdown(s: PSSL): TOpenSSL_C_INT;
   procedure SSL_CTX_set_post_handshake_auth(ctx: PSSL_CTX; val: TOpenSSL_C_INT); {introduced 1.1.0}
   procedure SSL_set_post_handshake_auth(s: PSSL; val: TOpenSSL_C_INT); {introduced 1.1.0}
