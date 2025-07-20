@@ -1380,6 +1380,7 @@ files generated for C++. }
 {$EXTERNALSYM TLS_method}
 {$EXTERNALSYM TLS_server_method}
 {$EXTERNALSYM TLS_client_method}
+{$EXTERNALSYM SSL_do_handshake}
 {$EXTERNALSYM SSL_key_update}
 {$EXTERNALSYM SSL_get_key_update_type}
 {$EXTERNALSYM SSL_renegotiate}
@@ -1768,6 +1769,7 @@ function SSL_CTX_set_ssl_version(ctx: PSSL_CTX; const meth: PSSL_METHOD): TOpenS
 function TLS_method: PSSL_METHOD; cdecl; external CLibSSL;
 function TLS_server_method: PSSL_METHOD; cdecl; external CLibSSL;
 function TLS_client_method: PSSL_METHOD; cdecl; external CLibSSL;
+function SSL_do_handshake(s: PSSL): TOpenSSL_C_INT; cdecl; external CLibSSL;
 function SSL_key_update(s: PSSL; updatetype: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibSSL;
 function SSL_get_key_update_type(const s: PSSL): TOpenSSL_C_INT; cdecl; external CLibSSL;
 function SSL_renegotiate(s: PSSL): TOpenSSL_C_INT; cdecl; external CLibSSL;
@@ -2322,6 +2324,7 @@ function Load_SSL_CTX_set_ssl_version(ctx: PSSL_CTX; const meth: PSSL_METHOD): T
 function Load_TLS_method: PSSL_METHOD; cdecl;
 function Load_TLS_server_method: PSSL_METHOD; cdecl;
 function Load_TLS_client_method: PSSL_METHOD; cdecl;
+function Load_SSL_do_handshake(s: PSSL): TOpenSSL_C_INT; cdecl;
 function Load_SSL_key_update(s: PSSL; updatetype: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 function Load_SSL_get_key_update_type(const s: PSSL): TOpenSSL_C_INT; cdecl;
 function Load_SSL_renegotiate(s: PSSL): TOpenSSL_C_INT; cdecl;
@@ -2713,6 +2716,7 @@ var
   TLS_method: function : PSSL_METHOD; cdecl = Load_TLS_method;
   TLS_server_method: function : PSSL_METHOD; cdecl = Load_TLS_server_method;
   TLS_client_method: function : PSSL_METHOD; cdecl = Load_TLS_client_method;
+  SSL_do_handshake: function (s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_do_handshake;
   SSL_key_update: function (s: PSSL; updatetype: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_key_update;
   SSL_get_key_update_type: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_get_key_update_type;
   SSL_renegotiate: function (s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_renegotiate;
@@ -7886,6 +7890,14 @@ begin
   Result := TLS_client_method();
 end;
 
+function Load_SSL_do_handshake(s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_do_handshake := LoadLibSSLFunction('SSL_do_handshake');
+  if not assigned(SSL_do_handshake) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_do_handshake');
+  Result := SSL_do_handshake(s);
+end;
+
 function Load_SSL_key_update(s: PSSL; updatetype: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   SSL_key_update := LoadLibSSLFunction('SSL_key_update');
@@ -9399,6 +9411,7 @@ begin
   TLS_method := Load_TLS_method;
   TLS_server_method := Load_TLS_server_method;
   TLS_client_method := Load_TLS_client_method;
+  SSL_do_handshake := Load_SSL_do_handshake;
   SSL_key_update := Load_SSL_key_update;
   SSL_get_key_update_type := Load_SSL_get_key_update_type;
   SSL_renegotiate := Load_SSL_renegotiate;
