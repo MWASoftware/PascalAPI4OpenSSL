@@ -81,6 +81,10 @@ const
     {$ENDIF}
   {$ENDIF}
 
+  {$IFDEF POSIX}
+  {$DEFINE UNIX}
+  {$ENDIF}
+
   {$IFDEF UNIX}
   DirListDelimiter = ':';
   LibSuffix = '.so';
@@ -171,7 +175,7 @@ type
       {$IFDEF CPU64}
   TOpenSSL_C_TIMET = TOpenSSL_C_INT64;
       {$ENDIF}
-    {$ENDIF}
+    {$ifend}
   {$ifend}
 
 {$ELSE}
@@ -213,7 +217,7 @@ TOpenSSL_C_SSIZET = TOpenSSL_C_INT32;
     {$IFDEF CPU64}
 TOpenSSL_C_SSIZET = TOpenSSL_C_INT64;
     {$ENDIF}
-  {$ENDIF}
+  {$ifend}
 
   {$if declared(time_t))}
     TOpenSSL_C_TIMET = time_t;
