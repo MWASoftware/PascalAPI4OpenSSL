@@ -155,63 +155,33 @@ function CONF_parse_list(const list: PAnsiChar; sep: TOpenSSL_C_INT; nospc: TOpe
 procedure OPENSSL_load_builtin_modules; cdecl; external CLibCrypto;
 
 {$ELSE}
-
-{Declare external function initialisers - should not be called directly}
-
-function Load_CONF_set_default_method(meth: PCONF_METHOD): TOpenSSL_C_INT; cdecl;
-function Load_NCONF_new(meth: PCONF_METHOD): PCONF; cdecl;
-function Load_NCONF_default: PCONF_METHOD; cdecl;
-function Load_NCONF_WIN32: PCONF_METHOD; cdecl;
-procedure Load_NCONF_free(conf: PCONF); cdecl;
-procedure Load_NCONF_free_data(conf: PCONF); cdecl;
-function Load_NCONF_load(conf: PCONF; const file_: PAnsiChar; eline: POpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
-function Load_NCONF_load_bio(conf: PCONF; bp: PBIO; eline: POpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
-function Load_NCONF_get_string(const conf: PCONF; const group: PAnsiChar; const name: PAnsiChar): PAnsiChar; cdecl;
-function Load_NCONF_get_number_e(const conf: PCONF; const group: PAnsiChar; const name: PAnsiChar; result_: POpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
-function Load_NCONF_dump_bio(const conf: PCONf; out_: PBIO): TOpenSSL_C_INT; cdecl;
-function Load_CONF_modules_load(const cnf: PCONF; const appname: PAnsiChar; flags: TOpenSSL_C_ULONG): TOpenSSL_C_INT; cdecl;
-function Load_CONF_modules_load_file(const filename: PAnsiChar; const appname: PAnsiChar; flags: TOpenSSL_C_ULONG): TOpenSSL_C_INT; cdecl;
-procedure Load_CONF_modules_unload(all: TOpenSSL_C_INT); cdecl;
-procedure Load_CONF_modules_finish; cdecl;
-function Load_CONF_module_add(const name: PAnsiChar; ifunc: conf_init_func; ffunc: conf_finish_func): TOpenSSL_C_INT; cdecl;
-function Load_CONF_imodule_get_usr_data(const md: PCONF_IMODULE): Pointer; cdecl;
-procedure Load_CONF_imodule_set_usr_data(md: PCONF_IMODULE; usr_data: Pointer); cdecl;
-function Load_CONF_imodule_get_module(const md: PCONF_IMODULE): PCONF_MODULE; cdecl;
-function Load_CONF_imodule_get_flags(const md: PCONF_IMODULE): TOpenSSL_C_ULONG; cdecl;
-procedure Load_CONF_imodule_set_flags(md: PCONF_IMODULE; flags: TOpenSSL_C_ULONG); cdecl;
-function Load_CONF_module_get_usr_data(pmod: PCONF_MODULE): Pointer; cdecl;
-procedure Load_CONF_module_set_usr_data(pmod: PCONF_MODULE; usr_data: Pointer); cdecl;
-function Load_CONF_get1_default_config_file: PAnsiChar; cdecl;
-function Load_CONF_parse_list(const list: PAnsiChar; sep: TOpenSSL_C_INT; nospc: TOpenSSL_C_INT; list_cb: CONF_parse_list_list_cb; arg: Pointer): TOpenSSL_C_INT; cdecl;
-procedure Load_OPENSSL_load_builtin_modules; cdecl;
-
 var
-  CONF_set_default_method: function (meth: PCONF_METHOD): TOpenSSL_C_INT; cdecl = Load_CONF_set_default_method;
-  NCONF_new: function (meth: PCONF_METHOD): PCONF; cdecl = Load_NCONF_new;
-  NCONF_default: function : PCONF_METHOD; cdecl = Load_NCONF_default;
-  NCONF_WIN32: function : PCONF_METHOD; cdecl = Load_NCONF_WIN32;
-  NCONF_free: procedure (conf: PCONF); cdecl = Load_NCONF_free;
-  NCONF_free_data: procedure (conf: PCONF); cdecl = Load_NCONF_free_data;
-  NCONF_load: function (conf: PCONF; const file_: PAnsiChar; eline: POpenSSL_C_LONG): TOpenSSL_C_INT; cdecl = Load_NCONF_load;
-  NCONF_load_bio: function (conf: PCONF; bp: PBIO; eline: POpenSSL_C_LONG): TOpenSSL_C_INT; cdecl = Load_NCONF_load_bio;
-  NCONF_get_string: function (const conf: PCONF; const group: PAnsiChar; const name: PAnsiChar): PAnsiChar; cdecl = Load_NCONF_get_string;
-  NCONF_get_number_e: function (const conf: PCONF; const group: PAnsiChar; const name: PAnsiChar; result_: POpenSSL_C_LONG): TOpenSSL_C_INT; cdecl = Load_NCONF_get_number_e;
-  NCONF_dump_bio: function (const conf: PCONf; out_: PBIO): TOpenSSL_C_INT; cdecl = Load_NCONF_dump_bio;
-  CONF_modules_load: function (const cnf: PCONF; const appname: PAnsiChar; flags: TOpenSSL_C_ULONG): TOpenSSL_C_INT; cdecl = Load_CONF_modules_load;
-  CONF_modules_load_file: function (const filename: PAnsiChar; const appname: PAnsiChar; flags: TOpenSSL_C_ULONG): TOpenSSL_C_INT; cdecl = Load_CONF_modules_load_file;
-  CONF_modules_unload: procedure (all: TOpenSSL_C_INT); cdecl = Load_CONF_modules_unload;
-  CONF_modules_finish: procedure ; cdecl = Load_CONF_modules_finish;
-  CONF_module_add: function (const name: PAnsiChar; ifunc: conf_init_func; ffunc: conf_finish_func): TOpenSSL_C_INT; cdecl = Load_CONF_module_add;
-  CONF_imodule_get_usr_data: function (const md: PCONF_IMODULE): Pointer; cdecl = Load_CONF_imodule_get_usr_data;
-  CONF_imodule_set_usr_data: procedure (md: PCONF_IMODULE; usr_data: Pointer); cdecl = Load_CONF_imodule_set_usr_data;
-  CONF_imodule_get_module: function (const md: PCONF_IMODULE): PCONF_MODULE; cdecl = Load_CONF_imodule_get_module;
-  CONF_imodule_get_flags: function (const md: PCONF_IMODULE): TOpenSSL_C_ULONG; cdecl = Load_CONF_imodule_get_flags;
-  CONF_imodule_set_flags: procedure (md: PCONF_IMODULE; flags: TOpenSSL_C_ULONG); cdecl = Load_CONF_imodule_set_flags;
-  CONF_module_get_usr_data: function (pmod: PCONF_MODULE): Pointer; cdecl = Load_CONF_module_get_usr_data;
-  CONF_module_set_usr_data: procedure (pmod: PCONF_MODULE; usr_data: Pointer); cdecl = Load_CONF_module_set_usr_data;
-  CONF_get1_default_config_file: function : PAnsiChar; cdecl = Load_CONF_get1_default_config_file;
-  CONF_parse_list: function (const list: PAnsiChar; sep: TOpenSSL_C_INT; nospc: TOpenSSL_C_INT; list_cb: CONF_parse_list_list_cb; arg: Pointer): TOpenSSL_C_INT; cdecl = Load_CONF_parse_list;
-  OPENSSL_load_builtin_modules: procedure ; cdecl = Load_OPENSSL_load_builtin_modules;
+  CONF_set_default_method: function (meth: PCONF_METHOD): TOpenSSL_C_INT; cdecl = nil;
+  NCONF_new: function (meth: PCONF_METHOD): PCONF; cdecl = nil;
+  NCONF_default: function : PCONF_METHOD; cdecl = nil;
+  NCONF_WIN32: function : PCONF_METHOD; cdecl = nil;
+  NCONF_free: procedure (conf: PCONF); cdecl = nil;
+  NCONF_free_data: procedure (conf: PCONF); cdecl = nil;
+  NCONF_load: function (conf: PCONF; const file_: PAnsiChar; eline: POpenSSL_C_LONG): TOpenSSL_C_INT; cdecl = nil;
+  NCONF_load_bio: function (conf: PCONF; bp: PBIO; eline: POpenSSL_C_LONG): TOpenSSL_C_INT; cdecl = nil;
+  NCONF_get_string: function (const conf: PCONF; const group: PAnsiChar; const name: PAnsiChar): PAnsiChar; cdecl = nil;
+  NCONF_get_number_e: function (const conf: PCONF; const group: PAnsiChar; const name: PAnsiChar; result_: POpenSSL_C_LONG): TOpenSSL_C_INT; cdecl = nil;
+  NCONF_dump_bio: function (const conf: PCONf; out_: PBIO): TOpenSSL_C_INT; cdecl = nil;
+  CONF_modules_load: function (const cnf: PCONF; const appname: PAnsiChar; flags: TOpenSSL_C_ULONG): TOpenSSL_C_INT; cdecl = nil;
+  CONF_modules_load_file: function (const filename: PAnsiChar; const appname: PAnsiChar; flags: TOpenSSL_C_ULONG): TOpenSSL_C_INT; cdecl = nil;
+  CONF_modules_unload: procedure (all: TOpenSSL_C_INT); cdecl = nil;
+  CONF_modules_finish: procedure ; cdecl = nil;
+  CONF_module_add: function (const name: PAnsiChar; ifunc: conf_init_func; ffunc: conf_finish_func): TOpenSSL_C_INT; cdecl = nil;
+  CONF_imodule_get_usr_data: function (const md: PCONF_IMODULE): Pointer; cdecl = nil;
+  CONF_imodule_set_usr_data: procedure (md: PCONF_IMODULE; usr_data: Pointer); cdecl = nil;
+  CONF_imodule_get_module: function (const md: PCONF_IMODULE): PCONF_MODULE; cdecl = nil;
+  CONF_imodule_get_flags: function (const md: PCONF_IMODULE): TOpenSSL_C_ULONG; cdecl = nil;
+  CONF_imodule_set_flags: procedure (md: PCONF_IMODULE; flags: TOpenSSL_C_ULONG); cdecl = nil;
+  CONF_module_get_usr_data: function (pmod: PCONF_MODULE): Pointer; cdecl = nil;
+  CONF_module_set_usr_data: procedure (pmod: PCONF_MODULE; usr_data: Pointer); cdecl = nil;
+  CONF_get1_default_config_file: function : PAnsiChar; cdecl = nil;
+  CONF_parse_list: function (const list: PAnsiChar; sep: TOpenSSL_C_INT; nospc: TOpenSSL_C_INT; list_cb: CONF_parse_list_list_cb; arg: Pointer): TOpenSSL_C_INT; cdecl = nil;
+  OPENSSL_load_builtin_modules: procedure ; cdecl = nil;
 {$ENDIF}
 
 implementation
@@ -229,249 +199,361 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-function Load_CONF_set_default_method(meth: PCONF_METHOD): TOpenSSL_C_INT; cdecl;
+
+{$WARN  NO_RETVAL OFF}
+function ERROR_CONF_set_default_method(meth: PCONF_METHOD): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_set_default_method');
+end;
+
+function ERROR_NCONF_new(meth: PCONF_METHOD): PCONF; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('NCONF_new');
+end;
+
+function ERROR_NCONF_default: PCONF_METHOD; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('NCONF_default');
+end;
+
+function ERROR_NCONF_WIN32: PCONF_METHOD; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('NCONF_WIN32');
+end;
+
+procedure ERROR_NCONF_free(conf: PCONF); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('NCONF_free');
+end;
+
+procedure ERROR_NCONF_free_data(conf: PCONF); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('NCONF_free_data');
+end;
+
+function ERROR_NCONF_load(conf: PCONF; const file_: PAnsiChar; eline: POpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('NCONF_load');
+end;
+
+function ERROR_NCONF_load_bio(conf: PCONF; bp: PBIO; eline: POpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('NCONF_load_bio');
+end;
+
+function ERROR_NCONF_get_string(const conf: PCONF; const group: PAnsiChar; const name: PAnsiChar): PAnsiChar; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('NCONF_get_string');
+end;
+
+function ERROR_NCONF_get_number_e(const conf: PCONF; const group: PAnsiChar; const name: PAnsiChar; result_: POpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('NCONF_get_number_e');
+end;
+
+function ERROR_NCONF_dump_bio(const conf: PCONf; out_: PBIO): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('NCONF_dump_bio');
+end;
+
+function ERROR_CONF_modules_load(const cnf: PCONF; const appname: PAnsiChar; flags: TOpenSSL_C_ULONG): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_modules_load');
+end;
+
+function ERROR_CONF_modules_load_file(const filename: PAnsiChar; const appname: PAnsiChar; flags: TOpenSSL_C_ULONG): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_modules_load_file');
+end;
+
+procedure ERROR_CONF_modules_unload(all: TOpenSSL_C_INT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_modules_unload');
+end;
+
+procedure ERROR_CONF_modules_finish; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_modules_finish');
+end;
+
+function ERROR_CONF_module_add(const name: PAnsiChar; ifunc: conf_init_func; ffunc: conf_finish_func): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_module_add');
+end;
+
+function ERROR_CONF_imodule_get_usr_data(const md: PCONF_IMODULE): Pointer; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_imodule_get_usr_data');
+end;
+
+procedure ERROR_CONF_imodule_set_usr_data(md: PCONF_IMODULE; usr_data: Pointer); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_imodule_set_usr_data');
+end;
+
+function ERROR_CONF_imodule_get_module(const md: PCONF_IMODULE): PCONF_MODULE; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_imodule_get_module');
+end;
+
+function ERROR_CONF_imodule_get_flags(const md: PCONF_IMODULE): TOpenSSL_C_ULONG; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_imodule_get_flags');
+end;
+
+procedure ERROR_CONF_imodule_set_flags(md: PCONF_IMODULE; flags: TOpenSSL_C_ULONG); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_imodule_set_flags');
+end;
+
+function ERROR_CONF_module_get_usr_data(pmod: PCONF_MODULE): Pointer; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_module_get_usr_data');
+end;
+
+procedure ERROR_CONF_module_set_usr_data(pmod: PCONF_MODULE; usr_data: Pointer); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_module_set_usr_data');
+end;
+
+function ERROR_CONF_get1_default_config_file: PAnsiChar; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_get1_default_config_file');
+end;
+
+function ERROR_CONF_parse_list(const list: PAnsiChar; sep: TOpenSSL_C_INT; nospc: TOpenSSL_C_INT; list_cb: CONF_parse_list_list_cb; arg: Pointer): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_parse_list');
+end;
+
+procedure ERROR_OPENSSL_load_builtin_modules; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_load_builtin_modules');
+end;
+
+{$WARN  NO_RETVAL ON}
+procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
+var FuncLoadError: boolean;
 begin
   CONF_set_default_method := LoadLibCryptoFunction('CONF_set_default_method');
-  if not assigned(CONF_set_default_method) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_set_default_method');
-  Result := CONF_set_default_method(meth);
-end;
+  FuncLoadError := not assigned(CONF_set_default_method);
+  if FuncLoadError then
+  begin
+    CONF_set_default_method :=  @ERROR_CONF_set_default_method;
+  end;
 
-function Load_NCONF_new(meth: PCONF_METHOD): PCONF; cdecl;
-begin
   NCONF_new := LoadLibCryptoFunction('NCONF_new');
-  if not assigned(NCONF_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('NCONF_new');
-  Result := NCONF_new(meth);
-end;
+  FuncLoadError := not assigned(NCONF_new);
+  if FuncLoadError then
+  begin
+    NCONF_new :=  @ERROR_NCONF_new;
+  end;
 
-function Load_NCONF_default: PCONF_METHOD; cdecl;
-begin
   NCONF_default := LoadLibCryptoFunction('NCONF_default');
-  if not assigned(NCONF_default) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('NCONF_default');
-  Result := NCONF_default();
-end;
+  FuncLoadError := not assigned(NCONF_default);
+  if FuncLoadError then
+  begin
+    NCONF_default :=  @ERROR_NCONF_default;
+  end;
 
-function Load_NCONF_WIN32: PCONF_METHOD; cdecl;
-begin
   NCONF_WIN32 := LoadLibCryptoFunction('NCONF_WIN32');
-  if not assigned(NCONF_WIN32) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('NCONF_WIN32');
-  Result := NCONF_WIN32();
-end;
+  FuncLoadError := not assigned(NCONF_WIN32);
+  if FuncLoadError then
+  begin
+    NCONF_WIN32 :=  @ERROR_NCONF_WIN32;
+  end;
 
-procedure Load_NCONF_free(conf: PCONF); cdecl;
-begin
   NCONF_free := LoadLibCryptoFunction('NCONF_free');
-  if not assigned(NCONF_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('NCONF_free');
-  NCONF_free(conf);
-end;
+  FuncLoadError := not assigned(NCONF_free);
+  if FuncLoadError then
+  begin
+    NCONF_free :=  @ERROR_NCONF_free;
+  end;
 
-procedure Load_NCONF_free_data(conf: PCONF); cdecl;
-begin
   NCONF_free_data := LoadLibCryptoFunction('NCONF_free_data');
-  if not assigned(NCONF_free_data) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('NCONF_free_data');
-  NCONF_free_data(conf);
-end;
+  FuncLoadError := not assigned(NCONF_free_data);
+  if FuncLoadError then
+  begin
+    NCONF_free_data :=  @ERROR_NCONF_free_data;
+  end;
 
-function Load_NCONF_load(conf: PCONF; const file_: PAnsiChar; eline: POpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
-begin
   NCONF_load := LoadLibCryptoFunction('NCONF_load');
-  if not assigned(NCONF_load) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('NCONF_load');
-  Result := NCONF_load(conf,file_,eline);
-end;
+  FuncLoadError := not assigned(NCONF_load);
+  if FuncLoadError then
+  begin
+    NCONF_load :=  @ERROR_NCONF_load;
+  end;
 
-function Load_NCONF_load_bio(conf: PCONF; bp: PBIO; eline: POpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
-begin
   NCONF_load_bio := LoadLibCryptoFunction('NCONF_load_bio');
-  if not assigned(NCONF_load_bio) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('NCONF_load_bio');
-  Result := NCONF_load_bio(conf,bp,eline);
-end;
+  FuncLoadError := not assigned(NCONF_load_bio);
+  if FuncLoadError then
+  begin
+    NCONF_load_bio :=  @ERROR_NCONF_load_bio;
+  end;
 
-function Load_NCONF_get_string(const conf: PCONF; const group: PAnsiChar; const name: PAnsiChar): PAnsiChar; cdecl;
-begin
   NCONF_get_string := LoadLibCryptoFunction('NCONF_get_string');
-  if not assigned(NCONF_get_string) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('NCONF_get_string');
-  Result := NCONF_get_string(conf,group,name);
-end;
+  FuncLoadError := not assigned(NCONF_get_string);
+  if FuncLoadError then
+  begin
+    NCONF_get_string :=  @ERROR_NCONF_get_string;
+  end;
 
-function Load_NCONF_get_number_e(const conf: PCONF; const group: PAnsiChar; const name: PAnsiChar; result_: POpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
-begin
   NCONF_get_number_e := LoadLibCryptoFunction('NCONF_get_number_e');
-  if not assigned(NCONF_get_number_e) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('NCONF_get_number_e');
-  Result := NCONF_get_number_e(conf,group,name,result_);
-end;
+  FuncLoadError := not assigned(NCONF_get_number_e);
+  if FuncLoadError then
+  begin
+    NCONF_get_number_e :=  @ERROR_NCONF_get_number_e;
+  end;
 
-function Load_NCONF_dump_bio(const conf: PCONf; out_: PBIO): TOpenSSL_C_INT; cdecl;
-begin
   NCONF_dump_bio := LoadLibCryptoFunction('NCONF_dump_bio');
-  if not assigned(NCONF_dump_bio) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('NCONF_dump_bio');
-  Result := NCONF_dump_bio(conf,out_);
-end;
+  FuncLoadError := not assigned(NCONF_dump_bio);
+  if FuncLoadError then
+  begin
+    NCONF_dump_bio :=  @ERROR_NCONF_dump_bio;
+  end;
 
-function Load_CONF_modules_load(const cnf: PCONF; const appname: PAnsiChar; flags: TOpenSSL_C_ULONG): TOpenSSL_C_INT; cdecl;
-begin
   CONF_modules_load := LoadLibCryptoFunction('CONF_modules_load');
-  if not assigned(CONF_modules_load) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_modules_load');
-  Result := CONF_modules_load(cnf,appname,flags);
-end;
+  FuncLoadError := not assigned(CONF_modules_load);
+  if FuncLoadError then
+  begin
+    CONF_modules_load :=  @ERROR_CONF_modules_load;
+  end;
 
-function Load_CONF_modules_load_file(const filename: PAnsiChar; const appname: PAnsiChar; flags: TOpenSSL_C_ULONG): TOpenSSL_C_INT; cdecl;
-begin
   CONF_modules_load_file := LoadLibCryptoFunction('CONF_modules_load_file');
-  if not assigned(CONF_modules_load_file) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_modules_load_file');
-  Result := CONF_modules_load_file(filename,appname,flags);
-end;
+  FuncLoadError := not assigned(CONF_modules_load_file);
+  if FuncLoadError then
+  begin
+    CONF_modules_load_file :=  @ERROR_CONF_modules_load_file;
+  end;
 
-procedure Load_CONF_modules_unload(all: TOpenSSL_C_INT); cdecl;
-begin
   CONF_modules_unload := LoadLibCryptoFunction('CONF_modules_unload');
-  if not assigned(CONF_modules_unload) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_modules_unload');
-  CONF_modules_unload(all);
-end;
+  FuncLoadError := not assigned(CONF_modules_unload);
+  if FuncLoadError then
+  begin
+    CONF_modules_unload :=  @ERROR_CONF_modules_unload;
+  end;
 
-procedure Load_CONF_modules_finish; cdecl;
-begin
   CONF_modules_finish := LoadLibCryptoFunction('CONF_modules_finish');
-  if not assigned(CONF_modules_finish) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_modules_finish');
-  CONF_modules_finish();
-end;
+  FuncLoadError := not assigned(CONF_modules_finish);
+  if FuncLoadError then
+  begin
+    CONF_modules_finish :=  @ERROR_CONF_modules_finish;
+  end;
 
-function Load_CONF_module_add(const name: PAnsiChar; ifunc: conf_init_func; ffunc: conf_finish_func): TOpenSSL_C_INT; cdecl;
-begin
   CONF_module_add := LoadLibCryptoFunction('CONF_module_add');
-  if not assigned(CONF_module_add) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_module_add');
-  Result := CONF_module_add(name,ifunc,ffunc);
-end;
+  FuncLoadError := not assigned(CONF_module_add);
+  if FuncLoadError then
+  begin
+    CONF_module_add :=  @ERROR_CONF_module_add;
+  end;
 
-function Load_CONF_imodule_get_usr_data(const md: PCONF_IMODULE): Pointer; cdecl;
-begin
   CONF_imodule_get_usr_data := LoadLibCryptoFunction('CONF_imodule_get_usr_data');
-  if not assigned(CONF_imodule_get_usr_data) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_imodule_get_usr_data');
-  Result := CONF_imodule_get_usr_data(md);
-end;
+  FuncLoadError := not assigned(CONF_imodule_get_usr_data);
+  if FuncLoadError then
+  begin
+    CONF_imodule_get_usr_data :=  @ERROR_CONF_imodule_get_usr_data;
+  end;
 
-procedure Load_CONF_imodule_set_usr_data(md: PCONF_IMODULE; usr_data: Pointer); cdecl;
-begin
   CONF_imodule_set_usr_data := LoadLibCryptoFunction('CONF_imodule_set_usr_data');
-  if not assigned(CONF_imodule_set_usr_data) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_imodule_set_usr_data');
-  CONF_imodule_set_usr_data(md,usr_data);
-end;
+  FuncLoadError := not assigned(CONF_imodule_set_usr_data);
+  if FuncLoadError then
+  begin
+    CONF_imodule_set_usr_data :=  @ERROR_CONF_imodule_set_usr_data;
+  end;
 
-function Load_CONF_imodule_get_module(const md: PCONF_IMODULE): PCONF_MODULE; cdecl;
-begin
   CONF_imodule_get_module := LoadLibCryptoFunction('CONF_imodule_get_module');
-  if not assigned(CONF_imodule_get_module) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_imodule_get_module');
-  Result := CONF_imodule_get_module(md);
-end;
+  FuncLoadError := not assigned(CONF_imodule_get_module);
+  if FuncLoadError then
+  begin
+    CONF_imodule_get_module :=  @ERROR_CONF_imodule_get_module;
+  end;
 
-function Load_CONF_imodule_get_flags(const md: PCONF_IMODULE): TOpenSSL_C_ULONG; cdecl;
-begin
   CONF_imodule_get_flags := LoadLibCryptoFunction('CONF_imodule_get_flags');
-  if not assigned(CONF_imodule_get_flags) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_imodule_get_flags');
-  Result := CONF_imodule_get_flags(md);
-end;
+  FuncLoadError := not assigned(CONF_imodule_get_flags);
+  if FuncLoadError then
+  begin
+    CONF_imodule_get_flags :=  @ERROR_CONF_imodule_get_flags;
+  end;
 
-procedure Load_CONF_imodule_set_flags(md: PCONF_IMODULE; flags: TOpenSSL_C_ULONG); cdecl;
-begin
   CONF_imodule_set_flags := LoadLibCryptoFunction('CONF_imodule_set_flags');
-  if not assigned(CONF_imodule_set_flags) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_imodule_set_flags');
-  CONF_imodule_set_flags(md,flags);
-end;
+  FuncLoadError := not assigned(CONF_imodule_set_flags);
+  if FuncLoadError then
+  begin
+    CONF_imodule_set_flags :=  @ERROR_CONF_imodule_set_flags;
+  end;
 
-function Load_CONF_module_get_usr_data(pmod: PCONF_MODULE): Pointer; cdecl;
-begin
   CONF_module_get_usr_data := LoadLibCryptoFunction('CONF_module_get_usr_data');
-  if not assigned(CONF_module_get_usr_data) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_module_get_usr_data');
-  Result := CONF_module_get_usr_data(pmod);
-end;
+  FuncLoadError := not assigned(CONF_module_get_usr_data);
+  if FuncLoadError then
+  begin
+    CONF_module_get_usr_data :=  @ERROR_CONF_module_get_usr_data;
+  end;
 
-procedure Load_CONF_module_set_usr_data(pmod: PCONF_MODULE; usr_data: Pointer); cdecl;
-begin
   CONF_module_set_usr_data := LoadLibCryptoFunction('CONF_module_set_usr_data');
-  if not assigned(CONF_module_set_usr_data) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_module_set_usr_data');
-  CONF_module_set_usr_data(pmod,usr_data);
-end;
+  FuncLoadError := not assigned(CONF_module_set_usr_data);
+  if FuncLoadError then
+  begin
+    CONF_module_set_usr_data :=  @ERROR_CONF_module_set_usr_data;
+  end;
 
-function Load_CONF_get1_default_config_file: PAnsiChar; cdecl;
-begin
   CONF_get1_default_config_file := LoadLibCryptoFunction('CONF_get1_default_config_file');
-  if not assigned(CONF_get1_default_config_file) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_get1_default_config_file');
-  Result := CONF_get1_default_config_file();
-end;
+  FuncLoadError := not assigned(CONF_get1_default_config_file);
+  if FuncLoadError then
+  begin
+    CONF_get1_default_config_file :=  @ERROR_CONF_get1_default_config_file;
+  end;
 
-function Load_CONF_parse_list(const list: PAnsiChar; sep: TOpenSSL_C_INT; nospc: TOpenSSL_C_INT; list_cb: CONF_parse_list_list_cb; arg: Pointer): TOpenSSL_C_INT; cdecl;
-begin
   CONF_parse_list := LoadLibCryptoFunction('CONF_parse_list');
-  if not assigned(CONF_parse_list) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CONF_parse_list');
-  Result := CONF_parse_list(list,sep,nospc,list_cb,arg);
-end;
+  FuncLoadError := not assigned(CONF_parse_list);
+  if FuncLoadError then
+  begin
+    CONF_parse_list :=  @ERROR_CONF_parse_list;
+  end;
 
-procedure Load_OPENSSL_load_builtin_modules; cdecl;
-begin
   OPENSSL_load_builtin_modules := LoadLibCryptoFunction('OPENSSL_load_builtin_modules');
-  if not assigned(OPENSSL_load_builtin_modules) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_load_builtin_modules');
-  OPENSSL_load_builtin_modules();
-end;
+  FuncLoadError := not assigned(OPENSSL_load_builtin_modules);
+  if FuncLoadError then
+  begin
+    OPENSSL_load_builtin_modules :=  @ERROR_OPENSSL_load_builtin_modules;
+  end;
 
+end;
 
 procedure UnLoad;
 begin
-  CONF_set_default_method := Load_CONF_set_default_method;
-  NCONF_new := Load_NCONF_new;
-  NCONF_default := Load_NCONF_default;
-  NCONF_WIN32 := Load_NCONF_WIN32;
-  NCONF_free := Load_NCONF_free;
-  NCONF_free_data := Load_NCONF_free_data;
-  NCONF_load := Load_NCONF_load;
-  NCONF_load_bio := Load_NCONF_load_bio;
-  NCONF_get_string := Load_NCONF_get_string;
-  NCONF_get_number_e := Load_NCONF_get_number_e;
-  NCONF_dump_bio := Load_NCONF_dump_bio;
-  CONF_modules_load := Load_CONF_modules_load;
-  CONF_modules_load_file := Load_CONF_modules_load_file;
-  CONF_modules_unload := Load_CONF_modules_unload;
-  CONF_modules_finish := Load_CONF_modules_finish;
-  CONF_module_add := Load_CONF_module_add;
-  CONF_imodule_get_usr_data := Load_CONF_imodule_get_usr_data;
-  CONF_imodule_set_usr_data := Load_CONF_imodule_set_usr_data;
-  CONF_imodule_get_module := Load_CONF_imodule_get_module;
-  CONF_imodule_get_flags := Load_CONF_imodule_get_flags;
-  CONF_imodule_set_flags := Load_CONF_imodule_set_flags;
-  CONF_module_get_usr_data := Load_CONF_module_get_usr_data;
-  CONF_module_set_usr_data := Load_CONF_module_set_usr_data;
-  CONF_get1_default_config_file := Load_CONF_get1_default_config_file;
-  CONF_parse_list := Load_CONF_parse_list;
-  OPENSSL_load_builtin_modules := Load_OPENSSL_load_builtin_modules;
+  CONF_set_default_method := nil;
+  NCONF_new := nil;
+  NCONF_default := nil;
+  NCONF_WIN32 := nil;
+  NCONF_free := nil;
+  NCONF_free_data := nil;
+  NCONF_load := nil;
+  NCONF_load_bio := nil;
+  NCONF_get_string := nil;
+  NCONF_get_number_e := nil;
+  NCONF_dump_bio := nil;
+  CONF_modules_load := nil;
+  CONF_modules_load_file := nil;
+  CONF_modules_unload := nil;
+  CONF_modules_finish := nil;
+  CONF_module_add := nil;
+  CONF_imodule_get_usr_data := nil;
+  CONF_imodule_set_usr_data := nil;
+  CONF_imodule_get_module := nil;
+  CONF_imodule_get_flags := nil;
+  CONF_imodule_set_flags := nil;
+  CONF_module_get_usr_data := nil;
+  CONF_module_set_usr_data := nil;
+  CONF_get1_default_config_file := nil;
+  CONF_parse_list := nil;
+  OPENSSL_load_builtin_modules := nil;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
+Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

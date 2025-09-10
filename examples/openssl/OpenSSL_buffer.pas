@@ -68,23 +68,13 @@ function BUF_MEM_grow_clean(str: PBUF_MEM; len: TOpenSSL_C_SIZET): TOpenSSL_C_SI
 procedure BUF_reverse(out_: PByte; const in_: PByte; siz: TOpenSSL_C_SIZET); cdecl; external CLibCrypto;
 
 {$ELSE}
-
-{Declare external function initialisers - should not be called directly}
-
-function Load_BUF_MEM_new: PBUF_MEM; cdecl;
-function Load_BUF_MEM_new_ex(flags: TOpenSSL_C_ULONG): PBUF_MEM; cdecl;
-procedure Load_BUF_MEM_free(a: PBUF_MEM); cdecl;
-function Load_BUF_MEM_grow(str: PBUF_MEM; len: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
-function Load_BUF_MEM_grow_clean(str: PBUF_MEM; len: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
-procedure Load_BUF_reverse(out_: PByte; const in_: PByte; siz: TOpenSSL_C_SIZET); cdecl;
-
 var
-  BUF_MEM_new: function : PBUF_MEM; cdecl = Load_BUF_MEM_new;
-  BUF_MEM_new_ex: function (flags: TOpenSSL_C_ULONG): PBUF_MEM; cdecl = Load_BUF_MEM_new_ex;
-  BUF_MEM_free: procedure (a: PBUF_MEM); cdecl = Load_BUF_MEM_free;
-  BUF_MEM_grow: function (str: PBUF_MEM; len: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = Load_BUF_MEM_grow;
-  BUF_MEM_grow_clean: function (str: PBUF_MEM; len: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = Load_BUF_MEM_grow_clean;
-  BUF_reverse: procedure (out_: PByte; const in_: PByte; siz: TOpenSSL_C_SIZET); cdecl = Load_BUF_reverse;
+  BUF_MEM_new: function : PBUF_MEM; cdecl = nil;
+  BUF_MEM_new_ex: function (flags: TOpenSSL_C_ULONG): PBUF_MEM; cdecl = nil;
+  BUF_MEM_free: procedure (a: PBUF_MEM); cdecl = nil;
+  BUF_MEM_grow: function (str: PBUF_MEM; len: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = nil;
+  BUF_MEM_grow_clean: function (str: PBUF_MEM; len: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = nil;
+  BUF_reverse: procedure (out_: PByte; const in_: PByte; siz: TOpenSSL_C_SIZET); cdecl = nil;
 {$ENDIF}
 
 implementation
@@ -102,69 +92,101 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-function Load_BUF_MEM_new: PBUF_MEM; cdecl;
+
+{$WARN  NO_RETVAL OFF}
+function ERROR_BUF_MEM_new: PBUF_MEM; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('BUF_MEM_new');
+end;
+
+function ERROR_BUF_MEM_new_ex(flags: TOpenSSL_C_ULONG): PBUF_MEM; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('BUF_MEM_new_ex');
+end;
+
+procedure ERROR_BUF_MEM_free(a: PBUF_MEM); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('BUF_MEM_free');
+end;
+
+function ERROR_BUF_MEM_grow(str: PBUF_MEM; len: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('BUF_MEM_grow');
+end;
+
+function ERROR_BUF_MEM_grow_clean(str: PBUF_MEM; len: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('BUF_MEM_grow_clean');
+end;
+
+procedure ERROR_BUF_reverse(out_: PByte; const in_: PByte; siz: TOpenSSL_C_SIZET); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('BUF_reverse');
+end;
+
+{$WARN  NO_RETVAL ON}
+procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
+var FuncLoadError: boolean;
 begin
   BUF_MEM_new := LoadLibCryptoFunction('BUF_MEM_new');
-  if not assigned(BUF_MEM_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('BUF_MEM_new');
-  Result := BUF_MEM_new();
-end;
+  FuncLoadError := not assigned(BUF_MEM_new);
+  if FuncLoadError then
+  begin
+    BUF_MEM_new :=  @ERROR_BUF_MEM_new;
+  end;
 
-function Load_BUF_MEM_new_ex(flags: TOpenSSL_C_ULONG): PBUF_MEM; cdecl;
-begin
   BUF_MEM_new_ex := LoadLibCryptoFunction('BUF_MEM_new_ex');
-  if not assigned(BUF_MEM_new_ex) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('BUF_MEM_new_ex');
-  Result := BUF_MEM_new_ex(flags);
-end;
+  FuncLoadError := not assigned(BUF_MEM_new_ex);
+  if FuncLoadError then
+  begin
+    BUF_MEM_new_ex :=  @ERROR_BUF_MEM_new_ex;
+  end;
 
-procedure Load_BUF_MEM_free(a: PBUF_MEM); cdecl;
-begin
   BUF_MEM_free := LoadLibCryptoFunction('BUF_MEM_free');
-  if not assigned(BUF_MEM_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('BUF_MEM_free');
-  BUF_MEM_free(a);
-end;
+  FuncLoadError := not assigned(BUF_MEM_free);
+  if FuncLoadError then
+  begin
+    BUF_MEM_free :=  @ERROR_BUF_MEM_free;
+  end;
 
-function Load_BUF_MEM_grow(str: PBUF_MEM; len: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
-begin
   BUF_MEM_grow := LoadLibCryptoFunction('BUF_MEM_grow');
-  if not assigned(BUF_MEM_grow) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('BUF_MEM_grow');
-  Result := BUF_MEM_grow(str,len);
-end;
+  FuncLoadError := not assigned(BUF_MEM_grow);
+  if FuncLoadError then
+  begin
+    BUF_MEM_grow :=  @ERROR_BUF_MEM_grow;
+  end;
 
-function Load_BUF_MEM_grow_clean(str: PBUF_MEM; len: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
-begin
   BUF_MEM_grow_clean := LoadLibCryptoFunction('BUF_MEM_grow_clean');
-  if not assigned(BUF_MEM_grow_clean) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('BUF_MEM_grow_clean');
-  Result := BUF_MEM_grow_clean(str,len);
-end;
+  FuncLoadError := not assigned(BUF_MEM_grow_clean);
+  if FuncLoadError then
+  begin
+    BUF_MEM_grow_clean :=  @ERROR_BUF_MEM_grow_clean;
+  end;
 
-procedure Load_BUF_reverse(out_: PByte; const in_: PByte; siz: TOpenSSL_C_SIZET); cdecl;
-begin
   BUF_reverse := LoadLibCryptoFunction('BUF_reverse');
-  if not assigned(BUF_reverse) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('BUF_reverse');
-  BUF_reverse(out_,in_,siz);
-end;
+  FuncLoadError := not assigned(BUF_reverse);
+  if FuncLoadError then
+  begin
+    BUF_reverse :=  @ERROR_BUF_reverse;
+  end;
 
+end;
 
 procedure UnLoad;
 begin
-  BUF_MEM_new := Load_BUF_MEM_new;
-  BUF_MEM_new_ex := Load_BUF_MEM_new_ex;
-  BUF_MEM_free := Load_BUF_MEM_free;
-  BUF_MEM_grow := Load_BUF_MEM_grow;
-  BUF_MEM_grow_clean := Load_BUF_MEM_grow_clean;
-  BUF_reverse := Load_BUF_reverse;
+  BUF_MEM_new := nil;
+  BUF_MEM_new_ex := nil;
+  BUF_MEM_free := nil;
+  BUF_MEM_grow := nil;
+  BUF_MEM_grow_clean := nil;
+  BUF_reverse := nil;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
+Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

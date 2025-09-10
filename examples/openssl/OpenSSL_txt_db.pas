@@ -84,21 +84,12 @@ function TXT_DB_get_by_index(db: PTXT_DB; idx: TOpenSSL_C_INT; value: POPENSSL_S
 function TXT_DB_insert(db: PTXT_DB; value: POPENSSL_STRING): TOpenSSL_C_INT; cdecl; external CLibCrypto;
 
 {$ELSE}
-
-{Declare external function initialisers - should not be called directly}
-
-function Load_TXT_DB_read(in_: PBIO; num: TOpenSSL_C_INT): PTXT_DB; cdecl;
-function Load_TXT_DB_write(out_: PBIO; db: PTXT_DB): TOpenSSL_C_LONG; cdecl;
-procedure Load_TXT_DB_free(db: PTXT_DB); cdecl;
-function Load_TXT_DB_get_by_index(db: PTXT_DB; idx: TOpenSSL_C_INT; value: POPENSSL_STRING): POPENSSL_STRING; cdecl;
-function Load_TXT_DB_insert(db: PTXT_DB; value: POPENSSL_STRING): TOpenSSL_C_INT; cdecl;
-
 var
-  TXT_DB_read: function (in_: PBIO; num: TOpenSSL_C_INT): PTXT_DB; cdecl = Load_TXT_DB_read;
-  TXT_DB_write: function (out_: PBIO; db: PTXT_DB): TOpenSSL_C_LONG; cdecl = Load_TXT_DB_write;
-  TXT_DB_free: procedure (db: PTXT_DB); cdecl = Load_TXT_DB_free;
-  TXT_DB_get_by_index: function (db: PTXT_DB; idx: TOpenSSL_C_INT; value: POPENSSL_STRING): POPENSSL_STRING; cdecl = Load_TXT_DB_get_by_index;
-  TXT_DB_insert: function (db: PTXT_DB; value: POPENSSL_STRING): TOpenSSL_C_INT; cdecl = Load_TXT_DB_insert;
+  TXT_DB_read: function (in_: PBIO; num: TOpenSSL_C_INT): PTXT_DB; cdecl = nil;
+  TXT_DB_write: function (out_: PBIO; db: PTXT_DB): TOpenSSL_C_LONG; cdecl = nil;
+  TXT_DB_free: procedure (db: PTXT_DB); cdecl = nil;
+  TXT_DB_get_by_index: function (db: PTXT_DB; idx: TOpenSSL_C_INT; value: POPENSSL_STRING): POPENSSL_STRING; cdecl = nil;
+  TXT_DB_insert: function (db: PTXT_DB; value: POPENSSL_STRING): TOpenSSL_C_INT; cdecl = nil;
 {$ENDIF}
 
 implementation
@@ -116,60 +107,88 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-function Load_TXT_DB_read(in_: PBIO; num: TOpenSSL_C_INT): PTXT_DB; cdecl;
+
+{$WARN  NO_RETVAL OFF}
+function ERROR_TXT_DB_read(in_: PBIO; num: TOpenSSL_C_INT): PTXT_DB; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TXT_DB_read');
+end;
+
+function ERROR_TXT_DB_write(out_: PBIO; db: PTXT_DB): TOpenSSL_C_LONG; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TXT_DB_write');
+end;
+
+procedure ERROR_TXT_DB_free(db: PTXT_DB); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TXT_DB_free');
+end;
+
+function ERROR_TXT_DB_get_by_index(db: PTXT_DB; idx: TOpenSSL_C_INT; value: POPENSSL_STRING): POPENSSL_STRING; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TXT_DB_get_by_index');
+end;
+
+function ERROR_TXT_DB_insert(db: PTXT_DB; value: POPENSSL_STRING): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TXT_DB_insert');
+end;
+
+{$WARN  NO_RETVAL ON}
+procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
+var FuncLoadError: boolean;
 begin
   TXT_DB_read := LoadLibCryptoFunction('TXT_DB_read');
-  if not assigned(TXT_DB_read) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TXT_DB_read');
-  Result := TXT_DB_read(in_,num);
-end;
+  FuncLoadError := not assigned(TXT_DB_read);
+  if FuncLoadError then
+  begin
+    TXT_DB_read :=  @ERROR_TXT_DB_read;
+  end;
 
-function Load_TXT_DB_write(out_: PBIO; db: PTXT_DB): TOpenSSL_C_LONG; cdecl;
-begin
   TXT_DB_write := LoadLibCryptoFunction('TXT_DB_write');
-  if not assigned(TXT_DB_write) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TXT_DB_write');
-  Result := TXT_DB_write(out_,db);
-end;
+  FuncLoadError := not assigned(TXT_DB_write);
+  if FuncLoadError then
+  begin
+    TXT_DB_write :=  @ERROR_TXT_DB_write;
+  end;
 
-procedure Load_TXT_DB_free(db: PTXT_DB); cdecl;
-begin
   TXT_DB_free := LoadLibCryptoFunction('TXT_DB_free');
-  if not assigned(TXT_DB_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TXT_DB_free');
-  TXT_DB_free(db);
-end;
+  FuncLoadError := not assigned(TXT_DB_free);
+  if FuncLoadError then
+  begin
+    TXT_DB_free :=  @ERROR_TXT_DB_free;
+  end;
 
-function Load_TXT_DB_get_by_index(db: PTXT_DB; idx: TOpenSSL_C_INT; value: POPENSSL_STRING): POPENSSL_STRING; cdecl;
-begin
   TXT_DB_get_by_index := LoadLibCryptoFunction('TXT_DB_get_by_index');
-  if not assigned(TXT_DB_get_by_index) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TXT_DB_get_by_index');
-  Result := TXT_DB_get_by_index(db,idx,value);
-end;
+  FuncLoadError := not assigned(TXT_DB_get_by_index);
+  if FuncLoadError then
+  begin
+    TXT_DB_get_by_index :=  @ERROR_TXT_DB_get_by_index;
+  end;
 
-function Load_TXT_DB_insert(db: PTXT_DB; value: POPENSSL_STRING): TOpenSSL_C_INT; cdecl;
-begin
   TXT_DB_insert := LoadLibCryptoFunction('TXT_DB_insert');
-  if not assigned(TXT_DB_insert) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TXT_DB_insert');
-  Result := TXT_DB_insert(db,value);
-end;
+  FuncLoadError := not assigned(TXT_DB_insert);
+  if FuncLoadError then
+  begin
+    TXT_DB_insert :=  @ERROR_TXT_DB_insert;
+  end;
 
+end;
 
 procedure UnLoad;
 begin
-  TXT_DB_read := Load_TXT_DB_read;
-  TXT_DB_write := Load_TXT_DB_write;
-  TXT_DB_free := Load_TXT_DB_free;
-  TXT_DB_get_by_index := Load_TXT_DB_get_by_index;
-  TXT_DB_insert := Load_TXT_DB_insert;
+  TXT_DB_read := nil;
+  TXT_DB_write := nil;
+  TXT_DB_free := nil;
+  TXT_DB_get_by_index := nil;
+  TXT_DB_insert := nil;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
+Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

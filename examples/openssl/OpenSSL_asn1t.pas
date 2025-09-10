@@ -993,19 +993,11 @@ function ASN1_item_ex_d2i(pval: PPASN1_VALUE; const AIn: PPByte; len: TOpenSSL_C
 function ASN1_item_ex_i2d(pval: PPASN1_VALUE; AOut: PPByte; const it: PASN1_ITEM; tag: TOpenSSL_C_INT; aclass: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto;
 
 {$ELSE}
-
-{Declare external function initialisers - should not be called directly}
-
-function Load_ASN1_item_ex_new(pval: PPASN1_VALUE; const it: PASN1_ITEM): TOpenSSL_C_INT; cdecl;
-procedure Load_ASN1_item_ex_free(pval: PPASN1_VALUE; const it: PASN1_ITEM); cdecl;
-function Load_ASN1_item_ex_d2i(pval: PPASN1_VALUE; const AIn: PPByte; len: TOpenSSL_C_LONG; const it: PASN1_ITEM; tag: TOpenSSL_C_INT; aclass: TOpenSSL_C_INT; opt: AnsiChar; ctx: PASN1_TLC): TOpenSSL_C_INT; cdecl;
-function Load_ASN1_item_ex_i2d(pval: PPASN1_VALUE; AOut: PPByte; const it: PASN1_ITEM; tag: TOpenSSL_C_INT; aclass: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-
 var
-  ASN1_item_ex_new: function (pval: PPASN1_VALUE; const it: PASN1_ITEM): TOpenSSL_C_INT; cdecl = Load_ASN1_item_ex_new;
-  ASN1_item_ex_free: procedure (pval: PPASN1_VALUE; const it: PASN1_ITEM); cdecl = Load_ASN1_item_ex_free;
-  ASN1_item_ex_d2i: function (pval: PPASN1_VALUE; const AIn: PPByte; len: TOpenSSL_C_LONG; const it: PASN1_ITEM; tag: TOpenSSL_C_INT; aclass: TOpenSSL_C_INT; opt: AnsiChar; ctx: PASN1_TLC): TOpenSSL_C_INT; cdecl = Load_ASN1_item_ex_d2i;
-  ASN1_item_ex_i2d: function (pval: PPASN1_VALUE; AOut: PPByte; const it: PASN1_ITEM; tag: TOpenSSL_C_INT; aclass: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_ASN1_item_ex_i2d;
+  ASN1_item_ex_new: function (pval: PPASN1_VALUE; const it: PASN1_ITEM): TOpenSSL_C_INT; cdecl = nil;
+  ASN1_item_ex_free: procedure (pval: PPASN1_VALUE; const it: PASN1_ITEM); cdecl = nil;
+  ASN1_item_ex_d2i: function (pval: PPASN1_VALUE; const AIn: PPByte; len: TOpenSSL_C_LONG; const it: PASN1_ITEM; tag: TOpenSSL_C_INT; aclass: TOpenSSL_C_INT; opt: AnsiChar; ctx: PASN1_TLC): TOpenSSL_C_INT; cdecl = nil;
+  ASN1_item_ex_i2d: function (pval: PPASN1_VALUE; AOut: PPByte; const it: PASN1_ITEM; tag: TOpenSSL_C_INT; aclass: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
 {$ENDIF}
 
 implementation
@@ -1023,51 +1015,75 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-function Load_ASN1_item_ex_new(pval: PPASN1_VALUE; const it: PASN1_ITEM): TOpenSSL_C_INT; cdecl;
+
+{$WARN  NO_RETVAL OFF}
+function ERROR_ASN1_item_ex_new(pval: PPASN1_VALUE; const it: PASN1_ITEM): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ASN1_item_ex_new');
+end;
+
+procedure ERROR_ASN1_item_ex_free(pval: PPASN1_VALUE; const it: PASN1_ITEM); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ASN1_item_ex_free');
+end;
+
+function ERROR_ASN1_item_ex_d2i(pval: PPASN1_VALUE; const AIn: PPByte; len: TOpenSSL_C_LONG; const it: PASN1_ITEM; tag: TOpenSSL_C_INT; aclass: TOpenSSL_C_INT; opt: AnsiChar; ctx: PASN1_TLC): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ASN1_item_ex_d2i');
+end;
+
+function ERROR_ASN1_item_ex_i2d(pval: PPASN1_VALUE; AOut: PPByte; const it: PASN1_ITEM; tag: TOpenSSL_C_INT; aclass: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ASN1_item_ex_i2d');
+end;
+
+{$WARN  NO_RETVAL ON}
+procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
+var FuncLoadError: boolean;
 begin
   ASN1_item_ex_new := LoadLibCryptoFunction('ASN1_item_ex_new');
-  if not assigned(ASN1_item_ex_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ASN1_item_ex_new');
-  Result := ASN1_item_ex_new(pval,it);
-end;
+  FuncLoadError := not assigned(ASN1_item_ex_new);
+  if FuncLoadError then
+  begin
+    ASN1_item_ex_new :=  @ERROR_ASN1_item_ex_new;
+  end;
 
-procedure Load_ASN1_item_ex_free(pval: PPASN1_VALUE; const it: PASN1_ITEM); cdecl;
-begin
   ASN1_item_ex_free := LoadLibCryptoFunction('ASN1_item_ex_free');
-  if not assigned(ASN1_item_ex_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ASN1_item_ex_free');
-  ASN1_item_ex_free(pval,it);
-end;
+  FuncLoadError := not assigned(ASN1_item_ex_free);
+  if FuncLoadError then
+  begin
+    ASN1_item_ex_free :=  @ERROR_ASN1_item_ex_free;
+  end;
 
-function Load_ASN1_item_ex_d2i(pval: PPASN1_VALUE; const AIn: PPByte; len: TOpenSSL_C_LONG; const it: PASN1_ITEM; tag: TOpenSSL_C_INT; aclass: TOpenSSL_C_INT; opt: AnsiChar; ctx: PASN1_TLC): TOpenSSL_C_INT; cdecl;
-begin
   ASN1_item_ex_d2i := LoadLibCryptoFunction('ASN1_item_ex_d2i');
-  if not assigned(ASN1_item_ex_d2i) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ASN1_item_ex_d2i');
-  Result := ASN1_item_ex_d2i(pval,AIn,len,it,tag,aclass,opt,ctx);
-end;
+  FuncLoadError := not assigned(ASN1_item_ex_d2i);
+  if FuncLoadError then
+  begin
+    ASN1_item_ex_d2i :=  @ERROR_ASN1_item_ex_d2i;
+  end;
 
-function Load_ASN1_item_ex_i2d(pval: PPASN1_VALUE; AOut: PPByte; const it: PASN1_ITEM; tag: TOpenSSL_C_INT; aclass: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   ASN1_item_ex_i2d := LoadLibCryptoFunction('ASN1_item_ex_i2d');
-  if not assigned(ASN1_item_ex_i2d) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ASN1_item_ex_i2d');
-  Result := ASN1_item_ex_i2d(pval,AOut,it,tag,aclass);
-end;
+  FuncLoadError := not assigned(ASN1_item_ex_i2d);
+  if FuncLoadError then
+  begin
+    ASN1_item_ex_i2d :=  @ERROR_ASN1_item_ex_i2d;
+  end;
 
+end;
 
 procedure UnLoad;
 begin
-  ASN1_item_ex_new := Load_ASN1_item_ex_new;
-  ASN1_item_ex_free := Load_ASN1_item_ex_free;
-  ASN1_item_ex_d2i := Load_ASN1_item_ex_d2i;
-  ASN1_item_ex_i2d := Load_ASN1_item_ex_i2d;
+  ASN1_item_ex_new := nil;
+  ASN1_item_ex_free := nil;
+  ASN1_item_ex_d2i := nil;
+  ASN1_item_ex_i2d := nil;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
+Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

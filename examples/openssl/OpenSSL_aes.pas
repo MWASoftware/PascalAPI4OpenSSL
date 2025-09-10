@@ -95,41 +95,22 @@ function AES_wrap_key(key: PAES_KEY; const iv: PByte; out_: PByte; const in_: PB
 function AES_unwrap_key(key: PAES_KEY; const iv: PByte; out_: PByte; const in_: PByte; inlen: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl; external CLibCrypto;
 
 {$ELSE}
-
-{Declare external function initialisers - should not be called directly}
-
-function Load_AES_options: PAnsiChar; cdecl;
-function Load_AES_set_encrypt_key(const userKey: PByte; const bits: TOpenSSL_C_INT; const key: PAES_KEY): TOpenSSL_C_INT; cdecl;
-function Load_AES_set_decrypt_key(const userKey: PByte; const bits: TOpenSSL_C_INT; const key: PAES_KEY): TOpenSSL_C_INT; cdecl;
-procedure Load_AES_encrypt(const in_: PByte; out_: PByte; const key: PAES_KEY); cdecl;
-procedure Load_AES_decrypt(const in_: PByte; out_: PByte; const key: PAES_KEY); cdecl;
-procedure Load_AES_ecb_encrypt(const in_: PByte; out_: PByte; const key: PAES_KEY; const enc: TOpenSSL_C_INT); cdecl;
-procedure Load_AES_cbc_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; const enc: TOpenSSL_C_INT); cdecl;
-procedure Load_AES_cfb128_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; num: POpenSSL_C_INT; const enc: TOpenSSL_C_INT); cdecl;
-procedure Load_AES_cfb1_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; num: POpenSSL_C_INT; const enc: TOpenSSL_C_INT); cdecl;
-procedure Load_AES_cfb8_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; num: POpenSSL_C_INT; const enc: TOpenSSL_C_INT); cdecl;
-procedure Load_AES_ofb128_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; num: POpenSSL_C_INT); cdecl;
-procedure Load_AES_ige_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; const enc: TOpenSSL_C_INT); cdecl;
-procedure Load_AES_bi_ige_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; const key2: PAES_KEY; ivec: PByte; const enc: TOpenSSL_C_INT); cdecl;
-function Load_AES_wrap_key(key: PAES_KEY; const iv: PByte; out_: PByte; const in_: PByte; inlen: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
-function Load_AES_unwrap_key(key: PAES_KEY; const iv: PByte; out_: PByte; const in_: PByte; inlen: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
-
 var
-  AES_options: function : PAnsiChar; cdecl = Load_AES_options;
-  AES_set_encrypt_key: function (const userKey: PByte; const bits: TOpenSSL_C_INT; const key: PAES_KEY): TOpenSSL_C_INT; cdecl = Load_AES_set_encrypt_key;
-  AES_set_decrypt_key: function (const userKey: PByte; const bits: TOpenSSL_C_INT; const key: PAES_KEY): TOpenSSL_C_INT; cdecl = Load_AES_set_decrypt_key;
-  AES_encrypt: procedure (const in_: PByte; out_: PByte; const key: PAES_KEY); cdecl = Load_AES_encrypt;
-  AES_decrypt: procedure (const in_: PByte; out_: PByte; const key: PAES_KEY); cdecl = Load_AES_decrypt;
-  AES_ecb_encrypt: procedure (const in_: PByte; out_: PByte; const key: PAES_KEY; const enc: TOpenSSL_C_INT); cdecl = Load_AES_ecb_encrypt;
-  AES_cbc_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; const enc: TOpenSSL_C_INT); cdecl = Load_AES_cbc_encrypt;
-  AES_cfb128_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; num: POpenSSL_C_INT; const enc: TOpenSSL_C_INT); cdecl = Load_AES_cfb128_encrypt;
-  AES_cfb1_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; num: POpenSSL_C_INT; const enc: TOpenSSL_C_INT); cdecl = Load_AES_cfb1_encrypt;
-  AES_cfb8_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; num: POpenSSL_C_INT; const enc: TOpenSSL_C_INT); cdecl = Load_AES_cfb8_encrypt;
-  AES_ofb128_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; num: POpenSSL_C_INT); cdecl = Load_AES_ofb128_encrypt;
-  AES_ige_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; const enc: TOpenSSL_C_INT); cdecl = Load_AES_ige_encrypt;
-  AES_bi_ige_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; const key2: PAES_KEY; ivec: PByte; const enc: TOpenSSL_C_INT); cdecl = Load_AES_bi_ige_encrypt;
-  AES_wrap_key: function (key: PAES_KEY; const iv: PByte; out_: PByte; const in_: PByte; inlen: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = Load_AES_wrap_key;
-  AES_unwrap_key: function (key: PAES_KEY; const iv: PByte; out_: PByte; const in_: PByte; inlen: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = Load_AES_unwrap_key;
+  AES_options: function : PAnsiChar; cdecl = nil;
+  AES_set_encrypt_key: function (const userKey: PByte; const bits: TOpenSSL_C_INT; const key: PAES_KEY): TOpenSSL_C_INT; cdecl = nil;
+  AES_set_decrypt_key: function (const userKey: PByte; const bits: TOpenSSL_C_INT; const key: PAES_KEY): TOpenSSL_C_INT; cdecl = nil;
+  AES_encrypt: procedure (const in_: PByte; out_: PByte; const key: PAES_KEY); cdecl = nil;
+  AES_decrypt: procedure (const in_: PByte; out_: PByte; const key: PAES_KEY); cdecl = nil;
+  AES_ecb_encrypt: procedure (const in_: PByte; out_: PByte; const key: PAES_KEY; const enc: TOpenSSL_C_INT); cdecl = nil;
+  AES_cbc_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; const enc: TOpenSSL_C_INT); cdecl = nil;
+  AES_cfb128_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; num: POpenSSL_C_INT; const enc: TOpenSSL_C_INT); cdecl = nil;
+  AES_cfb1_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; num: POpenSSL_C_INT; const enc: TOpenSSL_C_INT); cdecl = nil;
+  AES_cfb8_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; num: POpenSSL_C_INT; const enc: TOpenSSL_C_INT); cdecl = nil;
+  AES_ofb128_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; num: POpenSSL_C_INT); cdecl = nil;
+  AES_ige_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; const enc: TOpenSSL_C_INT); cdecl = nil;
+  AES_bi_ige_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; const key2: PAES_KEY; ivec: PByte; const enc: TOpenSSL_C_INT); cdecl = nil;
+  AES_wrap_key: function (key: PAES_KEY; const iv: PByte; out_: PByte; const in_: PByte; inlen: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = nil;
+  AES_unwrap_key: function (key: PAES_KEY; const iv: PByte; out_: PByte; const in_: PByte; inlen: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = nil;
 {$ENDIF}
 
 implementation
@@ -147,150 +128,218 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-function Load_AES_options: PAnsiChar; cdecl;
+
+{$WARN  NO_RETVAL OFF}
+function ERROR_AES_options: PAnsiChar; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('AES_options');
+end;
+
+function ERROR_AES_set_encrypt_key(const userKey: PByte; const bits: TOpenSSL_C_INT; const key: PAES_KEY): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('AES_set_encrypt_key');
+end;
+
+function ERROR_AES_set_decrypt_key(const userKey: PByte; const bits: TOpenSSL_C_INT; const key: PAES_KEY): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('AES_set_decrypt_key');
+end;
+
+procedure ERROR_AES_encrypt(const in_: PByte; out_: PByte; const key: PAES_KEY); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('AES_encrypt');
+end;
+
+procedure ERROR_AES_decrypt(const in_: PByte; out_: PByte; const key: PAES_KEY); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('AES_decrypt');
+end;
+
+procedure ERROR_AES_ecb_encrypt(const in_: PByte; out_: PByte; const key: PAES_KEY; const enc: TOpenSSL_C_INT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('AES_ecb_encrypt');
+end;
+
+procedure ERROR_AES_cbc_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; const enc: TOpenSSL_C_INT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('AES_cbc_encrypt');
+end;
+
+procedure ERROR_AES_cfb128_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; num: POpenSSL_C_INT; const enc: TOpenSSL_C_INT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('AES_cfb128_encrypt');
+end;
+
+procedure ERROR_AES_cfb1_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; num: POpenSSL_C_INT; const enc: TOpenSSL_C_INT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('AES_cfb1_encrypt');
+end;
+
+procedure ERROR_AES_cfb8_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; num: POpenSSL_C_INT; const enc: TOpenSSL_C_INT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('AES_cfb8_encrypt');
+end;
+
+procedure ERROR_AES_ofb128_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; num: POpenSSL_C_INT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('AES_ofb128_encrypt');
+end;
+
+procedure ERROR_AES_ige_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; const enc: TOpenSSL_C_INT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('AES_ige_encrypt');
+end;
+
+procedure ERROR_AES_bi_ige_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; const key2: PAES_KEY; ivec: PByte; const enc: TOpenSSL_C_INT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('AES_bi_ige_encrypt');
+end;
+
+function ERROR_AES_wrap_key(key: PAES_KEY; const iv: PByte; out_: PByte; const in_: PByte; inlen: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('AES_wrap_key');
+end;
+
+function ERROR_AES_unwrap_key(key: PAES_KEY; const iv: PByte; out_: PByte; const in_: PByte; inlen: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('AES_unwrap_key');
+end;
+
+{$WARN  NO_RETVAL ON}
+procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
+var FuncLoadError: boolean;
 begin
   AES_options := LoadLibCryptoFunction('AES_options');
-  if not assigned(AES_options) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('AES_options');
-  Result := AES_options();
-end;
+  FuncLoadError := not assigned(AES_options);
+  if FuncLoadError then
+  begin
+    AES_options :=  @ERROR_AES_options;
+  end;
 
-function Load_AES_set_encrypt_key(const userKey: PByte; const bits: TOpenSSL_C_INT; const key: PAES_KEY): TOpenSSL_C_INT; cdecl;
-begin
   AES_set_encrypt_key := LoadLibCryptoFunction('AES_set_encrypt_key');
-  if not assigned(AES_set_encrypt_key) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('AES_set_encrypt_key');
-  Result := AES_set_encrypt_key(userKey,bits,key);
-end;
+  FuncLoadError := not assigned(AES_set_encrypt_key);
+  if FuncLoadError then
+  begin
+    AES_set_encrypt_key :=  @ERROR_AES_set_encrypt_key;
+  end;
 
-function Load_AES_set_decrypt_key(const userKey: PByte; const bits: TOpenSSL_C_INT; const key: PAES_KEY): TOpenSSL_C_INT; cdecl;
-begin
   AES_set_decrypt_key := LoadLibCryptoFunction('AES_set_decrypt_key');
-  if not assigned(AES_set_decrypt_key) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('AES_set_decrypt_key');
-  Result := AES_set_decrypt_key(userKey,bits,key);
-end;
+  FuncLoadError := not assigned(AES_set_decrypt_key);
+  if FuncLoadError then
+  begin
+    AES_set_decrypt_key :=  @ERROR_AES_set_decrypt_key;
+  end;
 
-procedure Load_AES_encrypt(const in_: PByte; out_: PByte; const key: PAES_KEY); cdecl;
-begin
   AES_encrypt := LoadLibCryptoFunction('AES_encrypt');
-  if not assigned(AES_encrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('AES_encrypt');
-  AES_encrypt(in_,out_,key);
-end;
+  FuncLoadError := not assigned(AES_encrypt);
+  if FuncLoadError then
+  begin
+    AES_encrypt :=  @ERROR_AES_encrypt;
+  end;
 
-procedure Load_AES_decrypt(const in_: PByte; out_: PByte; const key: PAES_KEY); cdecl;
-begin
   AES_decrypt := LoadLibCryptoFunction('AES_decrypt');
-  if not assigned(AES_decrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('AES_decrypt');
-  AES_decrypt(in_,out_,key);
-end;
+  FuncLoadError := not assigned(AES_decrypt);
+  if FuncLoadError then
+  begin
+    AES_decrypt :=  @ERROR_AES_decrypt;
+  end;
 
-procedure Load_AES_ecb_encrypt(const in_: PByte; out_: PByte; const key: PAES_KEY; const enc: TOpenSSL_C_INT); cdecl;
-begin
   AES_ecb_encrypt := LoadLibCryptoFunction('AES_ecb_encrypt');
-  if not assigned(AES_ecb_encrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('AES_ecb_encrypt');
-  AES_ecb_encrypt(in_,out_,key,enc);
-end;
+  FuncLoadError := not assigned(AES_ecb_encrypt);
+  if FuncLoadError then
+  begin
+    AES_ecb_encrypt :=  @ERROR_AES_ecb_encrypt;
+  end;
 
-procedure Load_AES_cbc_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; const enc: TOpenSSL_C_INT); cdecl;
-begin
   AES_cbc_encrypt := LoadLibCryptoFunction('AES_cbc_encrypt');
-  if not assigned(AES_cbc_encrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('AES_cbc_encrypt');
-  AES_cbc_encrypt(in_,out_,length,key,ivec,enc);
-end;
+  FuncLoadError := not assigned(AES_cbc_encrypt);
+  if FuncLoadError then
+  begin
+    AES_cbc_encrypt :=  @ERROR_AES_cbc_encrypt;
+  end;
 
-procedure Load_AES_cfb128_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; num: POpenSSL_C_INT; const enc: TOpenSSL_C_INT); cdecl;
-begin
   AES_cfb128_encrypt := LoadLibCryptoFunction('AES_cfb128_encrypt');
-  if not assigned(AES_cfb128_encrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('AES_cfb128_encrypt');
-  AES_cfb128_encrypt(in_,out_,length,key,ivec,num,enc);
-end;
+  FuncLoadError := not assigned(AES_cfb128_encrypt);
+  if FuncLoadError then
+  begin
+    AES_cfb128_encrypt :=  @ERROR_AES_cfb128_encrypt;
+  end;
 
-procedure Load_AES_cfb1_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; num: POpenSSL_C_INT; const enc: TOpenSSL_C_INT); cdecl;
-begin
   AES_cfb1_encrypt := LoadLibCryptoFunction('AES_cfb1_encrypt');
-  if not assigned(AES_cfb1_encrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('AES_cfb1_encrypt');
-  AES_cfb1_encrypt(in_,out_,length,key,ivec,num,enc);
-end;
+  FuncLoadError := not assigned(AES_cfb1_encrypt);
+  if FuncLoadError then
+  begin
+    AES_cfb1_encrypt :=  @ERROR_AES_cfb1_encrypt;
+  end;
 
-procedure Load_AES_cfb8_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; num: POpenSSL_C_INT; const enc: TOpenSSL_C_INT); cdecl;
-begin
   AES_cfb8_encrypt := LoadLibCryptoFunction('AES_cfb8_encrypt');
-  if not assigned(AES_cfb8_encrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('AES_cfb8_encrypt');
-  AES_cfb8_encrypt(in_,out_,length,key,ivec,num,enc);
-end;
+  FuncLoadError := not assigned(AES_cfb8_encrypt);
+  if FuncLoadError then
+  begin
+    AES_cfb8_encrypt :=  @ERROR_AES_cfb8_encrypt;
+  end;
 
-procedure Load_AES_ofb128_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; num: POpenSSL_C_INT); cdecl;
-begin
   AES_ofb128_encrypt := LoadLibCryptoFunction('AES_ofb128_encrypt');
-  if not assigned(AES_ofb128_encrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('AES_ofb128_encrypt');
-  AES_ofb128_encrypt(in_,out_,length,key,ivec,num);
-end;
+  FuncLoadError := not assigned(AES_ofb128_encrypt);
+  if FuncLoadError then
+  begin
+    AES_ofb128_encrypt :=  @ERROR_AES_ofb128_encrypt;
+  end;
 
-procedure Load_AES_ige_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; ivec: PByte; const enc: TOpenSSL_C_INT); cdecl;
-begin
   AES_ige_encrypt := LoadLibCryptoFunction('AES_ige_encrypt');
-  if not assigned(AES_ige_encrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('AES_ige_encrypt');
-  AES_ige_encrypt(in_,out_,length,key,ivec,enc);
-end;
+  FuncLoadError := not assigned(AES_ige_encrypt);
+  if FuncLoadError then
+  begin
+    AES_ige_encrypt :=  @ERROR_AES_ige_encrypt;
+  end;
 
-procedure Load_AES_bi_ige_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_SIZET; const key: PAES_KEY; const key2: PAES_KEY; ivec: PByte; const enc: TOpenSSL_C_INT); cdecl;
-begin
   AES_bi_ige_encrypt := LoadLibCryptoFunction('AES_bi_ige_encrypt');
-  if not assigned(AES_bi_ige_encrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('AES_bi_ige_encrypt');
-  AES_bi_ige_encrypt(in_,out_,length,key,key2,ivec,enc);
-end;
+  FuncLoadError := not assigned(AES_bi_ige_encrypt);
+  if FuncLoadError then
+  begin
+    AES_bi_ige_encrypt :=  @ERROR_AES_bi_ige_encrypt;
+  end;
 
-function Load_AES_wrap_key(key: PAES_KEY; const iv: PByte; out_: PByte; const in_: PByte; inlen: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
-begin
   AES_wrap_key := LoadLibCryptoFunction('AES_wrap_key');
-  if not assigned(AES_wrap_key) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('AES_wrap_key');
-  Result := AES_wrap_key(key,iv,out_,in_,inlen);
-end;
+  FuncLoadError := not assigned(AES_wrap_key);
+  if FuncLoadError then
+  begin
+    AES_wrap_key :=  @ERROR_AES_wrap_key;
+  end;
 
-function Load_AES_unwrap_key(key: PAES_KEY; const iv: PByte; out_: PByte; const in_: PByte; inlen: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
-begin
   AES_unwrap_key := LoadLibCryptoFunction('AES_unwrap_key');
-  if not assigned(AES_unwrap_key) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('AES_unwrap_key');
-  Result := AES_unwrap_key(key,iv,out_,in_,inlen);
-end;
+  FuncLoadError := not assigned(AES_unwrap_key);
+  if FuncLoadError then
+  begin
+    AES_unwrap_key :=  @ERROR_AES_unwrap_key;
+  end;
 
+end;
 
 procedure UnLoad;
 begin
-  AES_options := Load_AES_options;
-  AES_set_encrypt_key := Load_AES_set_encrypt_key;
-  AES_set_decrypt_key := Load_AES_set_decrypt_key;
-  AES_encrypt := Load_AES_encrypt;
-  AES_decrypt := Load_AES_decrypt;
-  AES_ecb_encrypt := Load_AES_ecb_encrypt;
-  AES_cbc_encrypt := Load_AES_cbc_encrypt;
-  AES_cfb128_encrypt := Load_AES_cfb128_encrypt;
-  AES_cfb1_encrypt := Load_AES_cfb1_encrypt;
-  AES_cfb8_encrypt := Load_AES_cfb8_encrypt;
-  AES_ofb128_encrypt := Load_AES_ofb128_encrypt;
-  AES_ige_encrypt := Load_AES_ige_encrypt;
-  AES_bi_ige_encrypt := Load_AES_bi_ige_encrypt;
-  AES_wrap_key := Load_AES_wrap_key;
-  AES_unwrap_key := Load_AES_unwrap_key;
+  AES_options := nil;
+  AES_set_encrypt_key := nil;
+  AES_set_decrypt_key := nil;
+  AES_encrypt := nil;
+  AES_decrypt := nil;
+  AES_ecb_encrypt := nil;
+  AES_cbc_encrypt := nil;
+  AES_cfb128_encrypt := nil;
+  AES_cfb1_encrypt := nil;
+  AES_cfb8_encrypt := nil;
+  AES_ofb128_encrypt := nil;
+  AES_ige_encrypt := nil;
+  AES_bi_ige_encrypt := nil;
+  AES_wrap_key := nil;
+  AES_unwrap_key := nil;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
+Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

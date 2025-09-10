@@ -617,247 +617,125 @@ procedure ENGINE_add_conf_module; cdecl; external CLibCrypto;
 function ENGINE_get_static_state: Pointer; cdecl; external CLibCrypto;
 
 {$ELSE}
-
-{Declare external function initialisers - should not be called directly}
-
-function Load_ENGINE_get_first: PENGINE; cdecl;
-function Load_ENGINE_get_last: PENGINE; cdecl;
-function Load_ENGINE_get_next(e: PENGINE): PENGINE; cdecl;
-function Load_ENGINE_get_prev(e: PENGINE): PENGINE; cdecl;
-function Load_ENGINE_add(e: PENGINE): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_remove(e: PENGINE): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_by_id(const id: PAnsiChar): PENGINE; cdecl;
-procedure Load_ENGINE_load_builtin_engines; cdecl;
-function Load_ENGINE_get_table_flags: TOpenSSL_C_UINT; cdecl;
-procedure Load_ENGINE_set_table_flags(flags: TOpenSSL_C_UINT); cdecl;
-function Load_ENGINE_register_RSA(e: PENGINE): TOpenSSL_C_INT; cdecl;
-procedure Load_ENGINE_unregister_RSA(e: PENGINE); cdecl;
-procedure Load_ENGINE_register_all_RSA; cdecl;
-function Load_ENGINE_register_DSA(e: PENGINE): TOpenSSL_C_INT; cdecl;
-procedure Load_ENGINE_unregister_DSA(e: PENGINE); cdecl;
-procedure Load_ENGINE_register_all_DSA; cdecl;
-function Load_ENGINE_register_EC(e: PENGINE): TOpenSSL_C_INT; cdecl;
-procedure Load_ENGINE_unregister_EC(e: PENGINE); cdecl;
-procedure Load_ENGINE_register_all_EC; cdecl;
-function Load_ENGINE_register_DH(e: PENGINE): TOpenSSL_C_INT; cdecl;
-procedure Load_ENGINE_unregister_DH(e: PENGINE); cdecl;
-procedure Load_ENGINE_register_all_DH; cdecl;
-function Load_ENGINE_register_RAND(e: PENGINE): TOpenSSL_C_INT; cdecl;
-procedure Load_ENGINE_unregister_RAND(e: PENGINE); cdecl;
-procedure Load_ENGINE_register_all_RAND; cdecl;
-function Load_ENGINE_register_ciphers(e: PENGINE): TOpenSSL_C_INT; cdecl;
-procedure Load_ENGINE_unregister_ciphers(e: PENGINE); cdecl;
-procedure Load_ENGINE_register_all_ciphers; cdecl;
-function Load_ENGINE_register_digests(e: PENGINE): TOpenSSL_C_INT; cdecl;
-procedure Load_ENGINE_unregister_digests(e: PENGINE); cdecl;
-procedure Load_ENGINE_register_all_digests; cdecl;
-function Load_ENGINE_register_pkey_meths(e: PENGINE): TOpenSSL_C_INT; cdecl;
-procedure Load_ENGINE_unregister_pkey_meths(e: PENGINE); cdecl;
-procedure Load_ENGINE_register_all_pkey_meths; cdecl;
-function Load_ENGINE_register_pkey_asn1_meths(e: PENGINE): TOpenSSL_C_INT; cdecl;
-procedure Load_ENGINE_unregister_pkey_asn1_meths(e: PENGINE); cdecl;
-procedure Load_ENGINE_register_all_pkey_asn1_meths; cdecl;
-function Load_ENGINE_register_complete(e: PENGINE): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_register_all_complete: TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_ctrl(e: PENGINE; cmd: TOpenSSL_C_INT; i: TOpenSSL_C_LONG; p: Pointer; v1: f): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_cmd_is_executable(e: PENGINE; cmd: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_ctrl_cmd(e: PENGINE; const cmd_name: PAnsiChar; i: TOpenSSL_C_LONG; p: Pointer; v1: f; cmd_optional: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_ctrl_cmd_string(e: PENGINE; const cmd_name: PAnsiChar; const arg: PAnsiChar; cmd_optional: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_new: PENGINE; cdecl;
-function Load_ENGINE_free(e: PENGINE): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_up_ref(e: PENGINE): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_id(e: PENGINE; const id: PAnsiChar): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_name(e: PENGINE; const name: PAnsiChar): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_RSA(e: PENGINE; const rsa_meth: PRSA_METHOD): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_DSA(e: PENGINE; const dsa_meth: PDSA_METHOD): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_EC(e: PENGINE; const ecdsa_meth: PEC_KEY_METHOD): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_DH(e: PENGINE; const dh_meth: PDH_METHOD): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_RAND(e: PENGINE; const rand_meth: PRAND_METHOD): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_destroy_function(e: PENGINE; destroy_f: ENGINE_GEN_INT_FUNC_PTR): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_init_function(e: PENGINE; init_f: ENGINE_GEN_INT_FUNC_PTR): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_finish_function(e: PENGINE; finish_f: ENGINE_GEN_INT_FUNC_PTR): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_ctrl_function(e: PENGINE; ctrl_f: ENGINE_CTRL_FUNC_PTR): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_load_privkey_function(e: PENGINE; loadpriv_f: ENGINE_LOAD_KEY_PTR): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_load_pubkey_function(e: PENGINE; loadpub_f: ENGINE_LOAD_KEY_PTR): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_ciphers(e: PENGINE; f: ENGINE_CIPHERS_PTR): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_digests(e: PENGINE; f: ENGINE_DIGESTS_PTR): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_pkey_meths(e: PENGINE; f: ENGINE_PKEY_METHS_PTR): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_pkey_asn1_meths(e: PENGINE; f: ENGINE_PKEY_ASN1_METHS_PTR): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_flags(e: PENGINE; flags: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_cmd_defns(e: PENGINE; const defns: PENGINE_CMD_DEFN): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_ex_data(e: PENGINE; idx: TOpenSSL_C_INT; arg: Pointer): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_get_ex_data(const e: PENGINE; idx: TOpenSSL_C_INT): Pointer; cdecl;
-function Load_ENGINE_get_id(const e: PENGINE): PAnsiChar; cdecl;
-function Load_ENGINE_get_name(const e: PENGINE): PAnsiChar; cdecl;
-function Load_ENGINE_get_RSA(const e: PENGINE): PRSA_METHOD; cdecl;
-function Load_ENGINE_get_DSA(const e: PENGINE): PDSA_METHOD; cdecl;
-function Load_ENGINE_get_EC(const e: PENGINE): PEC_METHOD; cdecl;
-function Load_ENGINE_get_DH(const e: PENGINE): PDH_METHOD; cdecl;
-function Load_ENGINE_get_RAND(const e: PENGINE): PRAND_METHOD; cdecl;
-function Load_ENGINE_get_destroy_function(const e: PENGINE): ENGINE_GEN_INT_FUNC_PTR; cdecl;
-function Load_ENGINE_get_init_function(const e: PENGINE): ENGINE_GEN_INT_FUNC_PTR; cdecl;
-function Load_ENGINE_get_finish_function(const e: PENGINE): ENGINE_GEN_INT_FUNC_PTR; cdecl;
-function Load_ENGINE_get_ctrl_function(const e: PENGINE): ENGINE_CTRL_FUNC_PTR; cdecl;
-function Load_ENGINE_get_load_privkey_function(const e: PENGINE): ENGINE_LOAD_KEY_PTR; cdecl;
-function Load_ENGINE_get_load_pubkey_function(const e: PENGINE): ENGINE_LOAD_KEY_PTR; cdecl;
-function Load_ENGINE_get_ciphers(const e: PENGINE): ENGINE_CIPHERS_PTR; cdecl;
-function Load_ENGINE_get_digests(const e: PENGINE): ENGINE_DIGESTS_PTR; cdecl;
-function Load_ENGINE_get_pkey_meths(const e: PENGINE): ENGINE_PKEY_METHS_PTR; cdecl;
-function Load_ENGINE_get_pkey_asn1_meths(const e: PENGINE): ENGINE_PKEY_ASN1_METHS_PTR; cdecl;
-function Load_ENGINE_get_cipher(e: PENGINE; nid: TOpenSSL_C_INT): PEVP_CIPHER; cdecl;
-function Load_ENGINE_get_digest(e: PENGINE; nid: TOpenSSL_C_INT): PEVP_MD; cdecl;
-function Load_ENGINE_get_pkey_meth(e: PENGINE; nid: TOpenSSL_C_INT): PEVP_PKEY_METHOD; cdecl;
-function Load_ENGINE_get_pkey_asn1_meth(e: PENGINE; nid: TOpenSSL_C_INT): PEVP_PKEY_ASN1_METHOD; cdecl;
-function Load_ENGINE_get_pkey_asn1_meth_str(e: PENGINE; const str: PAnsiChar; len: TOpenSSL_C_INT): PEVP_PKEY_ASN1_METHOD; cdecl;
-function Load_ENGINE_pkey_asn1_find_str(pe: PPENGINE; const str: PAnsiChar; len: TOpenSSL_C_INT): PEVP_PKEY_ASN1_METHOD; cdecl;
-function Load_ENGINE_get_cmd_defns(const e: PENGINE): PENGINE_CMD_DEFN; cdecl;
-function Load_ENGINE_get_flags(const e: PENGINE): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_init(e: PENGINE): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_finish(e: PENGINE): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_load_private_key(e: PENGINE; const key_id: PAnsiChar; ui_method: PUI_METHOD; callback_data: Pointer): PEVP_PKEY; cdecl;
-function Load_ENGINE_load_public_key(e: PENGINE; const key_id: PAnsiChar; ui_method: PUI_METHOD; callback_data: Pointer): PEVP_PKEY; cdecl;
-function Load_ENGINE_get_default_RSA: PENGINE; cdecl;
-function Load_ENGINE_get_default_DSA: PENGINE; cdecl;
-function Load_ENGINE_get_default_EC: PENGINE; cdecl;
-function Load_ENGINE_get_default_DH: PENGINE; cdecl;
-function Load_ENGINE_get_default_RAND: PENGINE; cdecl;
-function Load_ENGINE_get_cipher_engine(nid: TOpenSSL_C_INT): PENGINE; cdecl;
-function Load_ENGINE_get_digest_engine(nid: TOpenSSL_C_INT): PENGINE; cdecl;
-function Load_ENGINE_get_pkey_meth_engine(nid: TOpenSSL_C_INT): PENGINE; cdecl;
-function Load_ENGINE_get_pkey_asn1_meth_engine(nid: TOpenSSL_C_INT): PENGINE; cdecl;
-function Load_ENGINE_set_default_RSA(e: PENGINE): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_default_string(e: PENGINE; const def_list: PAnsiChar): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_default_DSA(e: PENGINE): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_default_EC(e: PENGINE): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_default_DH(e: PENGINE): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_default_RAND(e: PENGINE): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_default_ciphers(e: PENGINE): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_default_digests(e: PENGINE): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_default_pkey_meths(e: PENGINE): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_default_pkey_asn1_meths(e: PENGINE): TOpenSSL_C_INT; cdecl;
-function Load_ENGINE_set_default(e: PENGINE; flags: TOpenSSL_C_ULONG): TOpenSSL_C_INT; cdecl;
-procedure Load_ENGINE_add_conf_module; cdecl;
-function Load_ENGINE_get_static_state: Pointer; cdecl;
-
 var
-  ENGINE_get_first: function : PENGINE; cdecl = Load_ENGINE_get_first;
-  ENGINE_get_last: function : PENGINE; cdecl = Load_ENGINE_get_last;
-  ENGINE_get_next: function (e: PENGINE): PENGINE; cdecl = Load_ENGINE_get_next;
-  ENGINE_get_prev: function (e: PENGINE): PENGINE; cdecl = Load_ENGINE_get_prev;
-  ENGINE_add: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_add;
-  ENGINE_remove: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_remove;
-  ENGINE_by_id: function (const id: PAnsiChar): PENGINE; cdecl = Load_ENGINE_by_id;
-  ENGINE_load_builtin_engines: procedure ; cdecl = Load_ENGINE_load_builtin_engines;
-  ENGINE_get_table_flags: function : TOpenSSL_C_UINT; cdecl = Load_ENGINE_get_table_flags;
-  ENGINE_set_table_flags: procedure (flags: TOpenSSL_C_UINT); cdecl = Load_ENGINE_set_table_flags;
-  ENGINE_register_RSA: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_register_RSA;
-  ENGINE_unregister_RSA: procedure (e: PENGINE); cdecl = Load_ENGINE_unregister_RSA;
-  ENGINE_register_all_RSA: procedure ; cdecl = Load_ENGINE_register_all_RSA;
-  ENGINE_register_DSA: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_register_DSA;
-  ENGINE_unregister_DSA: procedure (e: PENGINE); cdecl = Load_ENGINE_unregister_DSA;
-  ENGINE_register_all_DSA: procedure ; cdecl = Load_ENGINE_register_all_DSA;
-  ENGINE_register_EC: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_register_EC;
-  ENGINE_unregister_EC: procedure (e: PENGINE); cdecl = Load_ENGINE_unregister_EC;
-  ENGINE_register_all_EC: procedure ; cdecl = Load_ENGINE_register_all_EC;
-  ENGINE_register_DH: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_register_DH;
-  ENGINE_unregister_DH: procedure (e: PENGINE); cdecl = Load_ENGINE_unregister_DH;
-  ENGINE_register_all_DH: procedure ; cdecl = Load_ENGINE_register_all_DH;
-  ENGINE_register_RAND: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_register_RAND;
-  ENGINE_unregister_RAND: procedure (e: PENGINE); cdecl = Load_ENGINE_unregister_RAND;
-  ENGINE_register_all_RAND: procedure ; cdecl = Load_ENGINE_register_all_RAND;
-  ENGINE_register_ciphers: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_register_ciphers;
-  ENGINE_unregister_ciphers: procedure (e: PENGINE); cdecl = Load_ENGINE_unregister_ciphers;
-  ENGINE_register_all_ciphers: procedure ; cdecl = Load_ENGINE_register_all_ciphers;
-  ENGINE_register_digests: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_register_digests;
-  ENGINE_unregister_digests: procedure (e: PENGINE); cdecl = Load_ENGINE_unregister_digests;
-  ENGINE_register_all_digests: procedure ; cdecl = Load_ENGINE_register_all_digests;
-  ENGINE_register_pkey_meths: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_register_pkey_meths;
-  ENGINE_unregister_pkey_meths: procedure (e: PENGINE); cdecl = Load_ENGINE_unregister_pkey_meths;
-  ENGINE_register_all_pkey_meths: procedure ; cdecl = Load_ENGINE_register_all_pkey_meths;
-  ENGINE_register_pkey_asn1_meths: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_register_pkey_asn1_meths;
-  ENGINE_unregister_pkey_asn1_meths: procedure (e: PENGINE); cdecl = Load_ENGINE_unregister_pkey_asn1_meths;
-  ENGINE_register_all_pkey_asn1_meths: procedure ; cdecl = Load_ENGINE_register_all_pkey_asn1_meths;
-  ENGINE_register_complete: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_register_complete;
-  ENGINE_register_all_complete: function : TOpenSSL_C_INT; cdecl = Load_ENGINE_register_all_complete;
-  ENGINE_ctrl: function (e: PENGINE; cmd: TOpenSSL_C_INT; i: TOpenSSL_C_LONG; p: Pointer; v1: f): TOpenSSL_C_INT; cdecl = Load_ENGINE_ctrl;
-  ENGINE_cmd_is_executable: function (e: PENGINE; cmd: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_ENGINE_cmd_is_executable;
-  ENGINE_ctrl_cmd: function (e: PENGINE; const cmd_name: PAnsiChar; i: TOpenSSL_C_LONG; p: Pointer; v1: f; cmd_optional: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_ENGINE_ctrl_cmd;
-  ENGINE_ctrl_cmd_string: function (e: PENGINE; const cmd_name: PAnsiChar; const arg: PAnsiChar; cmd_optional: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_ENGINE_ctrl_cmd_string;
-  ENGINE_new: function : PENGINE; cdecl = Load_ENGINE_new;
-  ENGINE_free: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_free;
-  ENGINE_up_ref: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_up_ref;
-  ENGINE_set_id: function (e: PENGINE; const id: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_id;
-  ENGINE_set_name: function (e: PENGINE; const name: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_name;
-  ENGINE_set_RSA: function (e: PENGINE; const rsa_meth: PRSA_METHOD): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_RSA;
-  ENGINE_set_DSA: function (e: PENGINE; const dsa_meth: PDSA_METHOD): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_DSA;
-  ENGINE_set_EC: function (e: PENGINE; const ecdsa_meth: PEC_KEY_METHOD): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_EC;
-  ENGINE_set_DH: function (e: PENGINE; const dh_meth: PDH_METHOD): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_DH;
-  ENGINE_set_RAND: function (e: PENGINE; const rand_meth: PRAND_METHOD): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_RAND;
-  ENGINE_set_destroy_function: function (e: PENGINE; destroy_f: ENGINE_GEN_INT_FUNC_PTR): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_destroy_function;
-  ENGINE_set_init_function: function (e: PENGINE; init_f: ENGINE_GEN_INT_FUNC_PTR): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_init_function;
-  ENGINE_set_finish_function: function (e: PENGINE; finish_f: ENGINE_GEN_INT_FUNC_PTR): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_finish_function;
-  ENGINE_set_ctrl_function: function (e: PENGINE; ctrl_f: ENGINE_CTRL_FUNC_PTR): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_ctrl_function;
-  ENGINE_set_load_privkey_function: function (e: PENGINE; loadpriv_f: ENGINE_LOAD_KEY_PTR): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_load_privkey_function;
-  ENGINE_set_load_pubkey_function: function (e: PENGINE; loadpub_f: ENGINE_LOAD_KEY_PTR): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_load_pubkey_function;
-  ENGINE_set_ciphers: function (e: PENGINE; f: ENGINE_CIPHERS_PTR): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_ciphers;
-  ENGINE_set_digests: function (e: PENGINE; f: ENGINE_DIGESTS_PTR): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_digests;
-  ENGINE_set_pkey_meths: function (e: PENGINE; f: ENGINE_PKEY_METHS_PTR): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_pkey_meths;
-  ENGINE_set_pkey_asn1_meths: function (e: PENGINE; f: ENGINE_PKEY_ASN1_METHS_PTR): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_pkey_asn1_meths;
-  ENGINE_set_flags: function (e: PENGINE; flags: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_flags;
-  ENGINE_set_cmd_defns: function (e: PENGINE; const defns: PENGINE_CMD_DEFN): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_cmd_defns;
-  ENGINE_set_ex_data: function (e: PENGINE; idx: TOpenSSL_C_INT; arg: Pointer): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_ex_data;
-  ENGINE_get_ex_data: function (const e: PENGINE; idx: TOpenSSL_C_INT): Pointer; cdecl = Load_ENGINE_get_ex_data;
-  ENGINE_get_id: function (const e: PENGINE): PAnsiChar; cdecl = Load_ENGINE_get_id;
-  ENGINE_get_name: function (const e: PENGINE): PAnsiChar; cdecl = Load_ENGINE_get_name;
-  ENGINE_get_RSA: function (const e: PENGINE): PRSA_METHOD; cdecl = Load_ENGINE_get_RSA;
-  ENGINE_get_DSA: function (const e: PENGINE): PDSA_METHOD; cdecl = Load_ENGINE_get_DSA;
-  ENGINE_get_EC: function (const e: PENGINE): PEC_METHOD; cdecl = Load_ENGINE_get_EC;
-  ENGINE_get_DH: function (const e: PENGINE): PDH_METHOD; cdecl = Load_ENGINE_get_DH;
-  ENGINE_get_RAND: function (const e: PENGINE): PRAND_METHOD; cdecl = Load_ENGINE_get_RAND;
-  ENGINE_get_destroy_function: function (const e: PENGINE): ENGINE_GEN_INT_FUNC_PTR; cdecl = Load_ENGINE_get_destroy_function;
-  ENGINE_get_init_function: function (const e: PENGINE): ENGINE_GEN_INT_FUNC_PTR; cdecl = Load_ENGINE_get_init_function;
-  ENGINE_get_finish_function: function (const e: PENGINE): ENGINE_GEN_INT_FUNC_PTR; cdecl = Load_ENGINE_get_finish_function;
-  ENGINE_get_ctrl_function: function (const e: PENGINE): ENGINE_CTRL_FUNC_PTR; cdecl = Load_ENGINE_get_ctrl_function;
-  ENGINE_get_load_privkey_function: function (const e: PENGINE): ENGINE_LOAD_KEY_PTR; cdecl = Load_ENGINE_get_load_privkey_function;
-  ENGINE_get_load_pubkey_function: function (const e: PENGINE): ENGINE_LOAD_KEY_PTR; cdecl = Load_ENGINE_get_load_pubkey_function;
-  ENGINE_get_ciphers: function (const e: PENGINE): ENGINE_CIPHERS_PTR; cdecl = Load_ENGINE_get_ciphers;
-  ENGINE_get_digests: function (const e: PENGINE): ENGINE_DIGESTS_PTR; cdecl = Load_ENGINE_get_digests;
-  ENGINE_get_pkey_meths: function (const e: PENGINE): ENGINE_PKEY_METHS_PTR; cdecl = Load_ENGINE_get_pkey_meths;
-  ENGINE_get_pkey_asn1_meths: function (const e: PENGINE): ENGINE_PKEY_ASN1_METHS_PTR; cdecl = Load_ENGINE_get_pkey_asn1_meths;
-  ENGINE_get_cipher: function (e: PENGINE; nid: TOpenSSL_C_INT): PEVP_CIPHER; cdecl = Load_ENGINE_get_cipher;
-  ENGINE_get_digest: function (e: PENGINE; nid: TOpenSSL_C_INT): PEVP_MD; cdecl = Load_ENGINE_get_digest;
-  ENGINE_get_pkey_meth: function (e: PENGINE; nid: TOpenSSL_C_INT): PEVP_PKEY_METHOD; cdecl = Load_ENGINE_get_pkey_meth;
-  ENGINE_get_pkey_asn1_meth: function (e: PENGINE; nid: TOpenSSL_C_INT): PEVP_PKEY_ASN1_METHOD; cdecl = Load_ENGINE_get_pkey_asn1_meth;
-  ENGINE_get_pkey_asn1_meth_str: function (e: PENGINE; const str: PAnsiChar; len: TOpenSSL_C_INT): PEVP_PKEY_ASN1_METHOD; cdecl = Load_ENGINE_get_pkey_asn1_meth_str;
-  ENGINE_pkey_asn1_find_str: function (pe: PPENGINE; const str: PAnsiChar; len: TOpenSSL_C_INT): PEVP_PKEY_ASN1_METHOD; cdecl = Load_ENGINE_pkey_asn1_find_str;
-  ENGINE_get_cmd_defns: function (const e: PENGINE): PENGINE_CMD_DEFN; cdecl = Load_ENGINE_get_cmd_defns;
-  ENGINE_get_flags: function (const e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_get_flags;
-  ENGINE_init: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_init;
-  ENGINE_finish: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_finish;
-  ENGINE_load_private_key: function (e: PENGINE; const key_id: PAnsiChar; ui_method: PUI_METHOD; callback_data: Pointer): PEVP_PKEY; cdecl = Load_ENGINE_load_private_key;
-  ENGINE_load_public_key: function (e: PENGINE; const key_id: PAnsiChar; ui_method: PUI_METHOD; callback_data: Pointer): PEVP_PKEY; cdecl = Load_ENGINE_load_public_key;
-  ENGINE_get_default_RSA: function : PENGINE; cdecl = Load_ENGINE_get_default_RSA;
-  ENGINE_get_default_DSA: function : PENGINE; cdecl = Load_ENGINE_get_default_DSA;
-  ENGINE_get_default_EC: function : PENGINE; cdecl = Load_ENGINE_get_default_EC;
-  ENGINE_get_default_DH: function : PENGINE; cdecl = Load_ENGINE_get_default_DH;
-  ENGINE_get_default_RAND: function : PENGINE; cdecl = Load_ENGINE_get_default_RAND;
-  ENGINE_get_cipher_engine: function (nid: TOpenSSL_C_INT): PENGINE; cdecl = Load_ENGINE_get_cipher_engine;
-  ENGINE_get_digest_engine: function (nid: TOpenSSL_C_INT): PENGINE; cdecl = Load_ENGINE_get_digest_engine;
-  ENGINE_get_pkey_meth_engine: function (nid: TOpenSSL_C_INT): PENGINE; cdecl = Load_ENGINE_get_pkey_meth_engine;
-  ENGINE_get_pkey_asn1_meth_engine: function (nid: TOpenSSL_C_INT): PENGINE; cdecl = Load_ENGINE_get_pkey_asn1_meth_engine;
-  ENGINE_set_default_RSA: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_default_RSA;
-  ENGINE_set_default_string: function (e: PENGINE; const def_list: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_default_string;
-  ENGINE_set_default_DSA: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_default_DSA;
-  ENGINE_set_default_EC: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_default_EC;
-  ENGINE_set_default_DH: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_default_DH;
-  ENGINE_set_default_RAND: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_default_RAND;
-  ENGINE_set_default_ciphers: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_default_ciphers;
-  ENGINE_set_default_digests: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_default_digests;
-  ENGINE_set_default_pkey_meths: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_default_pkey_meths;
-  ENGINE_set_default_pkey_asn1_meths: function (e: PENGINE): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_default_pkey_asn1_meths;
-  ENGINE_set_default: function (e: PENGINE; flags: TOpenSSL_C_ULONG): TOpenSSL_C_INT; cdecl = Load_ENGINE_set_default;
-  ENGINE_add_conf_module: procedure ; cdecl = Load_ENGINE_add_conf_module;
-  ENGINE_get_static_state: function : Pointer; cdecl = Load_ENGINE_get_static_state;
+  ENGINE_get_first: function : PENGINE; cdecl = nil;
+  ENGINE_get_last: function : PENGINE; cdecl = nil;
+  ENGINE_get_next: function (e: PENGINE): PENGINE; cdecl = nil;
+  ENGINE_get_prev: function (e: PENGINE): PENGINE; cdecl = nil;
+  ENGINE_add: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_remove: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_by_id: function (const id: PAnsiChar): PENGINE; cdecl = nil;
+  ENGINE_load_builtin_engines: procedure ; cdecl = nil;
+  ENGINE_get_table_flags: function : TOpenSSL_C_UINT; cdecl = nil;
+  ENGINE_set_table_flags: procedure (flags: TOpenSSL_C_UINT); cdecl = nil;
+  ENGINE_register_RSA: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_unregister_RSA: procedure (e: PENGINE); cdecl = nil;
+  ENGINE_register_all_RSA: procedure ; cdecl = nil;
+  ENGINE_register_DSA: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_unregister_DSA: procedure (e: PENGINE); cdecl = nil;
+  ENGINE_register_all_DSA: procedure ; cdecl = nil;
+  ENGINE_register_EC: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_unregister_EC: procedure (e: PENGINE); cdecl = nil;
+  ENGINE_register_all_EC: procedure ; cdecl = nil;
+  ENGINE_register_DH: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_unregister_DH: procedure (e: PENGINE); cdecl = nil;
+  ENGINE_register_all_DH: procedure ; cdecl = nil;
+  ENGINE_register_RAND: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_unregister_RAND: procedure (e: PENGINE); cdecl = nil;
+  ENGINE_register_all_RAND: procedure ; cdecl = nil;
+  ENGINE_register_ciphers: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_unregister_ciphers: procedure (e: PENGINE); cdecl = nil;
+  ENGINE_register_all_ciphers: procedure ; cdecl = nil;
+  ENGINE_register_digests: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_unregister_digests: procedure (e: PENGINE); cdecl = nil;
+  ENGINE_register_all_digests: procedure ; cdecl = nil;
+  ENGINE_register_pkey_meths: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_unregister_pkey_meths: procedure (e: PENGINE); cdecl = nil;
+  ENGINE_register_all_pkey_meths: procedure ; cdecl = nil;
+  ENGINE_register_pkey_asn1_meths: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_unregister_pkey_asn1_meths: procedure (e: PENGINE); cdecl = nil;
+  ENGINE_register_all_pkey_asn1_meths: procedure ; cdecl = nil;
+  ENGINE_register_complete: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_register_all_complete: function : TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_ctrl: function (e: PENGINE; cmd: TOpenSSL_C_INT; i: TOpenSSL_C_LONG; p: Pointer; v1: f): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_cmd_is_executable: function (e: PENGINE; cmd: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_ctrl_cmd: function (e: PENGINE; const cmd_name: PAnsiChar; i: TOpenSSL_C_LONG; p: Pointer; v1: f; cmd_optional: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_ctrl_cmd_string: function (e: PENGINE; const cmd_name: PAnsiChar; const arg: PAnsiChar; cmd_optional: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_new: function : PENGINE; cdecl = nil;
+  ENGINE_free: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_up_ref: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_id: function (e: PENGINE; const id: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_name: function (e: PENGINE; const name: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_RSA: function (e: PENGINE; const rsa_meth: PRSA_METHOD): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_DSA: function (e: PENGINE; const dsa_meth: PDSA_METHOD): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_EC: function (e: PENGINE; const ecdsa_meth: PEC_KEY_METHOD): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_DH: function (e: PENGINE; const dh_meth: PDH_METHOD): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_RAND: function (e: PENGINE; const rand_meth: PRAND_METHOD): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_destroy_function: function (e: PENGINE; destroy_f: ENGINE_GEN_INT_FUNC_PTR): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_init_function: function (e: PENGINE; init_f: ENGINE_GEN_INT_FUNC_PTR): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_finish_function: function (e: PENGINE; finish_f: ENGINE_GEN_INT_FUNC_PTR): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_ctrl_function: function (e: PENGINE; ctrl_f: ENGINE_CTRL_FUNC_PTR): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_load_privkey_function: function (e: PENGINE; loadpriv_f: ENGINE_LOAD_KEY_PTR): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_load_pubkey_function: function (e: PENGINE; loadpub_f: ENGINE_LOAD_KEY_PTR): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_ciphers: function (e: PENGINE; f: ENGINE_CIPHERS_PTR): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_digests: function (e: PENGINE; f: ENGINE_DIGESTS_PTR): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_pkey_meths: function (e: PENGINE; f: ENGINE_PKEY_METHS_PTR): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_pkey_asn1_meths: function (e: PENGINE; f: ENGINE_PKEY_ASN1_METHS_PTR): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_flags: function (e: PENGINE; flags: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_cmd_defns: function (e: PENGINE; const defns: PENGINE_CMD_DEFN): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_ex_data: function (e: PENGINE; idx: TOpenSSL_C_INT; arg: Pointer): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_get_ex_data: function (const e: PENGINE; idx: TOpenSSL_C_INT): Pointer; cdecl = nil;
+  ENGINE_get_id: function (const e: PENGINE): PAnsiChar; cdecl = nil;
+  ENGINE_get_name: function (const e: PENGINE): PAnsiChar; cdecl = nil;
+  ENGINE_get_RSA: function (const e: PENGINE): PRSA_METHOD; cdecl = nil;
+  ENGINE_get_DSA: function (const e: PENGINE): PDSA_METHOD; cdecl = nil;
+  ENGINE_get_EC: function (const e: PENGINE): PEC_METHOD; cdecl = nil;
+  ENGINE_get_DH: function (const e: PENGINE): PDH_METHOD; cdecl = nil;
+  ENGINE_get_RAND: function (const e: PENGINE): PRAND_METHOD; cdecl = nil;
+  ENGINE_get_destroy_function: function (const e: PENGINE): ENGINE_GEN_INT_FUNC_PTR; cdecl = nil;
+  ENGINE_get_init_function: function (const e: PENGINE): ENGINE_GEN_INT_FUNC_PTR; cdecl = nil;
+  ENGINE_get_finish_function: function (const e: PENGINE): ENGINE_GEN_INT_FUNC_PTR; cdecl = nil;
+  ENGINE_get_ctrl_function: function (const e: PENGINE): ENGINE_CTRL_FUNC_PTR; cdecl = nil;
+  ENGINE_get_load_privkey_function: function (const e: PENGINE): ENGINE_LOAD_KEY_PTR; cdecl = nil;
+  ENGINE_get_load_pubkey_function: function (const e: PENGINE): ENGINE_LOAD_KEY_PTR; cdecl = nil;
+  ENGINE_get_ciphers: function (const e: PENGINE): ENGINE_CIPHERS_PTR; cdecl = nil;
+  ENGINE_get_digests: function (const e: PENGINE): ENGINE_DIGESTS_PTR; cdecl = nil;
+  ENGINE_get_pkey_meths: function (const e: PENGINE): ENGINE_PKEY_METHS_PTR; cdecl = nil;
+  ENGINE_get_pkey_asn1_meths: function (const e: PENGINE): ENGINE_PKEY_ASN1_METHS_PTR; cdecl = nil;
+  ENGINE_get_cipher: function (e: PENGINE; nid: TOpenSSL_C_INT): PEVP_CIPHER; cdecl = nil;
+  ENGINE_get_digest: function (e: PENGINE; nid: TOpenSSL_C_INT): PEVP_MD; cdecl = nil;
+  ENGINE_get_pkey_meth: function (e: PENGINE; nid: TOpenSSL_C_INT): PEVP_PKEY_METHOD; cdecl = nil;
+  ENGINE_get_pkey_asn1_meth: function (e: PENGINE; nid: TOpenSSL_C_INT): PEVP_PKEY_ASN1_METHOD; cdecl = nil;
+  ENGINE_get_pkey_asn1_meth_str: function (e: PENGINE; const str: PAnsiChar; len: TOpenSSL_C_INT): PEVP_PKEY_ASN1_METHOD; cdecl = nil;
+  ENGINE_pkey_asn1_find_str: function (pe: PPENGINE; const str: PAnsiChar; len: TOpenSSL_C_INT): PEVP_PKEY_ASN1_METHOD; cdecl = nil;
+  ENGINE_get_cmd_defns: function (const e: PENGINE): PENGINE_CMD_DEFN; cdecl = nil;
+  ENGINE_get_flags: function (const e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_init: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_finish: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_load_private_key: function (e: PENGINE; const key_id: PAnsiChar; ui_method: PUI_METHOD; callback_data: Pointer): PEVP_PKEY; cdecl = nil;
+  ENGINE_load_public_key: function (e: PENGINE; const key_id: PAnsiChar; ui_method: PUI_METHOD; callback_data: Pointer): PEVP_PKEY; cdecl = nil;
+  ENGINE_get_default_RSA: function : PENGINE; cdecl = nil;
+  ENGINE_get_default_DSA: function : PENGINE; cdecl = nil;
+  ENGINE_get_default_EC: function : PENGINE; cdecl = nil;
+  ENGINE_get_default_DH: function : PENGINE; cdecl = nil;
+  ENGINE_get_default_RAND: function : PENGINE; cdecl = nil;
+  ENGINE_get_cipher_engine: function (nid: TOpenSSL_C_INT): PENGINE; cdecl = nil;
+  ENGINE_get_digest_engine: function (nid: TOpenSSL_C_INT): PENGINE; cdecl = nil;
+  ENGINE_get_pkey_meth_engine: function (nid: TOpenSSL_C_INT): PENGINE; cdecl = nil;
+  ENGINE_get_pkey_asn1_meth_engine: function (nid: TOpenSSL_C_INT): PENGINE; cdecl = nil;
+  ENGINE_set_default_RSA: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_default_string: function (e: PENGINE; const def_list: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_default_DSA: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_default_EC: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_default_DH: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_default_RAND: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_default_ciphers: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_default_digests: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_default_pkey_meths: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_default_pkey_asn1_meths: function (e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_set_default: function (e: PENGINE; flags: TOpenSSL_C_ULONG): TOpenSSL_C_INT; cdecl = nil;
+  ENGINE_add_conf_module: procedure ; cdecl = nil;
+  ENGINE_get_static_state: function : Pointer; cdecl = nil;
 {$ENDIF}
 
 implementation
@@ -875,1077 +753,1557 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-function Load_ENGINE_get_first: PENGINE; cdecl;
+
+{$WARN  NO_RETVAL OFF}
+function ERROR_ENGINE_get_first: PENGINE; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_first');
+end;
+
+function ERROR_ENGINE_get_last: PENGINE; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_last');
+end;
+
+function ERROR_ENGINE_get_next(e: PENGINE): PENGINE; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_next');
+end;
+
+function ERROR_ENGINE_get_prev(e: PENGINE): PENGINE; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_prev');
+end;
+
+function ERROR_ENGINE_add(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_add');
+end;
+
+function ERROR_ENGINE_remove(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_remove');
+end;
+
+function ERROR_ENGINE_by_id(const id: PAnsiChar): PENGINE; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_by_id');
+end;
+
+procedure ERROR_ENGINE_load_builtin_engines; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_load_builtin_engines');
+end;
+
+function ERROR_ENGINE_get_table_flags: TOpenSSL_C_UINT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_table_flags');
+end;
+
+procedure ERROR_ENGINE_set_table_flags(flags: TOpenSSL_C_UINT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_table_flags');
+end;
+
+function ERROR_ENGINE_register_RSA(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_RSA');
+end;
+
+procedure ERROR_ENGINE_unregister_RSA(e: PENGINE); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_unregister_RSA');
+end;
+
+procedure ERROR_ENGINE_register_all_RSA; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_all_RSA');
+end;
+
+function ERROR_ENGINE_register_DSA(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_DSA');
+end;
+
+procedure ERROR_ENGINE_unregister_DSA(e: PENGINE); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_unregister_DSA');
+end;
+
+procedure ERROR_ENGINE_register_all_DSA; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_all_DSA');
+end;
+
+function ERROR_ENGINE_register_EC(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_EC');
+end;
+
+procedure ERROR_ENGINE_unregister_EC(e: PENGINE); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_unregister_EC');
+end;
+
+procedure ERROR_ENGINE_register_all_EC; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_all_EC');
+end;
+
+function ERROR_ENGINE_register_DH(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_DH');
+end;
+
+procedure ERROR_ENGINE_unregister_DH(e: PENGINE); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_unregister_DH');
+end;
+
+procedure ERROR_ENGINE_register_all_DH; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_all_DH');
+end;
+
+function ERROR_ENGINE_register_RAND(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_RAND');
+end;
+
+procedure ERROR_ENGINE_unregister_RAND(e: PENGINE); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_unregister_RAND');
+end;
+
+procedure ERROR_ENGINE_register_all_RAND; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_all_RAND');
+end;
+
+function ERROR_ENGINE_register_ciphers(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_ciphers');
+end;
+
+procedure ERROR_ENGINE_unregister_ciphers(e: PENGINE); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_unregister_ciphers');
+end;
+
+procedure ERROR_ENGINE_register_all_ciphers; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_all_ciphers');
+end;
+
+function ERROR_ENGINE_register_digests(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_digests');
+end;
+
+procedure ERROR_ENGINE_unregister_digests(e: PENGINE); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_unregister_digests');
+end;
+
+procedure ERROR_ENGINE_register_all_digests; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_all_digests');
+end;
+
+function ERROR_ENGINE_register_pkey_meths(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_pkey_meths');
+end;
+
+procedure ERROR_ENGINE_unregister_pkey_meths(e: PENGINE); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_unregister_pkey_meths');
+end;
+
+procedure ERROR_ENGINE_register_all_pkey_meths; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_all_pkey_meths');
+end;
+
+function ERROR_ENGINE_register_pkey_asn1_meths(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_pkey_asn1_meths');
+end;
+
+procedure ERROR_ENGINE_unregister_pkey_asn1_meths(e: PENGINE); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_unregister_pkey_asn1_meths');
+end;
+
+procedure ERROR_ENGINE_register_all_pkey_asn1_meths; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_all_pkey_asn1_meths');
+end;
+
+function ERROR_ENGINE_register_complete(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_complete');
+end;
+
+function ERROR_ENGINE_register_all_complete: TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_all_complete');
+end;
+
+function ERROR_ENGINE_ctrl(e: PENGINE; cmd: TOpenSSL_C_INT; i: TOpenSSL_C_LONG; p: Pointer; v1: f): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_ctrl');
+end;
+
+function ERROR_ENGINE_cmd_is_executable(e: PENGINE; cmd: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_cmd_is_executable');
+end;
+
+function ERROR_ENGINE_ctrl_cmd(e: PENGINE; const cmd_name: PAnsiChar; i: TOpenSSL_C_LONG; p: Pointer; v1: f; cmd_optional: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_ctrl_cmd');
+end;
+
+function ERROR_ENGINE_ctrl_cmd_string(e: PENGINE; const cmd_name: PAnsiChar; const arg: PAnsiChar; cmd_optional: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_ctrl_cmd_string');
+end;
+
+function ERROR_ENGINE_new: PENGINE; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_new');
+end;
+
+function ERROR_ENGINE_free(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_free');
+end;
+
+function ERROR_ENGINE_up_ref(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_up_ref');
+end;
+
+function ERROR_ENGINE_set_id(e: PENGINE; const id: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_id');
+end;
+
+function ERROR_ENGINE_set_name(e: PENGINE; const name: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_name');
+end;
+
+function ERROR_ENGINE_set_RSA(e: PENGINE; const rsa_meth: PRSA_METHOD): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_RSA');
+end;
+
+function ERROR_ENGINE_set_DSA(e: PENGINE; const dsa_meth: PDSA_METHOD): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_DSA');
+end;
+
+function ERROR_ENGINE_set_EC(e: PENGINE; const ecdsa_meth: PEC_KEY_METHOD): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_EC');
+end;
+
+function ERROR_ENGINE_set_DH(e: PENGINE; const dh_meth: PDH_METHOD): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_DH');
+end;
+
+function ERROR_ENGINE_set_RAND(e: PENGINE; const rand_meth: PRAND_METHOD): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_RAND');
+end;
+
+function ERROR_ENGINE_set_destroy_function(e: PENGINE; destroy_f: ENGINE_GEN_INT_FUNC_PTR): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_destroy_function');
+end;
+
+function ERROR_ENGINE_set_init_function(e: PENGINE; init_f: ENGINE_GEN_INT_FUNC_PTR): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_init_function');
+end;
+
+function ERROR_ENGINE_set_finish_function(e: PENGINE; finish_f: ENGINE_GEN_INT_FUNC_PTR): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_finish_function');
+end;
+
+function ERROR_ENGINE_set_ctrl_function(e: PENGINE; ctrl_f: ENGINE_CTRL_FUNC_PTR): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_ctrl_function');
+end;
+
+function ERROR_ENGINE_set_load_privkey_function(e: PENGINE; loadpriv_f: ENGINE_LOAD_KEY_PTR): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_load_privkey_function');
+end;
+
+function ERROR_ENGINE_set_load_pubkey_function(e: PENGINE; loadpub_f: ENGINE_LOAD_KEY_PTR): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_load_pubkey_function');
+end;
+
+function ERROR_ENGINE_set_ciphers(e: PENGINE; f: ENGINE_CIPHERS_PTR): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_ciphers');
+end;
+
+function ERROR_ENGINE_set_digests(e: PENGINE; f: ENGINE_DIGESTS_PTR): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_digests');
+end;
+
+function ERROR_ENGINE_set_pkey_meths(e: PENGINE; f: ENGINE_PKEY_METHS_PTR): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_pkey_meths');
+end;
+
+function ERROR_ENGINE_set_pkey_asn1_meths(e: PENGINE; f: ENGINE_PKEY_ASN1_METHS_PTR): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_pkey_asn1_meths');
+end;
+
+function ERROR_ENGINE_set_flags(e: PENGINE; flags: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_flags');
+end;
+
+function ERROR_ENGINE_set_cmd_defns(e: PENGINE; const defns: PENGINE_CMD_DEFN): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_cmd_defns');
+end;
+
+function ERROR_ENGINE_set_ex_data(e: PENGINE; idx: TOpenSSL_C_INT; arg: Pointer): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_ex_data');
+end;
+
+function ERROR_ENGINE_get_ex_data(const e: PENGINE; idx: TOpenSSL_C_INT): Pointer; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_ex_data');
+end;
+
+function ERROR_ENGINE_get_id(const e: PENGINE): PAnsiChar; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_id');
+end;
+
+function ERROR_ENGINE_get_name(const e: PENGINE): PAnsiChar; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_name');
+end;
+
+function ERROR_ENGINE_get_RSA(const e: PENGINE): PRSA_METHOD; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_RSA');
+end;
+
+function ERROR_ENGINE_get_DSA(const e: PENGINE): PDSA_METHOD; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_DSA');
+end;
+
+function ERROR_ENGINE_get_EC(const e: PENGINE): PEC_METHOD; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_EC');
+end;
+
+function ERROR_ENGINE_get_DH(const e: PENGINE): PDH_METHOD; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_DH');
+end;
+
+function ERROR_ENGINE_get_RAND(const e: PENGINE): PRAND_METHOD; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_RAND');
+end;
+
+function ERROR_ENGINE_get_destroy_function(const e: PENGINE): ENGINE_GEN_INT_FUNC_PTR; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_destroy_function');
+end;
+
+function ERROR_ENGINE_get_init_function(const e: PENGINE): ENGINE_GEN_INT_FUNC_PTR; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_init_function');
+end;
+
+function ERROR_ENGINE_get_finish_function(const e: PENGINE): ENGINE_GEN_INT_FUNC_PTR; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_finish_function');
+end;
+
+function ERROR_ENGINE_get_ctrl_function(const e: PENGINE): ENGINE_CTRL_FUNC_PTR; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_ctrl_function');
+end;
+
+function ERROR_ENGINE_get_load_privkey_function(const e: PENGINE): ENGINE_LOAD_KEY_PTR; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_load_privkey_function');
+end;
+
+function ERROR_ENGINE_get_load_pubkey_function(const e: PENGINE): ENGINE_LOAD_KEY_PTR; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_load_pubkey_function');
+end;
+
+function ERROR_ENGINE_get_ciphers(const e: PENGINE): ENGINE_CIPHERS_PTR; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_ciphers');
+end;
+
+function ERROR_ENGINE_get_digests(const e: PENGINE): ENGINE_DIGESTS_PTR; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_digests');
+end;
+
+function ERROR_ENGINE_get_pkey_meths(const e: PENGINE): ENGINE_PKEY_METHS_PTR; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_pkey_meths');
+end;
+
+function ERROR_ENGINE_get_pkey_asn1_meths(const e: PENGINE): ENGINE_PKEY_ASN1_METHS_PTR; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_pkey_asn1_meths');
+end;
+
+function ERROR_ENGINE_get_cipher(e: PENGINE; nid: TOpenSSL_C_INT): PEVP_CIPHER; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_cipher');
+end;
+
+function ERROR_ENGINE_get_digest(e: PENGINE; nid: TOpenSSL_C_INT): PEVP_MD; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_digest');
+end;
+
+function ERROR_ENGINE_get_pkey_meth(e: PENGINE; nid: TOpenSSL_C_INT): PEVP_PKEY_METHOD; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_pkey_meth');
+end;
+
+function ERROR_ENGINE_get_pkey_asn1_meth(e: PENGINE; nid: TOpenSSL_C_INT): PEVP_PKEY_ASN1_METHOD; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_pkey_asn1_meth');
+end;
+
+function ERROR_ENGINE_get_pkey_asn1_meth_str(e: PENGINE; const str: PAnsiChar; len: TOpenSSL_C_INT): PEVP_PKEY_ASN1_METHOD; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_pkey_asn1_meth_str');
+end;
+
+function ERROR_ENGINE_pkey_asn1_find_str(pe: PPENGINE; const str: PAnsiChar; len: TOpenSSL_C_INT): PEVP_PKEY_ASN1_METHOD; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_pkey_asn1_find_str');
+end;
+
+function ERROR_ENGINE_get_cmd_defns(const e: PENGINE): PENGINE_CMD_DEFN; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_cmd_defns');
+end;
+
+function ERROR_ENGINE_get_flags(const e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_flags');
+end;
+
+function ERROR_ENGINE_init(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_init');
+end;
+
+function ERROR_ENGINE_finish(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_finish');
+end;
+
+function ERROR_ENGINE_load_private_key(e: PENGINE; const key_id: PAnsiChar; ui_method: PUI_METHOD; callback_data: Pointer): PEVP_PKEY; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_load_private_key');
+end;
+
+function ERROR_ENGINE_load_public_key(e: PENGINE; const key_id: PAnsiChar; ui_method: PUI_METHOD; callback_data: Pointer): PEVP_PKEY; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_load_public_key');
+end;
+
+function ERROR_ENGINE_get_default_RSA: PENGINE; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_default_RSA');
+end;
+
+function ERROR_ENGINE_get_default_DSA: PENGINE; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_default_DSA');
+end;
+
+function ERROR_ENGINE_get_default_EC: PENGINE; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_default_EC');
+end;
+
+function ERROR_ENGINE_get_default_DH: PENGINE; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_default_DH');
+end;
+
+function ERROR_ENGINE_get_default_RAND: PENGINE; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_default_RAND');
+end;
+
+function ERROR_ENGINE_get_cipher_engine(nid: TOpenSSL_C_INT): PENGINE; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_cipher_engine');
+end;
+
+function ERROR_ENGINE_get_digest_engine(nid: TOpenSSL_C_INT): PENGINE; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_digest_engine');
+end;
+
+function ERROR_ENGINE_get_pkey_meth_engine(nid: TOpenSSL_C_INT): PENGINE; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_pkey_meth_engine');
+end;
+
+function ERROR_ENGINE_get_pkey_asn1_meth_engine(nid: TOpenSSL_C_INT): PENGINE; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_pkey_asn1_meth_engine');
+end;
+
+function ERROR_ENGINE_set_default_RSA(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default_RSA');
+end;
+
+function ERROR_ENGINE_set_default_string(e: PENGINE; const def_list: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default_string');
+end;
+
+function ERROR_ENGINE_set_default_DSA(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default_DSA');
+end;
+
+function ERROR_ENGINE_set_default_EC(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default_EC');
+end;
+
+function ERROR_ENGINE_set_default_DH(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default_DH');
+end;
+
+function ERROR_ENGINE_set_default_RAND(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default_RAND');
+end;
+
+function ERROR_ENGINE_set_default_ciphers(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default_ciphers');
+end;
+
+function ERROR_ENGINE_set_default_digests(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default_digests');
+end;
+
+function ERROR_ENGINE_set_default_pkey_meths(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default_pkey_meths');
+end;
+
+function ERROR_ENGINE_set_default_pkey_asn1_meths(e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default_pkey_asn1_meths');
+end;
+
+function ERROR_ENGINE_set_default(e: PENGINE; flags: TOpenSSL_C_ULONG): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default');
+end;
+
+procedure ERROR_ENGINE_add_conf_module; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_add_conf_module');
+end;
+
+function ERROR_ENGINE_get_static_state: Pointer; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_static_state');
+end;
+
+{$WARN  NO_RETVAL ON}
+procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
+var FuncLoadError: boolean;
 begin
   ENGINE_get_first := LoadLibCryptoFunction('ENGINE_get_first');
-  if not assigned(ENGINE_get_first) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_first');
-  Result := ENGINE_get_first();
-end;
+  FuncLoadError := not assigned(ENGINE_get_first);
+  if FuncLoadError then
+  begin
+    ENGINE_get_first :=  @ERROR_ENGINE_get_first;
+  end;
 
-function Load_ENGINE_get_last: PENGINE; cdecl;
-begin
   ENGINE_get_last := LoadLibCryptoFunction('ENGINE_get_last');
-  if not assigned(ENGINE_get_last) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_last');
-  Result := ENGINE_get_last();
-end;
+  FuncLoadError := not assigned(ENGINE_get_last);
+  if FuncLoadError then
+  begin
+    ENGINE_get_last :=  @ERROR_ENGINE_get_last;
+  end;
 
-function Load_ENGINE_get_next(e: PENGINE): PENGINE; cdecl;
-begin
   ENGINE_get_next := LoadLibCryptoFunction('ENGINE_get_next');
-  if not assigned(ENGINE_get_next) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_next');
-  Result := ENGINE_get_next(e);
-end;
+  FuncLoadError := not assigned(ENGINE_get_next);
+  if FuncLoadError then
+  begin
+    ENGINE_get_next :=  @ERROR_ENGINE_get_next;
+  end;
 
-function Load_ENGINE_get_prev(e: PENGINE): PENGINE; cdecl;
-begin
   ENGINE_get_prev := LoadLibCryptoFunction('ENGINE_get_prev');
-  if not assigned(ENGINE_get_prev) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_prev');
-  Result := ENGINE_get_prev(e);
-end;
+  FuncLoadError := not assigned(ENGINE_get_prev);
+  if FuncLoadError then
+  begin
+    ENGINE_get_prev :=  @ERROR_ENGINE_get_prev;
+  end;
 
-function Load_ENGINE_add(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_add := LoadLibCryptoFunction('ENGINE_add');
-  if not assigned(ENGINE_add) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_add');
-  Result := ENGINE_add(e);
-end;
+  FuncLoadError := not assigned(ENGINE_add);
+  if FuncLoadError then
+  begin
+    ENGINE_add :=  @ERROR_ENGINE_add;
+  end;
 
-function Load_ENGINE_remove(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_remove := LoadLibCryptoFunction('ENGINE_remove');
-  if not assigned(ENGINE_remove) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_remove');
-  Result := ENGINE_remove(e);
-end;
+  FuncLoadError := not assigned(ENGINE_remove);
+  if FuncLoadError then
+  begin
+    ENGINE_remove :=  @ERROR_ENGINE_remove;
+  end;
 
-function Load_ENGINE_by_id(const id: PAnsiChar): PENGINE; cdecl;
-begin
   ENGINE_by_id := LoadLibCryptoFunction('ENGINE_by_id');
-  if not assigned(ENGINE_by_id) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_by_id');
-  Result := ENGINE_by_id(id);
-end;
+  FuncLoadError := not assigned(ENGINE_by_id);
+  if FuncLoadError then
+  begin
+    ENGINE_by_id :=  @ERROR_ENGINE_by_id;
+  end;
 
-procedure Load_ENGINE_load_builtin_engines; cdecl;
-begin
   ENGINE_load_builtin_engines := LoadLibCryptoFunction('ENGINE_load_builtin_engines');
-  if not assigned(ENGINE_load_builtin_engines) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_load_builtin_engines');
-  ENGINE_load_builtin_engines();
-end;
+  FuncLoadError := not assigned(ENGINE_load_builtin_engines);
+  if FuncLoadError then
+  begin
+    ENGINE_load_builtin_engines :=  @ERROR_ENGINE_load_builtin_engines;
+  end;
 
-function Load_ENGINE_get_table_flags: TOpenSSL_C_UINT; cdecl;
-begin
   ENGINE_get_table_flags := LoadLibCryptoFunction('ENGINE_get_table_flags');
-  if not assigned(ENGINE_get_table_flags) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_table_flags');
-  Result := ENGINE_get_table_flags();
-end;
+  FuncLoadError := not assigned(ENGINE_get_table_flags);
+  if FuncLoadError then
+  begin
+    ENGINE_get_table_flags :=  @ERROR_ENGINE_get_table_flags;
+  end;
 
-procedure Load_ENGINE_set_table_flags(flags: TOpenSSL_C_UINT); cdecl;
-begin
   ENGINE_set_table_flags := LoadLibCryptoFunction('ENGINE_set_table_flags');
-  if not assigned(ENGINE_set_table_flags) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_table_flags');
-  ENGINE_set_table_flags(flags);
-end;
+  FuncLoadError := not assigned(ENGINE_set_table_flags);
+  if FuncLoadError then
+  begin
+    ENGINE_set_table_flags :=  @ERROR_ENGINE_set_table_flags;
+  end;
 
-function Load_ENGINE_register_RSA(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_register_RSA := LoadLibCryptoFunction('ENGINE_register_RSA');
-  if not assigned(ENGINE_register_RSA) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_RSA');
-  Result := ENGINE_register_RSA(e);
-end;
+  FuncLoadError := not assigned(ENGINE_register_RSA);
+  if FuncLoadError then
+  begin
+    ENGINE_register_RSA :=  @ERROR_ENGINE_register_RSA;
+  end;
 
-procedure Load_ENGINE_unregister_RSA(e: PENGINE); cdecl;
-begin
   ENGINE_unregister_RSA := LoadLibCryptoFunction('ENGINE_unregister_RSA');
-  if not assigned(ENGINE_unregister_RSA) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_unregister_RSA');
-  ENGINE_unregister_RSA(e);
-end;
+  FuncLoadError := not assigned(ENGINE_unregister_RSA);
+  if FuncLoadError then
+  begin
+    ENGINE_unregister_RSA :=  @ERROR_ENGINE_unregister_RSA;
+  end;
 
-procedure Load_ENGINE_register_all_RSA; cdecl;
-begin
   ENGINE_register_all_RSA := LoadLibCryptoFunction('ENGINE_register_all_RSA');
-  if not assigned(ENGINE_register_all_RSA) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_all_RSA');
-  ENGINE_register_all_RSA();
-end;
+  FuncLoadError := not assigned(ENGINE_register_all_RSA);
+  if FuncLoadError then
+  begin
+    ENGINE_register_all_RSA :=  @ERROR_ENGINE_register_all_RSA;
+  end;
 
-function Load_ENGINE_register_DSA(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_register_DSA := LoadLibCryptoFunction('ENGINE_register_DSA');
-  if not assigned(ENGINE_register_DSA) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_DSA');
-  Result := ENGINE_register_DSA(e);
-end;
+  FuncLoadError := not assigned(ENGINE_register_DSA);
+  if FuncLoadError then
+  begin
+    ENGINE_register_DSA :=  @ERROR_ENGINE_register_DSA;
+  end;
 
-procedure Load_ENGINE_unregister_DSA(e: PENGINE); cdecl;
-begin
   ENGINE_unregister_DSA := LoadLibCryptoFunction('ENGINE_unregister_DSA');
-  if not assigned(ENGINE_unregister_DSA) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_unregister_DSA');
-  ENGINE_unregister_DSA(e);
-end;
+  FuncLoadError := not assigned(ENGINE_unregister_DSA);
+  if FuncLoadError then
+  begin
+    ENGINE_unregister_DSA :=  @ERROR_ENGINE_unregister_DSA;
+  end;
 
-procedure Load_ENGINE_register_all_DSA; cdecl;
-begin
   ENGINE_register_all_DSA := LoadLibCryptoFunction('ENGINE_register_all_DSA');
-  if not assigned(ENGINE_register_all_DSA) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_all_DSA');
-  ENGINE_register_all_DSA();
-end;
+  FuncLoadError := not assigned(ENGINE_register_all_DSA);
+  if FuncLoadError then
+  begin
+    ENGINE_register_all_DSA :=  @ERROR_ENGINE_register_all_DSA;
+  end;
 
-function Load_ENGINE_register_EC(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_register_EC := LoadLibCryptoFunction('ENGINE_register_EC');
-  if not assigned(ENGINE_register_EC) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_EC');
-  Result := ENGINE_register_EC(e);
-end;
+  FuncLoadError := not assigned(ENGINE_register_EC);
+  if FuncLoadError then
+  begin
+    ENGINE_register_EC :=  @ERROR_ENGINE_register_EC;
+  end;
 
-procedure Load_ENGINE_unregister_EC(e: PENGINE); cdecl;
-begin
   ENGINE_unregister_EC := LoadLibCryptoFunction('ENGINE_unregister_EC');
-  if not assigned(ENGINE_unregister_EC) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_unregister_EC');
-  ENGINE_unregister_EC(e);
-end;
+  FuncLoadError := not assigned(ENGINE_unregister_EC);
+  if FuncLoadError then
+  begin
+    ENGINE_unregister_EC :=  @ERROR_ENGINE_unregister_EC;
+  end;
 
-procedure Load_ENGINE_register_all_EC; cdecl;
-begin
   ENGINE_register_all_EC := LoadLibCryptoFunction('ENGINE_register_all_EC');
-  if not assigned(ENGINE_register_all_EC) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_all_EC');
-  ENGINE_register_all_EC();
-end;
+  FuncLoadError := not assigned(ENGINE_register_all_EC);
+  if FuncLoadError then
+  begin
+    ENGINE_register_all_EC :=  @ERROR_ENGINE_register_all_EC;
+  end;
 
-function Load_ENGINE_register_DH(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_register_DH := LoadLibCryptoFunction('ENGINE_register_DH');
-  if not assigned(ENGINE_register_DH) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_DH');
-  Result := ENGINE_register_DH(e);
-end;
+  FuncLoadError := not assigned(ENGINE_register_DH);
+  if FuncLoadError then
+  begin
+    ENGINE_register_DH :=  @ERROR_ENGINE_register_DH;
+  end;
 
-procedure Load_ENGINE_unregister_DH(e: PENGINE); cdecl;
-begin
   ENGINE_unregister_DH := LoadLibCryptoFunction('ENGINE_unregister_DH');
-  if not assigned(ENGINE_unregister_DH) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_unregister_DH');
-  ENGINE_unregister_DH(e);
-end;
+  FuncLoadError := not assigned(ENGINE_unregister_DH);
+  if FuncLoadError then
+  begin
+    ENGINE_unregister_DH :=  @ERROR_ENGINE_unregister_DH;
+  end;
 
-procedure Load_ENGINE_register_all_DH; cdecl;
-begin
   ENGINE_register_all_DH := LoadLibCryptoFunction('ENGINE_register_all_DH');
-  if not assigned(ENGINE_register_all_DH) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_all_DH');
-  ENGINE_register_all_DH();
-end;
+  FuncLoadError := not assigned(ENGINE_register_all_DH);
+  if FuncLoadError then
+  begin
+    ENGINE_register_all_DH :=  @ERROR_ENGINE_register_all_DH;
+  end;
 
-function Load_ENGINE_register_RAND(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_register_RAND := LoadLibCryptoFunction('ENGINE_register_RAND');
-  if not assigned(ENGINE_register_RAND) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_RAND');
-  Result := ENGINE_register_RAND(e);
-end;
+  FuncLoadError := not assigned(ENGINE_register_RAND);
+  if FuncLoadError then
+  begin
+    ENGINE_register_RAND :=  @ERROR_ENGINE_register_RAND;
+  end;
 
-procedure Load_ENGINE_unregister_RAND(e: PENGINE); cdecl;
-begin
   ENGINE_unregister_RAND := LoadLibCryptoFunction('ENGINE_unregister_RAND');
-  if not assigned(ENGINE_unregister_RAND) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_unregister_RAND');
-  ENGINE_unregister_RAND(e);
-end;
+  FuncLoadError := not assigned(ENGINE_unregister_RAND);
+  if FuncLoadError then
+  begin
+    ENGINE_unregister_RAND :=  @ERROR_ENGINE_unregister_RAND;
+  end;
 
-procedure Load_ENGINE_register_all_RAND; cdecl;
-begin
   ENGINE_register_all_RAND := LoadLibCryptoFunction('ENGINE_register_all_RAND');
-  if not assigned(ENGINE_register_all_RAND) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_all_RAND');
-  ENGINE_register_all_RAND();
-end;
+  FuncLoadError := not assigned(ENGINE_register_all_RAND);
+  if FuncLoadError then
+  begin
+    ENGINE_register_all_RAND :=  @ERROR_ENGINE_register_all_RAND;
+  end;
 
-function Load_ENGINE_register_ciphers(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_register_ciphers := LoadLibCryptoFunction('ENGINE_register_ciphers');
-  if not assigned(ENGINE_register_ciphers) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_ciphers');
-  Result := ENGINE_register_ciphers(e);
-end;
+  FuncLoadError := not assigned(ENGINE_register_ciphers);
+  if FuncLoadError then
+  begin
+    ENGINE_register_ciphers :=  @ERROR_ENGINE_register_ciphers;
+  end;
 
-procedure Load_ENGINE_unregister_ciphers(e: PENGINE); cdecl;
-begin
   ENGINE_unregister_ciphers := LoadLibCryptoFunction('ENGINE_unregister_ciphers');
-  if not assigned(ENGINE_unregister_ciphers) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_unregister_ciphers');
-  ENGINE_unregister_ciphers(e);
-end;
+  FuncLoadError := not assigned(ENGINE_unregister_ciphers);
+  if FuncLoadError then
+  begin
+    ENGINE_unregister_ciphers :=  @ERROR_ENGINE_unregister_ciphers;
+  end;
 
-procedure Load_ENGINE_register_all_ciphers; cdecl;
-begin
   ENGINE_register_all_ciphers := LoadLibCryptoFunction('ENGINE_register_all_ciphers');
-  if not assigned(ENGINE_register_all_ciphers) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_all_ciphers');
-  ENGINE_register_all_ciphers();
-end;
+  FuncLoadError := not assigned(ENGINE_register_all_ciphers);
+  if FuncLoadError then
+  begin
+    ENGINE_register_all_ciphers :=  @ERROR_ENGINE_register_all_ciphers;
+  end;
 
-function Load_ENGINE_register_digests(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_register_digests := LoadLibCryptoFunction('ENGINE_register_digests');
-  if not assigned(ENGINE_register_digests) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_digests');
-  Result := ENGINE_register_digests(e);
-end;
+  FuncLoadError := not assigned(ENGINE_register_digests);
+  if FuncLoadError then
+  begin
+    ENGINE_register_digests :=  @ERROR_ENGINE_register_digests;
+  end;
 
-procedure Load_ENGINE_unregister_digests(e: PENGINE); cdecl;
-begin
   ENGINE_unregister_digests := LoadLibCryptoFunction('ENGINE_unregister_digests');
-  if not assigned(ENGINE_unregister_digests) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_unregister_digests');
-  ENGINE_unregister_digests(e);
-end;
+  FuncLoadError := not assigned(ENGINE_unregister_digests);
+  if FuncLoadError then
+  begin
+    ENGINE_unregister_digests :=  @ERROR_ENGINE_unregister_digests;
+  end;
 
-procedure Load_ENGINE_register_all_digests; cdecl;
-begin
   ENGINE_register_all_digests := LoadLibCryptoFunction('ENGINE_register_all_digests');
-  if not assigned(ENGINE_register_all_digests) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_all_digests');
-  ENGINE_register_all_digests();
-end;
+  FuncLoadError := not assigned(ENGINE_register_all_digests);
+  if FuncLoadError then
+  begin
+    ENGINE_register_all_digests :=  @ERROR_ENGINE_register_all_digests;
+  end;
 
-function Load_ENGINE_register_pkey_meths(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_register_pkey_meths := LoadLibCryptoFunction('ENGINE_register_pkey_meths');
-  if not assigned(ENGINE_register_pkey_meths) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_pkey_meths');
-  Result := ENGINE_register_pkey_meths(e);
-end;
+  FuncLoadError := not assigned(ENGINE_register_pkey_meths);
+  if FuncLoadError then
+  begin
+    ENGINE_register_pkey_meths :=  @ERROR_ENGINE_register_pkey_meths;
+  end;
 
-procedure Load_ENGINE_unregister_pkey_meths(e: PENGINE); cdecl;
-begin
   ENGINE_unregister_pkey_meths := LoadLibCryptoFunction('ENGINE_unregister_pkey_meths');
-  if not assigned(ENGINE_unregister_pkey_meths) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_unregister_pkey_meths');
-  ENGINE_unregister_pkey_meths(e);
-end;
+  FuncLoadError := not assigned(ENGINE_unregister_pkey_meths);
+  if FuncLoadError then
+  begin
+    ENGINE_unregister_pkey_meths :=  @ERROR_ENGINE_unregister_pkey_meths;
+  end;
 
-procedure Load_ENGINE_register_all_pkey_meths; cdecl;
-begin
   ENGINE_register_all_pkey_meths := LoadLibCryptoFunction('ENGINE_register_all_pkey_meths');
-  if not assigned(ENGINE_register_all_pkey_meths) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_all_pkey_meths');
-  ENGINE_register_all_pkey_meths();
-end;
+  FuncLoadError := not assigned(ENGINE_register_all_pkey_meths);
+  if FuncLoadError then
+  begin
+    ENGINE_register_all_pkey_meths :=  @ERROR_ENGINE_register_all_pkey_meths;
+  end;
 
-function Load_ENGINE_register_pkey_asn1_meths(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_register_pkey_asn1_meths := LoadLibCryptoFunction('ENGINE_register_pkey_asn1_meths');
-  if not assigned(ENGINE_register_pkey_asn1_meths) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_pkey_asn1_meths');
-  Result := ENGINE_register_pkey_asn1_meths(e);
-end;
+  FuncLoadError := not assigned(ENGINE_register_pkey_asn1_meths);
+  if FuncLoadError then
+  begin
+    ENGINE_register_pkey_asn1_meths :=  @ERROR_ENGINE_register_pkey_asn1_meths;
+  end;
 
-procedure Load_ENGINE_unregister_pkey_asn1_meths(e: PENGINE); cdecl;
-begin
   ENGINE_unregister_pkey_asn1_meths := LoadLibCryptoFunction('ENGINE_unregister_pkey_asn1_meths');
-  if not assigned(ENGINE_unregister_pkey_asn1_meths) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_unregister_pkey_asn1_meths');
-  ENGINE_unregister_pkey_asn1_meths(e);
-end;
+  FuncLoadError := not assigned(ENGINE_unregister_pkey_asn1_meths);
+  if FuncLoadError then
+  begin
+    ENGINE_unregister_pkey_asn1_meths :=  @ERROR_ENGINE_unregister_pkey_asn1_meths;
+  end;
 
-procedure Load_ENGINE_register_all_pkey_asn1_meths; cdecl;
-begin
   ENGINE_register_all_pkey_asn1_meths := LoadLibCryptoFunction('ENGINE_register_all_pkey_asn1_meths');
-  if not assigned(ENGINE_register_all_pkey_asn1_meths) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_all_pkey_asn1_meths');
-  ENGINE_register_all_pkey_asn1_meths();
-end;
+  FuncLoadError := not assigned(ENGINE_register_all_pkey_asn1_meths);
+  if FuncLoadError then
+  begin
+    ENGINE_register_all_pkey_asn1_meths :=  @ERROR_ENGINE_register_all_pkey_asn1_meths;
+  end;
 
-function Load_ENGINE_register_complete(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_register_complete := LoadLibCryptoFunction('ENGINE_register_complete');
-  if not assigned(ENGINE_register_complete) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_complete');
-  Result := ENGINE_register_complete(e);
-end;
+  FuncLoadError := not assigned(ENGINE_register_complete);
+  if FuncLoadError then
+  begin
+    ENGINE_register_complete :=  @ERROR_ENGINE_register_complete;
+  end;
 
-function Load_ENGINE_register_all_complete: TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_register_all_complete := LoadLibCryptoFunction('ENGINE_register_all_complete');
-  if not assigned(ENGINE_register_all_complete) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_register_all_complete');
-  Result := ENGINE_register_all_complete();
-end;
+  FuncLoadError := not assigned(ENGINE_register_all_complete);
+  if FuncLoadError then
+  begin
+    ENGINE_register_all_complete :=  @ERROR_ENGINE_register_all_complete;
+  end;
 
-function Load_ENGINE_ctrl(e: PENGINE; cmd: TOpenSSL_C_INT; i: TOpenSSL_C_LONG; p: Pointer; v1: f): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_ctrl := LoadLibCryptoFunction('ENGINE_ctrl');
-  if not assigned(ENGINE_ctrl) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_ctrl');
-  Result := ENGINE_ctrl(e,cmd,i,p,v1);
-end;
+  FuncLoadError := not assigned(ENGINE_ctrl);
+  if FuncLoadError then
+  begin
+    ENGINE_ctrl :=  @ERROR_ENGINE_ctrl;
+  end;
 
-function Load_ENGINE_cmd_is_executable(e: PENGINE; cmd: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_cmd_is_executable := LoadLibCryptoFunction('ENGINE_cmd_is_executable');
-  if not assigned(ENGINE_cmd_is_executable) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_cmd_is_executable');
-  Result := ENGINE_cmd_is_executable(e,cmd);
-end;
+  FuncLoadError := not assigned(ENGINE_cmd_is_executable);
+  if FuncLoadError then
+  begin
+    ENGINE_cmd_is_executable :=  @ERROR_ENGINE_cmd_is_executable;
+  end;
 
-function Load_ENGINE_ctrl_cmd(e: PENGINE; const cmd_name: PAnsiChar; i: TOpenSSL_C_LONG; p: Pointer; v1: f; cmd_optional: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_ctrl_cmd := LoadLibCryptoFunction('ENGINE_ctrl_cmd');
-  if not assigned(ENGINE_ctrl_cmd) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_ctrl_cmd');
-  Result := ENGINE_ctrl_cmd(e,cmd_name,i,p,v1,cmd_optional);
-end;
+  FuncLoadError := not assigned(ENGINE_ctrl_cmd);
+  if FuncLoadError then
+  begin
+    ENGINE_ctrl_cmd :=  @ERROR_ENGINE_ctrl_cmd;
+  end;
 
-function Load_ENGINE_ctrl_cmd_string(e: PENGINE; const cmd_name: PAnsiChar; const arg: PAnsiChar; cmd_optional: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_ctrl_cmd_string := LoadLibCryptoFunction('ENGINE_ctrl_cmd_string');
-  if not assigned(ENGINE_ctrl_cmd_string) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_ctrl_cmd_string');
-  Result := ENGINE_ctrl_cmd_string(e,cmd_name,arg,cmd_optional);
-end;
+  FuncLoadError := not assigned(ENGINE_ctrl_cmd_string);
+  if FuncLoadError then
+  begin
+    ENGINE_ctrl_cmd_string :=  @ERROR_ENGINE_ctrl_cmd_string;
+  end;
 
-function Load_ENGINE_new: PENGINE; cdecl;
-begin
   ENGINE_new := LoadLibCryptoFunction('ENGINE_new');
-  if not assigned(ENGINE_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_new');
-  Result := ENGINE_new();
-end;
+  FuncLoadError := not assigned(ENGINE_new);
+  if FuncLoadError then
+  begin
+    ENGINE_new :=  @ERROR_ENGINE_new;
+  end;
 
-function Load_ENGINE_free(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_free := LoadLibCryptoFunction('ENGINE_free');
-  if not assigned(ENGINE_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_free');
-  Result := ENGINE_free(e);
-end;
+  FuncLoadError := not assigned(ENGINE_free);
+  if FuncLoadError then
+  begin
+    ENGINE_free :=  @ERROR_ENGINE_free;
+  end;
 
-function Load_ENGINE_up_ref(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_up_ref := LoadLibCryptoFunction('ENGINE_up_ref');
-  if not assigned(ENGINE_up_ref) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_up_ref');
-  Result := ENGINE_up_ref(e);
-end;
+  FuncLoadError := not assigned(ENGINE_up_ref);
+  if FuncLoadError then
+  begin
+    ENGINE_up_ref :=  @ERROR_ENGINE_up_ref;
+  end;
 
-function Load_ENGINE_set_id(e: PENGINE; const id: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_id := LoadLibCryptoFunction('ENGINE_set_id');
-  if not assigned(ENGINE_set_id) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_id');
-  Result := ENGINE_set_id(e,id);
-end;
+  FuncLoadError := not assigned(ENGINE_set_id);
+  if FuncLoadError then
+  begin
+    ENGINE_set_id :=  @ERROR_ENGINE_set_id;
+  end;
 
-function Load_ENGINE_set_name(e: PENGINE; const name: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_name := LoadLibCryptoFunction('ENGINE_set_name');
-  if not assigned(ENGINE_set_name) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_name');
-  Result := ENGINE_set_name(e,name);
-end;
+  FuncLoadError := not assigned(ENGINE_set_name);
+  if FuncLoadError then
+  begin
+    ENGINE_set_name :=  @ERROR_ENGINE_set_name;
+  end;
 
-function Load_ENGINE_set_RSA(e: PENGINE; const rsa_meth: PRSA_METHOD): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_RSA := LoadLibCryptoFunction('ENGINE_set_RSA');
-  if not assigned(ENGINE_set_RSA) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_RSA');
-  Result := ENGINE_set_RSA(e,rsa_meth);
-end;
+  FuncLoadError := not assigned(ENGINE_set_RSA);
+  if FuncLoadError then
+  begin
+    ENGINE_set_RSA :=  @ERROR_ENGINE_set_RSA;
+  end;
 
-function Load_ENGINE_set_DSA(e: PENGINE; const dsa_meth: PDSA_METHOD): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_DSA := LoadLibCryptoFunction('ENGINE_set_DSA');
-  if not assigned(ENGINE_set_DSA) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_DSA');
-  Result := ENGINE_set_DSA(e,dsa_meth);
-end;
+  FuncLoadError := not assigned(ENGINE_set_DSA);
+  if FuncLoadError then
+  begin
+    ENGINE_set_DSA :=  @ERROR_ENGINE_set_DSA;
+  end;
 
-function Load_ENGINE_set_EC(e: PENGINE; const ecdsa_meth: PEC_KEY_METHOD): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_EC := LoadLibCryptoFunction('ENGINE_set_EC');
-  if not assigned(ENGINE_set_EC) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_EC');
-  Result := ENGINE_set_EC(e,ecdsa_meth);
-end;
+  FuncLoadError := not assigned(ENGINE_set_EC);
+  if FuncLoadError then
+  begin
+    ENGINE_set_EC :=  @ERROR_ENGINE_set_EC;
+  end;
 
-function Load_ENGINE_set_DH(e: PENGINE; const dh_meth: PDH_METHOD): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_DH := LoadLibCryptoFunction('ENGINE_set_DH');
-  if not assigned(ENGINE_set_DH) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_DH');
-  Result := ENGINE_set_DH(e,dh_meth);
-end;
+  FuncLoadError := not assigned(ENGINE_set_DH);
+  if FuncLoadError then
+  begin
+    ENGINE_set_DH :=  @ERROR_ENGINE_set_DH;
+  end;
 
-function Load_ENGINE_set_RAND(e: PENGINE; const rand_meth: PRAND_METHOD): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_RAND := LoadLibCryptoFunction('ENGINE_set_RAND');
-  if not assigned(ENGINE_set_RAND) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_RAND');
-  Result := ENGINE_set_RAND(e,rand_meth);
-end;
+  FuncLoadError := not assigned(ENGINE_set_RAND);
+  if FuncLoadError then
+  begin
+    ENGINE_set_RAND :=  @ERROR_ENGINE_set_RAND;
+  end;
 
-function Load_ENGINE_set_destroy_function(e: PENGINE; destroy_f: ENGINE_GEN_INT_FUNC_PTR): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_destroy_function := LoadLibCryptoFunction('ENGINE_set_destroy_function');
-  if not assigned(ENGINE_set_destroy_function) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_destroy_function');
-  Result := ENGINE_set_destroy_function(e,destroy_f);
-end;
+  FuncLoadError := not assigned(ENGINE_set_destroy_function);
+  if FuncLoadError then
+  begin
+    ENGINE_set_destroy_function :=  @ERROR_ENGINE_set_destroy_function;
+  end;
 
-function Load_ENGINE_set_init_function(e: PENGINE; init_f: ENGINE_GEN_INT_FUNC_PTR): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_init_function := LoadLibCryptoFunction('ENGINE_set_init_function');
-  if not assigned(ENGINE_set_init_function) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_init_function');
-  Result := ENGINE_set_init_function(e,init_f);
-end;
+  FuncLoadError := not assigned(ENGINE_set_init_function);
+  if FuncLoadError then
+  begin
+    ENGINE_set_init_function :=  @ERROR_ENGINE_set_init_function;
+  end;
 
-function Load_ENGINE_set_finish_function(e: PENGINE; finish_f: ENGINE_GEN_INT_FUNC_PTR): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_finish_function := LoadLibCryptoFunction('ENGINE_set_finish_function');
-  if not assigned(ENGINE_set_finish_function) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_finish_function');
-  Result := ENGINE_set_finish_function(e,finish_f);
-end;
+  FuncLoadError := not assigned(ENGINE_set_finish_function);
+  if FuncLoadError then
+  begin
+    ENGINE_set_finish_function :=  @ERROR_ENGINE_set_finish_function;
+  end;
 
-function Load_ENGINE_set_ctrl_function(e: PENGINE; ctrl_f: ENGINE_CTRL_FUNC_PTR): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_ctrl_function := LoadLibCryptoFunction('ENGINE_set_ctrl_function');
-  if not assigned(ENGINE_set_ctrl_function) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_ctrl_function');
-  Result := ENGINE_set_ctrl_function(e,ctrl_f);
-end;
+  FuncLoadError := not assigned(ENGINE_set_ctrl_function);
+  if FuncLoadError then
+  begin
+    ENGINE_set_ctrl_function :=  @ERROR_ENGINE_set_ctrl_function;
+  end;
 
-function Load_ENGINE_set_load_privkey_function(e: PENGINE; loadpriv_f: ENGINE_LOAD_KEY_PTR): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_load_privkey_function := LoadLibCryptoFunction('ENGINE_set_load_privkey_function');
-  if not assigned(ENGINE_set_load_privkey_function) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_load_privkey_function');
-  Result := ENGINE_set_load_privkey_function(e,loadpriv_f);
-end;
+  FuncLoadError := not assigned(ENGINE_set_load_privkey_function);
+  if FuncLoadError then
+  begin
+    ENGINE_set_load_privkey_function :=  @ERROR_ENGINE_set_load_privkey_function;
+  end;
 
-function Load_ENGINE_set_load_pubkey_function(e: PENGINE; loadpub_f: ENGINE_LOAD_KEY_PTR): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_load_pubkey_function := LoadLibCryptoFunction('ENGINE_set_load_pubkey_function');
-  if not assigned(ENGINE_set_load_pubkey_function) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_load_pubkey_function');
-  Result := ENGINE_set_load_pubkey_function(e,loadpub_f);
-end;
+  FuncLoadError := not assigned(ENGINE_set_load_pubkey_function);
+  if FuncLoadError then
+  begin
+    ENGINE_set_load_pubkey_function :=  @ERROR_ENGINE_set_load_pubkey_function;
+  end;
 
-function Load_ENGINE_set_ciphers(e: PENGINE; f: ENGINE_CIPHERS_PTR): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_ciphers := LoadLibCryptoFunction('ENGINE_set_ciphers');
-  if not assigned(ENGINE_set_ciphers) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_ciphers');
-  Result := ENGINE_set_ciphers(e,f);
-end;
+  FuncLoadError := not assigned(ENGINE_set_ciphers);
+  if FuncLoadError then
+  begin
+    ENGINE_set_ciphers :=  @ERROR_ENGINE_set_ciphers;
+  end;
 
-function Load_ENGINE_set_digests(e: PENGINE; f: ENGINE_DIGESTS_PTR): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_digests := LoadLibCryptoFunction('ENGINE_set_digests');
-  if not assigned(ENGINE_set_digests) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_digests');
-  Result := ENGINE_set_digests(e,f);
-end;
+  FuncLoadError := not assigned(ENGINE_set_digests);
+  if FuncLoadError then
+  begin
+    ENGINE_set_digests :=  @ERROR_ENGINE_set_digests;
+  end;
 
-function Load_ENGINE_set_pkey_meths(e: PENGINE; f: ENGINE_PKEY_METHS_PTR): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_pkey_meths := LoadLibCryptoFunction('ENGINE_set_pkey_meths');
-  if not assigned(ENGINE_set_pkey_meths) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_pkey_meths');
-  Result := ENGINE_set_pkey_meths(e,f);
-end;
+  FuncLoadError := not assigned(ENGINE_set_pkey_meths);
+  if FuncLoadError then
+  begin
+    ENGINE_set_pkey_meths :=  @ERROR_ENGINE_set_pkey_meths;
+  end;
 
-function Load_ENGINE_set_pkey_asn1_meths(e: PENGINE; f: ENGINE_PKEY_ASN1_METHS_PTR): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_pkey_asn1_meths := LoadLibCryptoFunction('ENGINE_set_pkey_asn1_meths');
-  if not assigned(ENGINE_set_pkey_asn1_meths) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_pkey_asn1_meths');
-  Result := ENGINE_set_pkey_asn1_meths(e,f);
-end;
+  FuncLoadError := not assigned(ENGINE_set_pkey_asn1_meths);
+  if FuncLoadError then
+  begin
+    ENGINE_set_pkey_asn1_meths :=  @ERROR_ENGINE_set_pkey_asn1_meths;
+  end;
 
-function Load_ENGINE_set_flags(e: PENGINE; flags: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_flags := LoadLibCryptoFunction('ENGINE_set_flags');
-  if not assigned(ENGINE_set_flags) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_flags');
-  Result := ENGINE_set_flags(e,flags);
-end;
+  FuncLoadError := not assigned(ENGINE_set_flags);
+  if FuncLoadError then
+  begin
+    ENGINE_set_flags :=  @ERROR_ENGINE_set_flags;
+  end;
 
-function Load_ENGINE_set_cmd_defns(e: PENGINE; const defns: PENGINE_CMD_DEFN): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_cmd_defns := LoadLibCryptoFunction('ENGINE_set_cmd_defns');
-  if not assigned(ENGINE_set_cmd_defns) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_cmd_defns');
-  Result := ENGINE_set_cmd_defns(e,defns);
-end;
+  FuncLoadError := not assigned(ENGINE_set_cmd_defns);
+  if FuncLoadError then
+  begin
+    ENGINE_set_cmd_defns :=  @ERROR_ENGINE_set_cmd_defns;
+  end;
 
-function Load_ENGINE_set_ex_data(e: PENGINE; idx: TOpenSSL_C_INT; arg: Pointer): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_ex_data := LoadLibCryptoFunction('ENGINE_set_ex_data');
-  if not assigned(ENGINE_set_ex_data) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_ex_data');
-  Result := ENGINE_set_ex_data(e,idx,arg);
-end;
+  FuncLoadError := not assigned(ENGINE_set_ex_data);
+  if FuncLoadError then
+  begin
+    ENGINE_set_ex_data :=  @ERROR_ENGINE_set_ex_data;
+  end;
 
-function Load_ENGINE_get_ex_data(const e: PENGINE; idx: TOpenSSL_C_INT): Pointer; cdecl;
-begin
   ENGINE_get_ex_data := LoadLibCryptoFunction('ENGINE_get_ex_data');
-  if not assigned(ENGINE_get_ex_data) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_ex_data');
-  Result := ENGINE_get_ex_data(e,idx);
-end;
+  FuncLoadError := not assigned(ENGINE_get_ex_data);
+  if FuncLoadError then
+  begin
+    ENGINE_get_ex_data :=  @ERROR_ENGINE_get_ex_data;
+  end;
 
-function Load_ENGINE_get_id(const e: PENGINE): PAnsiChar; cdecl;
-begin
   ENGINE_get_id := LoadLibCryptoFunction('ENGINE_get_id');
-  if not assigned(ENGINE_get_id) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_id');
-  Result := ENGINE_get_id(e);
-end;
+  FuncLoadError := not assigned(ENGINE_get_id);
+  if FuncLoadError then
+  begin
+    ENGINE_get_id :=  @ERROR_ENGINE_get_id;
+  end;
 
-function Load_ENGINE_get_name(const e: PENGINE): PAnsiChar; cdecl;
-begin
   ENGINE_get_name := LoadLibCryptoFunction('ENGINE_get_name');
-  if not assigned(ENGINE_get_name) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_name');
-  Result := ENGINE_get_name(e);
-end;
+  FuncLoadError := not assigned(ENGINE_get_name);
+  if FuncLoadError then
+  begin
+    ENGINE_get_name :=  @ERROR_ENGINE_get_name;
+  end;
 
-function Load_ENGINE_get_RSA(const e: PENGINE): PRSA_METHOD; cdecl;
-begin
   ENGINE_get_RSA := LoadLibCryptoFunction('ENGINE_get_RSA');
-  if not assigned(ENGINE_get_RSA) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_RSA');
-  Result := ENGINE_get_RSA(e);
-end;
+  FuncLoadError := not assigned(ENGINE_get_RSA);
+  if FuncLoadError then
+  begin
+    ENGINE_get_RSA :=  @ERROR_ENGINE_get_RSA;
+  end;
 
-function Load_ENGINE_get_DSA(const e: PENGINE): PDSA_METHOD; cdecl;
-begin
   ENGINE_get_DSA := LoadLibCryptoFunction('ENGINE_get_DSA');
-  if not assigned(ENGINE_get_DSA) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_DSA');
-  Result := ENGINE_get_DSA(e);
-end;
+  FuncLoadError := not assigned(ENGINE_get_DSA);
+  if FuncLoadError then
+  begin
+    ENGINE_get_DSA :=  @ERROR_ENGINE_get_DSA;
+  end;
 
-function Load_ENGINE_get_EC(const e: PENGINE): PEC_METHOD; cdecl;
-begin
   ENGINE_get_EC := LoadLibCryptoFunction('ENGINE_get_EC');
-  if not assigned(ENGINE_get_EC) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_EC');
-  Result := ENGINE_get_EC(e);
-end;
+  FuncLoadError := not assigned(ENGINE_get_EC);
+  if FuncLoadError then
+  begin
+    ENGINE_get_EC :=  @ERROR_ENGINE_get_EC;
+  end;
 
-function Load_ENGINE_get_DH(const e: PENGINE): PDH_METHOD; cdecl;
-begin
   ENGINE_get_DH := LoadLibCryptoFunction('ENGINE_get_DH');
-  if not assigned(ENGINE_get_DH) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_DH');
-  Result := ENGINE_get_DH(e);
-end;
+  FuncLoadError := not assigned(ENGINE_get_DH);
+  if FuncLoadError then
+  begin
+    ENGINE_get_DH :=  @ERROR_ENGINE_get_DH;
+  end;
 
-function Load_ENGINE_get_RAND(const e: PENGINE): PRAND_METHOD; cdecl;
-begin
   ENGINE_get_RAND := LoadLibCryptoFunction('ENGINE_get_RAND');
-  if not assigned(ENGINE_get_RAND) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_RAND');
-  Result := ENGINE_get_RAND(e);
-end;
+  FuncLoadError := not assigned(ENGINE_get_RAND);
+  if FuncLoadError then
+  begin
+    ENGINE_get_RAND :=  @ERROR_ENGINE_get_RAND;
+  end;
 
-function Load_ENGINE_get_destroy_function(const e: PENGINE): ENGINE_GEN_INT_FUNC_PTR; cdecl;
-begin
   ENGINE_get_destroy_function := LoadLibCryptoFunction('ENGINE_get_destroy_function');
-  if not assigned(ENGINE_get_destroy_function) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_destroy_function');
-  Result := ENGINE_get_destroy_function(e);
-end;
+  FuncLoadError := not assigned(ENGINE_get_destroy_function);
+  if FuncLoadError then
+  begin
+    ENGINE_get_destroy_function :=  @ERROR_ENGINE_get_destroy_function;
+  end;
 
-function Load_ENGINE_get_init_function(const e: PENGINE): ENGINE_GEN_INT_FUNC_PTR; cdecl;
-begin
   ENGINE_get_init_function := LoadLibCryptoFunction('ENGINE_get_init_function');
-  if not assigned(ENGINE_get_init_function) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_init_function');
-  Result := ENGINE_get_init_function(e);
-end;
+  FuncLoadError := not assigned(ENGINE_get_init_function);
+  if FuncLoadError then
+  begin
+    ENGINE_get_init_function :=  @ERROR_ENGINE_get_init_function;
+  end;
 
-function Load_ENGINE_get_finish_function(const e: PENGINE): ENGINE_GEN_INT_FUNC_PTR; cdecl;
-begin
   ENGINE_get_finish_function := LoadLibCryptoFunction('ENGINE_get_finish_function');
-  if not assigned(ENGINE_get_finish_function) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_finish_function');
-  Result := ENGINE_get_finish_function(e);
-end;
+  FuncLoadError := not assigned(ENGINE_get_finish_function);
+  if FuncLoadError then
+  begin
+    ENGINE_get_finish_function :=  @ERROR_ENGINE_get_finish_function;
+  end;
 
-function Load_ENGINE_get_ctrl_function(const e: PENGINE): ENGINE_CTRL_FUNC_PTR; cdecl;
-begin
   ENGINE_get_ctrl_function := LoadLibCryptoFunction('ENGINE_get_ctrl_function');
-  if not assigned(ENGINE_get_ctrl_function) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_ctrl_function');
-  Result := ENGINE_get_ctrl_function(e);
-end;
+  FuncLoadError := not assigned(ENGINE_get_ctrl_function);
+  if FuncLoadError then
+  begin
+    ENGINE_get_ctrl_function :=  @ERROR_ENGINE_get_ctrl_function;
+  end;
 
-function Load_ENGINE_get_load_privkey_function(const e: PENGINE): ENGINE_LOAD_KEY_PTR; cdecl;
-begin
   ENGINE_get_load_privkey_function := LoadLibCryptoFunction('ENGINE_get_load_privkey_function');
-  if not assigned(ENGINE_get_load_privkey_function) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_load_privkey_function');
-  Result := ENGINE_get_load_privkey_function(e);
-end;
+  FuncLoadError := not assigned(ENGINE_get_load_privkey_function);
+  if FuncLoadError then
+  begin
+    ENGINE_get_load_privkey_function :=  @ERROR_ENGINE_get_load_privkey_function;
+  end;
 
-function Load_ENGINE_get_load_pubkey_function(const e: PENGINE): ENGINE_LOAD_KEY_PTR; cdecl;
-begin
   ENGINE_get_load_pubkey_function := LoadLibCryptoFunction('ENGINE_get_load_pubkey_function');
-  if not assigned(ENGINE_get_load_pubkey_function) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_load_pubkey_function');
-  Result := ENGINE_get_load_pubkey_function(e);
-end;
+  FuncLoadError := not assigned(ENGINE_get_load_pubkey_function);
+  if FuncLoadError then
+  begin
+    ENGINE_get_load_pubkey_function :=  @ERROR_ENGINE_get_load_pubkey_function;
+  end;
 
-function Load_ENGINE_get_ciphers(const e: PENGINE): ENGINE_CIPHERS_PTR; cdecl;
-begin
   ENGINE_get_ciphers := LoadLibCryptoFunction('ENGINE_get_ciphers');
-  if not assigned(ENGINE_get_ciphers) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_ciphers');
-  Result := ENGINE_get_ciphers(e);
-end;
+  FuncLoadError := not assigned(ENGINE_get_ciphers);
+  if FuncLoadError then
+  begin
+    ENGINE_get_ciphers :=  @ERROR_ENGINE_get_ciphers;
+  end;
 
-function Load_ENGINE_get_digests(const e: PENGINE): ENGINE_DIGESTS_PTR; cdecl;
-begin
   ENGINE_get_digests := LoadLibCryptoFunction('ENGINE_get_digests');
-  if not assigned(ENGINE_get_digests) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_digests');
-  Result := ENGINE_get_digests(e);
-end;
+  FuncLoadError := not assigned(ENGINE_get_digests);
+  if FuncLoadError then
+  begin
+    ENGINE_get_digests :=  @ERROR_ENGINE_get_digests;
+  end;
 
-function Load_ENGINE_get_pkey_meths(const e: PENGINE): ENGINE_PKEY_METHS_PTR; cdecl;
-begin
   ENGINE_get_pkey_meths := LoadLibCryptoFunction('ENGINE_get_pkey_meths');
-  if not assigned(ENGINE_get_pkey_meths) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_pkey_meths');
-  Result := ENGINE_get_pkey_meths(e);
-end;
+  FuncLoadError := not assigned(ENGINE_get_pkey_meths);
+  if FuncLoadError then
+  begin
+    ENGINE_get_pkey_meths :=  @ERROR_ENGINE_get_pkey_meths;
+  end;
 
-function Load_ENGINE_get_pkey_asn1_meths(const e: PENGINE): ENGINE_PKEY_ASN1_METHS_PTR; cdecl;
-begin
   ENGINE_get_pkey_asn1_meths := LoadLibCryptoFunction('ENGINE_get_pkey_asn1_meths');
-  if not assigned(ENGINE_get_pkey_asn1_meths) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_pkey_asn1_meths');
-  Result := ENGINE_get_pkey_asn1_meths(e);
-end;
+  FuncLoadError := not assigned(ENGINE_get_pkey_asn1_meths);
+  if FuncLoadError then
+  begin
+    ENGINE_get_pkey_asn1_meths :=  @ERROR_ENGINE_get_pkey_asn1_meths;
+  end;
 
-function Load_ENGINE_get_cipher(e: PENGINE; nid: TOpenSSL_C_INT): PEVP_CIPHER; cdecl;
-begin
   ENGINE_get_cipher := LoadLibCryptoFunction('ENGINE_get_cipher');
-  if not assigned(ENGINE_get_cipher) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_cipher');
-  Result := ENGINE_get_cipher(e,nid);
-end;
+  FuncLoadError := not assigned(ENGINE_get_cipher);
+  if FuncLoadError then
+  begin
+    ENGINE_get_cipher :=  @ERROR_ENGINE_get_cipher;
+  end;
 
-function Load_ENGINE_get_digest(e: PENGINE; nid: TOpenSSL_C_INT): PEVP_MD; cdecl;
-begin
   ENGINE_get_digest := LoadLibCryptoFunction('ENGINE_get_digest');
-  if not assigned(ENGINE_get_digest) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_digest');
-  Result := ENGINE_get_digest(e,nid);
-end;
+  FuncLoadError := not assigned(ENGINE_get_digest);
+  if FuncLoadError then
+  begin
+    ENGINE_get_digest :=  @ERROR_ENGINE_get_digest;
+  end;
 
-function Load_ENGINE_get_pkey_meth(e: PENGINE; nid: TOpenSSL_C_INT): PEVP_PKEY_METHOD; cdecl;
-begin
   ENGINE_get_pkey_meth := LoadLibCryptoFunction('ENGINE_get_pkey_meth');
-  if not assigned(ENGINE_get_pkey_meth) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_pkey_meth');
-  Result := ENGINE_get_pkey_meth(e,nid);
-end;
+  FuncLoadError := not assigned(ENGINE_get_pkey_meth);
+  if FuncLoadError then
+  begin
+    ENGINE_get_pkey_meth :=  @ERROR_ENGINE_get_pkey_meth;
+  end;
 
-function Load_ENGINE_get_pkey_asn1_meth(e: PENGINE; nid: TOpenSSL_C_INT): PEVP_PKEY_ASN1_METHOD; cdecl;
-begin
   ENGINE_get_pkey_asn1_meth := LoadLibCryptoFunction('ENGINE_get_pkey_asn1_meth');
-  if not assigned(ENGINE_get_pkey_asn1_meth) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_pkey_asn1_meth');
-  Result := ENGINE_get_pkey_asn1_meth(e,nid);
-end;
+  FuncLoadError := not assigned(ENGINE_get_pkey_asn1_meth);
+  if FuncLoadError then
+  begin
+    ENGINE_get_pkey_asn1_meth :=  @ERROR_ENGINE_get_pkey_asn1_meth;
+  end;
 
-function Load_ENGINE_get_pkey_asn1_meth_str(e: PENGINE; const str: PAnsiChar; len: TOpenSSL_C_INT): PEVP_PKEY_ASN1_METHOD; cdecl;
-begin
   ENGINE_get_pkey_asn1_meth_str := LoadLibCryptoFunction('ENGINE_get_pkey_asn1_meth_str');
-  if not assigned(ENGINE_get_pkey_asn1_meth_str) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_pkey_asn1_meth_str');
-  Result := ENGINE_get_pkey_asn1_meth_str(e,str,len);
-end;
+  FuncLoadError := not assigned(ENGINE_get_pkey_asn1_meth_str);
+  if FuncLoadError then
+  begin
+    ENGINE_get_pkey_asn1_meth_str :=  @ERROR_ENGINE_get_pkey_asn1_meth_str;
+  end;
 
-function Load_ENGINE_pkey_asn1_find_str(pe: PPENGINE; const str: PAnsiChar; len: TOpenSSL_C_INT): PEVP_PKEY_ASN1_METHOD; cdecl;
-begin
   ENGINE_pkey_asn1_find_str := LoadLibCryptoFunction('ENGINE_pkey_asn1_find_str');
-  if not assigned(ENGINE_pkey_asn1_find_str) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_pkey_asn1_find_str');
-  Result := ENGINE_pkey_asn1_find_str(pe,str,len);
-end;
+  FuncLoadError := not assigned(ENGINE_pkey_asn1_find_str);
+  if FuncLoadError then
+  begin
+    ENGINE_pkey_asn1_find_str :=  @ERROR_ENGINE_pkey_asn1_find_str;
+  end;
 
-function Load_ENGINE_get_cmd_defns(const e: PENGINE): PENGINE_CMD_DEFN; cdecl;
-begin
   ENGINE_get_cmd_defns := LoadLibCryptoFunction('ENGINE_get_cmd_defns');
-  if not assigned(ENGINE_get_cmd_defns) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_cmd_defns');
-  Result := ENGINE_get_cmd_defns(e);
-end;
+  FuncLoadError := not assigned(ENGINE_get_cmd_defns);
+  if FuncLoadError then
+  begin
+    ENGINE_get_cmd_defns :=  @ERROR_ENGINE_get_cmd_defns;
+  end;
 
-function Load_ENGINE_get_flags(const e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_get_flags := LoadLibCryptoFunction('ENGINE_get_flags');
-  if not assigned(ENGINE_get_flags) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_flags');
-  Result := ENGINE_get_flags(e);
-end;
+  FuncLoadError := not assigned(ENGINE_get_flags);
+  if FuncLoadError then
+  begin
+    ENGINE_get_flags :=  @ERROR_ENGINE_get_flags;
+  end;
 
-function Load_ENGINE_init(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_init := LoadLibCryptoFunction('ENGINE_init');
-  if not assigned(ENGINE_init) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_init');
-  Result := ENGINE_init(e);
-end;
+  FuncLoadError := not assigned(ENGINE_init);
+  if FuncLoadError then
+  begin
+    ENGINE_init :=  @ERROR_ENGINE_init;
+  end;
 
-function Load_ENGINE_finish(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_finish := LoadLibCryptoFunction('ENGINE_finish');
-  if not assigned(ENGINE_finish) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_finish');
-  Result := ENGINE_finish(e);
-end;
+  FuncLoadError := not assigned(ENGINE_finish);
+  if FuncLoadError then
+  begin
+    ENGINE_finish :=  @ERROR_ENGINE_finish;
+  end;
 
-function Load_ENGINE_load_private_key(e: PENGINE; const key_id: PAnsiChar; ui_method: PUI_METHOD; callback_data: Pointer): PEVP_PKEY; cdecl;
-begin
   ENGINE_load_private_key := LoadLibCryptoFunction('ENGINE_load_private_key');
-  if not assigned(ENGINE_load_private_key) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_load_private_key');
-  Result := ENGINE_load_private_key(e,key_id,ui_method,callback_data);
-end;
+  FuncLoadError := not assigned(ENGINE_load_private_key);
+  if FuncLoadError then
+  begin
+    ENGINE_load_private_key :=  @ERROR_ENGINE_load_private_key;
+  end;
 
-function Load_ENGINE_load_public_key(e: PENGINE; const key_id: PAnsiChar; ui_method: PUI_METHOD; callback_data: Pointer): PEVP_PKEY; cdecl;
-begin
   ENGINE_load_public_key := LoadLibCryptoFunction('ENGINE_load_public_key');
-  if not assigned(ENGINE_load_public_key) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_load_public_key');
-  Result := ENGINE_load_public_key(e,key_id,ui_method,callback_data);
-end;
+  FuncLoadError := not assigned(ENGINE_load_public_key);
+  if FuncLoadError then
+  begin
+    ENGINE_load_public_key :=  @ERROR_ENGINE_load_public_key;
+  end;
 
-function Load_ENGINE_get_default_RSA: PENGINE; cdecl;
-begin
   ENGINE_get_default_RSA := LoadLibCryptoFunction('ENGINE_get_default_RSA');
-  if not assigned(ENGINE_get_default_RSA) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_default_RSA');
-  Result := ENGINE_get_default_RSA();
-end;
+  FuncLoadError := not assigned(ENGINE_get_default_RSA);
+  if FuncLoadError then
+  begin
+    ENGINE_get_default_RSA :=  @ERROR_ENGINE_get_default_RSA;
+  end;
 
-function Load_ENGINE_get_default_DSA: PENGINE; cdecl;
-begin
   ENGINE_get_default_DSA := LoadLibCryptoFunction('ENGINE_get_default_DSA');
-  if not assigned(ENGINE_get_default_DSA) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_default_DSA');
-  Result := ENGINE_get_default_DSA();
-end;
+  FuncLoadError := not assigned(ENGINE_get_default_DSA);
+  if FuncLoadError then
+  begin
+    ENGINE_get_default_DSA :=  @ERROR_ENGINE_get_default_DSA;
+  end;
 
-function Load_ENGINE_get_default_EC: PENGINE; cdecl;
-begin
   ENGINE_get_default_EC := LoadLibCryptoFunction('ENGINE_get_default_EC');
-  if not assigned(ENGINE_get_default_EC) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_default_EC');
-  Result := ENGINE_get_default_EC();
-end;
+  FuncLoadError := not assigned(ENGINE_get_default_EC);
+  if FuncLoadError then
+  begin
+    ENGINE_get_default_EC :=  @ERROR_ENGINE_get_default_EC;
+  end;
 
-function Load_ENGINE_get_default_DH: PENGINE; cdecl;
-begin
   ENGINE_get_default_DH := LoadLibCryptoFunction('ENGINE_get_default_DH');
-  if not assigned(ENGINE_get_default_DH) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_default_DH');
-  Result := ENGINE_get_default_DH();
-end;
+  FuncLoadError := not assigned(ENGINE_get_default_DH);
+  if FuncLoadError then
+  begin
+    ENGINE_get_default_DH :=  @ERROR_ENGINE_get_default_DH;
+  end;
 
-function Load_ENGINE_get_default_RAND: PENGINE; cdecl;
-begin
   ENGINE_get_default_RAND := LoadLibCryptoFunction('ENGINE_get_default_RAND');
-  if not assigned(ENGINE_get_default_RAND) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_default_RAND');
-  Result := ENGINE_get_default_RAND();
-end;
+  FuncLoadError := not assigned(ENGINE_get_default_RAND);
+  if FuncLoadError then
+  begin
+    ENGINE_get_default_RAND :=  @ERROR_ENGINE_get_default_RAND;
+  end;
 
-function Load_ENGINE_get_cipher_engine(nid: TOpenSSL_C_INT): PENGINE; cdecl;
-begin
   ENGINE_get_cipher_engine := LoadLibCryptoFunction('ENGINE_get_cipher_engine');
-  if not assigned(ENGINE_get_cipher_engine) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_cipher_engine');
-  Result := ENGINE_get_cipher_engine(nid);
-end;
+  FuncLoadError := not assigned(ENGINE_get_cipher_engine);
+  if FuncLoadError then
+  begin
+    ENGINE_get_cipher_engine :=  @ERROR_ENGINE_get_cipher_engine;
+  end;
 
-function Load_ENGINE_get_digest_engine(nid: TOpenSSL_C_INT): PENGINE; cdecl;
-begin
   ENGINE_get_digest_engine := LoadLibCryptoFunction('ENGINE_get_digest_engine');
-  if not assigned(ENGINE_get_digest_engine) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_digest_engine');
-  Result := ENGINE_get_digest_engine(nid);
-end;
+  FuncLoadError := not assigned(ENGINE_get_digest_engine);
+  if FuncLoadError then
+  begin
+    ENGINE_get_digest_engine :=  @ERROR_ENGINE_get_digest_engine;
+  end;
 
-function Load_ENGINE_get_pkey_meth_engine(nid: TOpenSSL_C_INT): PENGINE; cdecl;
-begin
   ENGINE_get_pkey_meth_engine := LoadLibCryptoFunction('ENGINE_get_pkey_meth_engine');
-  if not assigned(ENGINE_get_pkey_meth_engine) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_pkey_meth_engine');
-  Result := ENGINE_get_pkey_meth_engine(nid);
-end;
+  FuncLoadError := not assigned(ENGINE_get_pkey_meth_engine);
+  if FuncLoadError then
+  begin
+    ENGINE_get_pkey_meth_engine :=  @ERROR_ENGINE_get_pkey_meth_engine;
+  end;
 
-function Load_ENGINE_get_pkey_asn1_meth_engine(nid: TOpenSSL_C_INT): PENGINE; cdecl;
-begin
   ENGINE_get_pkey_asn1_meth_engine := LoadLibCryptoFunction('ENGINE_get_pkey_asn1_meth_engine');
-  if not assigned(ENGINE_get_pkey_asn1_meth_engine) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_pkey_asn1_meth_engine');
-  Result := ENGINE_get_pkey_asn1_meth_engine(nid);
-end;
+  FuncLoadError := not assigned(ENGINE_get_pkey_asn1_meth_engine);
+  if FuncLoadError then
+  begin
+    ENGINE_get_pkey_asn1_meth_engine :=  @ERROR_ENGINE_get_pkey_asn1_meth_engine;
+  end;
 
-function Load_ENGINE_set_default_RSA(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_default_RSA := LoadLibCryptoFunction('ENGINE_set_default_RSA');
-  if not assigned(ENGINE_set_default_RSA) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default_RSA');
-  Result := ENGINE_set_default_RSA(e);
-end;
+  FuncLoadError := not assigned(ENGINE_set_default_RSA);
+  if FuncLoadError then
+  begin
+    ENGINE_set_default_RSA :=  @ERROR_ENGINE_set_default_RSA;
+  end;
 
-function Load_ENGINE_set_default_string(e: PENGINE; const def_list: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_default_string := LoadLibCryptoFunction('ENGINE_set_default_string');
-  if not assigned(ENGINE_set_default_string) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default_string');
-  Result := ENGINE_set_default_string(e,def_list);
-end;
+  FuncLoadError := not assigned(ENGINE_set_default_string);
+  if FuncLoadError then
+  begin
+    ENGINE_set_default_string :=  @ERROR_ENGINE_set_default_string;
+  end;
 
-function Load_ENGINE_set_default_DSA(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_default_DSA := LoadLibCryptoFunction('ENGINE_set_default_DSA');
-  if not assigned(ENGINE_set_default_DSA) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default_DSA');
-  Result := ENGINE_set_default_DSA(e);
-end;
+  FuncLoadError := not assigned(ENGINE_set_default_DSA);
+  if FuncLoadError then
+  begin
+    ENGINE_set_default_DSA :=  @ERROR_ENGINE_set_default_DSA;
+  end;
 
-function Load_ENGINE_set_default_EC(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_default_EC := LoadLibCryptoFunction('ENGINE_set_default_EC');
-  if not assigned(ENGINE_set_default_EC) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default_EC');
-  Result := ENGINE_set_default_EC(e);
-end;
+  FuncLoadError := not assigned(ENGINE_set_default_EC);
+  if FuncLoadError then
+  begin
+    ENGINE_set_default_EC :=  @ERROR_ENGINE_set_default_EC;
+  end;
 
-function Load_ENGINE_set_default_DH(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_default_DH := LoadLibCryptoFunction('ENGINE_set_default_DH');
-  if not assigned(ENGINE_set_default_DH) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default_DH');
-  Result := ENGINE_set_default_DH(e);
-end;
+  FuncLoadError := not assigned(ENGINE_set_default_DH);
+  if FuncLoadError then
+  begin
+    ENGINE_set_default_DH :=  @ERROR_ENGINE_set_default_DH;
+  end;
 
-function Load_ENGINE_set_default_RAND(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_default_RAND := LoadLibCryptoFunction('ENGINE_set_default_RAND');
-  if not assigned(ENGINE_set_default_RAND) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default_RAND');
-  Result := ENGINE_set_default_RAND(e);
-end;
+  FuncLoadError := not assigned(ENGINE_set_default_RAND);
+  if FuncLoadError then
+  begin
+    ENGINE_set_default_RAND :=  @ERROR_ENGINE_set_default_RAND;
+  end;
 
-function Load_ENGINE_set_default_ciphers(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_default_ciphers := LoadLibCryptoFunction('ENGINE_set_default_ciphers');
-  if not assigned(ENGINE_set_default_ciphers) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default_ciphers');
-  Result := ENGINE_set_default_ciphers(e);
-end;
+  FuncLoadError := not assigned(ENGINE_set_default_ciphers);
+  if FuncLoadError then
+  begin
+    ENGINE_set_default_ciphers :=  @ERROR_ENGINE_set_default_ciphers;
+  end;
 
-function Load_ENGINE_set_default_digests(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_default_digests := LoadLibCryptoFunction('ENGINE_set_default_digests');
-  if not assigned(ENGINE_set_default_digests) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default_digests');
-  Result := ENGINE_set_default_digests(e);
-end;
+  FuncLoadError := not assigned(ENGINE_set_default_digests);
+  if FuncLoadError then
+  begin
+    ENGINE_set_default_digests :=  @ERROR_ENGINE_set_default_digests;
+  end;
 
-function Load_ENGINE_set_default_pkey_meths(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_default_pkey_meths := LoadLibCryptoFunction('ENGINE_set_default_pkey_meths');
-  if not assigned(ENGINE_set_default_pkey_meths) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default_pkey_meths');
-  Result := ENGINE_set_default_pkey_meths(e);
-end;
+  FuncLoadError := not assigned(ENGINE_set_default_pkey_meths);
+  if FuncLoadError then
+  begin
+    ENGINE_set_default_pkey_meths :=  @ERROR_ENGINE_set_default_pkey_meths;
+  end;
 
-function Load_ENGINE_set_default_pkey_asn1_meths(e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_default_pkey_asn1_meths := LoadLibCryptoFunction('ENGINE_set_default_pkey_asn1_meths');
-  if not assigned(ENGINE_set_default_pkey_asn1_meths) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default_pkey_asn1_meths');
-  Result := ENGINE_set_default_pkey_asn1_meths(e);
-end;
+  FuncLoadError := not assigned(ENGINE_set_default_pkey_asn1_meths);
+  if FuncLoadError then
+  begin
+    ENGINE_set_default_pkey_asn1_meths :=  @ERROR_ENGINE_set_default_pkey_asn1_meths;
+  end;
 
-function Load_ENGINE_set_default(e: PENGINE; flags: TOpenSSL_C_ULONG): TOpenSSL_C_INT; cdecl;
-begin
   ENGINE_set_default := LoadLibCryptoFunction('ENGINE_set_default');
-  if not assigned(ENGINE_set_default) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_set_default');
-  Result := ENGINE_set_default(e,flags);
-end;
+  FuncLoadError := not assigned(ENGINE_set_default);
+  if FuncLoadError then
+  begin
+    ENGINE_set_default :=  @ERROR_ENGINE_set_default;
+  end;
 
-procedure Load_ENGINE_add_conf_module; cdecl;
-begin
   ENGINE_add_conf_module := LoadLibCryptoFunction('ENGINE_add_conf_module');
-  if not assigned(ENGINE_add_conf_module) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_add_conf_module');
-  ENGINE_add_conf_module();
-end;
+  FuncLoadError := not assigned(ENGINE_add_conf_module);
+  if FuncLoadError then
+  begin
+    ENGINE_add_conf_module :=  @ERROR_ENGINE_add_conf_module;
+  end;
 
-function Load_ENGINE_get_static_state: Pointer; cdecl;
-begin
   ENGINE_get_static_state := LoadLibCryptoFunction('ENGINE_get_static_state');
-  if not assigned(ENGINE_get_static_state) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ENGINE_get_static_state');
-  Result := ENGINE_get_static_state();
-end;
+  FuncLoadError := not assigned(ENGINE_get_static_state);
+  if FuncLoadError then
+  begin
+    ENGINE_get_static_state :=  @ERROR_ENGINE_get_static_state;
+  end;
 
+end;
 
 procedure UnLoad;
 begin
-  ENGINE_get_first := Load_ENGINE_get_first;
-  ENGINE_get_last := Load_ENGINE_get_last;
-  ENGINE_get_next := Load_ENGINE_get_next;
-  ENGINE_get_prev := Load_ENGINE_get_prev;
-  ENGINE_add := Load_ENGINE_add;
-  ENGINE_remove := Load_ENGINE_remove;
-  ENGINE_by_id := Load_ENGINE_by_id;
-  ENGINE_load_builtin_engines := Load_ENGINE_load_builtin_engines;
-  ENGINE_get_table_flags := Load_ENGINE_get_table_flags;
-  ENGINE_set_table_flags := Load_ENGINE_set_table_flags;
-  ENGINE_register_RSA := Load_ENGINE_register_RSA;
-  ENGINE_unregister_RSA := Load_ENGINE_unregister_RSA;
-  ENGINE_register_all_RSA := Load_ENGINE_register_all_RSA;
-  ENGINE_register_DSA := Load_ENGINE_register_DSA;
-  ENGINE_unregister_DSA := Load_ENGINE_unregister_DSA;
-  ENGINE_register_all_DSA := Load_ENGINE_register_all_DSA;
-  ENGINE_register_EC := Load_ENGINE_register_EC;
-  ENGINE_unregister_EC := Load_ENGINE_unregister_EC;
-  ENGINE_register_all_EC := Load_ENGINE_register_all_EC;
-  ENGINE_register_DH := Load_ENGINE_register_DH;
-  ENGINE_unregister_DH := Load_ENGINE_unregister_DH;
-  ENGINE_register_all_DH := Load_ENGINE_register_all_DH;
-  ENGINE_register_RAND := Load_ENGINE_register_RAND;
-  ENGINE_unregister_RAND := Load_ENGINE_unregister_RAND;
-  ENGINE_register_all_RAND := Load_ENGINE_register_all_RAND;
-  ENGINE_register_ciphers := Load_ENGINE_register_ciphers;
-  ENGINE_unregister_ciphers := Load_ENGINE_unregister_ciphers;
-  ENGINE_register_all_ciphers := Load_ENGINE_register_all_ciphers;
-  ENGINE_register_digests := Load_ENGINE_register_digests;
-  ENGINE_unregister_digests := Load_ENGINE_unregister_digests;
-  ENGINE_register_all_digests := Load_ENGINE_register_all_digests;
-  ENGINE_register_pkey_meths := Load_ENGINE_register_pkey_meths;
-  ENGINE_unregister_pkey_meths := Load_ENGINE_unregister_pkey_meths;
-  ENGINE_register_all_pkey_meths := Load_ENGINE_register_all_pkey_meths;
-  ENGINE_register_pkey_asn1_meths := Load_ENGINE_register_pkey_asn1_meths;
-  ENGINE_unregister_pkey_asn1_meths := Load_ENGINE_unregister_pkey_asn1_meths;
-  ENGINE_register_all_pkey_asn1_meths := Load_ENGINE_register_all_pkey_asn1_meths;
-  ENGINE_register_complete := Load_ENGINE_register_complete;
-  ENGINE_register_all_complete := Load_ENGINE_register_all_complete;
-  ENGINE_ctrl := Load_ENGINE_ctrl;
-  ENGINE_cmd_is_executable := Load_ENGINE_cmd_is_executable;
-  ENGINE_ctrl_cmd := Load_ENGINE_ctrl_cmd;
-  ENGINE_ctrl_cmd_string := Load_ENGINE_ctrl_cmd_string;
-  ENGINE_new := Load_ENGINE_new;
-  ENGINE_free := Load_ENGINE_free;
-  ENGINE_up_ref := Load_ENGINE_up_ref;
-  ENGINE_set_id := Load_ENGINE_set_id;
-  ENGINE_set_name := Load_ENGINE_set_name;
-  ENGINE_set_RSA := Load_ENGINE_set_RSA;
-  ENGINE_set_DSA := Load_ENGINE_set_DSA;
-  ENGINE_set_EC := Load_ENGINE_set_EC;
-  ENGINE_set_DH := Load_ENGINE_set_DH;
-  ENGINE_set_RAND := Load_ENGINE_set_RAND;
-  ENGINE_set_destroy_function := Load_ENGINE_set_destroy_function;
-  ENGINE_set_init_function := Load_ENGINE_set_init_function;
-  ENGINE_set_finish_function := Load_ENGINE_set_finish_function;
-  ENGINE_set_ctrl_function := Load_ENGINE_set_ctrl_function;
-  ENGINE_set_load_privkey_function := Load_ENGINE_set_load_privkey_function;
-  ENGINE_set_load_pubkey_function := Load_ENGINE_set_load_pubkey_function;
-  ENGINE_set_ciphers := Load_ENGINE_set_ciphers;
-  ENGINE_set_digests := Load_ENGINE_set_digests;
-  ENGINE_set_pkey_meths := Load_ENGINE_set_pkey_meths;
-  ENGINE_set_pkey_asn1_meths := Load_ENGINE_set_pkey_asn1_meths;
-  ENGINE_set_flags := Load_ENGINE_set_flags;
-  ENGINE_set_cmd_defns := Load_ENGINE_set_cmd_defns;
-  ENGINE_set_ex_data := Load_ENGINE_set_ex_data;
-  ENGINE_get_ex_data := Load_ENGINE_get_ex_data;
-  ENGINE_get_id := Load_ENGINE_get_id;
-  ENGINE_get_name := Load_ENGINE_get_name;
-  ENGINE_get_RSA := Load_ENGINE_get_RSA;
-  ENGINE_get_DSA := Load_ENGINE_get_DSA;
-  ENGINE_get_EC := Load_ENGINE_get_EC;
-  ENGINE_get_DH := Load_ENGINE_get_DH;
-  ENGINE_get_RAND := Load_ENGINE_get_RAND;
-  ENGINE_get_destroy_function := Load_ENGINE_get_destroy_function;
-  ENGINE_get_init_function := Load_ENGINE_get_init_function;
-  ENGINE_get_finish_function := Load_ENGINE_get_finish_function;
-  ENGINE_get_ctrl_function := Load_ENGINE_get_ctrl_function;
-  ENGINE_get_load_privkey_function := Load_ENGINE_get_load_privkey_function;
-  ENGINE_get_load_pubkey_function := Load_ENGINE_get_load_pubkey_function;
-  ENGINE_get_ciphers := Load_ENGINE_get_ciphers;
-  ENGINE_get_digests := Load_ENGINE_get_digests;
-  ENGINE_get_pkey_meths := Load_ENGINE_get_pkey_meths;
-  ENGINE_get_pkey_asn1_meths := Load_ENGINE_get_pkey_asn1_meths;
-  ENGINE_get_cipher := Load_ENGINE_get_cipher;
-  ENGINE_get_digest := Load_ENGINE_get_digest;
-  ENGINE_get_pkey_meth := Load_ENGINE_get_pkey_meth;
-  ENGINE_get_pkey_asn1_meth := Load_ENGINE_get_pkey_asn1_meth;
-  ENGINE_get_pkey_asn1_meth_str := Load_ENGINE_get_pkey_asn1_meth_str;
-  ENGINE_pkey_asn1_find_str := Load_ENGINE_pkey_asn1_find_str;
-  ENGINE_get_cmd_defns := Load_ENGINE_get_cmd_defns;
-  ENGINE_get_flags := Load_ENGINE_get_flags;
-  ENGINE_init := Load_ENGINE_init;
-  ENGINE_finish := Load_ENGINE_finish;
-  ENGINE_load_private_key := Load_ENGINE_load_private_key;
-  ENGINE_load_public_key := Load_ENGINE_load_public_key;
-  ENGINE_get_default_RSA := Load_ENGINE_get_default_RSA;
-  ENGINE_get_default_DSA := Load_ENGINE_get_default_DSA;
-  ENGINE_get_default_EC := Load_ENGINE_get_default_EC;
-  ENGINE_get_default_DH := Load_ENGINE_get_default_DH;
-  ENGINE_get_default_RAND := Load_ENGINE_get_default_RAND;
-  ENGINE_get_cipher_engine := Load_ENGINE_get_cipher_engine;
-  ENGINE_get_digest_engine := Load_ENGINE_get_digest_engine;
-  ENGINE_get_pkey_meth_engine := Load_ENGINE_get_pkey_meth_engine;
-  ENGINE_get_pkey_asn1_meth_engine := Load_ENGINE_get_pkey_asn1_meth_engine;
-  ENGINE_set_default_RSA := Load_ENGINE_set_default_RSA;
-  ENGINE_set_default_string := Load_ENGINE_set_default_string;
-  ENGINE_set_default_DSA := Load_ENGINE_set_default_DSA;
-  ENGINE_set_default_EC := Load_ENGINE_set_default_EC;
-  ENGINE_set_default_DH := Load_ENGINE_set_default_DH;
-  ENGINE_set_default_RAND := Load_ENGINE_set_default_RAND;
-  ENGINE_set_default_ciphers := Load_ENGINE_set_default_ciphers;
-  ENGINE_set_default_digests := Load_ENGINE_set_default_digests;
-  ENGINE_set_default_pkey_meths := Load_ENGINE_set_default_pkey_meths;
-  ENGINE_set_default_pkey_asn1_meths := Load_ENGINE_set_default_pkey_asn1_meths;
-  ENGINE_set_default := Load_ENGINE_set_default;
-  ENGINE_add_conf_module := Load_ENGINE_add_conf_module;
-  ENGINE_get_static_state := Load_ENGINE_get_static_state;
+  ENGINE_get_first := nil;
+  ENGINE_get_last := nil;
+  ENGINE_get_next := nil;
+  ENGINE_get_prev := nil;
+  ENGINE_add := nil;
+  ENGINE_remove := nil;
+  ENGINE_by_id := nil;
+  ENGINE_load_builtin_engines := nil;
+  ENGINE_get_table_flags := nil;
+  ENGINE_set_table_flags := nil;
+  ENGINE_register_RSA := nil;
+  ENGINE_unregister_RSA := nil;
+  ENGINE_register_all_RSA := nil;
+  ENGINE_register_DSA := nil;
+  ENGINE_unregister_DSA := nil;
+  ENGINE_register_all_DSA := nil;
+  ENGINE_register_EC := nil;
+  ENGINE_unregister_EC := nil;
+  ENGINE_register_all_EC := nil;
+  ENGINE_register_DH := nil;
+  ENGINE_unregister_DH := nil;
+  ENGINE_register_all_DH := nil;
+  ENGINE_register_RAND := nil;
+  ENGINE_unregister_RAND := nil;
+  ENGINE_register_all_RAND := nil;
+  ENGINE_register_ciphers := nil;
+  ENGINE_unregister_ciphers := nil;
+  ENGINE_register_all_ciphers := nil;
+  ENGINE_register_digests := nil;
+  ENGINE_unregister_digests := nil;
+  ENGINE_register_all_digests := nil;
+  ENGINE_register_pkey_meths := nil;
+  ENGINE_unregister_pkey_meths := nil;
+  ENGINE_register_all_pkey_meths := nil;
+  ENGINE_register_pkey_asn1_meths := nil;
+  ENGINE_unregister_pkey_asn1_meths := nil;
+  ENGINE_register_all_pkey_asn1_meths := nil;
+  ENGINE_register_complete := nil;
+  ENGINE_register_all_complete := nil;
+  ENGINE_ctrl := nil;
+  ENGINE_cmd_is_executable := nil;
+  ENGINE_ctrl_cmd := nil;
+  ENGINE_ctrl_cmd_string := nil;
+  ENGINE_new := nil;
+  ENGINE_free := nil;
+  ENGINE_up_ref := nil;
+  ENGINE_set_id := nil;
+  ENGINE_set_name := nil;
+  ENGINE_set_RSA := nil;
+  ENGINE_set_DSA := nil;
+  ENGINE_set_EC := nil;
+  ENGINE_set_DH := nil;
+  ENGINE_set_RAND := nil;
+  ENGINE_set_destroy_function := nil;
+  ENGINE_set_init_function := nil;
+  ENGINE_set_finish_function := nil;
+  ENGINE_set_ctrl_function := nil;
+  ENGINE_set_load_privkey_function := nil;
+  ENGINE_set_load_pubkey_function := nil;
+  ENGINE_set_ciphers := nil;
+  ENGINE_set_digests := nil;
+  ENGINE_set_pkey_meths := nil;
+  ENGINE_set_pkey_asn1_meths := nil;
+  ENGINE_set_flags := nil;
+  ENGINE_set_cmd_defns := nil;
+  ENGINE_set_ex_data := nil;
+  ENGINE_get_ex_data := nil;
+  ENGINE_get_id := nil;
+  ENGINE_get_name := nil;
+  ENGINE_get_RSA := nil;
+  ENGINE_get_DSA := nil;
+  ENGINE_get_EC := nil;
+  ENGINE_get_DH := nil;
+  ENGINE_get_RAND := nil;
+  ENGINE_get_destroy_function := nil;
+  ENGINE_get_init_function := nil;
+  ENGINE_get_finish_function := nil;
+  ENGINE_get_ctrl_function := nil;
+  ENGINE_get_load_privkey_function := nil;
+  ENGINE_get_load_pubkey_function := nil;
+  ENGINE_get_ciphers := nil;
+  ENGINE_get_digests := nil;
+  ENGINE_get_pkey_meths := nil;
+  ENGINE_get_pkey_asn1_meths := nil;
+  ENGINE_get_cipher := nil;
+  ENGINE_get_digest := nil;
+  ENGINE_get_pkey_meth := nil;
+  ENGINE_get_pkey_asn1_meth := nil;
+  ENGINE_get_pkey_asn1_meth_str := nil;
+  ENGINE_pkey_asn1_find_str := nil;
+  ENGINE_get_cmd_defns := nil;
+  ENGINE_get_flags := nil;
+  ENGINE_init := nil;
+  ENGINE_finish := nil;
+  ENGINE_load_private_key := nil;
+  ENGINE_load_public_key := nil;
+  ENGINE_get_default_RSA := nil;
+  ENGINE_get_default_DSA := nil;
+  ENGINE_get_default_EC := nil;
+  ENGINE_get_default_DH := nil;
+  ENGINE_get_default_RAND := nil;
+  ENGINE_get_cipher_engine := nil;
+  ENGINE_get_digest_engine := nil;
+  ENGINE_get_pkey_meth_engine := nil;
+  ENGINE_get_pkey_asn1_meth_engine := nil;
+  ENGINE_set_default_RSA := nil;
+  ENGINE_set_default_string := nil;
+  ENGINE_set_default_DSA := nil;
+  ENGINE_set_default_EC := nil;
+  ENGINE_set_default_DH := nil;
+  ENGINE_set_default_RAND := nil;
+  ENGINE_set_default_ciphers := nil;
+  ENGINE_set_default_digests := nil;
+  ENGINE_set_default_pkey_meths := nil;
+  ENGINE_set_default_pkey_asn1_meths := nil;
+  ENGINE_set_default := nil;
+  ENGINE_add_conf_module := nil;
+  ENGINE_get_static_state := nil;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
+Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

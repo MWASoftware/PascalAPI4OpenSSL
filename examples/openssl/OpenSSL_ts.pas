@@ -585,385 +585,194 @@ function TS_CONF_set_ess_cert_id_chain(conf: PCONF; section: PAnsiChar; ctx: PTS
 function TS_CONF_set_ess_cert_id_digest(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl; external CLibCrypto;
 
 {$ELSE}
-
-{Declare external function initialisers - should not be called directly}
-
-function Load_TS_REQ_new: PTS_REQ; cdecl;
-procedure Load_TS_REQ_free(a: PTS_REQ); cdecl;
-function Load_i2d_TS_REQ(a: PTS_REQ; pp: PPByte): TOpenSSL_C_INT; cdecl;
-function Load_d2i_TS_REQ(a: PPTS_REQ; pp: PPByte; length: TOpenSSL_C_LONG): PTS_REQ; cdecl;
-function Load_TS_REQ_dup(a: PTS_REQ): PTS_REQ; cdecl;
-function Load_d2i_TS_REQ_bio(fp: PBIO; a: PPTS_REQ): PTS_REQ; cdecl;
-function Load_i2d_TS_REQ_bio(fp: PBIO; a: PTS_REQ): TOpenSSL_C_INT; cdecl;
-function Load_TS_MSG_IMPRINT_new: PTS_MSG_IMPRINT; cdecl;
-procedure Load_TS_MSG_IMPRINT_free(a: PTS_MSG_IMPRINT); cdecl;
-function Load_i2d_TS_MSG_IMPRINT(a: PTS_MSG_IMPRINT; pp: PPByte): TOpenSSL_C_INT; cdecl;
-function Load_d2i_TS_MSG_IMPRINT(a: PPTS_MSG_IMPRINT; pp: PPByte; length: TOpenSSL_C_LONG): PTS_MSG_IMPRINT; cdecl;
-function Load_TS_MSG_IMPRINT_dup(a: PTS_MSG_IMPRINT): PTS_MSG_IMPRINT; cdecl;
-function Load_d2i_TS_MSG_IMPRINT_bio(bio: PBIO; a: PPTS_MSG_IMPRINT): PTS_MSG_IMPRINT; cdecl;
-function Load_i2d_TS_MSG_IMPRINT_bio(bio: PBIO; a: PTS_MSG_IMPRINT): TOpenSSL_C_INT; cdecl;
-function Load_TS_RESP_new: PTS_RESP; cdecl;
-procedure Load_TS_RESP_free(a: PTS_RESP); cdecl;
-function Load_i2d_TS_RESP(a: PTS_RESP; pp: PPByte): TOpenSSL_C_INT; cdecl;
-function Load_d2i_TS_RESP(a: PPTS_RESP; pp: PPByte; length: TOpenSSL_C_LONG): PTS_RESP; cdecl;
-function Load_PKCS7_to_TS_TST_INFO(token: PPKCS7): PTS_TST_Info; cdecl;
-function Load_TS_RESP_dup(a: PTS_RESP): PTS_RESP; cdecl;
-function Load_d2i_TS_RESP_bio(bio: PBIO; a: PPTS_RESP): PTS_RESP; cdecl;
-function Load_i2d_TS_RESP_bio(bio: PBIO; a: PTS_RESP): TOpenSSL_C_INT; cdecl;
-function Load_TS_STATUS_INFO_new: PTS_STATUS_INFO; cdecl;
-procedure Load_TS_STATUS_INFO_free(a: PTS_STATUS_INFO); cdecl;
-function Load_i2d_TS_STATUS_INFO(a: PTS_STATUS_INFO; pp: PPByte): TOpenSSL_C_INT; cdecl;
-function Load_d2i_TS_STATUS_INFO(a: PPTS_STATUS_INFO; pp: PPByte; length: TOpenSSL_C_LONG): PTS_STATUS_INFO; cdecl;
-function Load_TS_STATUS_INFO_dup(a: PTS_STATUS_INFO): PTS_STATUS_INFO; cdecl;
-function Load_TS_TST_INFO_new: PTS_TST_Info; cdecl;
-procedure Load_TS_TST_INFO_free(a: PTS_TST_Info); cdecl;
-function Load_i2d_TS_TST_INFO(a: PTS_TST_Info; pp: PPByte): TOpenSSL_C_INT; cdecl;
-function Load_d2i_TS_TST_INFO(a: PPTS_TST_Info; pp: PPByte; length: TOpenSSL_C_LONG): PTS_TST_Info; cdecl;
-function Load_TS_TST_INFO_dup(a: PTS_TST_Info): PTS_TST_Info; cdecl;
-function Load_d2i_TS_TST_INFO_bio(bio: PBIO; a: PPTS_TST_Info): PTS_TST_Info; cdecl;
-function Load_i2d_TS_TST_INFO_bio(bio: PBIO; a: PTS_TST_Info): TOpenSSL_C_INT; cdecl;
-function Load_TS_ACCURACY_new: PTS_ACCURACY; cdecl;
-procedure Load_TS_ACCURACY_free(a: PTS_ACCURACY); cdecl;
-function Load_i2d_TS_ACCURACY(a: PTS_ACCURACY; pp: PPByte): TOpenSSL_C_INT; cdecl;
-function Load_d2i_TS_ACCURACY(a: PPTS_ACCURACY; pp: PPByte; length: TOpenSSL_C_LONG): PTS_ACCURACY; cdecl;
-function Load_TS_ACCURACY_dup(a: PTS_ACCURACY): PTS_ACCURACY; cdecl;
-function Load_ESS_ISSUER_SERIAL_new: PESS_ISSUER_SERIAL; cdecl;
-procedure Load_ESS_ISSUER_SERIAL_free(a: PESS_ISSUER_SERIAL); cdecl;
-function Load_i2d_ESS_ISSUER_SERIAL( a: PESS_ISSUER_SERIAL; pp: PPByte): TOpenSSL_C_INT; cdecl;
-function Load_d2i_ESS_ISSUER_SERIAL(a: PPESS_ISSUER_SERIAL; pp: PPByte; length: TOpenSSL_C_LONG): PESS_ISSUER_SERIAL; cdecl;
-function Load_ESS_ISSUER_SERIAL_dup(a: PESS_ISSUER_SERIAL): PESS_ISSUER_SERIAL; cdecl;
-function Load_ESS_CERT_ID_new: PESS_CERT_ID; cdecl;
-procedure Load_ESS_CERT_ID_free(a: PESS_CERT_ID); cdecl;
-function Load_i2d_ESS_CERT_ID(a: PESS_CERT_ID; pp: PPByte): TOpenSSL_C_INT; cdecl;
-function Load_d2i_ESS_CERT_ID(a: PPESS_CERT_ID; pp: PPByte; length: TOpenSSL_C_LONG): PESS_CERT_ID; cdecl;
-function Load_ESS_CERT_ID_dup(a: PESS_CERT_ID): PESS_CERT_ID; cdecl;
-function Load_ESS_SIGNING_CERT_new: PESS_SIGNING_Cert; cdecl;
-procedure Load_ESS_SIGNING_CERT_free(a: PESS_SIGNING_Cert); cdecl;
-function Load_i2d_ESS_SIGNING_CERT( a: PESS_SIGNING_Cert; pp: PPByte): TOpenSSL_C_INT; cdecl;
-function Load_d2i_ESS_SIGNING_CERT(a: PPESS_SIGNING_Cert; pp: PPByte; length: TOpenSSL_C_LONG): PESS_SIGNING_Cert; cdecl;
-function Load_ESS_SIGNING_CERT_dup(a: PESS_SIGNING_Cert): PESS_SIGNING_Cert; cdecl;
-function Load_ESS_CERT_ID_V2_new: PESS_CERT_ID_V2; cdecl;
-procedure Load_ESS_CERT_ID_V2_free(a: PESS_CERT_ID_V2); cdecl;
-function Load_i2d_ESS_CERT_ID_V2( a: PESS_CERT_ID_V2; pp: PPByte): TOpenSSL_C_INT; cdecl;
-function Load_d2i_ESS_CERT_ID_V2(a: PPESS_CERT_ID_V2; pp: PPByte; length: TOpenSSL_C_LONG): PESS_CERT_ID_V2; cdecl;
-function Load_ESS_CERT_ID_V2_dup(a: PESS_CERT_ID_V2): PESS_CERT_ID_V2; cdecl;
-function Load_ESS_SIGNING_CERT_V2_new: PESS_SIGNING_CERT_V2; cdecl;
-procedure Load_ESS_SIGNING_CERT_V2_free(a: PESS_SIGNING_CERT_V2); cdecl;
-function Load_i2d_ESS_SIGNING_CERT_V2(a: PESS_SIGNING_CERT_V2; pp: PPByte): TOpenSSL_C_INT; cdecl;
-function Load_d2i_ESS_SIGNING_CERT_V2(a: PPESS_SIGNING_CERT_V2; pp: PPByte; length: TOpenSSL_C_LONG): PESS_SIGNING_CERT_V2; cdecl;
-function Load_ESS_SIGNING_CERT_V2_dup(a: PESS_SIGNING_CERT_V2): PESS_SIGNING_CERT_V2; cdecl;
-function Load_TS_REQ_set_version(a: PTS_REQ; version: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
-function Load_TS_REQ_get_version(a: PTS_REQ): TOpenSSL_C_LONG; cdecl;
-function Load_TS_STATUS_INFO_set_status(a: PTS_STATUS_INFO; i: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_TS_STATUS_INFO_get0_status(const a: PTS_STATUS_INFO): PASN1_INTEGER; cdecl;
-function Load_TS_REQ_set_msg_imprint(a: PTS_REQ; msg_imprint: PTS_MSG_IMPRINT): TOpenSSL_C_INT; cdecl;
-function Load_TS_REQ_get_msg_imprint(a: PTS_REQ): PTS_MSG_IMPRINT; cdecl;
-function Load_TS_MSG_IMPRINT_set_algo(a: PTS_MSG_IMPRINT; alg: PX509_ALGOr): TOpenSSL_C_INT; cdecl;
-function Load_TS_MSG_IMPRINT_get_algo(a: PTS_MSG_IMPRINT): PX509_ALGOr; cdecl;
-function Load_TS_MSG_IMPRINT_set_msg(a: PTS_MSG_IMPRINT; d: PByte; len: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_TS_MSG_IMPRINT_get_msg(a: PTS_MSG_IMPRINT): PASN1_OCTET_STRING; cdecl;
-function Load_TS_REQ_set_policy_id(a: PTS_REQ; policy: PASN1_OBJECT): TOpenSSL_C_INT; cdecl;
-function Load_TS_REQ_get_policy_id(a: PTS_REQ): PASN1_OBJECT; cdecl;
-function Load_TS_REQ_set_nonce(a: PTS_REQ; nonce: PASN1_INTEGER): TOpenSSL_C_INT; cdecl;
-function Load_TS_REQ_get_nonce(const a: PTS_REQ): PASN1_INTEGER; cdecl;
-function Load_TS_REQ_set_cert_req(a: PTS_REQ; cert_req: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_TS_REQ_get_cert_req(a: PTS_REQ): TOpenSSL_C_INT; cdecl;
-procedure Load_TS_REQ_ext_free(a: PTS_REQ); cdecl;
-function Load_TS_REQ_get_ext_count(a: PTS_REQ): TOpenSSL_C_INT; cdecl;
-function Load_TS_REQ_get_ext_by_NID(a: PTS_REQ; nid: TOpenSSL_C_INT; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_TS_REQ_get_ext_by_OBJ(a: PTS_REQ; obj: PASN1_Object; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_TS_REQ_get_ext_by_critical(a: PTS_REQ; crit: TOpenSSL_C_INT; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_TS_REQ_get_ext(a: PTS_REQ; loc: TOpenSSL_C_INT): PX509_Extension; cdecl;
-function Load_TS_REQ_delete_ext(a: PTS_REQ; loc: TOpenSSL_C_INT): PX509_Extension; cdecl;
-function Load_TS_REQ_add_ext(a: PTS_REQ; ex: PX509_Extension; loc: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_TS_REQ_get_ext_d2i(a: PTS_REQ; nid: TOpenSSL_C_INT; crit: POpenSSL_C_INT; idx: POpenSSL_C_INT): Pointer; cdecl;
-function Load_TS_REQ_print_bio(bio: PBIO; a: PTS_REQ): TOpenSSL_C_INT; cdecl;
-function Load_TS_RESP_set_status_info(a: PTS_RESP; info: PTS_STATUS_INFO): TOpenSSL_C_INT; cdecl;
-function Load_TS_RESP_get_status_info(a: PTS_RESP): PTS_STATUS_INFO; cdecl;
-procedure Load_TS_RESP_set_tst_info(a: PTS_RESP; p7: PPKCS7; tst_info: PTS_TST_Info); cdecl;
-function Load_TS_RESP_get_token(a: PTS_RESP): PPKCS7; cdecl;
-function Load_TS_RESP_get_tst_info(a: PTS_RESP): PTS_TST_Info; cdecl;
-function Load_TS_TST_INFO_set_version(a: PTS_TST_Info; version: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
-function Load_TS_TST_INFO_get_version(const a: PTS_TST_Info): TOpenSSL_C_LONG; cdecl;
-function Load_TS_TST_INFO_set_policy_id(a: PTS_TST_Info; policy_id: PASN1_Object): TOpenSSL_C_INT; cdecl;
-function Load_TS_TST_INFO_get_policy_id(a: PTS_TST_Info): PASN1_Object; cdecl;
-function Load_TS_TST_INFO_set_msg_imprint(a: PTS_TST_Info; msg_imprint: PTS_MSG_IMPRINT): TOpenSSL_C_INT; cdecl;
-function Load_TS_TST_INFO_get_msg_imprint(a: PTS_TST_Info): PTS_MSG_IMPRINT; cdecl;
-function Load_TS_TST_INFO_set_serial(a: PTS_TST_Info; const serial: PASN1_INTEGER): TOpenSSL_C_INT; cdecl;
-function Load_TS_TST_INFO_get_serial(const a: PTS_TST_INFO): PASN1_INTEGER; cdecl;
-function Load_TS_TST_INFO_set_time(a: PTS_TST_Info; gtime: PASN1_GENERALIZEDTIME): TOpenSSL_C_INT; cdecl;
-function Load_TS_TST_INFO_get_time(const a: PTS_TST_INFO): PASN1_GENERALIZEDTIME; cdecl;
-function Load_TS_TST_INFO_set_accuracy(a: PTS_TST_Info; accuracy: PTS_ACCURACY): TOpenSSL_C_INT; cdecl;
-function Load_TS_TST_INFO_get_accuracy(a: PTS_TST_Info): PTS_ACCURACY; cdecl;
-function Load_TS_ACCURACY_set_seconds(a: PTS_ACCURACY; const seconds: PASN1_INTEGER): TOpenSSL_C_INT; cdecl;
-function Load_TS_ACCURACY_get_seconds(const a: PTS_ACCURACY): PASN1_INTEGER; cdecl;
-function Load_TS_ACCURACY_set_millis(a: PTS_ACCURACY; const millis: PASN1_INTEGER): TOpenSSL_C_INT; cdecl;
-function Load_TS_ACCURACY_get_millis(const a: PTS_ACCURACY): PASN1_INTEGER; cdecl;
-function Load_TS_ACCURACY_set_micros(a: PTS_ACCURACY; const micros: PASN1_INTEGER): TOpenSSL_C_INT; cdecl;
-function Load_TS_ACCURACY_get_micros(const a: PTS_ACCURACY): PASN1_INTEGER; cdecl;
-function Load_TS_TST_INFO_set_ordering(a: PTS_TST_Info; ordering: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_TS_TST_INFO_get_ordering(const a: PTS_TST_Info): TOpenSSL_C_INT; cdecl;
-function Load_TS_TST_INFO_set_nonce(a: PTS_TST_Info; const nonce: PASN1_INTEGER): TOpenSSL_C_INT; cdecl;
-function Load_TS_TST_INFO_get_nonce(const a: PTS_TST_INFO): PASN1_INTEGER; cdecl;
-function Load_TS_TST_INFO_set_tsa(a: PTS_TST_Info; tsa: PGENERAL_NAME): TOpenSSL_C_INT; cdecl;
-function Load_TS_TST_INFO_get_tsa(a: PTS_TST_Info): PGENERAL_NAME; cdecl;
-procedure Load_TS_TST_INFO_ext_free(a: PTS_TST_Info); cdecl;
-function Load_TS_TST_INFO_get_ext_count(a: PTS_TST_Info): TOpenSSL_C_INT; cdecl;
-function Load_TS_TST_INFO_get_ext_by_NID(a: PTS_TST_Info; nid: TOpenSSL_C_INT; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_TS_TST_INFO_get_ext_by_OBJ(a: PTS_TST_Info; const obj: PASN1_Object; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_TS_TST_INFO_get_ext_by_critical(a: PTS_TST_Info; crit: TOpenSSL_C_INT; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_TS_TST_INFO_get_ext(a: PTS_TST_Info; loc: TOpenSSL_C_INT): PX509_Extension; cdecl;
-function Load_TS_TST_INFO_delete_ext(a: PTS_TST_Info; loc: TOpenSSL_C_INT): PX509_Extension; cdecl;
-function Load_TS_TST_INFO_add_ext(a: PTS_TST_Info; ex: PX509_Extension; loc: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_TS_TST_INFO_get_ext_d2i(a: PTS_TST_Info; nid: TOpenSSL_C_INT; crit: POpenSSL_C_INT; idx: POpenSSL_C_INT): Pointer; cdecl;
-function Load_TS_RESP_CTX_new: PTS_RESP_CTX; cdecl;
-procedure Load_TS_RESP_CTX_free(ctx: PTS_RESP_CTX); cdecl;
-function Load_TS_RESP_CTX_set_signer_cert(ctx: PTS_RESP_CTX; signer: PX509): TOpenSSL_C_INT; cdecl;
-function Load_TS_RESP_CTX_set_signer_key(ctx: PTS_RESP_CTX; key: PEVP_PKEY): TOpenSSL_C_INT; cdecl;
-function Load_TS_RESP_CTX_set_signer_digest(ctx: PTS_RESP_CTX; signer_digest: PEVP_MD): TOpenSSL_C_INT; cdecl;
-function Load_TS_RESP_CTX_set_ess_cert_id_digest(ctx: PTS_RESP_CTX; md: PEVP_MD): TOpenSSL_C_INT; cdecl;
-function Load_TS_RESP_CTX_set_def_policy(ctx: PTS_RESP_CTX; def_policy: PASN1_Object): TOpenSSL_C_INT; cdecl;
-function Load_TS_RESP_CTX_add_policy(ctx: PTS_RESP_CTX; const policy: PASN1_Object): TOpenSSL_C_INT; cdecl;
-function Load_TS_RESP_CTX_add_md(ctx: PTS_RESP_CTX; const md: PEVP_MD): TOpenSSL_C_INT; cdecl;
-function Load_TS_RESP_CTX_set_accuracy(ctx: PTS_RESP_CTX; secs: TOpenSSL_C_INT; millis: TOpenSSL_C_INT; micros: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_TS_RESP_CTX_set_clock_precision_digits(ctx: PTS_RESP_CTX; clock_precision_digits: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
-procedure Load_TS_RESP_CTX_add_flags(ctx: PTS_RESP_CTX; flags: TOpenSSL_C_INT); cdecl;
-procedure Load_TS_RESP_CTX_set_serial_cb(ctx: PTS_RESP_CTX; cb: TS_serial_cb; data: Pointer); cdecl;
-procedure Load_TS_RESP_CTX_set_time_cb(ctx: PTS_RESP_CTX; cb: TS_time_cb; data: Pointer); cdecl;
-procedure Load_TS_RESP_CTX_set_extension_cb(ctx: PTS_RESP_CTX; cb: TS_extension_cb; data: Pointer); cdecl;
-function Load_TS_RESP_CTX_set_status_info(ctx: PTS_RESP_CTX; status: TOpenSSL_C_INT; text: PAnsiChar): TOpenSSL_C_INT; cdecl;
-function Load_TS_RESP_CTX_set_status_info_cond(ctx: PTS_RESP_CTX; status: TOpenSSL_C_INT; text: PAnsiChar): TOpenSSL_C_INT; cdecl;
-function Load_TS_RESP_CTX_add_failure_info(ctx: PTS_RESP_CTX; failure: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_TS_RESP_CTX_get_request(ctx: PTS_RESP_CTX): PTS_REQ; cdecl;
-function Load_TS_RESP_CTX_get_tst_info(ctx: PTS_RESP_CTX): PTS_TST_Info; cdecl;
-function Load_TS_RESP_create_response(ctx: PTS_RESP_CTX; req_bio: PBIO): PTS_RESP; cdecl;
-function Load_TS_RESP_verify_response(ctx: PTS_VERIFY_CTX; response: PTS_RESP): TOpenSSL_C_INT; cdecl;
-function Load_TS_RESP_verify_token(ctx: PTS_VERIFY_CTX; token: PPKCS7): TOpenSSL_C_INT; cdecl;
-function Load_TS_VERIFY_CTX_new: PTS_VERIFY_CTX; cdecl;
-procedure Load_TS_VERIFY_CTX_init(ctx: PTS_VERIFY_CTX); cdecl;
-procedure Load_TS_VERIFY_CTX_free(ctx: PTS_VERIFY_CTX); cdecl;
-procedure Load_TS_VERIFY_CTX_cleanup(ctx: PTS_VERIFY_CTX); cdecl;
-function Load_TS_VERIFY_CTX_set_flags(ctx: PTS_VERIFY_CTX; f: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_TS_VERIFY_CTX_add_flags(ctx: PTS_VERIFY_CTX; f: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_TS_VERIFY_CTX_set_data(ctx: PTS_VERIFY_CTX; b: PBIO): PBIO; cdecl;
-function Load_TS_VERIFY_CTX_set_imprint(ctx: PTS_VERIFY_CTX; hexstr: PByte; len: TOpenSSL_C_LONG): PByte; cdecl;
-function Load_TS_VERIFY_CTX_set_store(ctx: PTS_VERIFY_CTX; s: PX509_Store): PX509_Store; cdecl;
-function Load_TS_REQ_to_TS_VERIFY_CTX(req: PTS_REQ; ctx: PTS_VERIFY_CTX): PTS_VERIFY_CTX; cdecl;
-function Load_TS_RESP_print_bio(bio: PBIO; a: PTS_RESP): TOpenSSL_C_INT; cdecl;
-function Load_TS_STATUS_INFO_print_bio(bio: PBIO; a: PTS_STATUS_INFO): TOpenSSL_C_INT; cdecl;
-function Load_TS_TST_INFO_print_bio(bio: PBIO; a: PTS_TST_Info): TOpenSSL_C_INT; cdecl;
-function Load_TS_ASN1_INTEGER_print_bio(bio: PBIO; const num: PASN1_INTEGER): TOpenSSL_C_INT; cdecl;
-function Load_TS_OBJ_print_bio(bio: PBIO; const obj: PASN1_Object): TOpenSSL_C_INT; cdecl;
-function Load_TS_X509_ALGOR_print_bio(bio: PBIO; const alg: PX509_ALGOr): TOpenSSL_C_INT; cdecl;
-function Load_TS_MSG_IMPRINT_print_bio(bio: PBIO; msg: PTS_MSG_IMPRINT): TOpenSSL_C_INT; cdecl;
-function Load_TS_CONF_load_cert(file_: PAnsiChar): PX509; cdecl;
-function Load_TS_CONF_load_key( file_: PAnsiChar; pass: PAnsiChar): PEVP_PKey; cdecl;
-function Load_TS_CONF_set_serial(conf: PCONF; section: PAnsiChar; cb: TS_serial_cb; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-function Load_TS_CONF_get_tsa_section(conf: PCONF; const section: PAnsiChar): PAnsiChar; cdecl;
-function Load_TS_CONF_set_crypto_device(conf: PCONF; section: PAnsiChar; device: PAnsiChar): TOpenSSL_C_INT; cdecl;
-function Load_TS_CONF_set_default_engine(name: PAnsiChar): TOpenSSL_C_INT; cdecl;
-function Load_TS_CONF_set_signer_cert(conf: PCONF; section: PAnsiChar; cert: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-function Load_TS_CONF_set_certs(conf: PCONF; section: PAnsiChar; certs: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-function Load_TS_CONF_set_signer_key(conf: PCONF; const section: PAnsiChar; key: PAnsiChar; pass: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-function Load_TS_CONF_set_signer_digest(conf: PCONF; section: PAnsiChar; md: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-function Load_TS_CONF_set_def_policy(conf: PCONF; section: PAnsiChar; policy: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-function Load_TS_CONF_set_policies(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-function Load_TS_CONF_set_digests(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-function Load_TS_CONF_set_accuracy(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-function Load_TS_CONF_set_clock_precision_digits(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-function Load_TS_CONF_set_ordering(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-function Load_TS_CONF_set_tsa_name(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-function Load_TS_CONF_set_ess_cert_id_chain(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-function Load_TS_CONF_set_ess_cert_id_digest(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-
 var
-  TS_REQ_new: function : PTS_REQ; cdecl = Load_TS_REQ_new;
-  TS_REQ_free: procedure (a: PTS_REQ); cdecl = Load_TS_REQ_free;
-  i2d_TS_REQ: function (a: PTS_REQ; pp: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_TS_REQ;
-  d2i_TS_REQ: function (a: PPTS_REQ; pp: PPByte; length: TOpenSSL_C_LONG): PTS_REQ; cdecl = Load_d2i_TS_REQ;
-  TS_REQ_dup: function (a: PTS_REQ): PTS_REQ; cdecl = Load_TS_REQ_dup;
-  d2i_TS_REQ_bio: function (fp: PBIO; a: PPTS_REQ): PTS_REQ; cdecl = Load_d2i_TS_REQ_bio;
-  i2d_TS_REQ_bio: function (fp: PBIO; a: PTS_REQ): TOpenSSL_C_INT; cdecl = Load_i2d_TS_REQ_bio;
-  TS_MSG_IMPRINT_new: function : PTS_MSG_IMPRINT; cdecl = Load_TS_MSG_IMPRINT_new;
-  TS_MSG_IMPRINT_free: procedure (a: PTS_MSG_IMPRINT); cdecl = Load_TS_MSG_IMPRINT_free;
-  i2d_TS_MSG_IMPRINT: function (a: PTS_MSG_IMPRINT; pp: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_TS_MSG_IMPRINT;
-  d2i_TS_MSG_IMPRINT: function (a: PPTS_MSG_IMPRINT; pp: PPByte; length: TOpenSSL_C_LONG): PTS_MSG_IMPRINT; cdecl = Load_d2i_TS_MSG_IMPRINT;
-  TS_MSG_IMPRINT_dup: function (a: PTS_MSG_IMPRINT): PTS_MSG_IMPRINT; cdecl = Load_TS_MSG_IMPRINT_dup;
-  d2i_TS_MSG_IMPRINT_bio: function (bio: PBIO; a: PPTS_MSG_IMPRINT): PTS_MSG_IMPRINT; cdecl = Load_d2i_TS_MSG_IMPRINT_bio;
-  i2d_TS_MSG_IMPRINT_bio: function (bio: PBIO; a: PTS_MSG_IMPRINT): TOpenSSL_C_INT; cdecl = Load_i2d_TS_MSG_IMPRINT_bio;
-  TS_RESP_new: function : PTS_RESP; cdecl = Load_TS_RESP_new;
-  TS_RESP_free: procedure (a: PTS_RESP); cdecl = Load_TS_RESP_free;
-  i2d_TS_RESP: function (a: PTS_RESP; pp: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_TS_RESP;
-  d2i_TS_RESP: function (a: PPTS_RESP; pp: PPByte; length: TOpenSSL_C_LONG): PTS_RESP; cdecl = Load_d2i_TS_RESP;
-  PKCS7_to_TS_TST_INFO: function (token: PPKCS7): PTS_TST_Info; cdecl = Load_PKCS7_to_TS_TST_INFO;
-  TS_RESP_dup: function (a: PTS_RESP): PTS_RESP; cdecl = Load_TS_RESP_dup;
-  d2i_TS_RESP_bio: function (bio: PBIO; a: PPTS_RESP): PTS_RESP; cdecl = Load_d2i_TS_RESP_bio;
-  i2d_TS_RESP_bio: function (bio: PBIO; a: PTS_RESP): TOpenSSL_C_INT; cdecl = Load_i2d_TS_RESP_bio;
-  TS_STATUS_INFO_new: function : PTS_STATUS_INFO; cdecl = Load_TS_STATUS_INFO_new;
-  TS_STATUS_INFO_free: procedure (a: PTS_STATUS_INFO); cdecl = Load_TS_STATUS_INFO_free;
-  i2d_TS_STATUS_INFO: function (a: PTS_STATUS_INFO; pp: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_TS_STATUS_INFO;
-  d2i_TS_STATUS_INFO: function (a: PPTS_STATUS_INFO; pp: PPByte; length: TOpenSSL_C_LONG): PTS_STATUS_INFO; cdecl = Load_d2i_TS_STATUS_INFO;
-  TS_STATUS_INFO_dup: function (a: PTS_STATUS_INFO): PTS_STATUS_INFO; cdecl = Load_TS_STATUS_INFO_dup;
-  TS_TST_INFO_new: function : PTS_TST_Info; cdecl = Load_TS_TST_INFO_new;
-  TS_TST_INFO_free: procedure (a: PTS_TST_Info); cdecl = Load_TS_TST_INFO_free;
-  i2d_TS_TST_INFO: function (a: PTS_TST_Info; pp: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_TS_TST_INFO;
-  d2i_TS_TST_INFO: function (a: PPTS_TST_Info; pp: PPByte; length: TOpenSSL_C_LONG): PTS_TST_Info; cdecl = Load_d2i_TS_TST_INFO;
-  TS_TST_INFO_dup: function (a: PTS_TST_Info): PTS_TST_Info; cdecl = Load_TS_TST_INFO_dup;
-  d2i_TS_TST_INFO_bio: function (bio: PBIO; a: PPTS_TST_Info): PTS_TST_Info; cdecl = Load_d2i_TS_TST_INFO_bio;
-  i2d_TS_TST_INFO_bio: function (bio: PBIO; a: PTS_TST_Info): TOpenSSL_C_INT; cdecl = Load_i2d_TS_TST_INFO_bio;
-  TS_ACCURACY_new: function : PTS_ACCURACY; cdecl = Load_TS_ACCURACY_new;
-  TS_ACCURACY_free: procedure (a: PTS_ACCURACY); cdecl = Load_TS_ACCURACY_free;
-  i2d_TS_ACCURACY: function (a: PTS_ACCURACY; pp: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_TS_ACCURACY;
-  d2i_TS_ACCURACY: function (a: PPTS_ACCURACY; pp: PPByte; length: TOpenSSL_C_LONG): PTS_ACCURACY; cdecl = Load_d2i_TS_ACCURACY;
-  TS_ACCURACY_dup: function (a: PTS_ACCURACY): PTS_ACCURACY; cdecl = Load_TS_ACCURACY_dup;
-  ESS_ISSUER_SERIAL_new: function : PESS_ISSUER_SERIAL; cdecl = Load_ESS_ISSUER_SERIAL_new;
-  ESS_ISSUER_SERIAL_free: procedure (a: PESS_ISSUER_SERIAL); cdecl = Load_ESS_ISSUER_SERIAL_free;
-  i2d_ESS_ISSUER_SERIAL: function ( a: PESS_ISSUER_SERIAL; pp: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_ESS_ISSUER_SERIAL;
-  d2i_ESS_ISSUER_SERIAL: function (a: PPESS_ISSUER_SERIAL; pp: PPByte; length: TOpenSSL_C_LONG): PESS_ISSUER_SERIAL; cdecl = Load_d2i_ESS_ISSUER_SERIAL;
-  ESS_ISSUER_SERIAL_dup: function (a: PESS_ISSUER_SERIAL): PESS_ISSUER_SERIAL; cdecl = Load_ESS_ISSUER_SERIAL_dup;
-  ESS_CERT_ID_new: function : PESS_CERT_ID; cdecl = Load_ESS_CERT_ID_new;
-  ESS_CERT_ID_free: procedure (a: PESS_CERT_ID); cdecl = Load_ESS_CERT_ID_free;
-  i2d_ESS_CERT_ID: function (a: PESS_CERT_ID; pp: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_ESS_CERT_ID;
-  d2i_ESS_CERT_ID: function (a: PPESS_CERT_ID; pp: PPByte; length: TOpenSSL_C_LONG): PESS_CERT_ID; cdecl = Load_d2i_ESS_CERT_ID;
-  ESS_CERT_ID_dup: function (a: PESS_CERT_ID): PESS_CERT_ID; cdecl = Load_ESS_CERT_ID_dup;
-  ESS_SIGNING_CERT_new: function : PESS_SIGNING_Cert; cdecl = Load_ESS_SIGNING_CERT_new;
-  ESS_SIGNING_CERT_free: procedure (a: PESS_SIGNING_Cert); cdecl = Load_ESS_SIGNING_CERT_free;
-  i2d_ESS_SIGNING_CERT: function ( a: PESS_SIGNING_Cert; pp: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_ESS_SIGNING_CERT;
-  d2i_ESS_SIGNING_CERT: function (a: PPESS_SIGNING_Cert; pp: PPByte; length: TOpenSSL_C_LONG): PESS_SIGNING_Cert; cdecl = Load_d2i_ESS_SIGNING_CERT;
-  ESS_SIGNING_CERT_dup: function (a: PESS_SIGNING_Cert): PESS_SIGNING_Cert; cdecl = Load_ESS_SIGNING_CERT_dup;
-  ESS_CERT_ID_V2_new: function : PESS_CERT_ID_V2; cdecl = Load_ESS_CERT_ID_V2_new;
-  ESS_CERT_ID_V2_free: procedure (a: PESS_CERT_ID_V2); cdecl = Load_ESS_CERT_ID_V2_free;
-  i2d_ESS_CERT_ID_V2: function ( a: PESS_CERT_ID_V2; pp: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_ESS_CERT_ID_V2;
-  d2i_ESS_CERT_ID_V2: function (a: PPESS_CERT_ID_V2; pp: PPByte; length: TOpenSSL_C_LONG): PESS_CERT_ID_V2; cdecl = Load_d2i_ESS_CERT_ID_V2;
-  ESS_CERT_ID_V2_dup: function (a: PESS_CERT_ID_V2): PESS_CERT_ID_V2; cdecl = Load_ESS_CERT_ID_V2_dup;
-  ESS_SIGNING_CERT_V2_new: function : PESS_SIGNING_CERT_V2; cdecl = Load_ESS_SIGNING_CERT_V2_new;
-  ESS_SIGNING_CERT_V2_free: procedure (a: PESS_SIGNING_CERT_V2); cdecl = Load_ESS_SIGNING_CERT_V2_free;
-  i2d_ESS_SIGNING_CERT_V2: function (a: PESS_SIGNING_CERT_V2; pp: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_ESS_SIGNING_CERT_V2;
-  d2i_ESS_SIGNING_CERT_V2: function (a: PPESS_SIGNING_CERT_V2; pp: PPByte; length: TOpenSSL_C_LONG): PESS_SIGNING_CERT_V2; cdecl = Load_d2i_ESS_SIGNING_CERT_V2;
-  ESS_SIGNING_CERT_V2_dup: function (a: PESS_SIGNING_CERT_V2): PESS_SIGNING_CERT_V2; cdecl = Load_ESS_SIGNING_CERT_V2_dup;
-  TS_REQ_set_version: function (a: PTS_REQ; version: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl = Load_TS_REQ_set_version;
-  TS_REQ_get_version: function (a: PTS_REQ): TOpenSSL_C_LONG; cdecl = Load_TS_REQ_get_version;
-  TS_STATUS_INFO_set_status: function (a: PTS_STATUS_INFO; i: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_TS_STATUS_INFO_set_status;
-  TS_STATUS_INFO_get0_status: function (const a: PTS_STATUS_INFO): PASN1_INTEGER; cdecl = Load_TS_STATUS_INFO_get0_status;
-  TS_REQ_set_msg_imprint: function (a: PTS_REQ; msg_imprint: PTS_MSG_IMPRINT): TOpenSSL_C_INT; cdecl = Load_TS_REQ_set_msg_imprint;
-  TS_REQ_get_msg_imprint: function (a: PTS_REQ): PTS_MSG_IMPRINT; cdecl = Load_TS_REQ_get_msg_imprint;
-  TS_MSG_IMPRINT_set_algo: function (a: PTS_MSG_IMPRINT; alg: PX509_ALGOr): TOpenSSL_C_INT; cdecl = Load_TS_MSG_IMPRINT_set_algo;
-  TS_MSG_IMPRINT_get_algo: function (a: PTS_MSG_IMPRINT): PX509_ALGOr; cdecl = Load_TS_MSG_IMPRINT_get_algo;
-  TS_MSG_IMPRINT_set_msg: function (a: PTS_MSG_IMPRINT; d: PByte; len: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_TS_MSG_IMPRINT_set_msg;
-  TS_MSG_IMPRINT_get_msg: function (a: PTS_MSG_IMPRINT): PASN1_OCTET_STRING; cdecl = Load_TS_MSG_IMPRINT_get_msg;
-  TS_REQ_set_policy_id: function (a: PTS_REQ; policy: PASN1_OBJECT): TOpenSSL_C_INT; cdecl = Load_TS_REQ_set_policy_id;
-  TS_REQ_get_policy_id: function (a: PTS_REQ): PASN1_OBJECT; cdecl = Load_TS_REQ_get_policy_id;
-  TS_REQ_set_nonce: function (a: PTS_REQ; nonce: PASN1_INTEGER): TOpenSSL_C_INT; cdecl = Load_TS_REQ_set_nonce;
-  TS_REQ_get_nonce: function (const a: PTS_REQ): PASN1_INTEGER; cdecl = Load_TS_REQ_get_nonce;
-  TS_REQ_set_cert_req: function (a: PTS_REQ; cert_req: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_TS_REQ_set_cert_req;
-  TS_REQ_get_cert_req: function (a: PTS_REQ): TOpenSSL_C_INT; cdecl = Load_TS_REQ_get_cert_req;
-  TS_REQ_ext_free: procedure (a: PTS_REQ); cdecl = Load_TS_REQ_ext_free;
-  TS_REQ_get_ext_count: function (a: PTS_REQ): TOpenSSL_C_INT; cdecl = Load_TS_REQ_get_ext_count;
-  TS_REQ_get_ext_by_NID: function (a: PTS_REQ; nid: TOpenSSL_C_INT; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_TS_REQ_get_ext_by_NID;
-  TS_REQ_get_ext_by_OBJ: function (a: PTS_REQ; obj: PASN1_Object; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_TS_REQ_get_ext_by_OBJ;
-  TS_REQ_get_ext_by_critical: function (a: PTS_REQ; crit: TOpenSSL_C_INT; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_TS_REQ_get_ext_by_critical;
-  TS_REQ_get_ext: function (a: PTS_REQ; loc: TOpenSSL_C_INT): PX509_Extension; cdecl = Load_TS_REQ_get_ext;
-  TS_REQ_delete_ext: function (a: PTS_REQ; loc: TOpenSSL_C_INT): PX509_Extension; cdecl = Load_TS_REQ_delete_ext;
-  TS_REQ_add_ext: function (a: PTS_REQ; ex: PX509_Extension; loc: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_TS_REQ_add_ext;
-  TS_REQ_get_ext_d2i: function (a: PTS_REQ; nid: TOpenSSL_C_INT; crit: POpenSSL_C_INT; idx: POpenSSL_C_INT): Pointer; cdecl = Load_TS_REQ_get_ext_d2i;
-  TS_REQ_print_bio: function (bio: PBIO; a: PTS_REQ): TOpenSSL_C_INT; cdecl = Load_TS_REQ_print_bio;
-  TS_RESP_set_status_info: function (a: PTS_RESP; info: PTS_STATUS_INFO): TOpenSSL_C_INT; cdecl = Load_TS_RESP_set_status_info;
-  TS_RESP_get_status_info: function (a: PTS_RESP): PTS_STATUS_INFO; cdecl = Load_TS_RESP_get_status_info;
-  TS_RESP_set_tst_info: procedure (a: PTS_RESP; p7: PPKCS7; tst_info: PTS_TST_Info); cdecl = Load_TS_RESP_set_tst_info;
-  TS_RESP_get_token: function (a: PTS_RESP): PPKCS7; cdecl = Load_TS_RESP_get_token;
-  TS_RESP_get_tst_info: function (a: PTS_RESP): PTS_TST_Info; cdecl = Load_TS_RESP_get_tst_info;
-  TS_TST_INFO_set_version: function (a: PTS_TST_Info; version: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl = Load_TS_TST_INFO_set_version;
-  TS_TST_INFO_get_version: function (const a: PTS_TST_Info): TOpenSSL_C_LONG; cdecl = Load_TS_TST_INFO_get_version;
-  TS_TST_INFO_set_policy_id: function (a: PTS_TST_Info; policy_id: PASN1_Object): TOpenSSL_C_INT; cdecl = Load_TS_TST_INFO_set_policy_id;
-  TS_TST_INFO_get_policy_id: function (a: PTS_TST_Info): PASN1_Object; cdecl = Load_TS_TST_INFO_get_policy_id;
-  TS_TST_INFO_set_msg_imprint: function (a: PTS_TST_Info; msg_imprint: PTS_MSG_IMPRINT): TOpenSSL_C_INT; cdecl = Load_TS_TST_INFO_set_msg_imprint;
-  TS_TST_INFO_get_msg_imprint: function (a: PTS_TST_Info): PTS_MSG_IMPRINT; cdecl = Load_TS_TST_INFO_get_msg_imprint;
-  TS_TST_INFO_set_serial: function (a: PTS_TST_Info; const serial: PASN1_INTEGER): TOpenSSL_C_INT; cdecl = Load_TS_TST_INFO_set_serial;
-  TS_TST_INFO_get_serial: function (const a: PTS_TST_INFO): PASN1_INTEGER; cdecl = Load_TS_TST_INFO_get_serial;
-  TS_TST_INFO_set_time: function (a: PTS_TST_Info; gtime: PASN1_GENERALIZEDTIME): TOpenSSL_C_INT; cdecl = Load_TS_TST_INFO_set_time;
-  TS_TST_INFO_get_time: function (const a: PTS_TST_INFO): PASN1_GENERALIZEDTIME; cdecl = Load_TS_TST_INFO_get_time;
-  TS_TST_INFO_set_accuracy: function (a: PTS_TST_Info; accuracy: PTS_ACCURACY): TOpenSSL_C_INT; cdecl = Load_TS_TST_INFO_set_accuracy;
-  TS_TST_INFO_get_accuracy: function (a: PTS_TST_Info): PTS_ACCURACY; cdecl = Load_TS_TST_INFO_get_accuracy;
-  TS_ACCURACY_set_seconds: function (a: PTS_ACCURACY; const seconds: PASN1_INTEGER): TOpenSSL_C_INT; cdecl = Load_TS_ACCURACY_set_seconds;
-  TS_ACCURACY_get_seconds: function (const a: PTS_ACCURACY): PASN1_INTEGER; cdecl = Load_TS_ACCURACY_get_seconds;
-  TS_ACCURACY_set_millis: function (a: PTS_ACCURACY; const millis: PASN1_INTEGER): TOpenSSL_C_INT; cdecl = Load_TS_ACCURACY_set_millis;
-  TS_ACCURACY_get_millis: function (const a: PTS_ACCURACY): PASN1_INTEGER; cdecl = Load_TS_ACCURACY_get_millis;
-  TS_ACCURACY_set_micros: function (a: PTS_ACCURACY; const micros: PASN1_INTEGER): TOpenSSL_C_INT; cdecl = Load_TS_ACCURACY_set_micros;
-  TS_ACCURACY_get_micros: function (const a: PTS_ACCURACY): PASN1_INTEGER; cdecl = Load_TS_ACCURACY_get_micros;
-  TS_TST_INFO_set_ordering: function (a: PTS_TST_Info; ordering: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_TS_TST_INFO_set_ordering;
-  TS_TST_INFO_get_ordering: function (const a: PTS_TST_Info): TOpenSSL_C_INT; cdecl = Load_TS_TST_INFO_get_ordering;
-  TS_TST_INFO_set_nonce: function (a: PTS_TST_Info; const nonce: PASN1_INTEGER): TOpenSSL_C_INT; cdecl = Load_TS_TST_INFO_set_nonce;
-  TS_TST_INFO_get_nonce: function (const a: PTS_TST_INFO): PASN1_INTEGER; cdecl = Load_TS_TST_INFO_get_nonce;
-  TS_TST_INFO_set_tsa: function (a: PTS_TST_Info; tsa: PGENERAL_NAME): TOpenSSL_C_INT; cdecl = Load_TS_TST_INFO_set_tsa;
-  TS_TST_INFO_get_tsa: function (a: PTS_TST_Info): PGENERAL_NAME; cdecl = Load_TS_TST_INFO_get_tsa;
-  TS_TST_INFO_ext_free: procedure (a: PTS_TST_Info); cdecl = Load_TS_TST_INFO_ext_free;
-  TS_TST_INFO_get_ext_count: function (a: PTS_TST_Info): TOpenSSL_C_INT; cdecl = Load_TS_TST_INFO_get_ext_count;
-  TS_TST_INFO_get_ext_by_NID: function (a: PTS_TST_Info; nid: TOpenSSL_C_INT; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_TS_TST_INFO_get_ext_by_NID;
-  TS_TST_INFO_get_ext_by_OBJ: function (a: PTS_TST_Info; const obj: PASN1_Object; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_TS_TST_INFO_get_ext_by_OBJ;
-  TS_TST_INFO_get_ext_by_critical: function (a: PTS_TST_Info; crit: TOpenSSL_C_INT; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_TS_TST_INFO_get_ext_by_critical;
-  TS_TST_INFO_get_ext: function (a: PTS_TST_Info; loc: TOpenSSL_C_INT): PX509_Extension; cdecl = Load_TS_TST_INFO_get_ext;
-  TS_TST_INFO_delete_ext: function (a: PTS_TST_Info; loc: TOpenSSL_C_INT): PX509_Extension; cdecl = Load_TS_TST_INFO_delete_ext;
-  TS_TST_INFO_add_ext: function (a: PTS_TST_Info; ex: PX509_Extension; loc: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_TS_TST_INFO_add_ext;
-  TS_TST_INFO_get_ext_d2i: function (a: PTS_TST_Info; nid: TOpenSSL_C_INT; crit: POpenSSL_C_INT; idx: POpenSSL_C_INT): Pointer; cdecl = Load_TS_TST_INFO_get_ext_d2i;
-  TS_RESP_CTX_new: function : PTS_RESP_CTX; cdecl = Load_TS_RESP_CTX_new;
-  TS_RESP_CTX_free: procedure (ctx: PTS_RESP_CTX); cdecl = Load_TS_RESP_CTX_free;
-  TS_RESP_CTX_set_signer_cert: function (ctx: PTS_RESP_CTX; signer: PX509): TOpenSSL_C_INT; cdecl = Load_TS_RESP_CTX_set_signer_cert;
-  TS_RESP_CTX_set_signer_key: function (ctx: PTS_RESP_CTX; key: PEVP_PKEY): TOpenSSL_C_INT; cdecl = Load_TS_RESP_CTX_set_signer_key;
-  TS_RESP_CTX_set_signer_digest: function (ctx: PTS_RESP_CTX; signer_digest: PEVP_MD): TOpenSSL_C_INT; cdecl = Load_TS_RESP_CTX_set_signer_digest;
-  TS_RESP_CTX_set_ess_cert_id_digest: function (ctx: PTS_RESP_CTX; md: PEVP_MD): TOpenSSL_C_INT; cdecl = Load_TS_RESP_CTX_set_ess_cert_id_digest;
-  TS_RESP_CTX_set_def_policy: function (ctx: PTS_RESP_CTX; def_policy: PASN1_Object): TOpenSSL_C_INT; cdecl = Load_TS_RESP_CTX_set_def_policy;
-  TS_RESP_CTX_add_policy: function (ctx: PTS_RESP_CTX; const policy: PASN1_Object): TOpenSSL_C_INT; cdecl = Load_TS_RESP_CTX_add_policy;
-  TS_RESP_CTX_add_md: function (ctx: PTS_RESP_CTX; const md: PEVP_MD): TOpenSSL_C_INT; cdecl = Load_TS_RESP_CTX_add_md;
-  TS_RESP_CTX_set_accuracy: function (ctx: PTS_RESP_CTX; secs: TOpenSSL_C_INT; millis: TOpenSSL_C_INT; micros: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_TS_RESP_CTX_set_accuracy;
-  TS_RESP_CTX_set_clock_precision_digits: function (ctx: PTS_RESP_CTX; clock_precision_digits: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = Load_TS_RESP_CTX_set_clock_precision_digits;
-  TS_RESP_CTX_add_flags: procedure (ctx: PTS_RESP_CTX; flags: TOpenSSL_C_INT); cdecl = Load_TS_RESP_CTX_add_flags;
-  TS_RESP_CTX_set_serial_cb: procedure (ctx: PTS_RESP_CTX; cb: TS_serial_cb; data: Pointer); cdecl = Load_TS_RESP_CTX_set_serial_cb;
-  TS_RESP_CTX_set_time_cb: procedure (ctx: PTS_RESP_CTX; cb: TS_time_cb; data: Pointer); cdecl = Load_TS_RESP_CTX_set_time_cb;
-  TS_RESP_CTX_set_extension_cb: procedure (ctx: PTS_RESP_CTX; cb: TS_extension_cb; data: Pointer); cdecl = Load_TS_RESP_CTX_set_extension_cb;
-  TS_RESP_CTX_set_status_info: function (ctx: PTS_RESP_CTX; status: TOpenSSL_C_INT; text: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_TS_RESP_CTX_set_status_info;
-  TS_RESP_CTX_set_status_info_cond: function (ctx: PTS_RESP_CTX; status: TOpenSSL_C_INT; text: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_TS_RESP_CTX_set_status_info_cond;
-  TS_RESP_CTX_add_failure_info: function (ctx: PTS_RESP_CTX; failure: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_TS_RESP_CTX_add_failure_info;
-  TS_RESP_CTX_get_request: function (ctx: PTS_RESP_CTX): PTS_REQ; cdecl = Load_TS_RESP_CTX_get_request;
-  TS_RESP_CTX_get_tst_info: function (ctx: PTS_RESP_CTX): PTS_TST_Info; cdecl = Load_TS_RESP_CTX_get_tst_info;
-  TS_RESP_create_response: function (ctx: PTS_RESP_CTX; req_bio: PBIO): PTS_RESP; cdecl = Load_TS_RESP_create_response;
-  TS_RESP_verify_response: function (ctx: PTS_VERIFY_CTX; response: PTS_RESP): TOpenSSL_C_INT; cdecl = Load_TS_RESP_verify_response;
-  TS_RESP_verify_token: function (ctx: PTS_VERIFY_CTX; token: PPKCS7): TOpenSSL_C_INT; cdecl = Load_TS_RESP_verify_token;
-  TS_VERIFY_CTX_new: function : PTS_VERIFY_CTX; cdecl = Load_TS_VERIFY_CTX_new;
-  TS_VERIFY_CTX_init: procedure (ctx: PTS_VERIFY_CTX); cdecl = Load_TS_VERIFY_CTX_init;
-  TS_VERIFY_CTX_free: procedure (ctx: PTS_VERIFY_CTX); cdecl = Load_TS_VERIFY_CTX_free;
-  TS_VERIFY_CTX_cleanup: procedure (ctx: PTS_VERIFY_CTX); cdecl = Load_TS_VERIFY_CTX_cleanup;
-  TS_VERIFY_CTX_set_flags: function (ctx: PTS_VERIFY_CTX; f: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_TS_VERIFY_CTX_set_flags;
-  TS_VERIFY_CTX_add_flags: function (ctx: PTS_VERIFY_CTX; f: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_TS_VERIFY_CTX_add_flags;
-  TS_VERIFY_CTX_set_data: function (ctx: PTS_VERIFY_CTX; b: PBIO): PBIO; cdecl = Load_TS_VERIFY_CTX_set_data;
-  TS_VERIFY_CTX_set_imprint: function (ctx: PTS_VERIFY_CTX; hexstr: PByte; len: TOpenSSL_C_LONG): PByte; cdecl = Load_TS_VERIFY_CTX_set_imprint;
-  TS_VERIFY_CTX_set_store: function (ctx: PTS_VERIFY_CTX; s: PX509_Store): PX509_Store; cdecl = Load_TS_VERIFY_CTX_set_store;
-  TS_REQ_to_TS_VERIFY_CTX: function (req: PTS_REQ; ctx: PTS_VERIFY_CTX): PTS_VERIFY_CTX; cdecl = Load_TS_REQ_to_TS_VERIFY_CTX;
-  TS_RESP_print_bio: function (bio: PBIO; a: PTS_RESP): TOpenSSL_C_INT; cdecl = Load_TS_RESP_print_bio;
-  TS_STATUS_INFO_print_bio: function (bio: PBIO; a: PTS_STATUS_INFO): TOpenSSL_C_INT; cdecl = Load_TS_STATUS_INFO_print_bio;
-  TS_TST_INFO_print_bio: function (bio: PBIO; a: PTS_TST_Info): TOpenSSL_C_INT; cdecl = Load_TS_TST_INFO_print_bio;
-  TS_ASN1_INTEGER_print_bio: function (bio: PBIO; const num: PASN1_INTEGER): TOpenSSL_C_INT; cdecl = Load_TS_ASN1_INTEGER_print_bio;
-  TS_OBJ_print_bio: function (bio: PBIO; const obj: PASN1_Object): TOpenSSL_C_INT; cdecl = Load_TS_OBJ_print_bio;
-  TS_X509_ALGOR_print_bio: function (bio: PBIO; const alg: PX509_ALGOr): TOpenSSL_C_INT; cdecl = Load_TS_X509_ALGOR_print_bio;
-  TS_MSG_IMPRINT_print_bio: function (bio: PBIO; msg: PTS_MSG_IMPRINT): TOpenSSL_C_INT; cdecl = Load_TS_MSG_IMPRINT_print_bio;
-  TS_CONF_load_cert: function (file_: PAnsiChar): PX509; cdecl = Load_TS_CONF_load_cert;
-  TS_CONF_load_key: function ( file_: PAnsiChar; pass: PAnsiChar): PEVP_PKey; cdecl = Load_TS_CONF_load_key;
-  TS_CONF_set_serial: function (conf: PCONF; section: PAnsiChar; cb: TS_serial_cb; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = Load_TS_CONF_set_serial;
-  TS_CONF_get_tsa_section: function (conf: PCONF; const section: PAnsiChar): PAnsiChar; cdecl = Load_TS_CONF_get_tsa_section;
-  TS_CONF_set_crypto_device: function (conf: PCONF; section: PAnsiChar; device: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_TS_CONF_set_crypto_device;
-  TS_CONF_set_default_engine: function (name: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_TS_CONF_set_default_engine;
-  TS_CONF_set_signer_cert: function (conf: PCONF; section: PAnsiChar; cert: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = Load_TS_CONF_set_signer_cert;
-  TS_CONF_set_certs: function (conf: PCONF; section: PAnsiChar; certs: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = Load_TS_CONF_set_certs;
-  TS_CONF_set_signer_key: function (conf: PCONF; const section: PAnsiChar; key: PAnsiChar; pass: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = Load_TS_CONF_set_signer_key;
-  TS_CONF_set_signer_digest: function (conf: PCONF; section: PAnsiChar; md: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = Load_TS_CONF_set_signer_digest;
-  TS_CONF_set_def_policy: function (conf: PCONF; section: PAnsiChar; policy: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = Load_TS_CONF_set_def_policy;
-  TS_CONF_set_policies: function (conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = Load_TS_CONF_set_policies;
-  TS_CONF_set_digests: function (conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = Load_TS_CONF_set_digests;
-  TS_CONF_set_accuracy: function (conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = Load_TS_CONF_set_accuracy;
-  TS_CONF_set_clock_precision_digits: function (conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = Load_TS_CONF_set_clock_precision_digits;
-  TS_CONF_set_ordering: function (conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = Load_TS_CONF_set_ordering;
-  TS_CONF_set_tsa_name: function (conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = Load_TS_CONF_set_tsa_name;
-  TS_CONF_set_ess_cert_id_chain: function (conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = Load_TS_CONF_set_ess_cert_id_chain;
-  TS_CONF_set_ess_cert_id_digest: function (conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = Load_TS_CONF_set_ess_cert_id_digest;
+  TS_REQ_new: function : PTS_REQ; cdecl = nil;
+  TS_REQ_free: procedure (a: PTS_REQ); cdecl = nil;
+  i2d_TS_REQ: function (a: PTS_REQ; pp: PPByte): TOpenSSL_C_INT; cdecl = nil;
+  d2i_TS_REQ: function (a: PPTS_REQ; pp: PPByte; length: TOpenSSL_C_LONG): PTS_REQ; cdecl = nil;
+  TS_REQ_dup: function (a: PTS_REQ): PTS_REQ; cdecl = nil;
+  d2i_TS_REQ_bio: function (fp: PBIO; a: PPTS_REQ): PTS_REQ; cdecl = nil;
+  i2d_TS_REQ_bio: function (fp: PBIO; a: PTS_REQ): TOpenSSL_C_INT; cdecl = nil;
+  TS_MSG_IMPRINT_new: function : PTS_MSG_IMPRINT; cdecl = nil;
+  TS_MSG_IMPRINT_free: procedure (a: PTS_MSG_IMPRINT); cdecl = nil;
+  i2d_TS_MSG_IMPRINT: function (a: PTS_MSG_IMPRINT; pp: PPByte): TOpenSSL_C_INT; cdecl = nil;
+  d2i_TS_MSG_IMPRINT: function (a: PPTS_MSG_IMPRINT; pp: PPByte; length: TOpenSSL_C_LONG): PTS_MSG_IMPRINT; cdecl = nil;
+  TS_MSG_IMPRINT_dup: function (a: PTS_MSG_IMPRINT): PTS_MSG_IMPRINT; cdecl = nil;
+  d2i_TS_MSG_IMPRINT_bio: function (bio: PBIO; a: PPTS_MSG_IMPRINT): PTS_MSG_IMPRINT; cdecl = nil;
+  i2d_TS_MSG_IMPRINT_bio: function (bio: PBIO; a: PTS_MSG_IMPRINT): TOpenSSL_C_INT; cdecl = nil;
+  TS_RESP_new: function : PTS_RESP; cdecl = nil;
+  TS_RESP_free: procedure (a: PTS_RESP); cdecl = nil;
+  i2d_TS_RESP: function (a: PTS_RESP; pp: PPByte): TOpenSSL_C_INT; cdecl = nil;
+  d2i_TS_RESP: function (a: PPTS_RESP; pp: PPByte; length: TOpenSSL_C_LONG): PTS_RESP; cdecl = nil;
+  PKCS7_to_TS_TST_INFO: function (token: PPKCS7): PTS_TST_Info; cdecl = nil;
+  TS_RESP_dup: function (a: PTS_RESP): PTS_RESP; cdecl = nil;
+  d2i_TS_RESP_bio: function (bio: PBIO; a: PPTS_RESP): PTS_RESP; cdecl = nil;
+  i2d_TS_RESP_bio: function (bio: PBIO; a: PTS_RESP): TOpenSSL_C_INT; cdecl = nil;
+  TS_STATUS_INFO_new: function : PTS_STATUS_INFO; cdecl = nil;
+  TS_STATUS_INFO_free: procedure (a: PTS_STATUS_INFO); cdecl = nil;
+  i2d_TS_STATUS_INFO: function (a: PTS_STATUS_INFO; pp: PPByte): TOpenSSL_C_INT; cdecl = nil;
+  d2i_TS_STATUS_INFO: function (a: PPTS_STATUS_INFO; pp: PPByte; length: TOpenSSL_C_LONG): PTS_STATUS_INFO; cdecl = nil;
+  TS_STATUS_INFO_dup: function (a: PTS_STATUS_INFO): PTS_STATUS_INFO; cdecl = nil;
+  TS_TST_INFO_new: function : PTS_TST_Info; cdecl = nil;
+  TS_TST_INFO_free: procedure (a: PTS_TST_Info); cdecl = nil;
+  i2d_TS_TST_INFO: function (a: PTS_TST_Info; pp: PPByte): TOpenSSL_C_INT; cdecl = nil;
+  d2i_TS_TST_INFO: function (a: PPTS_TST_Info; pp: PPByte; length: TOpenSSL_C_LONG): PTS_TST_Info; cdecl = nil;
+  TS_TST_INFO_dup: function (a: PTS_TST_Info): PTS_TST_Info; cdecl = nil;
+  d2i_TS_TST_INFO_bio: function (bio: PBIO; a: PPTS_TST_Info): PTS_TST_Info; cdecl = nil;
+  i2d_TS_TST_INFO_bio: function (bio: PBIO; a: PTS_TST_Info): TOpenSSL_C_INT; cdecl = nil;
+  TS_ACCURACY_new: function : PTS_ACCURACY; cdecl = nil;
+  TS_ACCURACY_free: procedure (a: PTS_ACCURACY); cdecl = nil;
+  i2d_TS_ACCURACY: function (a: PTS_ACCURACY; pp: PPByte): TOpenSSL_C_INT; cdecl = nil;
+  d2i_TS_ACCURACY: function (a: PPTS_ACCURACY; pp: PPByte; length: TOpenSSL_C_LONG): PTS_ACCURACY; cdecl = nil;
+  TS_ACCURACY_dup: function (a: PTS_ACCURACY): PTS_ACCURACY; cdecl = nil;
+  ESS_ISSUER_SERIAL_new: function : PESS_ISSUER_SERIAL; cdecl = nil;
+  ESS_ISSUER_SERIAL_free: procedure (a: PESS_ISSUER_SERIAL); cdecl = nil;
+  i2d_ESS_ISSUER_SERIAL: function ( a: PESS_ISSUER_SERIAL; pp: PPByte): TOpenSSL_C_INT; cdecl = nil;
+  d2i_ESS_ISSUER_SERIAL: function (a: PPESS_ISSUER_SERIAL; pp: PPByte; length: TOpenSSL_C_LONG): PESS_ISSUER_SERIAL; cdecl = nil;
+  ESS_ISSUER_SERIAL_dup: function (a: PESS_ISSUER_SERIAL): PESS_ISSUER_SERIAL; cdecl = nil;
+  ESS_CERT_ID_new: function : PESS_CERT_ID; cdecl = nil;
+  ESS_CERT_ID_free: procedure (a: PESS_CERT_ID); cdecl = nil;
+  i2d_ESS_CERT_ID: function (a: PESS_CERT_ID; pp: PPByte): TOpenSSL_C_INT; cdecl = nil;
+  d2i_ESS_CERT_ID: function (a: PPESS_CERT_ID; pp: PPByte; length: TOpenSSL_C_LONG): PESS_CERT_ID; cdecl = nil;
+  ESS_CERT_ID_dup: function (a: PESS_CERT_ID): PESS_CERT_ID; cdecl = nil;
+  ESS_SIGNING_CERT_new: function : PESS_SIGNING_Cert; cdecl = nil;
+  ESS_SIGNING_CERT_free: procedure (a: PESS_SIGNING_Cert); cdecl = nil;
+  i2d_ESS_SIGNING_CERT: function ( a: PESS_SIGNING_Cert; pp: PPByte): TOpenSSL_C_INT; cdecl = nil;
+  d2i_ESS_SIGNING_CERT: function (a: PPESS_SIGNING_Cert; pp: PPByte; length: TOpenSSL_C_LONG): PESS_SIGNING_Cert; cdecl = nil;
+  ESS_SIGNING_CERT_dup: function (a: PESS_SIGNING_Cert): PESS_SIGNING_Cert; cdecl = nil;
+  ESS_CERT_ID_V2_new: function : PESS_CERT_ID_V2; cdecl = nil;
+  ESS_CERT_ID_V2_free: procedure (a: PESS_CERT_ID_V2); cdecl = nil;
+  i2d_ESS_CERT_ID_V2: function ( a: PESS_CERT_ID_V2; pp: PPByte): TOpenSSL_C_INT; cdecl = nil;
+  d2i_ESS_CERT_ID_V2: function (a: PPESS_CERT_ID_V2; pp: PPByte; length: TOpenSSL_C_LONG): PESS_CERT_ID_V2; cdecl = nil;
+  ESS_CERT_ID_V2_dup: function (a: PESS_CERT_ID_V2): PESS_CERT_ID_V2; cdecl = nil;
+  ESS_SIGNING_CERT_V2_new: function : PESS_SIGNING_CERT_V2; cdecl = nil;
+  ESS_SIGNING_CERT_V2_free: procedure (a: PESS_SIGNING_CERT_V2); cdecl = nil;
+  i2d_ESS_SIGNING_CERT_V2: function (a: PESS_SIGNING_CERT_V2; pp: PPByte): TOpenSSL_C_INT; cdecl = nil;
+  d2i_ESS_SIGNING_CERT_V2: function (a: PPESS_SIGNING_CERT_V2; pp: PPByte; length: TOpenSSL_C_LONG): PESS_SIGNING_CERT_V2; cdecl = nil;
+  ESS_SIGNING_CERT_V2_dup: function (a: PESS_SIGNING_CERT_V2): PESS_SIGNING_CERT_V2; cdecl = nil;
+  TS_REQ_set_version: function (a: PTS_REQ; version: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl = nil;
+  TS_REQ_get_version: function (a: PTS_REQ): TOpenSSL_C_LONG; cdecl = nil;
+  TS_STATUS_INFO_set_status: function (a: PTS_STATUS_INFO; i: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  TS_STATUS_INFO_get0_status: function (const a: PTS_STATUS_INFO): PASN1_INTEGER; cdecl = nil;
+  TS_REQ_set_msg_imprint: function (a: PTS_REQ; msg_imprint: PTS_MSG_IMPRINT): TOpenSSL_C_INT; cdecl = nil;
+  TS_REQ_get_msg_imprint: function (a: PTS_REQ): PTS_MSG_IMPRINT; cdecl = nil;
+  TS_MSG_IMPRINT_set_algo: function (a: PTS_MSG_IMPRINT; alg: PX509_ALGOr): TOpenSSL_C_INT; cdecl = nil;
+  TS_MSG_IMPRINT_get_algo: function (a: PTS_MSG_IMPRINT): PX509_ALGOr; cdecl = nil;
+  TS_MSG_IMPRINT_set_msg: function (a: PTS_MSG_IMPRINT; d: PByte; len: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  TS_MSG_IMPRINT_get_msg: function (a: PTS_MSG_IMPRINT): PASN1_OCTET_STRING; cdecl = nil;
+  TS_REQ_set_policy_id: function (a: PTS_REQ; policy: PASN1_OBJECT): TOpenSSL_C_INT; cdecl = nil;
+  TS_REQ_get_policy_id: function (a: PTS_REQ): PASN1_OBJECT; cdecl = nil;
+  TS_REQ_set_nonce: function (a: PTS_REQ; nonce: PASN1_INTEGER): TOpenSSL_C_INT; cdecl = nil;
+  TS_REQ_get_nonce: function (const a: PTS_REQ): PASN1_INTEGER; cdecl = nil;
+  TS_REQ_set_cert_req: function (a: PTS_REQ; cert_req: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  TS_REQ_get_cert_req: function (a: PTS_REQ): TOpenSSL_C_INT; cdecl = nil;
+  TS_REQ_ext_free: procedure (a: PTS_REQ); cdecl = nil;
+  TS_REQ_get_ext_count: function (a: PTS_REQ): TOpenSSL_C_INT; cdecl = nil;
+  TS_REQ_get_ext_by_NID: function (a: PTS_REQ; nid: TOpenSSL_C_INT; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  TS_REQ_get_ext_by_OBJ: function (a: PTS_REQ; obj: PASN1_Object; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  TS_REQ_get_ext_by_critical: function (a: PTS_REQ; crit: TOpenSSL_C_INT; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  TS_REQ_get_ext: function (a: PTS_REQ; loc: TOpenSSL_C_INT): PX509_Extension; cdecl = nil;
+  TS_REQ_delete_ext: function (a: PTS_REQ; loc: TOpenSSL_C_INT): PX509_Extension; cdecl = nil;
+  TS_REQ_add_ext: function (a: PTS_REQ; ex: PX509_Extension; loc: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  TS_REQ_get_ext_d2i: function (a: PTS_REQ; nid: TOpenSSL_C_INT; crit: POpenSSL_C_INT; idx: POpenSSL_C_INT): Pointer; cdecl = nil;
+  TS_REQ_print_bio: function (bio: PBIO; a: PTS_REQ): TOpenSSL_C_INT; cdecl = nil;
+  TS_RESP_set_status_info: function (a: PTS_RESP; info: PTS_STATUS_INFO): TOpenSSL_C_INT; cdecl = nil;
+  TS_RESP_get_status_info: function (a: PTS_RESP): PTS_STATUS_INFO; cdecl = nil;
+  TS_RESP_set_tst_info: procedure (a: PTS_RESP; p7: PPKCS7; tst_info: PTS_TST_Info); cdecl = nil;
+  TS_RESP_get_token: function (a: PTS_RESP): PPKCS7; cdecl = nil;
+  TS_RESP_get_tst_info: function (a: PTS_RESP): PTS_TST_Info; cdecl = nil;
+  TS_TST_INFO_set_version: function (a: PTS_TST_Info; version: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl = nil;
+  TS_TST_INFO_get_version: function (const a: PTS_TST_Info): TOpenSSL_C_LONG; cdecl = nil;
+  TS_TST_INFO_set_policy_id: function (a: PTS_TST_Info; policy_id: PASN1_Object): TOpenSSL_C_INT; cdecl = nil;
+  TS_TST_INFO_get_policy_id: function (a: PTS_TST_Info): PASN1_Object; cdecl = nil;
+  TS_TST_INFO_set_msg_imprint: function (a: PTS_TST_Info; msg_imprint: PTS_MSG_IMPRINT): TOpenSSL_C_INT; cdecl = nil;
+  TS_TST_INFO_get_msg_imprint: function (a: PTS_TST_Info): PTS_MSG_IMPRINT; cdecl = nil;
+  TS_TST_INFO_set_serial: function (a: PTS_TST_Info; const serial: PASN1_INTEGER): TOpenSSL_C_INT; cdecl = nil;
+  TS_TST_INFO_get_serial: function (const a: PTS_TST_INFO): PASN1_INTEGER; cdecl = nil;
+  TS_TST_INFO_set_time: function (a: PTS_TST_Info; gtime: PASN1_GENERALIZEDTIME): TOpenSSL_C_INT; cdecl = nil;
+  TS_TST_INFO_get_time: function (const a: PTS_TST_INFO): PASN1_GENERALIZEDTIME; cdecl = nil;
+  TS_TST_INFO_set_accuracy: function (a: PTS_TST_Info; accuracy: PTS_ACCURACY): TOpenSSL_C_INT; cdecl = nil;
+  TS_TST_INFO_get_accuracy: function (a: PTS_TST_Info): PTS_ACCURACY; cdecl = nil;
+  TS_ACCURACY_set_seconds: function (a: PTS_ACCURACY; const seconds: PASN1_INTEGER): TOpenSSL_C_INT; cdecl = nil;
+  TS_ACCURACY_get_seconds: function (const a: PTS_ACCURACY): PASN1_INTEGER; cdecl = nil;
+  TS_ACCURACY_set_millis: function (a: PTS_ACCURACY; const millis: PASN1_INTEGER): TOpenSSL_C_INT; cdecl = nil;
+  TS_ACCURACY_get_millis: function (const a: PTS_ACCURACY): PASN1_INTEGER; cdecl = nil;
+  TS_ACCURACY_set_micros: function (a: PTS_ACCURACY; const micros: PASN1_INTEGER): TOpenSSL_C_INT; cdecl = nil;
+  TS_ACCURACY_get_micros: function (const a: PTS_ACCURACY): PASN1_INTEGER; cdecl = nil;
+  TS_TST_INFO_set_ordering: function (a: PTS_TST_Info; ordering: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  TS_TST_INFO_get_ordering: function (const a: PTS_TST_Info): TOpenSSL_C_INT; cdecl = nil;
+  TS_TST_INFO_set_nonce: function (a: PTS_TST_Info; const nonce: PASN1_INTEGER): TOpenSSL_C_INT; cdecl = nil;
+  TS_TST_INFO_get_nonce: function (const a: PTS_TST_INFO): PASN1_INTEGER; cdecl = nil;
+  TS_TST_INFO_set_tsa: function (a: PTS_TST_Info; tsa: PGENERAL_NAME): TOpenSSL_C_INT; cdecl = nil;
+  TS_TST_INFO_get_tsa: function (a: PTS_TST_Info): PGENERAL_NAME; cdecl = nil;
+  TS_TST_INFO_ext_free: procedure (a: PTS_TST_Info); cdecl = nil;
+  TS_TST_INFO_get_ext_count: function (a: PTS_TST_Info): TOpenSSL_C_INT; cdecl = nil;
+  TS_TST_INFO_get_ext_by_NID: function (a: PTS_TST_Info; nid: TOpenSSL_C_INT; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  TS_TST_INFO_get_ext_by_OBJ: function (a: PTS_TST_Info; const obj: PASN1_Object; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  TS_TST_INFO_get_ext_by_critical: function (a: PTS_TST_Info; crit: TOpenSSL_C_INT; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  TS_TST_INFO_get_ext: function (a: PTS_TST_Info; loc: TOpenSSL_C_INT): PX509_Extension; cdecl = nil;
+  TS_TST_INFO_delete_ext: function (a: PTS_TST_Info; loc: TOpenSSL_C_INT): PX509_Extension; cdecl = nil;
+  TS_TST_INFO_add_ext: function (a: PTS_TST_Info; ex: PX509_Extension; loc: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  TS_TST_INFO_get_ext_d2i: function (a: PTS_TST_Info; nid: TOpenSSL_C_INT; crit: POpenSSL_C_INT; idx: POpenSSL_C_INT): Pointer; cdecl = nil;
+  TS_RESP_CTX_new: function : PTS_RESP_CTX; cdecl = nil;
+  TS_RESP_CTX_free: procedure (ctx: PTS_RESP_CTX); cdecl = nil;
+  TS_RESP_CTX_set_signer_cert: function (ctx: PTS_RESP_CTX; signer: PX509): TOpenSSL_C_INT; cdecl = nil;
+  TS_RESP_CTX_set_signer_key: function (ctx: PTS_RESP_CTX; key: PEVP_PKEY): TOpenSSL_C_INT; cdecl = nil;
+  TS_RESP_CTX_set_signer_digest: function (ctx: PTS_RESP_CTX; signer_digest: PEVP_MD): TOpenSSL_C_INT; cdecl = nil;
+  TS_RESP_CTX_set_ess_cert_id_digest: function (ctx: PTS_RESP_CTX; md: PEVP_MD): TOpenSSL_C_INT; cdecl = nil;
+  TS_RESP_CTX_set_def_policy: function (ctx: PTS_RESP_CTX; def_policy: PASN1_Object): TOpenSSL_C_INT; cdecl = nil;
+  TS_RESP_CTX_add_policy: function (ctx: PTS_RESP_CTX; const policy: PASN1_Object): TOpenSSL_C_INT; cdecl = nil;
+  TS_RESP_CTX_add_md: function (ctx: PTS_RESP_CTX; const md: PEVP_MD): TOpenSSL_C_INT; cdecl = nil;
+  TS_RESP_CTX_set_accuracy: function (ctx: PTS_RESP_CTX; secs: TOpenSSL_C_INT; millis: TOpenSSL_C_INT; micros: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  TS_RESP_CTX_set_clock_precision_digits: function (ctx: PTS_RESP_CTX; clock_precision_digits: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = nil;
+  TS_RESP_CTX_add_flags: procedure (ctx: PTS_RESP_CTX; flags: TOpenSSL_C_INT); cdecl = nil;
+  TS_RESP_CTX_set_serial_cb: procedure (ctx: PTS_RESP_CTX; cb: TS_serial_cb; data: Pointer); cdecl = nil;
+  TS_RESP_CTX_set_time_cb: procedure (ctx: PTS_RESP_CTX; cb: TS_time_cb; data: Pointer); cdecl = nil;
+  TS_RESP_CTX_set_extension_cb: procedure (ctx: PTS_RESP_CTX; cb: TS_extension_cb; data: Pointer); cdecl = nil;
+  TS_RESP_CTX_set_status_info: function (ctx: PTS_RESP_CTX; status: TOpenSSL_C_INT; text: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
+  TS_RESP_CTX_set_status_info_cond: function (ctx: PTS_RESP_CTX; status: TOpenSSL_C_INT; text: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
+  TS_RESP_CTX_add_failure_info: function (ctx: PTS_RESP_CTX; failure: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  TS_RESP_CTX_get_request: function (ctx: PTS_RESP_CTX): PTS_REQ; cdecl = nil;
+  TS_RESP_CTX_get_tst_info: function (ctx: PTS_RESP_CTX): PTS_TST_Info; cdecl = nil;
+  TS_RESP_create_response: function (ctx: PTS_RESP_CTX; req_bio: PBIO): PTS_RESP; cdecl = nil;
+  TS_RESP_verify_response: function (ctx: PTS_VERIFY_CTX; response: PTS_RESP): TOpenSSL_C_INT; cdecl = nil;
+  TS_RESP_verify_token: function (ctx: PTS_VERIFY_CTX; token: PPKCS7): TOpenSSL_C_INT; cdecl = nil;
+  TS_VERIFY_CTX_new: function : PTS_VERIFY_CTX; cdecl = nil;
+  TS_VERIFY_CTX_init: procedure (ctx: PTS_VERIFY_CTX); cdecl = nil;
+  TS_VERIFY_CTX_free: procedure (ctx: PTS_VERIFY_CTX); cdecl = nil;
+  TS_VERIFY_CTX_cleanup: procedure (ctx: PTS_VERIFY_CTX); cdecl = nil;
+  TS_VERIFY_CTX_set_flags: function (ctx: PTS_VERIFY_CTX; f: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  TS_VERIFY_CTX_add_flags: function (ctx: PTS_VERIFY_CTX; f: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  TS_VERIFY_CTX_set_data: function (ctx: PTS_VERIFY_CTX; b: PBIO): PBIO; cdecl = nil;
+  TS_VERIFY_CTX_set_imprint: function (ctx: PTS_VERIFY_CTX; hexstr: PByte; len: TOpenSSL_C_LONG): PByte; cdecl = nil;
+  TS_VERIFY_CTX_set_store: function (ctx: PTS_VERIFY_CTX; s: PX509_Store): PX509_Store; cdecl = nil;
+  TS_REQ_to_TS_VERIFY_CTX: function (req: PTS_REQ; ctx: PTS_VERIFY_CTX): PTS_VERIFY_CTX; cdecl = nil;
+  TS_RESP_print_bio: function (bio: PBIO; a: PTS_RESP): TOpenSSL_C_INT; cdecl = nil;
+  TS_STATUS_INFO_print_bio: function (bio: PBIO; a: PTS_STATUS_INFO): TOpenSSL_C_INT; cdecl = nil;
+  TS_TST_INFO_print_bio: function (bio: PBIO; a: PTS_TST_Info): TOpenSSL_C_INT; cdecl = nil;
+  TS_ASN1_INTEGER_print_bio: function (bio: PBIO; const num: PASN1_INTEGER): TOpenSSL_C_INT; cdecl = nil;
+  TS_OBJ_print_bio: function (bio: PBIO; const obj: PASN1_Object): TOpenSSL_C_INT; cdecl = nil;
+  TS_X509_ALGOR_print_bio: function (bio: PBIO; const alg: PX509_ALGOr): TOpenSSL_C_INT; cdecl = nil;
+  TS_MSG_IMPRINT_print_bio: function (bio: PBIO; msg: PTS_MSG_IMPRINT): TOpenSSL_C_INT; cdecl = nil;
+  TS_CONF_load_cert: function (file_: PAnsiChar): PX509; cdecl = nil;
+  TS_CONF_load_key: function ( file_: PAnsiChar; pass: PAnsiChar): PEVP_PKey; cdecl = nil;
+  TS_CONF_set_serial: function (conf: PCONF; section: PAnsiChar; cb: TS_serial_cb; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = nil;
+  TS_CONF_get_tsa_section: function (conf: PCONF; const section: PAnsiChar): PAnsiChar; cdecl = nil;
+  TS_CONF_set_crypto_device: function (conf: PCONF; section: PAnsiChar; device: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
+  TS_CONF_set_default_engine: function (name: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
+  TS_CONF_set_signer_cert: function (conf: PCONF; section: PAnsiChar; cert: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = nil;
+  TS_CONF_set_certs: function (conf: PCONF; section: PAnsiChar; certs: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = nil;
+  TS_CONF_set_signer_key: function (conf: PCONF; const section: PAnsiChar; key: PAnsiChar; pass: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = nil;
+  TS_CONF_set_signer_digest: function (conf: PCONF; section: PAnsiChar; md: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = nil;
+  TS_CONF_set_def_policy: function (conf: PCONF; section: PAnsiChar; policy: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = nil;
+  TS_CONF_set_policies: function (conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = nil;
+  TS_CONF_set_digests: function (conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = nil;
+  TS_CONF_set_accuracy: function (conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = nil;
+  TS_CONF_set_clock_precision_digits: function (conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = nil;
+  TS_CONF_set_ordering: function (conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = nil;
+  TS_CONF_set_tsa_name: function (conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = nil;
+  TS_CONF_set_ess_cert_id_chain: function (conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = nil;
+  TS_CONF_set_ess_cert_id_digest: function (conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl = nil;
 {$ENDIF}
 
 implementation
@@ -981,1698 +790,2454 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-function Load_TS_REQ_new: PTS_REQ; cdecl;
+
+{$WARN  NO_RETVAL OFF}
+function ERROR_TS_REQ_new: PTS_REQ; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_new');
+end;
+
+procedure ERROR_TS_REQ_free(a: PTS_REQ); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_free');
+end;
+
+function ERROR_i2d_TS_REQ(a: PTS_REQ; pp: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_TS_REQ');
+end;
+
+function ERROR_d2i_TS_REQ(a: PPTS_REQ; pp: PPByte; length: TOpenSSL_C_LONG): PTS_REQ; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_TS_REQ');
+end;
+
+function ERROR_TS_REQ_dup(a: PTS_REQ): PTS_REQ; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_dup');
+end;
+
+function ERROR_d2i_TS_REQ_bio(fp: PBIO; a: PPTS_REQ): PTS_REQ; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_TS_REQ_bio');
+end;
+
+function ERROR_i2d_TS_REQ_bio(fp: PBIO; a: PTS_REQ): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_TS_REQ_bio');
+end;
+
+function ERROR_TS_MSG_IMPRINT_new: PTS_MSG_IMPRINT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_MSG_IMPRINT_new');
+end;
+
+procedure ERROR_TS_MSG_IMPRINT_free(a: PTS_MSG_IMPRINT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_MSG_IMPRINT_free');
+end;
+
+function ERROR_i2d_TS_MSG_IMPRINT(a: PTS_MSG_IMPRINT; pp: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_TS_MSG_IMPRINT');
+end;
+
+function ERROR_d2i_TS_MSG_IMPRINT(a: PPTS_MSG_IMPRINT; pp: PPByte; length: TOpenSSL_C_LONG): PTS_MSG_IMPRINT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_TS_MSG_IMPRINT');
+end;
+
+function ERROR_TS_MSG_IMPRINT_dup(a: PTS_MSG_IMPRINT): PTS_MSG_IMPRINT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_MSG_IMPRINT_dup');
+end;
+
+function ERROR_d2i_TS_MSG_IMPRINT_bio(bio: PBIO; a: PPTS_MSG_IMPRINT): PTS_MSG_IMPRINT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_TS_MSG_IMPRINT_bio');
+end;
+
+function ERROR_i2d_TS_MSG_IMPRINT_bio(bio: PBIO; a: PTS_MSG_IMPRINT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_TS_MSG_IMPRINT_bio');
+end;
+
+function ERROR_TS_RESP_new: PTS_RESP; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_new');
+end;
+
+procedure ERROR_TS_RESP_free(a: PTS_RESP); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_free');
+end;
+
+function ERROR_i2d_TS_RESP(a: PTS_RESP; pp: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_TS_RESP');
+end;
+
+function ERROR_d2i_TS_RESP(a: PPTS_RESP; pp: PPByte; length: TOpenSSL_C_LONG): PTS_RESP; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_TS_RESP');
+end;
+
+function ERROR_PKCS7_to_TS_TST_INFO(token: PPKCS7): PTS_TST_Info; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS7_to_TS_TST_INFO');
+end;
+
+function ERROR_TS_RESP_dup(a: PTS_RESP): PTS_RESP; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_dup');
+end;
+
+function ERROR_d2i_TS_RESP_bio(bio: PBIO; a: PPTS_RESP): PTS_RESP; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_TS_RESP_bio');
+end;
+
+function ERROR_i2d_TS_RESP_bio(bio: PBIO; a: PTS_RESP): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_TS_RESP_bio');
+end;
+
+function ERROR_TS_STATUS_INFO_new: PTS_STATUS_INFO; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_STATUS_INFO_new');
+end;
+
+procedure ERROR_TS_STATUS_INFO_free(a: PTS_STATUS_INFO); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_STATUS_INFO_free');
+end;
+
+function ERROR_i2d_TS_STATUS_INFO(a: PTS_STATUS_INFO; pp: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_TS_STATUS_INFO');
+end;
+
+function ERROR_d2i_TS_STATUS_INFO(a: PPTS_STATUS_INFO; pp: PPByte; length: TOpenSSL_C_LONG): PTS_STATUS_INFO; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_TS_STATUS_INFO');
+end;
+
+function ERROR_TS_STATUS_INFO_dup(a: PTS_STATUS_INFO): PTS_STATUS_INFO; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_STATUS_INFO_dup');
+end;
+
+function ERROR_TS_TST_INFO_new: PTS_TST_Info; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_new');
+end;
+
+procedure ERROR_TS_TST_INFO_free(a: PTS_TST_Info); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_free');
+end;
+
+function ERROR_i2d_TS_TST_INFO(a: PTS_TST_Info; pp: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_TS_TST_INFO');
+end;
+
+function ERROR_d2i_TS_TST_INFO(a: PPTS_TST_Info; pp: PPByte; length: TOpenSSL_C_LONG): PTS_TST_Info; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_TS_TST_INFO');
+end;
+
+function ERROR_TS_TST_INFO_dup(a: PTS_TST_Info): PTS_TST_Info; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_dup');
+end;
+
+function ERROR_d2i_TS_TST_INFO_bio(bio: PBIO; a: PPTS_TST_Info): PTS_TST_Info; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_TS_TST_INFO_bio');
+end;
+
+function ERROR_i2d_TS_TST_INFO_bio(bio: PBIO; a: PTS_TST_Info): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_TS_TST_INFO_bio');
+end;
+
+function ERROR_TS_ACCURACY_new: PTS_ACCURACY; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_ACCURACY_new');
+end;
+
+procedure ERROR_TS_ACCURACY_free(a: PTS_ACCURACY); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_ACCURACY_free');
+end;
+
+function ERROR_i2d_TS_ACCURACY(a: PTS_ACCURACY; pp: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_TS_ACCURACY');
+end;
+
+function ERROR_d2i_TS_ACCURACY(a: PPTS_ACCURACY; pp: PPByte; length: TOpenSSL_C_LONG): PTS_ACCURACY; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_TS_ACCURACY');
+end;
+
+function ERROR_TS_ACCURACY_dup(a: PTS_ACCURACY): PTS_ACCURACY; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_ACCURACY_dup');
+end;
+
+function ERROR_ESS_ISSUER_SERIAL_new: PESS_ISSUER_SERIAL; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_ISSUER_SERIAL_new');
+end;
+
+procedure ERROR_ESS_ISSUER_SERIAL_free(a: PESS_ISSUER_SERIAL); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_ISSUER_SERIAL_free');
+end;
+
+function ERROR_i2d_ESS_ISSUER_SERIAL( a: PESS_ISSUER_SERIAL; pp: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_ESS_ISSUER_SERIAL');
+end;
+
+function ERROR_d2i_ESS_ISSUER_SERIAL(a: PPESS_ISSUER_SERIAL; pp: PPByte; length: TOpenSSL_C_LONG): PESS_ISSUER_SERIAL; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_ESS_ISSUER_SERIAL');
+end;
+
+function ERROR_ESS_ISSUER_SERIAL_dup(a: PESS_ISSUER_SERIAL): PESS_ISSUER_SERIAL; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_ISSUER_SERIAL_dup');
+end;
+
+function ERROR_ESS_CERT_ID_new: PESS_CERT_ID; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_CERT_ID_new');
+end;
+
+procedure ERROR_ESS_CERT_ID_free(a: PESS_CERT_ID); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_CERT_ID_free');
+end;
+
+function ERROR_i2d_ESS_CERT_ID(a: PESS_CERT_ID; pp: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_ESS_CERT_ID');
+end;
+
+function ERROR_d2i_ESS_CERT_ID(a: PPESS_CERT_ID; pp: PPByte; length: TOpenSSL_C_LONG): PESS_CERT_ID; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_ESS_CERT_ID');
+end;
+
+function ERROR_ESS_CERT_ID_dup(a: PESS_CERT_ID): PESS_CERT_ID; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_CERT_ID_dup');
+end;
+
+function ERROR_ESS_SIGNING_CERT_new: PESS_SIGNING_Cert; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_SIGNING_CERT_new');
+end;
+
+procedure ERROR_ESS_SIGNING_CERT_free(a: PESS_SIGNING_Cert); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_SIGNING_CERT_free');
+end;
+
+function ERROR_i2d_ESS_SIGNING_CERT( a: PESS_SIGNING_Cert; pp: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_ESS_SIGNING_CERT');
+end;
+
+function ERROR_d2i_ESS_SIGNING_CERT(a: PPESS_SIGNING_Cert; pp: PPByte; length: TOpenSSL_C_LONG): PESS_SIGNING_Cert; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_ESS_SIGNING_CERT');
+end;
+
+function ERROR_ESS_SIGNING_CERT_dup(a: PESS_SIGNING_Cert): PESS_SIGNING_Cert; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_SIGNING_CERT_dup');
+end;
+
+function ERROR_ESS_CERT_ID_V2_new: PESS_CERT_ID_V2; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_CERT_ID_V2_new');
+end;
+
+procedure ERROR_ESS_CERT_ID_V2_free(a: PESS_CERT_ID_V2); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_CERT_ID_V2_free');
+end;
+
+function ERROR_i2d_ESS_CERT_ID_V2( a: PESS_CERT_ID_V2; pp: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_ESS_CERT_ID_V2');
+end;
+
+function ERROR_d2i_ESS_CERT_ID_V2(a: PPESS_CERT_ID_V2; pp: PPByte; length: TOpenSSL_C_LONG): PESS_CERT_ID_V2; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_ESS_CERT_ID_V2');
+end;
+
+function ERROR_ESS_CERT_ID_V2_dup(a: PESS_CERT_ID_V2): PESS_CERT_ID_V2; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_CERT_ID_V2_dup');
+end;
+
+function ERROR_ESS_SIGNING_CERT_V2_new: PESS_SIGNING_CERT_V2; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_SIGNING_CERT_V2_new');
+end;
+
+procedure ERROR_ESS_SIGNING_CERT_V2_free(a: PESS_SIGNING_CERT_V2); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_SIGNING_CERT_V2_free');
+end;
+
+function ERROR_i2d_ESS_SIGNING_CERT_V2(a: PESS_SIGNING_CERT_V2; pp: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_ESS_SIGNING_CERT_V2');
+end;
+
+function ERROR_d2i_ESS_SIGNING_CERT_V2(a: PPESS_SIGNING_CERT_V2; pp: PPByte; length: TOpenSSL_C_LONG): PESS_SIGNING_CERT_V2; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_ESS_SIGNING_CERT_V2');
+end;
+
+function ERROR_ESS_SIGNING_CERT_V2_dup(a: PESS_SIGNING_CERT_V2): PESS_SIGNING_CERT_V2; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_SIGNING_CERT_V2_dup');
+end;
+
+function ERROR_TS_REQ_set_version(a: PTS_REQ; version: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_set_version');
+end;
+
+function ERROR_TS_REQ_get_version(a: PTS_REQ): TOpenSSL_C_LONG; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_version');
+end;
+
+function ERROR_TS_STATUS_INFO_set_status(a: PTS_STATUS_INFO; i: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_STATUS_INFO_set_status');
+end;
+
+function ERROR_TS_STATUS_INFO_get0_status(const a: PTS_STATUS_INFO): PASN1_INTEGER; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_STATUS_INFO_get0_status');
+end;
+
+function ERROR_TS_REQ_set_msg_imprint(a: PTS_REQ; msg_imprint: PTS_MSG_IMPRINT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_set_msg_imprint');
+end;
+
+function ERROR_TS_REQ_get_msg_imprint(a: PTS_REQ): PTS_MSG_IMPRINT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_msg_imprint');
+end;
+
+function ERROR_TS_MSG_IMPRINT_set_algo(a: PTS_MSG_IMPRINT; alg: PX509_ALGOr): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_MSG_IMPRINT_set_algo');
+end;
+
+function ERROR_TS_MSG_IMPRINT_get_algo(a: PTS_MSG_IMPRINT): PX509_ALGOr; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_MSG_IMPRINT_get_algo');
+end;
+
+function ERROR_TS_MSG_IMPRINT_set_msg(a: PTS_MSG_IMPRINT; d: PByte; len: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_MSG_IMPRINT_set_msg');
+end;
+
+function ERROR_TS_MSG_IMPRINT_get_msg(a: PTS_MSG_IMPRINT): PASN1_OCTET_STRING; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_MSG_IMPRINT_get_msg');
+end;
+
+function ERROR_TS_REQ_set_policy_id(a: PTS_REQ; policy: PASN1_OBJECT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_set_policy_id');
+end;
+
+function ERROR_TS_REQ_get_policy_id(a: PTS_REQ): PASN1_OBJECT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_policy_id');
+end;
+
+function ERROR_TS_REQ_set_nonce(a: PTS_REQ; nonce: PASN1_INTEGER): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_set_nonce');
+end;
+
+function ERROR_TS_REQ_get_nonce(const a: PTS_REQ): PASN1_INTEGER; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_nonce');
+end;
+
+function ERROR_TS_REQ_set_cert_req(a: PTS_REQ; cert_req: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_set_cert_req');
+end;
+
+function ERROR_TS_REQ_get_cert_req(a: PTS_REQ): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_cert_req');
+end;
+
+procedure ERROR_TS_REQ_ext_free(a: PTS_REQ); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_ext_free');
+end;
+
+function ERROR_TS_REQ_get_ext_count(a: PTS_REQ): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_ext_count');
+end;
+
+function ERROR_TS_REQ_get_ext_by_NID(a: PTS_REQ; nid: TOpenSSL_C_INT; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_ext_by_NID');
+end;
+
+function ERROR_TS_REQ_get_ext_by_OBJ(a: PTS_REQ; obj: PASN1_Object; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_ext_by_OBJ');
+end;
+
+function ERROR_TS_REQ_get_ext_by_critical(a: PTS_REQ; crit: TOpenSSL_C_INT; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_ext_by_critical');
+end;
+
+function ERROR_TS_REQ_get_ext(a: PTS_REQ; loc: TOpenSSL_C_INT): PX509_Extension; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_ext');
+end;
+
+function ERROR_TS_REQ_delete_ext(a: PTS_REQ; loc: TOpenSSL_C_INT): PX509_Extension; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_delete_ext');
+end;
+
+function ERROR_TS_REQ_add_ext(a: PTS_REQ; ex: PX509_Extension; loc: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_add_ext');
+end;
+
+function ERROR_TS_REQ_get_ext_d2i(a: PTS_REQ; nid: TOpenSSL_C_INT; crit: POpenSSL_C_INT; idx: POpenSSL_C_INT): Pointer; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_ext_d2i');
+end;
+
+function ERROR_TS_REQ_print_bio(bio: PBIO; a: PTS_REQ): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_print_bio');
+end;
+
+function ERROR_TS_RESP_set_status_info(a: PTS_RESP; info: PTS_STATUS_INFO): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_set_status_info');
+end;
+
+function ERROR_TS_RESP_get_status_info(a: PTS_RESP): PTS_STATUS_INFO; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_get_status_info');
+end;
+
+procedure ERROR_TS_RESP_set_tst_info(a: PTS_RESP; p7: PPKCS7; tst_info: PTS_TST_Info); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_set_tst_info');
+end;
+
+function ERROR_TS_RESP_get_token(a: PTS_RESP): PPKCS7; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_get_token');
+end;
+
+function ERROR_TS_RESP_get_tst_info(a: PTS_RESP): PTS_TST_Info; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_get_tst_info');
+end;
+
+function ERROR_TS_TST_INFO_set_version(a: PTS_TST_Info; version: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_set_version');
+end;
+
+function ERROR_TS_TST_INFO_get_version(const a: PTS_TST_Info): TOpenSSL_C_LONG; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_version');
+end;
+
+function ERROR_TS_TST_INFO_set_policy_id(a: PTS_TST_Info; policy_id: PASN1_Object): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_set_policy_id');
+end;
+
+function ERROR_TS_TST_INFO_get_policy_id(a: PTS_TST_Info): PASN1_Object; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_policy_id');
+end;
+
+function ERROR_TS_TST_INFO_set_msg_imprint(a: PTS_TST_Info; msg_imprint: PTS_MSG_IMPRINT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_set_msg_imprint');
+end;
+
+function ERROR_TS_TST_INFO_get_msg_imprint(a: PTS_TST_Info): PTS_MSG_IMPRINT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_msg_imprint');
+end;
+
+function ERROR_TS_TST_INFO_set_serial(a: PTS_TST_Info; const serial: PASN1_INTEGER): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_set_serial');
+end;
+
+function ERROR_TS_TST_INFO_get_serial(const a: PTS_TST_INFO): PASN1_INTEGER; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_serial');
+end;
+
+function ERROR_TS_TST_INFO_set_time(a: PTS_TST_Info; gtime: PASN1_GENERALIZEDTIME): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_set_time');
+end;
+
+function ERROR_TS_TST_INFO_get_time(const a: PTS_TST_INFO): PASN1_GENERALIZEDTIME; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_time');
+end;
+
+function ERROR_TS_TST_INFO_set_accuracy(a: PTS_TST_Info; accuracy: PTS_ACCURACY): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_set_accuracy');
+end;
+
+function ERROR_TS_TST_INFO_get_accuracy(a: PTS_TST_Info): PTS_ACCURACY; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_accuracy');
+end;
+
+function ERROR_TS_ACCURACY_set_seconds(a: PTS_ACCURACY; const seconds: PASN1_INTEGER): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_ACCURACY_set_seconds');
+end;
+
+function ERROR_TS_ACCURACY_get_seconds(const a: PTS_ACCURACY): PASN1_INTEGER; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_ACCURACY_get_seconds');
+end;
+
+function ERROR_TS_ACCURACY_set_millis(a: PTS_ACCURACY; const millis: PASN1_INTEGER): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_ACCURACY_set_millis');
+end;
+
+function ERROR_TS_ACCURACY_get_millis(const a: PTS_ACCURACY): PASN1_INTEGER; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_ACCURACY_get_millis');
+end;
+
+function ERROR_TS_ACCURACY_set_micros(a: PTS_ACCURACY; const micros: PASN1_INTEGER): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_ACCURACY_set_micros');
+end;
+
+function ERROR_TS_ACCURACY_get_micros(const a: PTS_ACCURACY): PASN1_INTEGER; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_ACCURACY_get_micros');
+end;
+
+function ERROR_TS_TST_INFO_set_ordering(a: PTS_TST_Info; ordering: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_set_ordering');
+end;
+
+function ERROR_TS_TST_INFO_get_ordering(const a: PTS_TST_Info): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_ordering');
+end;
+
+function ERROR_TS_TST_INFO_set_nonce(a: PTS_TST_Info; const nonce: PASN1_INTEGER): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_set_nonce');
+end;
+
+function ERROR_TS_TST_INFO_get_nonce(const a: PTS_TST_INFO): PASN1_INTEGER; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_nonce');
+end;
+
+function ERROR_TS_TST_INFO_set_tsa(a: PTS_TST_Info; tsa: PGENERAL_NAME): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_set_tsa');
+end;
+
+function ERROR_TS_TST_INFO_get_tsa(a: PTS_TST_Info): PGENERAL_NAME; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_tsa');
+end;
+
+procedure ERROR_TS_TST_INFO_ext_free(a: PTS_TST_Info); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_ext_free');
+end;
+
+function ERROR_TS_TST_INFO_get_ext_count(a: PTS_TST_Info): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_ext_count');
+end;
+
+function ERROR_TS_TST_INFO_get_ext_by_NID(a: PTS_TST_Info; nid: TOpenSSL_C_INT; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_ext_by_NID');
+end;
+
+function ERROR_TS_TST_INFO_get_ext_by_OBJ(a: PTS_TST_Info; const obj: PASN1_Object; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_ext_by_OBJ');
+end;
+
+function ERROR_TS_TST_INFO_get_ext_by_critical(a: PTS_TST_Info; crit: TOpenSSL_C_INT; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_ext_by_critical');
+end;
+
+function ERROR_TS_TST_INFO_get_ext(a: PTS_TST_Info; loc: TOpenSSL_C_INT): PX509_Extension; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_ext');
+end;
+
+function ERROR_TS_TST_INFO_delete_ext(a: PTS_TST_Info; loc: TOpenSSL_C_INT): PX509_Extension; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_delete_ext');
+end;
+
+function ERROR_TS_TST_INFO_add_ext(a: PTS_TST_Info; ex: PX509_Extension; loc: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_add_ext');
+end;
+
+function ERROR_TS_TST_INFO_get_ext_d2i(a: PTS_TST_Info; nid: TOpenSSL_C_INT; crit: POpenSSL_C_INT; idx: POpenSSL_C_INT): Pointer; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_ext_d2i');
+end;
+
+function ERROR_TS_RESP_CTX_new: PTS_RESP_CTX; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_new');
+end;
+
+procedure ERROR_TS_RESP_CTX_free(ctx: PTS_RESP_CTX); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_free');
+end;
+
+function ERROR_TS_RESP_CTX_set_signer_cert(ctx: PTS_RESP_CTX; signer: PX509): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_signer_cert');
+end;
+
+function ERROR_TS_RESP_CTX_set_signer_key(ctx: PTS_RESP_CTX; key: PEVP_PKEY): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_signer_key');
+end;
+
+function ERROR_TS_RESP_CTX_set_signer_digest(ctx: PTS_RESP_CTX; signer_digest: PEVP_MD): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_signer_digest');
+end;
+
+function ERROR_TS_RESP_CTX_set_ess_cert_id_digest(ctx: PTS_RESP_CTX; md: PEVP_MD): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_ess_cert_id_digest');
+end;
+
+function ERROR_TS_RESP_CTX_set_def_policy(ctx: PTS_RESP_CTX; def_policy: PASN1_Object): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_def_policy');
+end;
+
+function ERROR_TS_RESP_CTX_add_policy(ctx: PTS_RESP_CTX; const policy: PASN1_Object): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_add_policy');
+end;
+
+function ERROR_TS_RESP_CTX_add_md(ctx: PTS_RESP_CTX; const md: PEVP_MD): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_add_md');
+end;
+
+function ERROR_TS_RESP_CTX_set_accuracy(ctx: PTS_RESP_CTX; secs: TOpenSSL_C_INT; millis: TOpenSSL_C_INT; micros: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_accuracy');
+end;
+
+function ERROR_TS_RESP_CTX_set_clock_precision_digits(ctx: PTS_RESP_CTX; clock_precision_digits: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_clock_precision_digits');
+end;
+
+procedure ERROR_TS_RESP_CTX_add_flags(ctx: PTS_RESP_CTX; flags: TOpenSSL_C_INT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_add_flags');
+end;
+
+procedure ERROR_TS_RESP_CTX_set_serial_cb(ctx: PTS_RESP_CTX; cb: TS_serial_cb; data: Pointer); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_serial_cb');
+end;
+
+procedure ERROR_TS_RESP_CTX_set_time_cb(ctx: PTS_RESP_CTX; cb: TS_time_cb; data: Pointer); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_time_cb');
+end;
+
+procedure ERROR_TS_RESP_CTX_set_extension_cb(ctx: PTS_RESP_CTX; cb: TS_extension_cb; data: Pointer); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_extension_cb');
+end;
+
+function ERROR_TS_RESP_CTX_set_status_info(ctx: PTS_RESP_CTX; status: TOpenSSL_C_INT; text: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_status_info');
+end;
+
+function ERROR_TS_RESP_CTX_set_status_info_cond(ctx: PTS_RESP_CTX; status: TOpenSSL_C_INT; text: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_status_info_cond');
+end;
+
+function ERROR_TS_RESP_CTX_add_failure_info(ctx: PTS_RESP_CTX; failure: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_add_failure_info');
+end;
+
+function ERROR_TS_RESP_CTX_get_request(ctx: PTS_RESP_CTX): PTS_REQ; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_get_request');
+end;
+
+function ERROR_TS_RESP_CTX_get_tst_info(ctx: PTS_RESP_CTX): PTS_TST_Info; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_get_tst_info');
+end;
+
+function ERROR_TS_RESP_create_response(ctx: PTS_RESP_CTX; req_bio: PBIO): PTS_RESP; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_create_response');
+end;
+
+function ERROR_TS_RESP_verify_response(ctx: PTS_VERIFY_CTX; response: PTS_RESP): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_verify_response');
+end;
+
+function ERROR_TS_RESP_verify_token(ctx: PTS_VERIFY_CTX; token: PPKCS7): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_verify_token');
+end;
+
+function ERROR_TS_VERIFY_CTX_new: PTS_VERIFY_CTX; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_VERIFY_CTX_new');
+end;
+
+procedure ERROR_TS_VERIFY_CTX_init(ctx: PTS_VERIFY_CTX); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_VERIFY_CTX_init');
+end;
+
+procedure ERROR_TS_VERIFY_CTX_free(ctx: PTS_VERIFY_CTX); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_VERIFY_CTX_free');
+end;
+
+procedure ERROR_TS_VERIFY_CTX_cleanup(ctx: PTS_VERIFY_CTX); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_VERIFY_CTX_cleanup');
+end;
+
+function ERROR_TS_VERIFY_CTX_set_flags(ctx: PTS_VERIFY_CTX; f: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_VERIFY_CTX_set_flags');
+end;
+
+function ERROR_TS_VERIFY_CTX_add_flags(ctx: PTS_VERIFY_CTX; f: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_VERIFY_CTX_add_flags');
+end;
+
+function ERROR_TS_VERIFY_CTX_set_data(ctx: PTS_VERIFY_CTX; b: PBIO): PBIO; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_VERIFY_CTX_set_data');
+end;
+
+function ERROR_TS_VERIFY_CTX_set_imprint(ctx: PTS_VERIFY_CTX; hexstr: PByte; len: TOpenSSL_C_LONG): PByte; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_VERIFY_CTX_set_imprint');
+end;
+
+function ERROR_TS_VERIFY_CTX_set_store(ctx: PTS_VERIFY_CTX; s: PX509_Store): PX509_Store; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_VERIFY_CTX_set_store');
+end;
+
+function ERROR_TS_REQ_to_TS_VERIFY_CTX(req: PTS_REQ; ctx: PTS_VERIFY_CTX): PTS_VERIFY_CTX; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_to_TS_VERIFY_CTX');
+end;
+
+function ERROR_TS_RESP_print_bio(bio: PBIO; a: PTS_RESP): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_print_bio');
+end;
+
+function ERROR_TS_STATUS_INFO_print_bio(bio: PBIO; a: PTS_STATUS_INFO): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_STATUS_INFO_print_bio');
+end;
+
+function ERROR_TS_TST_INFO_print_bio(bio: PBIO; a: PTS_TST_Info): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_print_bio');
+end;
+
+function ERROR_TS_ASN1_INTEGER_print_bio(bio: PBIO; const num: PASN1_INTEGER): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_ASN1_INTEGER_print_bio');
+end;
+
+function ERROR_TS_OBJ_print_bio(bio: PBIO; const obj: PASN1_Object): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_OBJ_print_bio');
+end;
+
+function ERROR_TS_X509_ALGOR_print_bio(bio: PBIO; const alg: PX509_ALGOr): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_X509_ALGOR_print_bio');
+end;
+
+function ERROR_TS_MSG_IMPRINT_print_bio(bio: PBIO; msg: PTS_MSG_IMPRINT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_MSG_IMPRINT_print_bio');
+end;
+
+function ERROR_TS_CONF_load_cert(file_: PAnsiChar): PX509; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_load_cert');
+end;
+
+function ERROR_TS_CONF_load_key( file_: PAnsiChar; pass: PAnsiChar): PEVP_PKey; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_load_key');
+end;
+
+function ERROR_TS_CONF_set_serial(conf: PCONF; section: PAnsiChar; cb: TS_serial_cb; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_serial');
+end;
+
+function ERROR_TS_CONF_get_tsa_section(conf: PCONF; const section: PAnsiChar): PAnsiChar; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_get_tsa_section');
+end;
+
+function ERROR_TS_CONF_set_crypto_device(conf: PCONF; section: PAnsiChar; device: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_crypto_device');
+end;
+
+function ERROR_TS_CONF_set_default_engine(name: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_default_engine');
+end;
+
+function ERROR_TS_CONF_set_signer_cert(conf: PCONF; section: PAnsiChar; cert: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_signer_cert');
+end;
+
+function ERROR_TS_CONF_set_certs(conf: PCONF; section: PAnsiChar; certs: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_certs');
+end;
+
+function ERROR_TS_CONF_set_signer_key(conf: PCONF; const section: PAnsiChar; key: PAnsiChar; pass: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_signer_key');
+end;
+
+function ERROR_TS_CONF_set_signer_digest(conf: PCONF; section: PAnsiChar; md: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_signer_digest');
+end;
+
+function ERROR_TS_CONF_set_def_policy(conf: PCONF; section: PAnsiChar; policy: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_def_policy');
+end;
+
+function ERROR_TS_CONF_set_policies(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_policies');
+end;
+
+function ERROR_TS_CONF_set_digests(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_digests');
+end;
+
+function ERROR_TS_CONF_set_accuracy(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_accuracy');
+end;
+
+function ERROR_TS_CONF_set_clock_precision_digits(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_clock_precision_digits');
+end;
+
+function ERROR_TS_CONF_set_ordering(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_ordering');
+end;
+
+function ERROR_TS_CONF_set_tsa_name(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_tsa_name');
+end;
+
+function ERROR_TS_CONF_set_ess_cert_id_chain(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_ess_cert_id_chain');
+end;
+
+function ERROR_TS_CONF_set_ess_cert_id_digest(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_ess_cert_id_digest');
+end;
+
+{$WARN  NO_RETVAL ON}
+procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
+var FuncLoadError: boolean;
 begin
   TS_REQ_new := LoadLibCryptoFunction('TS_REQ_new');
-  if not assigned(TS_REQ_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_new');
-  Result := TS_REQ_new();
-end;
+  FuncLoadError := not assigned(TS_REQ_new);
+  if FuncLoadError then
+  begin
+    TS_REQ_new :=  @ERROR_TS_REQ_new;
+  end;
 
-procedure Load_TS_REQ_free(a: PTS_REQ); cdecl;
-begin
   TS_REQ_free := LoadLibCryptoFunction('TS_REQ_free');
-  if not assigned(TS_REQ_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_free');
-  TS_REQ_free(a);
-end;
+  FuncLoadError := not assigned(TS_REQ_free);
+  if FuncLoadError then
+  begin
+    TS_REQ_free :=  @ERROR_TS_REQ_free;
+  end;
 
-function Load_i2d_TS_REQ(a: PTS_REQ; pp: PPByte): TOpenSSL_C_INT; cdecl;
-begin
   i2d_TS_REQ := LoadLibCryptoFunction('i2d_TS_REQ');
-  if not assigned(i2d_TS_REQ) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_TS_REQ');
-  Result := i2d_TS_REQ(a,pp);
-end;
+  FuncLoadError := not assigned(i2d_TS_REQ);
+  if FuncLoadError then
+  begin
+    i2d_TS_REQ :=  @ERROR_i2d_TS_REQ;
+  end;
 
-function Load_d2i_TS_REQ(a: PPTS_REQ; pp: PPByte; length: TOpenSSL_C_LONG): PTS_REQ; cdecl;
-begin
   d2i_TS_REQ := LoadLibCryptoFunction('d2i_TS_REQ');
-  if not assigned(d2i_TS_REQ) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_TS_REQ');
-  Result := d2i_TS_REQ(a,pp,length);
-end;
+  FuncLoadError := not assigned(d2i_TS_REQ);
+  if FuncLoadError then
+  begin
+    d2i_TS_REQ :=  @ERROR_d2i_TS_REQ;
+  end;
 
-function Load_TS_REQ_dup(a: PTS_REQ): PTS_REQ; cdecl;
-begin
   TS_REQ_dup := LoadLibCryptoFunction('TS_REQ_dup');
-  if not assigned(TS_REQ_dup) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_dup');
-  Result := TS_REQ_dup(a);
-end;
+  FuncLoadError := not assigned(TS_REQ_dup);
+  if FuncLoadError then
+  begin
+    TS_REQ_dup :=  @ERROR_TS_REQ_dup;
+  end;
 
-function Load_d2i_TS_REQ_bio(fp: PBIO; a: PPTS_REQ): PTS_REQ; cdecl;
-begin
   d2i_TS_REQ_bio := LoadLibCryptoFunction('d2i_TS_REQ_bio');
-  if not assigned(d2i_TS_REQ_bio) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_TS_REQ_bio');
-  Result := d2i_TS_REQ_bio(fp,a);
-end;
+  FuncLoadError := not assigned(d2i_TS_REQ_bio);
+  if FuncLoadError then
+  begin
+    d2i_TS_REQ_bio :=  @ERROR_d2i_TS_REQ_bio;
+  end;
 
-function Load_i2d_TS_REQ_bio(fp: PBIO; a: PTS_REQ): TOpenSSL_C_INT; cdecl;
-begin
   i2d_TS_REQ_bio := LoadLibCryptoFunction('i2d_TS_REQ_bio');
-  if not assigned(i2d_TS_REQ_bio) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_TS_REQ_bio');
-  Result := i2d_TS_REQ_bio(fp,a);
-end;
+  FuncLoadError := not assigned(i2d_TS_REQ_bio);
+  if FuncLoadError then
+  begin
+    i2d_TS_REQ_bio :=  @ERROR_i2d_TS_REQ_bio;
+  end;
 
-function Load_TS_MSG_IMPRINT_new: PTS_MSG_IMPRINT; cdecl;
-begin
   TS_MSG_IMPRINT_new := LoadLibCryptoFunction('TS_MSG_IMPRINT_new');
-  if not assigned(TS_MSG_IMPRINT_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_MSG_IMPRINT_new');
-  Result := TS_MSG_IMPRINT_new();
-end;
+  FuncLoadError := not assigned(TS_MSG_IMPRINT_new);
+  if FuncLoadError then
+  begin
+    TS_MSG_IMPRINT_new :=  @ERROR_TS_MSG_IMPRINT_new;
+  end;
 
-procedure Load_TS_MSG_IMPRINT_free(a: PTS_MSG_IMPRINT); cdecl;
-begin
   TS_MSG_IMPRINT_free := LoadLibCryptoFunction('TS_MSG_IMPRINT_free');
-  if not assigned(TS_MSG_IMPRINT_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_MSG_IMPRINT_free');
-  TS_MSG_IMPRINT_free(a);
-end;
+  FuncLoadError := not assigned(TS_MSG_IMPRINT_free);
+  if FuncLoadError then
+  begin
+    TS_MSG_IMPRINT_free :=  @ERROR_TS_MSG_IMPRINT_free;
+  end;
 
-function Load_i2d_TS_MSG_IMPRINT(a: PTS_MSG_IMPRINT; pp: PPByte): TOpenSSL_C_INT; cdecl;
-begin
   i2d_TS_MSG_IMPRINT := LoadLibCryptoFunction('i2d_TS_MSG_IMPRINT');
-  if not assigned(i2d_TS_MSG_IMPRINT) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_TS_MSG_IMPRINT');
-  Result := i2d_TS_MSG_IMPRINT(a,pp);
-end;
+  FuncLoadError := not assigned(i2d_TS_MSG_IMPRINT);
+  if FuncLoadError then
+  begin
+    i2d_TS_MSG_IMPRINT :=  @ERROR_i2d_TS_MSG_IMPRINT;
+  end;
 
-function Load_d2i_TS_MSG_IMPRINT(a: PPTS_MSG_IMPRINT; pp: PPByte; length: TOpenSSL_C_LONG): PTS_MSG_IMPRINT; cdecl;
-begin
   d2i_TS_MSG_IMPRINT := LoadLibCryptoFunction('d2i_TS_MSG_IMPRINT');
-  if not assigned(d2i_TS_MSG_IMPRINT) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_TS_MSG_IMPRINT');
-  Result := d2i_TS_MSG_IMPRINT(a,pp,length);
-end;
+  FuncLoadError := not assigned(d2i_TS_MSG_IMPRINT);
+  if FuncLoadError then
+  begin
+    d2i_TS_MSG_IMPRINT :=  @ERROR_d2i_TS_MSG_IMPRINT;
+  end;
 
-function Load_TS_MSG_IMPRINT_dup(a: PTS_MSG_IMPRINT): PTS_MSG_IMPRINT; cdecl;
-begin
   TS_MSG_IMPRINT_dup := LoadLibCryptoFunction('TS_MSG_IMPRINT_dup');
-  if not assigned(TS_MSG_IMPRINT_dup) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_MSG_IMPRINT_dup');
-  Result := TS_MSG_IMPRINT_dup(a);
-end;
+  FuncLoadError := not assigned(TS_MSG_IMPRINT_dup);
+  if FuncLoadError then
+  begin
+    TS_MSG_IMPRINT_dup :=  @ERROR_TS_MSG_IMPRINT_dup;
+  end;
 
-function Load_d2i_TS_MSG_IMPRINT_bio(bio: PBIO; a: PPTS_MSG_IMPRINT): PTS_MSG_IMPRINT; cdecl;
-begin
   d2i_TS_MSG_IMPRINT_bio := LoadLibCryptoFunction('d2i_TS_MSG_IMPRINT_bio');
-  if not assigned(d2i_TS_MSG_IMPRINT_bio) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_TS_MSG_IMPRINT_bio');
-  Result := d2i_TS_MSG_IMPRINT_bio(bio,a);
-end;
+  FuncLoadError := not assigned(d2i_TS_MSG_IMPRINT_bio);
+  if FuncLoadError then
+  begin
+    d2i_TS_MSG_IMPRINT_bio :=  @ERROR_d2i_TS_MSG_IMPRINT_bio;
+  end;
 
-function Load_i2d_TS_MSG_IMPRINT_bio(bio: PBIO; a: PTS_MSG_IMPRINT): TOpenSSL_C_INT; cdecl;
-begin
   i2d_TS_MSG_IMPRINT_bio := LoadLibCryptoFunction('i2d_TS_MSG_IMPRINT_bio');
-  if not assigned(i2d_TS_MSG_IMPRINT_bio) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_TS_MSG_IMPRINT_bio');
-  Result := i2d_TS_MSG_IMPRINT_bio(bio,a);
-end;
+  FuncLoadError := not assigned(i2d_TS_MSG_IMPRINT_bio);
+  if FuncLoadError then
+  begin
+    i2d_TS_MSG_IMPRINT_bio :=  @ERROR_i2d_TS_MSG_IMPRINT_bio;
+  end;
 
-function Load_TS_RESP_new: PTS_RESP; cdecl;
-begin
   TS_RESP_new := LoadLibCryptoFunction('TS_RESP_new');
-  if not assigned(TS_RESP_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_new');
-  Result := TS_RESP_new();
-end;
+  FuncLoadError := not assigned(TS_RESP_new);
+  if FuncLoadError then
+  begin
+    TS_RESP_new :=  @ERROR_TS_RESP_new;
+  end;
 
-procedure Load_TS_RESP_free(a: PTS_RESP); cdecl;
-begin
   TS_RESP_free := LoadLibCryptoFunction('TS_RESP_free');
-  if not assigned(TS_RESP_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_free');
-  TS_RESP_free(a);
-end;
+  FuncLoadError := not assigned(TS_RESP_free);
+  if FuncLoadError then
+  begin
+    TS_RESP_free :=  @ERROR_TS_RESP_free;
+  end;
 
-function Load_i2d_TS_RESP(a: PTS_RESP; pp: PPByte): TOpenSSL_C_INT; cdecl;
-begin
   i2d_TS_RESP := LoadLibCryptoFunction('i2d_TS_RESP');
-  if not assigned(i2d_TS_RESP) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_TS_RESP');
-  Result := i2d_TS_RESP(a,pp);
-end;
+  FuncLoadError := not assigned(i2d_TS_RESP);
+  if FuncLoadError then
+  begin
+    i2d_TS_RESP :=  @ERROR_i2d_TS_RESP;
+  end;
 
-function Load_d2i_TS_RESP(a: PPTS_RESP; pp: PPByte; length: TOpenSSL_C_LONG): PTS_RESP; cdecl;
-begin
   d2i_TS_RESP := LoadLibCryptoFunction('d2i_TS_RESP');
-  if not assigned(d2i_TS_RESP) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_TS_RESP');
-  Result := d2i_TS_RESP(a,pp,length);
-end;
+  FuncLoadError := not assigned(d2i_TS_RESP);
+  if FuncLoadError then
+  begin
+    d2i_TS_RESP :=  @ERROR_d2i_TS_RESP;
+  end;
 
-function Load_PKCS7_to_TS_TST_INFO(token: PPKCS7): PTS_TST_Info; cdecl;
-begin
   PKCS7_to_TS_TST_INFO := LoadLibCryptoFunction('PKCS7_to_TS_TST_INFO');
-  if not assigned(PKCS7_to_TS_TST_INFO) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS7_to_TS_TST_INFO');
-  Result := PKCS7_to_TS_TST_INFO(token);
-end;
+  FuncLoadError := not assigned(PKCS7_to_TS_TST_INFO);
+  if FuncLoadError then
+  begin
+    PKCS7_to_TS_TST_INFO :=  @ERROR_PKCS7_to_TS_TST_INFO;
+  end;
 
-function Load_TS_RESP_dup(a: PTS_RESP): PTS_RESP; cdecl;
-begin
   TS_RESP_dup := LoadLibCryptoFunction('TS_RESP_dup');
-  if not assigned(TS_RESP_dup) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_dup');
-  Result := TS_RESP_dup(a);
-end;
+  FuncLoadError := not assigned(TS_RESP_dup);
+  if FuncLoadError then
+  begin
+    TS_RESP_dup :=  @ERROR_TS_RESP_dup;
+  end;
 
-function Load_d2i_TS_RESP_bio(bio: PBIO; a: PPTS_RESP): PTS_RESP; cdecl;
-begin
   d2i_TS_RESP_bio := LoadLibCryptoFunction('d2i_TS_RESP_bio');
-  if not assigned(d2i_TS_RESP_bio) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_TS_RESP_bio');
-  Result := d2i_TS_RESP_bio(bio,a);
-end;
+  FuncLoadError := not assigned(d2i_TS_RESP_bio);
+  if FuncLoadError then
+  begin
+    d2i_TS_RESP_bio :=  @ERROR_d2i_TS_RESP_bio;
+  end;
 
-function Load_i2d_TS_RESP_bio(bio: PBIO; a: PTS_RESP): TOpenSSL_C_INT; cdecl;
-begin
   i2d_TS_RESP_bio := LoadLibCryptoFunction('i2d_TS_RESP_bio');
-  if not assigned(i2d_TS_RESP_bio) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_TS_RESP_bio');
-  Result := i2d_TS_RESP_bio(bio,a);
-end;
+  FuncLoadError := not assigned(i2d_TS_RESP_bio);
+  if FuncLoadError then
+  begin
+    i2d_TS_RESP_bio :=  @ERROR_i2d_TS_RESP_bio;
+  end;
 
-function Load_TS_STATUS_INFO_new: PTS_STATUS_INFO; cdecl;
-begin
   TS_STATUS_INFO_new := LoadLibCryptoFunction('TS_STATUS_INFO_new');
-  if not assigned(TS_STATUS_INFO_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_STATUS_INFO_new');
-  Result := TS_STATUS_INFO_new();
-end;
+  FuncLoadError := not assigned(TS_STATUS_INFO_new);
+  if FuncLoadError then
+  begin
+    TS_STATUS_INFO_new :=  @ERROR_TS_STATUS_INFO_new;
+  end;
 
-procedure Load_TS_STATUS_INFO_free(a: PTS_STATUS_INFO); cdecl;
-begin
   TS_STATUS_INFO_free := LoadLibCryptoFunction('TS_STATUS_INFO_free');
-  if not assigned(TS_STATUS_INFO_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_STATUS_INFO_free');
-  TS_STATUS_INFO_free(a);
-end;
+  FuncLoadError := not assigned(TS_STATUS_INFO_free);
+  if FuncLoadError then
+  begin
+    TS_STATUS_INFO_free :=  @ERROR_TS_STATUS_INFO_free;
+  end;
 
-function Load_i2d_TS_STATUS_INFO(a: PTS_STATUS_INFO; pp: PPByte): TOpenSSL_C_INT; cdecl;
-begin
   i2d_TS_STATUS_INFO := LoadLibCryptoFunction('i2d_TS_STATUS_INFO');
-  if not assigned(i2d_TS_STATUS_INFO) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_TS_STATUS_INFO');
-  Result := i2d_TS_STATUS_INFO(a,pp);
-end;
+  FuncLoadError := not assigned(i2d_TS_STATUS_INFO);
+  if FuncLoadError then
+  begin
+    i2d_TS_STATUS_INFO :=  @ERROR_i2d_TS_STATUS_INFO;
+  end;
 
-function Load_d2i_TS_STATUS_INFO(a: PPTS_STATUS_INFO; pp: PPByte; length: TOpenSSL_C_LONG): PTS_STATUS_INFO; cdecl;
-begin
   d2i_TS_STATUS_INFO := LoadLibCryptoFunction('d2i_TS_STATUS_INFO');
-  if not assigned(d2i_TS_STATUS_INFO) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_TS_STATUS_INFO');
-  Result := d2i_TS_STATUS_INFO(a,pp,length);
-end;
+  FuncLoadError := not assigned(d2i_TS_STATUS_INFO);
+  if FuncLoadError then
+  begin
+    d2i_TS_STATUS_INFO :=  @ERROR_d2i_TS_STATUS_INFO;
+  end;
 
-function Load_TS_STATUS_INFO_dup(a: PTS_STATUS_INFO): PTS_STATUS_INFO; cdecl;
-begin
   TS_STATUS_INFO_dup := LoadLibCryptoFunction('TS_STATUS_INFO_dup');
-  if not assigned(TS_STATUS_INFO_dup) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_STATUS_INFO_dup');
-  Result := TS_STATUS_INFO_dup(a);
-end;
+  FuncLoadError := not assigned(TS_STATUS_INFO_dup);
+  if FuncLoadError then
+  begin
+    TS_STATUS_INFO_dup :=  @ERROR_TS_STATUS_INFO_dup;
+  end;
 
-function Load_TS_TST_INFO_new: PTS_TST_Info; cdecl;
-begin
   TS_TST_INFO_new := LoadLibCryptoFunction('TS_TST_INFO_new');
-  if not assigned(TS_TST_INFO_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_new');
-  Result := TS_TST_INFO_new();
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_new);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_new :=  @ERROR_TS_TST_INFO_new;
+  end;
 
-procedure Load_TS_TST_INFO_free(a: PTS_TST_Info); cdecl;
-begin
   TS_TST_INFO_free := LoadLibCryptoFunction('TS_TST_INFO_free');
-  if not assigned(TS_TST_INFO_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_free');
-  TS_TST_INFO_free(a);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_free);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_free :=  @ERROR_TS_TST_INFO_free;
+  end;
 
-function Load_i2d_TS_TST_INFO(a: PTS_TST_Info; pp: PPByte): TOpenSSL_C_INT; cdecl;
-begin
   i2d_TS_TST_INFO := LoadLibCryptoFunction('i2d_TS_TST_INFO');
-  if not assigned(i2d_TS_TST_INFO) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_TS_TST_INFO');
-  Result := i2d_TS_TST_INFO(a,pp);
-end;
+  FuncLoadError := not assigned(i2d_TS_TST_INFO);
+  if FuncLoadError then
+  begin
+    i2d_TS_TST_INFO :=  @ERROR_i2d_TS_TST_INFO;
+  end;
 
-function Load_d2i_TS_TST_INFO(a: PPTS_TST_Info; pp: PPByte; length: TOpenSSL_C_LONG): PTS_TST_Info; cdecl;
-begin
   d2i_TS_TST_INFO := LoadLibCryptoFunction('d2i_TS_TST_INFO');
-  if not assigned(d2i_TS_TST_INFO) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_TS_TST_INFO');
-  Result := d2i_TS_TST_INFO(a,pp,length);
-end;
+  FuncLoadError := not assigned(d2i_TS_TST_INFO);
+  if FuncLoadError then
+  begin
+    d2i_TS_TST_INFO :=  @ERROR_d2i_TS_TST_INFO;
+  end;
 
-function Load_TS_TST_INFO_dup(a: PTS_TST_Info): PTS_TST_Info; cdecl;
-begin
   TS_TST_INFO_dup := LoadLibCryptoFunction('TS_TST_INFO_dup');
-  if not assigned(TS_TST_INFO_dup) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_dup');
-  Result := TS_TST_INFO_dup(a);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_dup);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_dup :=  @ERROR_TS_TST_INFO_dup;
+  end;
 
-function Load_d2i_TS_TST_INFO_bio(bio: PBIO; a: PPTS_TST_Info): PTS_TST_Info; cdecl;
-begin
   d2i_TS_TST_INFO_bio := LoadLibCryptoFunction('d2i_TS_TST_INFO_bio');
-  if not assigned(d2i_TS_TST_INFO_bio) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_TS_TST_INFO_bio');
-  Result := d2i_TS_TST_INFO_bio(bio,a);
-end;
+  FuncLoadError := not assigned(d2i_TS_TST_INFO_bio);
+  if FuncLoadError then
+  begin
+    d2i_TS_TST_INFO_bio :=  @ERROR_d2i_TS_TST_INFO_bio;
+  end;
 
-function Load_i2d_TS_TST_INFO_bio(bio: PBIO; a: PTS_TST_Info): TOpenSSL_C_INT; cdecl;
-begin
   i2d_TS_TST_INFO_bio := LoadLibCryptoFunction('i2d_TS_TST_INFO_bio');
-  if not assigned(i2d_TS_TST_INFO_bio) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_TS_TST_INFO_bio');
-  Result := i2d_TS_TST_INFO_bio(bio,a);
-end;
+  FuncLoadError := not assigned(i2d_TS_TST_INFO_bio);
+  if FuncLoadError then
+  begin
+    i2d_TS_TST_INFO_bio :=  @ERROR_i2d_TS_TST_INFO_bio;
+  end;
 
-function Load_TS_ACCURACY_new: PTS_ACCURACY; cdecl;
-begin
   TS_ACCURACY_new := LoadLibCryptoFunction('TS_ACCURACY_new');
-  if not assigned(TS_ACCURACY_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_ACCURACY_new');
-  Result := TS_ACCURACY_new();
-end;
+  FuncLoadError := not assigned(TS_ACCURACY_new);
+  if FuncLoadError then
+  begin
+    TS_ACCURACY_new :=  @ERROR_TS_ACCURACY_new;
+  end;
 
-procedure Load_TS_ACCURACY_free(a: PTS_ACCURACY); cdecl;
-begin
   TS_ACCURACY_free := LoadLibCryptoFunction('TS_ACCURACY_free');
-  if not assigned(TS_ACCURACY_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_ACCURACY_free');
-  TS_ACCURACY_free(a);
-end;
+  FuncLoadError := not assigned(TS_ACCURACY_free);
+  if FuncLoadError then
+  begin
+    TS_ACCURACY_free :=  @ERROR_TS_ACCURACY_free;
+  end;
 
-function Load_i2d_TS_ACCURACY(a: PTS_ACCURACY; pp: PPByte): TOpenSSL_C_INT; cdecl;
-begin
   i2d_TS_ACCURACY := LoadLibCryptoFunction('i2d_TS_ACCURACY');
-  if not assigned(i2d_TS_ACCURACY) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_TS_ACCURACY');
-  Result := i2d_TS_ACCURACY(a,pp);
-end;
+  FuncLoadError := not assigned(i2d_TS_ACCURACY);
+  if FuncLoadError then
+  begin
+    i2d_TS_ACCURACY :=  @ERROR_i2d_TS_ACCURACY;
+  end;
 
-function Load_d2i_TS_ACCURACY(a: PPTS_ACCURACY; pp: PPByte; length: TOpenSSL_C_LONG): PTS_ACCURACY; cdecl;
-begin
   d2i_TS_ACCURACY := LoadLibCryptoFunction('d2i_TS_ACCURACY');
-  if not assigned(d2i_TS_ACCURACY) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_TS_ACCURACY');
-  Result := d2i_TS_ACCURACY(a,pp,length);
-end;
+  FuncLoadError := not assigned(d2i_TS_ACCURACY);
+  if FuncLoadError then
+  begin
+    d2i_TS_ACCURACY :=  @ERROR_d2i_TS_ACCURACY;
+  end;
 
-function Load_TS_ACCURACY_dup(a: PTS_ACCURACY): PTS_ACCURACY; cdecl;
-begin
   TS_ACCURACY_dup := LoadLibCryptoFunction('TS_ACCURACY_dup');
-  if not assigned(TS_ACCURACY_dup) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_ACCURACY_dup');
-  Result := TS_ACCURACY_dup(a);
-end;
+  FuncLoadError := not assigned(TS_ACCURACY_dup);
+  if FuncLoadError then
+  begin
+    TS_ACCURACY_dup :=  @ERROR_TS_ACCURACY_dup;
+  end;
 
-function Load_ESS_ISSUER_SERIAL_new: PESS_ISSUER_SERIAL; cdecl;
-begin
   ESS_ISSUER_SERIAL_new := LoadLibCryptoFunction('ESS_ISSUER_SERIAL_new');
-  if not assigned(ESS_ISSUER_SERIAL_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_ISSUER_SERIAL_new');
-  Result := ESS_ISSUER_SERIAL_new();
-end;
+  FuncLoadError := not assigned(ESS_ISSUER_SERIAL_new);
+  if FuncLoadError then
+  begin
+    ESS_ISSUER_SERIAL_new :=  @ERROR_ESS_ISSUER_SERIAL_new;
+  end;
 
-procedure Load_ESS_ISSUER_SERIAL_free(a: PESS_ISSUER_SERIAL); cdecl;
-begin
   ESS_ISSUER_SERIAL_free := LoadLibCryptoFunction('ESS_ISSUER_SERIAL_free');
-  if not assigned(ESS_ISSUER_SERIAL_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_ISSUER_SERIAL_free');
-  ESS_ISSUER_SERIAL_free(a);
-end;
+  FuncLoadError := not assigned(ESS_ISSUER_SERIAL_free);
+  if FuncLoadError then
+  begin
+    ESS_ISSUER_SERIAL_free :=  @ERROR_ESS_ISSUER_SERIAL_free;
+  end;
 
-function Load_i2d_ESS_ISSUER_SERIAL( a: PESS_ISSUER_SERIAL; pp: PPByte): TOpenSSL_C_INT; cdecl;
-begin
   i2d_ESS_ISSUER_SERIAL := LoadLibCryptoFunction('i2d_ESS_ISSUER_SERIAL');
-  if not assigned(i2d_ESS_ISSUER_SERIAL) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_ESS_ISSUER_SERIAL');
-  Result := i2d_ESS_ISSUER_SERIAL(a,pp);
-end;
+  FuncLoadError := not assigned(i2d_ESS_ISSUER_SERIAL);
+  if FuncLoadError then
+  begin
+    i2d_ESS_ISSUER_SERIAL :=  @ERROR_i2d_ESS_ISSUER_SERIAL;
+  end;
 
-function Load_d2i_ESS_ISSUER_SERIAL(a: PPESS_ISSUER_SERIAL; pp: PPByte; length: TOpenSSL_C_LONG): PESS_ISSUER_SERIAL; cdecl;
-begin
   d2i_ESS_ISSUER_SERIAL := LoadLibCryptoFunction('d2i_ESS_ISSUER_SERIAL');
-  if not assigned(d2i_ESS_ISSUER_SERIAL) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_ESS_ISSUER_SERIAL');
-  Result := d2i_ESS_ISSUER_SERIAL(a,pp,length);
-end;
+  FuncLoadError := not assigned(d2i_ESS_ISSUER_SERIAL);
+  if FuncLoadError then
+  begin
+    d2i_ESS_ISSUER_SERIAL :=  @ERROR_d2i_ESS_ISSUER_SERIAL;
+  end;
 
-function Load_ESS_ISSUER_SERIAL_dup(a: PESS_ISSUER_SERIAL): PESS_ISSUER_SERIAL; cdecl;
-begin
   ESS_ISSUER_SERIAL_dup := LoadLibCryptoFunction('ESS_ISSUER_SERIAL_dup');
-  if not assigned(ESS_ISSUER_SERIAL_dup) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_ISSUER_SERIAL_dup');
-  Result := ESS_ISSUER_SERIAL_dup(a);
-end;
+  FuncLoadError := not assigned(ESS_ISSUER_SERIAL_dup);
+  if FuncLoadError then
+  begin
+    ESS_ISSUER_SERIAL_dup :=  @ERROR_ESS_ISSUER_SERIAL_dup;
+  end;
 
-function Load_ESS_CERT_ID_new: PESS_CERT_ID; cdecl;
-begin
   ESS_CERT_ID_new := LoadLibCryptoFunction('ESS_CERT_ID_new');
-  if not assigned(ESS_CERT_ID_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_CERT_ID_new');
-  Result := ESS_CERT_ID_new();
-end;
+  FuncLoadError := not assigned(ESS_CERT_ID_new);
+  if FuncLoadError then
+  begin
+    ESS_CERT_ID_new :=  @ERROR_ESS_CERT_ID_new;
+  end;
 
-procedure Load_ESS_CERT_ID_free(a: PESS_CERT_ID); cdecl;
-begin
   ESS_CERT_ID_free := LoadLibCryptoFunction('ESS_CERT_ID_free');
-  if not assigned(ESS_CERT_ID_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_CERT_ID_free');
-  ESS_CERT_ID_free(a);
-end;
+  FuncLoadError := not assigned(ESS_CERT_ID_free);
+  if FuncLoadError then
+  begin
+    ESS_CERT_ID_free :=  @ERROR_ESS_CERT_ID_free;
+  end;
 
-function Load_i2d_ESS_CERT_ID(a: PESS_CERT_ID; pp: PPByte): TOpenSSL_C_INT; cdecl;
-begin
   i2d_ESS_CERT_ID := LoadLibCryptoFunction('i2d_ESS_CERT_ID');
-  if not assigned(i2d_ESS_CERT_ID) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_ESS_CERT_ID');
-  Result := i2d_ESS_CERT_ID(a,pp);
-end;
+  FuncLoadError := not assigned(i2d_ESS_CERT_ID);
+  if FuncLoadError then
+  begin
+    i2d_ESS_CERT_ID :=  @ERROR_i2d_ESS_CERT_ID;
+  end;
 
-function Load_d2i_ESS_CERT_ID(a: PPESS_CERT_ID; pp: PPByte; length: TOpenSSL_C_LONG): PESS_CERT_ID; cdecl;
-begin
   d2i_ESS_CERT_ID := LoadLibCryptoFunction('d2i_ESS_CERT_ID');
-  if not assigned(d2i_ESS_CERT_ID) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_ESS_CERT_ID');
-  Result := d2i_ESS_CERT_ID(a,pp,length);
-end;
+  FuncLoadError := not assigned(d2i_ESS_CERT_ID);
+  if FuncLoadError then
+  begin
+    d2i_ESS_CERT_ID :=  @ERROR_d2i_ESS_CERT_ID;
+  end;
 
-function Load_ESS_CERT_ID_dup(a: PESS_CERT_ID): PESS_CERT_ID; cdecl;
-begin
   ESS_CERT_ID_dup := LoadLibCryptoFunction('ESS_CERT_ID_dup');
-  if not assigned(ESS_CERT_ID_dup) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_CERT_ID_dup');
-  Result := ESS_CERT_ID_dup(a);
-end;
+  FuncLoadError := not assigned(ESS_CERT_ID_dup);
+  if FuncLoadError then
+  begin
+    ESS_CERT_ID_dup :=  @ERROR_ESS_CERT_ID_dup;
+  end;
 
-function Load_ESS_SIGNING_CERT_new: PESS_SIGNING_Cert; cdecl;
-begin
   ESS_SIGNING_CERT_new := LoadLibCryptoFunction('ESS_SIGNING_CERT_new');
-  if not assigned(ESS_SIGNING_CERT_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_SIGNING_CERT_new');
-  Result := ESS_SIGNING_CERT_new();
-end;
+  FuncLoadError := not assigned(ESS_SIGNING_CERT_new);
+  if FuncLoadError then
+  begin
+    ESS_SIGNING_CERT_new :=  @ERROR_ESS_SIGNING_CERT_new;
+  end;
 
-procedure Load_ESS_SIGNING_CERT_free(a: PESS_SIGNING_Cert); cdecl;
-begin
   ESS_SIGNING_CERT_free := LoadLibCryptoFunction('ESS_SIGNING_CERT_free');
-  if not assigned(ESS_SIGNING_CERT_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_SIGNING_CERT_free');
-  ESS_SIGNING_CERT_free(a);
-end;
+  FuncLoadError := not assigned(ESS_SIGNING_CERT_free);
+  if FuncLoadError then
+  begin
+    ESS_SIGNING_CERT_free :=  @ERROR_ESS_SIGNING_CERT_free;
+  end;
 
-function Load_i2d_ESS_SIGNING_CERT( a: PESS_SIGNING_Cert; pp: PPByte): TOpenSSL_C_INT; cdecl;
-begin
   i2d_ESS_SIGNING_CERT := LoadLibCryptoFunction('i2d_ESS_SIGNING_CERT');
-  if not assigned(i2d_ESS_SIGNING_CERT) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_ESS_SIGNING_CERT');
-  Result := i2d_ESS_SIGNING_CERT(a,pp);
-end;
+  FuncLoadError := not assigned(i2d_ESS_SIGNING_CERT);
+  if FuncLoadError then
+  begin
+    i2d_ESS_SIGNING_CERT :=  @ERROR_i2d_ESS_SIGNING_CERT;
+  end;
 
-function Load_d2i_ESS_SIGNING_CERT(a: PPESS_SIGNING_Cert; pp: PPByte; length: TOpenSSL_C_LONG): PESS_SIGNING_Cert; cdecl;
-begin
   d2i_ESS_SIGNING_CERT := LoadLibCryptoFunction('d2i_ESS_SIGNING_CERT');
-  if not assigned(d2i_ESS_SIGNING_CERT) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_ESS_SIGNING_CERT');
-  Result := d2i_ESS_SIGNING_CERT(a,pp,length);
-end;
+  FuncLoadError := not assigned(d2i_ESS_SIGNING_CERT);
+  if FuncLoadError then
+  begin
+    d2i_ESS_SIGNING_CERT :=  @ERROR_d2i_ESS_SIGNING_CERT;
+  end;
 
-function Load_ESS_SIGNING_CERT_dup(a: PESS_SIGNING_Cert): PESS_SIGNING_Cert; cdecl;
-begin
   ESS_SIGNING_CERT_dup := LoadLibCryptoFunction('ESS_SIGNING_CERT_dup');
-  if not assigned(ESS_SIGNING_CERT_dup) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_SIGNING_CERT_dup');
-  Result := ESS_SIGNING_CERT_dup(a);
-end;
+  FuncLoadError := not assigned(ESS_SIGNING_CERT_dup);
+  if FuncLoadError then
+  begin
+    ESS_SIGNING_CERT_dup :=  @ERROR_ESS_SIGNING_CERT_dup;
+  end;
 
-function Load_ESS_CERT_ID_V2_new: PESS_CERT_ID_V2; cdecl;
-begin
   ESS_CERT_ID_V2_new := LoadLibCryptoFunction('ESS_CERT_ID_V2_new');
-  if not assigned(ESS_CERT_ID_V2_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_CERT_ID_V2_new');
-  Result := ESS_CERT_ID_V2_new();
-end;
+  FuncLoadError := not assigned(ESS_CERT_ID_V2_new);
+  if FuncLoadError then
+  begin
+    ESS_CERT_ID_V2_new :=  @ERROR_ESS_CERT_ID_V2_new;
+  end;
 
-procedure Load_ESS_CERT_ID_V2_free(a: PESS_CERT_ID_V2); cdecl;
-begin
   ESS_CERT_ID_V2_free := LoadLibCryptoFunction('ESS_CERT_ID_V2_free');
-  if not assigned(ESS_CERT_ID_V2_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_CERT_ID_V2_free');
-  ESS_CERT_ID_V2_free(a);
-end;
+  FuncLoadError := not assigned(ESS_CERT_ID_V2_free);
+  if FuncLoadError then
+  begin
+    ESS_CERT_ID_V2_free :=  @ERROR_ESS_CERT_ID_V2_free;
+  end;
 
-function Load_i2d_ESS_CERT_ID_V2( a: PESS_CERT_ID_V2; pp: PPByte): TOpenSSL_C_INT; cdecl;
-begin
   i2d_ESS_CERT_ID_V2 := LoadLibCryptoFunction('i2d_ESS_CERT_ID_V2');
-  if not assigned(i2d_ESS_CERT_ID_V2) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_ESS_CERT_ID_V2');
-  Result := i2d_ESS_CERT_ID_V2(a,pp);
-end;
+  FuncLoadError := not assigned(i2d_ESS_CERT_ID_V2);
+  if FuncLoadError then
+  begin
+    i2d_ESS_CERT_ID_V2 :=  @ERROR_i2d_ESS_CERT_ID_V2;
+  end;
 
-function Load_d2i_ESS_CERT_ID_V2(a: PPESS_CERT_ID_V2; pp: PPByte; length: TOpenSSL_C_LONG): PESS_CERT_ID_V2; cdecl;
-begin
   d2i_ESS_CERT_ID_V2 := LoadLibCryptoFunction('d2i_ESS_CERT_ID_V2');
-  if not assigned(d2i_ESS_CERT_ID_V2) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_ESS_CERT_ID_V2');
-  Result := d2i_ESS_CERT_ID_V2(a,pp,length);
-end;
+  FuncLoadError := not assigned(d2i_ESS_CERT_ID_V2);
+  if FuncLoadError then
+  begin
+    d2i_ESS_CERT_ID_V2 :=  @ERROR_d2i_ESS_CERT_ID_V2;
+  end;
 
-function Load_ESS_CERT_ID_V2_dup(a: PESS_CERT_ID_V2): PESS_CERT_ID_V2; cdecl;
-begin
   ESS_CERT_ID_V2_dup := LoadLibCryptoFunction('ESS_CERT_ID_V2_dup');
-  if not assigned(ESS_CERT_ID_V2_dup) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_CERT_ID_V2_dup');
-  Result := ESS_CERT_ID_V2_dup(a);
-end;
+  FuncLoadError := not assigned(ESS_CERT_ID_V2_dup);
+  if FuncLoadError then
+  begin
+    ESS_CERT_ID_V2_dup :=  @ERROR_ESS_CERT_ID_V2_dup;
+  end;
 
-function Load_ESS_SIGNING_CERT_V2_new: PESS_SIGNING_CERT_V2; cdecl;
-begin
   ESS_SIGNING_CERT_V2_new := LoadLibCryptoFunction('ESS_SIGNING_CERT_V2_new');
-  if not assigned(ESS_SIGNING_CERT_V2_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_SIGNING_CERT_V2_new');
-  Result := ESS_SIGNING_CERT_V2_new();
-end;
+  FuncLoadError := not assigned(ESS_SIGNING_CERT_V2_new);
+  if FuncLoadError then
+  begin
+    ESS_SIGNING_CERT_V2_new :=  @ERROR_ESS_SIGNING_CERT_V2_new;
+  end;
 
-procedure Load_ESS_SIGNING_CERT_V2_free(a: PESS_SIGNING_CERT_V2); cdecl;
-begin
   ESS_SIGNING_CERT_V2_free := LoadLibCryptoFunction('ESS_SIGNING_CERT_V2_free');
-  if not assigned(ESS_SIGNING_CERT_V2_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_SIGNING_CERT_V2_free');
-  ESS_SIGNING_CERT_V2_free(a);
-end;
+  FuncLoadError := not assigned(ESS_SIGNING_CERT_V2_free);
+  if FuncLoadError then
+  begin
+    ESS_SIGNING_CERT_V2_free :=  @ERROR_ESS_SIGNING_CERT_V2_free;
+  end;
 
-function Load_i2d_ESS_SIGNING_CERT_V2(a: PESS_SIGNING_CERT_V2; pp: PPByte): TOpenSSL_C_INT; cdecl;
-begin
   i2d_ESS_SIGNING_CERT_V2 := LoadLibCryptoFunction('i2d_ESS_SIGNING_CERT_V2');
-  if not assigned(i2d_ESS_SIGNING_CERT_V2) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_ESS_SIGNING_CERT_V2');
-  Result := i2d_ESS_SIGNING_CERT_V2(a,pp);
-end;
+  FuncLoadError := not assigned(i2d_ESS_SIGNING_CERT_V2);
+  if FuncLoadError then
+  begin
+    i2d_ESS_SIGNING_CERT_V2 :=  @ERROR_i2d_ESS_SIGNING_CERT_V2;
+  end;
 
-function Load_d2i_ESS_SIGNING_CERT_V2(a: PPESS_SIGNING_CERT_V2; pp: PPByte; length: TOpenSSL_C_LONG): PESS_SIGNING_CERT_V2; cdecl;
-begin
   d2i_ESS_SIGNING_CERT_V2 := LoadLibCryptoFunction('d2i_ESS_SIGNING_CERT_V2');
-  if not assigned(d2i_ESS_SIGNING_CERT_V2) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_ESS_SIGNING_CERT_V2');
-  Result := d2i_ESS_SIGNING_CERT_V2(a,pp,length);
-end;
+  FuncLoadError := not assigned(d2i_ESS_SIGNING_CERT_V2);
+  if FuncLoadError then
+  begin
+    d2i_ESS_SIGNING_CERT_V2 :=  @ERROR_d2i_ESS_SIGNING_CERT_V2;
+  end;
 
-function Load_ESS_SIGNING_CERT_V2_dup(a: PESS_SIGNING_CERT_V2): PESS_SIGNING_CERT_V2; cdecl;
-begin
   ESS_SIGNING_CERT_V2_dup := LoadLibCryptoFunction('ESS_SIGNING_CERT_V2_dup');
-  if not assigned(ESS_SIGNING_CERT_V2_dup) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ESS_SIGNING_CERT_V2_dup');
-  Result := ESS_SIGNING_CERT_V2_dup(a);
-end;
+  FuncLoadError := not assigned(ESS_SIGNING_CERT_V2_dup);
+  if FuncLoadError then
+  begin
+    ESS_SIGNING_CERT_V2_dup :=  @ERROR_ESS_SIGNING_CERT_V2_dup;
+  end;
 
-function Load_TS_REQ_set_version(a: PTS_REQ; version: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
-begin
   TS_REQ_set_version := LoadLibCryptoFunction('TS_REQ_set_version');
-  if not assigned(TS_REQ_set_version) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_set_version');
-  Result := TS_REQ_set_version(a,version);
-end;
+  FuncLoadError := not assigned(TS_REQ_set_version);
+  if FuncLoadError then
+  begin
+    TS_REQ_set_version :=  @ERROR_TS_REQ_set_version;
+  end;
 
-function Load_TS_REQ_get_version(a: PTS_REQ): TOpenSSL_C_LONG; cdecl;
-begin
   TS_REQ_get_version := LoadLibCryptoFunction('TS_REQ_get_version');
-  if not assigned(TS_REQ_get_version) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_version');
-  Result := TS_REQ_get_version(a);
-end;
+  FuncLoadError := not assigned(TS_REQ_get_version);
+  if FuncLoadError then
+  begin
+    TS_REQ_get_version :=  @ERROR_TS_REQ_get_version;
+  end;
 
-function Load_TS_STATUS_INFO_set_status(a: PTS_STATUS_INFO; i: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   TS_STATUS_INFO_set_status := LoadLibCryptoFunction('TS_STATUS_INFO_set_status');
-  if not assigned(TS_STATUS_INFO_set_status) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_STATUS_INFO_set_status');
-  Result := TS_STATUS_INFO_set_status(a,i);
-end;
+  FuncLoadError := not assigned(TS_STATUS_INFO_set_status);
+  if FuncLoadError then
+  begin
+    TS_STATUS_INFO_set_status :=  @ERROR_TS_STATUS_INFO_set_status;
+  end;
 
-function Load_TS_STATUS_INFO_get0_status(const a: PTS_STATUS_INFO): PASN1_INTEGER; cdecl;
-begin
   TS_STATUS_INFO_get0_status := LoadLibCryptoFunction('TS_STATUS_INFO_get0_status');
-  if not assigned(TS_STATUS_INFO_get0_status) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_STATUS_INFO_get0_status');
-  Result := TS_STATUS_INFO_get0_status(a);
-end;
+  FuncLoadError := not assigned(TS_STATUS_INFO_get0_status);
+  if FuncLoadError then
+  begin
+    TS_STATUS_INFO_get0_status :=  @ERROR_TS_STATUS_INFO_get0_status;
+  end;
 
-function Load_TS_REQ_set_msg_imprint(a: PTS_REQ; msg_imprint: PTS_MSG_IMPRINT): TOpenSSL_C_INT; cdecl;
-begin
   TS_REQ_set_msg_imprint := LoadLibCryptoFunction('TS_REQ_set_msg_imprint');
-  if not assigned(TS_REQ_set_msg_imprint) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_set_msg_imprint');
-  Result := TS_REQ_set_msg_imprint(a,msg_imprint);
-end;
+  FuncLoadError := not assigned(TS_REQ_set_msg_imprint);
+  if FuncLoadError then
+  begin
+    TS_REQ_set_msg_imprint :=  @ERROR_TS_REQ_set_msg_imprint;
+  end;
 
-function Load_TS_REQ_get_msg_imprint(a: PTS_REQ): PTS_MSG_IMPRINT; cdecl;
-begin
   TS_REQ_get_msg_imprint := LoadLibCryptoFunction('TS_REQ_get_msg_imprint');
-  if not assigned(TS_REQ_get_msg_imprint) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_msg_imprint');
-  Result := TS_REQ_get_msg_imprint(a);
-end;
+  FuncLoadError := not assigned(TS_REQ_get_msg_imprint);
+  if FuncLoadError then
+  begin
+    TS_REQ_get_msg_imprint :=  @ERROR_TS_REQ_get_msg_imprint;
+  end;
 
-function Load_TS_MSG_IMPRINT_set_algo(a: PTS_MSG_IMPRINT; alg: PX509_ALGOr): TOpenSSL_C_INT; cdecl;
-begin
   TS_MSG_IMPRINT_set_algo := LoadLibCryptoFunction('TS_MSG_IMPRINT_set_algo');
-  if not assigned(TS_MSG_IMPRINT_set_algo) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_MSG_IMPRINT_set_algo');
-  Result := TS_MSG_IMPRINT_set_algo(a,alg);
-end;
+  FuncLoadError := not assigned(TS_MSG_IMPRINT_set_algo);
+  if FuncLoadError then
+  begin
+    TS_MSG_IMPRINT_set_algo :=  @ERROR_TS_MSG_IMPRINT_set_algo;
+  end;
 
-function Load_TS_MSG_IMPRINT_get_algo(a: PTS_MSG_IMPRINT): PX509_ALGOr; cdecl;
-begin
   TS_MSG_IMPRINT_get_algo := LoadLibCryptoFunction('TS_MSG_IMPRINT_get_algo');
-  if not assigned(TS_MSG_IMPRINT_get_algo) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_MSG_IMPRINT_get_algo');
-  Result := TS_MSG_IMPRINT_get_algo(a);
-end;
+  FuncLoadError := not assigned(TS_MSG_IMPRINT_get_algo);
+  if FuncLoadError then
+  begin
+    TS_MSG_IMPRINT_get_algo :=  @ERROR_TS_MSG_IMPRINT_get_algo;
+  end;
 
-function Load_TS_MSG_IMPRINT_set_msg(a: PTS_MSG_IMPRINT; d: PByte; len: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   TS_MSG_IMPRINT_set_msg := LoadLibCryptoFunction('TS_MSG_IMPRINT_set_msg');
-  if not assigned(TS_MSG_IMPRINT_set_msg) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_MSG_IMPRINT_set_msg');
-  Result := TS_MSG_IMPRINT_set_msg(a,d,len);
-end;
+  FuncLoadError := not assigned(TS_MSG_IMPRINT_set_msg);
+  if FuncLoadError then
+  begin
+    TS_MSG_IMPRINT_set_msg :=  @ERROR_TS_MSG_IMPRINT_set_msg;
+  end;
 
-function Load_TS_MSG_IMPRINT_get_msg(a: PTS_MSG_IMPRINT): PASN1_OCTET_STRING; cdecl;
-begin
   TS_MSG_IMPRINT_get_msg := LoadLibCryptoFunction('TS_MSG_IMPRINT_get_msg');
-  if not assigned(TS_MSG_IMPRINT_get_msg) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_MSG_IMPRINT_get_msg');
-  Result := TS_MSG_IMPRINT_get_msg(a);
-end;
+  FuncLoadError := not assigned(TS_MSG_IMPRINT_get_msg);
+  if FuncLoadError then
+  begin
+    TS_MSG_IMPRINT_get_msg :=  @ERROR_TS_MSG_IMPRINT_get_msg;
+  end;
 
-function Load_TS_REQ_set_policy_id(a: PTS_REQ; policy: PASN1_OBJECT): TOpenSSL_C_INT; cdecl;
-begin
   TS_REQ_set_policy_id := LoadLibCryptoFunction('TS_REQ_set_policy_id');
-  if not assigned(TS_REQ_set_policy_id) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_set_policy_id');
-  Result := TS_REQ_set_policy_id(a,policy);
-end;
+  FuncLoadError := not assigned(TS_REQ_set_policy_id);
+  if FuncLoadError then
+  begin
+    TS_REQ_set_policy_id :=  @ERROR_TS_REQ_set_policy_id;
+  end;
 
-function Load_TS_REQ_get_policy_id(a: PTS_REQ): PASN1_OBJECT; cdecl;
-begin
   TS_REQ_get_policy_id := LoadLibCryptoFunction('TS_REQ_get_policy_id');
-  if not assigned(TS_REQ_get_policy_id) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_policy_id');
-  Result := TS_REQ_get_policy_id(a);
-end;
+  FuncLoadError := not assigned(TS_REQ_get_policy_id);
+  if FuncLoadError then
+  begin
+    TS_REQ_get_policy_id :=  @ERROR_TS_REQ_get_policy_id;
+  end;
 
-function Load_TS_REQ_set_nonce(a: PTS_REQ; nonce: PASN1_INTEGER): TOpenSSL_C_INT; cdecl;
-begin
   TS_REQ_set_nonce := LoadLibCryptoFunction('TS_REQ_set_nonce');
-  if not assigned(TS_REQ_set_nonce) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_set_nonce');
-  Result := TS_REQ_set_nonce(a,nonce);
-end;
+  FuncLoadError := not assigned(TS_REQ_set_nonce);
+  if FuncLoadError then
+  begin
+    TS_REQ_set_nonce :=  @ERROR_TS_REQ_set_nonce;
+  end;
 
-function Load_TS_REQ_get_nonce(const a: PTS_REQ): PASN1_INTEGER; cdecl;
-begin
   TS_REQ_get_nonce := LoadLibCryptoFunction('TS_REQ_get_nonce');
-  if not assigned(TS_REQ_get_nonce) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_nonce');
-  Result := TS_REQ_get_nonce(a);
-end;
+  FuncLoadError := not assigned(TS_REQ_get_nonce);
+  if FuncLoadError then
+  begin
+    TS_REQ_get_nonce :=  @ERROR_TS_REQ_get_nonce;
+  end;
 
-function Load_TS_REQ_set_cert_req(a: PTS_REQ; cert_req: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   TS_REQ_set_cert_req := LoadLibCryptoFunction('TS_REQ_set_cert_req');
-  if not assigned(TS_REQ_set_cert_req) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_set_cert_req');
-  Result := TS_REQ_set_cert_req(a,cert_req);
-end;
+  FuncLoadError := not assigned(TS_REQ_set_cert_req);
+  if FuncLoadError then
+  begin
+    TS_REQ_set_cert_req :=  @ERROR_TS_REQ_set_cert_req;
+  end;
 
-function Load_TS_REQ_get_cert_req(a: PTS_REQ): TOpenSSL_C_INT; cdecl;
-begin
   TS_REQ_get_cert_req := LoadLibCryptoFunction('TS_REQ_get_cert_req');
-  if not assigned(TS_REQ_get_cert_req) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_cert_req');
-  Result := TS_REQ_get_cert_req(a);
-end;
+  FuncLoadError := not assigned(TS_REQ_get_cert_req);
+  if FuncLoadError then
+  begin
+    TS_REQ_get_cert_req :=  @ERROR_TS_REQ_get_cert_req;
+  end;
 
-procedure Load_TS_REQ_ext_free(a: PTS_REQ); cdecl;
-begin
   TS_REQ_ext_free := LoadLibCryptoFunction('TS_REQ_ext_free');
-  if not assigned(TS_REQ_ext_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_ext_free');
-  TS_REQ_ext_free(a);
-end;
+  FuncLoadError := not assigned(TS_REQ_ext_free);
+  if FuncLoadError then
+  begin
+    TS_REQ_ext_free :=  @ERROR_TS_REQ_ext_free;
+  end;
 
-function Load_TS_REQ_get_ext_count(a: PTS_REQ): TOpenSSL_C_INT; cdecl;
-begin
   TS_REQ_get_ext_count := LoadLibCryptoFunction('TS_REQ_get_ext_count');
-  if not assigned(TS_REQ_get_ext_count) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_ext_count');
-  Result := TS_REQ_get_ext_count(a);
-end;
+  FuncLoadError := not assigned(TS_REQ_get_ext_count);
+  if FuncLoadError then
+  begin
+    TS_REQ_get_ext_count :=  @ERROR_TS_REQ_get_ext_count;
+  end;
 
-function Load_TS_REQ_get_ext_by_NID(a: PTS_REQ; nid: TOpenSSL_C_INT; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   TS_REQ_get_ext_by_NID := LoadLibCryptoFunction('TS_REQ_get_ext_by_NID');
-  if not assigned(TS_REQ_get_ext_by_NID) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_ext_by_NID');
-  Result := TS_REQ_get_ext_by_NID(a,nid,lastpos);
-end;
+  FuncLoadError := not assigned(TS_REQ_get_ext_by_NID);
+  if FuncLoadError then
+  begin
+    TS_REQ_get_ext_by_NID :=  @ERROR_TS_REQ_get_ext_by_NID;
+  end;
 
-function Load_TS_REQ_get_ext_by_OBJ(a: PTS_REQ; obj: PASN1_Object; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   TS_REQ_get_ext_by_OBJ := LoadLibCryptoFunction('TS_REQ_get_ext_by_OBJ');
-  if not assigned(TS_REQ_get_ext_by_OBJ) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_ext_by_OBJ');
-  Result := TS_REQ_get_ext_by_OBJ(a,obj,lastpos);
-end;
+  FuncLoadError := not assigned(TS_REQ_get_ext_by_OBJ);
+  if FuncLoadError then
+  begin
+    TS_REQ_get_ext_by_OBJ :=  @ERROR_TS_REQ_get_ext_by_OBJ;
+  end;
 
-function Load_TS_REQ_get_ext_by_critical(a: PTS_REQ; crit: TOpenSSL_C_INT; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   TS_REQ_get_ext_by_critical := LoadLibCryptoFunction('TS_REQ_get_ext_by_critical');
-  if not assigned(TS_REQ_get_ext_by_critical) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_ext_by_critical');
-  Result := TS_REQ_get_ext_by_critical(a,crit,lastpos);
-end;
+  FuncLoadError := not assigned(TS_REQ_get_ext_by_critical);
+  if FuncLoadError then
+  begin
+    TS_REQ_get_ext_by_critical :=  @ERROR_TS_REQ_get_ext_by_critical;
+  end;
 
-function Load_TS_REQ_get_ext(a: PTS_REQ; loc: TOpenSSL_C_INT): PX509_Extension; cdecl;
-begin
   TS_REQ_get_ext := LoadLibCryptoFunction('TS_REQ_get_ext');
-  if not assigned(TS_REQ_get_ext) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_ext');
-  Result := TS_REQ_get_ext(a,loc);
-end;
+  FuncLoadError := not assigned(TS_REQ_get_ext);
+  if FuncLoadError then
+  begin
+    TS_REQ_get_ext :=  @ERROR_TS_REQ_get_ext;
+  end;
 
-function Load_TS_REQ_delete_ext(a: PTS_REQ; loc: TOpenSSL_C_INT): PX509_Extension; cdecl;
-begin
   TS_REQ_delete_ext := LoadLibCryptoFunction('TS_REQ_delete_ext');
-  if not assigned(TS_REQ_delete_ext) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_delete_ext');
-  Result := TS_REQ_delete_ext(a,loc);
-end;
+  FuncLoadError := not assigned(TS_REQ_delete_ext);
+  if FuncLoadError then
+  begin
+    TS_REQ_delete_ext :=  @ERROR_TS_REQ_delete_ext;
+  end;
 
-function Load_TS_REQ_add_ext(a: PTS_REQ; ex: PX509_Extension; loc: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   TS_REQ_add_ext := LoadLibCryptoFunction('TS_REQ_add_ext');
-  if not assigned(TS_REQ_add_ext) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_add_ext');
-  Result := TS_REQ_add_ext(a,ex,loc);
-end;
+  FuncLoadError := not assigned(TS_REQ_add_ext);
+  if FuncLoadError then
+  begin
+    TS_REQ_add_ext :=  @ERROR_TS_REQ_add_ext;
+  end;
 
-function Load_TS_REQ_get_ext_d2i(a: PTS_REQ; nid: TOpenSSL_C_INT; crit: POpenSSL_C_INT; idx: POpenSSL_C_INT): Pointer; cdecl;
-begin
   TS_REQ_get_ext_d2i := LoadLibCryptoFunction('TS_REQ_get_ext_d2i');
-  if not assigned(TS_REQ_get_ext_d2i) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_get_ext_d2i');
-  Result := TS_REQ_get_ext_d2i(a,nid,crit,idx);
-end;
+  FuncLoadError := not assigned(TS_REQ_get_ext_d2i);
+  if FuncLoadError then
+  begin
+    TS_REQ_get_ext_d2i :=  @ERROR_TS_REQ_get_ext_d2i;
+  end;
 
-function Load_TS_REQ_print_bio(bio: PBIO; a: PTS_REQ): TOpenSSL_C_INT; cdecl;
-begin
   TS_REQ_print_bio := LoadLibCryptoFunction('TS_REQ_print_bio');
-  if not assigned(TS_REQ_print_bio) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_print_bio');
-  Result := TS_REQ_print_bio(bio,a);
-end;
+  FuncLoadError := not assigned(TS_REQ_print_bio);
+  if FuncLoadError then
+  begin
+    TS_REQ_print_bio :=  @ERROR_TS_REQ_print_bio;
+  end;
 
-function Load_TS_RESP_set_status_info(a: PTS_RESP; info: PTS_STATUS_INFO): TOpenSSL_C_INT; cdecl;
-begin
   TS_RESP_set_status_info := LoadLibCryptoFunction('TS_RESP_set_status_info');
-  if not assigned(TS_RESP_set_status_info) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_set_status_info');
-  Result := TS_RESP_set_status_info(a,info);
-end;
+  FuncLoadError := not assigned(TS_RESP_set_status_info);
+  if FuncLoadError then
+  begin
+    TS_RESP_set_status_info :=  @ERROR_TS_RESP_set_status_info;
+  end;
 
-function Load_TS_RESP_get_status_info(a: PTS_RESP): PTS_STATUS_INFO; cdecl;
-begin
   TS_RESP_get_status_info := LoadLibCryptoFunction('TS_RESP_get_status_info');
-  if not assigned(TS_RESP_get_status_info) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_get_status_info');
-  Result := TS_RESP_get_status_info(a);
-end;
+  FuncLoadError := not assigned(TS_RESP_get_status_info);
+  if FuncLoadError then
+  begin
+    TS_RESP_get_status_info :=  @ERROR_TS_RESP_get_status_info;
+  end;
 
-procedure Load_TS_RESP_set_tst_info(a: PTS_RESP; p7: PPKCS7; tst_info: PTS_TST_Info); cdecl;
-begin
   TS_RESP_set_tst_info := LoadLibCryptoFunction('TS_RESP_set_tst_info');
-  if not assigned(TS_RESP_set_tst_info) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_set_tst_info');
-  TS_RESP_set_tst_info(a,p7,tst_info);
-end;
+  FuncLoadError := not assigned(TS_RESP_set_tst_info);
+  if FuncLoadError then
+  begin
+    TS_RESP_set_tst_info :=  @ERROR_TS_RESP_set_tst_info;
+  end;
 
-function Load_TS_RESP_get_token(a: PTS_RESP): PPKCS7; cdecl;
-begin
   TS_RESP_get_token := LoadLibCryptoFunction('TS_RESP_get_token');
-  if not assigned(TS_RESP_get_token) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_get_token');
-  Result := TS_RESP_get_token(a);
-end;
+  FuncLoadError := not assigned(TS_RESP_get_token);
+  if FuncLoadError then
+  begin
+    TS_RESP_get_token :=  @ERROR_TS_RESP_get_token;
+  end;
 
-function Load_TS_RESP_get_tst_info(a: PTS_RESP): PTS_TST_Info; cdecl;
-begin
   TS_RESP_get_tst_info := LoadLibCryptoFunction('TS_RESP_get_tst_info');
-  if not assigned(TS_RESP_get_tst_info) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_get_tst_info');
-  Result := TS_RESP_get_tst_info(a);
-end;
+  FuncLoadError := not assigned(TS_RESP_get_tst_info);
+  if FuncLoadError then
+  begin
+    TS_RESP_get_tst_info :=  @ERROR_TS_RESP_get_tst_info;
+  end;
 
-function Load_TS_TST_INFO_set_version(a: PTS_TST_Info; version: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
-begin
   TS_TST_INFO_set_version := LoadLibCryptoFunction('TS_TST_INFO_set_version');
-  if not assigned(TS_TST_INFO_set_version) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_set_version');
-  Result := TS_TST_INFO_set_version(a,version);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_set_version);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_set_version :=  @ERROR_TS_TST_INFO_set_version;
+  end;
 
-function Load_TS_TST_INFO_get_version(const a: PTS_TST_Info): TOpenSSL_C_LONG; cdecl;
-begin
   TS_TST_INFO_get_version := LoadLibCryptoFunction('TS_TST_INFO_get_version');
-  if not assigned(TS_TST_INFO_get_version) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_version');
-  Result := TS_TST_INFO_get_version(a);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_get_version);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_get_version :=  @ERROR_TS_TST_INFO_get_version;
+  end;
 
-function Load_TS_TST_INFO_set_policy_id(a: PTS_TST_Info; policy_id: PASN1_Object): TOpenSSL_C_INT; cdecl;
-begin
   TS_TST_INFO_set_policy_id := LoadLibCryptoFunction('TS_TST_INFO_set_policy_id');
-  if not assigned(TS_TST_INFO_set_policy_id) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_set_policy_id');
-  Result := TS_TST_INFO_set_policy_id(a,policy_id);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_set_policy_id);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_set_policy_id :=  @ERROR_TS_TST_INFO_set_policy_id;
+  end;
 
-function Load_TS_TST_INFO_get_policy_id(a: PTS_TST_Info): PASN1_Object; cdecl;
-begin
   TS_TST_INFO_get_policy_id := LoadLibCryptoFunction('TS_TST_INFO_get_policy_id');
-  if not assigned(TS_TST_INFO_get_policy_id) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_policy_id');
-  Result := TS_TST_INFO_get_policy_id(a);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_get_policy_id);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_get_policy_id :=  @ERROR_TS_TST_INFO_get_policy_id;
+  end;
 
-function Load_TS_TST_INFO_set_msg_imprint(a: PTS_TST_Info; msg_imprint: PTS_MSG_IMPRINT): TOpenSSL_C_INT; cdecl;
-begin
   TS_TST_INFO_set_msg_imprint := LoadLibCryptoFunction('TS_TST_INFO_set_msg_imprint');
-  if not assigned(TS_TST_INFO_set_msg_imprint) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_set_msg_imprint');
-  Result := TS_TST_INFO_set_msg_imprint(a,msg_imprint);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_set_msg_imprint);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_set_msg_imprint :=  @ERROR_TS_TST_INFO_set_msg_imprint;
+  end;
 
-function Load_TS_TST_INFO_get_msg_imprint(a: PTS_TST_Info): PTS_MSG_IMPRINT; cdecl;
-begin
   TS_TST_INFO_get_msg_imprint := LoadLibCryptoFunction('TS_TST_INFO_get_msg_imprint');
-  if not assigned(TS_TST_INFO_get_msg_imprint) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_msg_imprint');
-  Result := TS_TST_INFO_get_msg_imprint(a);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_get_msg_imprint);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_get_msg_imprint :=  @ERROR_TS_TST_INFO_get_msg_imprint;
+  end;
 
-function Load_TS_TST_INFO_set_serial(a: PTS_TST_Info; const serial: PASN1_INTEGER): TOpenSSL_C_INT; cdecl;
-begin
   TS_TST_INFO_set_serial := LoadLibCryptoFunction('TS_TST_INFO_set_serial');
-  if not assigned(TS_TST_INFO_set_serial) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_set_serial');
-  Result := TS_TST_INFO_set_serial(a,serial);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_set_serial);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_set_serial :=  @ERROR_TS_TST_INFO_set_serial;
+  end;
 
-function Load_TS_TST_INFO_get_serial(const a: PTS_TST_INFO): PASN1_INTEGER; cdecl;
-begin
   TS_TST_INFO_get_serial := LoadLibCryptoFunction('TS_TST_INFO_get_serial');
-  if not assigned(TS_TST_INFO_get_serial) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_serial');
-  Result := TS_TST_INFO_get_serial(a);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_get_serial);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_get_serial :=  @ERROR_TS_TST_INFO_get_serial;
+  end;
 
-function Load_TS_TST_INFO_set_time(a: PTS_TST_Info; gtime: PASN1_GENERALIZEDTIME): TOpenSSL_C_INT; cdecl;
-begin
   TS_TST_INFO_set_time := LoadLibCryptoFunction('TS_TST_INFO_set_time');
-  if not assigned(TS_TST_INFO_set_time) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_set_time');
-  Result := TS_TST_INFO_set_time(a,gtime);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_set_time);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_set_time :=  @ERROR_TS_TST_INFO_set_time;
+  end;
 
-function Load_TS_TST_INFO_get_time(const a: PTS_TST_INFO): PASN1_GENERALIZEDTIME; cdecl;
-begin
   TS_TST_INFO_get_time := LoadLibCryptoFunction('TS_TST_INFO_get_time');
-  if not assigned(TS_TST_INFO_get_time) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_time');
-  Result := TS_TST_INFO_get_time(a);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_get_time);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_get_time :=  @ERROR_TS_TST_INFO_get_time;
+  end;
 
-function Load_TS_TST_INFO_set_accuracy(a: PTS_TST_Info; accuracy: PTS_ACCURACY): TOpenSSL_C_INT; cdecl;
-begin
   TS_TST_INFO_set_accuracy := LoadLibCryptoFunction('TS_TST_INFO_set_accuracy');
-  if not assigned(TS_TST_INFO_set_accuracy) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_set_accuracy');
-  Result := TS_TST_INFO_set_accuracy(a,accuracy);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_set_accuracy);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_set_accuracy :=  @ERROR_TS_TST_INFO_set_accuracy;
+  end;
 
-function Load_TS_TST_INFO_get_accuracy(a: PTS_TST_Info): PTS_ACCURACY; cdecl;
-begin
   TS_TST_INFO_get_accuracy := LoadLibCryptoFunction('TS_TST_INFO_get_accuracy');
-  if not assigned(TS_TST_INFO_get_accuracy) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_accuracy');
-  Result := TS_TST_INFO_get_accuracy(a);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_get_accuracy);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_get_accuracy :=  @ERROR_TS_TST_INFO_get_accuracy;
+  end;
 
-function Load_TS_ACCURACY_set_seconds(a: PTS_ACCURACY; const seconds: PASN1_INTEGER): TOpenSSL_C_INT; cdecl;
-begin
   TS_ACCURACY_set_seconds := LoadLibCryptoFunction('TS_ACCURACY_set_seconds');
-  if not assigned(TS_ACCURACY_set_seconds) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_ACCURACY_set_seconds');
-  Result := TS_ACCURACY_set_seconds(a,seconds);
-end;
+  FuncLoadError := not assigned(TS_ACCURACY_set_seconds);
+  if FuncLoadError then
+  begin
+    TS_ACCURACY_set_seconds :=  @ERROR_TS_ACCURACY_set_seconds;
+  end;
 
-function Load_TS_ACCURACY_get_seconds(const a: PTS_ACCURACY): PASN1_INTEGER; cdecl;
-begin
   TS_ACCURACY_get_seconds := LoadLibCryptoFunction('TS_ACCURACY_get_seconds');
-  if not assigned(TS_ACCURACY_get_seconds) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_ACCURACY_get_seconds');
-  Result := TS_ACCURACY_get_seconds(a);
-end;
+  FuncLoadError := not assigned(TS_ACCURACY_get_seconds);
+  if FuncLoadError then
+  begin
+    TS_ACCURACY_get_seconds :=  @ERROR_TS_ACCURACY_get_seconds;
+  end;
 
-function Load_TS_ACCURACY_set_millis(a: PTS_ACCURACY; const millis: PASN1_INTEGER): TOpenSSL_C_INT; cdecl;
-begin
   TS_ACCURACY_set_millis := LoadLibCryptoFunction('TS_ACCURACY_set_millis');
-  if not assigned(TS_ACCURACY_set_millis) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_ACCURACY_set_millis');
-  Result := TS_ACCURACY_set_millis(a,millis);
-end;
+  FuncLoadError := not assigned(TS_ACCURACY_set_millis);
+  if FuncLoadError then
+  begin
+    TS_ACCURACY_set_millis :=  @ERROR_TS_ACCURACY_set_millis;
+  end;
 
-function Load_TS_ACCURACY_get_millis(const a: PTS_ACCURACY): PASN1_INTEGER; cdecl;
-begin
   TS_ACCURACY_get_millis := LoadLibCryptoFunction('TS_ACCURACY_get_millis');
-  if not assigned(TS_ACCURACY_get_millis) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_ACCURACY_get_millis');
-  Result := TS_ACCURACY_get_millis(a);
-end;
+  FuncLoadError := not assigned(TS_ACCURACY_get_millis);
+  if FuncLoadError then
+  begin
+    TS_ACCURACY_get_millis :=  @ERROR_TS_ACCURACY_get_millis;
+  end;
 
-function Load_TS_ACCURACY_set_micros(a: PTS_ACCURACY; const micros: PASN1_INTEGER): TOpenSSL_C_INT; cdecl;
-begin
   TS_ACCURACY_set_micros := LoadLibCryptoFunction('TS_ACCURACY_set_micros');
-  if not assigned(TS_ACCURACY_set_micros) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_ACCURACY_set_micros');
-  Result := TS_ACCURACY_set_micros(a,micros);
-end;
+  FuncLoadError := not assigned(TS_ACCURACY_set_micros);
+  if FuncLoadError then
+  begin
+    TS_ACCURACY_set_micros :=  @ERROR_TS_ACCURACY_set_micros;
+  end;
 
-function Load_TS_ACCURACY_get_micros(const a: PTS_ACCURACY): PASN1_INTEGER; cdecl;
-begin
   TS_ACCURACY_get_micros := LoadLibCryptoFunction('TS_ACCURACY_get_micros');
-  if not assigned(TS_ACCURACY_get_micros) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_ACCURACY_get_micros');
-  Result := TS_ACCURACY_get_micros(a);
-end;
+  FuncLoadError := not assigned(TS_ACCURACY_get_micros);
+  if FuncLoadError then
+  begin
+    TS_ACCURACY_get_micros :=  @ERROR_TS_ACCURACY_get_micros;
+  end;
 
-function Load_TS_TST_INFO_set_ordering(a: PTS_TST_Info; ordering: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   TS_TST_INFO_set_ordering := LoadLibCryptoFunction('TS_TST_INFO_set_ordering');
-  if not assigned(TS_TST_INFO_set_ordering) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_set_ordering');
-  Result := TS_TST_INFO_set_ordering(a,ordering);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_set_ordering);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_set_ordering :=  @ERROR_TS_TST_INFO_set_ordering;
+  end;
 
-function Load_TS_TST_INFO_get_ordering(const a: PTS_TST_Info): TOpenSSL_C_INT; cdecl;
-begin
   TS_TST_INFO_get_ordering := LoadLibCryptoFunction('TS_TST_INFO_get_ordering');
-  if not assigned(TS_TST_INFO_get_ordering) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_ordering');
-  Result := TS_TST_INFO_get_ordering(a);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_get_ordering);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_get_ordering :=  @ERROR_TS_TST_INFO_get_ordering;
+  end;
 
-function Load_TS_TST_INFO_set_nonce(a: PTS_TST_Info; const nonce: PASN1_INTEGER): TOpenSSL_C_INT; cdecl;
-begin
   TS_TST_INFO_set_nonce := LoadLibCryptoFunction('TS_TST_INFO_set_nonce');
-  if not assigned(TS_TST_INFO_set_nonce) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_set_nonce');
-  Result := TS_TST_INFO_set_nonce(a,nonce);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_set_nonce);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_set_nonce :=  @ERROR_TS_TST_INFO_set_nonce;
+  end;
 
-function Load_TS_TST_INFO_get_nonce(const a: PTS_TST_INFO): PASN1_INTEGER; cdecl;
-begin
   TS_TST_INFO_get_nonce := LoadLibCryptoFunction('TS_TST_INFO_get_nonce');
-  if not assigned(TS_TST_INFO_get_nonce) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_nonce');
-  Result := TS_TST_INFO_get_nonce(a);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_get_nonce);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_get_nonce :=  @ERROR_TS_TST_INFO_get_nonce;
+  end;
 
-function Load_TS_TST_INFO_set_tsa(a: PTS_TST_Info; tsa: PGENERAL_NAME): TOpenSSL_C_INT; cdecl;
-begin
   TS_TST_INFO_set_tsa := LoadLibCryptoFunction('TS_TST_INFO_set_tsa');
-  if not assigned(TS_TST_INFO_set_tsa) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_set_tsa');
-  Result := TS_TST_INFO_set_tsa(a,tsa);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_set_tsa);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_set_tsa :=  @ERROR_TS_TST_INFO_set_tsa;
+  end;
 
-function Load_TS_TST_INFO_get_tsa(a: PTS_TST_Info): PGENERAL_NAME; cdecl;
-begin
   TS_TST_INFO_get_tsa := LoadLibCryptoFunction('TS_TST_INFO_get_tsa');
-  if not assigned(TS_TST_INFO_get_tsa) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_tsa');
-  Result := TS_TST_INFO_get_tsa(a);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_get_tsa);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_get_tsa :=  @ERROR_TS_TST_INFO_get_tsa;
+  end;
 
-procedure Load_TS_TST_INFO_ext_free(a: PTS_TST_Info); cdecl;
-begin
   TS_TST_INFO_ext_free := LoadLibCryptoFunction('TS_TST_INFO_ext_free');
-  if not assigned(TS_TST_INFO_ext_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_ext_free');
-  TS_TST_INFO_ext_free(a);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_ext_free);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_ext_free :=  @ERROR_TS_TST_INFO_ext_free;
+  end;
 
-function Load_TS_TST_INFO_get_ext_count(a: PTS_TST_Info): TOpenSSL_C_INT; cdecl;
-begin
   TS_TST_INFO_get_ext_count := LoadLibCryptoFunction('TS_TST_INFO_get_ext_count');
-  if not assigned(TS_TST_INFO_get_ext_count) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_ext_count');
-  Result := TS_TST_INFO_get_ext_count(a);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_get_ext_count);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_get_ext_count :=  @ERROR_TS_TST_INFO_get_ext_count;
+  end;
 
-function Load_TS_TST_INFO_get_ext_by_NID(a: PTS_TST_Info; nid: TOpenSSL_C_INT; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   TS_TST_INFO_get_ext_by_NID := LoadLibCryptoFunction('TS_TST_INFO_get_ext_by_NID');
-  if not assigned(TS_TST_INFO_get_ext_by_NID) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_ext_by_NID');
-  Result := TS_TST_INFO_get_ext_by_NID(a,nid,lastpos);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_get_ext_by_NID);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_get_ext_by_NID :=  @ERROR_TS_TST_INFO_get_ext_by_NID;
+  end;
 
-function Load_TS_TST_INFO_get_ext_by_OBJ(a: PTS_TST_Info; const obj: PASN1_Object; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   TS_TST_INFO_get_ext_by_OBJ := LoadLibCryptoFunction('TS_TST_INFO_get_ext_by_OBJ');
-  if not assigned(TS_TST_INFO_get_ext_by_OBJ) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_ext_by_OBJ');
-  Result := TS_TST_INFO_get_ext_by_OBJ(a,obj,lastpos);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_get_ext_by_OBJ);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_get_ext_by_OBJ :=  @ERROR_TS_TST_INFO_get_ext_by_OBJ;
+  end;
 
-function Load_TS_TST_INFO_get_ext_by_critical(a: PTS_TST_Info; crit: TOpenSSL_C_INT; lastpos: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   TS_TST_INFO_get_ext_by_critical := LoadLibCryptoFunction('TS_TST_INFO_get_ext_by_critical');
-  if not assigned(TS_TST_INFO_get_ext_by_critical) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_ext_by_critical');
-  Result := TS_TST_INFO_get_ext_by_critical(a,crit,lastpos);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_get_ext_by_critical);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_get_ext_by_critical :=  @ERROR_TS_TST_INFO_get_ext_by_critical;
+  end;
 
-function Load_TS_TST_INFO_get_ext(a: PTS_TST_Info; loc: TOpenSSL_C_INT): PX509_Extension; cdecl;
-begin
   TS_TST_INFO_get_ext := LoadLibCryptoFunction('TS_TST_INFO_get_ext');
-  if not assigned(TS_TST_INFO_get_ext) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_ext');
-  Result := TS_TST_INFO_get_ext(a,loc);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_get_ext);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_get_ext :=  @ERROR_TS_TST_INFO_get_ext;
+  end;
 
-function Load_TS_TST_INFO_delete_ext(a: PTS_TST_Info; loc: TOpenSSL_C_INT): PX509_Extension; cdecl;
-begin
   TS_TST_INFO_delete_ext := LoadLibCryptoFunction('TS_TST_INFO_delete_ext');
-  if not assigned(TS_TST_INFO_delete_ext) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_delete_ext');
-  Result := TS_TST_INFO_delete_ext(a,loc);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_delete_ext);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_delete_ext :=  @ERROR_TS_TST_INFO_delete_ext;
+  end;
 
-function Load_TS_TST_INFO_add_ext(a: PTS_TST_Info; ex: PX509_Extension; loc: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   TS_TST_INFO_add_ext := LoadLibCryptoFunction('TS_TST_INFO_add_ext');
-  if not assigned(TS_TST_INFO_add_ext) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_add_ext');
-  Result := TS_TST_INFO_add_ext(a,ex,loc);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_add_ext);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_add_ext :=  @ERROR_TS_TST_INFO_add_ext;
+  end;
 
-function Load_TS_TST_INFO_get_ext_d2i(a: PTS_TST_Info; nid: TOpenSSL_C_INT; crit: POpenSSL_C_INT; idx: POpenSSL_C_INT): Pointer; cdecl;
-begin
   TS_TST_INFO_get_ext_d2i := LoadLibCryptoFunction('TS_TST_INFO_get_ext_d2i');
-  if not assigned(TS_TST_INFO_get_ext_d2i) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_get_ext_d2i');
-  Result := TS_TST_INFO_get_ext_d2i(a,nid,crit,idx);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_get_ext_d2i);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_get_ext_d2i :=  @ERROR_TS_TST_INFO_get_ext_d2i;
+  end;
 
-function Load_TS_RESP_CTX_new: PTS_RESP_CTX; cdecl;
-begin
   TS_RESP_CTX_new := LoadLibCryptoFunction('TS_RESP_CTX_new');
-  if not assigned(TS_RESP_CTX_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_new');
-  Result := TS_RESP_CTX_new();
-end;
+  FuncLoadError := not assigned(TS_RESP_CTX_new);
+  if FuncLoadError then
+  begin
+    TS_RESP_CTX_new :=  @ERROR_TS_RESP_CTX_new;
+  end;
 
-procedure Load_TS_RESP_CTX_free(ctx: PTS_RESP_CTX); cdecl;
-begin
   TS_RESP_CTX_free := LoadLibCryptoFunction('TS_RESP_CTX_free');
-  if not assigned(TS_RESP_CTX_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_free');
-  TS_RESP_CTX_free(ctx);
-end;
+  FuncLoadError := not assigned(TS_RESP_CTX_free);
+  if FuncLoadError then
+  begin
+    TS_RESP_CTX_free :=  @ERROR_TS_RESP_CTX_free;
+  end;
 
-function Load_TS_RESP_CTX_set_signer_cert(ctx: PTS_RESP_CTX; signer: PX509): TOpenSSL_C_INT; cdecl;
-begin
   TS_RESP_CTX_set_signer_cert := LoadLibCryptoFunction('TS_RESP_CTX_set_signer_cert');
-  if not assigned(TS_RESP_CTX_set_signer_cert) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_signer_cert');
-  Result := TS_RESP_CTX_set_signer_cert(ctx,signer);
-end;
+  FuncLoadError := not assigned(TS_RESP_CTX_set_signer_cert);
+  if FuncLoadError then
+  begin
+    TS_RESP_CTX_set_signer_cert :=  @ERROR_TS_RESP_CTX_set_signer_cert;
+  end;
 
-function Load_TS_RESP_CTX_set_signer_key(ctx: PTS_RESP_CTX; key: PEVP_PKEY): TOpenSSL_C_INT; cdecl;
-begin
   TS_RESP_CTX_set_signer_key := LoadLibCryptoFunction('TS_RESP_CTX_set_signer_key');
-  if not assigned(TS_RESP_CTX_set_signer_key) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_signer_key');
-  Result := TS_RESP_CTX_set_signer_key(ctx,key);
-end;
+  FuncLoadError := not assigned(TS_RESP_CTX_set_signer_key);
+  if FuncLoadError then
+  begin
+    TS_RESP_CTX_set_signer_key :=  @ERROR_TS_RESP_CTX_set_signer_key;
+  end;
 
-function Load_TS_RESP_CTX_set_signer_digest(ctx: PTS_RESP_CTX; signer_digest: PEVP_MD): TOpenSSL_C_INT; cdecl;
-begin
   TS_RESP_CTX_set_signer_digest := LoadLibCryptoFunction('TS_RESP_CTX_set_signer_digest');
-  if not assigned(TS_RESP_CTX_set_signer_digest) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_signer_digest');
-  Result := TS_RESP_CTX_set_signer_digest(ctx,signer_digest);
-end;
+  FuncLoadError := not assigned(TS_RESP_CTX_set_signer_digest);
+  if FuncLoadError then
+  begin
+    TS_RESP_CTX_set_signer_digest :=  @ERROR_TS_RESP_CTX_set_signer_digest;
+  end;
 
-function Load_TS_RESP_CTX_set_ess_cert_id_digest(ctx: PTS_RESP_CTX; md: PEVP_MD): TOpenSSL_C_INT; cdecl;
-begin
   TS_RESP_CTX_set_ess_cert_id_digest := LoadLibCryptoFunction('TS_RESP_CTX_set_ess_cert_id_digest');
-  if not assigned(TS_RESP_CTX_set_ess_cert_id_digest) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_ess_cert_id_digest');
-  Result := TS_RESP_CTX_set_ess_cert_id_digest(ctx,md);
-end;
+  FuncLoadError := not assigned(TS_RESP_CTX_set_ess_cert_id_digest);
+  if FuncLoadError then
+  begin
+    TS_RESP_CTX_set_ess_cert_id_digest :=  @ERROR_TS_RESP_CTX_set_ess_cert_id_digest;
+  end;
 
-function Load_TS_RESP_CTX_set_def_policy(ctx: PTS_RESP_CTX; def_policy: PASN1_Object): TOpenSSL_C_INT; cdecl;
-begin
   TS_RESP_CTX_set_def_policy := LoadLibCryptoFunction('TS_RESP_CTX_set_def_policy');
-  if not assigned(TS_RESP_CTX_set_def_policy) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_def_policy');
-  Result := TS_RESP_CTX_set_def_policy(ctx,def_policy);
-end;
+  FuncLoadError := not assigned(TS_RESP_CTX_set_def_policy);
+  if FuncLoadError then
+  begin
+    TS_RESP_CTX_set_def_policy :=  @ERROR_TS_RESP_CTX_set_def_policy;
+  end;
 
-function Load_TS_RESP_CTX_add_policy(ctx: PTS_RESP_CTX; const policy: PASN1_Object): TOpenSSL_C_INT; cdecl;
-begin
   TS_RESP_CTX_add_policy := LoadLibCryptoFunction('TS_RESP_CTX_add_policy');
-  if not assigned(TS_RESP_CTX_add_policy) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_add_policy');
-  Result := TS_RESP_CTX_add_policy(ctx,policy);
-end;
+  FuncLoadError := not assigned(TS_RESP_CTX_add_policy);
+  if FuncLoadError then
+  begin
+    TS_RESP_CTX_add_policy :=  @ERROR_TS_RESP_CTX_add_policy;
+  end;
 
-function Load_TS_RESP_CTX_add_md(ctx: PTS_RESP_CTX; const md: PEVP_MD): TOpenSSL_C_INT; cdecl;
-begin
   TS_RESP_CTX_add_md := LoadLibCryptoFunction('TS_RESP_CTX_add_md');
-  if not assigned(TS_RESP_CTX_add_md) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_add_md');
-  Result := TS_RESP_CTX_add_md(ctx,md);
-end;
+  FuncLoadError := not assigned(TS_RESP_CTX_add_md);
+  if FuncLoadError then
+  begin
+    TS_RESP_CTX_add_md :=  @ERROR_TS_RESP_CTX_add_md;
+  end;
 
-function Load_TS_RESP_CTX_set_accuracy(ctx: PTS_RESP_CTX; secs: TOpenSSL_C_INT; millis: TOpenSSL_C_INT; micros: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   TS_RESP_CTX_set_accuracy := LoadLibCryptoFunction('TS_RESP_CTX_set_accuracy');
-  if not assigned(TS_RESP_CTX_set_accuracy) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_accuracy');
-  Result := TS_RESP_CTX_set_accuracy(ctx,secs,millis,micros);
-end;
+  FuncLoadError := not assigned(TS_RESP_CTX_set_accuracy);
+  if FuncLoadError then
+  begin
+    TS_RESP_CTX_set_accuracy :=  @ERROR_TS_RESP_CTX_set_accuracy;
+  end;
 
-function Load_TS_RESP_CTX_set_clock_precision_digits(ctx: PTS_RESP_CTX; clock_precision_digits: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
-begin
   TS_RESP_CTX_set_clock_precision_digits := LoadLibCryptoFunction('TS_RESP_CTX_set_clock_precision_digits');
-  if not assigned(TS_RESP_CTX_set_clock_precision_digits) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_clock_precision_digits');
-  Result := TS_RESP_CTX_set_clock_precision_digits(ctx,clock_precision_digits);
-end;
+  FuncLoadError := not assigned(TS_RESP_CTX_set_clock_precision_digits);
+  if FuncLoadError then
+  begin
+    TS_RESP_CTX_set_clock_precision_digits :=  @ERROR_TS_RESP_CTX_set_clock_precision_digits;
+  end;
 
-procedure Load_TS_RESP_CTX_add_flags(ctx: PTS_RESP_CTX; flags: TOpenSSL_C_INT); cdecl;
-begin
   TS_RESP_CTX_add_flags := LoadLibCryptoFunction('TS_RESP_CTX_add_flags');
-  if not assigned(TS_RESP_CTX_add_flags) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_add_flags');
-  TS_RESP_CTX_add_flags(ctx,flags);
-end;
+  FuncLoadError := not assigned(TS_RESP_CTX_add_flags);
+  if FuncLoadError then
+  begin
+    TS_RESP_CTX_add_flags :=  @ERROR_TS_RESP_CTX_add_flags;
+  end;
 
-procedure Load_TS_RESP_CTX_set_serial_cb(ctx: PTS_RESP_CTX; cb: TS_serial_cb; data: Pointer); cdecl;
-begin
   TS_RESP_CTX_set_serial_cb := LoadLibCryptoFunction('TS_RESP_CTX_set_serial_cb');
-  if not assigned(TS_RESP_CTX_set_serial_cb) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_serial_cb');
-  TS_RESP_CTX_set_serial_cb(ctx,cb,data);
-end;
+  FuncLoadError := not assigned(TS_RESP_CTX_set_serial_cb);
+  if FuncLoadError then
+  begin
+    TS_RESP_CTX_set_serial_cb :=  @ERROR_TS_RESP_CTX_set_serial_cb;
+  end;
 
-procedure Load_TS_RESP_CTX_set_time_cb(ctx: PTS_RESP_CTX; cb: TS_time_cb; data: Pointer); cdecl;
-begin
   TS_RESP_CTX_set_time_cb := LoadLibCryptoFunction('TS_RESP_CTX_set_time_cb');
-  if not assigned(TS_RESP_CTX_set_time_cb) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_time_cb');
-  TS_RESP_CTX_set_time_cb(ctx,cb,data);
-end;
+  FuncLoadError := not assigned(TS_RESP_CTX_set_time_cb);
+  if FuncLoadError then
+  begin
+    TS_RESP_CTX_set_time_cb :=  @ERROR_TS_RESP_CTX_set_time_cb;
+  end;
 
-procedure Load_TS_RESP_CTX_set_extension_cb(ctx: PTS_RESP_CTX; cb: TS_extension_cb; data: Pointer); cdecl;
-begin
   TS_RESP_CTX_set_extension_cb := LoadLibCryptoFunction('TS_RESP_CTX_set_extension_cb');
-  if not assigned(TS_RESP_CTX_set_extension_cb) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_extension_cb');
-  TS_RESP_CTX_set_extension_cb(ctx,cb,data);
-end;
+  FuncLoadError := not assigned(TS_RESP_CTX_set_extension_cb);
+  if FuncLoadError then
+  begin
+    TS_RESP_CTX_set_extension_cb :=  @ERROR_TS_RESP_CTX_set_extension_cb;
+  end;
 
-function Load_TS_RESP_CTX_set_status_info(ctx: PTS_RESP_CTX; status: TOpenSSL_C_INT; text: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
   TS_RESP_CTX_set_status_info := LoadLibCryptoFunction('TS_RESP_CTX_set_status_info');
-  if not assigned(TS_RESP_CTX_set_status_info) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_status_info');
-  Result := TS_RESP_CTX_set_status_info(ctx,status,text);
-end;
+  FuncLoadError := not assigned(TS_RESP_CTX_set_status_info);
+  if FuncLoadError then
+  begin
+    TS_RESP_CTX_set_status_info :=  @ERROR_TS_RESP_CTX_set_status_info;
+  end;
 
-function Load_TS_RESP_CTX_set_status_info_cond(ctx: PTS_RESP_CTX; status: TOpenSSL_C_INT; text: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
   TS_RESP_CTX_set_status_info_cond := LoadLibCryptoFunction('TS_RESP_CTX_set_status_info_cond');
-  if not assigned(TS_RESP_CTX_set_status_info_cond) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_set_status_info_cond');
-  Result := TS_RESP_CTX_set_status_info_cond(ctx,status,text);
-end;
+  FuncLoadError := not assigned(TS_RESP_CTX_set_status_info_cond);
+  if FuncLoadError then
+  begin
+    TS_RESP_CTX_set_status_info_cond :=  @ERROR_TS_RESP_CTX_set_status_info_cond;
+  end;
 
-function Load_TS_RESP_CTX_add_failure_info(ctx: PTS_RESP_CTX; failure: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   TS_RESP_CTX_add_failure_info := LoadLibCryptoFunction('TS_RESP_CTX_add_failure_info');
-  if not assigned(TS_RESP_CTX_add_failure_info) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_add_failure_info');
-  Result := TS_RESP_CTX_add_failure_info(ctx,failure);
-end;
+  FuncLoadError := not assigned(TS_RESP_CTX_add_failure_info);
+  if FuncLoadError then
+  begin
+    TS_RESP_CTX_add_failure_info :=  @ERROR_TS_RESP_CTX_add_failure_info;
+  end;
 
-function Load_TS_RESP_CTX_get_request(ctx: PTS_RESP_CTX): PTS_REQ; cdecl;
-begin
   TS_RESP_CTX_get_request := LoadLibCryptoFunction('TS_RESP_CTX_get_request');
-  if not assigned(TS_RESP_CTX_get_request) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_get_request');
-  Result := TS_RESP_CTX_get_request(ctx);
-end;
+  FuncLoadError := not assigned(TS_RESP_CTX_get_request);
+  if FuncLoadError then
+  begin
+    TS_RESP_CTX_get_request :=  @ERROR_TS_RESP_CTX_get_request;
+  end;
 
-function Load_TS_RESP_CTX_get_tst_info(ctx: PTS_RESP_CTX): PTS_TST_Info; cdecl;
-begin
   TS_RESP_CTX_get_tst_info := LoadLibCryptoFunction('TS_RESP_CTX_get_tst_info');
-  if not assigned(TS_RESP_CTX_get_tst_info) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_CTX_get_tst_info');
-  Result := TS_RESP_CTX_get_tst_info(ctx);
-end;
+  FuncLoadError := not assigned(TS_RESP_CTX_get_tst_info);
+  if FuncLoadError then
+  begin
+    TS_RESP_CTX_get_tst_info :=  @ERROR_TS_RESP_CTX_get_tst_info;
+  end;
 
-function Load_TS_RESP_create_response(ctx: PTS_RESP_CTX; req_bio: PBIO): PTS_RESP; cdecl;
-begin
   TS_RESP_create_response := LoadLibCryptoFunction('TS_RESP_create_response');
-  if not assigned(TS_RESP_create_response) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_create_response');
-  Result := TS_RESP_create_response(ctx,req_bio);
-end;
+  FuncLoadError := not assigned(TS_RESP_create_response);
+  if FuncLoadError then
+  begin
+    TS_RESP_create_response :=  @ERROR_TS_RESP_create_response;
+  end;
 
-function Load_TS_RESP_verify_response(ctx: PTS_VERIFY_CTX; response: PTS_RESP): TOpenSSL_C_INT; cdecl;
-begin
   TS_RESP_verify_response := LoadLibCryptoFunction('TS_RESP_verify_response');
-  if not assigned(TS_RESP_verify_response) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_verify_response');
-  Result := TS_RESP_verify_response(ctx,response);
-end;
+  FuncLoadError := not assigned(TS_RESP_verify_response);
+  if FuncLoadError then
+  begin
+    TS_RESP_verify_response :=  @ERROR_TS_RESP_verify_response;
+  end;
 
-function Load_TS_RESP_verify_token(ctx: PTS_VERIFY_CTX; token: PPKCS7): TOpenSSL_C_INT; cdecl;
-begin
   TS_RESP_verify_token := LoadLibCryptoFunction('TS_RESP_verify_token');
-  if not assigned(TS_RESP_verify_token) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_verify_token');
-  Result := TS_RESP_verify_token(ctx,token);
-end;
+  FuncLoadError := not assigned(TS_RESP_verify_token);
+  if FuncLoadError then
+  begin
+    TS_RESP_verify_token :=  @ERROR_TS_RESP_verify_token;
+  end;
 
-function Load_TS_VERIFY_CTX_new: PTS_VERIFY_CTX; cdecl;
-begin
   TS_VERIFY_CTX_new := LoadLibCryptoFunction('TS_VERIFY_CTX_new');
-  if not assigned(TS_VERIFY_CTX_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_VERIFY_CTX_new');
-  Result := TS_VERIFY_CTX_new();
-end;
+  FuncLoadError := not assigned(TS_VERIFY_CTX_new);
+  if FuncLoadError then
+  begin
+    TS_VERIFY_CTX_new :=  @ERROR_TS_VERIFY_CTX_new;
+  end;
 
-procedure Load_TS_VERIFY_CTX_init(ctx: PTS_VERIFY_CTX); cdecl;
-begin
   TS_VERIFY_CTX_init := LoadLibCryptoFunction('TS_VERIFY_CTX_init');
-  if not assigned(TS_VERIFY_CTX_init) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_VERIFY_CTX_init');
-  TS_VERIFY_CTX_init(ctx);
-end;
+  FuncLoadError := not assigned(TS_VERIFY_CTX_init);
+  if FuncLoadError then
+  begin
+    TS_VERIFY_CTX_init :=  @ERROR_TS_VERIFY_CTX_init;
+  end;
 
-procedure Load_TS_VERIFY_CTX_free(ctx: PTS_VERIFY_CTX); cdecl;
-begin
   TS_VERIFY_CTX_free := LoadLibCryptoFunction('TS_VERIFY_CTX_free');
-  if not assigned(TS_VERIFY_CTX_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_VERIFY_CTX_free');
-  TS_VERIFY_CTX_free(ctx);
-end;
+  FuncLoadError := not assigned(TS_VERIFY_CTX_free);
+  if FuncLoadError then
+  begin
+    TS_VERIFY_CTX_free :=  @ERROR_TS_VERIFY_CTX_free;
+  end;
 
-procedure Load_TS_VERIFY_CTX_cleanup(ctx: PTS_VERIFY_CTX); cdecl;
-begin
   TS_VERIFY_CTX_cleanup := LoadLibCryptoFunction('TS_VERIFY_CTX_cleanup');
-  if not assigned(TS_VERIFY_CTX_cleanup) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_VERIFY_CTX_cleanup');
-  TS_VERIFY_CTX_cleanup(ctx);
-end;
+  FuncLoadError := not assigned(TS_VERIFY_CTX_cleanup);
+  if FuncLoadError then
+  begin
+    TS_VERIFY_CTX_cleanup :=  @ERROR_TS_VERIFY_CTX_cleanup;
+  end;
 
-function Load_TS_VERIFY_CTX_set_flags(ctx: PTS_VERIFY_CTX; f: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   TS_VERIFY_CTX_set_flags := LoadLibCryptoFunction('TS_VERIFY_CTX_set_flags');
-  if not assigned(TS_VERIFY_CTX_set_flags) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_VERIFY_CTX_set_flags');
-  Result := TS_VERIFY_CTX_set_flags(ctx,f);
-end;
+  FuncLoadError := not assigned(TS_VERIFY_CTX_set_flags);
+  if FuncLoadError then
+  begin
+    TS_VERIFY_CTX_set_flags :=  @ERROR_TS_VERIFY_CTX_set_flags;
+  end;
 
-function Load_TS_VERIFY_CTX_add_flags(ctx: PTS_VERIFY_CTX; f: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   TS_VERIFY_CTX_add_flags := LoadLibCryptoFunction('TS_VERIFY_CTX_add_flags');
-  if not assigned(TS_VERIFY_CTX_add_flags) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_VERIFY_CTX_add_flags');
-  Result := TS_VERIFY_CTX_add_flags(ctx,f);
-end;
+  FuncLoadError := not assigned(TS_VERIFY_CTX_add_flags);
+  if FuncLoadError then
+  begin
+    TS_VERIFY_CTX_add_flags :=  @ERROR_TS_VERIFY_CTX_add_flags;
+  end;
 
-function Load_TS_VERIFY_CTX_set_data(ctx: PTS_VERIFY_CTX; b: PBIO): PBIO; cdecl;
-begin
   TS_VERIFY_CTX_set_data := LoadLibCryptoFunction('TS_VERIFY_CTX_set_data');
-  if not assigned(TS_VERIFY_CTX_set_data) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_VERIFY_CTX_set_data');
-  Result := TS_VERIFY_CTX_set_data(ctx,b);
-end;
+  FuncLoadError := not assigned(TS_VERIFY_CTX_set_data);
+  if FuncLoadError then
+  begin
+    TS_VERIFY_CTX_set_data :=  @ERROR_TS_VERIFY_CTX_set_data;
+  end;
 
-function Load_TS_VERIFY_CTX_set_imprint(ctx: PTS_VERIFY_CTX; hexstr: PByte; len: TOpenSSL_C_LONG): PByte; cdecl;
-begin
   TS_VERIFY_CTX_set_imprint := LoadLibCryptoFunction('TS_VERIFY_CTX_set_imprint');
-  if not assigned(TS_VERIFY_CTX_set_imprint) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_VERIFY_CTX_set_imprint');
-  Result := TS_VERIFY_CTX_set_imprint(ctx,hexstr,len);
-end;
+  FuncLoadError := not assigned(TS_VERIFY_CTX_set_imprint);
+  if FuncLoadError then
+  begin
+    TS_VERIFY_CTX_set_imprint :=  @ERROR_TS_VERIFY_CTX_set_imprint;
+  end;
 
-function Load_TS_VERIFY_CTX_set_store(ctx: PTS_VERIFY_CTX; s: PX509_Store): PX509_Store; cdecl;
-begin
   TS_VERIFY_CTX_set_store := LoadLibCryptoFunction('TS_VERIFY_CTX_set_store');
-  if not assigned(TS_VERIFY_CTX_set_store) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_VERIFY_CTX_set_store');
-  Result := TS_VERIFY_CTX_set_store(ctx,s);
-end;
+  FuncLoadError := not assigned(TS_VERIFY_CTX_set_store);
+  if FuncLoadError then
+  begin
+    TS_VERIFY_CTX_set_store :=  @ERROR_TS_VERIFY_CTX_set_store;
+  end;
 
-function Load_TS_REQ_to_TS_VERIFY_CTX(req: PTS_REQ; ctx: PTS_VERIFY_CTX): PTS_VERIFY_CTX; cdecl;
-begin
   TS_REQ_to_TS_VERIFY_CTX := LoadLibCryptoFunction('TS_REQ_to_TS_VERIFY_CTX');
-  if not assigned(TS_REQ_to_TS_VERIFY_CTX) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_REQ_to_TS_VERIFY_CTX');
-  Result := TS_REQ_to_TS_VERIFY_CTX(req,ctx);
-end;
+  FuncLoadError := not assigned(TS_REQ_to_TS_VERIFY_CTX);
+  if FuncLoadError then
+  begin
+    TS_REQ_to_TS_VERIFY_CTX :=  @ERROR_TS_REQ_to_TS_VERIFY_CTX;
+  end;
 
-function Load_TS_RESP_print_bio(bio: PBIO; a: PTS_RESP): TOpenSSL_C_INT; cdecl;
-begin
   TS_RESP_print_bio := LoadLibCryptoFunction('TS_RESP_print_bio');
-  if not assigned(TS_RESP_print_bio) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_RESP_print_bio');
-  Result := TS_RESP_print_bio(bio,a);
-end;
+  FuncLoadError := not assigned(TS_RESP_print_bio);
+  if FuncLoadError then
+  begin
+    TS_RESP_print_bio :=  @ERROR_TS_RESP_print_bio;
+  end;
 
-function Load_TS_STATUS_INFO_print_bio(bio: PBIO; a: PTS_STATUS_INFO): TOpenSSL_C_INT; cdecl;
-begin
   TS_STATUS_INFO_print_bio := LoadLibCryptoFunction('TS_STATUS_INFO_print_bio');
-  if not assigned(TS_STATUS_INFO_print_bio) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_STATUS_INFO_print_bio');
-  Result := TS_STATUS_INFO_print_bio(bio,a);
-end;
+  FuncLoadError := not assigned(TS_STATUS_INFO_print_bio);
+  if FuncLoadError then
+  begin
+    TS_STATUS_INFO_print_bio :=  @ERROR_TS_STATUS_INFO_print_bio;
+  end;
 
-function Load_TS_TST_INFO_print_bio(bio: PBIO; a: PTS_TST_Info): TOpenSSL_C_INT; cdecl;
-begin
   TS_TST_INFO_print_bio := LoadLibCryptoFunction('TS_TST_INFO_print_bio');
-  if not assigned(TS_TST_INFO_print_bio) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_TST_INFO_print_bio');
-  Result := TS_TST_INFO_print_bio(bio,a);
-end;
+  FuncLoadError := not assigned(TS_TST_INFO_print_bio);
+  if FuncLoadError then
+  begin
+    TS_TST_INFO_print_bio :=  @ERROR_TS_TST_INFO_print_bio;
+  end;
 
-function Load_TS_ASN1_INTEGER_print_bio(bio: PBIO; const num: PASN1_INTEGER): TOpenSSL_C_INT; cdecl;
-begin
   TS_ASN1_INTEGER_print_bio := LoadLibCryptoFunction('TS_ASN1_INTEGER_print_bio');
-  if not assigned(TS_ASN1_INTEGER_print_bio) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_ASN1_INTEGER_print_bio');
-  Result := TS_ASN1_INTEGER_print_bio(bio,num);
-end;
+  FuncLoadError := not assigned(TS_ASN1_INTEGER_print_bio);
+  if FuncLoadError then
+  begin
+    TS_ASN1_INTEGER_print_bio :=  @ERROR_TS_ASN1_INTEGER_print_bio;
+  end;
 
-function Load_TS_OBJ_print_bio(bio: PBIO; const obj: PASN1_Object): TOpenSSL_C_INT; cdecl;
-begin
   TS_OBJ_print_bio := LoadLibCryptoFunction('TS_OBJ_print_bio');
-  if not assigned(TS_OBJ_print_bio) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_OBJ_print_bio');
-  Result := TS_OBJ_print_bio(bio,obj);
-end;
+  FuncLoadError := not assigned(TS_OBJ_print_bio);
+  if FuncLoadError then
+  begin
+    TS_OBJ_print_bio :=  @ERROR_TS_OBJ_print_bio;
+  end;
 
-function Load_TS_X509_ALGOR_print_bio(bio: PBIO; const alg: PX509_ALGOr): TOpenSSL_C_INT; cdecl;
-begin
   TS_X509_ALGOR_print_bio := LoadLibCryptoFunction('TS_X509_ALGOR_print_bio');
-  if not assigned(TS_X509_ALGOR_print_bio) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_X509_ALGOR_print_bio');
-  Result := TS_X509_ALGOR_print_bio(bio,alg);
-end;
+  FuncLoadError := not assigned(TS_X509_ALGOR_print_bio);
+  if FuncLoadError then
+  begin
+    TS_X509_ALGOR_print_bio :=  @ERROR_TS_X509_ALGOR_print_bio;
+  end;
 
-function Load_TS_MSG_IMPRINT_print_bio(bio: PBIO; msg: PTS_MSG_IMPRINT): TOpenSSL_C_INT; cdecl;
-begin
   TS_MSG_IMPRINT_print_bio := LoadLibCryptoFunction('TS_MSG_IMPRINT_print_bio');
-  if not assigned(TS_MSG_IMPRINT_print_bio) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_MSG_IMPRINT_print_bio');
-  Result := TS_MSG_IMPRINT_print_bio(bio,msg);
-end;
+  FuncLoadError := not assigned(TS_MSG_IMPRINT_print_bio);
+  if FuncLoadError then
+  begin
+    TS_MSG_IMPRINT_print_bio :=  @ERROR_TS_MSG_IMPRINT_print_bio;
+  end;
 
-function Load_TS_CONF_load_cert(file_: PAnsiChar): PX509; cdecl;
-begin
   TS_CONF_load_cert := LoadLibCryptoFunction('TS_CONF_load_cert');
-  if not assigned(TS_CONF_load_cert) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_load_cert');
-  Result := TS_CONF_load_cert(file_);
-end;
+  FuncLoadError := not assigned(TS_CONF_load_cert);
+  if FuncLoadError then
+  begin
+    TS_CONF_load_cert :=  @ERROR_TS_CONF_load_cert;
+  end;
 
-function Load_TS_CONF_load_key( file_: PAnsiChar; pass: PAnsiChar): PEVP_PKey; cdecl;
-begin
   TS_CONF_load_key := LoadLibCryptoFunction('TS_CONF_load_key');
-  if not assigned(TS_CONF_load_key) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_load_key');
-  Result := TS_CONF_load_key(file_,pass);
-end;
+  FuncLoadError := not assigned(TS_CONF_load_key);
+  if FuncLoadError then
+  begin
+    TS_CONF_load_key :=  @ERROR_TS_CONF_load_key;
+  end;
 
-function Load_TS_CONF_set_serial(conf: PCONF; section: PAnsiChar; cb: TS_serial_cb; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-begin
   TS_CONF_set_serial := LoadLibCryptoFunction('TS_CONF_set_serial');
-  if not assigned(TS_CONF_set_serial) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_serial');
-  Result := TS_CONF_set_serial(conf,section,cb,ctx);
-end;
+  FuncLoadError := not assigned(TS_CONF_set_serial);
+  if FuncLoadError then
+  begin
+    TS_CONF_set_serial :=  @ERROR_TS_CONF_set_serial;
+  end;
 
-function Load_TS_CONF_get_tsa_section(conf: PCONF; const section: PAnsiChar): PAnsiChar; cdecl;
-begin
   TS_CONF_get_tsa_section := LoadLibCryptoFunction('TS_CONF_get_tsa_section');
-  if not assigned(TS_CONF_get_tsa_section) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_get_tsa_section');
-  Result := TS_CONF_get_tsa_section(conf,section);
-end;
+  FuncLoadError := not assigned(TS_CONF_get_tsa_section);
+  if FuncLoadError then
+  begin
+    TS_CONF_get_tsa_section :=  @ERROR_TS_CONF_get_tsa_section;
+  end;
 
-function Load_TS_CONF_set_crypto_device(conf: PCONF; section: PAnsiChar; device: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
   TS_CONF_set_crypto_device := LoadLibCryptoFunction('TS_CONF_set_crypto_device');
-  if not assigned(TS_CONF_set_crypto_device) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_crypto_device');
-  Result := TS_CONF_set_crypto_device(conf,section,device);
-end;
+  FuncLoadError := not assigned(TS_CONF_set_crypto_device);
+  if FuncLoadError then
+  begin
+    TS_CONF_set_crypto_device :=  @ERROR_TS_CONF_set_crypto_device;
+  end;
 
-function Load_TS_CONF_set_default_engine(name: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
   TS_CONF_set_default_engine := LoadLibCryptoFunction('TS_CONF_set_default_engine');
-  if not assigned(TS_CONF_set_default_engine) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_default_engine');
-  Result := TS_CONF_set_default_engine(name);
-end;
+  FuncLoadError := not assigned(TS_CONF_set_default_engine);
+  if FuncLoadError then
+  begin
+    TS_CONF_set_default_engine :=  @ERROR_TS_CONF_set_default_engine;
+  end;
 
-function Load_TS_CONF_set_signer_cert(conf: PCONF; section: PAnsiChar; cert: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-begin
   TS_CONF_set_signer_cert := LoadLibCryptoFunction('TS_CONF_set_signer_cert');
-  if not assigned(TS_CONF_set_signer_cert) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_signer_cert');
-  Result := TS_CONF_set_signer_cert(conf,section,cert,ctx);
-end;
+  FuncLoadError := not assigned(TS_CONF_set_signer_cert);
+  if FuncLoadError then
+  begin
+    TS_CONF_set_signer_cert :=  @ERROR_TS_CONF_set_signer_cert;
+  end;
 
-function Load_TS_CONF_set_certs(conf: PCONF; section: PAnsiChar; certs: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-begin
   TS_CONF_set_certs := LoadLibCryptoFunction('TS_CONF_set_certs');
-  if not assigned(TS_CONF_set_certs) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_certs');
-  Result := TS_CONF_set_certs(conf,section,certs,ctx);
-end;
+  FuncLoadError := not assigned(TS_CONF_set_certs);
+  if FuncLoadError then
+  begin
+    TS_CONF_set_certs :=  @ERROR_TS_CONF_set_certs;
+  end;
 
-function Load_TS_CONF_set_signer_key(conf: PCONF; const section: PAnsiChar; key: PAnsiChar; pass: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-begin
   TS_CONF_set_signer_key := LoadLibCryptoFunction('TS_CONF_set_signer_key');
-  if not assigned(TS_CONF_set_signer_key) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_signer_key');
-  Result := TS_CONF_set_signer_key(conf,section,key,pass,ctx);
-end;
+  FuncLoadError := not assigned(TS_CONF_set_signer_key);
+  if FuncLoadError then
+  begin
+    TS_CONF_set_signer_key :=  @ERROR_TS_CONF_set_signer_key;
+  end;
 
-function Load_TS_CONF_set_signer_digest(conf: PCONF; section: PAnsiChar; md: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-begin
   TS_CONF_set_signer_digest := LoadLibCryptoFunction('TS_CONF_set_signer_digest');
-  if not assigned(TS_CONF_set_signer_digest) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_signer_digest');
-  Result := TS_CONF_set_signer_digest(conf,section,md,ctx);
-end;
+  FuncLoadError := not assigned(TS_CONF_set_signer_digest);
+  if FuncLoadError then
+  begin
+    TS_CONF_set_signer_digest :=  @ERROR_TS_CONF_set_signer_digest;
+  end;
 
-function Load_TS_CONF_set_def_policy(conf: PCONF; section: PAnsiChar; policy: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-begin
   TS_CONF_set_def_policy := LoadLibCryptoFunction('TS_CONF_set_def_policy');
-  if not assigned(TS_CONF_set_def_policy) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_def_policy');
-  Result := TS_CONF_set_def_policy(conf,section,policy,ctx);
-end;
+  FuncLoadError := not assigned(TS_CONF_set_def_policy);
+  if FuncLoadError then
+  begin
+    TS_CONF_set_def_policy :=  @ERROR_TS_CONF_set_def_policy;
+  end;
 
-function Load_TS_CONF_set_policies(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-begin
   TS_CONF_set_policies := LoadLibCryptoFunction('TS_CONF_set_policies');
-  if not assigned(TS_CONF_set_policies) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_policies');
-  Result := TS_CONF_set_policies(conf,section,ctx);
-end;
+  FuncLoadError := not assigned(TS_CONF_set_policies);
+  if FuncLoadError then
+  begin
+    TS_CONF_set_policies :=  @ERROR_TS_CONF_set_policies;
+  end;
 
-function Load_TS_CONF_set_digests(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-begin
   TS_CONF_set_digests := LoadLibCryptoFunction('TS_CONF_set_digests');
-  if not assigned(TS_CONF_set_digests) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_digests');
-  Result := TS_CONF_set_digests(conf,section,ctx);
-end;
+  FuncLoadError := not assigned(TS_CONF_set_digests);
+  if FuncLoadError then
+  begin
+    TS_CONF_set_digests :=  @ERROR_TS_CONF_set_digests;
+  end;
 
-function Load_TS_CONF_set_accuracy(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-begin
   TS_CONF_set_accuracy := LoadLibCryptoFunction('TS_CONF_set_accuracy');
-  if not assigned(TS_CONF_set_accuracy) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_accuracy');
-  Result := TS_CONF_set_accuracy(conf,section,ctx);
-end;
+  FuncLoadError := not assigned(TS_CONF_set_accuracy);
+  if FuncLoadError then
+  begin
+    TS_CONF_set_accuracy :=  @ERROR_TS_CONF_set_accuracy;
+  end;
 
-function Load_TS_CONF_set_clock_precision_digits(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-begin
   TS_CONF_set_clock_precision_digits := LoadLibCryptoFunction('TS_CONF_set_clock_precision_digits');
-  if not assigned(TS_CONF_set_clock_precision_digits) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_clock_precision_digits');
-  Result := TS_CONF_set_clock_precision_digits(conf,section,ctx);
-end;
+  FuncLoadError := not assigned(TS_CONF_set_clock_precision_digits);
+  if FuncLoadError then
+  begin
+    TS_CONF_set_clock_precision_digits :=  @ERROR_TS_CONF_set_clock_precision_digits;
+  end;
 
-function Load_TS_CONF_set_ordering(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-begin
   TS_CONF_set_ordering := LoadLibCryptoFunction('TS_CONF_set_ordering');
-  if not assigned(TS_CONF_set_ordering) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_ordering');
-  Result := TS_CONF_set_ordering(conf,section,ctx);
-end;
+  FuncLoadError := not assigned(TS_CONF_set_ordering);
+  if FuncLoadError then
+  begin
+    TS_CONF_set_ordering :=  @ERROR_TS_CONF_set_ordering;
+  end;
 
-function Load_TS_CONF_set_tsa_name(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-begin
   TS_CONF_set_tsa_name := LoadLibCryptoFunction('TS_CONF_set_tsa_name');
-  if not assigned(TS_CONF_set_tsa_name) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_tsa_name');
-  Result := TS_CONF_set_tsa_name(conf,section,ctx);
-end;
+  FuncLoadError := not assigned(TS_CONF_set_tsa_name);
+  if FuncLoadError then
+  begin
+    TS_CONF_set_tsa_name :=  @ERROR_TS_CONF_set_tsa_name;
+  end;
 
-function Load_TS_CONF_set_ess_cert_id_chain(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-begin
   TS_CONF_set_ess_cert_id_chain := LoadLibCryptoFunction('TS_CONF_set_ess_cert_id_chain');
-  if not assigned(TS_CONF_set_ess_cert_id_chain) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_ess_cert_id_chain');
-  Result := TS_CONF_set_ess_cert_id_chain(conf,section,ctx);
-end;
+  FuncLoadError := not assigned(TS_CONF_set_ess_cert_id_chain);
+  if FuncLoadError then
+  begin
+    TS_CONF_set_ess_cert_id_chain :=  @ERROR_TS_CONF_set_ess_cert_id_chain;
+  end;
 
-function Load_TS_CONF_set_ess_cert_id_digest(conf: PCONF; section: PAnsiChar; ctx: PTS_RESP_CTX): TOpenSSL_C_INT; cdecl;
-begin
   TS_CONF_set_ess_cert_id_digest := LoadLibCryptoFunction('TS_CONF_set_ess_cert_id_digest');
-  if not assigned(TS_CONF_set_ess_cert_id_digest) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('TS_CONF_set_ess_cert_id_digest');
-  Result := TS_CONF_set_ess_cert_id_digest(conf,section,ctx);
-end;
+  FuncLoadError := not assigned(TS_CONF_set_ess_cert_id_digest);
+  if FuncLoadError then
+  begin
+    TS_CONF_set_ess_cert_id_digest :=  @ERROR_TS_CONF_set_ess_cert_id_digest;
+  end;
 
+end;
 
 procedure UnLoad;
 begin
-  TS_REQ_new := Load_TS_REQ_new;
-  TS_REQ_free := Load_TS_REQ_free;
-  i2d_TS_REQ := Load_i2d_TS_REQ;
-  d2i_TS_REQ := Load_d2i_TS_REQ;
-  TS_REQ_dup := Load_TS_REQ_dup;
-  d2i_TS_REQ_bio := Load_d2i_TS_REQ_bio;
-  i2d_TS_REQ_bio := Load_i2d_TS_REQ_bio;
-  TS_MSG_IMPRINT_new := Load_TS_MSG_IMPRINT_new;
-  TS_MSG_IMPRINT_free := Load_TS_MSG_IMPRINT_free;
-  i2d_TS_MSG_IMPRINT := Load_i2d_TS_MSG_IMPRINT;
-  d2i_TS_MSG_IMPRINT := Load_d2i_TS_MSG_IMPRINT;
-  TS_MSG_IMPRINT_dup := Load_TS_MSG_IMPRINT_dup;
-  d2i_TS_MSG_IMPRINT_bio := Load_d2i_TS_MSG_IMPRINT_bio;
-  i2d_TS_MSG_IMPRINT_bio := Load_i2d_TS_MSG_IMPRINT_bio;
-  TS_RESP_new := Load_TS_RESP_new;
-  TS_RESP_free := Load_TS_RESP_free;
-  i2d_TS_RESP := Load_i2d_TS_RESP;
-  d2i_TS_RESP := Load_d2i_TS_RESP;
-  PKCS7_to_TS_TST_INFO := Load_PKCS7_to_TS_TST_INFO;
-  TS_RESP_dup := Load_TS_RESP_dup;
-  d2i_TS_RESP_bio := Load_d2i_TS_RESP_bio;
-  i2d_TS_RESP_bio := Load_i2d_TS_RESP_bio;
-  TS_STATUS_INFO_new := Load_TS_STATUS_INFO_new;
-  TS_STATUS_INFO_free := Load_TS_STATUS_INFO_free;
-  i2d_TS_STATUS_INFO := Load_i2d_TS_STATUS_INFO;
-  d2i_TS_STATUS_INFO := Load_d2i_TS_STATUS_INFO;
-  TS_STATUS_INFO_dup := Load_TS_STATUS_INFO_dup;
-  TS_TST_INFO_new := Load_TS_TST_INFO_new;
-  TS_TST_INFO_free := Load_TS_TST_INFO_free;
-  i2d_TS_TST_INFO := Load_i2d_TS_TST_INFO;
-  d2i_TS_TST_INFO := Load_d2i_TS_TST_INFO;
-  TS_TST_INFO_dup := Load_TS_TST_INFO_dup;
-  d2i_TS_TST_INFO_bio := Load_d2i_TS_TST_INFO_bio;
-  i2d_TS_TST_INFO_bio := Load_i2d_TS_TST_INFO_bio;
-  TS_ACCURACY_new := Load_TS_ACCURACY_new;
-  TS_ACCURACY_free := Load_TS_ACCURACY_free;
-  i2d_TS_ACCURACY := Load_i2d_TS_ACCURACY;
-  d2i_TS_ACCURACY := Load_d2i_TS_ACCURACY;
-  TS_ACCURACY_dup := Load_TS_ACCURACY_dup;
-  ESS_ISSUER_SERIAL_new := Load_ESS_ISSUER_SERIAL_new;
-  ESS_ISSUER_SERIAL_free := Load_ESS_ISSUER_SERIAL_free;
-  i2d_ESS_ISSUER_SERIAL := Load_i2d_ESS_ISSUER_SERIAL;
-  d2i_ESS_ISSUER_SERIAL := Load_d2i_ESS_ISSUER_SERIAL;
-  ESS_ISSUER_SERIAL_dup := Load_ESS_ISSUER_SERIAL_dup;
-  ESS_CERT_ID_new := Load_ESS_CERT_ID_new;
-  ESS_CERT_ID_free := Load_ESS_CERT_ID_free;
-  i2d_ESS_CERT_ID := Load_i2d_ESS_CERT_ID;
-  d2i_ESS_CERT_ID := Load_d2i_ESS_CERT_ID;
-  ESS_CERT_ID_dup := Load_ESS_CERT_ID_dup;
-  ESS_SIGNING_CERT_new := Load_ESS_SIGNING_CERT_new;
-  ESS_SIGNING_CERT_free := Load_ESS_SIGNING_CERT_free;
-  i2d_ESS_SIGNING_CERT := Load_i2d_ESS_SIGNING_CERT;
-  d2i_ESS_SIGNING_CERT := Load_d2i_ESS_SIGNING_CERT;
-  ESS_SIGNING_CERT_dup := Load_ESS_SIGNING_CERT_dup;
-  ESS_CERT_ID_V2_new := Load_ESS_CERT_ID_V2_new;
-  ESS_CERT_ID_V2_free := Load_ESS_CERT_ID_V2_free;
-  i2d_ESS_CERT_ID_V2 := Load_i2d_ESS_CERT_ID_V2;
-  d2i_ESS_CERT_ID_V2 := Load_d2i_ESS_CERT_ID_V2;
-  ESS_CERT_ID_V2_dup := Load_ESS_CERT_ID_V2_dup;
-  ESS_SIGNING_CERT_V2_new := Load_ESS_SIGNING_CERT_V2_new;
-  ESS_SIGNING_CERT_V2_free := Load_ESS_SIGNING_CERT_V2_free;
-  i2d_ESS_SIGNING_CERT_V2 := Load_i2d_ESS_SIGNING_CERT_V2;
-  d2i_ESS_SIGNING_CERT_V2 := Load_d2i_ESS_SIGNING_CERT_V2;
-  ESS_SIGNING_CERT_V2_dup := Load_ESS_SIGNING_CERT_V2_dup;
-  TS_REQ_set_version := Load_TS_REQ_set_version;
-  TS_REQ_get_version := Load_TS_REQ_get_version;
-  TS_STATUS_INFO_set_status := Load_TS_STATUS_INFO_set_status;
-  TS_STATUS_INFO_get0_status := Load_TS_STATUS_INFO_get0_status;
-  TS_REQ_set_msg_imprint := Load_TS_REQ_set_msg_imprint;
-  TS_REQ_get_msg_imprint := Load_TS_REQ_get_msg_imprint;
-  TS_MSG_IMPRINT_set_algo := Load_TS_MSG_IMPRINT_set_algo;
-  TS_MSG_IMPRINT_get_algo := Load_TS_MSG_IMPRINT_get_algo;
-  TS_MSG_IMPRINT_set_msg := Load_TS_MSG_IMPRINT_set_msg;
-  TS_MSG_IMPRINT_get_msg := Load_TS_MSG_IMPRINT_get_msg;
-  TS_REQ_set_policy_id := Load_TS_REQ_set_policy_id;
-  TS_REQ_get_policy_id := Load_TS_REQ_get_policy_id;
-  TS_REQ_set_nonce := Load_TS_REQ_set_nonce;
-  TS_REQ_get_nonce := Load_TS_REQ_get_nonce;
-  TS_REQ_set_cert_req := Load_TS_REQ_set_cert_req;
-  TS_REQ_get_cert_req := Load_TS_REQ_get_cert_req;
-  TS_REQ_ext_free := Load_TS_REQ_ext_free;
-  TS_REQ_get_ext_count := Load_TS_REQ_get_ext_count;
-  TS_REQ_get_ext_by_NID := Load_TS_REQ_get_ext_by_NID;
-  TS_REQ_get_ext_by_OBJ := Load_TS_REQ_get_ext_by_OBJ;
-  TS_REQ_get_ext_by_critical := Load_TS_REQ_get_ext_by_critical;
-  TS_REQ_get_ext := Load_TS_REQ_get_ext;
-  TS_REQ_delete_ext := Load_TS_REQ_delete_ext;
-  TS_REQ_add_ext := Load_TS_REQ_add_ext;
-  TS_REQ_get_ext_d2i := Load_TS_REQ_get_ext_d2i;
-  TS_REQ_print_bio := Load_TS_REQ_print_bio;
-  TS_RESP_set_status_info := Load_TS_RESP_set_status_info;
-  TS_RESP_get_status_info := Load_TS_RESP_get_status_info;
-  TS_RESP_set_tst_info := Load_TS_RESP_set_tst_info;
-  TS_RESP_get_token := Load_TS_RESP_get_token;
-  TS_RESP_get_tst_info := Load_TS_RESP_get_tst_info;
-  TS_TST_INFO_set_version := Load_TS_TST_INFO_set_version;
-  TS_TST_INFO_get_version := Load_TS_TST_INFO_get_version;
-  TS_TST_INFO_set_policy_id := Load_TS_TST_INFO_set_policy_id;
-  TS_TST_INFO_get_policy_id := Load_TS_TST_INFO_get_policy_id;
-  TS_TST_INFO_set_msg_imprint := Load_TS_TST_INFO_set_msg_imprint;
-  TS_TST_INFO_get_msg_imprint := Load_TS_TST_INFO_get_msg_imprint;
-  TS_TST_INFO_set_serial := Load_TS_TST_INFO_set_serial;
-  TS_TST_INFO_get_serial := Load_TS_TST_INFO_get_serial;
-  TS_TST_INFO_set_time := Load_TS_TST_INFO_set_time;
-  TS_TST_INFO_get_time := Load_TS_TST_INFO_get_time;
-  TS_TST_INFO_set_accuracy := Load_TS_TST_INFO_set_accuracy;
-  TS_TST_INFO_get_accuracy := Load_TS_TST_INFO_get_accuracy;
-  TS_ACCURACY_set_seconds := Load_TS_ACCURACY_set_seconds;
-  TS_ACCURACY_get_seconds := Load_TS_ACCURACY_get_seconds;
-  TS_ACCURACY_set_millis := Load_TS_ACCURACY_set_millis;
-  TS_ACCURACY_get_millis := Load_TS_ACCURACY_get_millis;
-  TS_ACCURACY_set_micros := Load_TS_ACCURACY_set_micros;
-  TS_ACCURACY_get_micros := Load_TS_ACCURACY_get_micros;
-  TS_TST_INFO_set_ordering := Load_TS_TST_INFO_set_ordering;
-  TS_TST_INFO_get_ordering := Load_TS_TST_INFO_get_ordering;
-  TS_TST_INFO_set_nonce := Load_TS_TST_INFO_set_nonce;
-  TS_TST_INFO_get_nonce := Load_TS_TST_INFO_get_nonce;
-  TS_TST_INFO_set_tsa := Load_TS_TST_INFO_set_tsa;
-  TS_TST_INFO_get_tsa := Load_TS_TST_INFO_get_tsa;
-  TS_TST_INFO_ext_free := Load_TS_TST_INFO_ext_free;
-  TS_TST_INFO_get_ext_count := Load_TS_TST_INFO_get_ext_count;
-  TS_TST_INFO_get_ext_by_NID := Load_TS_TST_INFO_get_ext_by_NID;
-  TS_TST_INFO_get_ext_by_OBJ := Load_TS_TST_INFO_get_ext_by_OBJ;
-  TS_TST_INFO_get_ext_by_critical := Load_TS_TST_INFO_get_ext_by_critical;
-  TS_TST_INFO_get_ext := Load_TS_TST_INFO_get_ext;
-  TS_TST_INFO_delete_ext := Load_TS_TST_INFO_delete_ext;
-  TS_TST_INFO_add_ext := Load_TS_TST_INFO_add_ext;
-  TS_TST_INFO_get_ext_d2i := Load_TS_TST_INFO_get_ext_d2i;
-  TS_RESP_CTX_new := Load_TS_RESP_CTX_new;
-  TS_RESP_CTX_free := Load_TS_RESP_CTX_free;
-  TS_RESP_CTX_set_signer_cert := Load_TS_RESP_CTX_set_signer_cert;
-  TS_RESP_CTX_set_signer_key := Load_TS_RESP_CTX_set_signer_key;
-  TS_RESP_CTX_set_signer_digest := Load_TS_RESP_CTX_set_signer_digest;
-  TS_RESP_CTX_set_ess_cert_id_digest := Load_TS_RESP_CTX_set_ess_cert_id_digest;
-  TS_RESP_CTX_set_def_policy := Load_TS_RESP_CTX_set_def_policy;
-  TS_RESP_CTX_add_policy := Load_TS_RESP_CTX_add_policy;
-  TS_RESP_CTX_add_md := Load_TS_RESP_CTX_add_md;
-  TS_RESP_CTX_set_accuracy := Load_TS_RESP_CTX_set_accuracy;
-  TS_RESP_CTX_set_clock_precision_digits := Load_TS_RESP_CTX_set_clock_precision_digits;
-  TS_RESP_CTX_add_flags := Load_TS_RESP_CTX_add_flags;
-  TS_RESP_CTX_set_serial_cb := Load_TS_RESP_CTX_set_serial_cb;
-  TS_RESP_CTX_set_time_cb := Load_TS_RESP_CTX_set_time_cb;
-  TS_RESP_CTX_set_extension_cb := Load_TS_RESP_CTX_set_extension_cb;
-  TS_RESP_CTX_set_status_info := Load_TS_RESP_CTX_set_status_info;
-  TS_RESP_CTX_set_status_info_cond := Load_TS_RESP_CTX_set_status_info_cond;
-  TS_RESP_CTX_add_failure_info := Load_TS_RESP_CTX_add_failure_info;
-  TS_RESP_CTX_get_request := Load_TS_RESP_CTX_get_request;
-  TS_RESP_CTX_get_tst_info := Load_TS_RESP_CTX_get_tst_info;
-  TS_RESP_create_response := Load_TS_RESP_create_response;
-  TS_RESP_verify_response := Load_TS_RESP_verify_response;
-  TS_RESP_verify_token := Load_TS_RESP_verify_token;
-  TS_VERIFY_CTX_new := Load_TS_VERIFY_CTX_new;
-  TS_VERIFY_CTX_init := Load_TS_VERIFY_CTX_init;
-  TS_VERIFY_CTX_free := Load_TS_VERIFY_CTX_free;
-  TS_VERIFY_CTX_cleanup := Load_TS_VERIFY_CTX_cleanup;
-  TS_VERIFY_CTX_set_flags := Load_TS_VERIFY_CTX_set_flags;
-  TS_VERIFY_CTX_add_flags := Load_TS_VERIFY_CTX_add_flags;
-  TS_VERIFY_CTX_set_data := Load_TS_VERIFY_CTX_set_data;
-  TS_VERIFY_CTX_set_imprint := Load_TS_VERIFY_CTX_set_imprint;
-  TS_VERIFY_CTX_set_store := Load_TS_VERIFY_CTX_set_store;
-  TS_REQ_to_TS_VERIFY_CTX := Load_TS_REQ_to_TS_VERIFY_CTX;
-  TS_RESP_print_bio := Load_TS_RESP_print_bio;
-  TS_STATUS_INFO_print_bio := Load_TS_STATUS_INFO_print_bio;
-  TS_TST_INFO_print_bio := Load_TS_TST_INFO_print_bio;
-  TS_ASN1_INTEGER_print_bio := Load_TS_ASN1_INTEGER_print_bio;
-  TS_OBJ_print_bio := Load_TS_OBJ_print_bio;
-  TS_X509_ALGOR_print_bio := Load_TS_X509_ALGOR_print_bio;
-  TS_MSG_IMPRINT_print_bio := Load_TS_MSG_IMPRINT_print_bio;
-  TS_CONF_load_cert := Load_TS_CONF_load_cert;
-  TS_CONF_load_key := Load_TS_CONF_load_key;
-  TS_CONF_set_serial := Load_TS_CONF_set_serial;
-  TS_CONF_get_tsa_section := Load_TS_CONF_get_tsa_section;
-  TS_CONF_set_crypto_device := Load_TS_CONF_set_crypto_device;
-  TS_CONF_set_default_engine := Load_TS_CONF_set_default_engine;
-  TS_CONF_set_signer_cert := Load_TS_CONF_set_signer_cert;
-  TS_CONF_set_certs := Load_TS_CONF_set_certs;
-  TS_CONF_set_signer_key := Load_TS_CONF_set_signer_key;
-  TS_CONF_set_signer_digest := Load_TS_CONF_set_signer_digest;
-  TS_CONF_set_def_policy := Load_TS_CONF_set_def_policy;
-  TS_CONF_set_policies := Load_TS_CONF_set_policies;
-  TS_CONF_set_digests := Load_TS_CONF_set_digests;
-  TS_CONF_set_accuracy := Load_TS_CONF_set_accuracy;
-  TS_CONF_set_clock_precision_digits := Load_TS_CONF_set_clock_precision_digits;
-  TS_CONF_set_ordering := Load_TS_CONF_set_ordering;
-  TS_CONF_set_tsa_name := Load_TS_CONF_set_tsa_name;
-  TS_CONF_set_ess_cert_id_chain := Load_TS_CONF_set_ess_cert_id_chain;
-  TS_CONF_set_ess_cert_id_digest := Load_TS_CONF_set_ess_cert_id_digest;
+  TS_REQ_new := nil;
+  TS_REQ_free := nil;
+  i2d_TS_REQ := nil;
+  d2i_TS_REQ := nil;
+  TS_REQ_dup := nil;
+  d2i_TS_REQ_bio := nil;
+  i2d_TS_REQ_bio := nil;
+  TS_MSG_IMPRINT_new := nil;
+  TS_MSG_IMPRINT_free := nil;
+  i2d_TS_MSG_IMPRINT := nil;
+  d2i_TS_MSG_IMPRINT := nil;
+  TS_MSG_IMPRINT_dup := nil;
+  d2i_TS_MSG_IMPRINT_bio := nil;
+  i2d_TS_MSG_IMPRINT_bio := nil;
+  TS_RESP_new := nil;
+  TS_RESP_free := nil;
+  i2d_TS_RESP := nil;
+  d2i_TS_RESP := nil;
+  PKCS7_to_TS_TST_INFO := nil;
+  TS_RESP_dup := nil;
+  d2i_TS_RESP_bio := nil;
+  i2d_TS_RESP_bio := nil;
+  TS_STATUS_INFO_new := nil;
+  TS_STATUS_INFO_free := nil;
+  i2d_TS_STATUS_INFO := nil;
+  d2i_TS_STATUS_INFO := nil;
+  TS_STATUS_INFO_dup := nil;
+  TS_TST_INFO_new := nil;
+  TS_TST_INFO_free := nil;
+  i2d_TS_TST_INFO := nil;
+  d2i_TS_TST_INFO := nil;
+  TS_TST_INFO_dup := nil;
+  d2i_TS_TST_INFO_bio := nil;
+  i2d_TS_TST_INFO_bio := nil;
+  TS_ACCURACY_new := nil;
+  TS_ACCURACY_free := nil;
+  i2d_TS_ACCURACY := nil;
+  d2i_TS_ACCURACY := nil;
+  TS_ACCURACY_dup := nil;
+  ESS_ISSUER_SERIAL_new := nil;
+  ESS_ISSUER_SERIAL_free := nil;
+  i2d_ESS_ISSUER_SERIAL := nil;
+  d2i_ESS_ISSUER_SERIAL := nil;
+  ESS_ISSUER_SERIAL_dup := nil;
+  ESS_CERT_ID_new := nil;
+  ESS_CERT_ID_free := nil;
+  i2d_ESS_CERT_ID := nil;
+  d2i_ESS_CERT_ID := nil;
+  ESS_CERT_ID_dup := nil;
+  ESS_SIGNING_CERT_new := nil;
+  ESS_SIGNING_CERT_free := nil;
+  i2d_ESS_SIGNING_CERT := nil;
+  d2i_ESS_SIGNING_CERT := nil;
+  ESS_SIGNING_CERT_dup := nil;
+  ESS_CERT_ID_V2_new := nil;
+  ESS_CERT_ID_V2_free := nil;
+  i2d_ESS_CERT_ID_V2 := nil;
+  d2i_ESS_CERT_ID_V2 := nil;
+  ESS_CERT_ID_V2_dup := nil;
+  ESS_SIGNING_CERT_V2_new := nil;
+  ESS_SIGNING_CERT_V2_free := nil;
+  i2d_ESS_SIGNING_CERT_V2 := nil;
+  d2i_ESS_SIGNING_CERT_V2 := nil;
+  ESS_SIGNING_CERT_V2_dup := nil;
+  TS_REQ_set_version := nil;
+  TS_REQ_get_version := nil;
+  TS_STATUS_INFO_set_status := nil;
+  TS_STATUS_INFO_get0_status := nil;
+  TS_REQ_set_msg_imprint := nil;
+  TS_REQ_get_msg_imprint := nil;
+  TS_MSG_IMPRINT_set_algo := nil;
+  TS_MSG_IMPRINT_get_algo := nil;
+  TS_MSG_IMPRINT_set_msg := nil;
+  TS_MSG_IMPRINT_get_msg := nil;
+  TS_REQ_set_policy_id := nil;
+  TS_REQ_get_policy_id := nil;
+  TS_REQ_set_nonce := nil;
+  TS_REQ_get_nonce := nil;
+  TS_REQ_set_cert_req := nil;
+  TS_REQ_get_cert_req := nil;
+  TS_REQ_ext_free := nil;
+  TS_REQ_get_ext_count := nil;
+  TS_REQ_get_ext_by_NID := nil;
+  TS_REQ_get_ext_by_OBJ := nil;
+  TS_REQ_get_ext_by_critical := nil;
+  TS_REQ_get_ext := nil;
+  TS_REQ_delete_ext := nil;
+  TS_REQ_add_ext := nil;
+  TS_REQ_get_ext_d2i := nil;
+  TS_REQ_print_bio := nil;
+  TS_RESP_set_status_info := nil;
+  TS_RESP_get_status_info := nil;
+  TS_RESP_set_tst_info := nil;
+  TS_RESP_get_token := nil;
+  TS_RESP_get_tst_info := nil;
+  TS_TST_INFO_set_version := nil;
+  TS_TST_INFO_get_version := nil;
+  TS_TST_INFO_set_policy_id := nil;
+  TS_TST_INFO_get_policy_id := nil;
+  TS_TST_INFO_set_msg_imprint := nil;
+  TS_TST_INFO_get_msg_imprint := nil;
+  TS_TST_INFO_set_serial := nil;
+  TS_TST_INFO_get_serial := nil;
+  TS_TST_INFO_set_time := nil;
+  TS_TST_INFO_get_time := nil;
+  TS_TST_INFO_set_accuracy := nil;
+  TS_TST_INFO_get_accuracy := nil;
+  TS_ACCURACY_set_seconds := nil;
+  TS_ACCURACY_get_seconds := nil;
+  TS_ACCURACY_set_millis := nil;
+  TS_ACCURACY_get_millis := nil;
+  TS_ACCURACY_set_micros := nil;
+  TS_ACCURACY_get_micros := nil;
+  TS_TST_INFO_set_ordering := nil;
+  TS_TST_INFO_get_ordering := nil;
+  TS_TST_INFO_set_nonce := nil;
+  TS_TST_INFO_get_nonce := nil;
+  TS_TST_INFO_set_tsa := nil;
+  TS_TST_INFO_get_tsa := nil;
+  TS_TST_INFO_ext_free := nil;
+  TS_TST_INFO_get_ext_count := nil;
+  TS_TST_INFO_get_ext_by_NID := nil;
+  TS_TST_INFO_get_ext_by_OBJ := nil;
+  TS_TST_INFO_get_ext_by_critical := nil;
+  TS_TST_INFO_get_ext := nil;
+  TS_TST_INFO_delete_ext := nil;
+  TS_TST_INFO_add_ext := nil;
+  TS_TST_INFO_get_ext_d2i := nil;
+  TS_RESP_CTX_new := nil;
+  TS_RESP_CTX_free := nil;
+  TS_RESP_CTX_set_signer_cert := nil;
+  TS_RESP_CTX_set_signer_key := nil;
+  TS_RESP_CTX_set_signer_digest := nil;
+  TS_RESP_CTX_set_ess_cert_id_digest := nil;
+  TS_RESP_CTX_set_def_policy := nil;
+  TS_RESP_CTX_add_policy := nil;
+  TS_RESP_CTX_add_md := nil;
+  TS_RESP_CTX_set_accuracy := nil;
+  TS_RESP_CTX_set_clock_precision_digits := nil;
+  TS_RESP_CTX_add_flags := nil;
+  TS_RESP_CTX_set_serial_cb := nil;
+  TS_RESP_CTX_set_time_cb := nil;
+  TS_RESP_CTX_set_extension_cb := nil;
+  TS_RESP_CTX_set_status_info := nil;
+  TS_RESP_CTX_set_status_info_cond := nil;
+  TS_RESP_CTX_add_failure_info := nil;
+  TS_RESP_CTX_get_request := nil;
+  TS_RESP_CTX_get_tst_info := nil;
+  TS_RESP_create_response := nil;
+  TS_RESP_verify_response := nil;
+  TS_RESP_verify_token := nil;
+  TS_VERIFY_CTX_new := nil;
+  TS_VERIFY_CTX_init := nil;
+  TS_VERIFY_CTX_free := nil;
+  TS_VERIFY_CTX_cleanup := nil;
+  TS_VERIFY_CTX_set_flags := nil;
+  TS_VERIFY_CTX_add_flags := nil;
+  TS_VERIFY_CTX_set_data := nil;
+  TS_VERIFY_CTX_set_imprint := nil;
+  TS_VERIFY_CTX_set_store := nil;
+  TS_REQ_to_TS_VERIFY_CTX := nil;
+  TS_RESP_print_bio := nil;
+  TS_STATUS_INFO_print_bio := nil;
+  TS_TST_INFO_print_bio := nil;
+  TS_ASN1_INTEGER_print_bio := nil;
+  TS_OBJ_print_bio := nil;
+  TS_X509_ALGOR_print_bio := nil;
+  TS_MSG_IMPRINT_print_bio := nil;
+  TS_CONF_load_cert := nil;
+  TS_CONF_load_key := nil;
+  TS_CONF_set_serial := nil;
+  TS_CONF_get_tsa_section := nil;
+  TS_CONF_set_crypto_device := nil;
+  TS_CONF_set_default_engine := nil;
+  TS_CONF_set_signer_cert := nil;
+  TS_CONF_set_certs := nil;
+  TS_CONF_set_signer_key := nil;
+  TS_CONF_set_signer_digest := nil;
+  TS_CONF_set_def_policy := nil;
+  TS_CONF_set_policies := nil;
+  TS_CONF_set_digests := nil;
+  TS_CONF_set_accuracy := nil;
+  TS_CONF_set_clock_precision_digits := nil;
+  TS_CONF_set_ordering := nil;
+  TS_CONF_set_tsa_name := nil;
+  TS_CONF_set_ess_cert_id_chain := nil;
+  TS_CONF_set_ess_cert_id_digest := nil;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
+Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

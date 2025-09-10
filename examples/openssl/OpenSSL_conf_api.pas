@@ -60,25 +60,14 @@ function _CONF_new_data(conf: PCONF): TOpenSSL_C_INT; cdecl; external CLibCrypto
 procedure _CONF_free_data(conf: PCONF); cdecl; external CLibCrypto;
 
 {$ELSE}
-
-{Declare external function initialisers - should not be called directly}
-
-function Load__CONF_new_section(conf: PCONF; const section: PAnsiChar): PCONF_VALUE; cdecl;
-function Load__CONF_get_section(const conf: PCONF; const section: PAnsiChar): PCONF_VALUE; cdecl;
-function Load__CONF_add_string(conf: PCONF; section: PCONF_VALUE; value: PCONF_VALUE): TOpenSSL_C_INT; cdecl;
-function Load__CONF_get_string(const conf: PCONF; const section: PAnsiChar; const name: PAnsiChar): PAnsiChar; cdecl;
-function Load__CONF_get_number(const conf: PCONF; const section: PAnsiChar; const name: PAnsiChar): TOpenSSL_C_LONG; cdecl;
-function Load__CONF_new_data(conf: PCONF): TOpenSSL_C_INT; cdecl;
-procedure Load__CONF_free_data(conf: PCONF); cdecl;
-
 var
-  _CONF_new_section: function (conf: PCONF; const section: PAnsiChar): PCONF_VALUE; cdecl = Load__CONF_new_section;
-  _CONF_get_section: function (const conf: PCONF; const section: PAnsiChar): PCONF_VALUE; cdecl = Load__CONF_get_section;
-  _CONF_add_string: function (conf: PCONF; section: PCONF_VALUE; value: PCONF_VALUE): TOpenSSL_C_INT; cdecl = Load__CONF_add_string;
-  _CONF_get_string: function (const conf: PCONF; const section: PAnsiChar; const name: PAnsiChar): PAnsiChar; cdecl = Load__CONF_get_string;
-  _CONF_get_number: function (const conf: PCONF; const section: PAnsiChar; const name: PAnsiChar): TOpenSSL_C_LONG; cdecl = Load__CONF_get_number;
-  _CONF_new_data: function (conf: PCONF): TOpenSSL_C_INT; cdecl = Load__CONF_new_data;
-  _CONF_free_data: procedure (conf: PCONF); cdecl = Load__CONF_free_data;
+  _CONF_new_section: function (conf: PCONF; const section: PAnsiChar): PCONF_VALUE; cdecl = nil;
+  _CONF_get_section: function (const conf: PCONF; const section: PAnsiChar): PCONF_VALUE; cdecl = nil;
+  _CONF_add_string: function (conf: PCONF; section: PCONF_VALUE; value: PCONF_VALUE): TOpenSSL_C_INT; cdecl = nil;
+  _CONF_get_string: function (const conf: PCONF; const section: PAnsiChar; const name: PAnsiChar): PAnsiChar; cdecl = nil;
+  _CONF_get_number: function (const conf: PCONF; const section: PAnsiChar; const name: PAnsiChar): TOpenSSL_C_LONG; cdecl = nil;
+  _CONF_new_data: function (conf: PCONF): TOpenSSL_C_INT; cdecl = nil;
+  _CONF_free_data: procedure (conf: PCONF); cdecl = nil;
 {$ENDIF}
 
 implementation
@@ -96,78 +85,114 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-function Load__CONF_new_section(conf: PCONF; const section: PAnsiChar): PCONF_VALUE; cdecl;
+
+{$WARN  NO_RETVAL OFF}
+function ERROR__CONF_new_section(conf: PCONF; const section: PAnsiChar): PCONF_VALUE; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('_CONF_new_section');
+end;
+
+function ERROR__CONF_get_section(const conf: PCONF; const section: PAnsiChar): PCONF_VALUE; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('_CONF_get_section');
+end;
+
+function ERROR__CONF_add_string(conf: PCONF; section: PCONF_VALUE; value: PCONF_VALUE): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('_CONF_add_string');
+end;
+
+function ERROR__CONF_get_string(const conf: PCONF; const section: PAnsiChar; const name: PAnsiChar): PAnsiChar; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('_CONF_get_string');
+end;
+
+function ERROR__CONF_get_number(const conf: PCONF; const section: PAnsiChar; const name: PAnsiChar): TOpenSSL_C_LONG; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('_CONF_get_number');
+end;
+
+function ERROR__CONF_new_data(conf: PCONF): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('_CONF_new_data');
+end;
+
+procedure ERROR__CONF_free_data(conf: PCONF); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('_CONF_free_data');
+end;
+
+{$WARN  NO_RETVAL ON}
+procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
+var FuncLoadError: boolean;
 begin
   _CONF_new_section := LoadLibCryptoFunction('_CONF_new_section');
-  if not assigned(_CONF_new_section) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('_CONF_new_section');
-  Result := _CONF_new_section(conf,section);
-end;
+  FuncLoadError := not assigned(_CONF_new_section);
+  if FuncLoadError then
+  begin
+    _CONF_new_section :=  @ERROR__CONF_new_section;
+  end;
 
-function Load__CONF_get_section(const conf: PCONF; const section: PAnsiChar): PCONF_VALUE; cdecl;
-begin
   _CONF_get_section := LoadLibCryptoFunction('_CONF_get_section');
-  if not assigned(_CONF_get_section) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('_CONF_get_section');
-  Result := _CONF_get_section(conf,section);
-end;
+  FuncLoadError := not assigned(_CONF_get_section);
+  if FuncLoadError then
+  begin
+    _CONF_get_section :=  @ERROR__CONF_get_section;
+  end;
 
-function Load__CONF_add_string(conf: PCONF; section: PCONF_VALUE; value: PCONF_VALUE): TOpenSSL_C_INT; cdecl;
-begin
   _CONF_add_string := LoadLibCryptoFunction('_CONF_add_string');
-  if not assigned(_CONF_add_string) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('_CONF_add_string');
-  Result := _CONF_add_string(conf,section,value);
-end;
+  FuncLoadError := not assigned(_CONF_add_string);
+  if FuncLoadError then
+  begin
+    _CONF_add_string :=  @ERROR__CONF_add_string;
+  end;
 
-function Load__CONF_get_string(const conf: PCONF; const section: PAnsiChar; const name: PAnsiChar): PAnsiChar; cdecl;
-begin
   _CONF_get_string := LoadLibCryptoFunction('_CONF_get_string');
-  if not assigned(_CONF_get_string) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('_CONF_get_string');
-  Result := _CONF_get_string(conf,section,name);
-end;
+  FuncLoadError := not assigned(_CONF_get_string);
+  if FuncLoadError then
+  begin
+    _CONF_get_string :=  @ERROR__CONF_get_string;
+  end;
 
-function Load__CONF_get_number(const conf: PCONF; const section: PAnsiChar; const name: PAnsiChar): TOpenSSL_C_LONG; cdecl;
-begin
   _CONF_get_number := LoadLibCryptoFunction('_CONF_get_number');
-  if not assigned(_CONF_get_number) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('_CONF_get_number');
-  Result := _CONF_get_number(conf,section,name);
-end;
+  FuncLoadError := not assigned(_CONF_get_number);
+  if FuncLoadError then
+  begin
+    _CONF_get_number :=  @ERROR__CONF_get_number;
+  end;
 
-function Load__CONF_new_data(conf: PCONF): TOpenSSL_C_INT; cdecl;
-begin
   _CONF_new_data := LoadLibCryptoFunction('_CONF_new_data');
-  if not assigned(_CONF_new_data) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('_CONF_new_data');
-  Result := _CONF_new_data(conf);
-end;
+  FuncLoadError := not assigned(_CONF_new_data);
+  if FuncLoadError then
+  begin
+    _CONF_new_data :=  @ERROR__CONF_new_data;
+  end;
 
-procedure Load__CONF_free_data(conf: PCONF); cdecl;
-begin
   _CONF_free_data := LoadLibCryptoFunction('_CONF_free_data');
-  if not assigned(_CONF_free_data) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('_CONF_free_data');
-  _CONF_free_data(conf);
-end;
+  FuncLoadError := not assigned(_CONF_free_data);
+  if FuncLoadError then
+  begin
+    _CONF_free_data :=  @ERROR__CONF_free_data;
+  end;
 
+end;
 
 procedure UnLoad;
 begin
-  _CONF_new_section := Load__CONF_new_section;
-  _CONF_get_section := Load__CONF_get_section;
-  _CONF_add_string := Load__CONF_add_string;
-  _CONF_get_string := Load__CONF_get_string;
-  _CONF_get_number := Load__CONF_get_number;
-  _CONF_new_data := Load__CONF_new_data;
-  _CONF_free_data := Load__CONF_free_data;
+  _CONF_new_section := nil;
+  _CONF_get_section := nil;
+  _CONF_add_string := nil;
+  _CONF_get_string := nil;
+  _CONF_get_number := nil;
+  _CONF_new_data := nil;
+  _CONF_free_data := nil;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
+Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

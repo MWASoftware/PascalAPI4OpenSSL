@@ -241,163 +241,83 @@ function DSA_meth_get_keygen(const dsam: PDSA_METHOD): DSA_meth_keygen_cb; cdecl
 function DSA_meth_set_keygen(dsam: PDSA_METHOD; keygen: DSA_meth_keygen_cb): TOpenSSL_C_INT; cdecl; external CLibCrypto;
 
 {$ELSE}
-
-{Declare external function initialisers - should not be called directly}
-
-function Load_DSAparams_dup(x: PDSA): PDSA; cdecl;
-function Load_DSA_SIG_new: PDSA_SIG; cdecl;
-procedure Load_DSA_SIG_free(a: PDSA_SIG); cdecl;
-function Load_i2d_DSA_SIG(const a: PDSA_SIG; pp: PPByte): TOpenSSL_C_INT; cdecl;
-function Load_d2i_DSA_SIG(v: PPDSA_SIG; const pp: PPByte; length: TOpenSSL_C_LONG): PDSA_SIG; cdecl;
-procedure Load_DSA_SIG_get0(const sig: PDSA_SIG; const pr: PPBIGNUM; const ps: PPBIGNUM); cdecl;
-function Load_DSA_SIG_set0(sig: PDSA_SIG; r: PBIGNUM; s: PBIGNUM): TOpenSSL_C_INT; cdecl;
-function Load_DSA_do_sign(const dgst: PByte; dlen: TOpenSSL_C_INT; dsa: PDSA): PDSA_SIG; cdecl;
-function Load_DSA_do_verify(const dgst: PByte; dgst_len: TOpenSSL_C_INT; sig: PDSA_SIG; dsa: PDSA): TOpenSSL_C_INT; cdecl;
-function Load_DSA_OpenSSL: PDSA_METHOD; cdecl;
-procedure Load_DSA_set_default_method(const v1: PDSA_METHOD); cdecl;
-function Load_DSA_get_default_method: PDSA_METHOD; cdecl;
-function Load_DSA_set_method(dsa: PDSA; const v1: PDSA_METHOD): TOpenSSL_C_INT; cdecl;
-function Load_DSA_get_method(d: PDSA): PDSA_METHOD; cdecl;
-function Load_DSA_new: PDSA; cdecl;
-function Load_DSA_new_method(engine: PENGINE): PDSA; cdecl;
-procedure Load_DSA_free(r: PDSA); cdecl;
-function Load_DSA_up_ref(r: PDSA): TOpenSSL_C_INT; cdecl;
-function Load_DSA_size(const v1: PDSA): TOpenSSL_C_INT; cdecl;
-function Load_DSA_bits(const d: PDSA): TOpenSSL_C_INT; cdecl;
-function Load_DSA_security_bits(const d: PDSA): TOpenSSL_C_INT; cdecl;
-function Load_DSA_sign(type_: TOpenSSL_C_INT; const dgst: PByte; dlen: TOpenSSL_C_INT; sig: PByte; siglen: POpenSSL_C_UINT; dsa: PDSA): TOpenSSL_C_INT; cdecl;
-function Load_DSA_verify(type_: TOpenSSL_C_INT; const dgst: PByte; dgst_len: TOpenSSL_C_INT; const sigbuf: PByte; siglen: TOpenSSL_C_INT; dsa: PDSA): TOpenSSL_C_INT; cdecl;
-function Load_DSA_set_ex_data(d: PDSA; idx: TOpenSSL_C_INT; arg: Pointer): TOpenSSL_C_INT; cdecl;
-function Load_DSA_get_ex_data(d: PDSA; idx: TOpenSSL_C_INT): Pointer; cdecl;
-function Load_d2i_DSAPublicKey(a: PPDSA; const pp: PPByte; length: TOpenSSL_C_LONG): PDSA; cdecl;
-function Load_d2i_DSAPrivateKey(a: PPDSA; const pp: PPByte; length: TOpenSSL_C_LONG): PDSA; cdecl;
-function Load_d2i_DSAparams(a: PPDSA; const pp: PPByte; length: TOpenSSL_C_LONG): PDSA; cdecl;
-function Load_DSA_generate_parameters_ex(dsa: PDSA; bits: TOpenSSL_C_INT; const seed: PByte; seed_len: TOpenSSL_C_INT; counter_ret: POpenSSL_C_INT; h_ret: POpenSSL_C_ULONG; cb: PBN_GENCB): TOpenSSL_C_INT; cdecl;
-function Load_DSA_generate_key(a: PDSA): TOpenSSL_C_INT; cdecl;
-function Load_i2d_DSAPublicKey(const a: PDSA; pp: PPByte): TOpenSSL_C_INT; cdecl;
-function Load_i2d_DSAPrivateKey(const a: PDSA; pp: PPByte): TOpenSSL_C_INT; cdecl;
-function Load_i2d_DSAparams(const a: PDSA; pp: PPByte): TOpenSSL_C_INT; cdecl;
-function Load_DSAparams_print(bp: PBIO; const x: PDSA): TOpenSSL_C_INT; cdecl;
-function Load_DSA_print(bp: PBIO; const x: PDSA; off: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_DSA_dup_DH(const r: PDSA): PDH; cdecl;
-procedure Load_DSA_get0_pqg(const d: PDSA; const p: PPBIGNUM; const q: PPBIGNUM; const g: PPBIGNUM); cdecl;
-function Load_DSA_set0_pqg(d: PDSA; p: PBIGNUM; q: PBIGNUM; g: PBIGNUM): TOpenSSL_C_INT; cdecl;
-procedure Load_DSA_get0_key(const d: PDSA; const pub_key: PPBIGNUM; const priv_key: PPBIGNUM); cdecl;
-function Load_DSA_set0_key(d: PDSA; pub_key: PBIGNUM; priv_key: PBIGNUM): TOpenSSL_C_INT; cdecl;
-function Load_DSA_get0_p(const d: PDSA): PBIGNUM; cdecl;
-function Load_DSA_get0_q(const d: PDSA): PBIGNUM; cdecl;
-function Load_DSA_get0_g(const d: PDSA): PBIGNUM; cdecl;
-function Load_DSA_get0_pub_key(const d: PDSA): PBIGNUM; cdecl;
-function Load_DSA_get0_priv_key(const d: PDSA): PBIGNUM; cdecl;
-procedure Load_DSA_clear_flags(d: PDSA; flags: TOpenSSL_C_INT); cdecl;
-function Load_DSA_test_flags(const d: PDSA; flags: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-procedure Load_DSA_set_flags(d: PDSA; flags: TOpenSSL_C_INT); cdecl;
-function Load_DSA_get0_engine(d: PDSA): PENGINE; cdecl;
-function Load_DSA_meth_new(const name: PAnsiChar; flags: TOpenSSL_C_INT): PDSA_METHOD; cdecl;
-procedure Load_DSA_meth_free(dsam: PDSA_METHOD); cdecl;
-function Load_DSA_meth_dup(const dsam: PDSA_METHOD): PDSA_METHOD; cdecl;
-function Load_DSA_meth_get0_name(const dsam: PDSA_METHOD): PAnsiChar; cdecl;
-function Load_DSA_meth_set1_name(dsam: PDSA_METHOD; const name: PAnsiChar): TOpenSSL_C_INT; cdecl;
-function Load_DSA_meth_get_flags(const dsam: PDSA_METHOD): TOpenSSL_C_INT; cdecl;
-function Load_DSA_meth_set_flags(dsam: PDSA_METHOD; flags: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_DSA_meth_get0_app_data(const dsam: PDSA_METHOD): Pointer; cdecl;
-function Load_DSA_meth_set0_app_data(dsam: PDSA_METHOD; app_data: Pointer): TOpenSSL_C_INT; cdecl;
-function Load_DSA_meth_get_sign(const dsam: PDSA_METHOD): DSA_meth_sign_cb; cdecl;
-function Load_DSA_meth_set_sign(dsam: PDSA_METHOD; sign: DSA_meth_sign_cb): TOpenSSL_C_INT; cdecl;
-function Load_DSA_meth_get_sign_setup(const dsam: PDSA_METHOD): DSA_meth_sign_setup_cb; cdecl;
-function Load_DSA_meth_set_sign_setup(dsam: PDSA_METHOD; sign_setup: DSA_meth_sign_setup_cb): TOpenSSL_C_INT; cdecl;
-function Load_DSA_meth_get_verify(const dsam: PDSA_METHOD): DSA_meth_verify_cb; cdecl;
-function Load_DSA_meth_set_verify(dsam: PDSA_METHOD; verify: DSA_meth_verify_cb): TOpenSSL_C_INT; cdecl;
-function Load_DSA_meth_get_mod_exp(const dsam: PDSA_METHOD): DSA_meth_mod_exp_cb; cdecl;
-function Load_DSA_meth_set_mod_exp(dsam: PDSA_METHOD; mod_exp: DSA_meth_mod_exp_cb): TOpenSSL_C_INT; cdecl;
-function Load_DSA_meth_get_bn_mod_exp(const dsam: PDSA_METHOD): DSA_meth_bn_mod_exp_cb; cdecl;
-function Load_DSA_meth_set_bn_mod_exp(dsam: PDSA_METHOD; bn_mod_exp: DSA_meth_bn_mod_exp_cb): TOpenSSL_C_INT; cdecl;
-function Load_DSA_meth_get_init(const dsam: PDSA_METHOD): DSA_meth_init_cb; cdecl;
-function Load_DSA_meth_set_init(dsam: PDSA_METHOD; init: DSA_meth_init_cb): TOpenSSL_C_INT; cdecl;
-function Load_DSA_meth_get_finish(const dsam: PDSA_METHOD): DSA_meth_finish_cb; cdecl;
-function Load_DSA_meth_set_finish(dsam: PDSA_METHOD; finish: DSA_meth_finish_cb): TOpenSSL_C_INT; cdecl;
-function Load_DSA_meth_get_paramgen(const dsam: PDSA_METHOD): DSA_meth_paramgen_cb; cdecl;
-function Load_DSA_meth_set_paramgen(dsam: PDSA_METHOD; paramgen: DSA_meth_paramgen_cb): TOpenSSL_C_INT; cdecl;
-function Load_DSA_meth_get_keygen(const dsam: PDSA_METHOD): DSA_meth_keygen_cb; cdecl;
-function Load_DSA_meth_set_keygen(dsam: PDSA_METHOD; keygen: DSA_meth_keygen_cb): TOpenSSL_C_INT; cdecl;
-
 var
-  DSAparams_dup: function (x: PDSA): PDSA; cdecl = Load_DSAparams_dup;
-  DSA_SIG_new: function : PDSA_SIG; cdecl = Load_DSA_SIG_new;
-  DSA_SIG_free: procedure (a: PDSA_SIG); cdecl = Load_DSA_SIG_free;
-  i2d_DSA_SIG: function (const a: PDSA_SIG; pp: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_DSA_SIG;
-  d2i_DSA_SIG: function (v: PPDSA_SIG; const pp: PPByte; length: TOpenSSL_C_LONG): PDSA_SIG; cdecl = Load_d2i_DSA_SIG;
-  DSA_SIG_get0: procedure (const sig: PDSA_SIG; const pr: PPBIGNUM; const ps: PPBIGNUM); cdecl = Load_DSA_SIG_get0;
-  DSA_SIG_set0: function (sig: PDSA_SIG; r: PBIGNUM; s: PBIGNUM): TOpenSSL_C_INT; cdecl = Load_DSA_SIG_set0;
-  DSA_do_sign: function (const dgst: PByte; dlen: TOpenSSL_C_INT; dsa: PDSA): PDSA_SIG; cdecl = Load_DSA_do_sign;
-  DSA_do_verify: function (const dgst: PByte; dgst_len: TOpenSSL_C_INT; sig: PDSA_SIG; dsa: PDSA): TOpenSSL_C_INT; cdecl = Load_DSA_do_verify;
-  DSA_OpenSSL: function : PDSA_METHOD; cdecl = Load_DSA_OpenSSL;
-  DSA_set_default_method: procedure (const v1: PDSA_METHOD); cdecl = Load_DSA_set_default_method;
-  DSA_get_default_method: function : PDSA_METHOD; cdecl = Load_DSA_get_default_method;
-  DSA_set_method: function (dsa: PDSA; const v1: PDSA_METHOD): TOpenSSL_C_INT; cdecl = Load_DSA_set_method;
-  DSA_get_method: function (d: PDSA): PDSA_METHOD; cdecl = Load_DSA_get_method;
-  DSA_new: function : PDSA; cdecl = Load_DSA_new;
-  DSA_new_method: function (engine: PENGINE): PDSA; cdecl = Load_DSA_new_method;
-  DSA_free: procedure (r: PDSA); cdecl = Load_DSA_free;
-  DSA_up_ref: function (r: PDSA): TOpenSSL_C_INT; cdecl = Load_DSA_up_ref;
-  DSA_size: function (const v1: PDSA): TOpenSSL_C_INT; cdecl = Load_DSA_size;
-  DSA_bits: function (const d: PDSA): TOpenSSL_C_INT; cdecl = Load_DSA_bits;
-  DSA_security_bits: function (const d: PDSA): TOpenSSL_C_INT; cdecl = Load_DSA_security_bits;
-  DSA_sign: function (type_: TOpenSSL_C_INT; const dgst: PByte; dlen: TOpenSSL_C_INT; sig: PByte; siglen: POpenSSL_C_UINT; dsa: PDSA): TOpenSSL_C_INT; cdecl = Load_DSA_sign;
-  DSA_verify: function (type_: TOpenSSL_C_INT; const dgst: PByte; dgst_len: TOpenSSL_C_INT; const sigbuf: PByte; siglen: TOpenSSL_C_INT; dsa: PDSA): TOpenSSL_C_INT; cdecl = Load_DSA_verify;
-  DSA_set_ex_data: function (d: PDSA; idx: TOpenSSL_C_INT; arg: Pointer): TOpenSSL_C_INT; cdecl = Load_DSA_set_ex_data;
-  DSA_get_ex_data: function (d: PDSA; idx: TOpenSSL_C_INT): Pointer; cdecl = Load_DSA_get_ex_data;
-  d2i_DSAPublicKey: function (a: PPDSA; const pp: PPByte; length: TOpenSSL_C_LONG): PDSA; cdecl = Load_d2i_DSAPublicKey;
-  d2i_DSAPrivateKey: function (a: PPDSA; const pp: PPByte; length: TOpenSSL_C_LONG): PDSA; cdecl = Load_d2i_DSAPrivateKey;
-  d2i_DSAparams: function (a: PPDSA; const pp: PPByte; length: TOpenSSL_C_LONG): PDSA; cdecl = Load_d2i_DSAparams;
-  DSA_generate_parameters_ex: function (dsa: PDSA; bits: TOpenSSL_C_INT; const seed: PByte; seed_len: TOpenSSL_C_INT; counter_ret: POpenSSL_C_INT; h_ret: POpenSSL_C_ULONG; cb: PBN_GENCB): TOpenSSL_C_INT; cdecl = Load_DSA_generate_parameters_ex;
-  DSA_generate_key: function (a: PDSA): TOpenSSL_C_INT; cdecl = Load_DSA_generate_key;
-  i2d_DSAPublicKey: function (const a: PDSA; pp: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_DSAPublicKey;
-  i2d_DSAPrivateKey: function (const a: PDSA; pp: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_DSAPrivateKey;
-  i2d_DSAparams: function (const a: PDSA; pp: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_DSAparams;
-  DSAparams_print: function (bp: PBIO; const x: PDSA): TOpenSSL_C_INT; cdecl = Load_DSAparams_print;
-  DSA_print: function (bp: PBIO; const x: PDSA; off: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_DSA_print;
-  DSA_dup_DH: function (const r: PDSA): PDH; cdecl = Load_DSA_dup_DH;
-  DSA_get0_pqg: procedure (const d: PDSA; const p: PPBIGNUM; const q: PPBIGNUM; const g: PPBIGNUM); cdecl = Load_DSA_get0_pqg;
-  DSA_set0_pqg: function (d: PDSA; p: PBIGNUM; q: PBIGNUM; g: PBIGNUM): TOpenSSL_C_INT; cdecl = Load_DSA_set0_pqg;
-  DSA_get0_key: procedure (const d: PDSA; const pub_key: PPBIGNUM; const priv_key: PPBIGNUM); cdecl = Load_DSA_get0_key;
-  DSA_set0_key: function (d: PDSA; pub_key: PBIGNUM; priv_key: PBIGNUM): TOpenSSL_C_INT; cdecl = Load_DSA_set0_key;
-  DSA_get0_p: function (const d: PDSA): PBIGNUM; cdecl = Load_DSA_get0_p;
-  DSA_get0_q: function (const d: PDSA): PBIGNUM; cdecl = Load_DSA_get0_q;
-  DSA_get0_g: function (const d: PDSA): PBIGNUM; cdecl = Load_DSA_get0_g;
-  DSA_get0_pub_key: function (const d: PDSA): PBIGNUM; cdecl = Load_DSA_get0_pub_key;
-  DSA_get0_priv_key: function (const d: PDSA): PBIGNUM; cdecl = Load_DSA_get0_priv_key;
-  DSA_clear_flags: procedure (d: PDSA; flags: TOpenSSL_C_INT); cdecl = Load_DSA_clear_flags;
-  DSA_test_flags: function (const d: PDSA; flags: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_DSA_test_flags;
-  DSA_set_flags: procedure (d: PDSA; flags: TOpenSSL_C_INT); cdecl = Load_DSA_set_flags;
-  DSA_get0_engine: function (d: PDSA): PENGINE; cdecl = Load_DSA_get0_engine;
-  DSA_meth_new: function (const name: PAnsiChar; flags: TOpenSSL_C_INT): PDSA_METHOD; cdecl = Load_DSA_meth_new;
-  DSA_meth_free: procedure (dsam: PDSA_METHOD); cdecl = Load_DSA_meth_free;
-  DSA_meth_dup: function (const dsam: PDSA_METHOD): PDSA_METHOD; cdecl = Load_DSA_meth_dup;
-  DSA_meth_get0_name: function (const dsam: PDSA_METHOD): PAnsiChar; cdecl = Load_DSA_meth_get0_name;
-  DSA_meth_set1_name: function (dsam: PDSA_METHOD; const name: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_DSA_meth_set1_name;
-  DSA_meth_get_flags: function (const dsam: PDSA_METHOD): TOpenSSL_C_INT; cdecl = Load_DSA_meth_get_flags;
-  DSA_meth_set_flags: function (dsam: PDSA_METHOD; flags: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_DSA_meth_set_flags;
-  DSA_meth_get0_app_data: function (const dsam: PDSA_METHOD): Pointer; cdecl = Load_DSA_meth_get0_app_data;
-  DSA_meth_set0_app_data: function (dsam: PDSA_METHOD; app_data: Pointer): TOpenSSL_C_INT; cdecl = Load_DSA_meth_set0_app_data;
-  DSA_meth_get_sign: function (const dsam: PDSA_METHOD): DSA_meth_sign_cb; cdecl = Load_DSA_meth_get_sign;
-  DSA_meth_set_sign: function (dsam: PDSA_METHOD; sign: DSA_meth_sign_cb): TOpenSSL_C_INT; cdecl = Load_DSA_meth_set_sign;
-  DSA_meth_get_sign_setup: function (const dsam: PDSA_METHOD): DSA_meth_sign_setup_cb; cdecl = Load_DSA_meth_get_sign_setup;
-  DSA_meth_set_sign_setup: function (dsam: PDSA_METHOD; sign_setup: DSA_meth_sign_setup_cb): TOpenSSL_C_INT; cdecl = Load_DSA_meth_set_sign_setup;
-  DSA_meth_get_verify: function (const dsam: PDSA_METHOD): DSA_meth_verify_cb; cdecl = Load_DSA_meth_get_verify;
-  DSA_meth_set_verify: function (dsam: PDSA_METHOD; verify: DSA_meth_verify_cb): TOpenSSL_C_INT; cdecl = Load_DSA_meth_set_verify;
-  DSA_meth_get_mod_exp: function (const dsam: PDSA_METHOD): DSA_meth_mod_exp_cb; cdecl = Load_DSA_meth_get_mod_exp;
-  DSA_meth_set_mod_exp: function (dsam: PDSA_METHOD; mod_exp: DSA_meth_mod_exp_cb): TOpenSSL_C_INT; cdecl = Load_DSA_meth_set_mod_exp;
-  DSA_meth_get_bn_mod_exp: function (const dsam: PDSA_METHOD): DSA_meth_bn_mod_exp_cb; cdecl = Load_DSA_meth_get_bn_mod_exp;
-  DSA_meth_set_bn_mod_exp: function (dsam: PDSA_METHOD; bn_mod_exp: DSA_meth_bn_mod_exp_cb): TOpenSSL_C_INT; cdecl = Load_DSA_meth_set_bn_mod_exp;
-  DSA_meth_get_init: function (const dsam: PDSA_METHOD): DSA_meth_init_cb; cdecl = Load_DSA_meth_get_init;
-  DSA_meth_set_init: function (dsam: PDSA_METHOD; init: DSA_meth_init_cb): TOpenSSL_C_INT; cdecl = Load_DSA_meth_set_init;
-  DSA_meth_get_finish: function (const dsam: PDSA_METHOD): DSA_meth_finish_cb; cdecl = Load_DSA_meth_get_finish;
-  DSA_meth_set_finish: function (dsam: PDSA_METHOD; finish: DSA_meth_finish_cb): TOpenSSL_C_INT; cdecl = Load_DSA_meth_set_finish;
-  DSA_meth_get_paramgen: function (const dsam: PDSA_METHOD): DSA_meth_paramgen_cb; cdecl = Load_DSA_meth_get_paramgen;
-  DSA_meth_set_paramgen: function (dsam: PDSA_METHOD; paramgen: DSA_meth_paramgen_cb): TOpenSSL_C_INT; cdecl = Load_DSA_meth_set_paramgen;
-  DSA_meth_get_keygen: function (const dsam: PDSA_METHOD): DSA_meth_keygen_cb; cdecl = Load_DSA_meth_get_keygen;
-  DSA_meth_set_keygen: function (dsam: PDSA_METHOD; keygen: DSA_meth_keygen_cb): TOpenSSL_C_INT; cdecl = Load_DSA_meth_set_keygen;
+  DSAparams_dup: function (x: PDSA): PDSA; cdecl = nil;
+  DSA_SIG_new: function : PDSA_SIG; cdecl = nil;
+  DSA_SIG_free: procedure (a: PDSA_SIG); cdecl = nil;
+  i2d_DSA_SIG: function (const a: PDSA_SIG; pp: PPByte): TOpenSSL_C_INT; cdecl = nil;
+  d2i_DSA_SIG: function (v: PPDSA_SIG; const pp: PPByte; length: TOpenSSL_C_LONG): PDSA_SIG; cdecl = nil;
+  DSA_SIG_get0: procedure (const sig: PDSA_SIG; const pr: PPBIGNUM; const ps: PPBIGNUM); cdecl = nil;
+  DSA_SIG_set0: function (sig: PDSA_SIG; r: PBIGNUM; s: PBIGNUM): TOpenSSL_C_INT; cdecl = nil;
+  DSA_do_sign: function (const dgst: PByte; dlen: TOpenSSL_C_INT; dsa: PDSA): PDSA_SIG; cdecl = nil;
+  DSA_do_verify: function (const dgst: PByte; dgst_len: TOpenSSL_C_INT; sig: PDSA_SIG; dsa: PDSA): TOpenSSL_C_INT; cdecl = nil;
+  DSA_OpenSSL: function : PDSA_METHOD; cdecl = nil;
+  DSA_set_default_method: procedure (const v1: PDSA_METHOD); cdecl = nil;
+  DSA_get_default_method: function : PDSA_METHOD; cdecl = nil;
+  DSA_set_method: function (dsa: PDSA; const v1: PDSA_METHOD): TOpenSSL_C_INT; cdecl = nil;
+  DSA_get_method: function (d: PDSA): PDSA_METHOD; cdecl = nil;
+  DSA_new: function : PDSA; cdecl = nil;
+  DSA_new_method: function (engine: PENGINE): PDSA; cdecl = nil;
+  DSA_free: procedure (r: PDSA); cdecl = nil;
+  DSA_up_ref: function (r: PDSA): TOpenSSL_C_INT; cdecl = nil;
+  DSA_size: function (const v1: PDSA): TOpenSSL_C_INT; cdecl = nil;
+  DSA_bits: function (const d: PDSA): TOpenSSL_C_INT; cdecl = nil;
+  DSA_security_bits: function (const d: PDSA): TOpenSSL_C_INT; cdecl = nil;
+  DSA_sign: function (type_: TOpenSSL_C_INT; const dgst: PByte; dlen: TOpenSSL_C_INT; sig: PByte; siglen: POpenSSL_C_UINT; dsa: PDSA): TOpenSSL_C_INT; cdecl = nil;
+  DSA_verify: function (type_: TOpenSSL_C_INT; const dgst: PByte; dgst_len: TOpenSSL_C_INT; const sigbuf: PByte; siglen: TOpenSSL_C_INT; dsa: PDSA): TOpenSSL_C_INT; cdecl = nil;
+  DSA_set_ex_data: function (d: PDSA; idx: TOpenSSL_C_INT; arg: Pointer): TOpenSSL_C_INT; cdecl = nil;
+  DSA_get_ex_data: function (d: PDSA; idx: TOpenSSL_C_INT): Pointer; cdecl = nil;
+  d2i_DSAPublicKey: function (a: PPDSA; const pp: PPByte; length: TOpenSSL_C_LONG): PDSA; cdecl = nil;
+  d2i_DSAPrivateKey: function (a: PPDSA; const pp: PPByte; length: TOpenSSL_C_LONG): PDSA; cdecl = nil;
+  d2i_DSAparams: function (a: PPDSA; const pp: PPByte; length: TOpenSSL_C_LONG): PDSA; cdecl = nil;
+  DSA_generate_parameters_ex: function (dsa: PDSA; bits: TOpenSSL_C_INT; const seed: PByte; seed_len: TOpenSSL_C_INT; counter_ret: POpenSSL_C_INT; h_ret: POpenSSL_C_ULONG; cb: PBN_GENCB): TOpenSSL_C_INT; cdecl = nil;
+  DSA_generate_key: function (a: PDSA): TOpenSSL_C_INT; cdecl = nil;
+  i2d_DSAPublicKey: function (const a: PDSA; pp: PPByte): TOpenSSL_C_INT; cdecl = nil;
+  i2d_DSAPrivateKey: function (const a: PDSA; pp: PPByte): TOpenSSL_C_INT; cdecl = nil;
+  i2d_DSAparams: function (const a: PDSA; pp: PPByte): TOpenSSL_C_INT; cdecl = nil;
+  DSAparams_print: function (bp: PBIO; const x: PDSA): TOpenSSL_C_INT; cdecl = nil;
+  DSA_print: function (bp: PBIO; const x: PDSA; off: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  DSA_dup_DH: function (const r: PDSA): PDH; cdecl = nil;
+  DSA_get0_pqg: procedure (const d: PDSA; const p: PPBIGNUM; const q: PPBIGNUM; const g: PPBIGNUM); cdecl = nil;
+  DSA_set0_pqg: function (d: PDSA; p: PBIGNUM; q: PBIGNUM; g: PBIGNUM): TOpenSSL_C_INT; cdecl = nil;
+  DSA_get0_key: procedure (const d: PDSA; const pub_key: PPBIGNUM; const priv_key: PPBIGNUM); cdecl = nil;
+  DSA_set0_key: function (d: PDSA; pub_key: PBIGNUM; priv_key: PBIGNUM): TOpenSSL_C_INT; cdecl = nil;
+  DSA_get0_p: function (const d: PDSA): PBIGNUM; cdecl = nil;
+  DSA_get0_q: function (const d: PDSA): PBIGNUM; cdecl = nil;
+  DSA_get0_g: function (const d: PDSA): PBIGNUM; cdecl = nil;
+  DSA_get0_pub_key: function (const d: PDSA): PBIGNUM; cdecl = nil;
+  DSA_get0_priv_key: function (const d: PDSA): PBIGNUM; cdecl = nil;
+  DSA_clear_flags: procedure (d: PDSA; flags: TOpenSSL_C_INT); cdecl = nil;
+  DSA_test_flags: function (const d: PDSA; flags: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  DSA_set_flags: procedure (d: PDSA; flags: TOpenSSL_C_INT); cdecl = nil;
+  DSA_get0_engine: function (d: PDSA): PENGINE; cdecl = nil;
+  DSA_meth_new: function (const name: PAnsiChar; flags: TOpenSSL_C_INT): PDSA_METHOD; cdecl = nil;
+  DSA_meth_free: procedure (dsam: PDSA_METHOD); cdecl = nil;
+  DSA_meth_dup: function (const dsam: PDSA_METHOD): PDSA_METHOD; cdecl = nil;
+  DSA_meth_get0_name: function (const dsam: PDSA_METHOD): PAnsiChar; cdecl = nil;
+  DSA_meth_set1_name: function (dsam: PDSA_METHOD; const name: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
+  DSA_meth_get_flags: function (const dsam: PDSA_METHOD): TOpenSSL_C_INT; cdecl = nil;
+  DSA_meth_set_flags: function (dsam: PDSA_METHOD; flags: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  DSA_meth_get0_app_data: function (const dsam: PDSA_METHOD): Pointer; cdecl = nil;
+  DSA_meth_set0_app_data: function (dsam: PDSA_METHOD; app_data: Pointer): TOpenSSL_C_INT; cdecl = nil;
+  DSA_meth_get_sign: function (const dsam: PDSA_METHOD): DSA_meth_sign_cb; cdecl = nil;
+  DSA_meth_set_sign: function (dsam: PDSA_METHOD; sign: DSA_meth_sign_cb): TOpenSSL_C_INT; cdecl = nil;
+  DSA_meth_get_sign_setup: function (const dsam: PDSA_METHOD): DSA_meth_sign_setup_cb; cdecl = nil;
+  DSA_meth_set_sign_setup: function (dsam: PDSA_METHOD; sign_setup: DSA_meth_sign_setup_cb): TOpenSSL_C_INT; cdecl = nil;
+  DSA_meth_get_verify: function (const dsam: PDSA_METHOD): DSA_meth_verify_cb; cdecl = nil;
+  DSA_meth_set_verify: function (dsam: PDSA_METHOD; verify: DSA_meth_verify_cb): TOpenSSL_C_INT; cdecl = nil;
+  DSA_meth_get_mod_exp: function (const dsam: PDSA_METHOD): DSA_meth_mod_exp_cb; cdecl = nil;
+  DSA_meth_set_mod_exp: function (dsam: PDSA_METHOD; mod_exp: DSA_meth_mod_exp_cb): TOpenSSL_C_INT; cdecl = nil;
+  DSA_meth_get_bn_mod_exp: function (const dsam: PDSA_METHOD): DSA_meth_bn_mod_exp_cb; cdecl = nil;
+  DSA_meth_set_bn_mod_exp: function (dsam: PDSA_METHOD; bn_mod_exp: DSA_meth_bn_mod_exp_cb): TOpenSSL_C_INT; cdecl = nil;
+  DSA_meth_get_init: function (const dsam: PDSA_METHOD): DSA_meth_init_cb; cdecl = nil;
+  DSA_meth_set_init: function (dsam: PDSA_METHOD; init: DSA_meth_init_cb): TOpenSSL_C_INT; cdecl = nil;
+  DSA_meth_get_finish: function (const dsam: PDSA_METHOD): DSA_meth_finish_cb; cdecl = nil;
+  DSA_meth_set_finish: function (dsam: PDSA_METHOD; finish: DSA_meth_finish_cb): TOpenSSL_C_INT; cdecl = nil;
+  DSA_meth_get_paramgen: function (const dsam: PDSA_METHOD): DSA_meth_paramgen_cb; cdecl = nil;
+  DSA_meth_set_paramgen: function (dsam: PDSA_METHOD; paramgen: DSA_meth_paramgen_cb): TOpenSSL_C_INT; cdecl = nil;
+  DSA_meth_get_keygen: function (const dsam: PDSA_METHOD): DSA_meth_keygen_cb; cdecl = nil;
+  DSA_meth_set_keygen: function (dsam: PDSA_METHOD; keygen: DSA_meth_keygen_cb): TOpenSSL_C_INT; cdecl = nil;
 {$ENDIF}
 
 implementation
@@ -415,699 +335,1011 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-function Load_DSAparams_dup(x: PDSA): PDSA; cdecl;
+
+{$WARN  NO_RETVAL OFF}
+function ERROR_DSAparams_dup(x: PDSA): PDSA; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSAparams_dup');
+end;
+
+function ERROR_DSA_SIG_new: PDSA_SIG; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_SIG_new');
+end;
+
+procedure ERROR_DSA_SIG_free(a: PDSA_SIG); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_SIG_free');
+end;
+
+function ERROR_i2d_DSA_SIG(const a: PDSA_SIG; pp: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_DSA_SIG');
+end;
+
+function ERROR_d2i_DSA_SIG(v: PPDSA_SIG; const pp: PPByte; length: TOpenSSL_C_LONG): PDSA_SIG; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_DSA_SIG');
+end;
+
+procedure ERROR_DSA_SIG_get0(const sig: PDSA_SIG; const pr: PPBIGNUM; const ps: PPBIGNUM); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_SIG_get0');
+end;
+
+function ERROR_DSA_SIG_set0(sig: PDSA_SIG; r: PBIGNUM; s: PBIGNUM): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_SIG_set0');
+end;
+
+function ERROR_DSA_do_sign(const dgst: PByte; dlen: TOpenSSL_C_INT; dsa: PDSA): PDSA_SIG; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_do_sign');
+end;
+
+function ERROR_DSA_do_verify(const dgst: PByte; dgst_len: TOpenSSL_C_INT; sig: PDSA_SIG; dsa: PDSA): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_do_verify');
+end;
+
+function ERROR_DSA_OpenSSL: PDSA_METHOD; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_OpenSSL');
+end;
+
+procedure ERROR_DSA_set_default_method(const v1: PDSA_METHOD); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_set_default_method');
+end;
+
+function ERROR_DSA_get_default_method: PDSA_METHOD; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get_default_method');
+end;
+
+function ERROR_DSA_set_method(dsa: PDSA; const v1: PDSA_METHOD): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_set_method');
+end;
+
+function ERROR_DSA_get_method(d: PDSA): PDSA_METHOD; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get_method');
+end;
+
+function ERROR_DSA_new: PDSA; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_new');
+end;
+
+function ERROR_DSA_new_method(engine: PENGINE): PDSA; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_new_method');
+end;
+
+procedure ERROR_DSA_free(r: PDSA); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_free');
+end;
+
+function ERROR_DSA_up_ref(r: PDSA): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_up_ref');
+end;
+
+function ERROR_DSA_size(const v1: PDSA): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_size');
+end;
+
+function ERROR_DSA_bits(const d: PDSA): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_bits');
+end;
+
+function ERROR_DSA_security_bits(const d: PDSA): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_security_bits');
+end;
+
+function ERROR_DSA_sign(type_: TOpenSSL_C_INT; const dgst: PByte; dlen: TOpenSSL_C_INT; sig: PByte; siglen: POpenSSL_C_UINT; dsa: PDSA): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_sign');
+end;
+
+function ERROR_DSA_verify(type_: TOpenSSL_C_INT; const dgst: PByte; dgst_len: TOpenSSL_C_INT; const sigbuf: PByte; siglen: TOpenSSL_C_INT; dsa: PDSA): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_verify');
+end;
+
+function ERROR_DSA_set_ex_data(d: PDSA; idx: TOpenSSL_C_INT; arg: Pointer): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_set_ex_data');
+end;
+
+function ERROR_DSA_get_ex_data(d: PDSA; idx: TOpenSSL_C_INT): Pointer; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get_ex_data');
+end;
+
+function ERROR_d2i_DSAPublicKey(a: PPDSA; const pp: PPByte; length: TOpenSSL_C_LONG): PDSA; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_DSAPublicKey');
+end;
+
+function ERROR_d2i_DSAPrivateKey(a: PPDSA; const pp: PPByte; length: TOpenSSL_C_LONG): PDSA; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_DSAPrivateKey');
+end;
+
+function ERROR_d2i_DSAparams(a: PPDSA; const pp: PPByte; length: TOpenSSL_C_LONG): PDSA; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_DSAparams');
+end;
+
+function ERROR_DSA_generate_parameters_ex(dsa: PDSA; bits: TOpenSSL_C_INT; const seed: PByte; seed_len: TOpenSSL_C_INT; counter_ret: POpenSSL_C_INT; h_ret: POpenSSL_C_ULONG; cb: PBN_GENCB): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_generate_parameters_ex');
+end;
+
+function ERROR_DSA_generate_key(a: PDSA): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_generate_key');
+end;
+
+function ERROR_i2d_DSAPublicKey(const a: PDSA; pp: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_DSAPublicKey');
+end;
+
+function ERROR_i2d_DSAPrivateKey(const a: PDSA; pp: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_DSAPrivateKey');
+end;
+
+function ERROR_i2d_DSAparams(const a: PDSA; pp: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_DSAparams');
+end;
+
+function ERROR_DSAparams_print(bp: PBIO; const x: PDSA): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSAparams_print');
+end;
+
+function ERROR_DSA_print(bp: PBIO; const x: PDSA; off: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_print');
+end;
+
+function ERROR_DSA_dup_DH(const r: PDSA): PDH; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_dup_DH');
+end;
+
+procedure ERROR_DSA_get0_pqg(const d: PDSA; const p: PPBIGNUM; const q: PPBIGNUM; const g: PPBIGNUM); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get0_pqg');
+end;
+
+function ERROR_DSA_set0_pqg(d: PDSA; p: PBIGNUM; q: PBIGNUM; g: PBIGNUM): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_set0_pqg');
+end;
+
+procedure ERROR_DSA_get0_key(const d: PDSA; const pub_key: PPBIGNUM; const priv_key: PPBIGNUM); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get0_key');
+end;
+
+function ERROR_DSA_set0_key(d: PDSA; pub_key: PBIGNUM; priv_key: PBIGNUM): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_set0_key');
+end;
+
+function ERROR_DSA_get0_p(const d: PDSA): PBIGNUM; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get0_p');
+end;
+
+function ERROR_DSA_get0_q(const d: PDSA): PBIGNUM; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get0_q');
+end;
+
+function ERROR_DSA_get0_g(const d: PDSA): PBIGNUM; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get0_g');
+end;
+
+function ERROR_DSA_get0_pub_key(const d: PDSA): PBIGNUM; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get0_pub_key');
+end;
+
+function ERROR_DSA_get0_priv_key(const d: PDSA): PBIGNUM; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get0_priv_key');
+end;
+
+procedure ERROR_DSA_clear_flags(d: PDSA; flags: TOpenSSL_C_INT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_clear_flags');
+end;
+
+function ERROR_DSA_test_flags(const d: PDSA; flags: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_test_flags');
+end;
+
+procedure ERROR_DSA_set_flags(d: PDSA; flags: TOpenSSL_C_INT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_set_flags');
+end;
+
+function ERROR_DSA_get0_engine(d: PDSA): PENGINE; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get0_engine');
+end;
+
+function ERROR_DSA_meth_new(const name: PAnsiChar; flags: TOpenSSL_C_INT): PDSA_METHOD; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_new');
+end;
+
+procedure ERROR_DSA_meth_free(dsam: PDSA_METHOD); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_free');
+end;
+
+function ERROR_DSA_meth_dup(const dsam: PDSA_METHOD): PDSA_METHOD; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_dup');
+end;
+
+function ERROR_DSA_meth_get0_name(const dsam: PDSA_METHOD): PAnsiChar; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get0_name');
+end;
+
+function ERROR_DSA_meth_set1_name(dsam: PDSA_METHOD; const name: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set1_name');
+end;
+
+function ERROR_DSA_meth_get_flags(const dsam: PDSA_METHOD): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get_flags');
+end;
+
+function ERROR_DSA_meth_set_flags(dsam: PDSA_METHOD; flags: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set_flags');
+end;
+
+function ERROR_DSA_meth_get0_app_data(const dsam: PDSA_METHOD): Pointer; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get0_app_data');
+end;
+
+function ERROR_DSA_meth_set0_app_data(dsam: PDSA_METHOD; app_data: Pointer): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set0_app_data');
+end;
+
+function ERROR_DSA_meth_get_sign(const dsam: PDSA_METHOD): DSA_meth_sign_cb; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get_sign');
+end;
+
+function ERROR_DSA_meth_set_sign(dsam: PDSA_METHOD; sign: DSA_meth_sign_cb): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set_sign');
+end;
+
+function ERROR_DSA_meth_get_sign_setup(const dsam: PDSA_METHOD): DSA_meth_sign_setup_cb; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get_sign_setup');
+end;
+
+function ERROR_DSA_meth_set_sign_setup(dsam: PDSA_METHOD; sign_setup: DSA_meth_sign_setup_cb): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set_sign_setup');
+end;
+
+function ERROR_DSA_meth_get_verify(const dsam: PDSA_METHOD): DSA_meth_verify_cb; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get_verify');
+end;
+
+function ERROR_DSA_meth_set_verify(dsam: PDSA_METHOD; verify: DSA_meth_verify_cb): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set_verify');
+end;
+
+function ERROR_DSA_meth_get_mod_exp(const dsam: PDSA_METHOD): DSA_meth_mod_exp_cb; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get_mod_exp');
+end;
+
+function ERROR_DSA_meth_set_mod_exp(dsam: PDSA_METHOD; mod_exp: DSA_meth_mod_exp_cb): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set_mod_exp');
+end;
+
+function ERROR_DSA_meth_get_bn_mod_exp(const dsam: PDSA_METHOD): DSA_meth_bn_mod_exp_cb; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get_bn_mod_exp');
+end;
+
+function ERROR_DSA_meth_set_bn_mod_exp(dsam: PDSA_METHOD; bn_mod_exp: DSA_meth_bn_mod_exp_cb): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set_bn_mod_exp');
+end;
+
+function ERROR_DSA_meth_get_init(const dsam: PDSA_METHOD): DSA_meth_init_cb; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get_init');
+end;
+
+function ERROR_DSA_meth_set_init(dsam: PDSA_METHOD; init: DSA_meth_init_cb): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set_init');
+end;
+
+function ERROR_DSA_meth_get_finish(const dsam: PDSA_METHOD): DSA_meth_finish_cb; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get_finish');
+end;
+
+function ERROR_DSA_meth_set_finish(dsam: PDSA_METHOD; finish: DSA_meth_finish_cb): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set_finish');
+end;
+
+function ERROR_DSA_meth_get_paramgen(const dsam: PDSA_METHOD): DSA_meth_paramgen_cb; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get_paramgen');
+end;
+
+function ERROR_DSA_meth_set_paramgen(dsam: PDSA_METHOD; paramgen: DSA_meth_paramgen_cb): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set_paramgen');
+end;
+
+function ERROR_DSA_meth_get_keygen(const dsam: PDSA_METHOD): DSA_meth_keygen_cb; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get_keygen');
+end;
+
+function ERROR_DSA_meth_set_keygen(dsam: PDSA_METHOD; keygen: DSA_meth_keygen_cb): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set_keygen');
+end;
+
+{$WARN  NO_RETVAL ON}
+procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
+var FuncLoadError: boolean;
 begin
   DSAparams_dup := LoadLibCryptoFunction('DSAparams_dup');
-  if not assigned(DSAparams_dup) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSAparams_dup');
-  Result := DSAparams_dup(x);
-end;
+  FuncLoadError := not assigned(DSAparams_dup);
+  if FuncLoadError then
+  begin
+    DSAparams_dup :=  @ERROR_DSAparams_dup;
+  end;
 
-function Load_DSA_SIG_new: PDSA_SIG; cdecl;
-begin
   DSA_SIG_new := LoadLibCryptoFunction('DSA_SIG_new');
-  if not assigned(DSA_SIG_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_SIG_new');
-  Result := DSA_SIG_new();
-end;
+  FuncLoadError := not assigned(DSA_SIG_new);
+  if FuncLoadError then
+  begin
+    DSA_SIG_new :=  @ERROR_DSA_SIG_new;
+  end;
 
-procedure Load_DSA_SIG_free(a: PDSA_SIG); cdecl;
-begin
   DSA_SIG_free := LoadLibCryptoFunction('DSA_SIG_free');
-  if not assigned(DSA_SIG_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_SIG_free');
-  DSA_SIG_free(a);
-end;
+  FuncLoadError := not assigned(DSA_SIG_free);
+  if FuncLoadError then
+  begin
+    DSA_SIG_free :=  @ERROR_DSA_SIG_free;
+  end;
 
-function Load_i2d_DSA_SIG(const a: PDSA_SIG; pp: PPByte): TOpenSSL_C_INT; cdecl;
-begin
   i2d_DSA_SIG := LoadLibCryptoFunction('i2d_DSA_SIG');
-  if not assigned(i2d_DSA_SIG) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_DSA_SIG');
-  Result := i2d_DSA_SIG(a,pp);
-end;
+  FuncLoadError := not assigned(i2d_DSA_SIG);
+  if FuncLoadError then
+  begin
+    i2d_DSA_SIG :=  @ERROR_i2d_DSA_SIG;
+  end;
 
-function Load_d2i_DSA_SIG(v: PPDSA_SIG; const pp: PPByte; length: TOpenSSL_C_LONG): PDSA_SIG; cdecl;
-begin
   d2i_DSA_SIG := LoadLibCryptoFunction('d2i_DSA_SIG');
-  if not assigned(d2i_DSA_SIG) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_DSA_SIG');
-  Result := d2i_DSA_SIG(v,pp,length);
-end;
+  FuncLoadError := not assigned(d2i_DSA_SIG);
+  if FuncLoadError then
+  begin
+    d2i_DSA_SIG :=  @ERROR_d2i_DSA_SIG;
+  end;
 
-procedure Load_DSA_SIG_get0(const sig: PDSA_SIG; const pr: PPBIGNUM; const ps: PPBIGNUM); cdecl;
-begin
   DSA_SIG_get0 := LoadLibCryptoFunction('DSA_SIG_get0');
-  if not assigned(DSA_SIG_get0) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_SIG_get0');
-  DSA_SIG_get0(sig,pr,ps);
-end;
+  FuncLoadError := not assigned(DSA_SIG_get0);
+  if FuncLoadError then
+  begin
+    DSA_SIG_get0 :=  @ERROR_DSA_SIG_get0;
+  end;
 
-function Load_DSA_SIG_set0(sig: PDSA_SIG; r: PBIGNUM; s: PBIGNUM): TOpenSSL_C_INT; cdecl;
-begin
   DSA_SIG_set0 := LoadLibCryptoFunction('DSA_SIG_set0');
-  if not assigned(DSA_SIG_set0) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_SIG_set0');
-  Result := DSA_SIG_set0(sig,r,s);
-end;
+  FuncLoadError := not assigned(DSA_SIG_set0);
+  if FuncLoadError then
+  begin
+    DSA_SIG_set0 :=  @ERROR_DSA_SIG_set0;
+  end;
 
-function Load_DSA_do_sign(const dgst: PByte; dlen: TOpenSSL_C_INT; dsa: PDSA): PDSA_SIG; cdecl;
-begin
   DSA_do_sign := LoadLibCryptoFunction('DSA_do_sign');
-  if not assigned(DSA_do_sign) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_do_sign');
-  Result := DSA_do_sign(dgst,dlen,dsa);
-end;
+  FuncLoadError := not assigned(DSA_do_sign);
+  if FuncLoadError then
+  begin
+    DSA_do_sign :=  @ERROR_DSA_do_sign;
+  end;
 
-function Load_DSA_do_verify(const dgst: PByte; dgst_len: TOpenSSL_C_INT; sig: PDSA_SIG; dsa: PDSA): TOpenSSL_C_INT; cdecl;
-begin
   DSA_do_verify := LoadLibCryptoFunction('DSA_do_verify');
-  if not assigned(DSA_do_verify) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_do_verify');
-  Result := DSA_do_verify(dgst,dgst_len,sig,dsa);
-end;
+  FuncLoadError := not assigned(DSA_do_verify);
+  if FuncLoadError then
+  begin
+    DSA_do_verify :=  @ERROR_DSA_do_verify;
+  end;
 
-function Load_DSA_OpenSSL: PDSA_METHOD; cdecl;
-begin
   DSA_OpenSSL := LoadLibCryptoFunction('DSA_OpenSSL');
-  if not assigned(DSA_OpenSSL) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_OpenSSL');
-  Result := DSA_OpenSSL();
-end;
+  FuncLoadError := not assigned(DSA_OpenSSL);
+  if FuncLoadError then
+  begin
+    DSA_OpenSSL :=  @ERROR_DSA_OpenSSL;
+  end;
 
-procedure Load_DSA_set_default_method(const v1: PDSA_METHOD); cdecl;
-begin
   DSA_set_default_method := LoadLibCryptoFunction('DSA_set_default_method');
-  if not assigned(DSA_set_default_method) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_set_default_method');
-  DSA_set_default_method(v1);
-end;
+  FuncLoadError := not assigned(DSA_set_default_method);
+  if FuncLoadError then
+  begin
+    DSA_set_default_method :=  @ERROR_DSA_set_default_method;
+  end;
 
-function Load_DSA_get_default_method: PDSA_METHOD; cdecl;
-begin
   DSA_get_default_method := LoadLibCryptoFunction('DSA_get_default_method');
-  if not assigned(DSA_get_default_method) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get_default_method');
-  Result := DSA_get_default_method();
-end;
+  FuncLoadError := not assigned(DSA_get_default_method);
+  if FuncLoadError then
+  begin
+    DSA_get_default_method :=  @ERROR_DSA_get_default_method;
+  end;
 
-function Load_DSA_set_method(dsa: PDSA; const v1: PDSA_METHOD): TOpenSSL_C_INT; cdecl;
-begin
   DSA_set_method := LoadLibCryptoFunction('DSA_set_method');
-  if not assigned(DSA_set_method) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_set_method');
-  Result := DSA_set_method(dsa,v1);
-end;
+  FuncLoadError := not assigned(DSA_set_method);
+  if FuncLoadError then
+  begin
+    DSA_set_method :=  @ERROR_DSA_set_method;
+  end;
 
-function Load_DSA_get_method(d: PDSA): PDSA_METHOD; cdecl;
-begin
   DSA_get_method := LoadLibCryptoFunction('DSA_get_method');
-  if not assigned(DSA_get_method) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get_method');
-  Result := DSA_get_method(d);
-end;
+  FuncLoadError := not assigned(DSA_get_method);
+  if FuncLoadError then
+  begin
+    DSA_get_method :=  @ERROR_DSA_get_method;
+  end;
 
-function Load_DSA_new: PDSA; cdecl;
-begin
   DSA_new := LoadLibCryptoFunction('DSA_new');
-  if not assigned(DSA_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_new');
-  Result := DSA_new();
-end;
+  FuncLoadError := not assigned(DSA_new);
+  if FuncLoadError then
+  begin
+    DSA_new :=  @ERROR_DSA_new;
+  end;
 
-function Load_DSA_new_method(engine: PENGINE): PDSA; cdecl;
-begin
   DSA_new_method := LoadLibCryptoFunction('DSA_new_method');
-  if not assigned(DSA_new_method) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_new_method');
-  Result := DSA_new_method(engine);
-end;
+  FuncLoadError := not assigned(DSA_new_method);
+  if FuncLoadError then
+  begin
+    DSA_new_method :=  @ERROR_DSA_new_method;
+  end;
 
-procedure Load_DSA_free(r: PDSA); cdecl;
-begin
   DSA_free := LoadLibCryptoFunction('DSA_free');
-  if not assigned(DSA_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_free');
-  DSA_free(r);
-end;
+  FuncLoadError := not assigned(DSA_free);
+  if FuncLoadError then
+  begin
+    DSA_free :=  @ERROR_DSA_free;
+  end;
 
-function Load_DSA_up_ref(r: PDSA): TOpenSSL_C_INT; cdecl;
-begin
   DSA_up_ref := LoadLibCryptoFunction('DSA_up_ref');
-  if not assigned(DSA_up_ref) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_up_ref');
-  Result := DSA_up_ref(r);
-end;
+  FuncLoadError := not assigned(DSA_up_ref);
+  if FuncLoadError then
+  begin
+    DSA_up_ref :=  @ERROR_DSA_up_ref;
+  end;
 
-function Load_DSA_size(const v1: PDSA): TOpenSSL_C_INT; cdecl;
-begin
   DSA_size := LoadLibCryptoFunction('DSA_size');
-  if not assigned(DSA_size) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_size');
-  Result := DSA_size(v1);
-end;
+  FuncLoadError := not assigned(DSA_size);
+  if FuncLoadError then
+  begin
+    DSA_size :=  @ERROR_DSA_size;
+  end;
 
-function Load_DSA_bits(const d: PDSA): TOpenSSL_C_INT; cdecl;
-begin
   DSA_bits := LoadLibCryptoFunction('DSA_bits');
-  if not assigned(DSA_bits) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_bits');
-  Result := DSA_bits(d);
-end;
+  FuncLoadError := not assigned(DSA_bits);
+  if FuncLoadError then
+  begin
+    DSA_bits :=  @ERROR_DSA_bits;
+  end;
 
-function Load_DSA_security_bits(const d: PDSA): TOpenSSL_C_INT; cdecl;
-begin
   DSA_security_bits := LoadLibCryptoFunction('DSA_security_bits');
-  if not assigned(DSA_security_bits) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_security_bits');
-  Result := DSA_security_bits(d);
-end;
+  FuncLoadError := not assigned(DSA_security_bits);
+  if FuncLoadError then
+  begin
+    DSA_security_bits :=  @ERROR_DSA_security_bits;
+  end;
 
-function Load_DSA_sign(type_: TOpenSSL_C_INT; const dgst: PByte; dlen: TOpenSSL_C_INT; sig: PByte; siglen: POpenSSL_C_UINT; dsa: PDSA): TOpenSSL_C_INT; cdecl;
-begin
   DSA_sign := LoadLibCryptoFunction('DSA_sign');
-  if not assigned(DSA_sign) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_sign');
-  Result := DSA_sign(type_,dgst,dlen,sig,siglen,dsa);
-end;
+  FuncLoadError := not assigned(DSA_sign);
+  if FuncLoadError then
+  begin
+    DSA_sign :=  @ERROR_DSA_sign;
+  end;
 
-function Load_DSA_verify(type_: TOpenSSL_C_INT; const dgst: PByte; dgst_len: TOpenSSL_C_INT; const sigbuf: PByte; siglen: TOpenSSL_C_INT; dsa: PDSA): TOpenSSL_C_INT; cdecl;
-begin
   DSA_verify := LoadLibCryptoFunction('DSA_verify');
-  if not assigned(DSA_verify) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_verify');
-  Result := DSA_verify(type_,dgst,dgst_len,sigbuf,siglen,dsa);
-end;
+  FuncLoadError := not assigned(DSA_verify);
+  if FuncLoadError then
+  begin
+    DSA_verify :=  @ERROR_DSA_verify;
+  end;
 
-function Load_DSA_set_ex_data(d: PDSA; idx: TOpenSSL_C_INT; arg: Pointer): TOpenSSL_C_INT; cdecl;
-begin
   DSA_set_ex_data := LoadLibCryptoFunction('DSA_set_ex_data');
-  if not assigned(DSA_set_ex_data) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_set_ex_data');
-  Result := DSA_set_ex_data(d,idx,arg);
-end;
+  FuncLoadError := not assigned(DSA_set_ex_data);
+  if FuncLoadError then
+  begin
+    DSA_set_ex_data :=  @ERROR_DSA_set_ex_data;
+  end;
 
-function Load_DSA_get_ex_data(d: PDSA; idx: TOpenSSL_C_INT): Pointer; cdecl;
-begin
   DSA_get_ex_data := LoadLibCryptoFunction('DSA_get_ex_data');
-  if not assigned(DSA_get_ex_data) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get_ex_data');
-  Result := DSA_get_ex_data(d,idx);
-end;
+  FuncLoadError := not assigned(DSA_get_ex_data);
+  if FuncLoadError then
+  begin
+    DSA_get_ex_data :=  @ERROR_DSA_get_ex_data;
+  end;
 
-function Load_d2i_DSAPublicKey(a: PPDSA; const pp: PPByte; length: TOpenSSL_C_LONG): PDSA; cdecl;
-begin
   d2i_DSAPublicKey := LoadLibCryptoFunction('d2i_DSAPublicKey');
-  if not assigned(d2i_DSAPublicKey) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_DSAPublicKey');
-  Result := d2i_DSAPublicKey(a,pp,length);
-end;
+  FuncLoadError := not assigned(d2i_DSAPublicKey);
+  if FuncLoadError then
+  begin
+    d2i_DSAPublicKey :=  @ERROR_d2i_DSAPublicKey;
+  end;
 
-function Load_d2i_DSAPrivateKey(a: PPDSA; const pp: PPByte; length: TOpenSSL_C_LONG): PDSA; cdecl;
-begin
   d2i_DSAPrivateKey := LoadLibCryptoFunction('d2i_DSAPrivateKey');
-  if not assigned(d2i_DSAPrivateKey) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_DSAPrivateKey');
-  Result := d2i_DSAPrivateKey(a,pp,length);
-end;
+  FuncLoadError := not assigned(d2i_DSAPrivateKey);
+  if FuncLoadError then
+  begin
+    d2i_DSAPrivateKey :=  @ERROR_d2i_DSAPrivateKey;
+  end;
 
-function Load_d2i_DSAparams(a: PPDSA; const pp: PPByte; length: TOpenSSL_C_LONG): PDSA; cdecl;
-begin
   d2i_DSAparams := LoadLibCryptoFunction('d2i_DSAparams');
-  if not assigned(d2i_DSAparams) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_DSAparams');
-  Result := d2i_DSAparams(a,pp,length);
-end;
+  FuncLoadError := not assigned(d2i_DSAparams);
+  if FuncLoadError then
+  begin
+    d2i_DSAparams :=  @ERROR_d2i_DSAparams;
+  end;
 
-function Load_DSA_generate_parameters_ex(dsa: PDSA; bits: TOpenSSL_C_INT; const seed: PByte; seed_len: TOpenSSL_C_INT; counter_ret: POpenSSL_C_INT; h_ret: POpenSSL_C_ULONG; cb: PBN_GENCB): TOpenSSL_C_INT; cdecl;
-begin
   DSA_generate_parameters_ex := LoadLibCryptoFunction('DSA_generate_parameters_ex');
-  if not assigned(DSA_generate_parameters_ex) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_generate_parameters_ex');
-  Result := DSA_generate_parameters_ex(dsa,bits,seed,seed_len,counter_ret,h_ret,cb);
-end;
+  FuncLoadError := not assigned(DSA_generate_parameters_ex);
+  if FuncLoadError then
+  begin
+    DSA_generate_parameters_ex :=  @ERROR_DSA_generate_parameters_ex;
+  end;
 
-function Load_DSA_generate_key(a: PDSA): TOpenSSL_C_INT; cdecl;
-begin
   DSA_generate_key := LoadLibCryptoFunction('DSA_generate_key');
-  if not assigned(DSA_generate_key) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_generate_key');
-  Result := DSA_generate_key(a);
-end;
+  FuncLoadError := not assigned(DSA_generate_key);
+  if FuncLoadError then
+  begin
+    DSA_generate_key :=  @ERROR_DSA_generate_key;
+  end;
 
-function Load_i2d_DSAPublicKey(const a: PDSA; pp: PPByte): TOpenSSL_C_INT; cdecl;
-begin
   i2d_DSAPublicKey := LoadLibCryptoFunction('i2d_DSAPublicKey');
-  if not assigned(i2d_DSAPublicKey) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_DSAPublicKey');
-  Result := i2d_DSAPublicKey(a,pp);
-end;
+  FuncLoadError := not assigned(i2d_DSAPublicKey);
+  if FuncLoadError then
+  begin
+    i2d_DSAPublicKey :=  @ERROR_i2d_DSAPublicKey;
+  end;
 
-function Load_i2d_DSAPrivateKey(const a: PDSA; pp: PPByte): TOpenSSL_C_INT; cdecl;
-begin
   i2d_DSAPrivateKey := LoadLibCryptoFunction('i2d_DSAPrivateKey');
-  if not assigned(i2d_DSAPrivateKey) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_DSAPrivateKey');
-  Result := i2d_DSAPrivateKey(a,pp);
-end;
+  FuncLoadError := not assigned(i2d_DSAPrivateKey);
+  if FuncLoadError then
+  begin
+    i2d_DSAPrivateKey :=  @ERROR_i2d_DSAPrivateKey;
+  end;
 
-function Load_i2d_DSAparams(const a: PDSA; pp: PPByte): TOpenSSL_C_INT; cdecl;
-begin
   i2d_DSAparams := LoadLibCryptoFunction('i2d_DSAparams');
-  if not assigned(i2d_DSAparams) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_DSAparams');
-  Result := i2d_DSAparams(a,pp);
-end;
+  FuncLoadError := not assigned(i2d_DSAparams);
+  if FuncLoadError then
+  begin
+    i2d_DSAparams :=  @ERROR_i2d_DSAparams;
+  end;
 
-function Load_DSAparams_print(bp: PBIO; const x: PDSA): TOpenSSL_C_INT; cdecl;
-begin
   DSAparams_print := LoadLibCryptoFunction('DSAparams_print');
-  if not assigned(DSAparams_print) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSAparams_print');
-  Result := DSAparams_print(bp,x);
-end;
+  FuncLoadError := not assigned(DSAparams_print);
+  if FuncLoadError then
+  begin
+    DSAparams_print :=  @ERROR_DSAparams_print;
+  end;
 
-function Load_DSA_print(bp: PBIO; const x: PDSA; off: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   DSA_print := LoadLibCryptoFunction('DSA_print');
-  if not assigned(DSA_print) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_print');
-  Result := DSA_print(bp,x,off);
-end;
+  FuncLoadError := not assigned(DSA_print);
+  if FuncLoadError then
+  begin
+    DSA_print :=  @ERROR_DSA_print;
+  end;
 
-function Load_DSA_dup_DH(const r: PDSA): PDH; cdecl;
-begin
   DSA_dup_DH := LoadLibCryptoFunction('DSA_dup_DH');
-  if not assigned(DSA_dup_DH) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_dup_DH');
-  Result := DSA_dup_DH(r);
-end;
+  FuncLoadError := not assigned(DSA_dup_DH);
+  if FuncLoadError then
+  begin
+    DSA_dup_DH :=  @ERROR_DSA_dup_DH;
+  end;
 
-procedure Load_DSA_get0_pqg(const d: PDSA; const p: PPBIGNUM; const q: PPBIGNUM; const g: PPBIGNUM); cdecl;
-begin
   DSA_get0_pqg := LoadLibCryptoFunction('DSA_get0_pqg');
-  if not assigned(DSA_get0_pqg) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get0_pqg');
-  DSA_get0_pqg(d,p,q,g);
-end;
+  FuncLoadError := not assigned(DSA_get0_pqg);
+  if FuncLoadError then
+  begin
+    DSA_get0_pqg :=  @ERROR_DSA_get0_pqg;
+  end;
 
-function Load_DSA_set0_pqg(d: PDSA; p: PBIGNUM; q: PBIGNUM; g: PBIGNUM): TOpenSSL_C_INT; cdecl;
-begin
   DSA_set0_pqg := LoadLibCryptoFunction('DSA_set0_pqg');
-  if not assigned(DSA_set0_pqg) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_set0_pqg');
-  Result := DSA_set0_pqg(d,p,q,g);
-end;
+  FuncLoadError := not assigned(DSA_set0_pqg);
+  if FuncLoadError then
+  begin
+    DSA_set0_pqg :=  @ERROR_DSA_set0_pqg;
+  end;
 
-procedure Load_DSA_get0_key(const d: PDSA; const pub_key: PPBIGNUM; const priv_key: PPBIGNUM); cdecl;
-begin
   DSA_get0_key := LoadLibCryptoFunction('DSA_get0_key');
-  if not assigned(DSA_get0_key) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get0_key');
-  DSA_get0_key(d,pub_key,priv_key);
-end;
+  FuncLoadError := not assigned(DSA_get0_key);
+  if FuncLoadError then
+  begin
+    DSA_get0_key :=  @ERROR_DSA_get0_key;
+  end;
 
-function Load_DSA_set0_key(d: PDSA; pub_key: PBIGNUM; priv_key: PBIGNUM): TOpenSSL_C_INT; cdecl;
-begin
   DSA_set0_key := LoadLibCryptoFunction('DSA_set0_key');
-  if not assigned(DSA_set0_key) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_set0_key');
-  Result := DSA_set0_key(d,pub_key,priv_key);
-end;
+  FuncLoadError := not assigned(DSA_set0_key);
+  if FuncLoadError then
+  begin
+    DSA_set0_key :=  @ERROR_DSA_set0_key;
+  end;
 
-function Load_DSA_get0_p(const d: PDSA): PBIGNUM; cdecl;
-begin
   DSA_get0_p := LoadLibCryptoFunction('DSA_get0_p');
-  if not assigned(DSA_get0_p) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get0_p');
-  Result := DSA_get0_p(d);
-end;
+  FuncLoadError := not assigned(DSA_get0_p);
+  if FuncLoadError then
+  begin
+    DSA_get0_p :=  @ERROR_DSA_get0_p;
+  end;
 
-function Load_DSA_get0_q(const d: PDSA): PBIGNUM; cdecl;
-begin
   DSA_get0_q := LoadLibCryptoFunction('DSA_get0_q');
-  if not assigned(DSA_get0_q) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get0_q');
-  Result := DSA_get0_q(d);
-end;
+  FuncLoadError := not assigned(DSA_get0_q);
+  if FuncLoadError then
+  begin
+    DSA_get0_q :=  @ERROR_DSA_get0_q;
+  end;
 
-function Load_DSA_get0_g(const d: PDSA): PBIGNUM; cdecl;
-begin
   DSA_get0_g := LoadLibCryptoFunction('DSA_get0_g');
-  if not assigned(DSA_get0_g) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get0_g');
-  Result := DSA_get0_g(d);
-end;
+  FuncLoadError := not assigned(DSA_get0_g);
+  if FuncLoadError then
+  begin
+    DSA_get0_g :=  @ERROR_DSA_get0_g;
+  end;
 
-function Load_DSA_get0_pub_key(const d: PDSA): PBIGNUM; cdecl;
-begin
   DSA_get0_pub_key := LoadLibCryptoFunction('DSA_get0_pub_key');
-  if not assigned(DSA_get0_pub_key) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get0_pub_key');
-  Result := DSA_get0_pub_key(d);
-end;
+  FuncLoadError := not assigned(DSA_get0_pub_key);
+  if FuncLoadError then
+  begin
+    DSA_get0_pub_key :=  @ERROR_DSA_get0_pub_key;
+  end;
 
-function Load_DSA_get0_priv_key(const d: PDSA): PBIGNUM; cdecl;
-begin
   DSA_get0_priv_key := LoadLibCryptoFunction('DSA_get0_priv_key');
-  if not assigned(DSA_get0_priv_key) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get0_priv_key');
-  Result := DSA_get0_priv_key(d);
-end;
+  FuncLoadError := not assigned(DSA_get0_priv_key);
+  if FuncLoadError then
+  begin
+    DSA_get0_priv_key :=  @ERROR_DSA_get0_priv_key;
+  end;
 
-procedure Load_DSA_clear_flags(d: PDSA; flags: TOpenSSL_C_INT); cdecl;
-begin
   DSA_clear_flags := LoadLibCryptoFunction('DSA_clear_flags');
-  if not assigned(DSA_clear_flags) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_clear_flags');
-  DSA_clear_flags(d,flags);
-end;
+  FuncLoadError := not assigned(DSA_clear_flags);
+  if FuncLoadError then
+  begin
+    DSA_clear_flags :=  @ERROR_DSA_clear_flags;
+  end;
 
-function Load_DSA_test_flags(const d: PDSA; flags: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   DSA_test_flags := LoadLibCryptoFunction('DSA_test_flags');
-  if not assigned(DSA_test_flags) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_test_flags');
-  Result := DSA_test_flags(d,flags);
-end;
+  FuncLoadError := not assigned(DSA_test_flags);
+  if FuncLoadError then
+  begin
+    DSA_test_flags :=  @ERROR_DSA_test_flags;
+  end;
 
-procedure Load_DSA_set_flags(d: PDSA; flags: TOpenSSL_C_INT); cdecl;
-begin
   DSA_set_flags := LoadLibCryptoFunction('DSA_set_flags');
-  if not assigned(DSA_set_flags) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_set_flags');
-  DSA_set_flags(d,flags);
-end;
+  FuncLoadError := not assigned(DSA_set_flags);
+  if FuncLoadError then
+  begin
+    DSA_set_flags :=  @ERROR_DSA_set_flags;
+  end;
 
-function Load_DSA_get0_engine(d: PDSA): PENGINE; cdecl;
-begin
   DSA_get0_engine := LoadLibCryptoFunction('DSA_get0_engine');
-  if not assigned(DSA_get0_engine) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_get0_engine');
-  Result := DSA_get0_engine(d);
-end;
+  FuncLoadError := not assigned(DSA_get0_engine);
+  if FuncLoadError then
+  begin
+    DSA_get0_engine :=  @ERROR_DSA_get0_engine;
+  end;
 
-function Load_DSA_meth_new(const name: PAnsiChar; flags: TOpenSSL_C_INT): PDSA_METHOD; cdecl;
-begin
   DSA_meth_new := LoadLibCryptoFunction('DSA_meth_new');
-  if not assigned(DSA_meth_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_new');
-  Result := DSA_meth_new(name,flags);
-end;
+  FuncLoadError := not assigned(DSA_meth_new);
+  if FuncLoadError then
+  begin
+    DSA_meth_new :=  @ERROR_DSA_meth_new;
+  end;
 
-procedure Load_DSA_meth_free(dsam: PDSA_METHOD); cdecl;
-begin
   DSA_meth_free := LoadLibCryptoFunction('DSA_meth_free');
-  if not assigned(DSA_meth_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_free');
-  DSA_meth_free(dsam);
-end;
+  FuncLoadError := not assigned(DSA_meth_free);
+  if FuncLoadError then
+  begin
+    DSA_meth_free :=  @ERROR_DSA_meth_free;
+  end;
 
-function Load_DSA_meth_dup(const dsam: PDSA_METHOD): PDSA_METHOD; cdecl;
-begin
   DSA_meth_dup := LoadLibCryptoFunction('DSA_meth_dup');
-  if not assigned(DSA_meth_dup) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_dup');
-  Result := DSA_meth_dup(dsam);
-end;
+  FuncLoadError := not assigned(DSA_meth_dup);
+  if FuncLoadError then
+  begin
+    DSA_meth_dup :=  @ERROR_DSA_meth_dup;
+  end;
 
-function Load_DSA_meth_get0_name(const dsam: PDSA_METHOD): PAnsiChar; cdecl;
-begin
   DSA_meth_get0_name := LoadLibCryptoFunction('DSA_meth_get0_name');
-  if not assigned(DSA_meth_get0_name) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get0_name');
-  Result := DSA_meth_get0_name(dsam);
-end;
+  FuncLoadError := not assigned(DSA_meth_get0_name);
+  if FuncLoadError then
+  begin
+    DSA_meth_get0_name :=  @ERROR_DSA_meth_get0_name;
+  end;
 
-function Load_DSA_meth_set1_name(dsam: PDSA_METHOD; const name: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
   DSA_meth_set1_name := LoadLibCryptoFunction('DSA_meth_set1_name');
-  if not assigned(DSA_meth_set1_name) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set1_name');
-  Result := DSA_meth_set1_name(dsam,name);
-end;
+  FuncLoadError := not assigned(DSA_meth_set1_name);
+  if FuncLoadError then
+  begin
+    DSA_meth_set1_name :=  @ERROR_DSA_meth_set1_name;
+  end;
 
-function Load_DSA_meth_get_flags(const dsam: PDSA_METHOD): TOpenSSL_C_INT; cdecl;
-begin
   DSA_meth_get_flags := LoadLibCryptoFunction('DSA_meth_get_flags');
-  if not assigned(DSA_meth_get_flags) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get_flags');
-  Result := DSA_meth_get_flags(dsam);
-end;
+  FuncLoadError := not assigned(DSA_meth_get_flags);
+  if FuncLoadError then
+  begin
+    DSA_meth_get_flags :=  @ERROR_DSA_meth_get_flags;
+  end;
 
-function Load_DSA_meth_set_flags(dsam: PDSA_METHOD; flags: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   DSA_meth_set_flags := LoadLibCryptoFunction('DSA_meth_set_flags');
-  if not assigned(DSA_meth_set_flags) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set_flags');
-  Result := DSA_meth_set_flags(dsam,flags);
-end;
+  FuncLoadError := not assigned(DSA_meth_set_flags);
+  if FuncLoadError then
+  begin
+    DSA_meth_set_flags :=  @ERROR_DSA_meth_set_flags;
+  end;
 
-function Load_DSA_meth_get0_app_data(const dsam: PDSA_METHOD): Pointer; cdecl;
-begin
   DSA_meth_get0_app_data := LoadLibCryptoFunction('DSA_meth_get0_app_data');
-  if not assigned(DSA_meth_get0_app_data) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get0_app_data');
-  Result := DSA_meth_get0_app_data(dsam);
-end;
+  FuncLoadError := not assigned(DSA_meth_get0_app_data);
+  if FuncLoadError then
+  begin
+    DSA_meth_get0_app_data :=  @ERROR_DSA_meth_get0_app_data;
+  end;
 
-function Load_DSA_meth_set0_app_data(dsam: PDSA_METHOD; app_data: Pointer): TOpenSSL_C_INT; cdecl;
-begin
   DSA_meth_set0_app_data := LoadLibCryptoFunction('DSA_meth_set0_app_data');
-  if not assigned(DSA_meth_set0_app_data) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set0_app_data');
-  Result := DSA_meth_set0_app_data(dsam,app_data);
-end;
+  FuncLoadError := not assigned(DSA_meth_set0_app_data);
+  if FuncLoadError then
+  begin
+    DSA_meth_set0_app_data :=  @ERROR_DSA_meth_set0_app_data;
+  end;
 
-function Load_DSA_meth_get_sign(const dsam: PDSA_METHOD): DSA_meth_sign_cb; cdecl;
-begin
   DSA_meth_get_sign := LoadLibCryptoFunction('DSA_meth_get_sign');
-  if not assigned(DSA_meth_get_sign) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get_sign');
-  Result := DSA_meth_get_sign(dsam);
-end;
+  FuncLoadError := not assigned(DSA_meth_get_sign);
+  if FuncLoadError then
+  begin
+    DSA_meth_get_sign :=  @ERROR_DSA_meth_get_sign;
+  end;
 
-function Load_DSA_meth_set_sign(dsam: PDSA_METHOD; sign: DSA_meth_sign_cb): TOpenSSL_C_INT; cdecl;
-begin
   DSA_meth_set_sign := LoadLibCryptoFunction('DSA_meth_set_sign');
-  if not assigned(DSA_meth_set_sign) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set_sign');
-  Result := DSA_meth_set_sign(dsam,sign);
-end;
+  FuncLoadError := not assigned(DSA_meth_set_sign);
+  if FuncLoadError then
+  begin
+    DSA_meth_set_sign :=  @ERROR_DSA_meth_set_sign;
+  end;
 
-function Load_DSA_meth_get_sign_setup(const dsam: PDSA_METHOD): DSA_meth_sign_setup_cb; cdecl;
-begin
   DSA_meth_get_sign_setup := LoadLibCryptoFunction('DSA_meth_get_sign_setup');
-  if not assigned(DSA_meth_get_sign_setup) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get_sign_setup');
-  Result := DSA_meth_get_sign_setup(dsam);
-end;
+  FuncLoadError := not assigned(DSA_meth_get_sign_setup);
+  if FuncLoadError then
+  begin
+    DSA_meth_get_sign_setup :=  @ERROR_DSA_meth_get_sign_setup;
+  end;
 
-function Load_DSA_meth_set_sign_setup(dsam: PDSA_METHOD; sign_setup: DSA_meth_sign_setup_cb): TOpenSSL_C_INT; cdecl;
-begin
   DSA_meth_set_sign_setup := LoadLibCryptoFunction('DSA_meth_set_sign_setup');
-  if not assigned(DSA_meth_set_sign_setup) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set_sign_setup');
-  Result := DSA_meth_set_sign_setup(dsam,sign_setup);
-end;
+  FuncLoadError := not assigned(DSA_meth_set_sign_setup);
+  if FuncLoadError then
+  begin
+    DSA_meth_set_sign_setup :=  @ERROR_DSA_meth_set_sign_setup;
+  end;
 
-function Load_DSA_meth_get_verify(const dsam: PDSA_METHOD): DSA_meth_verify_cb; cdecl;
-begin
   DSA_meth_get_verify := LoadLibCryptoFunction('DSA_meth_get_verify');
-  if not assigned(DSA_meth_get_verify) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get_verify');
-  Result := DSA_meth_get_verify(dsam);
-end;
+  FuncLoadError := not assigned(DSA_meth_get_verify);
+  if FuncLoadError then
+  begin
+    DSA_meth_get_verify :=  @ERROR_DSA_meth_get_verify;
+  end;
 
-function Load_DSA_meth_set_verify(dsam: PDSA_METHOD; verify: DSA_meth_verify_cb): TOpenSSL_C_INT; cdecl;
-begin
   DSA_meth_set_verify := LoadLibCryptoFunction('DSA_meth_set_verify');
-  if not assigned(DSA_meth_set_verify) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set_verify');
-  Result := DSA_meth_set_verify(dsam,verify);
-end;
+  FuncLoadError := not assigned(DSA_meth_set_verify);
+  if FuncLoadError then
+  begin
+    DSA_meth_set_verify :=  @ERROR_DSA_meth_set_verify;
+  end;
 
-function Load_DSA_meth_get_mod_exp(const dsam: PDSA_METHOD): DSA_meth_mod_exp_cb; cdecl;
-begin
   DSA_meth_get_mod_exp := LoadLibCryptoFunction('DSA_meth_get_mod_exp');
-  if not assigned(DSA_meth_get_mod_exp) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get_mod_exp');
-  Result := DSA_meth_get_mod_exp(dsam);
-end;
+  FuncLoadError := not assigned(DSA_meth_get_mod_exp);
+  if FuncLoadError then
+  begin
+    DSA_meth_get_mod_exp :=  @ERROR_DSA_meth_get_mod_exp;
+  end;
 
-function Load_DSA_meth_set_mod_exp(dsam: PDSA_METHOD; mod_exp: DSA_meth_mod_exp_cb): TOpenSSL_C_INT; cdecl;
-begin
   DSA_meth_set_mod_exp := LoadLibCryptoFunction('DSA_meth_set_mod_exp');
-  if not assigned(DSA_meth_set_mod_exp) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set_mod_exp');
-  Result := DSA_meth_set_mod_exp(dsam,mod_exp);
-end;
+  FuncLoadError := not assigned(DSA_meth_set_mod_exp);
+  if FuncLoadError then
+  begin
+    DSA_meth_set_mod_exp :=  @ERROR_DSA_meth_set_mod_exp;
+  end;
 
-function Load_DSA_meth_get_bn_mod_exp(const dsam: PDSA_METHOD): DSA_meth_bn_mod_exp_cb; cdecl;
-begin
   DSA_meth_get_bn_mod_exp := LoadLibCryptoFunction('DSA_meth_get_bn_mod_exp');
-  if not assigned(DSA_meth_get_bn_mod_exp) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get_bn_mod_exp');
-  Result := DSA_meth_get_bn_mod_exp(dsam);
-end;
+  FuncLoadError := not assigned(DSA_meth_get_bn_mod_exp);
+  if FuncLoadError then
+  begin
+    DSA_meth_get_bn_mod_exp :=  @ERROR_DSA_meth_get_bn_mod_exp;
+  end;
 
-function Load_DSA_meth_set_bn_mod_exp(dsam: PDSA_METHOD; bn_mod_exp: DSA_meth_bn_mod_exp_cb): TOpenSSL_C_INT; cdecl;
-begin
   DSA_meth_set_bn_mod_exp := LoadLibCryptoFunction('DSA_meth_set_bn_mod_exp');
-  if not assigned(DSA_meth_set_bn_mod_exp) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set_bn_mod_exp');
-  Result := DSA_meth_set_bn_mod_exp(dsam,bn_mod_exp);
-end;
+  FuncLoadError := not assigned(DSA_meth_set_bn_mod_exp);
+  if FuncLoadError then
+  begin
+    DSA_meth_set_bn_mod_exp :=  @ERROR_DSA_meth_set_bn_mod_exp;
+  end;
 
-function Load_DSA_meth_get_init(const dsam: PDSA_METHOD): DSA_meth_init_cb; cdecl;
-begin
   DSA_meth_get_init := LoadLibCryptoFunction('DSA_meth_get_init');
-  if not assigned(DSA_meth_get_init) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get_init');
-  Result := DSA_meth_get_init(dsam);
-end;
+  FuncLoadError := not assigned(DSA_meth_get_init);
+  if FuncLoadError then
+  begin
+    DSA_meth_get_init :=  @ERROR_DSA_meth_get_init;
+  end;
 
-function Load_DSA_meth_set_init(dsam: PDSA_METHOD; init: DSA_meth_init_cb): TOpenSSL_C_INT; cdecl;
-begin
   DSA_meth_set_init := LoadLibCryptoFunction('DSA_meth_set_init');
-  if not assigned(DSA_meth_set_init) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set_init');
-  Result := DSA_meth_set_init(dsam,init);
-end;
+  FuncLoadError := not assigned(DSA_meth_set_init);
+  if FuncLoadError then
+  begin
+    DSA_meth_set_init :=  @ERROR_DSA_meth_set_init;
+  end;
 
-function Load_DSA_meth_get_finish(const dsam: PDSA_METHOD): DSA_meth_finish_cb; cdecl;
-begin
   DSA_meth_get_finish := LoadLibCryptoFunction('DSA_meth_get_finish');
-  if not assigned(DSA_meth_get_finish) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get_finish');
-  Result := DSA_meth_get_finish(dsam);
-end;
+  FuncLoadError := not assigned(DSA_meth_get_finish);
+  if FuncLoadError then
+  begin
+    DSA_meth_get_finish :=  @ERROR_DSA_meth_get_finish;
+  end;
 
-function Load_DSA_meth_set_finish(dsam: PDSA_METHOD; finish: DSA_meth_finish_cb): TOpenSSL_C_INT; cdecl;
-begin
   DSA_meth_set_finish := LoadLibCryptoFunction('DSA_meth_set_finish');
-  if not assigned(DSA_meth_set_finish) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set_finish');
-  Result := DSA_meth_set_finish(dsam,finish);
-end;
+  FuncLoadError := not assigned(DSA_meth_set_finish);
+  if FuncLoadError then
+  begin
+    DSA_meth_set_finish :=  @ERROR_DSA_meth_set_finish;
+  end;
 
-function Load_DSA_meth_get_paramgen(const dsam: PDSA_METHOD): DSA_meth_paramgen_cb; cdecl;
-begin
   DSA_meth_get_paramgen := LoadLibCryptoFunction('DSA_meth_get_paramgen');
-  if not assigned(DSA_meth_get_paramgen) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get_paramgen');
-  Result := DSA_meth_get_paramgen(dsam);
-end;
+  FuncLoadError := not assigned(DSA_meth_get_paramgen);
+  if FuncLoadError then
+  begin
+    DSA_meth_get_paramgen :=  @ERROR_DSA_meth_get_paramgen;
+  end;
 
-function Load_DSA_meth_set_paramgen(dsam: PDSA_METHOD; paramgen: DSA_meth_paramgen_cb): TOpenSSL_C_INT; cdecl;
-begin
   DSA_meth_set_paramgen := LoadLibCryptoFunction('DSA_meth_set_paramgen');
-  if not assigned(DSA_meth_set_paramgen) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set_paramgen');
-  Result := DSA_meth_set_paramgen(dsam,paramgen);
-end;
+  FuncLoadError := not assigned(DSA_meth_set_paramgen);
+  if FuncLoadError then
+  begin
+    DSA_meth_set_paramgen :=  @ERROR_DSA_meth_set_paramgen;
+  end;
 
-function Load_DSA_meth_get_keygen(const dsam: PDSA_METHOD): DSA_meth_keygen_cb; cdecl;
-begin
   DSA_meth_get_keygen := LoadLibCryptoFunction('DSA_meth_get_keygen');
-  if not assigned(DSA_meth_get_keygen) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_get_keygen');
-  Result := DSA_meth_get_keygen(dsam);
-end;
+  FuncLoadError := not assigned(DSA_meth_get_keygen);
+  if FuncLoadError then
+  begin
+    DSA_meth_get_keygen :=  @ERROR_DSA_meth_get_keygen;
+  end;
 
-function Load_DSA_meth_set_keygen(dsam: PDSA_METHOD; keygen: DSA_meth_keygen_cb): TOpenSSL_C_INT; cdecl;
-begin
   DSA_meth_set_keygen := LoadLibCryptoFunction('DSA_meth_set_keygen');
-  if not assigned(DSA_meth_set_keygen) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('DSA_meth_set_keygen');
-  Result := DSA_meth_set_keygen(dsam,keygen);
-end;
+  FuncLoadError := not assigned(DSA_meth_set_keygen);
+  if FuncLoadError then
+  begin
+    DSA_meth_set_keygen :=  @ERROR_DSA_meth_set_keygen;
+  end;
 
+end;
 
 procedure UnLoad;
 begin
-  DSAparams_dup := Load_DSAparams_dup;
-  DSA_SIG_new := Load_DSA_SIG_new;
-  DSA_SIG_free := Load_DSA_SIG_free;
-  i2d_DSA_SIG := Load_i2d_DSA_SIG;
-  d2i_DSA_SIG := Load_d2i_DSA_SIG;
-  DSA_SIG_get0 := Load_DSA_SIG_get0;
-  DSA_SIG_set0 := Load_DSA_SIG_set0;
-  DSA_do_sign := Load_DSA_do_sign;
-  DSA_do_verify := Load_DSA_do_verify;
-  DSA_OpenSSL := Load_DSA_OpenSSL;
-  DSA_set_default_method := Load_DSA_set_default_method;
-  DSA_get_default_method := Load_DSA_get_default_method;
-  DSA_set_method := Load_DSA_set_method;
-  DSA_get_method := Load_DSA_get_method;
-  DSA_new := Load_DSA_new;
-  DSA_new_method := Load_DSA_new_method;
-  DSA_free := Load_DSA_free;
-  DSA_up_ref := Load_DSA_up_ref;
-  DSA_size := Load_DSA_size;
-  DSA_bits := Load_DSA_bits;
-  DSA_security_bits := Load_DSA_security_bits;
-  DSA_sign := Load_DSA_sign;
-  DSA_verify := Load_DSA_verify;
-  DSA_set_ex_data := Load_DSA_set_ex_data;
-  DSA_get_ex_data := Load_DSA_get_ex_data;
-  d2i_DSAPublicKey := Load_d2i_DSAPublicKey;
-  d2i_DSAPrivateKey := Load_d2i_DSAPrivateKey;
-  d2i_DSAparams := Load_d2i_DSAparams;
-  DSA_generate_parameters_ex := Load_DSA_generate_parameters_ex;
-  DSA_generate_key := Load_DSA_generate_key;
-  i2d_DSAPublicKey := Load_i2d_DSAPublicKey;
-  i2d_DSAPrivateKey := Load_i2d_DSAPrivateKey;
-  i2d_DSAparams := Load_i2d_DSAparams;
-  DSAparams_print := Load_DSAparams_print;
-  DSA_print := Load_DSA_print;
-  DSA_dup_DH := Load_DSA_dup_DH;
-  DSA_get0_pqg := Load_DSA_get0_pqg;
-  DSA_set0_pqg := Load_DSA_set0_pqg;
-  DSA_get0_key := Load_DSA_get0_key;
-  DSA_set0_key := Load_DSA_set0_key;
-  DSA_get0_p := Load_DSA_get0_p;
-  DSA_get0_q := Load_DSA_get0_q;
-  DSA_get0_g := Load_DSA_get0_g;
-  DSA_get0_pub_key := Load_DSA_get0_pub_key;
-  DSA_get0_priv_key := Load_DSA_get0_priv_key;
-  DSA_clear_flags := Load_DSA_clear_flags;
-  DSA_test_flags := Load_DSA_test_flags;
-  DSA_set_flags := Load_DSA_set_flags;
-  DSA_get0_engine := Load_DSA_get0_engine;
-  DSA_meth_new := Load_DSA_meth_new;
-  DSA_meth_free := Load_DSA_meth_free;
-  DSA_meth_dup := Load_DSA_meth_dup;
-  DSA_meth_get0_name := Load_DSA_meth_get0_name;
-  DSA_meth_set1_name := Load_DSA_meth_set1_name;
-  DSA_meth_get_flags := Load_DSA_meth_get_flags;
-  DSA_meth_set_flags := Load_DSA_meth_set_flags;
-  DSA_meth_get0_app_data := Load_DSA_meth_get0_app_data;
-  DSA_meth_set0_app_data := Load_DSA_meth_set0_app_data;
-  DSA_meth_get_sign := Load_DSA_meth_get_sign;
-  DSA_meth_set_sign := Load_DSA_meth_set_sign;
-  DSA_meth_get_sign_setup := Load_DSA_meth_get_sign_setup;
-  DSA_meth_set_sign_setup := Load_DSA_meth_set_sign_setup;
-  DSA_meth_get_verify := Load_DSA_meth_get_verify;
-  DSA_meth_set_verify := Load_DSA_meth_set_verify;
-  DSA_meth_get_mod_exp := Load_DSA_meth_get_mod_exp;
-  DSA_meth_set_mod_exp := Load_DSA_meth_set_mod_exp;
-  DSA_meth_get_bn_mod_exp := Load_DSA_meth_get_bn_mod_exp;
-  DSA_meth_set_bn_mod_exp := Load_DSA_meth_set_bn_mod_exp;
-  DSA_meth_get_init := Load_DSA_meth_get_init;
-  DSA_meth_set_init := Load_DSA_meth_set_init;
-  DSA_meth_get_finish := Load_DSA_meth_get_finish;
-  DSA_meth_set_finish := Load_DSA_meth_set_finish;
-  DSA_meth_get_paramgen := Load_DSA_meth_get_paramgen;
-  DSA_meth_set_paramgen := Load_DSA_meth_set_paramgen;
-  DSA_meth_get_keygen := Load_DSA_meth_get_keygen;
-  DSA_meth_set_keygen := Load_DSA_meth_set_keygen;
+  DSAparams_dup := nil;
+  DSA_SIG_new := nil;
+  DSA_SIG_free := nil;
+  i2d_DSA_SIG := nil;
+  d2i_DSA_SIG := nil;
+  DSA_SIG_get0 := nil;
+  DSA_SIG_set0 := nil;
+  DSA_do_sign := nil;
+  DSA_do_verify := nil;
+  DSA_OpenSSL := nil;
+  DSA_set_default_method := nil;
+  DSA_get_default_method := nil;
+  DSA_set_method := nil;
+  DSA_get_method := nil;
+  DSA_new := nil;
+  DSA_new_method := nil;
+  DSA_free := nil;
+  DSA_up_ref := nil;
+  DSA_size := nil;
+  DSA_bits := nil;
+  DSA_security_bits := nil;
+  DSA_sign := nil;
+  DSA_verify := nil;
+  DSA_set_ex_data := nil;
+  DSA_get_ex_data := nil;
+  d2i_DSAPublicKey := nil;
+  d2i_DSAPrivateKey := nil;
+  d2i_DSAparams := nil;
+  DSA_generate_parameters_ex := nil;
+  DSA_generate_key := nil;
+  i2d_DSAPublicKey := nil;
+  i2d_DSAPrivateKey := nil;
+  i2d_DSAparams := nil;
+  DSAparams_print := nil;
+  DSA_print := nil;
+  DSA_dup_DH := nil;
+  DSA_get0_pqg := nil;
+  DSA_set0_pqg := nil;
+  DSA_get0_key := nil;
+  DSA_set0_key := nil;
+  DSA_get0_p := nil;
+  DSA_get0_q := nil;
+  DSA_get0_g := nil;
+  DSA_get0_pub_key := nil;
+  DSA_get0_priv_key := nil;
+  DSA_clear_flags := nil;
+  DSA_test_flags := nil;
+  DSA_set_flags := nil;
+  DSA_get0_engine := nil;
+  DSA_meth_new := nil;
+  DSA_meth_free := nil;
+  DSA_meth_dup := nil;
+  DSA_meth_get0_name := nil;
+  DSA_meth_set1_name := nil;
+  DSA_meth_get_flags := nil;
+  DSA_meth_set_flags := nil;
+  DSA_meth_get0_app_data := nil;
+  DSA_meth_set0_app_data := nil;
+  DSA_meth_get_sign := nil;
+  DSA_meth_set_sign := nil;
+  DSA_meth_get_sign_setup := nil;
+  DSA_meth_set_sign_setup := nil;
+  DSA_meth_get_verify := nil;
+  DSA_meth_set_verify := nil;
+  DSA_meth_get_mod_exp := nil;
+  DSA_meth_set_mod_exp := nil;
+  DSA_meth_get_bn_mod_exp := nil;
+  DSA_meth_set_bn_mod_exp := nil;
+  DSA_meth_get_init := nil;
+  DSA_meth_set_init := nil;
+  DSA_meth_get_finish := nil;
+  DSA_meth_set_finish := nil;
+  DSA_meth_get_paramgen := nil;
+  DSA_meth_set_paramgen := nil;
+  DSA_meth_get_keygen := nil;
+  DSA_meth_set_keygen := nil;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
+Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

@@ -265,79 +265,37 @@ procedure X509err(const f,r : TOpenSSL_C_INT); {removed 1.0.0}
 function ERR_GET_REASON(const l : TOpenSSL_C_INT): TOpenSSL_C_INT; {removed 1.0.0}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ELSE}
-
-{Declare external function initialisers - should not be called directly}
-
-{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-procedure Load_ERR_put_error(lib: TOpenSSL_C_INT; func: TOpenSSL_C_INT; reason: TOpenSSL_C_INT; file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl;
-{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-procedure Load_ERR_new; cdecl;
-procedure Load_ERR_set_debug(const file_: PAnsiChar; line: integer; const func: PAnsiChar); cdecl;
-procedure Load_ERR_set_error(lib: integer; reason: integer; fmt: PAnsiChar); cdecl;
-procedure Load_ERR_set_error_data(data: PAnsiChar; flags: TOpenSSL_C_INT); cdecl;
-function Load_ERR_get_error: TOpenSSL_C_ULONG; cdecl;
-function Load_ERR_get_error_line(file_: PPAnsiChar; line: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl;
-function Load_ERR_get_error_line_data(file_: PPAnsiChar; line: POpenSSL_C_INT; data: PPAnsiChar; flags: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl;
-function Load_ERR_peek_error: TOpenSSL_C_ULONG; cdecl;
-function Load_ERR_peek_error_line(file_: PPAnsiChar; line: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl;
-function Load_ERR_peek_error_line_data(file_: PPAnsiChar; line: POpenSSL_C_INT; data: PPAnsiChar; flags: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl;
-function Load_ERR_peek_last_error: TOpenSSL_C_ULONG; cdecl;
-function Load_ERR_peek_last_error_line(file_: PPAnsiChar; line: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl;
-function Load_ERR_peek_last_error_line_data(file_: PPAnsiChar; line: POpenSSL_C_INT; data: PPAnsiChar; flags: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl;
-procedure Load_ERR_clear_error; cdecl;
-function Load_ERR_error_string(e: TOpenSSL_C_ULONG; buf: PAnsiChar): PAnsiChar; cdecl;
-procedure Load_ERR_error_string_n(e: TOpenSSL_C_ULONG; buf: PAnsiChar; len: TOpenSSL_C_SIZET); cdecl;
-function Load_ERR_lib_error_string(e: TOpenSSL_C_ULONG): PAnsiChar; cdecl;
-function Load_ERR_func_error_string(e: TOpenSSL_C_ULONG): PAnsiChar; cdecl;
-function Load_ERR_reason_error_string(e: TOpenSSL_C_ULONG): PAnsiChar; cdecl;
-procedure Load_ERR_print_errors_cb(cb: ERR_print_errors_cb_cb; u: Pointer); cdecl;
-procedure Load_ERR_print_errors(bp: PBIO); cdecl;
-function Load_ERR_load_strings(lib: TOpenSSL_C_INT; str: PERR_STRING_DATA): TOpenSSL_C_INT; cdecl;
-function Load_ERR_load_strings_const(str: PERR_STRING_DATA): TOpenSSL_C_INT; cdecl;
-function Load_ERR_unload_strings(lib: TOpenSSL_C_INT; str: PERR_STRING_DATA): TOpenSSL_C_INT; cdecl;
-function Load_ERR_load_ERR_strings: TOpenSSL_C_INT; cdecl;
-function Load_ERR_get_state: PERR_STATE; cdecl;
-function Load_ERR_get_next_error_library: TOpenSSL_C_INT; cdecl;
-function Load_ERR_set_mark: TOpenSSL_C_INT; cdecl;
-function Load_ERR_pop_to_mark: TOpenSSL_C_INT; cdecl;
-function Load_ERR_clear_last_mark: TOpenSSL_C_INT; cdecl;
-{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-procedure Load_SSLErr(func: TOpenSSL_C_INT; reason: TOpenSSL_C_INT); cdecl;
-procedure Load_X509err(const f,r : TOpenSSL_C_INT); cdecl;
-function Load_ERR_GET_REASON(const l : TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-
 var
-  ERR_new: procedure ; cdecl = Load_ERR_new;
-  ERR_set_debug: procedure (const file_: PAnsiChar; line: integer; const func: PAnsiChar); cdecl = Load_ERR_set_debug;
-  ERR_set_error: procedure (lib: integer; reason: integer; fmt: PAnsiChar); cdecl varargs = Load_ERR_set_error;
-  ERR_set_error_data: procedure (data: PAnsiChar; flags: TOpenSSL_C_INT); cdecl = Load_ERR_set_error_data;
-  ERR_get_error: function : TOpenSSL_C_ULONG; cdecl = Load_ERR_get_error;
-  ERR_get_error_line: function (file_: PPAnsiChar; line: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl = Load_ERR_get_error_line;
-  ERR_get_error_line_data: function (file_: PPAnsiChar; line: POpenSSL_C_INT; data: PPAnsiChar; flags: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl = Load_ERR_get_error_line_data;
-  ERR_peek_error: function : TOpenSSL_C_ULONG; cdecl = Load_ERR_peek_error;
-  ERR_peek_error_line: function (file_: PPAnsiChar; line: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl = Load_ERR_peek_error_line;
-  ERR_peek_error_line_data: function (file_: PPAnsiChar; line: POpenSSL_C_INT; data: PPAnsiChar; flags: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl = Load_ERR_peek_error_line_data;
-  ERR_peek_last_error: function : TOpenSSL_C_ULONG; cdecl = Load_ERR_peek_last_error;
-  ERR_peek_last_error_line: function (file_: PPAnsiChar; line: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl = Load_ERR_peek_last_error_line;
-  ERR_peek_last_error_line_data: function (file_: PPAnsiChar; line: POpenSSL_C_INT; data: PPAnsiChar; flags: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl = Load_ERR_peek_last_error_line_data;
-  ERR_clear_error: procedure ; cdecl = Load_ERR_clear_error;
-  ERR_error_string: function (e: TOpenSSL_C_ULONG; buf: PAnsiChar): PAnsiChar; cdecl = Load_ERR_error_string;
-  ERR_error_string_n: procedure (e: TOpenSSL_C_ULONG; buf: PAnsiChar; len: TOpenSSL_C_SIZET); cdecl = Load_ERR_error_string_n;
-  ERR_lib_error_string: function (e: TOpenSSL_C_ULONG): PAnsiChar; cdecl = Load_ERR_lib_error_string;
-  ERR_func_error_string: function (e: TOpenSSL_C_ULONG): PAnsiChar; cdecl = Load_ERR_func_error_string;
-  ERR_reason_error_string: function (e: TOpenSSL_C_ULONG): PAnsiChar; cdecl = Load_ERR_reason_error_string;
-  ERR_print_errors_cb: procedure (cb: ERR_print_errors_cb_cb; u: Pointer); cdecl = Load_ERR_print_errors_cb;
-  ERR_print_errors: procedure (bp: PBIO); cdecl = Load_ERR_print_errors;
-  ERR_load_strings: function (lib: TOpenSSL_C_INT; str: PERR_STRING_DATA): TOpenSSL_C_INT; cdecl = Load_ERR_load_strings;
-  ERR_load_strings_const: function (str: PERR_STRING_DATA): TOpenSSL_C_INT; cdecl = Load_ERR_load_strings_const;
-  ERR_unload_strings: function (lib: TOpenSSL_C_INT; str: PERR_STRING_DATA): TOpenSSL_C_INT; cdecl = Load_ERR_unload_strings;
-  ERR_load_ERR_strings: function : TOpenSSL_C_INT; cdecl = Load_ERR_load_ERR_strings;
-  ERR_get_state: function : PERR_STATE; cdecl = Load_ERR_get_state;
-  ERR_get_next_error_library: function : TOpenSSL_C_INT; cdecl = Load_ERR_get_next_error_library;
-  ERR_set_mark: function : TOpenSSL_C_INT; cdecl = Load_ERR_set_mark;
-  ERR_pop_to_mark: function : TOpenSSL_C_INT; cdecl = Load_ERR_pop_to_mark;
-  ERR_clear_last_mark: function : TOpenSSL_C_INT; cdecl = Load_ERR_clear_last_mark;
+  ERR_new: procedure ; cdecl = nil;
+  ERR_set_debug: procedure (const file_: PAnsiChar; line: integer; const func: PAnsiChar); cdecl = nil;
+  ERR_set_error: procedure (lib: integer; reason: integer; fmt: PAnsiChar); cdecl varargs = nil;
+  ERR_set_error_data: procedure (data: PAnsiChar; flags: TOpenSSL_C_INT); cdecl = nil;
+  ERR_get_error: function : TOpenSSL_C_ULONG; cdecl = nil;
+  ERR_get_error_line: function (file_: PPAnsiChar; line: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl = nil;
+  ERR_get_error_line_data: function (file_: PPAnsiChar; line: POpenSSL_C_INT; data: PPAnsiChar; flags: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl = nil;
+  ERR_peek_error: function : TOpenSSL_C_ULONG; cdecl = nil;
+  ERR_peek_error_line: function (file_: PPAnsiChar; line: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl = nil;
+  ERR_peek_error_line_data: function (file_: PPAnsiChar; line: POpenSSL_C_INT; data: PPAnsiChar; flags: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl = nil;
+  ERR_peek_last_error: function : TOpenSSL_C_ULONG; cdecl = nil;
+  ERR_peek_last_error_line: function (file_: PPAnsiChar; line: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl = nil;
+  ERR_peek_last_error_line_data: function (file_: PPAnsiChar; line: POpenSSL_C_INT; data: PPAnsiChar; flags: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl = nil;
+  ERR_clear_error: procedure ; cdecl = nil;
+  ERR_error_string: function (e: TOpenSSL_C_ULONG; buf: PAnsiChar): PAnsiChar; cdecl = nil;
+  ERR_error_string_n: procedure (e: TOpenSSL_C_ULONG; buf: PAnsiChar; len: TOpenSSL_C_SIZET); cdecl = nil;
+  ERR_lib_error_string: function (e: TOpenSSL_C_ULONG): PAnsiChar; cdecl = nil;
+  ERR_func_error_string: function (e: TOpenSSL_C_ULONG): PAnsiChar; cdecl = nil;
+  ERR_reason_error_string: function (e: TOpenSSL_C_ULONG): PAnsiChar; cdecl = nil;
+  ERR_print_errors_cb: procedure (cb: ERR_print_errors_cb_cb; u: Pointer); cdecl = nil;
+  ERR_print_errors: procedure (bp: PBIO); cdecl = nil;
+  ERR_load_strings: function (lib: TOpenSSL_C_INT; str: PERR_STRING_DATA): TOpenSSL_C_INT; cdecl = nil;
+  ERR_load_strings_const: function (str: PERR_STRING_DATA): TOpenSSL_C_INT; cdecl = nil;
+  ERR_unload_strings: function (lib: TOpenSSL_C_INT; str: PERR_STRING_DATA): TOpenSSL_C_INT; cdecl = nil;
+  ERR_load_ERR_strings: function : TOpenSSL_C_INT; cdecl = nil;
+  ERR_get_state: function : PERR_STATE; cdecl = nil;
+  ERR_get_next_error_library: function : TOpenSSL_C_INT; cdecl = nil;
+  ERR_set_mark: function : TOpenSSL_C_INT; cdecl = nil;
+  ERR_pop_to_mark: function : TOpenSSL_C_INT; cdecl = nil;
+  ERR_clear_last_mark: function : TOpenSSL_C_INT; cdecl = nil;
 
 
 
@@ -346,10 +304,10 @@ var
 
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 var
-  ERR_put_error: procedure (lib: TOpenSSL_C_INT; func: TOpenSSL_C_INT; reason: TOpenSSL_C_INT; file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl = Load_ERR_put_error; {removed 3.0.0}
-  SSLErr: procedure (func: TOpenSSL_C_INT; reason: TOpenSSL_C_INT); cdecl = Load_SSLErr; {removed 1.0.0}
-  X509err: procedure (const f,r : TOpenSSL_C_INT); cdecl = Load_X509err; {removed 1.0.0}
-  ERR_GET_REASON: function (const l : TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_ERR_GET_REASON; {removed 1.0.0}
+  ERR_put_error: procedure (lib: TOpenSSL_C_INT; func: TOpenSSL_C_INT; reason: TOpenSSL_C_INT; file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl = nil; {removed 3.0.0}
+  SSLErr: procedure (func: TOpenSSL_C_INT; reason: TOpenSSL_C_INT); cdecl = nil; {removed 1.0.0}
+  X509err: procedure (const f,r : TOpenSSL_C_INT); cdecl = nil; {removed 1.0.0}
+  ERR_GET_REASON: function (const l : TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil; {removed 1.0.0}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF}
 const
@@ -466,322 +424,489 @@ end;
 
 
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-procedure Load_ERR_put_error(lib: TOpenSSL_C_INT; func: TOpenSSL_C_INT; reason: TOpenSSL_C_INT; file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl;
+
+{$WARN  NO_RETVAL OFF}
+{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
+procedure ERROR_ERR_put_error(lib: TOpenSSL_C_INT; func: TOpenSSL_C_INT; reason: TOpenSSL_C_INT; file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl; {removed 3.0.0}
 begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_put_error');
+end;
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+
+procedure ERROR_ERR_new; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_new');
+end;
+
+procedure ERROR_ERR_set_debug(const file_: PAnsiChar; line: integer; const func: PAnsiChar); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_set_debug');
+end;
+
+procedure ERROR_ERR_set_error(lib: integer; reason: integer; fmt: PAnsiChar); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_set_error');
+end;
+
+procedure ERROR_ERR_set_error_data(data: PAnsiChar; flags: TOpenSSL_C_INT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_set_error_data');
+end;
+
+function ERROR_ERR_get_error: TOpenSSL_C_ULONG; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_get_error');
+end;
+
+function ERROR_ERR_get_error_line(file_: PPAnsiChar; line: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_get_error_line');
+end;
+
+function ERROR_ERR_get_error_line_data(file_: PPAnsiChar; line: POpenSSL_C_INT; data: PPAnsiChar; flags: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_get_error_line_data');
+end;
+
+function ERROR_ERR_peek_error: TOpenSSL_C_ULONG; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_peek_error');
+end;
+
+function ERROR_ERR_peek_error_line(file_: PPAnsiChar; line: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_peek_error_line');
+end;
+
+function ERROR_ERR_peek_error_line_data(file_: PPAnsiChar; line: POpenSSL_C_INT; data: PPAnsiChar; flags: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_peek_error_line_data');
+end;
+
+function ERROR_ERR_peek_last_error: TOpenSSL_C_ULONG; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_peek_last_error');
+end;
+
+function ERROR_ERR_peek_last_error_line(file_: PPAnsiChar; line: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_peek_last_error_line');
+end;
+
+function ERROR_ERR_peek_last_error_line_data(file_: PPAnsiChar; line: POpenSSL_C_INT; data: PPAnsiChar; flags: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_peek_last_error_line_data');
+end;
+
+procedure ERROR_ERR_clear_error; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_clear_error');
+end;
+
+function ERROR_ERR_error_string(e: TOpenSSL_C_ULONG; buf: PAnsiChar): PAnsiChar; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_error_string');
+end;
+
+procedure ERROR_ERR_error_string_n(e: TOpenSSL_C_ULONG; buf: PAnsiChar; len: TOpenSSL_C_SIZET); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_error_string_n');
+end;
+
+function ERROR_ERR_lib_error_string(e: TOpenSSL_C_ULONG): PAnsiChar; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_lib_error_string');
+end;
+
+function ERROR_ERR_func_error_string(e: TOpenSSL_C_ULONG): PAnsiChar; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_func_error_string');
+end;
+
+function ERROR_ERR_reason_error_string(e: TOpenSSL_C_ULONG): PAnsiChar; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_reason_error_string');
+end;
+
+procedure ERROR_ERR_print_errors_cb(cb: ERR_print_errors_cb_cb; u: Pointer); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_print_errors_cb');
+end;
+
+procedure ERROR_ERR_print_errors(bp: PBIO); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_print_errors');
+end;
+
+function ERROR_ERR_load_strings(lib: TOpenSSL_C_INT; str: PERR_STRING_DATA): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_load_strings');
+end;
+
+function ERROR_ERR_load_strings_const(str: PERR_STRING_DATA): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_load_strings_const');
+end;
+
+function ERROR_ERR_unload_strings(lib: TOpenSSL_C_INT; str: PERR_STRING_DATA): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_unload_strings');
+end;
+
+function ERROR_ERR_load_ERR_strings: TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_load_ERR_strings');
+end;
+
+function ERROR_ERR_get_state: PERR_STATE; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_get_state');
+end;
+
+function ERROR_ERR_get_next_error_library: TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_get_next_error_library');
+end;
+
+function ERROR_ERR_set_mark: TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_set_mark');
+end;
+
+function ERROR_ERR_pop_to_mark: TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_pop_to_mark');
+end;
+
+function ERROR_ERR_clear_last_mark: TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_clear_last_mark');
+end;
+
+{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
+procedure ERROR_SSLErr(func: TOpenSSL_C_INT; reason: TOpenSSL_C_INT); cdecl; {removed 1.0.0}
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('SSLErr');
+end;
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+
+{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
+procedure ERROR_X509err(const f,r : TOpenSSL_C_INT); cdecl; {removed 1.0.0}
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('X509err');
+end;
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+
+{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
+function ERROR_ERR_GET_REASON(const l : TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; {removed 1.0.0}
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_GET_REASON');
+end;
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+
+{$WARN  NO_RETVAL ON}
+procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
+var FuncLoadError: boolean;
+begin
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
   ERR_put_error := LoadLibCryptoFunction('ERR_put_error');
-  if not assigned(ERR_put_error) then
+  FuncLoadError := not assigned(ERR_put_error);
+  if FuncLoadError then
+  begin
     ERR_put_error := @COMPAT_ERR_put_error;
-  ERR_put_error(lib,func,reason,file_,line);
-end;
+    if ERR_put_error_removed <= LibVersion then
+      FuncLoadError := false;
+    if FuncLoadError then
+      AFailed.Add('ERR_put_error');
+  end;
 
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-procedure Load_ERR_new; cdecl;
-begin
   ERR_new := LoadLibCryptoFunction('ERR_new');
-  if not assigned(ERR_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_new');
-  ERR_new();
-end;
+  FuncLoadError := not assigned(ERR_new);
+  if FuncLoadError then
+  begin
+    ERR_new :=  @ERROR_ERR_new;
+  end;
 
-procedure Load_ERR_set_debug(const file_: PAnsiChar; line: integer; const func: PAnsiChar); cdecl;
-begin
   ERR_set_debug := LoadLibCryptoFunction('ERR_set_debug');
-  if not assigned(ERR_set_debug) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_set_debug');
-  ERR_set_debug(file_,line,func);
-end;
+  FuncLoadError := not assigned(ERR_set_debug);
+  if FuncLoadError then
+  begin
+    ERR_set_debug :=  @ERROR_ERR_set_debug;
+  end;
 
-procedure Load_ERR_set_error(lib: integer; reason: integer; fmt: PAnsiChar); cdecl;
-begin
   ERR_set_error := LoadLibCryptoFunction('ERR_set_error');
-  if not assigned(ERR_set_error) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_set_error');
-  ERR_set_error(lib,reason,fmt);
-end;
+  FuncLoadError := not assigned(ERR_set_error);
+  if FuncLoadError then
+  begin
+    ERR_set_error :=  @ERROR_ERR_set_error;
+  end;
 
-procedure Load_ERR_set_error_data(data: PAnsiChar; flags: TOpenSSL_C_INT); cdecl;
-begin
   ERR_set_error_data := LoadLibCryptoFunction('ERR_set_error_data');
-  if not assigned(ERR_set_error_data) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_set_error_data');
-  ERR_set_error_data(data,flags);
-end;
+  FuncLoadError := not assigned(ERR_set_error_data);
+  if FuncLoadError then
+  begin
+    ERR_set_error_data :=  @ERROR_ERR_set_error_data;
+  end;
 
-function Load_ERR_get_error: TOpenSSL_C_ULONG; cdecl;
-begin
   ERR_get_error := LoadLibCryptoFunction('ERR_get_error');
-  if not assigned(ERR_get_error) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_get_error');
-  Result := ERR_get_error();
-end;
+  FuncLoadError := not assigned(ERR_get_error);
+  if FuncLoadError then
+  begin
+    ERR_get_error :=  @ERROR_ERR_get_error;
+  end;
 
-function Load_ERR_get_error_line(file_: PPAnsiChar; line: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl;
-begin
   ERR_get_error_line := LoadLibCryptoFunction('ERR_get_error_line');
-  if not assigned(ERR_get_error_line) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_get_error_line');
-  Result := ERR_get_error_line(file_,line);
-end;
+  FuncLoadError := not assigned(ERR_get_error_line);
+  if FuncLoadError then
+  begin
+    ERR_get_error_line :=  @ERROR_ERR_get_error_line;
+  end;
 
-function Load_ERR_get_error_line_data(file_: PPAnsiChar; line: POpenSSL_C_INT; data: PPAnsiChar; flags: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl;
-begin
   ERR_get_error_line_data := LoadLibCryptoFunction('ERR_get_error_line_data');
-  if not assigned(ERR_get_error_line_data) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_get_error_line_data');
-  Result := ERR_get_error_line_data(file_,line,data,flags);
-end;
+  FuncLoadError := not assigned(ERR_get_error_line_data);
+  if FuncLoadError then
+  begin
+    ERR_get_error_line_data :=  @ERROR_ERR_get_error_line_data;
+  end;
 
-function Load_ERR_peek_error: TOpenSSL_C_ULONG; cdecl;
-begin
   ERR_peek_error := LoadLibCryptoFunction('ERR_peek_error');
-  if not assigned(ERR_peek_error) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_peek_error');
-  Result := ERR_peek_error();
-end;
+  FuncLoadError := not assigned(ERR_peek_error);
+  if FuncLoadError then
+  begin
+    ERR_peek_error :=  @ERROR_ERR_peek_error;
+  end;
 
-function Load_ERR_peek_error_line(file_: PPAnsiChar; line: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl;
-begin
   ERR_peek_error_line := LoadLibCryptoFunction('ERR_peek_error_line');
-  if not assigned(ERR_peek_error_line) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_peek_error_line');
-  Result := ERR_peek_error_line(file_,line);
-end;
+  FuncLoadError := not assigned(ERR_peek_error_line);
+  if FuncLoadError then
+  begin
+    ERR_peek_error_line :=  @ERROR_ERR_peek_error_line;
+  end;
 
-function Load_ERR_peek_error_line_data(file_: PPAnsiChar; line: POpenSSL_C_INT; data: PPAnsiChar; flags: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl;
-begin
   ERR_peek_error_line_data := LoadLibCryptoFunction('ERR_peek_error_line_data');
-  if not assigned(ERR_peek_error_line_data) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_peek_error_line_data');
-  Result := ERR_peek_error_line_data(file_,line,data,flags);
-end;
+  FuncLoadError := not assigned(ERR_peek_error_line_data);
+  if FuncLoadError then
+  begin
+    ERR_peek_error_line_data :=  @ERROR_ERR_peek_error_line_data;
+  end;
 
-function Load_ERR_peek_last_error: TOpenSSL_C_ULONG; cdecl;
-begin
   ERR_peek_last_error := LoadLibCryptoFunction('ERR_peek_last_error');
-  if not assigned(ERR_peek_last_error) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_peek_last_error');
-  Result := ERR_peek_last_error();
-end;
+  FuncLoadError := not assigned(ERR_peek_last_error);
+  if FuncLoadError then
+  begin
+    ERR_peek_last_error :=  @ERROR_ERR_peek_last_error;
+  end;
 
-function Load_ERR_peek_last_error_line(file_: PPAnsiChar; line: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl;
-begin
   ERR_peek_last_error_line := LoadLibCryptoFunction('ERR_peek_last_error_line');
-  if not assigned(ERR_peek_last_error_line) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_peek_last_error_line');
-  Result := ERR_peek_last_error_line(file_,line);
-end;
+  FuncLoadError := not assigned(ERR_peek_last_error_line);
+  if FuncLoadError then
+  begin
+    ERR_peek_last_error_line :=  @ERROR_ERR_peek_last_error_line;
+  end;
 
-function Load_ERR_peek_last_error_line_data(file_: PPAnsiChar; line: POpenSSL_C_INT; data: PPAnsiChar; flags: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl;
-begin
   ERR_peek_last_error_line_data := LoadLibCryptoFunction('ERR_peek_last_error_line_data');
-  if not assigned(ERR_peek_last_error_line_data) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_peek_last_error_line_data');
-  Result := ERR_peek_last_error_line_data(file_,line,data,flags);
-end;
+  FuncLoadError := not assigned(ERR_peek_last_error_line_data);
+  if FuncLoadError then
+  begin
+    ERR_peek_last_error_line_data :=  @ERROR_ERR_peek_last_error_line_data;
+  end;
 
-procedure Load_ERR_clear_error; cdecl;
-begin
   ERR_clear_error := LoadLibCryptoFunction('ERR_clear_error');
-  if not assigned(ERR_clear_error) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_clear_error');
-  ERR_clear_error();
-end;
+  FuncLoadError := not assigned(ERR_clear_error);
+  if FuncLoadError then
+  begin
+    ERR_clear_error :=  @ERROR_ERR_clear_error;
+  end;
 
-function Load_ERR_error_string(e: TOpenSSL_C_ULONG; buf: PAnsiChar): PAnsiChar; cdecl;
-begin
   ERR_error_string := LoadLibCryptoFunction('ERR_error_string');
-  if not assigned(ERR_error_string) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_error_string');
-  Result := ERR_error_string(e,buf);
-end;
+  FuncLoadError := not assigned(ERR_error_string);
+  if FuncLoadError then
+  begin
+    ERR_error_string :=  @ERROR_ERR_error_string;
+  end;
 
-procedure Load_ERR_error_string_n(e: TOpenSSL_C_ULONG; buf: PAnsiChar; len: TOpenSSL_C_SIZET); cdecl;
-begin
   ERR_error_string_n := LoadLibCryptoFunction('ERR_error_string_n');
-  if not assigned(ERR_error_string_n) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_error_string_n');
-  ERR_error_string_n(e,buf,len);
-end;
+  FuncLoadError := not assigned(ERR_error_string_n);
+  if FuncLoadError then
+  begin
+    ERR_error_string_n :=  @ERROR_ERR_error_string_n;
+  end;
 
-function Load_ERR_lib_error_string(e: TOpenSSL_C_ULONG): PAnsiChar; cdecl;
-begin
   ERR_lib_error_string := LoadLibCryptoFunction('ERR_lib_error_string');
-  if not assigned(ERR_lib_error_string) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_lib_error_string');
-  Result := ERR_lib_error_string(e);
-end;
+  FuncLoadError := not assigned(ERR_lib_error_string);
+  if FuncLoadError then
+  begin
+    ERR_lib_error_string :=  @ERROR_ERR_lib_error_string;
+  end;
 
-function Load_ERR_func_error_string(e: TOpenSSL_C_ULONG): PAnsiChar; cdecl;
-begin
   ERR_func_error_string := LoadLibCryptoFunction('ERR_func_error_string');
-  if not assigned(ERR_func_error_string) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_func_error_string');
-  Result := ERR_func_error_string(e);
-end;
+  FuncLoadError := not assigned(ERR_func_error_string);
+  if FuncLoadError then
+  begin
+    ERR_func_error_string :=  @ERROR_ERR_func_error_string;
+  end;
 
-function Load_ERR_reason_error_string(e: TOpenSSL_C_ULONG): PAnsiChar; cdecl;
-begin
   ERR_reason_error_string := LoadLibCryptoFunction('ERR_reason_error_string');
-  if not assigned(ERR_reason_error_string) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_reason_error_string');
-  Result := ERR_reason_error_string(e);
-end;
+  FuncLoadError := not assigned(ERR_reason_error_string);
+  if FuncLoadError then
+  begin
+    ERR_reason_error_string :=  @ERROR_ERR_reason_error_string;
+  end;
 
-procedure Load_ERR_print_errors_cb(cb: ERR_print_errors_cb_cb; u: Pointer); cdecl;
-begin
   ERR_print_errors_cb := LoadLibCryptoFunction('ERR_print_errors_cb');
-  if not assigned(ERR_print_errors_cb) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_print_errors_cb');
-  ERR_print_errors_cb(cb,u);
-end;
+  FuncLoadError := not assigned(ERR_print_errors_cb);
+  if FuncLoadError then
+  begin
+    ERR_print_errors_cb :=  @ERROR_ERR_print_errors_cb;
+  end;
 
-procedure Load_ERR_print_errors(bp: PBIO); cdecl;
-begin
   ERR_print_errors := LoadLibCryptoFunction('ERR_print_errors');
-  if not assigned(ERR_print_errors) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_print_errors');
-  ERR_print_errors(bp);
-end;
+  FuncLoadError := not assigned(ERR_print_errors);
+  if FuncLoadError then
+  begin
+    ERR_print_errors :=  @ERROR_ERR_print_errors;
+  end;
 
-function Load_ERR_load_strings(lib: TOpenSSL_C_INT; str: PERR_STRING_DATA): TOpenSSL_C_INT; cdecl;
-begin
   ERR_load_strings := LoadLibCryptoFunction('ERR_load_strings');
-  if not assigned(ERR_load_strings) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_load_strings');
-  Result := ERR_load_strings(lib,str);
-end;
+  FuncLoadError := not assigned(ERR_load_strings);
+  if FuncLoadError then
+  begin
+    ERR_load_strings :=  @ERROR_ERR_load_strings;
+  end;
 
-function Load_ERR_load_strings_const(str: PERR_STRING_DATA): TOpenSSL_C_INT; cdecl;
-begin
   ERR_load_strings_const := LoadLibCryptoFunction('ERR_load_strings_const');
-  if not assigned(ERR_load_strings_const) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_load_strings_const');
-  Result := ERR_load_strings_const(str);
-end;
+  FuncLoadError := not assigned(ERR_load_strings_const);
+  if FuncLoadError then
+  begin
+    ERR_load_strings_const :=  @ERROR_ERR_load_strings_const;
+  end;
 
-function Load_ERR_unload_strings(lib: TOpenSSL_C_INT; str: PERR_STRING_DATA): TOpenSSL_C_INT; cdecl;
-begin
   ERR_unload_strings := LoadLibCryptoFunction('ERR_unload_strings');
-  if not assigned(ERR_unload_strings) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_unload_strings');
-  Result := ERR_unload_strings(lib,str);
-end;
+  FuncLoadError := not assigned(ERR_unload_strings);
+  if FuncLoadError then
+  begin
+    ERR_unload_strings :=  @ERROR_ERR_unload_strings;
+  end;
 
-function Load_ERR_load_ERR_strings: TOpenSSL_C_INT; cdecl;
-begin
   ERR_load_ERR_strings := LoadLibCryptoFunction('ERR_load_ERR_strings');
-  if not assigned(ERR_load_ERR_strings) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_load_ERR_strings');
-  Result := ERR_load_ERR_strings();
-end;
+  FuncLoadError := not assigned(ERR_load_ERR_strings);
+  if FuncLoadError then
+  begin
+    ERR_load_ERR_strings :=  @ERROR_ERR_load_ERR_strings;
+  end;
 
-function Load_ERR_get_state: PERR_STATE; cdecl;
-begin
   ERR_get_state := LoadLibCryptoFunction('ERR_get_state');
-  if not assigned(ERR_get_state) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_get_state');
-  Result := ERR_get_state();
-end;
+  FuncLoadError := not assigned(ERR_get_state);
+  if FuncLoadError then
+  begin
+    ERR_get_state :=  @ERROR_ERR_get_state;
+  end;
 
-function Load_ERR_get_next_error_library: TOpenSSL_C_INT; cdecl;
-begin
   ERR_get_next_error_library := LoadLibCryptoFunction('ERR_get_next_error_library');
-  if not assigned(ERR_get_next_error_library) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_get_next_error_library');
-  Result := ERR_get_next_error_library();
-end;
+  FuncLoadError := not assigned(ERR_get_next_error_library);
+  if FuncLoadError then
+  begin
+    ERR_get_next_error_library :=  @ERROR_ERR_get_next_error_library;
+  end;
 
-function Load_ERR_set_mark: TOpenSSL_C_INT; cdecl;
-begin
   ERR_set_mark := LoadLibCryptoFunction('ERR_set_mark');
-  if not assigned(ERR_set_mark) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_set_mark');
-  Result := ERR_set_mark();
-end;
+  FuncLoadError := not assigned(ERR_set_mark);
+  if FuncLoadError then
+  begin
+    ERR_set_mark :=  @ERROR_ERR_set_mark;
+  end;
 
-function Load_ERR_pop_to_mark: TOpenSSL_C_INT; cdecl;
-begin
   ERR_pop_to_mark := LoadLibCryptoFunction('ERR_pop_to_mark');
-  if not assigned(ERR_pop_to_mark) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_pop_to_mark');
-  Result := ERR_pop_to_mark();
-end;
+  FuncLoadError := not assigned(ERR_pop_to_mark);
+  if FuncLoadError then
+  begin
+    ERR_pop_to_mark :=  @ERROR_ERR_pop_to_mark;
+  end;
 
-function Load_ERR_clear_last_mark: TOpenSSL_C_INT; cdecl;
-begin
   ERR_clear_last_mark := LoadLibCryptoFunction('ERR_clear_last_mark');
-  if not assigned(ERR_clear_last_mark) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_clear_last_mark');
-  Result := ERR_clear_last_mark();
-end;
+  FuncLoadError := not assigned(ERR_clear_last_mark);
+  if FuncLoadError then
+  begin
+    ERR_clear_last_mark :=  @ERROR_ERR_clear_last_mark;
+  end;
 
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-procedure Load_SSLErr(func: TOpenSSL_C_INT; reason: TOpenSSL_C_INT); cdecl;
-begin
   SSLErr := LoadLibCryptoFunction('SSLErr');
-  if not assigned(SSLErr) then
+  FuncLoadError := not assigned(SSLErr);
+  if FuncLoadError then
+  begin
     SSLErr := @COMPAT_SSLErr;
-  SSLErr(func,reason);
-end;
+    if SSLErr_removed <= LibVersion then
+      FuncLoadError := false;
+    if FuncLoadError then
+      AFailed.Add('SSLErr');
+  end;
 
-procedure Load_X509err(const f,r : TOpenSSL_C_INT); cdecl;
-begin
   X509err := LoadLibCryptoFunction('X509err');
-  if not assigned(X509err) then
+  FuncLoadError := not assigned(X509err);
+  if FuncLoadError then
+  begin
     X509err := @COMPAT_X509err;
-  X509err(f,r);
-end;
+    if X509err_removed <= LibVersion then
+      FuncLoadError := false;
+    if FuncLoadError then
+      AFailed.Add('X509err');
+  end;
 
-function Load_ERR_GET_REASON(const l : TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   ERR_GET_REASON := LoadLibCryptoFunction('ERR_GET_REASON');
-  if not assigned(ERR_GET_REASON) then
+  FuncLoadError := not assigned(ERR_GET_REASON);
+  if FuncLoadError then
+  begin
     ERR_GET_REASON := @COMPAT_ERR_GET_REASON;
-  Result := ERR_GET_REASON(l);
-end;
+    if ERR_GET_REASON_removed <= LibVersion then
+      FuncLoadError := false;
+    if FuncLoadError then
+      AFailed.Add('ERR_GET_REASON');
+  end;
 
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+end;
 
 procedure UnLoad;
 begin
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  ERR_put_error := Load_ERR_put_error;
+  ERR_put_error := nil;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-  ERR_new := Load_ERR_new;
-  ERR_set_debug := Load_ERR_set_debug;
-  ERR_set_error := Load_ERR_set_error;
-  ERR_set_error_data := Load_ERR_set_error_data;
-  ERR_get_error := Load_ERR_get_error;
-  ERR_get_error_line := Load_ERR_get_error_line;
-  ERR_get_error_line_data := Load_ERR_get_error_line_data;
-  ERR_peek_error := Load_ERR_peek_error;
-  ERR_peek_error_line := Load_ERR_peek_error_line;
-  ERR_peek_error_line_data := Load_ERR_peek_error_line_data;
-  ERR_peek_last_error := Load_ERR_peek_last_error;
-  ERR_peek_last_error_line := Load_ERR_peek_last_error_line;
-  ERR_peek_last_error_line_data := Load_ERR_peek_last_error_line_data;
-  ERR_clear_error := Load_ERR_clear_error;
-  ERR_error_string := Load_ERR_error_string;
-  ERR_error_string_n := Load_ERR_error_string_n;
-  ERR_lib_error_string := Load_ERR_lib_error_string;
-  ERR_func_error_string := Load_ERR_func_error_string;
-  ERR_reason_error_string := Load_ERR_reason_error_string;
-  ERR_print_errors_cb := Load_ERR_print_errors_cb;
-  ERR_print_errors := Load_ERR_print_errors;
-  ERR_load_strings := Load_ERR_load_strings;
-  ERR_load_strings_const := Load_ERR_load_strings_const;
-  ERR_unload_strings := Load_ERR_unload_strings;
-  ERR_load_ERR_strings := Load_ERR_load_ERR_strings;
-  ERR_get_state := Load_ERR_get_state;
-  ERR_get_next_error_library := Load_ERR_get_next_error_library;
-  ERR_set_mark := Load_ERR_set_mark;
-  ERR_pop_to_mark := Load_ERR_pop_to_mark;
-  ERR_clear_last_mark := Load_ERR_clear_last_mark;
+  ERR_new := nil;
+  ERR_set_debug := nil;
+  ERR_set_error := nil;
+  ERR_set_error_data := nil;
+  ERR_get_error := nil;
+  ERR_get_error_line := nil;
+  ERR_get_error_line_data := nil;
+  ERR_peek_error := nil;
+  ERR_peek_error_line := nil;
+  ERR_peek_error_line_data := nil;
+  ERR_peek_last_error := nil;
+  ERR_peek_last_error_line := nil;
+  ERR_peek_last_error_line_data := nil;
+  ERR_clear_error := nil;
+  ERR_error_string := nil;
+  ERR_error_string_n := nil;
+  ERR_lib_error_string := nil;
+  ERR_func_error_string := nil;
+  ERR_reason_error_string := nil;
+  ERR_print_errors_cb := nil;
+  ERR_print_errors := nil;
+  ERR_load_strings := nil;
+  ERR_load_strings_const := nil;
+  ERR_unload_strings := nil;
+  ERR_load_ERR_strings := nil;
+  ERR_get_state := nil;
+  ERR_get_next_error_library := nil;
+  ERR_set_mark := nil;
+  ERR_pop_to_mark := nil;
+  ERR_clear_last_mark := nil;
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  SSLErr := Load_SSLErr;
-  X509err := Load_X509err;
-  ERR_GET_REASON := Load_ERR_GET_REASON;
+  SSLErr := nil;
+  X509err := nil;
+  ERR_GET_REASON := nil;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
 end;
 {$ENDIF}
@@ -789,6 +914,7 @@ end;
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
+Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

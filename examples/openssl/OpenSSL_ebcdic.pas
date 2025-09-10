@@ -52,15 +52,9 @@ function ebcdic2ascii(dest: Pointer; const srce: Pointer; count: TOpenSSL_C_SIZE
 function ascii2ebcdic(dest: Pointer; const srce: Pointer; count: TOpenSSL_C_SIZET): Pointer; cdecl; external CLibCrypto;
 
 {$ELSE}
-
-{Declare external function initialisers - should not be called directly}
-
-function Load_ebcdic2ascii(dest: Pointer; const srce: Pointer; count: TOpenSSL_C_SIZET): Pointer; cdecl;
-function Load_ascii2ebcdic(dest: Pointer; const srce: Pointer; count: TOpenSSL_C_SIZET): Pointer; cdecl;
-
 var
-  ebcdic2ascii: function (dest: Pointer; const srce: Pointer; count: TOpenSSL_C_SIZET): Pointer; cdecl = Load_ebcdic2ascii;
-  ascii2ebcdic: function (dest: Pointer; const srce: Pointer; count: TOpenSSL_C_SIZET): Pointer; cdecl = Load_ascii2ebcdic;
+  ebcdic2ascii: function (dest: Pointer; const srce: Pointer; count: TOpenSSL_C_SIZET): Pointer; cdecl = nil;
+  ascii2ebcdic: function (dest: Pointer; const srce: Pointer; count: TOpenSSL_C_SIZET): Pointer; cdecl = nil;
 {$ENDIF}
 
 implementation
@@ -78,33 +72,49 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-function Load_ebcdic2ascii(dest: Pointer; const srce: Pointer; count: TOpenSSL_C_SIZET): Pointer; cdecl;
+
+{$WARN  NO_RETVAL OFF}
+function ERROR_ebcdic2ascii(dest: Pointer; const srce: Pointer; count: TOpenSSL_C_SIZET): Pointer; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ebcdic2ascii');
+end;
+
+function ERROR_ascii2ebcdic(dest: Pointer; const srce: Pointer; count: TOpenSSL_C_SIZET): Pointer; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('ascii2ebcdic');
+end;
+
+{$WARN  NO_RETVAL ON}
+procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
+var FuncLoadError: boolean;
 begin
   ebcdic2ascii := LoadLibCryptoFunction('ebcdic2ascii');
-  if not assigned(ebcdic2ascii) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ebcdic2ascii');
-  Result := ebcdic2ascii(dest,srce,count);
-end;
+  FuncLoadError := not assigned(ebcdic2ascii);
+  if FuncLoadError then
+  begin
+    ebcdic2ascii :=  @ERROR_ebcdic2ascii;
+  end;
 
-function Load_ascii2ebcdic(dest: Pointer; const srce: Pointer; count: TOpenSSL_C_SIZET): Pointer; cdecl;
-begin
   ascii2ebcdic := LoadLibCryptoFunction('ascii2ebcdic');
-  if not assigned(ascii2ebcdic) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('ascii2ebcdic');
-  Result := ascii2ebcdic(dest,srce,count);
-end;
+  FuncLoadError := not assigned(ascii2ebcdic);
+  if FuncLoadError then
+  begin
+    ascii2ebcdic :=  @ERROR_ascii2ebcdic;
+  end;
 
+end;
 
 procedure UnLoad;
 begin
-  ebcdic2ascii := Load_ebcdic2ascii;
-  ascii2ebcdic := Load_ascii2ebcdic;
+  ebcdic2ascii := nil;
+  ascii2ebcdic := nil;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
+Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

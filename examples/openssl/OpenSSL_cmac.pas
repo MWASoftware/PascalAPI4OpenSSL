@@ -71,29 +71,16 @@ function CMAC_Final(ctx: PCMAC_CTX; out_: PByte; poutlen: POpenSSL_C_SIZET): TOp
 function CMAC_resume(ctx: PCMAC_CTX): TOpenSSL_C_INT; cdecl; external CLibCrypto;
 
 {$ELSE}
-
-{Declare external function initialisers - should not be called directly}
-
-function Load_CMAC_CTX_new: PCMAC_CTX; cdecl;
-procedure Load_CMAC_CTX_cleanup(ctx: PCMAC_CTX); cdecl;
-procedure Load_CMAC_CTX_free(ctx: PCMAC_CTX); cdecl;
-function Load_CMAC_CTX_get0_cipher_ctx(ctx: PCMAC_CTX): PEVP_CIPHER_CTX; cdecl;
-function Load_CMAC_CTX_copy(out_: PCMAC_CTX; const in_: PCMAC_CTX): TOpenSSL_C_INT; cdecl;
-function Load_CMAC_Init(ctx: PCMAC_CTX; const key: Pointer; keylen: TOpenSSL_C_SIZET; const cipher: PEVP_Cipher; impl: PENGINe): TOpenSSL_C_INT; cdecl;
-function Load_CMAC_Update(ctx: PCMAC_CTX; const data: Pointer; dlen: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-function Load_CMAC_Final(ctx: PCMAC_CTX; out_: PByte; poutlen: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-function Load_CMAC_resume(ctx: PCMAC_CTX): TOpenSSL_C_INT; cdecl;
-
 var
-  CMAC_CTX_new: function : PCMAC_CTX; cdecl = Load_CMAC_CTX_new;
-  CMAC_CTX_cleanup: procedure (ctx: PCMAC_CTX); cdecl = Load_CMAC_CTX_cleanup;
-  CMAC_CTX_free: procedure (ctx: PCMAC_CTX); cdecl = Load_CMAC_CTX_free;
-  CMAC_CTX_get0_cipher_ctx: function (ctx: PCMAC_CTX): PEVP_CIPHER_CTX; cdecl = Load_CMAC_CTX_get0_cipher_ctx;
-  CMAC_CTX_copy: function (out_: PCMAC_CTX; const in_: PCMAC_CTX): TOpenSSL_C_INT; cdecl = Load_CMAC_CTX_copy;
-  CMAC_Init: function (ctx: PCMAC_CTX; const key: Pointer; keylen: TOpenSSL_C_SIZET; const cipher: PEVP_Cipher; impl: PENGINe): TOpenSSL_C_INT; cdecl = Load_CMAC_Init;
-  CMAC_Update: function (ctx: PCMAC_CTX; const data: Pointer; dlen: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_CMAC_Update;
-  CMAC_Final: function (ctx: PCMAC_CTX; out_: PByte; poutlen: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_CMAC_Final;
-  CMAC_resume: function (ctx: PCMAC_CTX): TOpenSSL_C_INT; cdecl = Load_CMAC_resume;
+  CMAC_CTX_new: function : PCMAC_CTX; cdecl = nil;
+  CMAC_CTX_cleanup: procedure (ctx: PCMAC_CTX); cdecl = nil;
+  CMAC_CTX_free: procedure (ctx: PCMAC_CTX); cdecl = nil;
+  CMAC_CTX_get0_cipher_ctx: function (ctx: PCMAC_CTX): PEVP_CIPHER_CTX; cdecl = nil;
+  CMAC_CTX_copy: function (out_: PCMAC_CTX; const in_: PCMAC_CTX): TOpenSSL_C_INT; cdecl = nil;
+  CMAC_Init: function (ctx: PCMAC_CTX; const key: Pointer; keylen: TOpenSSL_C_SIZET; const cipher: PEVP_Cipher; impl: PENGINe): TOpenSSL_C_INT; cdecl = nil;
+  CMAC_Update: function (ctx: PCMAC_CTX; const data: Pointer; dlen: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
+  CMAC_Final: function (ctx: PCMAC_CTX; out_: PByte; poutlen: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
+  CMAC_resume: function (ctx: PCMAC_CTX): TOpenSSL_C_INT; cdecl = nil;
 {$ENDIF}
 
 implementation
@@ -111,96 +98,140 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-function Load_CMAC_CTX_new: PCMAC_CTX; cdecl;
+
+{$WARN  NO_RETVAL OFF}
+function ERROR_CMAC_CTX_new: PCMAC_CTX; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CMAC_CTX_new');
+end;
+
+procedure ERROR_CMAC_CTX_cleanup(ctx: PCMAC_CTX); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CMAC_CTX_cleanup');
+end;
+
+procedure ERROR_CMAC_CTX_free(ctx: PCMAC_CTX); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CMAC_CTX_free');
+end;
+
+function ERROR_CMAC_CTX_get0_cipher_ctx(ctx: PCMAC_CTX): PEVP_CIPHER_CTX; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CMAC_CTX_get0_cipher_ctx');
+end;
+
+function ERROR_CMAC_CTX_copy(out_: PCMAC_CTX; const in_: PCMAC_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CMAC_CTX_copy');
+end;
+
+function ERROR_CMAC_Init(ctx: PCMAC_CTX; const key: Pointer; keylen: TOpenSSL_C_SIZET; const cipher: PEVP_Cipher; impl: PENGINe): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CMAC_Init');
+end;
+
+function ERROR_CMAC_Update(ctx: PCMAC_CTX; const data: Pointer; dlen: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CMAC_Update');
+end;
+
+function ERROR_CMAC_Final(ctx: PCMAC_CTX; out_: PByte; poutlen: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CMAC_Final');
+end;
+
+function ERROR_CMAC_resume(ctx: PCMAC_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CMAC_resume');
+end;
+
+{$WARN  NO_RETVAL ON}
+procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
+var FuncLoadError: boolean;
 begin
   CMAC_CTX_new := LoadLibCryptoFunction('CMAC_CTX_new');
-  if not assigned(CMAC_CTX_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CMAC_CTX_new');
-  Result := CMAC_CTX_new();
-end;
+  FuncLoadError := not assigned(CMAC_CTX_new);
+  if FuncLoadError then
+  begin
+    CMAC_CTX_new :=  @ERROR_CMAC_CTX_new;
+  end;
 
-procedure Load_CMAC_CTX_cleanup(ctx: PCMAC_CTX); cdecl;
-begin
   CMAC_CTX_cleanup := LoadLibCryptoFunction('CMAC_CTX_cleanup');
-  if not assigned(CMAC_CTX_cleanup) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CMAC_CTX_cleanup');
-  CMAC_CTX_cleanup(ctx);
-end;
+  FuncLoadError := not assigned(CMAC_CTX_cleanup);
+  if FuncLoadError then
+  begin
+    CMAC_CTX_cleanup :=  @ERROR_CMAC_CTX_cleanup;
+  end;
 
-procedure Load_CMAC_CTX_free(ctx: PCMAC_CTX); cdecl;
-begin
   CMAC_CTX_free := LoadLibCryptoFunction('CMAC_CTX_free');
-  if not assigned(CMAC_CTX_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CMAC_CTX_free');
-  CMAC_CTX_free(ctx);
-end;
+  FuncLoadError := not assigned(CMAC_CTX_free);
+  if FuncLoadError then
+  begin
+    CMAC_CTX_free :=  @ERROR_CMAC_CTX_free;
+  end;
 
-function Load_CMAC_CTX_get0_cipher_ctx(ctx: PCMAC_CTX): PEVP_CIPHER_CTX; cdecl;
-begin
   CMAC_CTX_get0_cipher_ctx := LoadLibCryptoFunction('CMAC_CTX_get0_cipher_ctx');
-  if not assigned(CMAC_CTX_get0_cipher_ctx) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CMAC_CTX_get0_cipher_ctx');
-  Result := CMAC_CTX_get0_cipher_ctx(ctx);
-end;
+  FuncLoadError := not assigned(CMAC_CTX_get0_cipher_ctx);
+  if FuncLoadError then
+  begin
+    CMAC_CTX_get0_cipher_ctx :=  @ERROR_CMAC_CTX_get0_cipher_ctx;
+  end;
 
-function Load_CMAC_CTX_copy(out_: PCMAC_CTX; const in_: PCMAC_CTX): TOpenSSL_C_INT; cdecl;
-begin
   CMAC_CTX_copy := LoadLibCryptoFunction('CMAC_CTX_copy');
-  if not assigned(CMAC_CTX_copy) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CMAC_CTX_copy');
-  Result := CMAC_CTX_copy(out_,in_);
-end;
+  FuncLoadError := not assigned(CMAC_CTX_copy);
+  if FuncLoadError then
+  begin
+    CMAC_CTX_copy :=  @ERROR_CMAC_CTX_copy;
+  end;
 
-function Load_CMAC_Init(ctx: PCMAC_CTX; const key: Pointer; keylen: TOpenSSL_C_SIZET; const cipher: PEVP_Cipher; impl: PENGINe): TOpenSSL_C_INT; cdecl;
-begin
   CMAC_Init := LoadLibCryptoFunction('CMAC_Init');
-  if not assigned(CMAC_Init) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CMAC_Init');
-  Result := CMAC_Init(ctx,key,keylen,cipher,impl);
-end;
+  FuncLoadError := not assigned(CMAC_Init);
+  if FuncLoadError then
+  begin
+    CMAC_Init :=  @ERROR_CMAC_Init;
+  end;
 
-function Load_CMAC_Update(ctx: PCMAC_CTX; const data: Pointer; dlen: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
   CMAC_Update := LoadLibCryptoFunction('CMAC_Update');
-  if not assigned(CMAC_Update) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CMAC_Update');
-  Result := CMAC_Update(ctx,data,dlen);
-end;
+  FuncLoadError := not assigned(CMAC_Update);
+  if FuncLoadError then
+  begin
+    CMAC_Update :=  @ERROR_CMAC_Update;
+  end;
 
-function Load_CMAC_Final(ctx: PCMAC_CTX; out_: PByte; poutlen: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
   CMAC_Final := LoadLibCryptoFunction('CMAC_Final');
-  if not assigned(CMAC_Final) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CMAC_Final');
-  Result := CMAC_Final(ctx,out_,poutlen);
-end;
+  FuncLoadError := not assigned(CMAC_Final);
+  if FuncLoadError then
+  begin
+    CMAC_Final :=  @ERROR_CMAC_Final;
+  end;
 
-function Load_CMAC_resume(ctx: PCMAC_CTX): TOpenSSL_C_INT; cdecl;
-begin
   CMAC_resume := LoadLibCryptoFunction('CMAC_resume');
-  if not assigned(CMAC_resume) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CMAC_resume');
-  Result := CMAC_resume(ctx);
-end;
+  FuncLoadError := not assigned(CMAC_resume);
+  if FuncLoadError then
+  begin
+    CMAC_resume :=  @ERROR_CMAC_resume;
+  end;
 
+end;
 
 procedure UnLoad;
 begin
-  CMAC_CTX_new := Load_CMAC_CTX_new;
-  CMAC_CTX_cleanup := Load_CMAC_CTX_cleanup;
-  CMAC_CTX_free := Load_CMAC_CTX_free;
-  CMAC_CTX_get0_cipher_ctx := Load_CMAC_CTX_get0_cipher_ctx;
-  CMAC_CTX_copy := Load_CMAC_CTX_copy;
-  CMAC_Init := Load_CMAC_Init;
-  CMAC_Update := Load_CMAC_Update;
-  CMAC_Final := Load_CMAC_Final;
-  CMAC_resume := Load_CMAC_resume;
+  CMAC_CTX_new := nil;
+  CMAC_CTX_cleanup := nil;
+  CMAC_CTX_free := nil;
+  CMAC_CTX_get0_cipher_ctx := nil;
+  CMAC_CTX_copy := nil;
+  CMAC_Init := nil;
+  CMAC_Update := nil;
+  CMAC_Final := nil;
+  CMAC_resume := nil;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
+Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

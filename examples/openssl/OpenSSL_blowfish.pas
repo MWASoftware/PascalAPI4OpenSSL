@@ -80,27 +80,15 @@ procedure BF_ofb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LON
 function BF_options: PAnsiChar; cdecl; external CLibCrypto;
 
 {$ELSE}
-
-{Declare external function initialisers - should not be called directly}
-
-procedure Load_BF_set_key(key: PBF_KEY; len: TOpenSSL_C_INT; const data: PByte); cdecl;
-procedure Load_BF_encrypt(data: PBF_LONG; const key: PBF_KEY); cdecl;
-procedure Load_BF_decrypt(data: PBF_LONG; const key: PBF_KEY); cdecl;
-procedure Load_BF_ecb_encrypt(const in_: PByte; out_: PByte; key: PBF_KEY; enc: TOpenSSL_C_INT); cdecl;
-procedure Load_BF_cbc_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; schedule: PBF_KEY; ivec: PByte; enc: TOpenSSL_C_INT); cdecl;
-procedure Load_BF_cfb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; schedule: PBF_KEY; ivec: PByte; num: POpenSSL_C_INT; enc: TOpenSSL_C_INT); cdecl;
-procedure Load_BF_ofb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; schedule: PBF_KEY; ivec: PByte; num: POpenSSL_C_INT); cdecl;
-function Load_BF_options: PAnsiChar; cdecl;
-
 var
-  BF_set_key: procedure (key: PBF_KEY; len: TOpenSSL_C_INT; const data: PByte); cdecl = Load_BF_set_key;
-  BF_encrypt: procedure (data: PBF_LONG; const key: PBF_KEY); cdecl = Load_BF_encrypt;
-  BF_decrypt: procedure (data: PBF_LONG; const key: PBF_KEY); cdecl = Load_BF_decrypt;
-  BF_ecb_encrypt: procedure (const in_: PByte; out_: PByte; key: PBF_KEY; enc: TOpenSSL_C_INT); cdecl = Load_BF_ecb_encrypt;
-  BF_cbc_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; schedule: PBF_KEY; ivec: PByte; enc: TOpenSSL_C_INT); cdecl = Load_BF_cbc_encrypt;
-  BF_cfb64_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; schedule: PBF_KEY; ivec: PByte; num: POpenSSL_C_INT; enc: TOpenSSL_C_INT); cdecl = Load_BF_cfb64_encrypt;
-  BF_ofb64_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; schedule: PBF_KEY; ivec: PByte; num: POpenSSL_C_INT); cdecl = Load_BF_ofb64_encrypt;
-  BF_options: function : PAnsiChar; cdecl = Load_BF_options;
+  BF_set_key: procedure (key: PBF_KEY; len: TOpenSSL_C_INT; const data: PByte); cdecl = nil;
+  BF_encrypt: procedure (data: PBF_LONG; const key: PBF_KEY); cdecl = nil;
+  BF_decrypt: procedure (data: PBF_LONG; const key: PBF_KEY); cdecl = nil;
+  BF_ecb_encrypt: procedure (const in_: PByte; out_: PByte; key: PBF_KEY; enc: TOpenSSL_C_INT); cdecl = nil;
+  BF_cbc_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; schedule: PBF_KEY; ivec: PByte; enc: TOpenSSL_C_INT); cdecl = nil;
+  BF_cfb64_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; schedule: PBF_KEY; ivec: PByte; num: POpenSSL_C_INT; enc: TOpenSSL_C_INT); cdecl = nil;
+  BF_ofb64_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; schedule: PBF_KEY; ivec: PByte; num: POpenSSL_C_INT); cdecl = nil;
+  BF_options: function : PAnsiChar; cdecl = nil;
 {$ENDIF}
 
 implementation
@@ -118,87 +106,127 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-procedure Load_BF_set_key(key: PBF_KEY; len: TOpenSSL_C_INT; const data: PByte); cdecl;
+
+{$WARN  NO_RETVAL OFF}
+procedure ERROR_BF_set_key(key: PBF_KEY; len: TOpenSSL_C_INT; const data: PByte); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('BF_set_key');
+end;
+
+procedure ERROR_BF_encrypt(data: PBF_LONG; const key: PBF_KEY); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('BF_encrypt');
+end;
+
+procedure ERROR_BF_decrypt(data: PBF_LONG; const key: PBF_KEY); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('BF_decrypt');
+end;
+
+procedure ERROR_BF_ecb_encrypt(const in_: PByte; out_: PByte; key: PBF_KEY; enc: TOpenSSL_C_INT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('BF_ecb_encrypt');
+end;
+
+procedure ERROR_BF_cbc_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; schedule: PBF_KEY; ivec: PByte; enc: TOpenSSL_C_INT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('BF_cbc_encrypt');
+end;
+
+procedure ERROR_BF_cfb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; schedule: PBF_KEY; ivec: PByte; num: POpenSSL_C_INT; enc: TOpenSSL_C_INT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('BF_cfb64_encrypt');
+end;
+
+procedure ERROR_BF_ofb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; schedule: PBF_KEY; ivec: PByte; num: POpenSSL_C_INT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('BF_ofb64_encrypt');
+end;
+
+function ERROR_BF_options: PAnsiChar; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('BF_options');
+end;
+
+{$WARN  NO_RETVAL ON}
+procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
+var FuncLoadError: boolean;
 begin
   BF_set_key := LoadLibCryptoFunction('BF_set_key');
-  if not assigned(BF_set_key) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('BF_set_key');
-  BF_set_key(key,len,data);
-end;
+  FuncLoadError := not assigned(BF_set_key);
+  if FuncLoadError then
+  begin
+    BF_set_key :=  @ERROR_BF_set_key;
+  end;
 
-procedure Load_BF_encrypt(data: PBF_LONG; const key: PBF_KEY); cdecl;
-begin
   BF_encrypt := LoadLibCryptoFunction('BF_encrypt');
-  if not assigned(BF_encrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('BF_encrypt');
-  BF_encrypt(data,key);
-end;
+  FuncLoadError := not assigned(BF_encrypt);
+  if FuncLoadError then
+  begin
+    BF_encrypt :=  @ERROR_BF_encrypt;
+  end;
 
-procedure Load_BF_decrypt(data: PBF_LONG; const key: PBF_KEY); cdecl;
-begin
   BF_decrypt := LoadLibCryptoFunction('BF_decrypt');
-  if not assigned(BF_decrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('BF_decrypt');
-  BF_decrypt(data,key);
-end;
+  FuncLoadError := not assigned(BF_decrypt);
+  if FuncLoadError then
+  begin
+    BF_decrypt :=  @ERROR_BF_decrypt;
+  end;
 
-procedure Load_BF_ecb_encrypt(const in_: PByte; out_: PByte; key: PBF_KEY; enc: TOpenSSL_C_INT); cdecl;
-begin
   BF_ecb_encrypt := LoadLibCryptoFunction('BF_ecb_encrypt');
-  if not assigned(BF_ecb_encrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('BF_ecb_encrypt');
-  BF_ecb_encrypt(in_,out_,key,enc);
-end;
+  FuncLoadError := not assigned(BF_ecb_encrypt);
+  if FuncLoadError then
+  begin
+    BF_ecb_encrypt :=  @ERROR_BF_ecb_encrypt;
+  end;
 
-procedure Load_BF_cbc_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; schedule: PBF_KEY; ivec: PByte; enc: TOpenSSL_C_INT); cdecl;
-begin
   BF_cbc_encrypt := LoadLibCryptoFunction('BF_cbc_encrypt');
-  if not assigned(BF_cbc_encrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('BF_cbc_encrypt');
-  BF_cbc_encrypt(in_,out_,length,schedule,ivec,enc);
-end;
+  FuncLoadError := not assigned(BF_cbc_encrypt);
+  if FuncLoadError then
+  begin
+    BF_cbc_encrypt :=  @ERROR_BF_cbc_encrypt;
+  end;
 
-procedure Load_BF_cfb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; schedule: PBF_KEY; ivec: PByte; num: POpenSSL_C_INT; enc: TOpenSSL_C_INT); cdecl;
-begin
   BF_cfb64_encrypt := LoadLibCryptoFunction('BF_cfb64_encrypt');
-  if not assigned(BF_cfb64_encrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('BF_cfb64_encrypt');
-  BF_cfb64_encrypt(in_,out_,length,schedule,ivec,num,enc);
-end;
+  FuncLoadError := not assigned(BF_cfb64_encrypt);
+  if FuncLoadError then
+  begin
+    BF_cfb64_encrypt :=  @ERROR_BF_cfb64_encrypt;
+  end;
 
-procedure Load_BF_ofb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; schedule: PBF_KEY; ivec: PByte; num: POpenSSL_C_INT); cdecl;
-begin
   BF_ofb64_encrypt := LoadLibCryptoFunction('BF_ofb64_encrypt');
-  if not assigned(BF_ofb64_encrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('BF_ofb64_encrypt');
-  BF_ofb64_encrypt(in_,out_,length,schedule,ivec,num);
-end;
+  FuncLoadError := not assigned(BF_ofb64_encrypt);
+  if FuncLoadError then
+  begin
+    BF_ofb64_encrypt :=  @ERROR_BF_ofb64_encrypt;
+  end;
 
-function Load_BF_options: PAnsiChar; cdecl;
-begin
   BF_options := LoadLibCryptoFunction('BF_options');
-  if not assigned(BF_options) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('BF_options');
-  Result := BF_options();
-end;
+  FuncLoadError := not assigned(BF_options);
+  if FuncLoadError then
+  begin
+    BF_options :=  @ERROR_BF_options;
+  end;
 
+end;
 
 procedure UnLoad;
 begin
-  BF_set_key := Load_BF_set_key;
-  BF_encrypt := Load_BF_encrypt;
-  BF_decrypt := Load_BF_decrypt;
-  BF_ecb_encrypt := Load_BF_ecb_encrypt;
-  BF_cbc_encrypt := Load_BF_cbc_encrypt;
-  BF_cfb64_encrypt := Load_BF_cfb64_encrypt;
-  BF_ofb64_encrypt := Load_BF_ofb64_encrypt;
-  BF_options := Load_BF_options;
+  BF_set_key := nil;
+  BF_encrypt := nil;
+  BF_decrypt := nil;
+  BF_ecb_encrypt := nil;
+  BF_cbc_encrypt := nil;
+  BF_cfb64_encrypt := nil;
+  BF_ofb64_encrypt := nil;
+  BF_options := nil;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
+Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

@@ -74,21 +74,12 @@ function WHIRLPOOL_Final(md: PByte; c: PWHIRLPOOL_CTX): TOpenSSL_C_INT; cdecl; e
 function WHIRLPOOL(inp: Pointer; bytes: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl; external CLibCrypto;
 
 {$ELSE}
-
-{Declare external function initialisers - should not be called directly}
-
-function Load_WHIRLPOOL_Init(c: PWHIRLPOOL_CTX): TOpenSSL_C_INT; cdecl;
-function Load_WHIRLPOOL_Update(c: PWHIRLPOOL_CTX; inp: Pointer; bytes: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-procedure Load_WHIRLPOOL_BitUpdate(c: PWHIRLPOOL_CTX; inp: Pointer; bits: TOpenSSL_C_SIZET); cdecl;
-function Load_WHIRLPOOL_Final(md: PByte; c: PWHIRLPOOL_CTX): TOpenSSL_C_INT; cdecl;
-function Load_WHIRLPOOL(inp: Pointer; bytes: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl;
-
 var
-  WHIRLPOOL_Init: function (c: PWHIRLPOOL_CTX): TOpenSSL_C_INT; cdecl = Load_WHIRLPOOL_Init;
-  WHIRLPOOL_Update: function (c: PWHIRLPOOL_CTX; inp: Pointer; bytes: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_WHIRLPOOL_Update;
-  WHIRLPOOL_BitUpdate: procedure (c: PWHIRLPOOL_CTX; inp: Pointer; bits: TOpenSSL_C_SIZET); cdecl = Load_WHIRLPOOL_BitUpdate;
-  WHIRLPOOL_Final: function (md: PByte; c: PWHIRLPOOL_CTX): TOpenSSL_C_INT; cdecl = Load_WHIRLPOOL_Final;
-  WHIRLPOOL: function (inp: Pointer; bytes: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl = Load_WHIRLPOOL;
+  WHIRLPOOL_Init: function (c: PWHIRLPOOL_CTX): TOpenSSL_C_INT; cdecl = nil;
+  WHIRLPOOL_Update: function (c: PWHIRLPOOL_CTX; inp: Pointer; bytes: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
+  WHIRLPOOL_BitUpdate: procedure (c: PWHIRLPOOL_CTX; inp: Pointer; bits: TOpenSSL_C_SIZET); cdecl = nil;
+  WHIRLPOOL_Final: function (md: PByte; c: PWHIRLPOOL_CTX): TOpenSSL_C_INT; cdecl = nil;
+  WHIRLPOOL: function (inp: Pointer; bytes: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl = nil;
 {$ENDIF}
 
 implementation
@@ -106,60 +97,88 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-function Load_WHIRLPOOL_Init(c: PWHIRLPOOL_CTX): TOpenSSL_C_INT; cdecl;
+
+{$WARN  NO_RETVAL OFF}
+function ERROR_WHIRLPOOL_Init(c: PWHIRLPOOL_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('WHIRLPOOL_Init');
+end;
+
+function ERROR_WHIRLPOOL_Update(c: PWHIRLPOOL_CTX; inp: Pointer; bytes: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('WHIRLPOOL_Update');
+end;
+
+procedure ERROR_WHIRLPOOL_BitUpdate(c: PWHIRLPOOL_CTX; inp: Pointer; bits: TOpenSSL_C_SIZET); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('WHIRLPOOL_BitUpdate');
+end;
+
+function ERROR_WHIRLPOOL_Final(md: PByte; c: PWHIRLPOOL_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('WHIRLPOOL_Final');
+end;
+
+function ERROR_WHIRLPOOL(inp: Pointer; bytes: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('WHIRLPOOL');
+end;
+
+{$WARN  NO_RETVAL ON}
+procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
+var FuncLoadError: boolean;
 begin
   WHIRLPOOL_Init := LoadLibCryptoFunction('WHIRLPOOL_Init');
-  if not assigned(WHIRLPOOL_Init) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('WHIRLPOOL_Init');
-  Result := WHIRLPOOL_Init(c);
-end;
+  FuncLoadError := not assigned(WHIRLPOOL_Init);
+  if FuncLoadError then
+  begin
+    WHIRLPOOL_Init :=  @ERROR_WHIRLPOOL_Init;
+  end;
 
-function Load_WHIRLPOOL_Update(c: PWHIRLPOOL_CTX; inp: Pointer; bytes: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
   WHIRLPOOL_Update := LoadLibCryptoFunction('WHIRLPOOL_Update');
-  if not assigned(WHIRLPOOL_Update) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('WHIRLPOOL_Update');
-  Result := WHIRLPOOL_Update(c,inp,bytes);
-end;
+  FuncLoadError := not assigned(WHIRLPOOL_Update);
+  if FuncLoadError then
+  begin
+    WHIRLPOOL_Update :=  @ERROR_WHIRLPOOL_Update;
+  end;
 
-procedure Load_WHIRLPOOL_BitUpdate(c: PWHIRLPOOL_CTX; inp: Pointer; bits: TOpenSSL_C_SIZET); cdecl;
-begin
   WHIRLPOOL_BitUpdate := LoadLibCryptoFunction('WHIRLPOOL_BitUpdate');
-  if not assigned(WHIRLPOOL_BitUpdate) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('WHIRLPOOL_BitUpdate');
-  WHIRLPOOL_BitUpdate(c,inp,bits);
-end;
+  FuncLoadError := not assigned(WHIRLPOOL_BitUpdate);
+  if FuncLoadError then
+  begin
+    WHIRLPOOL_BitUpdate :=  @ERROR_WHIRLPOOL_BitUpdate;
+  end;
 
-function Load_WHIRLPOOL_Final(md: PByte; c: PWHIRLPOOL_CTX): TOpenSSL_C_INT; cdecl;
-begin
   WHIRLPOOL_Final := LoadLibCryptoFunction('WHIRLPOOL_Final');
-  if not assigned(WHIRLPOOL_Final) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('WHIRLPOOL_Final');
-  Result := WHIRLPOOL_Final(md,c);
-end;
+  FuncLoadError := not assigned(WHIRLPOOL_Final);
+  if FuncLoadError then
+  begin
+    WHIRLPOOL_Final :=  @ERROR_WHIRLPOOL_Final;
+  end;
 
-function Load_WHIRLPOOL(inp: Pointer; bytes: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl;
-begin
   WHIRLPOOL := LoadLibCryptoFunction('WHIRLPOOL');
-  if not assigned(WHIRLPOOL) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('WHIRLPOOL');
-  Result := WHIRLPOOL(inp,bytes,md);
-end;
+  FuncLoadError := not assigned(WHIRLPOOL);
+  if FuncLoadError then
+  begin
+    WHIRLPOOL :=  @ERROR_WHIRLPOOL;
+  end;
 
+end;
 
 procedure UnLoad;
 begin
-  WHIRLPOOL_Init := Load_WHIRLPOOL_Init;
-  WHIRLPOOL_Update := Load_WHIRLPOOL_Update;
-  WHIRLPOOL_BitUpdate := Load_WHIRLPOOL_BitUpdate;
-  WHIRLPOOL_Final := Load_WHIRLPOOL_Final;
-  WHIRLPOOL := Load_WHIRLPOOL;
+  WHIRLPOOL_Init := nil;
+  WHIRLPOOL_Update := nil;
+  WHIRLPOOL_BitUpdate := nil;
+  WHIRLPOOL_Final := nil;
+  WHIRLPOOL := nil;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
+Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

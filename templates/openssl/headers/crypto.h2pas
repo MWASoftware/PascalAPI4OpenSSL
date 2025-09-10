@@ -364,7 +364,13 @@ procedure RemoveLegacyCallbacks;
 implementation
 
 uses SyncObjs,  Sysutils
-     {$IFDEF WINDOWS}, Windows{$ENDIF};
+   {$IFNDEF FPC}
+     {$IFDEF WINDOWS}
+       ,Windows
+     {$ELSE}
+       ,Posix.Pthread
+     {$ENDIF}
+   {$ENDIF};
 
 // OPENSSL_FILE = __FILE__ = C preprocessor macro
 // OPENSSL_LINE = __LINE__ = C preprocessor macro

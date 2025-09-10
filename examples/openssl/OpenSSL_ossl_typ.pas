@@ -553,7 +553,6 @@ files generated for C++. }
 {$IFDEF OPENSSL_STATIC_LINK_MODEL}
 
 {$ELSE}
-
 {$ENDIF}
 
 implementation

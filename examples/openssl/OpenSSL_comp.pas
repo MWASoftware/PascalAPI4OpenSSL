@@ -66,31 +66,17 @@ function COMP_zlib: PCOMP_METHOD; cdecl; external CLibCrypto;
 function BIO_f_zlib: PBIO_METHOD; cdecl; external CLibCrypto;
 
 {$ELSE}
-
-{Declare external function initialisers - should not be called directly}
-
-function Load_COMP_CTX_new(meth: PCOMP_METHOD): PCOMP_CTX; cdecl;
-function Load_COMP_CTX_get_method(const ctx: PCOMP_CTX): PCOMP_METHOD; cdecl;
-function Load_COMP_CTX_get_type(const comp: PCOMP_CTX): TOpenSSL_C_INT; cdecl;
-function Load_COMP_get_type(const meth: PCOMP_METHOD): TOpenSSL_C_INT; cdecl;
-function Load_COMP_get_name(const meth: PCOMP_METHOD): PAnsiChar; cdecl;
-procedure Load_COMP_CTX_free(ctx: PCOMP_CTX); cdecl;
-function Load_COMP_compress_block(ctx: PCOMP_CTX; out_: PByte; olen: TOpenSSL_C_INT; in_: PByte; ilen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_COMP_expand_block(ctx: PCOMP_CTX; out_: PByte; olen: TOpenSSL_C_INT; in_: PByte; ilen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-function Load_COMP_zlib: PCOMP_METHOD; cdecl;
-function Load_BIO_f_zlib: PBIO_METHOD; cdecl;
-
 var
-  COMP_CTX_new: function (meth: PCOMP_METHOD): PCOMP_CTX; cdecl = Load_COMP_CTX_new;
-  COMP_CTX_get_method: function (const ctx: PCOMP_CTX): PCOMP_METHOD; cdecl = Load_COMP_CTX_get_method;
-  COMP_CTX_get_type: function (const comp: PCOMP_CTX): TOpenSSL_C_INT; cdecl = Load_COMP_CTX_get_type;
-  COMP_get_type: function (const meth: PCOMP_METHOD): TOpenSSL_C_INT; cdecl = Load_COMP_get_type;
-  COMP_get_name: function (const meth: PCOMP_METHOD): PAnsiChar; cdecl = Load_COMP_get_name;
-  COMP_CTX_free: procedure (ctx: PCOMP_CTX); cdecl = Load_COMP_CTX_free;
-  COMP_compress_block: function (ctx: PCOMP_CTX; out_: PByte; olen: TOpenSSL_C_INT; in_: PByte; ilen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_COMP_compress_block;
-  COMP_expand_block: function (ctx: PCOMP_CTX; out_: PByte; olen: TOpenSSL_C_INT; in_: PByte; ilen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_COMP_expand_block;
-  COMP_zlib: function : PCOMP_METHOD; cdecl = Load_COMP_zlib;
-  BIO_f_zlib: function : PBIO_METHOD; cdecl = Load_BIO_f_zlib;
+  COMP_CTX_new: function (meth: PCOMP_METHOD): PCOMP_CTX; cdecl = nil;
+  COMP_CTX_get_method: function (const ctx: PCOMP_CTX): PCOMP_METHOD; cdecl = nil;
+  COMP_CTX_get_type: function (const comp: PCOMP_CTX): TOpenSSL_C_INT; cdecl = nil;
+  COMP_get_type: function (const meth: PCOMP_METHOD): TOpenSSL_C_INT; cdecl = nil;
+  COMP_get_name: function (const meth: PCOMP_METHOD): PAnsiChar; cdecl = nil;
+  COMP_CTX_free: procedure (ctx: PCOMP_CTX); cdecl = nil;
+  COMP_compress_block: function (ctx: PCOMP_CTX; out_: PByte; olen: TOpenSSL_C_INT; in_: PByte; ilen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  COMP_expand_block: function (ctx: PCOMP_CTX; out_: PByte; olen: TOpenSSL_C_INT; in_: PByte; ilen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
+  COMP_zlib: function : PCOMP_METHOD; cdecl = nil;
+  BIO_f_zlib: function : PBIO_METHOD; cdecl = nil;
 {$ENDIF}
 
 implementation
@@ -108,105 +94,153 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-function Load_COMP_CTX_new(meth: PCOMP_METHOD): PCOMP_CTX; cdecl;
+
+{$WARN  NO_RETVAL OFF}
+function ERROR_COMP_CTX_new(meth: PCOMP_METHOD): PCOMP_CTX; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('COMP_CTX_new');
+end;
+
+function ERROR_COMP_CTX_get_method(const ctx: PCOMP_CTX): PCOMP_METHOD; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('COMP_CTX_get_method');
+end;
+
+function ERROR_COMP_CTX_get_type(const comp: PCOMP_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('COMP_CTX_get_type');
+end;
+
+function ERROR_COMP_get_type(const meth: PCOMP_METHOD): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('COMP_get_type');
+end;
+
+function ERROR_COMP_get_name(const meth: PCOMP_METHOD): PAnsiChar; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('COMP_get_name');
+end;
+
+procedure ERROR_COMP_CTX_free(ctx: PCOMP_CTX); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('COMP_CTX_free');
+end;
+
+function ERROR_COMP_compress_block(ctx: PCOMP_CTX; out_: PByte; olen: TOpenSSL_C_INT; in_: PByte; ilen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('COMP_compress_block');
+end;
+
+function ERROR_COMP_expand_block(ctx: PCOMP_CTX; out_: PByte; olen: TOpenSSL_C_INT; in_: PByte; ilen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('COMP_expand_block');
+end;
+
+function ERROR_COMP_zlib: PCOMP_METHOD; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('COMP_zlib');
+end;
+
+function ERROR_BIO_f_zlib: PBIO_METHOD; cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('BIO_f_zlib');
+end;
+
+{$WARN  NO_RETVAL ON}
+procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
+var FuncLoadError: boolean;
 begin
   COMP_CTX_new := LoadLibCryptoFunction('COMP_CTX_new');
-  if not assigned(COMP_CTX_new) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('COMP_CTX_new');
-  Result := COMP_CTX_new(meth);
-end;
+  FuncLoadError := not assigned(COMP_CTX_new);
+  if FuncLoadError then
+  begin
+    COMP_CTX_new :=  @ERROR_COMP_CTX_new;
+  end;
 
-function Load_COMP_CTX_get_method(const ctx: PCOMP_CTX): PCOMP_METHOD; cdecl;
-begin
   COMP_CTX_get_method := LoadLibCryptoFunction('COMP_CTX_get_method');
-  if not assigned(COMP_CTX_get_method) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('COMP_CTX_get_method');
-  Result := COMP_CTX_get_method(ctx);
-end;
+  FuncLoadError := not assigned(COMP_CTX_get_method);
+  if FuncLoadError then
+  begin
+    COMP_CTX_get_method :=  @ERROR_COMP_CTX_get_method;
+  end;
 
-function Load_COMP_CTX_get_type(const comp: PCOMP_CTX): TOpenSSL_C_INT; cdecl;
-begin
   COMP_CTX_get_type := LoadLibCryptoFunction('COMP_CTX_get_type');
-  if not assigned(COMP_CTX_get_type) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('COMP_CTX_get_type');
-  Result := COMP_CTX_get_type(comp);
-end;
+  FuncLoadError := not assigned(COMP_CTX_get_type);
+  if FuncLoadError then
+  begin
+    COMP_CTX_get_type :=  @ERROR_COMP_CTX_get_type;
+  end;
 
-function Load_COMP_get_type(const meth: PCOMP_METHOD): TOpenSSL_C_INT; cdecl;
-begin
   COMP_get_type := LoadLibCryptoFunction('COMP_get_type');
-  if not assigned(COMP_get_type) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('COMP_get_type');
-  Result := COMP_get_type(meth);
-end;
+  FuncLoadError := not assigned(COMP_get_type);
+  if FuncLoadError then
+  begin
+    COMP_get_type :=  @ERROR_COMP_get_type;
+  end;
 
-function Load_COMP_get_name(const meth: PCOMP_METHOD): PAnsiChar; cdecl;
-begin
   COMP_get_name := LoadLibCryptoFunction('COMP_get_name');
-  if not assigned(COMP_get_name) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('COMP_get_name');
-  Result := COMP_get_name(meth);
-end;
+  FuncLoadError := not assigned(COMP_get_name);
+  if FuncLoadError then
+  begin
+    COMP_get_name :=  @ERROR_COMP_get_name;
+  end;
 
-procedure Load_COMP_CTX_free(ctx: PCOMP_CTX); cdecl;
-begin
   COMP_CTX_free := LoadLibCryptoFunction('COMP_CTX_free');
-  if not assigned(COMP_CTX_free) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('COMP_CTX_free');
-  COMP_CTX_free(ctx);
-end;
+  FuncLoadError := not assigned(COMP_CTX_free);
+  if FuncLoadError then
+  begin
+    COMP_CTX_free :=  @ERROR_COMP_CTX_free;
+  end;
 
-function Load_COMP_compress_block(ctx: PCOMP_CTX; out_: PByte; olen: TOpenSSL_C_INT; in_: PByte; ilen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   COMP_compress_block := LoadLibCryptoFunction('COMP_compress_block');
-  if not assigned(COMP_compress_block) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('COMP_compress_block');
-  Result := COMP_compress_block(ctx,out_,olen,in_,ilen);
-end;
+  FuncLoadError := not assigned(COMP_compress_block);
+  if FuncLoadError then
+  begin
+    COMP_compress_block :=  @ERROR_COMP_compress_block;
+  end;
 
-function Load_COMP_expand_block(ctx: PCOMP_CTX; out_: PByte; olen: TOpenSSL_C_INT; in_: PByte; ilen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
   COMP_expand_block := LoadLibCryptoFunction('COMP_expand_block');
-  if not assigned(COMP_expand_block) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('COMP_expand_block');
-  Result := COMP_expand_block(ctx,out_,olen,in_,ilen);
-end;
+  FuncLoadError := not assigned(COMP_expand_block);
+  if FuncLoadError then
+  begin
+    COMP_expand_block :=  @ERROR_COMP_expand_block;
+  end;
 
-function Load_COMP_zlib: PCOMP_METHOD; cdecl;
-begin
   COMP_zlib := LoadLibCryptoFunction('COMP_zlib');
-  if not assigned(COMP_zlib) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('COMP_zlib');
-  Result := COMP_zlib();
-end;
+  FuncLoadError := not assigned(COMP_zlib);
+  if FuncLoadError then
+  begin
+    COMP_zlib :=  @ERROR_COMP_zlib;
+  end;
 
-function Load_BIO_f_zlib: PBIO_METHOD; cdecl;
-begin
   BIO_f_zlib := LoadLibCryptoFunction('BIO_f_zlib');
-  if not assigned(BIO_f_zlib) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('BIO_f_zlib');
-  Result := BIO_f_zlib();
-end;
+  FuncLoadError := not assigned(BIO_f_zlib);
+  if FuncLoadError then
+  begin
+    BIO_f_zlib :=  @ERROR_BIO_f_zlib;
+  end;
 
+end;
 
 procedure UnLoad;
 begin
-  COMP_CTX_new := Load_COMP_CTX_new;
-  COMP_CTX_get_method := Load_COMP_CTX_get_method;
-  COMP_CTX_get_type := Load_COMP_CTX_get_type;
-  COMP_get_type := Load_COMP_get_type;
-  COMP_get_name := Load_COMP_get_name;
-  COMP_CTX_free := Load_COMP_CTX_free;
-  COMP_compress_block := Load_COMP_compress_block;
-  COMP_expand_block := Load_COMP_expand_block;
-  COMP_zlib := Load_COMP_zlib;
-  BIO_f_zlib := Load_BIO_f_zlib;
+  COMP_CTX_new := nil;
+  COMP_CTX_get_method := nil;
+  COMP_CTX_get_type := nil;
+  COMP_get_type := nil;
+  COMP_get_name := nil;
+  COMP_CTX_free := nil;
+  COMP_compress_block := nil;
+  COMP_expand_block := nil;
+  COMP_zlib := nil;
+  BIO_f_zlib := nil;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
+Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

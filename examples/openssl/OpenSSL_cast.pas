@@ -76,25 +76,14 @@ procedure CAST_cfb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_L
 procedure CAST_ofb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; const schedule: PCast_Key; ivec: PByte; num: POpenSSL_C_INT); cdecl; external CLibCrypto;
 
 {$ELSE}
-
-{Declare external function initialisers - should not be called directly}
-
-procedure Load_CAST_set_key(key: PCast_Key; len: TOpenSSL_C_INT; const data: PByte); cdecl;
-procedure Load_CAST_ecb_encrypt(const in_: PByte; out_: PByte; const key: PCast_Key; enc: TOpenSSL_C_INT); cdecl;
-procedure Load_CAST_encrypt(data: PCAST_LONG; const key: PCast_Key); cdecl;
-procedure Load_CAST_decrypt(data: PCAST_LONG; const key: PCast_Key); cdecl;
-procedure Load_CAST_cbc_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; const ks: PCast_Key; iv: PByte; enc: TOpenSSL_C_INT); cdecl;
-procedure Load_CAST_cfb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; const schedule: PCast_Key; ivec: PByte; num: POpenSSL_C_INT; enc: TOpenSSL_C_INT); cdecl;
-procedure Load_CAST_ofb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; const schedule: PCast_Key; ivec: PByte; num: POpenSSL_C_INT); cdecl;
-
 var
-  CAST_set_key: procedure (key: PCast_Key; len: TOpenSSL_C_INT; const data: PByte); cdecl = Load_CAST_set_key;
-  CAST_ecb_encrypt: procedure (const in_: PByte; out_: PByte; const key: PCast_Key; enc: TOpenSSL_C_INT); cdecl = Load_CAST_ecb_encrypt;
-  CAST_encrypt: procedure (data: PCAST_LONG; const key: PCast_Key); cdecl = Load_CAST_encrypt;
-  CAST_decrypt: procedure (data: PCAST_LONG; const key: PCast_Key); cdecl = Load_CAST_decrypt;
-  CAST_cbc_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; const ks: PCast_Key; iv: PByte; enc: TOpenSSL_C_INT); cdecl = Load_CAST_cbc_encrypt;
-  CAST_cfb64_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; const schedule: PCast_Key; ivec: PByte; num: POpenSSL_C_INT; enc: TOpenSSL_C_INT); cdecl = Load_CAST_cfb64_encrypt;
-  CAST_ofb64_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; const schedule: PCast_Key; ivec: PByte; num: POpenSSL_C_INT); cdecl = Load_CAST_ofb64_encrypt;
+  CAST_set_key: procedure (key: PCast_Key; len: TOpenSSL_C_INT; const data: PByte); cdecl = nil;
+  CAST_ecb_encrypt: procedure (const in_: PByte; out_: PByte; const key: PCast_Key; enc: TOpenSSL_C_INT); cdecl = nil;
+  CAST_encrypt: procedure (data: PCAST_LONG; const key: PCast_Key); cdecl = nil;
+  CAST_decrypt: procedure (data: PCAST_LONG; const key: PCast_Key); cdecl = nil;
+  CAST_cbc_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; const ks: PCast_Key; iv: PByte; enc: TOpenSSL_C_INT); cdecl = nil;
+  CAST_cfb64_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; const schedule: PCast_Key; ivec: PByte; num: POpenSSL_C_INT; enc: TOpenSSL_C_INT); cdecl = nil;
+  CAST_ofb64_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; const schedule: PCast_Key; ivec: PByte; num: POpenSSL_C_INT); cdecl = nil;
 {$ENDIF}
 
 implementation
@@ -112,78 +101,114 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-procedure Load_CAST_set_key(key: PCast_Key; len: TOpenSSL_C_INT; const data: PByte); cdecl;
+
+{$WARN  NO_RETVAL OFF}
+procedure ERROR_CAST_set_key(key: PCast_Key; len: TOpenSSL_C_INT; const data: PByte); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CAST_set_key');
+end;
+
+procedure ERROR_CAST_ecb_encrypt(const in_: PByte; out_: PByte; const key: PCast_Key; enc: TOpenSSL_C_INT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CAST_ecb_encrypt');
+end;
+
+procedure ERROR_CAST_encrypt(data: PCAST_LONG; const key: PCast_Key); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CAST_encrypt');
+end;
+
+procedure ERROR_CAST_decrypt(data: PCAST_LONG; const key: PCast_Key); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CAST_decrypt');
+end;
+
+procedure ERROR_CAST_cbc_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; const ks: PCast_Key; iv: PByte; enc: TOpenSSL_C_INT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CAST_cbc_encrypt');
+end;
+
+procedure ERROR_CAST_cfb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; const schedule: PCast_Key; ivec: PByte; num: POpenSSL_C_INT; enc: TOpenSSL_C_INT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CAST_cfb64_encrypt');
+end;
+
+procedure ERROR_CAST_ofb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; const schedule: PCast_Key; ivec: PByte; num: POpenSSL_C_INT); cdecl;
+begin
+  EOpenSSLAPIFunctionNotPresent.RaiseException('CAST_ofb64_encrypt');
+end;
+
+{$WARN  NO_RETVAL ON}
+procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
+var FuncLoadError: boolean;
 begin
   CAST_set_key := LoadLibCryptoFunction('CAST_set_key');
-  if not assigned(CAST_set_key) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CAST_set_key');
-  CAST_set_key(key,len,data);
-end;
+  FuncLoadError := not assigned(CAST_set_key);
+  if FuncLoadError then
+  begin
+    CAST_set_key :=  @ERROR_CAST_set_key;
+  end;
 
-procedure Load_CAST_ecb_encrypt(const in_: PByte; out_: PByte; const key: PCast_Key; enc: TOpenSSL_C_INT); cdecl;
-begin
   CAST_ecb_encrypt := LoadLibCryptoFunction('CAST_ecb_encrypt');
-  if not assigned(CAST_ecb_encrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CAST_ecb_encrypt');
-  CAST_ecb_encrypt(in_,out_,key,enc);
-end;
+  FuncLoadError := not assigned(CAST_ecb_encrypt);
+  if FuncLoadError then
+  begin
+    CAST_ecb_encrypt :=  @ERROR_CAST_ecb_encrypt;
+  end;
 
-procedure Load_CAST_encrypt(data: PCAST_LONG; const key: PCast_Key); cdecl;
-begin
   CAST_encrypt := LoadLibCryptoFunction('CAST_encrypt');
-  if not assigned(CAST_encrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CAST_encrypt');
-  CAST_encrypt(data,key);
-end;
+  FuncLoadError := not assigned(CAST_encrypt);
+  if FuncLoadError then
+  begin
+    CAST_encrypt :=  @ERROR_CAST_encrypt;
+  end;
 
-procedure Load_CAST_decrypt(data: PCAST_LONG; const key: PCast_Key); cdecl;
-begin
   CAST_decrypt := LoadLibCryptoFunction('CAST_decrypt');
-  if not assigned(CAST_decrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CAST_decrypt');
-  CAST_decrypt(data,key);
-end;
+  FuncLoadError := not assigned(CAST_decrypt);
+  if FuncLoadError then
+  begin
+    CAST_decrypt :=  @ERROR_CAST_decrypt;
+  end;
 
-procedure Load_CAST_cbc_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; const ks: PCast_Key; iv: PByte; enc: TOpenSSL_C_INT); cdecl;
-begin
   CAST_cbc_encrypt := LoadLibCryptoFunction('CAST_cbc_encrypt');
-  if not assigned(CAST_cbc_encrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CAST_cbc_encrypt');
-  CAST_cbc_encrypt(in_,out_,length,ks,iv,enc);
-end;
+  FuncLoadError := not assigned(CAST_cbc_encrypt);
+  if FuncLoadError then
+  begin
+    CAST_cbc_encrypt :=  @ERROR_CAST_cbc_encrypt;
+  end;
 
-procedure Load_CAST_cfb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; const schedule: PCast_Key; ivec: PByte; num: POpenSSL_C_INT; enc: TOpenSSL_C_INT); cdecl;
-begin
   CAST_cfb64_encrypt := LoadLibCryptoFunction('CAST_cfb64_encrypt');
-  if not assigned(CAST_cfb64_encrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CAST_cfb64_encrypt');
-  CAST_cfb64_encrypt(in_,out_,length,schedule,ivec,num,enc);
-end;
+  FuncLoadError := not assigned(CAST_cfb64_encrypt);
+  if FuncLoadError then
+  begin
+    CAST_cfb64_encrypt :=  @ERROR_CAST_cfb64_encrypt;
+  end;
 
-procedure Load_CAST_ofb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; const schedule: PCast_Key; ivec: PByte; num: POpenSSL_C_INT); cdecl;
-begin
   CAST_ofb64_encrypt := LoadLibCryptoFunction('CAST_ofb64_encrypt');
-  if not assigned(CAST_ofb64_encrypt) then
-    EOpenSSLAPIFunctionNotPresent.RaiseException('CAST_ofb64_encrypt');
-  CAST_ofb64_encrypt(in_,out_,length,schedule,ivec,num);
-end;
+  FuncLoadError := not assigned(CAST_ofb64_encrypt);
+  if FuncLoadError then
+  begin
+    CAST_ofb64_encrypt :=  @ERROR_CAST_ofb64_encrypt;
+  end;
 
+end;
 
 procedure UnLoad;
 begin
-  CAST_set_key := Load_CAST_set_key;
-  CAST_ecb_encrypt := Load_CAST_ecb_encrypt;
-  CAST_encrypt := Load_CAST_encrypt;
-  CAST_decrypt := Load_CAST_decrypt;
-  CAST_cbc_encrypt := Load_CAST_cbc_encrypt;
-  CAST_cfb64_encrypt := Load_CAST_cfb64_encrypt;
-  CAST_ofb64_encrypt := Load_CAST_ofb64_encrypt;
+  CAST_set_key := nil;
+  CAST_ecb_encrypt := nil;
+  CAST_encrypt := nil;
+  CAST_decrypt := nil;
+  CAST_cbc_encrypt := nil;
+  CAST_cfb64_encrypt := nil;
+  CAST_ofb64_encrypt := nil;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
+Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization
