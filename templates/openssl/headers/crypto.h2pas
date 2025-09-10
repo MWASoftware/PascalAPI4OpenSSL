@@ -30,7 +30,7 @@ uses
   ossl_typ,
   evp,
   provider,
-  {$IFDEF VCL_XE3_OR_ABOVE}System.Types{$ELSE}Types{$ENDIF};
+  Types;
 
 {$MINENUMSIZE 4}
 
@@ -364,7 +364,7 @@ procedure RemoveLegacyCallbacks;
 implementation
 
 uses SyncObjs,  Sysutils
-     {$IFNDEF FPC}, Windows{$ENDIF};
+     {$IFDEF WINDOWS}, Windows{$ENDIF};
 
 // OPENSSL_FILE = __FILE__ = C preprocessor macro
 // OPENSSL_LINE = __LINE__ = C preprocessor macro

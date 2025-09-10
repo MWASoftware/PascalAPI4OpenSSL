@@ -27,8 +27,7 @@ unit OpenSSL_core;
 interface
 
 uses
-  OpenSSLAPI
-  {$IFDEF VCL_XE3_OR_ABOVE},System.Types{$ELSE},Types{$ENDIF};
+  OpenSSLAPI,Types;
 
 
 {
