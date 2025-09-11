@@ -293,8 +293,8 @@ end;
 
 function GetIOpenSSLDDL: IOpenSSLDLL;
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
-function LoadLibCryptoFunction(const AProcName: PChar): Pointer;
-function LoadLibSSLFunction(const AProcName:  PChar): Pointer;
+function LoadLibCryptoFunction(const AProcName: string): Pointer;
+function LoadLibSSLFunction(const AProcName:  string): Pointer;
 
 type
   TOpenSSLLoadProc = procedure(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
@@ -536,14 +536,14 @@ begin
   Result := Load;
 end;
 
-function LoadLibCryptoFunction(const AProcName: PChar): Pointer;
+function LoadLibCryptoFunction(const AProcName: string): Pointer;
 begin
-  Result := GetProcAddress(TOpenSSLDynamicLibProvider.FOpenSSLDDL.GetLibCryptoHandle,AProcName);
+  Result := GetProcAddress(TOpenSSLDynamicLibProvider.FOpenSSLDDL.GetLibCryptoHandle,PChar(AProcName));
 end;
 
-function LoadLibSSLFunction(const AProcName:  PChar): Pointer;
+function LoadLibSSLFunction(const AProcName:  string): Pointer;
 begin
-  Result := GetProcAddress(TOpenSSLDynamicLibProvider.FOpenSSLDDL.GetLibSSLHandle,AProcName);
+  Result := GetProcAddress(TOpenSSLDynamicLibProvider.FOpenSSLDDL.GetLibSSLHandle,PChar(AProcName));
 end;
 
 procedure TOpenSSLDynamicLibProvider.SetOpenSSLPath(const Value : string);
