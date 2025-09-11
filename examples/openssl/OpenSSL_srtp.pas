@@ -64,10 +64,17 @@ function SSL_set_tlsext_use_srtp(ctx: PSSL_CTX; const profiles: PAnsiChar): TOpe
 function SSL_get_selected_srtp_profile(s: PSSL): PSRTP_PROTECTION_PROFILE; cdecl; external CLibCrypto;
 
 {$ELSE}
+
+{Declare external function initialisers - should not be called directly}
+
+function Load_SSL_CTX_set_tlsext_use_srtp(ctx: PSSL_CTX; const profiles: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_SSL_set_tlsext_use_srtp(ctx: PSSL_CTX; const profiles: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_selected_srtp_profile(s: PSSL): PSRTP_PROTECTION_PROFILE; cdecl;
+
 var
-  SSL_CTX_set_tlsext_use_srtp: function (ctx: PSSL_CTX; const profiles: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set_tlsext_use_srtp: function (ctx: PSSL_CTX; const profiles: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_selected_srtp_profile: function (s: PSSL): PSRTP_PROTECTION_PROFILE; cdecl = nil;
+  SSL_CTX_set_tlsext_use_srtp: function (ctx: PSSL_CTX; const profiles: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_tlsext_use_srtp;
+  SSL_set_tlsext_use_srtp: function (ctx: PSSL_CTX; const profiles: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_set_tlsext_use_srtp;
+  SSL_get_selected_srtp_profile: function (s: PSSL): PSRTP_PROTECTION_PROFILE; cdecl = Load_SSL_get_selected_srtp_profile;
 {$ENDIF}
 
 implementation
@@ -85,62 +92,42 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$WARN  NO_RETVAL OFF}
-function ERROR_SSL_CTX_set_tlsext_use_srtp(ctx: PSSL_CTX; const profiles: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_tlsext_use_srtp');
-end;
-
-function ERROR_SSL_set_tlsext_use_srtp(ctx: PSSL_CTX; const profiles: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_tlsext_use_srtp');
-end;
-
-function ERROR_SSL_get_selected_srtp_profile(s: PSSL): PSRTP_PROTECTION_PROFILE; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_selected_srtp_profile');
-end;
-
-{$WARN  NO_RETVAL ON}
-procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
-var FuncLoadError: boolean;
+function Load_SSL_CTX_set_tlsext_use_srtp(ctx: PSSL_CTX; const profiles: PAnsiChar): TOpenSSL_C_INT; cdecl;
 begin
   SSL_CTX_set_tlsext_use_srtp := LoadLibCryptoFunction('SSL_CTX_set_tlsext_use_srtp');
-  FuncLoadError := not assigned(SSL_CTX_set_tlsext_use_srtp);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_tlsext_use_srtp :=  @ERROR_SSL_CTX_set_tlsext_use_srtp;
-  end;
-
-  SSL_set_tlsext_use_srtp := LoadLibCryptoFunction('SSL_set_tlsext_use_srtp');
-  FuncLoadError := not assigned(SSL_set_tlsext_use_srtp);
-  if FuncLoadError then
-  begin
-    SSL_set_tlsext_use_srtp :=  @ERROR_SSL_set_tlsext_use_srtp;
-  end;
-
-  SSL_get_selected_srtp_profile := LoadLibCryptoFunction('SSL_get_selected_srtp_profile');
-  FuncLoadError := not assigned(SSL_get_selected_srtp_profile);
-  if FuncLoadError then
-  begin
-    SSL_get_selected_srtp_profile :=  @ERROR_SSL_get_selected_srtp_profile;
-  end;
-
+  if not assigned(SSL_CTX_set_tlsext_use_srtp) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_tlsext_use_srtp');
+  Result := SSL_CTX_set_tlsext_use_srtp(ctx,profiles);
 end;
+
+function Load_SSL_set_tlsext_use_srtp(ctx: PSSL_CTX; const profiles: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_set_tlsext_use_srtp := LoadLibCryptoFunction('SSL_set_tlsext_use_srtp');
+  if not assigned(SSL_set_tlsext_use_srtp) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_tlsext_use_srtp');
+  Result := SSL_set_tlsext_use_srtp(ctx,profiles);
+end;
+
+function Load_SSL_get_selected_srtp_profile(s: PSSL): PSRTP_PROTECTION_PROFILE; cdecl;
+begin
+  SSL_get_selected_srtp_profile := LoadLibCryptoFunction('SSL_get_selected_srtp_profile');
+  if not assigned(SSL_get_selected_srtp_profile) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_selected_srtp_profile');
+  Result := SSL_get_selected_srtp_profile(s);
+end;
+
 
 procedure UnLoad;
 begin
-  SSL_CTX_set_tlsext_use_srtp := nil;
-  SSL_set_tlsext_use_srtp := nil;
-  SSL_get_selected_srtp_profile := nil;
+  SSL_CTX_set_tlsext_use_srtp := Load_SSL_CTX_set_tlsext_use_srtp;
+  SSL_set_tlsext_use_srtp := Load_SSL_set_tlsext_use_srtp;
+  SSL_get_selected_srtp_profile := Load_SSL_get_selected_srtp_profile;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
-Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

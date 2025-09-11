@@ -109,33 +109,63 @@ function OBJ_add_sigid(signid: TOpenSSL_C_INT; dig_id: TOpenSSL_C_INT; pkey_id: 
 procedure OBJ_sigid_free; cdecl; external CLibCrypto;
 
 {$ELSE}
+
+{Declare external function initialisers - should not be called directly}
+
+function Load_OBJ_NAME_init: TOpenSSL_C_INT; cdecl;
+function Load_OBJ_NAME_get(const name: PAnsiChar; type_: TOpenSSL_C_INT): PAnsiChar; cdecl;
+function Load_OBJ_NAME_add(const name: PAnsiChar; type_: TOpenSSL_C_INT; const data: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_OBJ_NAME_remove(const name: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+procedure Load_OBJ_NAME_cleanup(type_: TOpenSSL_C_INT); cdecl;
+function Load_OBJ_dup(const o: PASN1_OBJECT): PASN1_OBJECT; cdecl;
+function Load_OBJ_nid2obj(n: TOpenSSL_C_INT): PASN1_OBJECT; cdecl;
+function Load_OBJ_nid2ln(n: TOpenSSL_C_INT): PAnsiChar; cdecl;
+function Load_OBJ_nid2sn(n: TOpenSSL_C_INT): PAnsiChar; cdecl;
+function Load_OBJ_obj2nid(const o: PASN1_OBJECT): TOpenSSL_C_INT; cdecl;
+function Load_OBJ_txt2obj(const s: PAnsiChar; no_name: TOpenSSL_C_INT): PASN1_OBJECT; cdecl;
+function Load_OBJ_obj2txt(buf: PAnsiChar; buf_len: TOpenSSL_C_INT; const a: PASN1_OBJECT; no_name: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_OBJ_txt2nid(const s: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_OBJ_ln2nid(const s: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_OBJ_sn2nid(const s: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_OBJ_cmp(const a: PASN1_OBJECT; const b: PASN1_OBJECT): TOpenSSL_C_INT; cdecl;
+function Load_OBJ_new_nid(num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_OBJ_add_object(const obj: PASN1_OBJECT): TOpenSSL_C_INT; cdecl;
+function Load_OBJ_create(const oid: PAnsiChar; const sn: PAnsiChar; const ln: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_OBJ_create_objects(in_: PBIO): TOpenSSL_C_INT; cdecl;
+function Load_OBJ_length(const obj: PASN1_OBJECT): TOpenSSL_C_SIZET; cdecl;
+function Load_OBJ_get0_data(const obj: PASN1_OBJECT): PByte; cdecl;
+function Load_OBJ_find_sigid_algs(signid: TOpenSSL_C_INT; pdig_nid: POpenSSL_C_INT; ppkey_nid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_OBJ_find_sigid_by_algs(psignid: POpenSSL_C_INT; dig_nid: TOpenSSL_C_INT; pkey_nid: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_OBJ_add_sigid(signid: TOpenSSL_C_INT; dig_id: TOpenSSL_C_INT; pkey_id: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+procedure Load_OBJ_sigid_free; cdecl;
+
 var
-  OBJ_NAME_init: function : TOpenSSL_C_INT; cdecl = nil;
-  OBJ_NAME_get: function (const name: PAnsiChar; type_: TOpenSSL_C_INT): PAnsiChar; cdecl = nil;
-  OBJ_NAME_add: function (const name: PAnsiChar; type_: TOpenSSL_C_INT; const data: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  OBJ_NAME_remove: function (const name: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  OBJ_NAME_cleanup: procedure (type_: TOpenSSL_C_INT); cdecl = nil;
-  OBJ_dup: function (const o: PASN1_OBJECT): PASN1_OBJECT; cdecl = nil;
-  OBJ_nid2obj: function (n: TOpenSSL_C_INT): PASN1_OBJECT; cdecl = nil;
-  OBJ_nid2ln: function (n: TOpenSSL_C_INT): PAnsiChar; cdecl = nil;
-  OBJ_nid2sn: function (n: TOpenSSL_C_INT): PAnsiChar; cdecl = nil;
-  OBJ_obj2nid: function (const o: PASN1_OBJECT): TOpenSSL_C_INT; cdecl = nil;
-  OBJ_txt2obj: function (const s: PAnsiChar; no_name: TOpenSSL_C_INT): PASN1_OBJECT; cdecl = nil;
-  OBJ_obj2txt: function (buf: PAnsiChar; buf_len: TOpenSSL_C_INT; const a: PASN1_OBJECT; no_name: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  OBJ_txt2nid: function (const s: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  OBJ_ln2nid: function (const s: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  OBJ_sn2nid: function (const s: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  OBJ_cmp: function (const a: PASN1_OBJECT; const b: PASN1_OBJECT): TOpenSSL_C_INT; cdecl = nil;
-  OBJ_new_nid: function (num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  OBJ_add_object: function (const obj: PASN1_OBJECT): TOpenSSL_C_INT; cdecl = nil;
-  OBJ_create: function (const oid: PAnsiChar; const sn: PAnsiChar; const ln: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  OBJ_create_objects: function (in_: PBIO): TOpenSSL_C_INT; cdecl = nil;
-  OBJ_length: function (const obj: PASN1_OBJECT): TOpenSSL_C_SIZET; cdecl = nil;
-  OBJ_get0_data: function (const obj: PASN1_OBJECT): PByte; cdecl = nil;
-  OBJ_find_sigid_algs: function (signid: TOpenSSL_C_INT; pdig_nid: POpenSSL_C_INT; ppkey_nid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  OBJ_find_sigid_by_algs: function (psignid: POpenSSL_C_INT; dig_nid: TOpenSSL_C_INT; pkey_nid: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  OBJ_add_sigid: function (signid: TOpenSSL_C_INT; dig_id: TOpenSSL_C_INT; pkey_id: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  OBJ_sigid_free: procedure ; cdecl = nil;
+  OBJ_NAME_init: function : TOpenSSL_C_INT; cdecl = Load_OBJ_NAME_init;
+  OBJ_NAME_get: function (const name: PAnsiChar; type_: TOpenSSL_C_INT): PAnsiChar; cdecl = Load_OBJ_NAME_get;
+  OBJ_NAME_add: function (const name: PAnsiChar; type_: TOpenSSL_C_INT; const data: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_OBJ_NAME_add;
+  OBJ_NAME_remove: function (const name: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_OBJ_NAME_remove;
+  OBJ_NAME_cleanup: procedure (type_: TOpenSSL_C_INT); cdecl = Load_OBJ_NAME_cleanup;
+  OBJ_dup: function (const o: PASN1_OBJECT): PASN1_OBJECT; cdecl = Load_OBJ_dup;
+  OBJ_nid2obj: function (n: TOpenSSL_C_INT): PASN1_OBJECT; cdecl = Load_OBJ_nid2obj;
+  OBJ_nid2ln: function (n: TOpenSSL_C_INT): PAnsiChar; cdecl = Load_OBJ_nid2ln;
+  OBJ_nid2sn: function (n: TOpenSSL_C_INT): PAnsiChar; cdecl = Load_OBJ_nid2sn;
+  OBJ_obj2nid: function (const o: PASN1_OBJECT): TOpenSSL_C_INT; cdecl = Load_OBJ_obj2nid;
+  OBJ_txt2obj: function (const s: PAnsiChar; no_name: TOpenSSL_C_INT): PASN1_OBJECT; cdecl = Load_OBJ_txt2obj;
+  OBJ_obj2txt: function (buf: PAnsiChar; buf_len: TOpenSSL_C_INT; const a: PASN1_OBJECT; no_name: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_OBJ_obj2txt;
+  OBJ_txt2nid: function (const s: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_OBJ_txt2nid;
+  OBJ_ln2nid: function (const s: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_OBJ_ln2nid;
+  OBJ_sn2nid: function (const s: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_OBJ_sn2nid;
+  OBJ_cmp: function (const a: PASN1_OBJECT; const b: PASN1_OBJECT): TOpenSSL_C_INT; cdecl = Load_OBJ_cmp;
+  OBJ_new_nid: function (num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_OBJ_new_nid;
+  OBJ_add_object: function (const obj: PASN1_OBJECT): TOpenSSL_C_INT; cdecl = Load_OBJ_add_object;
+  OBJ_create: function (const oid: PAnsiChar; const sn: PAnsiChar; const ln: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_OBJ_create;
+  OBJ_create_objects: function (in_: PBIO): TOpenSSL_C_INT; cdecl = Load_OBJ_create_objects;
+  OBJ_length: function (const obj: PASN1_OBJECT): TOpenSSL_C_SIZET; cdecl = Load_OBJ_length;
+  OBJ_get0_data: function (const obj: PASN1_OBJECT): PByte; cdecl = Load_OBJ_get0_data;
+  OBJ_find_sigid_algs: function (signid: TOpenSSL_C_INT; pdig_nid: POpenSSL_C_INT; ppkey_nid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_OBJ_find_sigid_algs;
+  OBJ_find_sigid_by_algs: function (psignid: POpenSSL_C_INT; dig_nid: TOpenSSL_C_INT; pkey_nid: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_OBJ_find_sigid_by_algs;
+  OBJ_add_sigid: function (signid: TOpenSSL_C_INT; dig_id: TOpenSSL_C_INT; pkey_id: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_OBJ_add_sigid;
+  OBJ_sigid_free: procedure ; cdecl = Load_OBJ_sigid_free;
 {$ENDIF}
 const
   OBJ_length_introduced = ((((((byte(1) shl 8) or byte(1)) shl 8) or byte(0)) shl 8) or byte(0)) shl 4; {introduced 1.1.0}
@@ -157,361 +187,249 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$WARN  NO_RETVAL OFF}
-function ERROR_OBJ_NAME_init: TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_NAME_init');
-end;
-
-function ERROR_OBJ_NAME_get(const name: PAnsiChar; type_: TOpenSSL_C_INT): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_NAME_get');
-end;
-
-function ERROR_OBJ_NAME_add(const name: PAnsiChar; type_: TOpenSSL_C_INT; const data: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_NAME_add');
-end;
-
-function ERROR_OBJ_NAME_remove(const name: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_NAME_remove');
-end;
-
-procedure ERROR_OBJ_NAME_cleanup(type_: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_NAME_cleanup');
-end;
-
-function ERROR_OBJ_dup(const o: PASN1_OBJECT): PASN1_OBJECT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_dup');
-end;
-
-function ERROR_OBJ_nid2obj(n: TOpenSSL_C_INT): PASN1_OBJECT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_nid2obj');
-end;
-
-function ERROR_OBJ_nid2ln(n: TOpenSSL_C_INT): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_nid2ln');
-end;
-
-function ERROR_OBJ_nid2sn(n: TOpenSSL_C_INT): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_nid2sn');
-end;
-
-function ERROR_OBJ_obj2nid(const o: PASN1_OBJECT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_obj2nid');
-end;
-
-function ERROR_OBJ_txt2obj(const s: PAnsiChar; no_name: TOpenSSL_C_INT): PASN1_OBJECT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_txt2obj');
-end;
-
-function ERROR_OBJ_obj2txt(buf: PAnsiChar; buf_len: TOpenSSL_C_INT; const a: PASN1_OBJECT; no_name: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_obj2txt');
-end;
-
-function ERROR_OBJ_txt2nid(const s: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_txt2nid');
-end;
-
-function ERROR_OBJ_ln2nid(const s: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_ln2nid');
-end;
-
-function ERROR_OBJ_sn2nid(const s: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_sn2nid');
-end;
-
-function ERROR_OBJ_cmp(const a: PASN1_OBJECT; const b: PASN1_OBJECT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_cmp');
-end;
-
-function ERROR_OBJ_new_nid(num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_new_nid');
-end;
-
-function ERROR_OBJ_add_object(const obj: PASN1_OBJECT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_add_object');
-end;
-
-function ERROR_OBJ_create(const oid: PAnsiChar; const sn: PAnsiChar; const ln: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_create');
-end;
-
-function ERROR_OBJ_create_objects(in_: PBIO): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_create_objects');
-end;
-
-function ERROR_OBJ_length(const obj: PASN1_OBJECT): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_length');
-end;
-
-function ERROR_OBJ_get0_data(const obj: PASN1_OBJECT): PByte; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_get0_data');
-end;
-
-function ERROR_OBJ_find_sigid_algs(signid: TOpenSSL_C_INT; pdig_nid: POpenSSL_C_INT; ppkey_nid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_find_sigid_algs');
-end;
-
-function ERROR_OBJ_find_sigid_by_algs(psignid: POpenSSL_C_INT; dig_nid: TOpenSSL_C_INT; pkey_nid: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_find_sigid_by_algs');
-end;
-
-function ERROR_OBJ_add_sigid(signid: TOpenSSL_C_INT; dig_id: TOpenSSL_C_INT; pkey_id: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_add_sigid');
-end;
-
-procedure ERROR_OBJ_sigid_free; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_sigid_free');
-end;
-
-{$WARN  NO_RETVAL ON}
-procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
-var FuncLoadError: boolean;
+function Load_OBJ_NAME_init: TOpenSSL_C_INT; cdecl;
 begin
   OBJ_NAME_init := LoadLibCryptoFunction('OBJ_NAME_init');
-  FuncLoadError := not assigned(OBJ_NAME_init);
-  if FuncLoadError then
-  begin
-    OBJ_NAME_init :=  @ERROR_OBJ_NAME_init;
-  end;
-
-  OBJ_NAME_get := LoadLibCryptoFunction('OBJ_NAME_get');
-  FuncLoadError := not assigned(OBJ_NAME_get);
-  if FuncLoadError then
-  begin
-    OBJ_NAME_get :=  @ERROR_OBJ_NAME_get;
-  end;
-
-  OBJ_NAME_add := LoadLibCryptoFunction('OBJ_NAME_add');
-  FuncLoadError := not assigned(OBJ_NAME_add);
-  if FuncLoadError then
-  begin
-    OBJ_NAME_add :=  @ERROR_OBJ_NAME_add;
-  end;
-
-  OBJ_NAME_remove := LoadLibCryptoFunction('OBJ_NAME_remove');
-  FuncLoadError := not assigned(OBJ_NAME_remove);
-  if FuncLoadError then
-  begin
-    OBJ_NAME_remove :=  @ERROR_OBJ_NAME_remove;
-  end;
-
-  OBJ_NAME_cleanup := LoadLibCryptoFunction('OBJ_NAME_cleanup');
-  FuncLoadError := not assigned(OBJ_NAME_cleanup);
-  if FuncLoadError then
-  begin
-    OBJ_NAME_cleanup :=  @ERROR_OBJ_NAME_cleanup;
-  end;
-
-  OBJ_dup := LoadLibCryptoFunction('OBJ_dup');
-  FuncLoadError := not assigned(OBJ_dup);
-  if FuncLoadError then
-  begin
-    OBJ_dup :=  @ERROR_OBJ_dup;
-  end;
-
-  OBJ_nid2obj := LoadLibCryptoFunction('OBJ_nid2obj');
-  FuncLoadError := not assigned(OBJ_nid2obj);
-  if FuncLoadError then
-  begin
-    OBJ_nid2obj :=  @ERROR_OBJ_nid2obj;
-  end;
-
-  OBJ_nid2ln := LoadLibCryptoFunction('OBJ_nid2ln');
-  FuncLoadError := not assigned(OBJ_nid2ln);
-  if FuncLoadError then
-  begin
-    OBJ_nid2ln :=  @ERROR_OBJ_nid2ln;
-  end;
-
-  OBJ_nid2sn := LoadLibCryptoFunction('OBJ_nid2sn');
-  FuncLoadError := not assigned(OBJ_nid2sn);
-  if FuncLoadError then
-  begin
-    OBJ_nid2sn :=  @ERROR_OBJ_nid2sn;
-  end;
-
-  OBJ_obj2nid := LoadLibCryptoFunction('OBJ_obj2nid');
-  FuncLoadError := not assigned(OBJ_obj2nid);
-  if FuncLoadError then
-  begin
-    OBJ_obj2nid :=  @ERROR_OBJ_obj2nid;
-  end;
-
-  OBJ_txt2obj := LoadLibCryptoFunction('OBJ_txt2obj');
-  FuncLoadError := not assigned(OBJ_txt2obj);
-  if FuncLoadError then
-  begin
-    OBJ_txt2obj :=  @ERROR_OBJ_txt2obj;
-  end;
-
-  OBJ_obj2txt := LoadLibCryptoFunction('OBJ_obj2txt');
-  FuncLoadError := not assigned(OBJ_obj2txt);
-  if FuncLoadError then
-  begin
-    OBJ_obj2txt :=  @ERROR_OBJ_obj2txt;
-  end;
-
-  OBJ_txt2nid := LoadLibCryptoFunction('OBJ_txt2nid');
-  FuncLoadError := not assigned(OBJ_txt2nid);
-  if FuncLoadError then
-  begin
-    OBJ_txt2nid :=  @ERROR_OBJ_txt2nid;
-  end;
-
-  OBJ_ln2nid := LoadLibCryptoFunction('OBJ_ln2nid');
-  FuncLoadError := not assigned(OBJ_ln2nid);
-  if FuncLoadError then
-  begin
-    OBJ_ln2nid :=  @ERROR_OBJ_ln2nid;
-  end;
-
-  OBJ_sn2nid := LoadLibCryptoFunction('OBJ_sn2nid');
-  FuncLoadError := not assigned(OBJ_sn2nid);
-  if FuncLoadError then
-  begin
-    OBJ_sn2nid :=  @ERROR_OBJ_sn2nid;
-  end;
-
-  OBJ_cmp := LoadLibCryptoFunction('OBJ_cmp');
-  FuncLoadError := not assigned(OBJ_cmp);
-  if FuncLoadError then
-  begin
-    OBJ_cmp :=  @ERROR_OBJ_cmp;
-  end;
-
-  OBJ_new_nid := LoadLibCryptoFunction('OBJ_new_nid');
-  FuncLoadError := not assigned(OBJ_new_nid);
-  if FuncLoadError then
-  begin
-    OBJ_new_nid :=  @ERROR_OBJ_new_nid;
-  end;
-
-  OBJ_add_object := LoadLibCryptoFunction('OBJ_add_object');
-  FuncLoadError := not assigned(OBJ_add_object);
-  if FuncLoadError then
-  begin
-    OBJ_add_object :=  @ERROR_OBJ_add_object;
-  end;
-
-  OBJ_create := LoadLibCryptoFunction('OBJ_create');
-  FuncLoadError := not assigned(OBJ_create);
-  if FuncLoadError then
-  begin
-    OBJ_create :=  @ERROR_OBJ_create;
-  end;
-
-  OBJ_create_objects := LoadLibCryptoFunction('OBJ_create_objects');
-  FuncLoadError := not assigned(OBJ_create_objects);
-  if FuncLoadError then
-  begin
-    OBJ_create_objects :=  @ERROR_OBJ_create_objects;
-  end;
-
-  OBJ_length := LoadLibCryptoFunction('OBJ_length');
-  FuncLoadError := not assigned(OBJ_length);
-  if FuncLoadError then
-  begin
-    OBJ_length :=  @ERROR_OBJ_length;
-  end;
-
-  OBJ_get0_data := LoadLibCryptoFunction('OBJ_get0_data');
-  FuncLoadError := not assigned(OBJ_get0_data);
-  if FuncLoadError then
-  begin
-    OBJ_get0_data :=  @ERROR_OBJ_get0_data;
-  end;
-
-  OBJ_find_sigid_algs := LoadLibCryptoFunction('OBJ_find_sigid_algs');
-  FuncLoadError := not assigned(OBJ_find_sigid_algs);
-  if FuncLoadError then
-  begin
-    OBJ_find_sigid_algs :=  @ERROR_OBJ_find_sigid_algs;
-  end;
-
-  OBJ_find_sigid_by_algs := LoadLibCryptoFunction('OBJ_find_sigid_by_algs');
-  FuncLoadError := not assigned(OBJ_find_sigid_by_algs);
-  if FuncLoadError then
-  begin
-    OBJ_find_sigid_by_algs :=  @ERROR_OBJ_find_sigid_by_algs;
-  end;
-
-  OBJ_add_sigid := LoadLibCryptoFunction('OBJ_add_sigid');
-  FuncLoadError := not assigned(OBJ_add_sigid);
-  if FuncLoadError then
-  begin
-    OBJ_add_sigid :=  @ERROR_OBJ_add_sigid;
-  end;
-
-  OBJ_sigid_free := LoadLibCryptoFunction('OBJ_sigid_free');
-  FuncLoadError := not assigned(OBJ_sigid_free);
-  if FuncLoadError then
-  begin
-    OBJ_sigid_free :=  @ERROR_OBJ_sigid_free;
-  end;
-
+  if not assigned(OBJ_NAME_init) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_NAME_init');
+  Result := OBJ_NAME_init();
 end;
+
+function Load_OBJ_NAME_get(const name: PAnsiChar; type_: TOpenSSL_C_INT): PAnsiChar; cdecl;
+begin
+  OBJ_NAME_get := LoadLibCryptoFunction('OBJ_NAME_get');
+  if not assigned(OBJ_NAME_get) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_NAME_get');
+  Result := OBJ_NAME_get(name,type_);
+end;
+
+function Load_OBJ_NAME_add(const name: PAnsiChar; type_: TOpenSSL_C_INT; const data: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
+  OBJ_NAME_add := LoadLibCryptoFunction('OBJ_NAME_add');
+  if not assigned(OBJ_NAME_add) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_NAME_add');
+  Result := OBJ_NAME_add(name,type_,data);
+end;
+
+function Load_OBJ_NAME_remove(const name: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  OBJ_NAME_remove := LoadLibCryptoFunction('OBJ_NAME_remove');
+  if not assigned(OBJ_NAME_remove) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_NAME_remove');
+  Result := OBJ_NAME_remove(name,type_);
+end;
+
+procedure Load_OBJ_NAME_cleanup(type_: TOpenSSL_C_INT); cdecl;
+begin
+  OBJ_NAME_cleanup := LoadLibCryptoFunction('OBJ_NAME_cleanup');
+  if not assigned(OBJ_NAME_cleanup) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_NAME_cleanup');
+  OBJ_NAME_cleanup(type_);
+end;
+
+function Load_OBJ_dup(const o: PASN1_OBJECT): PASN1_OBJECT; cdecl;
+begin
+  OBJ_dup := LoadLibCryptoFunction('OBJ_dup');
+  if not assigned(OBJ_dup) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_dup');
+  Result := OBJ_dup(o);
+end;
+
+function Load_OBJ_nid2obj(n: TOpenSSL_C_INT): PASN1_OBJECT; cdecl;
+begin
+  OBJ_nid2obj := LoadLibCryptoFunction('OBJ_nid2obj');
+  if not assigned(OBJ_nid2obj) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_nid2obj');
+  Result := OBJ_nid2obj(n);
+end;
+
+function Load_OBJ_nid2ln(n: TOpenSSL_C_INT): PAnsiChar; cdecl;
+begin
+  OBJ_nid2ln := LoadLibCryptoFunction('OBJ_nid2ln');
+  if not assigned(OBJ_nid2ln) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_nid2ln');
+  Result := OBJ_nid2ln(n);
+end;
+
+function Load_OBJ_nid2sn(n: TOpenSSL_C_INT): PAnsiChar; cdecl;
+begin
+  OBJ_nid2sn := LoadLibCryptoFunction('OBJ_nid2sn');
+  if not assigned(OBJ_nid2sn) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_nid2sn');
+  Result := OBJ_nid2sn(n);
+end;
+
+function Load_OBJ_obj2nid(const o: PASN1_OBJECT): TOpenSSL_C_INT; cdecl;
+begin
+  OBJ_obj2nid := LoadLibCryptoFunction('OBJ_obj2nid');
+  if not assigned(OBJ_obj2nid) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_obj2nid');
+  Result := OBJ_obj2nid(o);
+end;
+
+function Load_OBJ_txt2obj(const s: PAnsiChar; no_name: TOpenSSL_C_INT): PASN1_OBJECT; cdecl;
+begin
+  OBJ_txt2obj := LoadLibCryptoFunction('OBJ_txt2obj');
+  if not assigned(OBJ_txt2obj) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_txt2obj');
+  Result := OBJ_txt2obj(s,no_name);
+end;
+
+function Load_OBJ_obj2txt(buf: PAnsiChar; buf_len: TOpenSSL_C_INT; const a: PASN1_OBJECT; no_name: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  OBJ_obj2txt := LoadLibCryptoFunction('OBJ_obj2txt');
+  if not assigned(OBJ_obj2txt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_obj2txt');
+  Result := OBJ_obj2txt(buf,buf_len,a,no_name);
+end;
+
+function Load_OBJ_txt2nid(const s: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
+  OBJ_txt2nid := LoadLibCryptoFunction('OBJ_txt2nid');
+  if not assigned(OBJ_txt2nid) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_txt2nid');
+  Result := OBJ_txt2nid(s);
+end;
+
+function Load_OBJ_ln2nid(const s: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
+  OBJ_ln2nid := LoadLibCryptoFunction('OBJ_ln2nid');
+  if not assigned(OBJ_ln2nid) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_ln2nid');
+  Result := OBJ_ln2nid(s);
+end;
+
+function Load_OBJ_sn2nid(const s: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
+  OBJ_sn2nid := LoadLibCryptoFunction('OBJ_sn2nid');
+  if not assigned(OBJ_sn2nid) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_sn2nid');
+  Result := OBJ_sn2nid(s);
+end;
+
+function Load_OBJ_cmp(const a: PASN1_OBJECT; const b: PASN1_OBJECT): TOpenSSL_C_INT; cdecl;
+begin
+  OBJ_cmp := LoadLibCryptoFunction('OBJ_cmp');
+  if not assigned(OBJ_cmp) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_cmp');
+  Result := OBJ_cmp(a,b);
+end;
+
+function Load_OBJ_new_nid(num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  OBJ_new_nid := LoadLibCryptoFunction('OBJ_new_nid');
+  if not assigned(OBJ_new_nid) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_new_nid');
+  Result := OBJ_new_nid(num);
+end;
+
+function Load_OBJ_add_object(const obj: PASN1_OBJECT): TOpenSSL_C_INT; cdecl;
+begin
+  OBJ_add_object := LoadLibCryptoFunction('OBJ_add_object');
+  if not assigned(OBJ_add_object) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_add_object');
+  Result := OBJ_add_object(obj);
+end;
+
+function Load_OBJ_create(const oid: PAnsiChar; const sn: PAnsiChar; const ln: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
+  OBJ_create := LoadLibCryptoFunction('OBJ_create');
+  if not assigned(OBJ_create) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_create');
+  Result := OBJ_create(oid,sn,ln);
+end;
+
+function Load_OBJ_create_objects(in_: PBIO): TOpenSSL_C_INT; cdecl;
+begin
+  OBJ_create_objects := LoadLibCryptoFunction('OBJ_create_objects');
+  if not assigned(OBJ_create_objects) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_create_objects');
+  Result := OBJ_create_objects(in_);
+end;
+
+function Load_OBJ_length(const obj: PASN1_OBJECT): TOpenSSL_C_SIZET; cdecl;
+begin
+  OBJ_length := LoadLibCryptoFunction('OBJ_length');
+  if not assigned(OBJ_length) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_length');
+  Result := OBJ_length(obj);
+end;
+
+function Load_OBJ_get0_data(const obj: PASN1_OBJECT): PByte; cdecl;
+begin
+  OBJ_get0_data := LoadLibCryptoFunction('OBJ_get0_data');
+  if not assigned(OBJ_get0_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_get0_data');
+  Result := OBJ_get0_data(obj);
+end;
+
+function Load_OBJ_find_sigid_algs(signid: TOpenSSL_C_INT; pdig_nid: POpenSSL_C_INT; ppkey_nid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  OBJ_find_sigid_algs := LoadLibCryptoFunction('OBJ_find_sigid_algs');
+  if not assigned(OBJ_find_sigid_algs) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_find_sigid_algs');
+  Result := OBJ_find_sigid_algs(signid,pdig_nid,ppkey_nid);
+end;
+
+function Load_OBJ_find_sigid_by_algs(psignid: POpenSSL_C_INT; dig_nid: TOpenSSL_C_INT; pkey_nid: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  OBJ_find_sigid_by_algs := LoadLibCryptoFunction('OBJ_find_sigid_by_algs');
+  if not assigned(OBJ_find_sigid_by_algs) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_find_sigid_by_algs');
+  Result := OBJ_find_sigid_by_algs(psignid,dig_nid,pkey_nid);
+end;
+
+function Load_OBJ_add_sigid(signid: TOpenSSL_C_INT; dig_id: TOpenSSL_C_INT; pkey_id: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  OBJ_add_sigid := LoadLibCryptoFunction('OBJ_add_sigid');
+  if not assigned(OBJ_add_sigid) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_add_sigid');
+  Result := OBJ_add_sigid(signid,dig_id,pkey_id);
+end;
+
+procedure Load_OBJ_sigid_free; cdecl;
+begin
+  OBJ_sigid_free := LoadLibCryptoFunction('OBJ_sigid_free');
+  if not assigned(OBJ_sigid_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OBJ_sigid_free');
+  OBJ_sigid_free();
+end;
+
 
 procedure UnLoad;
 begin
-  OBJ_NAME_init := nil;
-  OBJ_NAME_get := nil;
-  OBJ_NAME_add := nil;
-  OBJ_NAME_remove := nil;
-  OBJ_NAME_cleanup := nil;
-  OBJ_dup := nil;
-  OBJ_nid2obj := nil;
-  OBJ_nid2ln := nil;
-  OBJ_nid2sn := nil;
-  OBJ_obj2nid := nil;
-  OBJ_txt2obj := nil;
-  OBJ_obj2txt := nil;
-  OBJ_txt2nid := nil;
-  OBJ_ln2nid := nil;
-  OBJ_sn2nid := nil;
-  OBJ_cmp := nil;
-  OBJ_new_nid := nil;
-  OBJ_add_object := nil;
-  OBJ_create := nil;
-  OBJ_create_objects := nil;
-  OBJ_length := nil;
-  OBJ_get0_data := nil;
-  OBJ_find_sigid_algs := nil;
-  OBJ_find_sigid_by_algs := nil;
-  OBJ_add_sigid := nil;
-  OBJ_sigid_free := nil;
+  OBJ_NAME_init := Load_OBJ_NAME_init;
+  OBJ_NAME_get := Load_OBJ_NAME_get;
+  OBJ_NAME_add := Load_OBJ_NAME_add;
+  OBJ_NAME_remove := Load_OBJ_NAME_remove;
+  OBJ_NAME_cleanup := Load_OBJ_NAME_cleanup;
+  OBJ_dup := Load_OBJ_dup;
+  OBJ_nid2obj := Load_OBJ_nid2obj;
+  OBJ_nid2ln := Load_OBJ_nid2ln;
+  OBJ_nid2sn := Load_OBJ_nid2sn;
+  OBJ_obj2nid := Load_OBJ_obj2nid;
+  OBJ_txt2obj := Load_OBJ_txt2obj;
+  OBJ_obj2txt := Load_OBJ_obj2txt;
+  OBJ_txt2nid := Load_OBJ_txt2nid;
+  OBJ_ln2nid := Load_OBJ_ln2nid;
+  OBJ_sn2nid := Load_OBJ_sn2nid;
+  OBJ_cmp := Load_OBJ_cmp;
+  OBJ_new_nid := Load_OBJ_new_nid;
+  OBJ_add_object := Load_OBJ_add_object;
+  OBJ_create := Load_OBJ_create;
+  OBJ_create_objects := Load_OBJ_create_objects;
+  OBJ_length := Load_OBJ_length;
+  OBJ_get0_data := Load_OBJ_get0_data;
+  OBJ_find_sigid_algs := Load_OBJ_find_sigid_algs;
+  OBJ_find_sigid_by_algs := Load_OBJ_find_sigid_by_algs;
+  OBJ_add_sigid := Load_OBJ_add_sigid;
+  OBJ_sigid_free := Load_OBJ_sigid_free;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
-Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

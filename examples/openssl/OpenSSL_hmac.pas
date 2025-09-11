@@ -68,18 +68,39 @@ procedure HMAC_CTX_set_flags(ctx: PHMAC_CTX; flags: TOpenSSL_C_ULONG); cdecl; ex
 function HMAC_CTX_get_md(const ctx: PHMAC_CTX): PEVP_MD; cdecl; external CLibCrypto;
 
 {$ELSE}
+
+{Declare external function initialisers - should not be called directly}
+
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+procedure Load_HMAC_CTX_init(ctx : PHMAC_CTX); cdecl;
+{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_HMAC_size(const e: PHMAC_CTX): TOpenSSL_C_SIZET; cdecl;
+function Load_HMAC_CTX_new: PHMAC_CTX; cdecl;
+function Load_HMAC_CTX_reset(ctx: PHMAC_CTX): TOpenSSL_C_INT; cdecl;
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+procedure Load_HMAC_CTX_cleanup(ctx : PHMAC_CTX); cdecl;
+{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+procedure Load_HMAC_CTX_free(ctx: PHMAC_CTX); cdecl;
+function Load_HMAC_Init_ex(ctx: PHMAC_CTX; const key: Pointer; len: TOpenSSL_C_INT; const md: PEVP_MD; impl: PENGINE): TOpenSSL_C_INT; cdecl;
+function Load_HMAC_Update(ctx: PHMAC_CTX; const data: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_HMAC_Final(ctx: PHMAC_CTX; md: PByte; len: PByte): TOpenSSL_C_INT; cdecl;
+function Load_HMAC(const evp_md: PEVP_MD; const key: Pointer; key_len: TOpenSSL_C_INT; const d: PByte; n: TOpenSSL_C_SIZET; md: PByte; md_len: POpenSSL_C_INT): PByte; cdecl;
+function Load_HMAC_CTX_copy(dctx: PHMAC_CTX; sctx: PHMAC_CTX): TOpenSSL_C_INT; cdecl;
+procedure Load_HMAC_CTX_set_flags(ctx: PHMAC_CTX; flags: TOpenSSL_C_ULONG); cdecl;
+function Load_HMAC_CTX_get_md(const ctx: PHMAC_CTX): PEVP_MD; cdecl;
+
 var
-  HMAC_size: function (const e: PHMAC_CTX): TOpenSSL_C_SIZET; cdecl = nil;
-  HMAC_CTX_new: function : PHMAC_CTX; cdecl = nil;
-  HMAC_CTX_reset: function (ctx: PHMAC_CTX): TOpenSSL_C_INT; cdecl = nil;
-  HMAC_CTX_free: procedure (ctx: PHMAC_CTX); cdecl = nil;
-  HMAC_Init_ex: function (ctx: PHMAC_CTX; const key: Pointer; len: TOpenSSL_C_INT; const md: PEVP_MD; impl: PENGINE): TOpenSSL_C_INT; cdecl = nil;
-  HMAC_Update: function (ctx: PHMAC_CTX; const data: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  HMAC_Final: function (ctx: PHMAC_CTX; md: PByte; len: PByte): TOpenSSL_C_INT; cdecl = nil;
-  HMAC: function (const evp_md: PEVP_MD; const key: Pointer; key_len: TOpenSSL_C_INT; const d: PByte; n: TOpenSSL_C_SIZET; md: PByte; md_len: POpenSSL_C_INT): PByte; cdecl = nil;
-  HMAC_CTX_copy: function (dctx: PHMAC_CTX; sctx: PHMAC_CTX): TOpenSSL_C_INT; cdecl = nil;
-  HMAC_CTX_set_flags: procedure (ctx: PHMAC_CTX; flags: TOpenSSL_C_ULONG); cdecl = nil;
-  HMAC_CTX_get_md: function (const ctx: PHMAC_CTX): PEVP_MD; cdecl = nil;
+  HMAC_size: function (const e: PHMAC_CTX): TOpenSSL_C_SIZET; cdecl = Load_HMAC_size;
+  HMAC_CTX_new: function : PHMAC_CTX; cdecl = Load_HMAC_CTX_new;
+  HMAC_CTX_reset: function (ctx: PHMAC_CTX): TOpenSSL_C_INT; cdecl = Load_HMAC_CTX_reset;
+  HMAC_CTX_free: procedure (ctx: PHMAC_CTX); cdecl = Load_HMAC_CTX_free;
+  HMAC_Init_ex: function (ctx: PHMAC_CTX; const key: Pointer; len: TOpenSSL_C_INT; const md: PEVP_MD; impl: PENGINE): TOpenSSL_C_INT; cdecl = Load_HMAC_Init_ex;
+  HMAC_Update: function (ctx: PHMAC_CTX; const data: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_HMAC_Update;
+  HMAC_Final: function (ctx: PHMAC_CTX; md: PByte; len: PByte): TOpenSSL_C_INT; cdecl = Load_HMAC_Final;
+  HMAC: function (const evp_md: PEVP_MD; const key: Pointer; key_len: TOpenSSL_C_INT; const d: PByte; n: TOpenSSL_C_SIZET; md: PByte; md_len: POpenSSL_C_INT): PByte; cdecl = Load_HMAC;
+  HMAC_CTX_copy: function (dctx: PHMAC_CTX; sctx: PHMAC_CTX): TOpenSSL_C_INT; cdecl = Load_HMAC_CTX_copy;
+  HMAC_CTX_set_flags: procedure (ctx: PHMAC_CTX; flags: TOpenSSL_C_ULONG); cdecl = Load_HMAC_CTX_set_flags;
+  HMAC_CTX_get_md: function (const ctx: PHMAC_CTX): PEVP_MD; cdecl = Load_HMAC_CTX_get_md;
 {$ENDIF}
 const
   HMAC_CTX_init_removed = ((((((byte(1) shl 8) or byte(1)) shl 8) or byte(0)) shl 8) or byte(0)) shl 4; {removed 1.1.0}
@@ -102,8 +123,8 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 var
-  HMAC_CTX_init: procedure (ctx : PHMAC_CTX); cdecl = nil; {removed 1.1.0}
-  HMAC_CTX_cleanup: procedure (ctx : PHMAC_CTX); cdecl = nil; {removed 1.1.0}
+  HMAC_CTX_init: procedure (ctx : PHMAC_CTX); cdecl = Load_HMAC_CTX_init; {removed 1.1.0}
+  HMAC_CTX_cleanup: procedure (ctx : PHMAC_CTX); cdecl = Load_HMAC_CTX_cleanup; {removed 1.1.0}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF}
 const
@@ -169,224 +190,152 @@ end;
 
 
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$WARN  NO_RETVAL OFF}
-procedure ERROR_HMAC_CTX_init(ctx : PHMAC_CTX); cdecl; {removed 1.1.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_CTX_init');
-end;
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_HMAC_size(const e: PHMAC_CTX): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_size');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_HMAC_CTX_new: PHMAC_CTX; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_CTX_new');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-function ERROR_HMAC_CTX_reset(ctx: PHMAC_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_CTX_reset');
-end;
-
-procedure ERROR_HMAC_CTX_cleanup(ctx : PHMAC_CTX); cdecl; {removed 1.1.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_CTX_cleanup');
-end;
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-procedure ERROR_HMAC_CTX_free(ctx: PHMAC_CTX); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_CTX_free');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-function ERROR_HMAC_Init_ex(ctx: PHMAC_CTX; const key: Pointer; len: TOpenSSL_C_INT; const md: PEVP_MD; impl: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_Init_ex');
-end;
-
-function ERROR_HMAC_Update(ctx: PHMAC_CTX; const data: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_Update');
-end;
-
-function ERROR_HMAC_Final(ctx: PHMAC_CTX; md: PByte; len: PByte): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_Final');
-end;
-
-function ERROR_HMAC(const evp_md: PEVP_MD; const key: Pointer; key_len: TOpenSSL_C_INT; const d: PByte; n: TOpenSSL_C_SIZET; md: PByte; md_len: POpenSSL_C_INT): PByte; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC');
-end;
-
-function ERROR_HMAC_CTX_copy(dctx: PHMAC_CTX; sctx: PHMAC_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_CTX_copy');
-end;
-
-procedure ERROR_HMAC_CTX_set_flags(ctx: PHMAC_CTX; flags: TOpenSSL_C_ULONG); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_CTX_set_flags');
-end;
-
-function ERROR_HMAC_CTX_get_md(const ctx: PHMAC_CTX): PEVP_MD; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_CTX_get_md');
-end;
-
-{$WARN  NO_RETVAL ON}
-procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
-var FuncLoadError: boolean;
-begin
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+procedure Load_HMAC_CTX_init(ctx : PHMAC_CTX); cdecl;
+begin
   HMAC_CTX_init := LoadLibCryptoFunction('HMAC_CTX_init');
-  FuncLoadError := not assigned(HMAC_CTX_init);
-  if FuncLoadError then
-  begin
-    if HMAC_CTX_init_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('HMAC_CTX_init');
-  end;
+  if not assigned(HMAC_CTX_init) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_CTX_init');
+  HMAC_CTX_init(ctx);
+end;
 
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_HMAC_size(const e: PHMAC_CTX): TOpenSSL_C_SIZET; cdecl;
+begin
   HMAC_size := LoadLibCryptoFunction('HMAC_size');
-  FuncLoadError := not assigned(HMAC_size);
-  if FuncLoadError then
-  begin
+  if not assigned(HMAC_size) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     HMAC_size := @COMPAT_HMAC_size;
 {$ELSE}
-    HMAC_size :=  @ERROR_HMAC_size;
-{$ENDIF}
-  end;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_size');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  Result := HMAC_size(e);
+end;
 
+function Load_HMAC_CTX_new: PHMAC_CTX; cdecl;
+begin
   HMAC_CTX_new := LoadLibCryptoFunction('HMAC_CTX_new');
-  FuncLoadError := not assigned(HMAC_CTX_new);
-  if FuncLoadError then
-  begin
+  if not assigned(HMAC_CTX_new) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     HMAC_CTX_new := @COMPAT_HMAC_CTX_new;
 {$ELSE}
-    HMAC_CTX_new :=  @ERROR_HMAC_CTX_new;
-{$ENDIF}
-  end;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_CTX_new');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  Result := HMAC_CTX_new();
+end;
 
+function Load_HMAC_CTX_reset(ctx: PHMAC_CTX): TOpenSSL_C_INT; cdecl;
+begin
   HMAC_CTX_reset := LoadLibCryptoFunction('HMAC_CTX_reset');
-  FuncLoadError := not assigned(HMAC_CTX_reset);
-  if FuncLoadError then
-  begin
-    HMAC_CTX_reset :=  @ERROR_HMAC_CTX_reset;
-  end;
+  if not assigned(HMAC_CTX_reset) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_CTX_reset');
+  Result := HMAC_CTX_reset(ctx);
+end;
 
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+procedure Load_HMAC_CTX_cleanup(ctx : PHMAC_CTX); cdecl;
+begin
   HMAC_CTX_cleanup := LoadLibCryptoFunction('HMAC_CTX_cleanup');
-  FuncLoadError := not assigned(HMAC_CTX_cleanup);
-  if FuncLoadError then
-  begin
-    if HMAC_CTX_cleanup_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('HMAC_CTX_cleanup');
-  end;
+  if not assigned(HMAC_CTX_cleanup) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_CTX_cleanup');
+  HMAC_CTX_cleanup(ctx);
+end;
 
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+procedure Load_HMAC_CTX_free(ctx: PHMAC_CTX); cdecl;
+begin
   HMAC_CTX_free := LoadLibCryptoFunction('HMAC_CTX_free');
-  FuncLoadError := not assigned(HMAC_CTX_free);
-  if FuncLoadError then
-  begin
+  if not assigned(HMAC_CTX_free) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     HMAC_CTX_free := @COMPAT_HMAC_CTX_free;
 {$ELSE}
-    HMAC_CTX_free :=  @ERROR_HMAC_CTX_free;
-{$ENDIF}
-  end;
-
-  HMAC_Init_ex := LoadLibCryptoFunction('HMAC_Init_ex');
-  FuncLoadError := not assigned(HMAC_Init_ex);
-  if FuncLoadError then
-  begin
-    HMAC_Init_ex :=  @ERROR_HMAC_Init_ex;
-  end;
-
-  HMAC_Update := LoadLibCryptoFunction('HMAC_Update');
-  FuncLoadError := not assigned(HMAC_Update);
-  if FuncLoadError then
-  begin
-    HMAC_Update :=  @ERROR_HMAC_Update;
-  end;
-
-  HMAC_Final := LoadLibCryptoFunction('HMAC_Final');
-  FuncLoadError := not assigned(HMAC_Final);
-  if FuncLoadError then
-  begin
-    HMAC_Final :=  @ERROR_HMAC_Final;
-  end;
-
-  HMAC := LoadLibCryptoFunction('HMAC');
-  FuncLoadError := not assigned(HMAC);
-  if FuncLoadError then
-  begin
-    HMAC :=  @ERROR_HMAC;
-  end;
-
-  HMAC_CTX_copy := LoadLibCryptoFunction('HMAC_CTX_copy');
-  FuncLoadError := not assigned(HMAC_CTX_copy);
-  if FuncLoadError then
-  begin
-    HMAC_CTX_copy :=  @ERROR_HMAC_CTX_copy;
-  end;
-
-  HMAC_CTX_set_flags := LoadLibCryptoFunction('HMAC_CTX_set_flags');
-  FuncLoadError := not assigned(HMAC_CTX_set_flags);
-  if FuncLoadError then
-  begin
-    HMAC_CTX_set_flags :=  @ERROR_HMAC_CTX_set_flags;
-  end;
-
-  HMAC_CTX_get_md := LoadLibCryptoFunction('HMAC_CTX_get_md');
-  FuncLoadError := not assigned(HMAC_CTX_get_md);
-  if FuncLoadError then
-  begin
-    HMAC_CTX_get_md :=  @ERROR_HMAC_CTX_get_md;
-  end;
-
+    EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_CTX_free');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  HMAC_CTX_free(ctx);
 end;
+
+function Load_HMAC_Init_ex(ctx: PHMAC_CTX; const key: Pointer; len: TOpenSSL_C_INT; const md: PEVP_MD; impl: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  HMAC_Init_ex := LoadLibCryptoFunction('HMAC_Init_ex');
+  if not assigned(HMAC_Init_ex) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_Init_ex');
+  Result := HMAC_Init_ex(ctx,key,len,md,impl);
+end;
+
+function Load_HMAC_Update(ctx: PHMAC_CTX; const data: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
+  HMAC_Update := LoadLibCryptoFunction('HMAC_Update');
+  if not assigned(HMAC_Update) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_Update');
+  Result := HMAC_Update(ctx,data,len);
+end;
+
+function Load_HMAC_Final(ctx: PHMAC_CTX; md: PByte; len: PByte): TOpenSSL_C_INT; cdecl;
+begin
+  HMAC_Final := LoadLibCryptoFunction('HMAC_Final');
+  if not assigned(HMAC_Final) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_Final');
+  Result := HMAC_Final(ctx,md,len);
+end;
+
+function Load_HMAC(const evp_md: PEVP_MD; const key: Pointer; key_len: TOpenSSL_C_INT; const d: PByte; n: TOpenSSL_C_SIZET; md: PByte; md_len: POpenSSL_C_INT): PByte; cdecl;
+begin
+  HMAC := LoadLibCryptoFunction('HMAC');
+  if not assigned(HMAC) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC');
+  Result := HMAC(evp_md,key,key_len,d,n,md,md_len);
+end;
+
+function Load_HMAC_CTX_copy(dctx: PHMAC_CTX; sctx: PHMAC_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  HMAC_CTX_copy := LoadLibCryptoFunction('HMAC_CTX_copy');
+  if not assigned(HMAC_CTX_copy) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_CTX_copy');
+  Result := HMAC_CTX_copy(dctx,sctx);
+end;
+
+procedure Load_HMAC_CTX_set_flags(ctx: PHMAC_CTX; flags: TOpenSSL_C_ULONG); cdecl;
+begin
+  HMAC_CTX_set_flags := LoadLibCryptoFunction('HMAC_CTX_set_flags');
+  if not assigned(HMAC_CTX_set_flags) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_CTX_set_flags');
+  HMAC_CTX_set_flags(ctx,flags);
+end;
+
+function Load_HMAC_CTX_get_md(const ctx: PHMAC_CTX): PEVP_MD; cdecl;
+begin
+  HMAC_CTX_get_md := LoadLibCryptoFunction('HMAC_CTX_get_md');
+  if not assigned(HMAC_CTX_get_md) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('HMAC_CTX_get_md');
+  Result := HMAC_CTX_get_md(ctx);
+end;
+
 
 procedure UnLoad;
 begin
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  HMAC_CTX_init := nil;
+  HMAC_CTX_init := Load_HMAC_CTX_init;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-  HMAC_size := nil;
-  HMAC_CTX_new := nil;
-  HMAC_CTX_reset := nil;
+  HMAC_size := Load_HMAC_size;
+  HMAC_CTX_new := Load_HMAC_CTX_new;
+  HMAC_CTX_reset := Load_HMAC_CTX_reset;
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  HMAC_CTX_cleanup := nil;
+  HMAC_CTX_cleanup := Load_HMAC_CTX_cleanup;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-  HMAC_CTX_free := nil;
-  HMAC_Init_ex := nil;
-  HMAC_Update := nil;
-  HMAC_Final := nil;
-  HMAC := nil;
-  HMAC_CTX_copy := nil;
-  HMAC_CTX_set_flags := nil;
-  HMAC_CTX_get_md := nil;
+  HMAC_CTX_free := Load_HMAC_CTX_free;
+  HMAC_Init_ex := Load_HMAC_Init_ex;
+  HMAC_Update := Load_HMAC_Update;
+  HMAC_Final := Load_HMAC_Final;
+  HMAC := Load_HMAC;
+  HMAC_CTX_copy := Load_HMAC_CTX_copy;
+  HMAC_CTX_set_flags := Load_HMAC_CTX_set_flags;
+  HMAC_CTX_get_md := Load_HMAC_CTX_get_md;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
-Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

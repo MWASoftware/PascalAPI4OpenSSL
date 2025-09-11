@@ -144,30 +144,57 @@ function SHA512(const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl; e
 procedure SHA512_Transform(c: PSHA512_CTX; const data: PByte); cdecl; external CLibCrypto;
 
 {$ELSE}
+
+{Declare external function initialisers - should not be called directly}
+
+function Load_SHA1_Init(c: PSHA_CTX): TOpenSSL_C_INT; cdecl;
+function Load_SHA1_Update(c: PSHA_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SHA1_Final(md: PByte; c: PSHA_CTX): TOpenSSL_C_INT; cdecl;
+function Load_SHA1(const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl;
+procedure Load_SHA1_Transform(c: PSHA_CTX; const data: PByte); cdecl;
+function Load_SHA224_Init(c: PSHA256_CTX): TOpenSSL_C_INT; cdecl;
+function Load_SHA224_Update(c: PSHA256_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SHA224_Final(md: PByte; c: PSHA256_CTX): TOpenSSL_C_INT; cdecl;
+function Load_SHA224(const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl;
+function Load_SHA256_Init(c: PSHA256_CTX): TOpenSSL_C_INT; cdecl;
+function Load_SHA256_Update(c: PSHA256_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SHA256_Final(md: PByte; c: PSHA256_CTX): TOpenSSL_C_INT; cdecl;
+function Load_SHA256(const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl;
+procedure Load_SHA256_Transform(c: PSHA256_CTX; const data: PByte); cdecl;
+function Load_SHA384_Init(c: PSHA512_CTX): TOpenSSL_C_INT; cdecl;
+function Load_SHA384_Update(c: PSHA512_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SHA384_Final(md: PByte; c: PSHA512_CTX): TOpenSSL_C_INT; cdecl;
+function Load_SHA384(const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl;
+function Load_SHA512_Init(c: PSHA512_CTX): TOpenSSL_C_INT; cdecl;
+function Load_SHA512_Update(c: PSHA512_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SHA512_Final(md: PByte; c: PSHA512_CTX): TOpenSSL_C_INT; cdecl;
+function Load_SHA512(const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl;
+procedure Load_SHA512_Transform(c: PSHA512_CTX; const data: PByte); cdecl;
+
 var
-  SHA1_Init: function (c: PSHA_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SHA1_Update: function (c: PSHA_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SHA1_Final: function (md: PByte; c: PSHA_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SHA1: function (const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl = nil;
-  SHA1_Transform: procedure (c: PSHA_CTX; const data: PByte); cdecl = nil;
-  SHA224_Init: function (c: PSHA256_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SHA224_Update: function (c: PSHA256_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SHA224_Final: function (md: PByte; c: PSHA256_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SHA224: function (const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl = nil;
-  SHA256_Init: function (c: PSHA256_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SHA256_Update: function (c: PSHA256_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SHA256_Final: function (md: PByte; c: PSHA256_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SHA256: function (const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl = nil;
-  SHA256_Transform: procedure (c: PSHA256_CTX; const data: PByte); cdecl = nil;
-  SHA384_Init: function (c: PSHA512_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SHA384_Update: function (c: PSHA512_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SHA384_Final: function (md: PByte; c: PSHA512_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SHA384: function (const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl = nil;
-  SHA512_Init: function (c: PSHA512_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SHA512_Update: function (c: PSHA512_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SHA512_Final: function (md: PByte; c: PSHA512_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SHA512: function (const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl = nil;
-  SHA512_Transform: procedure (c: PSHA512_CTX; const data: PByte); cdecl = nil;
+  SHA1_Init: function (c: PSHA_CTX): TOpenSSL_C_INT; cdecl = Load_SHA1_Init;
+  SHA1_Update: function (c: PSHA_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SHA1_Update;
+  SHA1_Final: function (md: PByte; c: PSHA_CTX): TOpenSSL_C_INT; cdecl = Load_SHA1_Final;
+  SHA1: function (const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl = Load_SHA1;
+  SHA1_Transform: procedure (c: PSHA_CTX; const data: PByte); cdecl = Load_SHA1_Transform;
+  SHA224_Init: function (c: PSHA256_CTX): TOpenSSL_C_INT; cdecl = Load_SHA224_Init;
+  SHA224_Update: function (c: PSHA256_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SHA224_Update;
+  SHA224_Final: function (md: PByte; c: PSHA256_CTX): TOpenSSL_C_INT; cdecl = Load_SHA224_Final;
+  SHA224: function (const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl = Load_SHA224;
+  SHA256_Init: function (c: PSHA256_CTX): TOpenSSL_C_INT; cdecl = Load_SHA256_Init;
+  SHA256_Update: function (c: PSHA256_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SHA256_Update;
+  SHA256_Final: function (md: PByte; c: PSHA256_CTX): TOpenSSL_C_INT; cdecl = Load_SHA256_Final;
+  SHA256: function (const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl = Load_SHA256;
+  SHA256_Transform: procedure (c: PSHA256_CTX; const data: PByte); cdecl = Load_SHA256_Transform;
+  SHA384_Init: function (c: PSHA512_CTX): TOpenSSL_C_INT; cdecl = Load_SHA384_Init;
+  SHA384_Update: function (c: PSHA512_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SHA384_Update;
+  SHA384_Final: function (md: PByte; c: PSHA512_CTX): TOpenSSL_C_INT; cdecl = Load_SHA384_Final;
+  SHA384: function (const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl = Load_SHA384;
+  SHA512_Init: function (c: PSHA512_CTX): TOpenSSL_C_INT; cdecl = Load_SHA512_Init;
+  SHA512_Update: function (c: PSHA512_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SHA512_Update;
+  SHA512_Final: function (md: PByte; c: PSHA512_CTX): TOpenSSL_C_INT; cdecl = Load_SHA512_Final;
+  SHA512: function (const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl = Load_SHA512;
+  SHA512_Transform: procedure (c: PSHA512_CTX; const data: PByte); cdecl = Load_SHA512_Transform;
 {$ENDIF}
 
 implementation
@@ -185,322 +212,222 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$WARN  NO_RETVAL OFF}
-function ERROR_SHA1_Init(c: PSHA_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA1_Init');
-end;
-
-function ERROR_SHA1_Update(c: PSHA_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA1_Update');
-end;
-
-function ERROR_SHA1_Final(md: PByte; c: PSHA_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA1_Final');
-end;
-
-function ERROR_SHA1(const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA1');
-end;
-
-procedure ERROR_SHA1_Transform(c: PSHA_CTX; const data: PByte); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA1_Transform');
-end;
-
-function ERROR_SHA224_Init(c: PSHA256_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA224_Init');
-end;
-
-function ERROR_SHA224_Update(c: PSHA256_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA224_Update');
-end;
-
-function ERROR_SHA224_Final(md: PByte; c: PSHA256_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA224_Final');
-end;
-
-function ERROR_SHA224(const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA224');
-end;
-
-function ERROR_SHA256_Init(c: PSHA256_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA256_Init');
-end;
-
-function ERROR_SHA256_Update(c: PSHA256_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA256_Update');
-end;
-
-function ERROR_SHA256_Final(md: PByte; c: PSHA256_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA256_Final');
-end;
-
-function ERROR_SHA256(const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA256');
-end;
-
-procedure ERROR_SHA256_Transform(c: PSHA256_CTX; const data: PByte); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA256_Transform');
-end;
-
-function ERROR_SHA384_Init(c: PSHA512_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA384_Init');
-end;
-
-function ERROR_SHA384_Update(c: PSHA512_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA384_Update');
-end;
-
-function ERROR_SHA384_Final(md: PByte; c: PSHA512_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA384_Final');
-end;
-
-function ERROR_SHA384(const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA384');
-end;
-
-function ERROR_SHA512_Init(c: PSHA512_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA512_Init');
-end;
-
-function ERROR_SHA512_Update(c: PSHA512_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA512_Update');
-end;
-
-function ERROR_SHA512_Final(md: PByte; c: PSHA512_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA512_Final');
-end;
-
-function ERROR_SHA512(const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA512');
-end;
-
-procedure ERROR_SHA512_Transform(c: PSHA512_CTX; const data: PByte); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SHA512_Transform');
-end;
-
-{$WARN  NO_RETVAL ON}
-procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
-var FuncLoadError: boolean;
+function Load_SHA1_Init(c: PSHA_CTX): TOpenSSL_C_INT; cdecl;
 begin
   SHA1_Init := LoadLibCryptoFunction('SHA1_Init');
-  FuncLoadError := not assigned(SHA1_Init);
-  if FuncLoadError then
-  begin
-    SHA1_Init :=  @ERROR_SHA1_Init;
-  end;
-
-  SHA1_Update := LoadLibCryptoFunction('SHA1_Update');
-  FuncLoadError := not assigned(SHA1_Update);
-  if FuncLoadError then
-  begin
-    SHA1_Update :=  @ERROR_SHA1_Update;
-  end;
-
-  SHA1_Final := LoadLibCryptoFunction('SHA1_Final');
-  FuncLoadError := not assigned(SHA1_Final);
-  if FuncLoadError then
-  begin
-    SHA1_Final :=  @ERROR_SHA1_Final;
-  end;
-
-  SHA1 := LoadLibCryptoFunction('SHA1');
-  FuncLoadError := not assigned(SHA1);
-  if FuncLoadError then
-  begin
-    SHA1 :=  @ERROR_SHA1;
-  end;
-
-  SHA1_Transform := LoadLibCryptoFunction('SHA1_Transform');
-  FuncLoadError := not assigned(SHA1_Transform);
-  if FuncLoadError then
-  begin
-    SHA1_Transform :=  @ERROR_SHA1_Transform;
-  end;
-
-  SHA224_Init := LoadLibCryptoFunction('SHA224_Init');
-  FuncLoadError := not assigned(SHA224_Init);
-  if FuncLoadError then
-  begin
-    SHA224_Init :=  @ERROR_SHA224_Init;
-  end;
-
-  SHA224_Update := LoadLibCryptoFunction('SHA224_Update');
-  FuncLoadError := not assigned(SHA224_Update);
-  if FuncLoadError then
-  begin
-    SHA224_Update :=  @ERROR_SHA224_Update;
-  end;
-
-  SHA224_Final := LoadLibCryptoFunction('SHA224_Final');
-  FuncLoadError := not assigned(SHA224_Final);
-  if FuncLoadError then
-  begin
-    SHA224_Final :=  @ERROR_SHA224_Final;
-  end;
-
-  SHA224 := LoadLibCryptoFunction('SHA224');
-  FuncLoadError := not assigned(SHA224);
-  if FuncLoadError then
-  begin
-    SHA224 :=  @ERROR_SHA224;
-  end;
-
-  SHA256_Init := LoadLibCryptoFunction('SHA256_Init');
-  FuncLoadError := not assigned(SHA256_Init);
-  if FuncLoadError then
-  begin
-    SHA256_Init :=  @ERROR_SHA256_Init;
-  end;
-
-  SHA256_Update := LoadLibCryptoFunction('SHA256_Update');
-  FuncLoadError := not assigned(SHA256_Update);
-  if FuncLoadError then
-  begin
-    SHA256_Update :=  @ERROR_SHA256_Update;
-  end;
-
-  SHA256_Final := LoadLibCryptoFunction('SHA256_Final');
-  FuncLoadError := not assigned(SHA256_Final);
-  if FuncLoadError then
-  begin
-    SHA256_Final :=  @ERROR_SHA256_Final;
-  end;
-
-  SHA256 := LoadLibCryptoFunction('SHA256');
-  FuncLoadError := not assigned(SHA256);
-  if FuncLoadError then
-  begin
-    SHA256 :=  @ERROR_SHA256;
-  end;
-
-  SHA256_Transform := LoadLibCryptoFunction('SHA256_Transform');
-  FuncLoadError := not assigned(SHA256_Transform);
-  if FuncLoadError then
-  begin
-    SHA256_Transform :=  @ERROR_SHA256_Transform;
-  end;
-
-  SHA384_Init := LoadLibCryptoFunction('SHA384_Init');
-  FuncLoadError := not assigned(SHA384_Init);
-  if FuncLoadError then
-  begin
-    SHA384_Init :=  @ERROR_SHA384_Init;
-  end;
-
-  SHA384_Update := LoadLibCryptoFunction('SHA384_Update');
-  FuncLoadError := not assigned(SHA384_Update);
-  if FuncLoadError then
-  begin
-    SHA384_Update :=  @ERROR_SHA384_Update;
-  end;
-
-  SHA384_Final := LoadLibCryptoFunction('SHA384_Final');
-  FuncLoadError := not assigned(SHA384_Final);
-  if FuncLoadError then
-  begin
-    SHA384_Final :=  @ERROR_SHA384_Final;
-  end;
-
-  SHA384 := LoadLibCryptoFunction('SHA384');
-  FuncLoadError := not assigned(SHA384);
-  if FuncLoadError then
-  begin
-    SHA384 :=  @ERROR_SHA384;
-  end;
-
-  SHA512_Init := LoadLibCryptoFunction('SHA512_Init');
-  FuncLoadError := not assigned(SHA512_Init);
-  if FuncLoadError then
-  begin
-    SHA512_Init :=  @ERROR_SHA512_Init;
-  end;
-
-  SHA512_Update := LoadLibCryptoFunction('SHA512_Update');
-  FuncLoadError := not assigned(SHA512_Update);
-  if FuncLoadError then
-  begin
-    SHA512_Update :=  @ERROR_SHA512_Update;
-  end;
-
-  SHA512_Final := LoadLibCryptoFunction('SHA512_Final');
-  FuncLoadError := not assigned(SHA512_Final);
-  if FuncLoadError then
-  begin
-    SHA512_Final :=  @ERROR_SHA512_Final;
-  end;
-
-  SHA512 := LoadLibCryptoFunction('SHA512');
-  FuncLoadError := not assigned(SHA512);
-  if FuncLoadError then
-  begin
-    SHA512 :=  @ERROR_SHA512;
-  end;
-
-  SHA512_Transform := LoadLibCryptoFunction('SHA512_Transform');
-  FuncLoadError := not assigned(SHA512_Transform);
-  if FuncLoadError then
-  begin
-    SHA512_Transform :=  @ERROR_SHA512_Transform;
-  end;
-
+  if not assigned(SHA1_Init) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA1_Init');
+  Result := SHA1_Init(c);
 end;
+
+function Load_SHA1_Update(c: PSHA_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
+  SHA1_Update := LoadLibCryptoFunction('SHA1_Update');
+  if not assigned(SHA1_Update) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA1_Update');
+  Result := SHA1_Update(c,data,len);
+end;
+
+function Load_SHA1_Final(md: PByte; c: PSHA_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  SHA1_Final := LoadLibCryptoFunction('SHA1_Final');
+  if not assigned(SHA1_Final) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA1_Final');
+  Result := SHA1_Final(md,c);
+end;
+
+function Load_SHA1(const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl;
+begin
+  SHA1 := LoadLibCryptoFunction('SHA1');
+  if not assigned(SHA1) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA1');
+  Result := SHA1(d,n,md);
+end;
+
+procedure Load_SHA1_Transform(c: PSHA_CTX; const data: PByte); cdecl;
+begin
+  SHA1_Transform := LoadLibCryptoFunction('SHA1_Transform');
+  if not assigned(SHA1_Transform) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA1_Transform');
+  SHA1_Transform(c,data);
+end;
+
+function Load_SHA224_Init(c: PSHA256_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  SHA224_Init := LoadLibCryptoFunction('SHA224_Init');
+  if not assigned(SHA224_Init) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA224_Init');
+  Result := SHA224_Init(c);
+end;
+
+function Load_SHA224_Update(c: PSHA256_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
+  SHA224_Update := LoadLibCryptoFunction('SHA224_Update');
+  if not assigned(SHA224_Update) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA224_Update');
+  Result := SHA224_Update(c,data,len);
+end;
+
+function Load_SHA224_Final(md: PByte; c: PSHA256_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  SHA224_Final := LoadLibCryptoFunction('SHA224_Final');
+  if not assigned(SHA224_Final) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA224_Final');
+  Result := SHA224_Final(md,c);
+end;
+
+function Load_SHA224(const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl;
+begin
+  SHA224 := LoadLibCryptoFunction('SHA224');
+  if not assigned(SHA224) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA224');
+  Result := SHA224(d,n,md);
+end;
+
+function Load_SHA256_Init(c: PSHA256_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  SHA256_Init := LoadLibCryptoFunction('SHA256_Init');
+  if not assigned(SHA256_Init) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA256_Init');
+  Result := SHA256_Init(c);
+end;
+
+function Load_SHA256_Update(c: PSHA256_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
+  SHA256_Update := LoadLibCryptoFunction('SHA256_Update');
+  if not assigned(SHA256_Update) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA256_Update');
+  Result := SHA256_Update(c,data,len);
+end;
+
+function Load_SHA256_Final(md: PByte; c: PSHA256_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  SHA256_Final := LoadLibCryptoFunction('SHA256_Final');
+  if not assigned(SHA256_Final) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA256_Final');
+  Result := SHA256_Final(md,c);
+end;
+
+function Load_SHA256(const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl;
+begin
+  SHA256 := LoadLibCryptoFunction('SHA256');
+  if not assigned(SHA256) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA256');
+  Result := SHA256(d,n,md);
+end;
+
+procedure Load_SHA256_Transform(c: PSHA256_CTX; const data: PByte); cdecl;
+begin
+  SHA256_Transform := LoadLibCryptoFunction('SHA256_Transform');
+  if not assigned(SHA256_Transform) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA256_Transform');
+  SHA256_Transform(c,data);
+end;
+
+function Load_SHA384_Init(c: PSHA512_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  SHA384_Init := LoadLibCryptoFunction('SHA384_Init');
+  if not assigned(SHA384_Init) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA384_Init');
+  Result := SHA384_Init(c);
+end;
+
+function Load_SHA384_Update(c: PSHA512_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
+  SHA384_Update := LoadLibCryptoFunction('SHA384_Update');
+  if not assigned(SHA384_Update) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA384_Update');
+  Result := SHA384_Update(c,data,len);
+end;
+
+function Load_SHA384_Final(md: PByte; c: PSHA512_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  SHA384_Final := LoadLibCryptoFunction('SHA384_Final');
+  if not assigned(SHA384_Final) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA384_Final');
+  Result := SHA384_Final(md,c);
+end;
+
+function Load_SHA384(const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl;
+begin
+  SHA384 := LoadLibCryptoFunction('SHA384');
+  if not assigned(SHA384) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA384');
+  Result := SHA384(d,n,md);
+end;
+
+function Load_SHA512_Init(c: PSHA512_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  SHA512_Init := LoadLibCryptoFunction('SHA512_Init');
+  if not assigned(SHA512_Init) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA512_Init');
+  Result := SHA512_Init(c);
+end;
+
+function Load_SHA512_Update(c: PSHA512_CTX; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
+  SHA512_Update := LoadLibCryptoFunction('SHA512_Update');
+  if not assigned(SHA512_Update) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA512_Update');
+  Result := SHA512_Update(c,data,len);
+end;
+
+function Load_SHA512_Final(md: PByte; c: PSHA512_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  SHA512_Final := LoadLibCryptoFunction('SHA512_Final');
+  if not assigned(SHA512_Final) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA512_Final');
+  Result := SHA512_Final(md,c);
+end;
+
+function Load_SHA512(const d: PByte; n: TOpenSSL_C_SIZET; md: PByte): PByte; cdecl;
+begin
+  SHA512 := LoadLibCryptoFunction('SHA512');
+  if not assigned(SHA512) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA512');
+  Result := SHA512(d,n,md);
+end;
+
+procedure Load_SHA512_Transform(c: PSHA512_CTX; const data: PByte); cdecl;
+begin
+  SHA512_Transform := LoadLibCryptoFunction('SHA512_Transform');
+  if not assigned(SHA512_Transform) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SHA512_Transform');
+  SHA512_Transform(c,data);
+end;
+
 
 procedure UnLoad;
 begin
-  SHA1_Init := nil;
-  SHA1_Update := nil;
-  SHA1_Final := nil;
-  SHA1 := nil;
-  SHA1_Transform := nil;
-  SHA224_Init := nil;
-  SHA224_Update := nil;
-  SHA224_Final := nil;
-  SHA224 := nil;
-  SHA256_Init := nil;
-  SHA256_Update := nil;
-  SHA256_Final := nil;
-  SHA256 := nil;
-  SHA256_Transform := nil;
-  SHA384_Init := nil;
-  SHA384_Update := nil;
-  SHA384_Final := nil;
-  SHA384 := nil;
-  SHA512_Init := nil;
-  SHA512_Update := nil;
-  SHA512_Final := nil;
-  SHA512 := nil;
-  SHA512_Transform := nil;
+  SHA1_Init := Load_SHA1_Init;
+  SHA1_Update := Load_SHA1_Update;
+  SHA1_Final := Load_SHA1_Final;
+  SHA1 := Load_SHA1;
+  SHA1_Transform := Load_SHA1_Transform;
+  SHA224_Init := Load_SHA224_Init;
+  SHA224_Update := Load_SHA224_Update;
+  SHA224_Final := Load_SHA224_Final;
+  SHA224 := Load_SHA224;
+  SHA256_Init := Load_SHA256_Init;
+  SHA256_Update := Load_SHA256_Update;
+  SHA256_Final := Load_SHA256_Final;
+  SHA256 := Load_SHA256;
+  SHA256_Transform := Load_SHA256_Transform;
+  SHA384_Init := Load_SHA384_Init;
+  SHA384_Update := Load_SHA384_Update;
+  SHA384_Final := Load_SHA384_Final;
+  SHA384 := Load_SHA384;
+  SHA512_Init := Load_SHA512_Init;
+  SHA512_Update := Load_SHA512_Update;
+  SHA512_Final := Load_SHA512_Final;
+  SHA512 := Load_SHA512;
+  SHA512_Transform := Load_SHA512_Transform;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
-Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

@@ -1124,23 +1124,40 @@ function SSL_get_shared_sigalgs(s: PSSl; idx: TOpenSSL_C_INT; psign: POpenSSL_C_
 function SSL_set_tlsext_host_name(s: PSSL; const name: PAnsiChar): TOpenSSL_C_LONG; {removed 1.0.0}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ELSE}
+
+{Declare external function initialisers - should not be called directly}
+
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_SSL_set_tlsext_host_name(s: PSSL; const name: PAnsiChar): TOpenSSL_C_LONG; cdecl;
+{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_SSL_CTX_set_tlsext_max_fragment_length(ctx: PSSL_CTx; mode: TOpenSSL_C_UINT8): TOpenSSL_C_INT; cdecl;
+function Load_SSL_set_tlsext_max_fragment_length(ssl: PSSL; mode: TOpenSSL_C_UINT8): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_servername(const s: PSSL; const type_: TOpenSSL_C_INT): PAnsiChar; cdecl;
+function Load_SSL_get_servername_type(const s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_export_keying_material(s: PSSL; out_: PByte; olen: TOpenSSL_C_SIZET; const label_: PAnsiChar; llen: TOpenSSL_C_SIZET; const context: PByte; contextlen: TOpenSSL_C_SIZET; use_context: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_export_keying_material_early(s: PSSL; out_: PByte; olen: TOpenSSL_C_SIZET; const label_: PAnsiChar; llen: TOpenSSL_C_SIZET; const context: PByte; contextlen: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_peer_signature_type_nid(const s: PSSl; pnid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_signature_type_nid(const s: PSSl; pnid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_sigalgs(s: PSSl; idx: TOpenSSL_C_INT; psign: POpenSSL_C_INT; phash: POpenSSL_C_INT; psignandhash: POpenSSL_C_INT; rsig: PByte; rhash: PByte): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_shared_sigalgs(s: PSSl; idx: TOpenSSL_C_INT; psign: POpenSSL_C_INT; phash: POpenSSL_C_INT; psignandhash: POpenSSL_C_INT; rsig: PByte; rhash: PByte): TOpenSSL_C_INT; cdecl;
+
 var
-  SSL_CTX_set_tlsext_max_fragment_length: function (ctx: PSSL_CTx; mode: TOpenSSL_C_UINT8): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set_tlsext_max_fragment_length: function (ssl: PSSL; mode: TOpenSSL_C_UINT8): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_servername: function (const s: PSSL; const type_: TOpenSSL_C_INT): PAnsiChar; cdecl = nil;
-  SSL_get_servername_type: function (const s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_export_keying_material: function (s: PSSL; out_: PByte; olen: TOpenSSL_C_SIZET; const label_: PAnsiChar; llen: TOpenSSL_C_SIZET; const context: PByte; contextlen: TOpenSSL_C_SIZET; use_context: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_export_keying_material_early: function (s: PSSL; out_: PByte; olen: TOpenSSL_C_SIZET; const label_: PAnsiChar; llen: TOpenSSL_C_SIZET; const context: PByte; contextlen: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_peer_signature_type_nid: function (const s: PSSl; pnid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_signature_type_nid: function (const s: PSSl; pnid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_sigalgs: function (s: PSSl; idx: TOpenSSL_C_INT; psign: POpenSSL_C_INT; phash: POpenSSL_C_INT; psignandhash: POpenSSL_C_INT; rsig: PByte; rhash: PByte): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_shared_sigalgs: function (s: PSSl; idx: TOpenSSL_C_INT; psign: POpenSSL_C_INT; phash: POpenSSL_C_INT; psignandhash: POpenSSL_C_INT; rsig: PByte; rhash: PByte): TOpenSSL_C_INT; cdecl = nil;
+  SSL_CTX_set_tlsext_max_fragment_length: function (ctx: PSSL_CTx; mode: TOpenSSL_C_UINT8): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_tlsext_max_fragment_length;
+  SSL_set_tlsext_max_fragment_length: function (ssl: PSSL; mode: TOpenSSL_C_UINT8): TOpenSSL_C_INT; cdecl = Load_SSL_set_tlsext_max_fragment_length;
+  SSL_get_servername: function (const s: PSSL; const type_: TOpenSSL_C_INT): PAnsiChar; cdecl = Load_SSL_get_servername;
+  SSL_get_servername_type: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_get_servername_type;
+  SSL_export_keying_material: function (s: PSSL; out_: PByte; olen: TOpenSSL_C_SIZET; const label_: PAnsiChar; llen: TOpenSSL_C_SIZET; const context: PByte; contextlen: TOpenSSL_C_SIZET; use_context: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_export_keying_material;
+  SSL_export_keying_material_early: function (s: PSSL; out_: PByte; olen: TOpenSSL_C_SIZET; const label_: PAnsiChar; llen: TOpenSSL_C_SIZET; const context: PByte; contextlen: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_export_keying_material_early;
+  SSL_get_peer_signature_type_nid: function (const s: PSSl; pnid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_get_peer_signature_type_nid;
+  SSL_get_signature_type_nid: function (const s: PSSl; pnid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_get_signature_type_nid;
+  SSL_get_sigalgs: function (s: PSSl; idx: TOpenSSL_C_INT; psign: POpenSSL_C_INT; phash: POpenSSL_C_INT; psignandhash: POpenSSL_C_INT; rsig: PByte; rhash: PByte): TOpenSSL_C_INT; cdecl = Load_SSL_get_sigalgs;
+  SSL_get_shared_sigalgs: function (s: PSSl; idx: TOpenSSL_C_INT; psign: POpenSSL_C_INT; phash: POpenSSL_C_INT; psignandhash: POpenSSL_C_INT; rsig: PByte; rhash: PByte): TOpenSSL_C_INT; cdecl = Load_SSL_get_shared_sigalgs;
 
 {Removed functions for which legacy support available - use is deprecated}
 
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 var
-  SSL_set_tlsext_host_name: function (s: PSSL; const name: PAnsiChar): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
+  SSL_set_tlsext_host_name: function (s: PSSL; const name: PAnsiChar): TOpenSSL_C_LONG; cdecl = Load_SSL_set_tlsext_host_name; {removed 1.0.0}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF}
 const
@@ -1193,176 +1210,118 @@ end;
 
 
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$WARN  NO_RETVAL OFF}
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_set_tlsext_host_name(s: PSSL; const name: PAnsiChar): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_tlsext_host_name');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-function ERROR_SSL_CTX_set_tlsext_max_fragment_length(ctx: PSSL_CTx; mode: TOpenSSL_C_UINT8): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_tlsext_max_fragment_length');
-end;
-
-function ERROR_SSL_set_tlsext_max_fragment_length(ssl: PSSL; mode: TOpenSSL_C_UINT8): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_tlsext_max_fragment_length');
-end;
-
-function ERROR_SSL_get_servername(const s: PSSL; const type_: TOpenSSL_C_INT): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_servername');
-end;
-
-function ERROR_SSL_get_servername_type(const s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_servername_type');
-end;
-
-function ERROR_SSL_export_keying_material(s: PSSL; out_: PByte; olen: TOpenSSL_C_SIZET; const label_: PAnsiChar; llen: TOpenSSL_C_SIZET; const context: PByte; contextlen: TOpenSSL_C_SIZET; use_context: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_export_keying_material');
-end;
-
-function ERROR_SSL_export_keying_material_early(s: PSSL; out_: PByte; olen: TOpenSSL_C_SIZET; const label_: PAnsiChar; llen: TOpenSSL_C_SIZET; const context: PByte; contextlen: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_export_keying_material_early');
-end;
-
-function ERROR_SSL_get_peer_signature_type_nid(const s: PSSl; pnid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_peer_signature_type_nid');
-end;
-
-function ERROR_SSL_get_signature_type_nid(const s: PSSl; pnid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_signature_type_nid');
-end;
-
-function ERROR_SSL_get_sigalgs(s: PSSl; idx: TOpenSSL_C_INT; psign: POpenSSL_C_INT; phash: POpenSSL_C_INT; psignandhash: POpenSSL_C_INT; rsig: PByte; rhash: PByte): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_sigalgs');
-end;
-
-function ERROR_SSL_get_shared_sigalgs(s: PSSl; idx: TOpenSSL_C_INT; psign: POpenSSL_C_INT; phash: POpenSSL_C_INT; psignandhash: POpenSSL_C_INT; rsig: PByte; rhash: PByte): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_shared_sigalgs');
-end;
-
-{$WARN  NO_RETVAL ON}
-procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
-var FuncLoadError: boolean;
-begin
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_SSL_set_tlsext_host_name(s: PSSL; const name: PAnsiChar): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_set_tlsext_host_name := LoadLibSSLFunction('SSL_set_tlsext_host_name');
-  FuncLoadError := not assigned(SSL_set_tlsext_host_name);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_set_tlsext_host_name) then
     SSL_set_tlsext_host_name := @COMPAT_SSL_set_tlsext_host_name;
-    if SSL_set_tlsext_host_name_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_set_tlsext_host_name');
-  end;
+  Result := SSL_set_tlsext_host_name(s,name);
+end;
 
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_SSL_CTX_set_tlsext_max_fragment_length(ctx: PSSL_CTx; mode: TOpenSSL_C_UINT8): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_tlsext_max_fragment_length := LoadLibSSLFunction('SSL_CTX_set_tlsext_max_fragment_length');
-  FuncLoadError := not assigned(SSL_CTX_set_tlsext_max_fragment_length);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_tlsext_max_fragment_length :=  @ERROR_SSL_CTX_set_tlsext_max_fragment_length;
-  end;
-
-  SSL_set_tlsext_max_fragment_length := LoadLibSSLFunction('SSL_set_tlsext_max_fragment_length');
-  FuncLoadError := not assigned(SSL_set_tlsext_max_fragment_length);
-  if FuncLoadError then
-  begin
-    SSL_set_tlsext_max_fragment_length :=  @ERROR_SSL_set_tlsext_max_fragment_length;
-  end;
-
-  SSL_get_servername := LoadLibSSLFunction('SSL_get_servername');
-  FuncLoadError := not assigned(SSL_get_servername);
-  if FuncLoadError then
-  begin
-    SSL_get_servername :=  @ERROR_SSL_get_servername;
-  end;
-
-  SSL_get_servername_type := LoadLibSSLFunction('SSL_get_servername_type');
-  FuncLoadError := not assigned(SSL_get_servername_type);
-  if FuncLoadError then
-  begin
-    SSL_get_servername_type :=  @ERROR_SSL_get_servername_type;
-  end;
-
-  SSL_export_keying_material := LoadLibSSLFunction('SSL_export_keying_material');
-  FuncLoadError := not assigned(SSL_export_keying_material);
-  if FuncLoadError then
-  begin
-    SSL_export_keying_material :=  @ERROR_SSL_export_keying_material;
-  end;
-
-  SSL_export_keying_material_early := LoadLibSSLFunction('SSL_export_keying_material_early');
-  FuncLoadError := not assigned(SSL_export_keying_material_early);
-  if FuncLoadError then
-  begin
-    SSL_export_keying_material_early :=  @ERROR_SSL_export_keying_material_early;
-  end;
-
-  SSL_get_peer_signature_type_nid := LoadLibSSLFunction('SSL_get_peer_signature_type_nid');
-  FuncLoadError := not assigned(SSL_get_peer_signature_type_nid);
-  if FuncLoadError then
-  begin
-    SSL_get_peer_signature_type_nid :=  @ERROR_SSL_get_peer_signature_type_nid;
-  end;
-
-  SSL_get_signature_type_nid := LoadLibSSLFunction('SSL_get_signature_type_nid');
-  FuncLoadError := not assigned(SSL_get_signature_type_nid);
-  if FuncLoadError then
-  begin
-    SSL_get_signature_type_nid :=  @ERROR_SSL_get_signature_type_nid;
-  end;
-
-  SSL_get_sigalgs := LoadLibSSLFunction('SSL_get_sigalgs');
-  FuncLoadError := not assigned(SSL_get_sigalgs);
-  if FuncLoadError then
-  begin
-    SSL_get_sigalgs :=  @ERROR_SSL_get_sigalgs;
-  end;
-
-  SSL_get_shared_sigalgs := LoadLibSSLFunction('SSL_get_shared_sigalgs');
-  FuncLoadError := not assigned(SSL_get_shared_sigalgs);
-  if FuncLoadError then
-  begin
-    SSL_get_shared_sigalgs :=  @ERROR_SSL_get_shared_sigalgs;
-  end;
-
+  if not assigned(SSL_CTX_set_tlsext_max_fragment_length) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_tlsext_max_fragment_length');
+  Result := SSL_CTX_set_tlsext_max_fragment_length(ctx,mode);
 end;
+
+function Load_SSL_set_tlsext_max_fragment_length(ssl: PSSL; mode: TOpenSSL_C_UINT8): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_set_tlsext_max_fragment_length := LoadLibSSLFunction('SSL_set_tlsext_max_fragment_length');
+  if not assigned(SSL_set_tlsext_max_fragment_length) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_tlsext_max_fragment_length');
+  Result := SSL_set_tlsext_max_fragment_length(ssl,mode);
+end;
+
+function Load_SSL_get_servername(const s: PSSL; const type_: TOpenSSL_C_INT): PAnsiChar; cdecl;
+begin
+  SSL_get_servername := LoadLibSSLFunction('SSL_get_servername');
+  if not assigned(SSL_get_servername) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_servername');
+  Result := SSL_get_servername(s,type_);
+end;
+
+function Load_SSL_get_servername_type(const s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_get_servername_type := LoadLibSSLFunction('SSL_get_servername_type');
+  if not assigned(SSL_get_servername_type) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_servername_type');
+  Result := SSL_get_servername_type(s);
+end;
+
+function Load_SSL_export_keying_material(s: PSSL; out_: PByte; olen: TOpenSSL_C_SIZET; const label_: PAnsiChar; llen: TOpenSSL_C_SIZET; const context: PByte; contextlen: TOpenSSL_C_SIZET; use_context: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_export_keying_material := LoadLibSSLFunction('SSL_export_keying_material');
+  if not assigned(SSL_export_keying_material) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_export_keying_material');
+  Result := SSL_export_keying_material(s,out_,olen,label_,llen,context,contextlen,use_context);
+end;
+
+function Load_SSL_export_keying_material_early(s: PSSL; out_: PByte; olen: TOpenSSL_C_SIZET; const label_: PAnsiChar; llen: TOpenSSL_C_SIZET; const context: PByte; contextlen: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_export_keying_material_early := LoadLibSSLFunction('SSL_export_keying_material_early');
+  if not assigned(SSL_export_keying_material_early) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_export_keying_material_early');
+  Result := SSL_export_keying_material_early(s,out_,olen,label_,llen,context,contextlen);
+end;
+
+function Load_SSL_get_peer_signature_type_nid(const s: PSSl; pnid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_get_peer_signature_type_nid := LoadLibSSLFunction('SSL_get_peer_signature_type_nid');
+  if not assigned(SSL_get_peer_signature_type_nid) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_peer_signature_type_nid');
+  Result := SSL_get_peer_signature_type_nid(s,pnid);
+end;
+
+function Load_SSL_get_signature_type_nid(const s: PSSl; pnid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_get_signature_type_nid := LoadLibSSLFunction('SSL_get_signature_type_nid');
+  if not assigned(SSL_get_signature_type_nid) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_signature_type_nid');
+  Result := SSL_get_signature_type_nid(s,pnid);
+end;
+
+function Load_SSL_get_sigalgs(s: PSSl; idx: TOpenSSL_C_INT; psign: POpenSSL_C_INT; phash: POpenSSL_C_INT; psignandhash: POpenSSL_C_INT; rsig: PByte; rhash: PByte): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_get_sigalgs := LoadLibSSLFunction('SSL_get_sigalgs');
+  if not assigned(SSL_get_sigalgs) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_sigalgs');
+  Result := SSL_get_sigalgs(s,idx,psign,phash,psignandhash,rsig,rhash);
+end;
+
+function Load_SSL_get_shared_sigalgs(s: PSSl; idx: TOpenSSL_C_INT; psign: POpenSSL_C_INT; phash: POpenSSL_C_INT; psignandhash: POpenSSL_C_INT; rsig: PByte; rhash: PByte): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_get_shared_sigalgs := LoadLibSSLFunction('SSL_get_shared_sigalgs');
+  if not assigned(SSL_get_shared_sigalgs) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_shared_sigalgs');
+  Result := SSL_get_shared_sigalgs(s,idx,psign,phash,psignandhash,rsig,rhash);
+end;
+
 
 procedure UnLoad;
 begin
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  SSL_set_tlsext_host_name := nil;
+  SSL_set_tlsext_host_name := Load_SSL_set_tlsext_host_name;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-  SSL_CTX_set_tlsext_max_fragment_length := nil;
-  SSL_set_tlsext_max_fragment_length := nil;
-  SSL_get_servername := nil;
-  SSL_get_servername_type := nil;
-  SSL_export_keying_material := nil;
-  SSL_export_keying_material_early := nil;
-  SSL_get_peer_signature_type_nid := nil;
-  SSL_get_signature_type_nid := nil;
-  SSL_get_sigalgs := nil;
-  SSL_get_shared_sigalgs := nil;
+  SSL_CTX_set_tlsext_max_fragment_length := Load_SSL_CTX_set_tlsext_max_fragment_length;
+  SSL_set_tlsext_max_fragment_length := Load_SSL_set_tlsext_max_fragment_length;
+  SSL_get_servername := Load_SSL_get_servername;
+  SSL_get_servername_type := Load_SSL_get_servername_type;
+  SSL_export_keying_material := Load_SSL_export_keying_material;
+  SSL_export_keying_material_early := Load_SSL_export_keying_material_early;
+  SSL_get_peer_signature_type_nid := Load_SSL_get_peer_signature_type_nid;
+  SSL_get_signature_type_nid := Load_SSL_get_signature_type_nid;
+  SSL_get_sigalgs := Load_SSL_get_sigalgs;
+  SSL_get_shared_sigalgs := Load_SSL_get_shared_sigalgs;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
-Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

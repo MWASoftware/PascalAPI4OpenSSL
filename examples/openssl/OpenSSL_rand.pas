@@ -94,23 +94,43 @@ function RAND_egd_bytes(const path: PAnsiChar; bytes: TOpenSSL_C_INT): TOpenSSL_
 function RAND_poll: TOpenSSL_C_INT; cdecl; external CLibCrypto;
 
 {$ELSE}
+
+{Declare external function initialisers - should not be called directly}
+
+function Load_RAND_set_rand_method(const meth: PRAND_METHOD): TOpenSSL_C_INT; cdecl;
+function Load_RAND_get_rand_method: PRAND_METHOD; cdecl;
+function Load_RAND_set_rand_engine(engine: PENGINE): TOpenSSL_C_INT; cdecl;
+function Load_RAND_OpenSSL: PRAND_METHOD; cdecl;
+function Load_RAND_bytes(buf: PByte; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_RAND_priv_bytes(buf: PByte; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+procedure Load_RAND_seed(const buf: Pointer; num: TOpenSSL_C_INT); cdecl;
+procedure Load_RAND_keep_random_devices_open(keep: TOpenSSL_C_INT); cdecl;
+procedure Load_RAND_add(const buf: Pointer; num: TOpenSSL_C_INT; randomness: TOpenSSL_C_DOUBLE); cdecl;
+function Load_RAND_load_file(const file_: PAnsiChar; max_bytes: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
+function Load_RAND_write_file(const file_: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_RAND_status: TOpenSSL_C_INT; cdecl;
+function Load_RAND_query_egd_bytes(const path: PAnsiChar; buf: PByte; bytes: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_RAND_egd(const path: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_RAND_egd_bytes(const path: PAnsiChar; bytes: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_RAND_poll: TOpenSSL_C_INT; cdecl;
+
 var
-  RAND_set_rand_method: function (const meth: PRAND_METHOD): TOpenSSL_C_INT; cdecl = nil;
-  RAND_get_rand_method: function : PRAND_METHOD; cdecl = nil;
-  RAND_set_rand_engine: function (engine: PENGINE): TOpenSSL_C_INT; cdecl = nil;
-  RAND_OpenSSL: function : PRAND_METHOD; cdecl = nil;
-  RAND_bytes: function (buf: PByte; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  RAND_priv_bytes: function (buf: PByte; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  RAND_seed: procedure (const buf: Pointer; num: TOpenSSL_C_INT); cdecl = nil;
-  RAND_keep_random_devices_open: procedure (keep: TOpenSSL_C_INT); cdecl = nil;
-  RAND_add: procedure (const buf: Pointer; num: TOpenSSL_C_INT; randomness: TOpenSSL_C_DOUBLE); cdecl = nil;
-  RAND_load_file: function (const file_: PAnsiChar; max_bytes: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl = nil;
-  RAND_write_file: function (const file_: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  RAND_status: function : TOpenSSL_C_INT; cdecl = nil;
-  RAND_query_egd_bytes: function (const path: PAnsiChar; buf: PByte; bytes: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  RAND_egd: function (const path: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  RAND_egd_bytes: function (const path: PAnsiChar; bytes: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  RAND_poll: function : TOpenSSL_C_INT; cdecl = nil;
+  RAND_set_rand_method: function (const meth: PRAND_METHOD): TOpenSSL_C_INT; cdecl = Load_RAND_set_rand_method;
+  RAND_get_rand_method: function : PRAND_METHOD; cdecl = Load_RAND_get_rand_method;
+  RAND_set_rand_engine: function (engine: PENGINE): TOpenSSL_C_INT; cdecl = Load_RAND_set_rand_engine;
+  RAND_OpenSSL: function : PRAND_METHOD; cdecl = Load_RAND_OpenSSL;
+  RAND_bytes: function (buf: PByte; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_RAND_bytes;
+  RAND_priv_bytes: function (buf: PByte; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_RAND_priv_bytes;
+  RAND_seed: procedure (const buf: Pointer; num: TOpenSSL_C_INT); cdecl = Load_RAND_seed;
+  RAND_keep_random_devices_open: procedure (keep: TOpenSSL_C_INT); cdecl = Load_RAND_keep_random_devices_open;
+  RAND_add: procedure (const buf: Pointer; num: TOpenSSL_C_INT; randomness: TOpenSSL_C_DOUBLE); cdecl = Load_RAND_add;
+  RAND_load_file: function (const file_: PAnsiChar; max_bytes: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl = Load_RAND_load_file;
+  RAND_write_file: function (const file_: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_RAND_write_file;
+  RAND_status: function : TOpenSSL_C_INT; cdecl = Load_RAND_status;
+  RAND_query_egd_bytes: function (const path: PAnsiChar; buf: PByte; bytes: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_RAND_query_egd_bytes;
+  RAND_egd: function (const path: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_RAND_egd;
+  RAND_egd_bytes: function (const path: PAnsiChar; bytes: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_RAND_egd_bytes;
+  RAND_poll: function : TOpenSSL_C_INT; cdecl = Load_RAND_poll;
 {$ENDIF}
 
 implementation
@@ -128,231 +148,159 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$WARN  NO_RETVAL OFF}
-function ERROR_RAND_set_rand_method(const meth: PRAND_METHOD): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_set_rand_method');
-end;
-
-function ERROR_RAND_get_rand_method: PRAND_METHOD; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_get_rand_method');
-end;
-
-function ERROR_RAND_set_rand_engine(engine: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_set_rand_engine');
-end;
-
-function ERROR_RAND_OpenSSL: PRAND_METHOD; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_OpenSSL');
-end;
-
-function ERROR_RAND_bytes(buf: PByte; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_bytes');
-end;
-
-function ERROR_RAND_priv_bytes(buf: PByte; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_priv_bytes');
-end;
-
-procedure ERROR_RAND_seed(const buf: Pointer; num: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_seed');
-end;
-
-procedure ERROR_RAND_keep_random_devices_open(keep: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_keep_random_devices_open');
-end;
-
-procedure ERROR_RAND_add(const buf: Pointer; num: TOpenSSL_C_INT; randomness: TOpenSSL_C_DOUBLE); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_add');
-end;
-
-function ERROR_RAND_load_file(const file_: PAnsiChar; max_bytes: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_load_file');
-end;
-
-function ERROR_RAND_write_file(const file_: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_write_file');
-end;
-
-function ERROR_RAND_status: TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_status');
-end;
-
-function ERROR_RAND_query_egd_bytes(const path: PAnsiChar; buf: PByte; bytes: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_query_egd_bytes');
-end;
-
-function ERROR_RAND_egd(const path: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_egd');
-end;
-
-function ERROR_RAND_egd_bytes(const path: PAnsiChar; bytes: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_egd_bytes');
-end;
-
-function ERROR_RAND_poll: TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_poll');
-end;
-
-{$WARN  NO_RETVAL ON}
-procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
-var FuncLoadError: boolean;
+function Load_RAND_set_rand_method(const meth: PRAND_METHOD): TOpenSSL_C_INT; cdecl;
 begin
   RAND_set_rand_method := LoadLibCryptoFunction('RAND_set_rand_method');
-  FuncLoadError := not assigned(RAND_set_rand_method);
-  if FuncLoadError then
-  begin
-    RAND_set_rand_method :=  @ERROR_RAND_set_rand_method;
-  end;
-
-  RAND_get_rand_method := LoadLibCryptoFunction('RAND_get_rand_method');
-  FuncLoadError := not assigned(RAND_get_rand_method);
-  if FuncLoadError then
-  begin
-    RAND_get_rand_method :=  @ERROR_RAND_get_rand_method;
-  end;
-
-  RAND_set_rand_engine := LoadLibCryptoFunction('RAND_set_rand_engine');
-  FuncLoadError := not assigned(RAND_set_rand_engine);
-  if FuncLoadError then
-  begin
-    RAND_set_rand_engine :=  @ERROR_RAND_set_rand_engine;
-  end;
-
-  RAND_OpenSSL := LoadLibCryptoFunction('RAND_OpenSSL');
-  FuncLoadError := not assigned(RAND_OpenSSL);
-  if FuncLoadError then
-  begin
-    RAND_OpenSSL :=  @ERROR_RAND_OpenSSL;
-  end;
-
-  RAND_bytes := LoadLibCryptoFunction('RAND_bytes');
-  FuncLoadError := not assigned(RAND_bytes);
-  if FuncLoadError then
-  begin
-    RAND_bytes :=  @ERROR_RAND_bytes;
-  end;
-
-  RAND_priv_bytes := LoadLibCryptoFunction('RAND_priv_bytes');
-  FuncLoadError := not assigned(RAND_priv_bytes);
-  if FuncLoadError then
-  begin
-    RAND_priv_bytes :=  @ERROR_RAND_priv_bytes;
-  end;
-
-  RAND_seed := LoadLibCryptoFunction('RAND_seed');
-  FuncLoadError := not assigned(RAND_seed);
-  if FuncLoadError then
-  begin
-    RAND_seed :=  @ERROR_RAND_seed;
-  end;
-
-  RAND_keep_random_devices_open := LoadLibCryptoFunction('RAND_keep_random_devices_open');
-  FuncLoadError := not assigned(RAND_keep_random_devices_open);
-  if FuncLoadError then
-  begin
-    RAND_keep_random_devices_open :=  @ERROR_RAND_keep_random_devices_open;
-  end;
-
-  RAND_add := LoadLibCryptoFunction('RAND_add');
-  FuncLoadError := not assigned(RAND_add);
-  if FuncLoadError then
-  begin
-    RAND_add :=  @ERROR_RAND_add;
-  end;
-
-  RAND_load_file := LoadLibCryptoFunction('RAND_load_file');
-  FuncLoadError := not assigned(RAND_load_file);
-  if FuncLoadError then
-  begin
-    RAND_load_file :=  @ERROR_RAND_load_file;
-  end;
-
-  RAND_write_file := LoadLibCryptoFunction('RAND_write_file');
-  FuncLoadError := not assigned(RAND_write_file);
-  if FuncLoadError then
-  begin
-    RAND_write_file :=  @ERROR_RAND_write_file;
-  end;
-
-  RAND_status := LoadLibCryptoFunction('RAND_status');
-  FuncLoadError := not assigned(RAND_status);
-  if FuncLoadError then
-  begin
-    RAND_status :=  @ERROR_RAND_status;
-  end;
-
-  RAND_query_egd_bytes := LoadLibCryptoFunction('RAND_query_egd_bytes');
-  FuncLoadError := not assigned(RAND_query_egd_bytes);
-  if FuncLoadError then
-  begin
-    RAND_query_egd_bytes :=  @ERROR_RAND_query_egd_bytes;
-  end;
-
-  RAND_egd := LoadLibCryptoFunction('RAND_egd');
-  FuncLoadError := not assigned(RAND_egd);
-  if FuncLoadError then
-  begin
-    RAND_egd :=  @ERROR_RAND_egd;
-  end;
-
-  RAND_egd_bytes := LoadLibCryptoFunction('RAND_egd_bytes');
-  FuncLoadError := not assigned(RAND_egd_bytes);
-  if FuncLoadError then
-  begin
-    RAND_egd_bytes :=  @ERROR_RAND_egd_bytes;
-  end;
-
-  RAND_poll := LoadLibCryptoFunction('RAND_poll');
-  FuncLoadError := not assigned(RAND_poll);
-  if FuncLoadError then
-  begin
-    RAND_poll :=  @ERROR_RAND_poll;
-  end;
-
+  if not assigned(RAND_set_rand_method) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_set_rand_method');
+  Result := RAND_set_rand_method(meth);
 end;
+
+function Load_RAND_get_rand_method: PRAND_METHOD; cdecl;
+begin
+  RAND_get_rand_method := LoadLibCryptoFunction('RAND_get_rand_method');
+  if not assigned(RAND_get_rand_method) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_get_rand_method');
+  Result := RAND_get_rand_method();
+end;
+
+function Load_RAND_set_rand_engine(engine: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
+  RAND_set_rand_engine := LoadLibCryptoFunction('RAND_set_rand_engine');
+  if not assigned(RAND_set_rand_engine) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_set_rand_engine');
+  Result := RAND_set_rand_engine(engine);
+end;
+
+function Load_RAND_OpenSSL: PRAND_METHOD; cdecl;
+begin
+  RAND_OpenSSL := LoadLibCryptoFunction('RAND_OpenSSL');
+  if not assigned(RAND_OpenSSL) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_OpenSSL');
+  Result := RAND_OpenSSL();
+end;
+
+function Load_RAND_bytes(buf: PByte; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  RAND_bytes := LoadLibCryptoFunction('RAND_bytes');
+  if not assigned(RAND_bytes) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_bytes');
+  Result := RAND_bytes(buf,num);
+end;
+
+function Load_RAND_priv_bytes(buf: PByte; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  RAND_priv_bytes := LoadLibCryptoFunction('RAND_priv_bytes');
+  if not assigned(RAND_priv_bytes) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_priv_bytes');
+  Result := RAND_priv_bytes(buf,num);
+end;
+
+procedure Load_RAND_seed(const buf: Pointer; num: TOpenSSL_C_INT); cdecl;
+begin
+  RAND_seed := LoadLibCryptoFunction('RAND_seed');
+  if not assigned(RAND_seed) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_seed');
+  RAND_seed(buf,num);
+end;
+
+procedure Load_RAND_keep_random_devices_open(keep: TOpenSSL_C_INT); cdecl;
+begin
+  RAND_keep_random_devices_open := LoadLibCryptoFunction('RAND_keep_random_devices_open');
+  if not assigned(RAND_keep_random_devices_open) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_keep_random_devices_open');
+  RAND_keep_random_devices_open(keep);
+end;
+
+procedure Load_RAND_add(const buf: Pointer; num: TOpenSSL_C_INT; randomness: TOpenSSL_C_DOUBLE); cdecl;
+begin
+  RAND_add := LoadLibCryptoFunction('RAND_add');
+  if not assigned(RAND_add) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_add');
+  RAND_add(buf,num,randomness);
+end;
+
+function Load_RAND_load_file(const file_: PAnsiChar; max_bytes: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
+begin
+  RAND_load_file := LoadLibCryptoFunction('RAND_load_file');
+  if not assigned(RAND_load_file) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_load_file');
+  Result := RAND_load_file(file_,max_bytes);
+end;
+
+function Load_RAND_write_file(const file_: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
+  RAND_write_file := LoadLibCryptoFunction('RAND_write_file');
+  if not assigned(RAND_write_file) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_write_file');
+  Result := RAND_write_file(file_);
+end;
+
+function Load_RAND_status: TOpenSSL_C_INT; cdecl;
+begin
+  RAND_status := LoadLibCryptoFunction('RAND_status');
+  if not assigned(RAND_status) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_status');
+  Result := RAND_status();
+end;
+
+function Load_RAND_query_egd_bytes(const path: PAnsiChar; buf: PByte; bytes: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  RAND_query_egd_bytes := LoadLibCryptoFunction('RAND_query_egd_bytes');
+  if not assigned(RAND_query_egd_bytes) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_query_egd_bytes');
+  Result := RAND_query_egd_bytes(path,buf,bytes);
+end;
+
+function Load_RAND_egd(const path: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
+  RAND_egd := LoadLibCryptoFunction('RAND_egd');
+  if not assigned(RAND_egd) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_egd');
+  Result := RAND_egd(path);
+end;
+
+function Load_RAND_egd_bytes(const path: PAnsiChar; bytes: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  RAND_egd_bytes := LoadLibCryptoFunction('RAND_egd_bytes');
+  if not assigned(RAND_egd_bytes) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_egd_bytes');
+  Result := RAND_egd_bytes(path,bytes);
+end;
+
+function Load_RAND_poll: TOpenSSL_C_INT; cdecl;
+begin
+  RAND_poll := LoadLibCryptoFunction('RAND_poll');
+  if not assigned(RAND_poll) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('RAND_poll');
+  Result := RAND_poll();
+end;
+
 
 procedure UnLoad;
 begin
-  RAND_set_rand_method := nil;
-  RAND_get_rand_method := nil;
-  RAND_set_rand_engine := nil;
-  RAND_OpenSSL := nil;
-  RAND_bytes := nil;
-  RAND_priv_bytes := nil;
-  RAND_seed := nil;
-  RAND_keep_random_devices_open := nil;
-  RAND_add := nil;
-  RAND_load_file := nil;
-  RAND_write_file := nil;
-  RAND_status := nil;
-  RAND_query_egd_bytes := nil;
-  RAND_egd := nil;
-  RAND_egd_bytes := nil;
-  RAND_poll := nil;
+  RAND_set_rand_method := Load_RAND_set_rand_method;
+  RAND_get_rand_method := Load_RAND_get_rand_method;
+  RAND_set_rand_engine := Load_RAND_set_rand_engine;
+  RAND_OpenSSL := Load_RAND_OpenSSL;
+  RAND_bytes := Load_RAND_bytes;
+  RAND_priv_bytes := Load_RAND_priv_bytes;
+  RAND_seed := Load_RAND_seed;
+  RAND_keep_random_devices_open := Load_RAND_keep_random_devices_open;
+  RAND_add := Load_RAND_add;
+  RAND_load_file := Load_RAND_load_file;
+  RAND_write_file := Load_RAND_write_file;
+  RAND_status := Load_RAND_status;
+  RAND_query_egd_bytes := Load_RAND_query_egd_bytes;
+  RAND_egd := Load_RAND_egd;
+  RAND_egd_bytes := Load_RAND_egd_bytes;
+  RAND_poll := Load_RAND_poll;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
-Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

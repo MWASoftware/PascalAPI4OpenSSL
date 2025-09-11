@@ -79,8 +79,13 @@ files generated for C++. }
 function ERR_load_KDF_strings: TOpenSSL_C_INT; cdecl; external CLibCrypto;
 
 {$ELSE}
+
+{Declare external function initialisers - should not be called directly}
+
+function Load_ERR_load_KDF_strings: TOpenSSL_C_INT; cdecl;
+
 var
-  ERR_load_KDF_strings: function : TOpenSSL_C_INT; cdecl = nil;
+  ERR_load_KDF_strings: function : TOpenSSL_C_INT; cdecl = Load_ERR_load_KDF_strings;
 {$ENDIF}
 
 implementation
@@ -98,36 +103,24 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$WARN  NO_RETVAL OFF}
-function ERROR_ERR_load_KDF_strings: TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_load_KDF_strings');
-end;
-
-{$WARN  NO_RETVAL ON}
-procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
-var FuncLoadError: boolean;
+function Load_ERR_load_KDF_strings: TOpenSSL_C_INT; cdecl;
 begin
   ERR_load_KDF_strings := LoadLibCryptoFunction('ERR_load_KDF_strings');
-  FuncLoadError := not assigned(ERR_load_KDF_strings);
-  if FuncLoadError then
-  begin
-    ERR_load_KDF_strings :=  @ERROR_ERR_load_KDF_strings;
-  end;
-
+  if not assigned(ERR_load_KDF_strings) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ERR_load_KDF_strings');
+  Result := ERR_load_KDF_strings();
 end;
+
 
 procedure UnLoad;
 begin
-  ERR_load_KDF_strings := nil;
+  ERR_load_KDF_strings := Load_ERR_load_KDF_strings;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
-Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

@@ -83,11 +83,7 @@ const
     {$ENDIF}
   {$ENDIF}
 
-  {$IFDEF POSIX}
-  {$DEFINE UNIX}
-  {$ENDIF}
-
-  {$IFDEF UNIX}
+    {$IFDEF UNIX}
   DirListDelimiter = ':';
   LibSuffix = '.so';
   DefaultLibVersions = '.3:.1.1:.1.0.2:.1.0.0:.0.9.9:.0.9.8:.0.9.7:.0.9.6';
@@ -297,8 +293,8 @@ end;
 
 function GetIOpenSSLDDL: IOpenSSLDLL;
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
-function LoadLibCryptoFunction(const AProcName: AnsiString): Pointer;
-function LoadLibSSLFunction(const AProcName: AnsiString): Pointer;
+function LoadLibCryptoFunction(const AProcName: PChar): Pointer;
+function LoadLibSSLFunction(const AProcName:  PChar): Pointer;
 
 type
   TOpenSSLLoadProc = procedure(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
@@ -540,16 +536,14 @@ begin
   Result := Load;
 end;
 
-function LoadLibCryptoFunction(const AProcName: AnsiString): Pointer;
+function LoadLibCryptoFunction(const AProcName: PChar): Pointer;
 begin
-  Result := GetProcAddress(TOpenSSLDynamicLibProvider.FOpenSSLDDL.GetLibCryptoHandle,
-             {$IFDEF UNIX}AProcName{$ELSE}PAnsiChar(AProcName){$ENDIF});
+  Result := GetProcAddress(TOpenSSLDynamicLibProvider.FOpenSSLDDL.GetLibCryptoHandle,AProcName);
 end;
 
-function LoadLibSSLFunction(const AProcName: AnsiString): Pointer;
+function LoadLibSSLFunction(const AProcName:  PChar): Pointer;
 begin
-  Result := GetProcAddress(TOpenSSLDynamicLibProvider.FOpenSSLDDL.GetLibSSLHandle,
-             {$IFDEF UNIX}AProcName{$ELSE}PAnsiChar(AProcName){$ENDIF});
+  Result := GetProcAddress(TOpenSSLDynamicLibProvider.FOpenSSLDDL.GetLibSSLHandle,AProcName);
 end;
 
 procedure TOpenSSLDynamicLibProvider.SetOpenSSLPath(const Value : string);

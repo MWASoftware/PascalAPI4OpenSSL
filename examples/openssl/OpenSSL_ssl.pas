@@ -1981,394 +1981,870 @@ function SSL_get_peer_certificate(const s: PSSL): PX509; {removed 3.0.0}
 function SSL_library_init: TOpenSSL_C_INT; {removed 1.1.0}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ELSE}
+
+{Declare external function initialisers - should not be called directly}
+
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_SSL_CTX_set_mode(ctx: PSSL_CTX; op: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_clear_mode(ctx: PSSL_CTX; op: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_sess_set_cache_size(ctx: PSSL_CTX; t: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_sess_get_cache_size(ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_set_session_cache_mode(ctx: PSSL_CTX; m: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_get_session_cache_mode(ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_clear_num_renegotiations(ssl: PSSL): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_total_renegotiations(ssl: PSSL): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_set_tmp_dh(ctx: PSSL_CTX; dh: PDH): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_set_tmp_ecdh(ctx: PSSL_CTX; ecdh: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_set_dh_auto(ctx: PSSL_CTX; onoff: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_set_dh_auto(s: PSSL; onoff: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_set_tmp_dh(ssl: PSSL; dh: PDH): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_set_tmp_ecdh(ssl: PSSL; ecdh: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_add_extra_chain_cert(ctx: PSSL_CTX; x509: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_get_extra_chain_certs(ctx: PSSL_CTX; px509: Pointer): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_get_extra_chain_certs_only(ctx: PSSL_CTX; px509: Pointer): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_clear_extra_chain_certs(ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_set0_chain(ctx: PSSL_CTX; sk: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_set1_chain(ctx: PSSL_CTX; sk: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_add0_chain_cert(ctx: PSSL_CTX; x509: PX509): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_add1_chain_cert(ctx: PSSL_CTX; x509: PX509): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_get0_chain_certs(ctx: PSSL_CTX; px509: Pointer): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_clear_chain_certs(ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_build_cert_chain(ctx: PSSL_CTX; flags: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_select_current_cert(ctx: PSSL_CTX; x509: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_set_current_cert(ctx: PSSL_CTX; op: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_set0_verify_cert_store(ctx: PSSL_CTX; st: Pointer): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_set1_verify_cert_store(ctx: PSSL_CTX; st: Pointer): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_set0_chain_cert_store(ctx: PSSL_CTX; st: Pointer): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_set1_chain_cert_store(ctx: PSSL_CTX; st: Pointer): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_set0_chain(s: PSSL; sk: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_set1_chain(s: PSSL; sk: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_add0_chain_cert(s: PSSL; x509: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_add1_chain_cert(s: PSSL; x509: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_get0_chain_certs(s: PSSL; px509: Pointer): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_clear_chain_certs(s: PSSL): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_build_cert_chain(s: PSSL; flags: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_select_current_cert(s: PSSL; x509: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_set_current_cert(s: PSSL; op: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_set0_verify_cert_store(s: PSSL; st: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_set1_verify_cert_store(s: PSSL; st: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_set0_chain_cert_store(s: PSSL; st: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_set1_chain_cert_store(s: PSSL; st: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_get1_groups(s: PSSL; glist: POpenSSL_C_INT): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_set1_groups(ctx: PSSL_CTX; glist: PByte; glistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_set1_groups_list(ctx: PSSL_CTX; s: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_set1_groups(s: PSSL; glist: PByte; glistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_set1_groups_list(s: PSSL; str: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_get_shared_group(s: PSSL; n: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_set1_sigalgs(ctx: PSSL_CTX; slist: POpenSSL_C_INT; slistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_set1_sigalgs_list(ctx: PSSL_CTX; s: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_set1_sigalgs(s: PSSL; slist: POpenSSL_C_INT; slistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_set1_sigalgs_list(s: PSSL; str: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_set1_client_sigalgs(ctx: PSSL_CTX; slist: POpenSSL_C_INT; slistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_set1_client_sigalgs_list(ctx: PSSL_CTX; s: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_set1_client_sigalgs(s: PSSL; slist: POpenSSL_C_INT; slistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_set1_client_sigalgs_list(s: PSSL; str: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_get0_certificate_types(s: PSSL; clist: PByte): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_set1_client_certificate_types(ctx: PSSL_CTX; clist: PByte; clistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_set1_client_certificate_types(s: PSSL; clist: PByte; clistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_get_signature_nid(s: PSSL; pn: Pointer): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_get_peer_signature_nid(s: PSSL; pn: Pointer): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_get_peer_tmp_key(s: PSSL; pk: Pointer): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_get_tmp_key(s: PSSL; pk: Pointer): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_get0_raw_cipherlist(s: PSSL; plst: Pointer): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_get0_ec_point_formats(s: PSSL; plst: Pointer): TOpenSSL_C_LONG; cdecl;
+{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_SSL_CTX_get_options(const ctx: PSSL_CTX): TOpenSSL_C_ULONG; cdecl;
+function Load_SSL_get_options(const s: PSSL): TOpenSSL_C_ULONG; cdecl;
+function Load_SSL_CTX_clear_options(ctx: PSSL_CTX; op: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
+function Load_SSL_clear_options(s: PSSL; op: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
+function Load_SSL_CTX_set_options(ctx: PSSL_CTX; op: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
+function Load_SSL_set_options(s: PSSL; op: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
+procedure Load_SSL_CTX_sess_set_new_cb(ctx: PSSL_CTX; new_session_cb: SSL_CTX_sess_new_cb); cdecl;
+function Load_SSL_CTX_sess_get_new_cb(ctx: PSSL_CTX): SSL_CTX_sess_new_cb; cdecl;
+procedure Load_SSL_CTX_sess_set_remove_cb(ctx: PSSL_CTX; remove_session_cb: SSL_CTX_sess_remove_cb); cdecl;
+function Load_SSL_CTX_sess_get_remove_cb(ctx: PSSL_CTX): SSL_CTX_sess_remove_cb; cdecl;
+procedure Load_SSL_CTX_set_info_callback(ctx: PSSL_CTX; cb: SSL_CTX_info_callback); cdecl;
+function Load_SSL_CTX_get_info_callback(ctx: PSSL_CTX): SSL_CTX_info_callback; cdecl;
+procedure Load_SSL_CTX_set_client_cert_cb(ctx: PSSL_CTX; client_cert_cb: SSL_CTX_client_cert_cb); cdecl;
+function Load_SSL_CTX_get_client_cert_cb(ctx: PSSL_CTX): SSL_CTX_client_cert_cb; cdecl;
+function Load_SSL_CTX_set_client_cert_engine(ctx: PSSL_CTX; e: PENGINE): TOpenSSL_C_INT; cdecl;
+procedure Load_SSL_CTX_set_cookie_generate_cb(ctx: PSSL_CTX; app_gen_cookie_cb: SSL_CTX_cookie_verify_cb); cdecl;
+procedure Load_SSL_CTX_set_cookie_verify_cb(ctx: PSSL_CTX; app_verify_cookie_cb: SSL_CTX_set_cookie_verify_cb_app_verify_cookie_cb); cdecl;
+procedure Load_SSL_CTX_set_stateless_cookie_generate_cb(ctx: PSSL_CTX; gen_stateless_cookie_cb: SSL_CTX_set_stateless_cookie_generate_cb_gen_stateless_cookie_cb); cdecl;
+procedure Load_SSL_CTX_set_stateless_cookie_verify_cb(ctx: PSSL_CTX; verify_stateless_cookie_cb: SSL_CTX_set_stateless_cookie_verify_cb_verify_stateless_cookie_cb); cdecl;
+procedure Load_SSL_CTX_set_alpn_select_cb(ctx: PSSL_CTX; cb: SSL_CTX_alpn_select_cb_func; arg: Pointer); cdecl;
+procedure Load_SSL_get0_alpn_selected(const ssl: PSSL; const data: PPByte; len: POpenSSL_C_UINT); cdecl;
+procedure Load_SSL_CTX_set_psk_client_callback(ctx: PSSL_CTX; cb: SSL_psk_client_cb_func); cdecl;
+procedure Load_SSL_set_psk_client_callback(ssl: PSSL; cb: SSL_psk_client_cb_func); cdecl;
+procedure Load_SSL_CTX_set_psk_server_callback(ctx: PSSL_CTX; cb: SSL_psk_server_cb_func); cdecl;
+procedure Load_SSL_set_psk_server_callback(ssl: PSSL; cb: SSL_psk_server_cb_func); cdecl;
+procedure Load_SSL_set_psk_find_session_callback(s: PSSL; cb: SSL_psk_find_session_cb_func); cdecl;
+procedure Load_SSL_CTX_set_psk_find_session_callback(ctx: PSSL_CTX; cb: SSL_psk_find_session_cb_func); cdecl;
+procedure Load_SSL_set_psk_use_session_callback(s: PSSL; cb: SSL_psk_use_session_cb_func); cdecl;
+procedure Load_SSL_CTX_set_psk_use_session_callback(ctx: PSSL_CTX; cb: SSL_psk_use_session_cb_func); cdecl;
+procedure Load_SSL_CTX_set_keylog_callback(ctx: PSSL_CTX; cb: SSL_CTX_keylog_cb_func); cdecl;
+function Load_SSL_CTX_get_keylog_callback(const ctx: PSSL_CTX): SSL_CTX_keylog_cb_func; cdecl;
+function Load_SSL_CTX_set_max_early_data(ctx: PSSL_CTX; max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_get_max_early_data(const ctx: PSSL_CTX): TOpenSSL_C_UINT32; cdecl;
+function Load_SSL_set_max_early_data(s: PSSL; max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_max_early_data(const s: PSSL): TOpenSSL_C_UINT32; cdecl;
+function Load_SSL_CTX_set_recv_max_early_data(ctx: PSSL_CTX; recv_max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_get_recv_max_early_data(const ctx: PSSL_CTX): TOpenSSL_C_UINT32; cdecl;
+function Load_SSL_set_recv_max_early_data(s: PSSL; recv_max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_recv_max_early_data(const s: PSSL): TOpenSSL_C_UINT32; cdecl;
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_SSL_get_app_data(const ssl: PSSL): Pointer; cdecl;
+function Load_SSL_set_app_data(ssl: PSSL; data: Pointer): TOpenSSL_C_INT; cdecl;
+{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_SSL_in_init(const s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_in_before(const s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_is_init_finished(const s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_finished(const s: PSSL; buf: Pointer; count: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+function Load_SSL_get_peer_finished(const s: PSSL; buf: Pointer; count: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_SSLeay_add_ssl_algorithms: TOpenSSL_C_INT; cdecl;
+{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_BIO_f_ssl: PBIO_METHOD; cdecl;
+function Load_BIO_new_ssl(ctx: PSSL_CTX; client: TOpenSSL_C_INT): PBIO; cdecl;
+function Load_BIO_new_ssl_connect(ctx: PSSL_CTX): PBIO; cdecl;
+function Load_BIO_new_buffer_ssl_connect(ctx: PSSL_CTX): PBIO; cdecl;
+function Load_BIO_ssl_copy_session_id(to_: PBIO; from: PBIO): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_set_cipher_list(v1: PSSL_CTX; const str: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_new(const meth: PSSL_METHOD): PSSL_CTX; cdecl;
+function Load_SSL_CTX_set_timeout(ctx: PSSL_CTX; t: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_get_timeout(const ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_get_cert_store(const v1: PSSL_CTX): PX509_STORE; cdecl;
+function Load_SSL_want(const s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_clear(s: PSSL): TOpenSSL_C_INT; cdecl;
+procedure Load_BIO_ssl_shutdown(ssl_bio: PBIO); cdecl;
+function Load_SSL_CTX_up_ref(ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+procedure Load_SSL_CTX_free(v1: PSSL_CTX); cdecl;
+procedure Load_SSL_CTX_set_cert_store(v1: PSSL_CTX; v2: PX509_STORE); cdecl;
+procedure Load_SSL_CTX_set1_cert_store(v1: PSSL_CTX; v2: PX509_STORE); cdecl;
+procedure Load_SSL_CTX_flush_sessions(ctx: PSSL_CTX; tm: TOpenSSL_C_LONG); cdecl;
+function Load_SSL_get_current_cipher(const s: PSSL): PSSL_CIPHER; cdecl;
+function Load_SSL_get_pending_cipher(const s: PSSL): PSSL_CIPHER; cdecl;
+function Load_SSL_CIPHER_get_bits(const c: PSSL_CIPHER; var alg_bits: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CIPHER_get_version(const c: PSSL_CIPHER): PAnsiChar; cdecl;
+function Load_SSL_CIPHER_get_name(const c: PSSL_CIPHER): PAnsiChar; cdecl;
+function Load_SSL_CIPHER_standard_name(const c: PSSL_CIPHER): PAnsiChar; cdecl;
+function Load_OPENSSL_cipher_name(const rfc_name: PAnsiChar): PAnsiChar; cdecl;
+function Load_SSL_CIPHER_get_id(const c: PSSL_CIPHER): TOpenSSL_C_UINT32; cdecl;
+function Load_SSL_CIPHER_get_protocol_id(const c: PSSL_CIPHER): TOpenSSL_C_UINT16; cdecl;
+function Load_SSL_CIPHER_get_kx_nid(const c: PSSL_CIPHER): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CIPHER_get_auth_nid(const c: PSSL_CIPHER): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CIPHER_get_handshake_digest(const c: PSSL_CIPHER): PEVP_MD; cdecl;
+function Load_SSL_CIPHER_is_aead(const c: PSSL_CIPHER): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_fd(const s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_rfd(const s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_wfd(const s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_cipher_list(const s: PSSL; n: TOpenSSL_C_INT): PAnsiChar; cdecl;
+function Load_SSL_get_shared_ciphers(const s: PSSL; buf: PAnsiChar; size: TOpenSSL_C_INT): PAnsiChar; cdecl;
+function Load_SSL_get_read_ahead(const s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_pending(const s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_has_pending(const s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_set_fd(s: PSSL; fd: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_set_rfd(s: PSSL; fd: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_set_wfd(s: PSSL; fd: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+procedure Load_SSL_set0_rbio(s: PSSL; rbio: PBIO); cdecl;
+procedure Load_SSL_set0_wbio(s: PSSL; wbio: PBIO); cdecl;
+procedure Load_SSL_set_bio(s: PSSL; rbio: PBIO; wbio: PBIO); cdecl;
+function Load_SSL_get_rbio(const s: PSSL): PBIO; cdecl;
+function Load_SSL_get_wbio(const s: PSSL): PBIO; cdecl;
+function Load_SSL_set_cipher_list(s: PSSL; const str: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_set_ciphersuites(ctx: PSSL_CTX; const str: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_SSL_set_ciphersuites(s: PSSL; const str: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_verify_mode(const s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_verify_depth(const s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_verify_callback(const s: PSSL): SSL_verify_cb; cdecl;
+procedure Load_SSL_set_read_ahead(s: PSSL; yes: TOpenSSL_C_INT); cdecl;
+procedure Load_SSL_set_verify(s: PSSL; mode: TOpenSSL_C_INT; callback: SSL_verify_cb); cdecl;
+procedure Load_SSL_set_verify_depth(s: PSSL; depth: TOpenSSL_C_INT); cdecl;
+function Load_SSL_use_RSAPrivateKey(ssl: PSSL; rsa: PRSA): TOpenSSL_C_INT; cdecl;
+function Load_SSL_use_RSAPrivateKey_ASN1(ssl: PSSL; const d: PByte; len: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
+function Load_SSL_use_PrivateKey(ssl: PSSL; pkey: PEVP_PKEY): TOpenSSL_C_INT; cdecl;
+function Load_SSL_use_PrivateKey_ASN1(pk: TOpenSSL_C_INT; ssl: PSSL; const d: PByte; len: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
+function Load_SSL_use_certificate(ssl: PSSL; x: PX509): TOpenSSL_C_INT; cdecl;
+function Load_SSL_use_certificate_ASN1(ssl: PSSL; const d: PByte; len: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_use_serverinfo(ctx: PSSL_CTX; const serverinfo: PByte; serverinfo_length: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_use_serverinfo_ex(ctx: PSSL_CTX; version: TOpenSSL_C_UINT; const serverinfo: PByte; serverinfo_length: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_use_serverinfo_file(ctx: PSSL_CTX; const file_: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_SSL_use_RSAPrivateKey_file(ssl: PSSL; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_use_PrivateKey_file(ssl: PSSL; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_use_certificate_file(ssl: PSSL; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_use_RSAPrivateKey_file(ctx: PSSL_CTX; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_use_PrivateKey_file(ctx: PSSL_CTX; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_use_certificate_file(ctx: PSSL_CTX; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_use_certificate_chain_file(ctx: PSSL_CTX; const file_: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_SSL_use_certificate_chain_file(ssl: PSSL; const file_: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_SSL_load_client_CA_file(const file_: PAnsiChar): PSTACK_OF_X509_NAME; cdecl;
+function Load_SSL_add_file_cert_subjects_to_stack(stackCAs: PSTACK_OF_X509_NAME; const file_: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_SSL_add_dir_cert_subjects_to_stack(stackCAs: PSTACK_OF_X509_NAME; const dir_: PAnsiChar): TOpenSSL_C_INT; cdecl;
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+procedure Load_SSL_load_error_strings; cdecl;
+{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_SSL_state_string(const s: PSSL): PAnsiChar; cdecl;
+function Load_SSL_rstate_string(const s: PSSL): PAnsiChar; cdecl;
+function Load_SSL_state_string_long(const s: PSSL): PAnsiChar; cdecl;
+function Load_SSL_rstate_string_long(const s: PSSL): PAnsiChar; cdecl;
+function Load_SSL_SESSION_get_time(const s: PSSL_SESSION): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_SESSION_set_time(s: PSSL_SESSION; t: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_SESSION_get_timeout(const s: PSSL_SESSION): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_SESSION_set_timeout(s: PSSL_SESSION; t: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_SESSION_get_protocol_version(const s: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
+function Load_SSL_SESSION_set_protocol_version(s: PSSL_SESSION; version: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_SESSION_get0_hostname(const s: PSSL_SESSION): PAnsiChar; cdecl;
+function Load_SSL_SESSION_set1_hostname(s: PSSL_SESSION; const hostname: PAnsiChar): TOpenSSL_C_INT; cdecl;
+procedure Load_SSL_SESSION_get0_alpn_selected(const s: PSSL_SESSION; const alpn: PPByte; len: POpenSSL_C_SIZET); cdecl;
+function Load_SSL_SESSION_set1_alpn_selected(s: PSSL_SESSION; const alpn: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SSL_SESSION_get0_cipher(const s: PSSL_SESSION): PSSL_CIPHER; cdecl;
+function Load_SSL_SESSION_set_cipher(s: PSSL_SESSION; const cipher: PSSL_CIPHER): TOpenSSL_C_INT; cdecl;
+function Load_SSL_SESSION_has_ticket(const s: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
+function Load_SSL_SESSION_get_ticket_lifetime_hint(const s: PSSL_SESSION): TOpenSSL_C_ULONG; cdecl;
+procedure Load_SSL_SESSION_get0_ticket(const s: PSSL_SESSION; const tick: PPByte; len: POpenSSL_C_SIZET); cdecl;
+function Load_SSL_SESSION_get_max_early_data(const s: PSSL_SESSION): TOpenSSL_C_UINT32; cdecl;
+function Load_SSL_SESSION_set_max_early_data(s: PSSL_SESSION; max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl;
+function Load_SSL_copy_session_id(to_: PSSL; const from: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_SESSION_get0_peer(s: PSSL_SESSION): PX509; cdecl;
+function Load_SSL_SESSION_set1_id_context(s: PSSL_SESSION; const sid_ctx: PByte; sid_ctx_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_SESSION_set1_id(s: PSSL_SESSION; const sid: PByte; sid_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_SESSION_is_resumable(const s: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
+function Load_SSL_SESSION_new: PSSL_SESSION; cdecl;
+function Load_SSL_SESSION_dup(src: PSSL_SESSION): PSSL_SESSION; cdecl;
+function Load_SSL_SESSION_get_id(const s: PSSL_SESSION; len: POpenSSL_C_UINT): PByte; cdecl;
+function Load_SSL_SESSION_get0_id_context(const s: PSSL_SESSION; len: POpenSSL_C_UINT): PByte; cdecl;
+function Load_SSL_SESSION_get_compress_id(const s: PSSL_SESSION): TOpenSSL_C_UINT; cdecl;
+function Load_SSL_SESSION_print(fp: PBIO; const ses: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
+function Load_SSL_SESSION_print_keylog(bp: PBIO; const x: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
+function Load_SSL_SESSION_up_ref(ses: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
+procedure Load_SSL_SESSION_free(ses: PSSL_SESSION); cdecl;
+function Load_SSL_set_session(to_: PSSL; session: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_add_session(ctx: PSSL_CTX; session: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_remove_session(ctx: PSSL_CTX; session: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_set_generate_session_id(ctx: PSSL_CTX; cb: GEN_SESSION_CB): TOpenSSL_C_INT; cdecl;
+function Load_SSL_set_generate_session_id(s: PSSL; cb: GEN_SESSION_CB): TOpenSSL_C_INT; cdecl;
+function Load_SSL_has_matching_session_id(const s: PSSL; const id: PByte; id_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
+function Load_d2i_SSL_SESSION(a: PPSSL_SESSION; const pp: PPByte; length: TOpenSSL_C_LONG): PSSL_SESSION; cdecl;
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_SSL_get_peer_certificate(const s: PSSL): PX509; cdecl;
+{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_SSL_CTX_get_verify_mode(const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_get_verify_depth(const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_get_verify_callback(const ctx: PSSL_CTX): SSL_verify_cb; cdecl;
+procedure Load_SSL_CTX_set_verify(ctx: PSSL_CTX; mode: TOpenSSL_C_INT; callback: SSL_verify_cb); cdecl;
+procedure Load_SSL_CTX_set_verify_depth(ctx: PSSL_CTX; depth: TOpenSSL_C_INT); cdecl;
+procedure Load_SSL_CTX_set_cert_verify_callback(ctx: PSSL_CTX; cb: SSL_CTX_set_cert_verify_callback_cb; arg: Pointer); cdecl;
+procedure Load_SSL_CTX_set_cert_cb(c: PSSL_CTX; cb: SSL_CTX_set_cert_cb_cb; arg: Pointer); cdecl;
+function Load_SSL_CTX_use_RSAPrivateKey(ctx: PSSL_CTX; rsa: PRSA): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_use_RSAPrivateKey_ASN1(ctx: PSSL_CTX; const d: PByte; len: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_use_PrivateKey(ctx: PSSL_CTX; pkey: PEVP_PKEY): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_use_PrivateKey_ASN1(pk: TOpenSSL_C_INT; ctx: PSSL_CTX; const d: PByte; len: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_use_certificate(ctx: PSSL_CTX; x: X509): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_use_certificate_ASN1(ctx: PSSL_CTX; len: TOpenSSL_C_INT; const d: PByte): TOpenSSL_C_INT; cdecl;
+procedure Load_SSL_CTX_set_default_passwd_cb(ctx: PSSL_CTX; cb: pem_password_cb); cdecl;
+procedure Load_SSL_CTX_set_default_passwd_cb_userdata(ctx: PSSL_CTX; u: Pointer); cdecl;
+function Load_SSL_CTX_get_default_passwd_cb(ctx: PSSL_CTX): pem_password_cb; cdecl;
+function Load_SSL_CTX_get_default_passwd_cb_userdata(ctx: PSSL_CTX): Pointer; cdecl;
+procedure Load_SSL_set_default_passwd_cb(s: PSSL; cb: pem_password_cb); cdecl;
+procedure Load_SSL_set_default_passwd_cb_userdata(s: PSSL; u: Pointer); cdecl;
+function Load_SSL_get_default_passwd_cb(s: PSSL): pem_password_cb; cdecl;
+function Load_SSL_get_default_passwd_cb_userdata(s: PSSL): Pointer; cdecl;
+function Load_SSL_CTX_check_private_key(const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+function Load_SSL_check_private_key(const ctx: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_set_session_id_context(ctx: PSSL_CTX; const sid_ctx: PByte; sid_ctx_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_new(ctx: PSSL_CTX): PSSL; cdecl;
+function Load_SSL_up_ref(s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_is_dtls(const s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_set_session_id_context(ssl: PSSL; const sid_ctx: PByte; sid_ctx_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_set_purpose(ctx: PSSL_CTX; purpose: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_set_purpose(ssl: PSSL; purpose: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_set_trust(ctx: PSSL_CTX; trust: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_set_trust(ssl: PSSL; trust: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_set1_host(s: PSSL; const hostname: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_SSL_add1_host(s: PSSL; const hostname: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get0_peername(s: PSSL): PAnsiChar; cdecl;
+procedure Load_SSL_set_hostflags(s: PSSL; flags: TOpenSSL_C_UINT); cdecl;
+function Load_SSL_CTX_dane_enable(ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_dane_mtype_set(ctx: PSSL_CTX; const md: PEVP_MD; mtype: TOpenSSL_C_UINT8; ord: TOpenSSL_C_UINT8): TOpenSSL_C_INT; cdecl;
+function Load_SSL_dane_enable(s: PSSL; const basedomain: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_SSL_dane_tlsa_add(s: PSSL; usage: TOpenSSL_C_UINT8; selector: TOpenSSL_C_UINT8; mtype: TOpenSSL_C_UINT8; const data: PByte; dlen: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get0_dane_authority(s: PSSL; mcert: PPX509; mspki: PPEVP_PKEY): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get0_dane_tlsa(s: PSSL; usage: POpenSSL_C_UINT8; selector: POpenSSL_C_UINT8; mtype: POpenSSL_C_UINT8; const data: PPByte; dlen: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get0_dane(ssl: PSSL): PSSL_DANE; cdecl;
+function Load_SSL_CTX_dane_set_flags(ctx: PSSL_CTX; flags: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
+function Load_SSL_CTX_dane_clear_flags(ctx: PSSL_CTX; flags: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
+function Load_SSL_dane_set_flags(ssl: PSSL; flags: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
+function Load_SSL_dane_clear_flags(ssl: PSSL; flags: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
+function Load_SSL_CTX_set1_param(ctx: PSSL_CTX; vpm: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
+function Load_SSL_set1_param(ssl: PSSL; vpm: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_get0_param(ctx: PSSL_CTX): PX509_VERIFY_PARAM; cdecl;
+function Load_SSL_get0_param(ssl: PSSL): PX509_VERIFY_PARAM; cdecl;
+function Load_SSL_CTX_set_srp_username(ctx: PSSL_CTX; name: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_set_srp_password(ctx: PSSL_CTX; password: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_set_srp_strength(ctx: PSSL_CTX; strength: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_set_srp_client_pwd_callback(ctx: PSSL_CTX; cb: SSL_CTX_set_srp_client_pwd_callback_cb): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_set_srp_verify_param_callback(ctx: PSSL_CTX; cb: SSL_CTX_set_srp_verify_param_callback_cb): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_set_srp_username_callback(ctx: PSSL_CTX; cb: SSL_CTX_set_srp_username_callback_cb): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_set_srp_cb_arg(ctx: PSSL_CTX; arg: Pointer): TOpenSSL_C_INT; cdecl;
+function Load_SSL_set_srp_server_param(s: PSSL; const N: PBIGNUm; const g: PBIGNUm; sa: PBIGNUm; v: PBIGNUm; info: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_SSL_set_srp_server_param_pw(s: PSSL; const user: PAnsiChar; const pass: PAnsiChar; const grp: PAnsiChar): TOpenSSL_C_INT; cdecl;
+procedure Load_SSL_CTX_set_client_hello_cb(c: PSSL_CTX; cb: SSL_client_hello_cb_fn; arg: Pointer); cdecl;
+function Load_SSL_client_hello_isv2(s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_client_hello_get0_legacy_version(s: PSSL): TOpenSSL_C_UINT; cdecl;
+function Load_SSL_client_hello_get0_random(s: PSSL; const out_: PPByte): TOpenSSL_C_SIZET; cdecl;
+function Load_SSL_client_hello_get0_session_id(s: PSSL; const out_: PPByte): TOpenSSL_C_SIZET; cdecl;
+function Load_SSL_client_hello_get0_ciphers(s: PSSL; const out_: PPByte): TOpenSSL_C_SIZET; cdecl;
+function Load_SSL_client_hello_get0_compression_methods(s: PSSL; const out_: PPByte): TOpenSSL_C_SIZET; cdecl;
+function Load_SSL_client_hello_get1_extensions_present(s: PSSL; out_: PPOpenSSL_C_INT; outlen: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SSL_client_hello_get0_ext(s: PSSL; type_: TOpenSSL_C_UINT; const out_: PPByte; outlen: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+procedure Load_SSL_certs_clear(s: PSSL); cdecl;
+procedure Load_SSL_free(ssl: PSSL); cdecl;
+function Load_SSL_waiting_for_async(s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_all_async_fds(s: PSSL; fds: POSSL_ASYNC_FD; numfds: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_changed_async_fds(s: PSSL; addfd: POSSL_ASYNC_FD; numaddfds: POpenSSL_C_SIZET; delfd: POSSL_ASYNC_FD; numdelfds: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SSL_accept(ssl: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_stateless(s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_connect(ssl: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_read(ssl: PSSL; buf: Pointer; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_read_ex(ssl: PSSL; buf: Pointer; num: TOpenSSL_C_SIZET; readbytes: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SSL_read_early_data(s: PSSL; buf: Pointer; num: TOpenSSL_C_SIZET; readbytes: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SSL_peek(ssl: PSSL; buf: Pointer; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_peek_ex(ssl: PSSL; buf: Pointer; num: TOpenSSL_C_SIZET; readbytes: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SSL_write(ssl: PSSL; const buf: Pointer; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_write_ex(s: PSSL; const buf: Pointer; num: TOpenSSL_C_SIZET; written: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SSL_write_early_data(s: PSSL; const buf: Pointer; num: TOpenSSL_C_SIZET; written: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SSL_callback_ctrl(v1: PSSL; v2: TOpenSSL_C_INT; v3: SSL_callback_ctrl_v3): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_ctrl(ssl: PSSL; cmd: TOpenSSL_C_INT; larg: TOpenSSL_C_LONG; parg: Pointer): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_ctrl(ctx: PSSL_CTX; cmd: TOpenSSL_C_INT; larg: TOpenSSL_C_LONG; parg: Pointer): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_CTX_callback_ctrl(v1: PSSL_CTX; v2: TOpenSSL_C_INT; v3: SSL_CTX_callback_ctrl_v3): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_get_early_data_status(const s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_error(const s: PSSL; ret_code: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_version(const s: PSSL): PAnsiChar; cdecl;
+function Load_SSL_CTX_set_ssl_version(ctx: PSSL_CTX; const meth: PSSL_METHOD): TOpenSSL_C_INT; cdecl;
+function Load_TLS_method: PSSL_METHOD; cdecl;
+function Load_TLS_server_method: PSSL_METHOD; cdecl;
+function Load_TLS_client_method: PSSL_METHOD; cdecl;
+function Load_SSL_do_handshake(s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_key_update(s: PSSL; updatetype: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_key_update_type(const s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_renegotiate(s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_renegotiate_abbreviated(s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_new_session_ticket(s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_shutdown(s: PSSL): TOpenSSL_C_INT; cdecl;
+procedure Load_SSL_CTX_set_post_handshake_auth(ctx: PSSL_CTX; val: TOpenSSL_C_INT); cdecl;
+procedure Load_SSL_set_post_handshake_auth(s: PSSL; val: TOpenSSL_C_INT); cdecl;
+function Load_SSL_renegotiate_pending(const s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_verify_client_post_handshake(s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_get_ssl_method(const ctx: PSSL_CTX): PSSL_METHOD; cdecl;
+function Load_SSL_get_ssl_method(const s: PSSL): PSSL_METHOD; cdecl;
+function Load_SSL_set_ssl_method(s: PSSL; const method: PSSL_METHOD): TOpenSSL_C_INT; cdecl;
+function Load_SSL_alert_type_string_long(value: TOpenSSL_C_INT): PAnsiChar; cdecl;
+function Load_SSL_alert_type_string(value: TOpenSSL_C_INT): PAnsiChar; cdecl;
+function Load_SSL_alert_desc_string_long(value: TOpenSSL_C_INT): PAnsiChar; cdecl;
+function Load_SSL_alert_desc_string(value: TOpenSSL_C_INT): PAnsiChar; cdecl;
+procedure Load_SSL_CTX_set_client_CA_list(ctx: PSSL_CTX; name_list: PSTACK_OF_X509_NAME); cdecl;
+function Load_SSL_add_client_CA(ssl: PSSL; x: PX509): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_add_client_CA(ctx: PSSL_CTX; x: PX509): TOpenSSL_C_INT; cdecl;
+procedure Load_SSL_set_connect_state(s: PSSL); cdecl;
+procedure Load_SSL_set_accept_state(s: PSSL); cdecl;
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_SSL_library_init: TOpenSSL_C_INT; cdecl;
+{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_SSL_CIPHER_description(cipher: PSSL_CIPHER; buf: PAnsiChar; size_ :TOpenSSL_C_INT): PAnsiChar; cdecl;
+function Load_SSL_dup(ssl: PSSL): PSSL; cdecl;
+function Load_SSL_get_certificate(const ssl: PSSL): PX509; cdecl;
+function Load_SSL_get_privatekey(const ssl: PSSL): PEVP_PKEY; cdecl;
+function Load_SSL_CTX_get0_certificate(const ctx: PSSL_CTX): PX509; cdecl;
+function Load_SSL_CTX_get0_privatekey(const ctx: PSSL_CTX): PEVP_PKEY; cdecl;
+procedure Load_SSL_CTX_set_quiet_shutdown(ctx: PSSL_CTX; mode: TOpenSSL_C_INT); cdecl;
+function Load_SSL_CTX_get_quiet_shutdown(const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+procedure Load_SSL_set_quiet_shutdown(ssl: PSSL; mode: TOpenSSL_C_INT); cdecl;
+function Load_SSL_get_quiet_shutdown(const ssl: PSSL): TOpenSSL_C_INT; cdecl;
+procedure Load_SSL_set_shutdown(ssl: PSSL; mode: TOpenSSL_C_INT); cdecl;
+function Load_SSL_get_shutdown(const ssl: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_version(const ssl: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_client_version(const s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_set_default_verify_paths(ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_set_default_verify_dir(ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_set_default_verify_file(ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_load_verify_locations(ctx: PSSL_CTX; const CAfile: PAnsiChar; const CApath: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_session(const ssl: PSSL): PSSL_SESSION; cdecl;
+function Load_SSL_get1_session(ssl: PSSL): PSSL_SESSION; cdecl;
+function Load_SSL_get_SSL_CTX(const ssl: PSSL): PSSL_CTX; cdecl;
+function Load_SSL_set_SSL_CTX(ssl: PSSL; ctx: PSSL_CTX): PSSL_CTX; cdecl;
+procedure Load_SSL_set_info_callback(ssl: PSSL; cb: SSL_info_callback); cdecl;
+function Load_SSL_get_info_callback(const ssl: PSSL): SSL_info_callback; cdecl;
+function Load_SSL_get_state(const ssl: PSSL): OSSL_HANDSHAKE_STATE; cdecl;
+procedure Load_SSL_set_verify_result(ssl: PSSL; v: TOpenSSL_C_LONG); cdecl;
+function Load_SSL_get_verify_result(const ssl: PSSL): TOpenSSL_C_LONG; cdecl;
+function Load_SSL_get_client_random(const ssl: PSSL; out_: PByte; outlen: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+function Load_SSL_get_server_random(const ssl: PSSL; out_: PByte; outlen: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+function Load_SSL_SESSION_get_master_key(const sess: PSSL_SESSION; out_: PByte; outlen: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+function Load_SSL_SESSION_set1_master_key(sess: PSSL_SESSION; const in_: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SSL_SESSION_get_max_fragment_length(const sess: PSSL_SESSION): TOpenSSL_C_UINT8; cdecl;
+function Load_SSL_set_ex_data(ssl: PSSL; idx: TOpenSSL_C_INT; data: Pointer): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_ex_data(const ssl: PSSL; idx: TOpenSSL_C_INT): Pointer; cdecl;
+function Load_SSL_SESSION_set_ex_data(ss: PSSL_SESSION; idx: TOpenSSL_C_INT; data: Pointer): TOpenSSL_C_INT; cdecl;
+function Load_SSL_SESSION_get_ex_data(const ss: PSSL_SESSION; idx: TOpenSSL_C_INT): Pointer; cdecl;
+function Load_SSL_CTX_set_ex_data(ssl: PSSL_CTX; idx: TOpenSSL_C_INT; data: Pointer): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_get_ex_data(const ssl: PSSL_CTX; idx: TOpenSSL_C_INT): Pointer; cdecl;
+function Load_SSL_get_ex_data_X509_STORE_CTX_idx: TOpenSSL_C_INT; cdecl;
+procedure Load_SSL_CTX_set_default_read_buffer_len(ctx: PSSL_CTX; len: TOpenSSL_C_SIZET); cdecl;
+procedure Load_SSL_set_default_read_buffer_len(s: PSSL; len: TOpenSSL_C_SIZET); cdecl;
+procedure Load_SSL_CTX_set_tmp_dh_callback(ctx: PSSL_CTX; dh: SSL_CTX_set_tmp_dh_callback_dh); cdecl;
+procedure Load_SSL_set_tmp_dh_callback(ssl: PSSL; dh: SSL_set_tmp_dh_callback_dh); cdecl;
+function Load_SSL_CIPHER_find(ssl: PSSL; const ptr: PByte): PSSL_CIPHER; cdecl;
+function Load_SSL_CIPHER_get_cipher_nid(const c: PSSL_CIPHEr): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CIPHER_get_digest_nid(const c: PSSL_CIPHEr): TOpenSSL_C_INT; cdecl;
+function Load_SSL_set_session_ticket_ext(s: PSSL; ext_data: Pointer; ext_len: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_set_session_ticket_ext_cb(s: PSSL; cb: tls_session_ticket_ext_cb_fn; arg: Pointer): TOpenSSL_C_INT; cdecl;
+procedure Load_SSL_CTX_set_not_resumable_session_callback(ctx: PSSL_CTX; cb: SSL_CTX_set_not_resumable_session_callback_cb); cdecl;
+procedure Load_SSL_set_not_resumable_session_callback(ssl: PSSL; cb: SSL_set_not_resumable_session_callback_cb); cdecl;
+procedure Load_SSL_CTX_set_record_padding_callback(ctx: PSSL_CTX; cb: SSL_CTX_set_record_padding_callback_cb); cdecl;
+procedure Load_SSL_CTX_set_record_padding_callback_arg(ctx: PSSL_CTX; arg: Pointer); cdecl;
+function Load_SSL_CTX_get_record_padding_callback_arg(const ctx: PSSL_CTX): Pointer; cdecl;
+function Load_SSL_CTX_set_block_padding(ctx: PSSL_CTX; block_size: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+procedure Load_SSL_set_record_padding_callback(ssl: PSSL; cb: SSL_set_record_padding_callback_cb); cdecl;
+procedure Load_SSL_set_record_padding_callback_arg(ssl: PSSL; arg: Pointer); cdecl;
+function Load_SSL_get_record_padding_callback_arg(const ssl: PSSL): Pointer; cdecl;
+function Load_SSL_set_block_padding(ssl: PSSL; block_size: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SSL_set_num_tickets(s: PSSL; num_tickets: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SSL_get_num_tickets(const s: PSSL): TOpenSSL_C_SIZET; cdecl;
+function Load_SSL_CTX_set_num_tickets(ctx: PSSL_CTX; num_tickets: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_get_num_tickets(const ctx: PSSL_CTX): TOpenSSL_C_SIZET; cdecl;
+function Load_SSL_session_reused(const s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_is_server(const s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CONF_CTX_new: PSSL_CONF_CTX; cdecl;
+function Load_SSL_CONF_CTX_finish(cctx: PSSL_CONF_CTX): TOpenSSL_C_INT; cdecl;
+procedure Load_SSL_CONF_CTX_free(cctx: PSSL_CONF_CTX); cdecl;
+function Load_SSL_CONF_CTX_set_flags(cctx: PSSL_CONF_CTX; flags: TOpenSSL_C_UINT): TOpenSSL_C_UINT; cdecl;
+function Load_SSL_CONF_CTX_clear_flags(cctx: PSSL_CONF_CTX; flags: TOpenSSL_C_UINT): TOpenSSL_C_UINT; cdecl;
+function Load_SSL_CONF_CTX_set1_prefix(cctx: PSSL_CONF_CTX; const pre: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CONF_cmd(cctx: PSSL_CONF_CTX; const cmd: PAnsiChar; const value: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CONF_cmd_argv(cctx: PSSL_CONF_CTX; pargc: POpenSSL_C_INT; pargv: PPPAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CONF_cmd_value_type(cctx: PSSL_CONF_CTX; const cmd: PAnsiChar): TOpenSSL_C_INT; cdecl;
+procedure Load_SSL_CONF_CTX_set_ssl(cctx: PSSL_CONF_CTX; ssl: PSSL); cdecl;
+procedure Load_SSL_CONF_CTX_set_ssl_ctx(cctx: PSSL_CONF_CTX; ctx: PSSL_CTX); cdecl;
+procedure Load_SSL_add_ssl_module; cdecl;
+function Load_SSL_config(s: PSSL; const name: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_config(ctx: PSSL_CTX; const name: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_DTLSv1_listen(s: PSSL; client: PBIO_ADDr): TOpenSSL_C_INT; cdecl;
+function Load_SSL_enable_ct(s: PSSL; validation_mode: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_enable_ct(ctx: PSSL_CTX; validation_mode: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_SSL_ct_is_enabled(const s: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_ct_is_enabled(const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_set_default_ctlog_list_file(ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_set_ctlog_list_file(ctx: PSSL_CTX; const path: PAnsiChar): TOpenSSL_C_INT; cdecl;
+procedure Load_SSL_CTX_set0_ctlog_store(ctx: PSSL_CTX; logs: PCTLOG_STORE); cdecl;
+procedure Load_SSL_set_security_level(s: PSSL; level: TOpenSSL_C_INT); cdecl;
+procedure Load_SSL_set_security_callback(s: PSSL; cb: SSL_security_callback); cdecl;
+function Load_SSL_get_security_callback(const s: PSSL): SSL_security_callback; cdecl;
+procedure Load_SSL_set0_security_ex_data(s: PSSL; ex: Pointer); cdecl;
+function Load_SSL_get0_security_ex_data(const s: PSSL): Pointer; cdecl;
+procedure Load_SSL_CTX_set_security_level(ctx: PSSL_CTX; level: TOpenSSL_C_INT); cdecl;
+function Load_SSL_CTX_get_security_level(const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_get0_security_ex_data(const ctx: PSSL_CTX): Pointer; cdecl;
+procedure Load_SSL_CTX_set0_security_ex_data(ctx: PSSL_CTX; ex: Pointer); cdecl;
+function Load_OPENSSL_init_ssl(opts: TOpenSSL_C_UINT64; const settings: POPENSSL_INIT_SETTINGS): TOpenSSL_C_INT; cdecl;
+function Load_SSL_free_buffers(ssl: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_alloc_buffers(ssl: PSSL): TOpenSSL_C_INT; cdecl;
+function Load_SSL_CTX_set_session_ticket_cb(ctx: PSSL_CTX; gen_cb: SSL_CTX_generate_session_ticket_fn; dec_cb: SSL_CTX_decrypt_session_ticket_fn; arg: Pointer): TOpenSSL_C_INT; cdecl;
+function Load_SSL_SESSION_set1_ticket_appdata(ss: PSSL_SESSION; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_SSL_SESSION_get0_ticket_appdata(ss: PSSL_SESSION; data: PPointer; len: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+procedure Load_DTLS_set_timer_cb(s: PSSL; cb: DTLS_timer_cb); cdecl;
+procedure Load_SSL_CTX_set_allow_early_data_cb(ctx: PSSL_CTX; cb: SSL_allow_early_data_cb_fN; arg: Pointer); cdecl;
+procedure Load_SSL_set_allow_early_data_cb(s: PSSL; cb: SSL_allow_early_data_cb_fN; arg: Pointer); cdecl;
+function Load_SSL_get0_peer_certificate(const s: PSSL): PX509; cdecl;
+function Load_SSL_get1_peer_certificate(const s: PSSL): PX509; cdecl;
+
 var
-  SSL_CTX_get_options: function (const ctx: PSSL_CTX): TOpenSSL_C_ULONG; cdecl = nil;
-  SSL_get_options: function (const s: PSSL): TOpenSSL_C_ULONG; cdecl = nil;
-  SSL_CTX_clear_options: function (ctx: PSSL_CTX; op: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl = nil;
-  SSL_clear_options: function (s: PSSL; op: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl = nil;
-  SSL_CTX_set_options: function (ctx: PSSL_CTX; op: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl = nil;
-  SSL_set_options: function (s: PSSL; op: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl = nil;
-  SSL_CTX_sess_set_new_cb: procedure (ctx: PSSL_CTX; new_session_cb: SSL_CTX_sess_new_cb); cdecl = nil;
-  SSL_CTX_sess_get_new_cb: function (ctx: PSSL_CTX): SSL_CTX_sess_new_cb; cdecl = nil;
-  SSL_CTX_sess_set_remove_cb: procedure (ctx: PSSL_CTX; remove_session_cb: SSL_CTX_sess_remove_cb); cdecl = nil;
-  SSL_CTX_sess_get_remove_cb: function (ctx: PSSL_CTX): SSL_CTX_sess_remove_cb; cdecl = nil;
-  SSL_CTX_set_info_callback: procedure (ctx: PSSL_CTX; cb: SSL_CTX_info_callback); cdecl = nil;
-  SSL_CTX_get_info_callback: function (ctx: PSSL_CTX): SSL_CTX_info_callback; cdecl = nil;
-  SSL_CTX_set_client_cert_cb: procedure (ctx: PSSL_CTX; client_cert_cb: SSL_CTX_client_cert_cb); cdecl = nil;
-  SSL_CTX_get_client_cert_cb: function (ctx: PSSL_CTX): SSL_CTX_client_cert_cb; cdecl = nil;
-  SSL_CTX_set_client_cert_engine: function (ctx: PSSL_CTX; e: PENGINE): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_cookie_generate_cb: procedure (ctx: PSSL_CTX; app_gen_cookie_cb: SSL_CTX_cookie_verify_cb); cdecl = nil;
-  SSL_CTX_set_cookie_verify_cb: procedure (ctx: PSSL_CTX; app_verify_cookie_cb: SSL_CTX_set_cookie_verify_cb_app_verify_cookie_cb); cdecl = nil;
-  SSL_CTX_set_stateless_cookie_generate_cb: procedure (ctx: PSSL_CTX; gen_stateless_cookie_cb: SSL_CTX_set_stateless_cookie_generate_cb_gen_stateless_cookie_cb); cdecl = nil;
-  SSL_CTX_set_stateless_cookie_verify_cb: procedure (ctx: PSSL_CTX; verify_stateless_cookie_cb: SSL_CTX_set_stateless_cookie_verify_cb_verify_stateless_cookie_cb); cdecl = nil;
-  SSL_CTX_set_alpn_select_cb: procedure (ctx: PSSL_CTX; cb: SSL_CTX_alpn_select_cb_func; arg: Pointer); cdecl = nil;
-  SSL_get0_alpn_selected: procedure (const ssl: PSSL; const data: PPByte; len: POpenSSL_C_UINT); cdecl = nil;
-  SSL_CTX_set_psk_client_callback: procedure (ctx: PSSL_CTX; cb: SSL_psk_client_cb_func); cdecl = nil;
-  SSL_set_psk_client_callback: procedure (ssl: PSSL; cb: SSL_psk_client_cb_func); cdecl = nil;
-  SSL_CTX_set_psk_server_callback: procedure (ctx: PSSL_CTX; cb: SSL_psk_server_cb_func); cdecl = nil;
-  SSL_set_psk_server_callback: procedure (ssl: PSSL; cb: SSL_psk_server_cb_func); cdecl = nil;
-  SSL_set_psk_find_session_callback: procedure (s: PSSL; cb: SSL_psk_find_session_cb_func); cdecl = nil;
-  SSL_CTX_set_psk_find_session_callback: procedure (ctx: PSSL_CTX; cb: SSL_psk_find_session_cb_func); cdecl = nil;
-  SSL_set_psk_use_session_callback: procedure (s: PSSL; cb: SSL_psk_use_session_cb_func); cdecl = nil;
-  SSL_CTX_set_psk_use_session_callback: procedure (ctx: PSSL_CTX; cb: SSL_psk_use_session_cb_func); cdecl = nil;
-  SSL_CTX_set_keylog_callback: procedure (ctx: PSSL_CTX; cb: SSL_CTX_keylog_cb_func); cdecl = nil;
-  SSL_CTX_get_keylog_callback: function (const ctx: PSSL_CTX): SSL_CTX_keylog_cb_func; cdecl = nil;
-  SSL_CTX_set_max_early_data: function (ctx: PSSL_CTX; max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_get_max_early_data: function (const ctx: PSSL_CTX): TOpenSSL_C_UINT32; cdecl = nil;
-  SSL_set_max_early_data: function (s: PSSL; max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_max_early_data: function (const s: PSSL): TOpenSSL_C_UINT32; cdecl = nil;
-  SSL_CTX_set_recv_max_early_data: function (ctx: PSSL_CTX; recv_max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_get_recv_max_early_data: function (const ctx: PSSL_CTX): TOpenSSL_C_UINT32; cdecl = nil;
-  SSL_set_recv_max_early_data: function (s: PSSL; recv_max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_recv_max_early_data: function (const s: PSSL): TOpenSSL_C_UINT32; cdecl = nil;
-  SSL_in_init: function (const s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_in_before: function (const s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_is_init_finished: function (const s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_finished: function (const s: PSSL; buf: Pointer; count: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = nil;
-  SSL_get_peer_finished: function (const s: PSSL; buf: Pointer; count: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = nil;
-  BIO_f_ssl: function : PBIO_METHOD; cdecl = nil;
-  BIO_new_ssl: function (ctx: PSSL_CTX; client: TOpenSSL_C_INT): PBIO; cdecl = nil;
-  BIO_new_ssl_connect: function (ctx: PSSL_CTX): PBIO; cdecl = nil;
-  BIO_new_buffer_ssl_connect: function (ctx: PSSL_CTX): PBIO; cdecl = nil;
-  BIO_ssl_copy_session_id: function (to_: PBIO; from: PBIO): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_cipher_list: function (v1: PSSL_CTX; const str: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_new: function (const meth: PSSL_METHOD): PSSL_CTX; cdecl = nil;
-  SSL_CTX_set_timeout: function (ctx: PSSL_CTX; t: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil;
-  SSL_CTX_get_timeout: function (const ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl = nil;
-  SSL_CTX_get_cert_store: function (const v1: PSSL_CTX): PX509_STORE; cdecl = nil;
-  SSL_want: function (const s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_clear: function (s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  BIO_ssl_shutdown: procedure (ssl_bio: PBIO); cdecl = nil;
-  SSL_CTX_up_ref: function (ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_free: procedure (v1: PSSL_CTX); cdecl = nil;
-  SSL_CTX_set_cert_store: procedure (v1: PSSL_CTX; v2: PX509_STORE); cdecl = nil;
-  SSL_CTX_set1_cert_store: procedure (v1: PSSL_CTX; v2: PX509_STORE); cdecl = nil;
-  SSL_CTX_flush_sessions: procedure (ctx: PSSL_CTX; tm: TOpenSSL_C_LONG); cdecl = nil;
-  SSL_get_current_cipher: function (const s: PSSL): PSSL_CIPHER; cdecl = nil;
-  SSL_get_pending_cipher: function (const s: PSSL): PSSL_CIPHER; cdecl = nil;
-  SSL_CIPHER_get_bits: function (const c: PSSL_CIPHER; var alg_bits: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CIPHER_get_version: function (const c: PSSL_CIPHER): PAnsiChar; cdecl = nil;
-  SSL_CIPHER_get_name: function (const c: PSSL_CIPHER): PAnsiChar; cdecl = nil;
-  SSL_CIPHER_standard_name: function (const c: PSSL_CIPHER): PAnsiChar; cdecl = nil;
-  OPENSSL_cipher_name: function (const rfc_name: PAnsiChar): PAnsiChar; cdecl = nil;
-  SSL_CIPHER_get_id: function (const c: PSSL_CIPHER): TOpenSSL_C_UINT32; cdecl = nil;
-  SSL_CIPHER_get_protocol_id: function (const c: PSSL_CIPHER): TOpenSSL_C_UINT16; cdecl = nil;
-  SSL_CIPHER_get_kx_nid: function (const c: PSSL_CIPHER): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CIPHER_get_auth_nid: function (const c: PSSL_CIPHER): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CIPHER_get_handshake_digest: function (const c: PSSL_CIPHER): PEVP_MD; cdecl = nil;
-  SSL_CIPHER_is_aead: function (const c: PSSL_CIPHER): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_fd: function (const s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_rfd: function (const s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_wfd: function (const s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_cipher_list: function (const s: PSSL; n: TOpenSSL_C_INT): PAnsiChar; cdecl = nil;
-  SSL_get_shared_ciphers: function (const s: PSSL; buf: PAnsiChar; size: TOpenSSL_C_INT): PAnsiChar; cdecl = nil;
-  SSL_get_read_ahead: function (const s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_pending: function (const s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_has_pending: function (const s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set_fd: function (s: PSSL; fd: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set_rfd: function (s: PSSL; fd: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set_wfd: function (s: PSSL; fd: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set0_rbio: procedure (s: PSSL; rbio: PBIO); cdecl = nil;
-  SSL_set0_wbio: procedure (s: PSSL; wbio: PBIO); cdecl = nil;
-  SSL_set_bio: procedure (s: PSSL; rbio: PBIO; wbio: PBIO); cdecl = nil;
-  SSL_get_rbio: function (const s: PSSL): PBIO; cdecl = nil;
-  SSL_get_wbio: function (const s: PSSL): PBIO; cdecl = nil;
-  SSL_set_cipher_list: function (s: PSSL; const str: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_ciphersuites: function (ctx: PSSL_CTX; const str: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set_ciphersuites: function (s: PSSL; const str: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_verify_mode: function (const s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_verify_depth: function (const s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_verify_callback: function (const s: PSSL): SSL_verify_cb; cdecl = nil;
-  SSL_set_read_ahead: procedure (s: PSSL; yes: TOpenSSL_C_INT); cdecl = nil;
-  SSL_set_verify: procedure (s: PSSL; mode: TOpenSSL_C_INT; callback: SSL_verify_cb); cdecl = nil;
-  SSL_set_verify_depth: procedure (s: PSSL; depth: TOpenSSL_C_INT); cdecl = nil;
-  SSL_use_RSAPrivateKey: function (ssl: PSSL; rsa: PRSA): TOpenSSL_C_INT; cdecl = nil;
-  SSL_use_RSAPrivateKey_ASN1: function (ssl: PSSL; const d: PByte; len: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl = nil;
-  SSL_use_PrivateKey: function (ssl: PSSL; pkey: PEVP_PKEY): TOpenSSL_C_INT; cdecl = nil;
-  SSL_use_PrivateKey_ASN1: function (pk: TOpenSSL_C_INT; ssl: PSSL; const d: PByte; len: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl = nil;
-  SSL_use_certificate: function (ssl: PSSL; x: PX509): TOpenSSL_C_INT; cdecl = nil;
-  SSL_use_certificate_ASN1: function (ssl: PSSL; const d: PByte; len: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_use_serverinfo: function (ctx: PSSL_CTX; const serverinfo: PByte; serverinfo_length: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_use_serverinfo_ex: function (ctx: PSSL_CTX; version: TOpenSSL_C_UINT; const serverinfo: PByte; serverinfo_length: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_use_serverinfo_file: function (ctx: PSSL_CTX; const file_: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_use_RSAPrivateKey_file: function (ssl: PSSL; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_use_PrivateKey_file: function (ssl: PSSL; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_use_certificate_file: function (ssl: PSSL; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_use_RSAPrivateKey_file: function (ctx: PSSL_CTX; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_use_PrivateKey_file: function (ctx: PSSL_CTX; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_use_certificate_file: function (ctx: PSSL_CTX; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_use_certificate_chain_file: function (ctx: PSSL_CTX; const file_: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_use_certificate_chain_file: function (ssl: PSSL; const file_: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_load_client_CA_file: function (const file_: PAnsiChar): PSTACK_OF_X509_NAME; cdecl = nil;
-  SSL_add_file_cert_subjects_to_stack: function (stackCAs: PSTACK_OF_X509_NAME; const file_: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_add_dir_cert_subjects_to_stack: function (stackCAs: PSTACK_OF_X509_NAME; const dir_: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_state_string: function (const s: PSSL): PAnsiChar; cdecl = nil;
-  SSL_rstate_string: function (const s: PSSL): PAnsiChar; cdecl = nil;
-  SSL_state_string_long: function (const s: PSSL): PAnsiChar; cdecl = nil;
-  SSL_rstate_string_long: function (const s: PSSL): PAnsiChar; cdecl = nil;
-  SSL_SESSION_get_time: function (const s: PSSL_SESSION): TOpenSSL_C_LONG; cdecl = nil;
-  SSL_SESSION_set_time: function (s: PSSL_SESSION; t: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil;
-  SSL_SESSION_get_timeout: function (const s: PSSL_SESSION): TOpenSSL_C_LONG; cdecl = nil;
-  SSL_SESSION_set_timeout: function (s: PSSL_SESSION; t: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil;
-  SSL_SESSION_get_protocol_version: function (const s: PSSL_SESSION): TOpenSSL_C_INT; cdecl = nil;
-  SSL_SESSION_set_protocol_version: function (s: PSSL_SESSION; version: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_SESSION_get0_hostname: function (const s: PSSL_SESSION): PAnsiChar; cdecl = nil;
-  SSL_SESSION_set1_hostname: function (s: PSSL_SESSION; const hostname: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_SESSION_get0_alpn_selected: procedure (const s: PSSL_SESSION; const alpn: PPByte; len: POpenSSL_C_SIZET); cdecl = nil;
-  SSL_SESSION_set1_alpn_selected: function (s: PSSL_SESSION; const alpn: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SSL_SESSION_get0_cipher: function (const s: PSSL_SESSION): PSSL_CIPHER; cdecl = nil;
-  SSL_SESSION_set_cipher: function (s: PSSL_SESSION; const cipher: PSSL_CIPHER): TOpenSSL_C_INT; cdecl = nil;
-  SSL_SESSION_has_ticket: function (const s: PSSL_SESSION): TOpenSSL_C_INT; cdecl = nil;
-  SSL_SESSION_get_ticket_lifetime_hint: function (const s: PSSL_SESSION): TOpenSSL_C_ULONG; cdecl = nil;
-  SSL_SESSION_get0_ticket: procedure (const s: PSSL_SESSION; const tick: PPByte; len: POpenSSL_C_SIZET); cdecl = nil;
-  SSL_SESSION_get_max_early_data: function (const s: PSSL_SESSION): TOpenSSL_C_UINT32; cdecl = nil;
-  SSL_SESSION_set_max_early_data: function (s: PSSL_SESSION; max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl = nil;
-  SSL_copy_session_id: function (to_: PSSL; const from: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_SESSION_get0_peer: function (s: PSSL_SESSION): PX509; cdecl = nil;
-  SSL_SESSION_set1_id_context: function (s: PSSL_SESSION; const sid_ctx: PByte; sid_ctx_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_SESSION_set1_id: function (s: PSSL_SESSION; const sid: PByte; sid_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_SESSION_is_resumable: function (const s: PSSL_SESSION): TOpenSSL_C_INT; cdecl = nil;
-  SSL_SESSION_new: function : PSSL_SESSION; cdecl = nil;
-  SSL_SESSION_dup: function (src: PSSL_SESSION): PSSL_SESSION; cdecl = nil;
-  SSL_SESSION_get_id: function (const s: PSSL_SESSION; len: POpenSSL_C_UINT): PByte; cdecl = nil;
-  SSL_SESSION_get0_id_context: function (const s: PSSL_SESSION; len: POpenSSL_C_UINT): PByte; cdecl = nil;
-  SSL_SESSION_get_compress_id: function (const s: PSSL_SESSION): TOpenSSL_C_UINT; cdecl = nil;
-  SSL_SESSION_print: function (fp: PBIO; const ses: PSSL_SESSION): TOpenSSL_C_INT; cdecl = nil;
-  SSL_SESSION_print_keylog: function (bp: PBIO; const x: PSSL_SESSION): TOpenSSL_C_INT; cdecl = nil;
-  SSL_SESSION_up_ref: function (ses: PSSL_SESSION): TOpenSSL_C_INT; cdecl = nil;
-  SSL_SESSION_free: procedure (ses: PSSL_SESSION); cdecl = nil;
-  SSL_set_session: function (to_: PSSL; session: PSSL_SESSION): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_add_session: function (ctx: PSSL_CTX; session: PSSL_SESSION): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_remove_session: function (ctx: PSSL_CTX; session: PSSL_SESSION): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_generate_session_id: function (ctx: PSSL_CTX; cb: GEN_SESSION_CB): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set_generate_session_id: function (s: PSSL; cb: GEN_SESSION_CB): TOpenSSL_C_INT; cdecl = nil;
-  SSL_has_matching_session_id: function (const s: PSSL; const id: PByte; id_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = nil;
-  d2i_SSL_SESSION: function (a: PPSSL_SESSION; const pp: PPByte; length: TOpenSSL_C_LONG): PSSL_SESSION; cdecl = nil;
-  SSL_CTX_get_verify_mode: function (const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_get_verify_depth: function (const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_get_verify_callback: function (const ctx: PSSL_CTX): SSL_verify_cb; cdecl = nil;
-  SSL_CTX_set_verify: procedure (ctx: PSSL_CTX; mode: TOpenSSL_C_INT; callback: SSL_verify_cb); cdecl = nil;
-  SSL_CTX_set_verify_depth: procedure (ctx: PSSL_CTX; depth: TOpenSSL_C_INT); cdecl = nil;
-  SSL_CTX_set_cert_verify_callback: procedure (ctx: PSSL_CTX; cb: SSL_CTX_set_cert_verify_callback_cb; arg: Pointer); cdecl = nil;
-  SSL_CTX_set_cert_cb: procedure (c: PSSL_CTX; cb: SSL_CTX_set_cert_cb_cb; arg: Pointer); cdecl = nil;
-  SSL_CTX_use_RSAPrivateKey: function (ctx: PSSL_CTX; rsa: PRSA): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_use_RSAPrivateKey_ASN1: function (ctx: PSSL_CTX; const d: PByte; len: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_use_PrivateKey: function (ctx: PSSL_CTX; pkey: PEVP_PKEY): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_use_PrivateKey_ASN1: function (pk: TOpenSSL_C_INT; ctx: PSSL_CTX; const d: PByte; len: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_use_certificate: function (ctx: PSSL_CTX; x: X509): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_use_certificate_ASN1: function (ctx: PSSL_CTX; len: TOpenSSL_C_INT; const d: PByte): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_default_passwd_cb: procedure (ctx: PSSL_CTX; cb: pem_password_cb); cdecl = nil;
-  SSL_CTX_set_default_passwd_cb_userdata: procedure (ctx: PSSL_CTX; u: Pointer); cdecl = nil;
-  SSL_CTX_get_default_passwd_cb: function (ctx: PSSL_CTX): pem_password_cb; cdecl = nil;
-  SSL_CTX_get_default_passwd_cb_userdata: function (ctx: PSSL_CTX): Pointer; cdecl = nil;
-  SSL_set_default_passwd_cb: procedure (s: PSSL; cb: pem_password_cb); cdecl = nil;
-  SSL_set_default_passwd_cb_userdata: procedure (s: PSSL; u: Pointer); cdecl = nil;
-  SSL_get_default_passwd_cb: function (s: PSSL): pem_password_cb; cdecl = nil;
-  SSL_get_default_passwd_cb_userdata: function (s: PSSL): Pointer; cdecl = nil;
-  SSL_CTX_check_private_key: function (const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SSL_check_private_key: function (const ctx: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_session_id_context: function (ctx: PSSL_CTX; const sid_ctx: PByte; sid_ctx_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_new: function (ctx: PSSL_CTX): PSSL; cdecl = nil;
-  SSL_up_ref: function (s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_is_dtls: function (const s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set_session_id_context: function (ssl: PSSL; const sid_ctx: PByte; sid_ctx_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_purpose: function (ctx: PSSL_CTX; purpose: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set_purpose: function (ssl: PSSL; purpose: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_trust: function (ctx: PSSL_CTX; trust: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set_trust: function (ssl: PSSL; trust: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set1_host: function (s: PSSL; const hostname: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_add1_host: function (s: PSSL; const hostname: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get0_peername: function (s: PSSL): PAnsiChar; cdecl = nil;
-  SSL_set_hostflags: procedure (s: PSSL; flags: TOpenSSL_C_UINT); cdecl = nil;
-  SSL_CTX_dane_enable: function (ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_dane_mtype_set: function (ctx: PSSL_CTX; const md: PEVP_MD; mtype: TOpenSSL_C_UINT8; ord: TOpenSSL_C_UINT8): TOpenSSL_C_INT; cdecl = nil;
-  SSL_dane_enable: function (s: PSSL; const basedomain: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_dane_tlsa_add: function (s: PSSL; usage: TOpenSSL_C_UINT8; selector: TOpenSSL_C_UINT8; mtype: TOpenSSL_C_UINT8; const data: PByte; dlen: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get0_dane_authority: function (s: PSSL; mcert: PPX509; mspki: PPEVP_PKEY): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get0_dane_tlsa: function (s: PSSL; usage: POpenSSL_C_UINT8; selector: POpenSSL_C_UINT8; mtype: POpenSSL_C_UINT8; const data: PPByte; dlen: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get0_dane: function (ssl: PSSL): PSSL_DANE; cdecl = nil;
-  SSL_CTX_dane_set_flags: function (ctx: PSSL_CTX; flags: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl = nil;
-  SSL_CTX_dane_clear_flags: function (ctx: PSSL_CTX; flags: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl = nil;
-  SSL_dane_set_flags: function (ssl: PSSL; flags: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl = nil;
-  SSL_dane_clear_flags: function (ssl: PSSL; flags: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl = nil;
-  SSL_CTX_set1_param: function (ctx: PSSL_CTX; vpm: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set1_param: function (ssl: PSSL; vpm: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_get0_param: function (ctx: PSSL_CTX): PX509_VERIFY_PARAM; cdecl = nil;
-  SSL_get0_param: function (ssl: PSSL): PX509_VERIFY_PARAM; cdecl = nil;
-  SSL_CTX_set_srp_username: function (ctx: PSSL_CTX; name: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_srp_password: function (ctx: PSSL_CTX; password: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_srp_strength: function (ctx: PSSL_CTX; strength: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_srp_client_pwd_callback: function (ctx: PSSL_CTX; cb: SSL_CTX_set_srp_client_pwd_callback_cb): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_srp_verify_param_callback: function (ctx: PSSL_CTX; cb: SSL_CTX_set_srp_verify_param_callback_cb): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_srp_username_callback: function (ctx: PSSL_CTX; cb: SSL_CTX_set_srp_username_callback_cb): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_srp_cb_arg: function (ctx: PSSL_CTX; arg: Pointer): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set_srp_server_param: function (s: PSSL; const N: PBIGNUm; const g: PBIGNUm; sa: PBIGNUm; v: PBIGNUm; info: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set_srp_server_param_pw: function (s: PSSL; const user: PAnsiChar; const pass: PAnsiChar; const grp: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_client_hello_cb: procedure (c: PSSL_CTX; cb: SSL_client_hello_cb_fn; arg: Pointer); cdecl = nil;
-  SSL_client_hello_isv2: function (s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_client_hello_get0_legacy_version: function (s: PSSL): TOpenSSL_C_UINT; cdecl = nil;
-  SSL_client_hello_get0_random: function (s: PSSL; const out_: PPByte): TOpenSSL_C_SIZET; cdecl = nil;
-  SSL_client_hello_get0_session_id: function (s: PSSL; const out_: PPByte): TOpenSSL_C_SIZET; cdecl = nil;
-  SSL_client_hello_get0_ciphers: function (s: PSSL; const out_: PPByte): TOpenSSL_C_SIZET; cdecl = nil;
-  SSL_client_hello_get0_compression_methods: function (s: PSSL; const out_: PPByte): TOpenSSL_C_SIZET; cdecl = nil;
-  SSL_client_hello_get1_extensions_present: function (s: PSSL; out_: PPOpenSSL_C_INT; outlen: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SSL_client_hello_get0_ext: function (s: PSSL; type_: TOpenSSL_C_UINT; const out_: PPByte; outlen: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SSL_certs_clear: procedure (s: PSSL); cdecl = nil;
-  SSL_free: procedure (ssl: PSSL); cdecl = nil;
-  SSL_waiting_for_async: function (s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_all_async_fds: function (s: PSSL; fds: POSSL_ASYNC_FD; numfds: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_changed_async_fds: function (s: PSSL; addfd: POSSL_ASYNC_FD; numaddfds: POpenSSL_C_SIZET; delfd: POSSL_ASYNC_FD; numdelfds: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SSL_accept: function (ssl: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_stateless: function (s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_connect: function (ssl: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_read: function (ssl: PSSL; buf: Pointer; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_read_ex: function (ssl: PSSL; buf: Pointer; num: TOpenSSL_C_SIZET; readbytes: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SSL_read_early_data: function (s: PSSL; buf: Pointer; num: TOpenSSL_C_SIZET; readbytes: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SSL_peek: function (ssl: PSSL; buf: Pointer; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_peek_ex: function (ssl: PSSL; buf: Pointer; num: TOpenSSL_C_SIZET; readbytes: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SSL_write: function (ssl: PSSL; const buf: Pointer; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_write_ex: function (s: PSSL; const buf: Pointer; num: TOpenSSL_C_SIZET; written: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SSL_write_early_data: function (s: PSSL; const buf: Pointer; num: TOpenSSL_C_SIZET; written: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SSL_callback_ctrl: function (v1: PSSL; v2: TOpenSSL_C_INT; v3: SSL_callback_ctrl_v3): TOpenSSL_C_LONG; cdecl = nil;
-  SSL_ctrl: function (ssl: PSSL; cmd: TOpenSSL_C_INT; larg: TOpenSSL_C_LONG; parg: Pointer): TOpenSSL_C_LONG; cdecl = nil;
-  SSL_CTX_ctrl: function (ctx: PSSL_CTX; cmd: TOpenSSL_C_INT; larg: TOpenSSL_C_LONG; parg: Pointer): TOpenSSL_C_LONG; cdecl = nil;
-  SSL_CTX_callback_ctrl: function (v1: PSSL_CTX; v2: TOpenSSL_C_INT; v3: SSL_CTX_callback_ctrl_v3): TOpenSSL_C_LONG; cdecl = nil;
-  SSL_get_early_data_status: function (const s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_error: function (const s: PSSL; ret_code: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_version: function (const s: PSSL): PAnsiChar; cdecl = nil;
-  SSL_CTX_set_ssl_version: function (ctx: PSSL_CTX; const meth: PSSL_METHOD): TOpenSSL_C_INT; cdecl = nil;
-  TLS_method: function : PSSL_METHOD; cdecl = nil;
-  TLS_server_method: function : PSSL_METHOD; cdecl = nil;
-  TLS_client_method: function : PSSL_METHOD; cdecl = nil;
-  SSL_do_handshake: function (s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_key_update: function (s: PSSL; updatetype: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_key_update_type: function (const s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_renegotiate: function (s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_renegotiate_abbreviated: function (s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_new_session_ticket: function (s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_shutdown: function (s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_post_handshake_auth: procedure (ctx: PSSL_CTX; val: TOpenSSL_C_INT); cdecl = nil;
-  SSL_set_post_handshake_auth: procedure (s: PSSL; val: TOpenSSL_C_INT); cdecl = nil;
-  SSL_renegotiate_pending: function (const s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_verify_client_post_handshake: function (s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_get_ssl_method: function (const ctx: PSSL_CTX): PSSL_METHOD; cdecl = nil;
-  SSL_get_ssl_method: function (const s: PSSL): PSSL_METHOD; cdecl = nil;
-  SSL_set_ssl_method: function (s: PSSL; const method: PSSL_METHOD): TOpenSSL_C_INT; cdecl = nil;
-  SSL_alert_type_string_long: function (value: TOpenSSL_C_INT): PAnsiChar; cdecl = nil;
-  SSL_alert_type_string: function (value: TOpenSSL_C_INT): PAnsiChar; cdecl = nil;
-  SSL_alert_desc_string_long: function (value: TOpenSSL_C_INT): PAnsiChar; cdecl = nil;
-  SSL_alert_desc_string: function (value: TOpenSSL_C_INT): PAnsiChar; cdecl = nil;
-  SSL_CTX_set_client_CA_list: procedure (ctx: PSSL_CTX; name_list: PSTACK_OF_X509_NAME); cdecl = nil;
-  SSL_add_client_CA: function (ssl: PSSL; x: PX509): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_add_client_CA: function (ctx: PSSL_CTX; x: PX509): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set_connect_state: procedure (s: PSSL); cdecl = nil;
-  SSL_set_accept_state: procedure (s: PSSL); cdecl = nil;
-  SSL_CIPHER_description: function (cipher: PSSL_CIPHER; buf: PAnsiChar; size_ :TOpenSSL_C_INT): PAnsiChar; cdecl = nil;
-  SSL_dup: function (ssl: PSSL): PSSL; cdecl = nil;
-  SSL_get_certificate: function (const ssl: PSSL): PX509; cdecl = nil;
-  SSL_get_privatekey: function (const ssl: PSSL): PEVP_PKEY; cdecl = nil;
-  SSL_CTX_get0_certificate: function (const ctx: PSSL_CTX): PX509; cdecl = nil;
-  SSL_CTX_get0_privatekey: function (const ctx: PSSL_CTX): PEVP_PKEY; cdecl = nil;
-  SSL_CTX_set_quiet_shutdown: procedure (ctx: PSSL_CTX; mode: TOpenSSL_C_INT); cdecl = nil;
-  SSL_CTX_get_quiet_shutdown: function (const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set_quiet_shutdown: procedure (ssl: PSSL; mode: TOpenSSL_C_INT); cdecl = nil;
-  SSL_get_quiet_shutdown: function (const ssl: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set_shutdown: procedure (ssl: PSSL; mode: TOpenSSL_C_INT); cdecl = nil;
-  SSL_get_shutdown: function (const ssl: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_version: function (const ssl: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_client_version: function (const s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_default_verify_paths: function (ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_default_verify_dir: function (ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_default_verify_file: function (ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_load_verify_locations: function (ctx: PSSL_CTX; const CAfile: PAnsiChar; const CApath: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_session: function (const ssl: PSSL): PSSL_SESSION; cdecl = nil;
-  SSL_get1_session: function (ssl: PSSL): PSSL_SESSION; cdecl = nil;
-  SSL_get_SSL_CTX: function (const ssl: PSSL): PSSL_CTX; cdecl = nil;
-  SSL_set_SSL_CTX: function (ssl: PSSL; ctx: PSSL_CTX): PSSL_CTX; cdecl = nil;
-  SSL_set_info_callback: procedure (ssl: PSSL; cb: SSL_info_callback); cdecl = nil;
-  SSL_get_info_callback: function (const ssl: PSSL): SSL_info_callback; cdecl = nil;
-  SSL_get_state: function (const ssl: PSSL): OSSL_HANDSHAKE_STATE; cdecl = nil;
-  SSL_set_verify_result: procedure (ssl: PSSL; v: TOpenSSL_C_LONG); cdecl = nil;
-  SSL_get_verify_result: function (const ssl: PSSL): TOpenSSL_C_LONG; cdecl = nil;
-  SSL_get_client_random: function (const ssl: PSSL; out_: PByte; outlen: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = nil;
-  SSL_get_server_random: function (const ssl: PSSL; out_: PByte; outlen: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = nil;
-  SSL_SESSION_get_master_key: function (const sess: PSSL_SESSION; out_: PByte; outlen: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = nil;
-  SSL_SESSION_set1_master_key: function (sess: PSSL_SESSION; const in_: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SSL_SESSION_get_max_fragment_length: function (const sess: PSSL_SESSION): TOpenSSL_C_UINT8; cdecl = nil;
-  SSL_set_ex_data: function (ssl: PSSL; idx: TOpenSSL_C_INT; data: Pointer): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_ex_data: function (const ssl: PSSL; idx: TOpenSSL_C_INT): Pointer; cdecl = nil;
-  SSL_SESSION_set_ex_data: function (ss: PSSL_SESSION; idx: TOpenSSL_C_INT; data: Pointer): TOpenSSL_C_INT; cdecl = nil;
-  SSL_SESSION_get_ex_data: function (const ss: PSSL_SESSION; idx: TOpenSSL_C_INT): Pointer; cdecl = nil;
-  SSL_CTX_set_ex_data: function (ssl: PSSL_CTX; idx: TOpenSSL_C_INT; data: Pointer): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_get_ex_data: function (const ssl: PSSL_CTX; idx: TOpenSSL_C_INT): Pointer; cdecl = nil;
-  SSL_get_ex_data_X509_STORE_CTX_idx: function : TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_default_read_buffer_len: procedure (ctx: PSSL_CTX; len: TOpenSSL_C_SIZET); cdecl = nil;
-  SSL_set_default_read_buffer_len: procedure (s: PSSL; len: TOpenSSL_C_SIZET); cdecl = nil;
-  SSL_CTX_set_tmp_dh_callback: procedure (ctx: PSSL_CTX; dh: SSL_CTX_set_tmp_dh_callback_dh); cdecl = nil;
-  SSL_set_tmp_dh_callback: procedure (ssl: PSSL; dh: SSL_set_tmp_dh_callback_dh); cdecl = nil;
-  SSL_CIPHER_find: function (ssl: PSSL; const ptr: PByte): PSSL_CIPHER; cdecl = nil;
-  SSL_CIPHER_get_cipher_nid: function (const c: PSSL_CIPHEr): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CIPHER_get_digest_nid: function (const c: PSSL_CIPHEr): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set_session_ticket_ext: function (s: PSSL; ext_data: Pointer; ext_len: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set_session_ticket_ext_cb: function (s: PSSL; cb: tls_session_ticket_ext_cb_fn; arg: Pointer): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_not_resumable_session_callback: procedure (ctx: PSSL_CTX; cb: SSL_CTX_set_not_resumable_session_callback_cb); cdecl = nil;
-  SSL_set_not_resumable_session_callback: procedure (ssl: PSSL; cb: SSL_set_not_resumable_session_callback_cb); cdecl = nil;
-  SSL_CTX_set_record_padding_callback: procedure (ctx: PSSL_CTX; cb: SSL_CTX_set_record_padding_callback_cb); cdecl = nil;
-  SSL_CTX_set_record_padding_callback_arg: procedure (ctx: PSSL_CTX; arg: Pointer); cdecl = nil;
-  SSL_CTX_get_record_padding_callback_arg: function (const ctx: PSSL_CTX): Pointer; cdecl = nil;
-  SSL_CTX_set_block_padding: function (ctx: PSSL_CTX; block_size: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set_record_padding_callback: procedure (ssl: PSSL; cb: SSL_set_record_padding_callback_cb); cdecl = nil;
-  SSL_set_record_padding_callback_arg: procedure (ssl: PSSL; arg: Pointer); cdecl = nil;
-  SSL_get_record_padding_callback_arg: function (const ssl: PSSL): Pointer; cdecl = nil;
-  SSL_set_block_padding: function (ssl: PSSL; block_size: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SSL_set_num_tickets: function (s: PSSL; num_tickets: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SSL_get_num_tickets: function (const s: PSSL): TOpenSSL_C_SIZET; cdecl = nil;
-  SSL_CTX_set_num_tickets: function (ctx: PSSL_CTX; num_tickets: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_get_num_tickets: function (const ctx: PSSL_CTX): TOpenSSL_C_SIZET; cdecl = nil;
-  SSL_session_reused: function (const s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_is_server: function (const s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CONF_CTX_new: function : PSSL_CONF_CTX; cdecl = nil;
-  SSL_CONF_CTX_finish: function (cctx: PSSL_CONF_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CONF_CTX_free: procedure (cctx: PSSL_CONF_CTX); cdecl = nil;
-  SSL_CONF_CTX_set_flags: function (cctx: PSSL_CONF_CTX; flags: TOpenSSL_C_UINT): TOpenSSL_C_UINT; cdecl = nil;
-  SSL_CONF_CTX_clear_flags: function (cctx: PSSL_CONF_CTX; flags: TOpenSSL_C_UINT): TOpenSSL_C_UINT; cdecl = nil;
-  SSL_CONF_CTX_set1_prefix: function (cctx: PSSL_CONF_CTX; const pre: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CONF_cmd: function (cctx: PSSL_CONF_CTX; const cmd: PAnsiChar; const value: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CONF_cmd_argv: function (cctx: PSSL_CONF_CTX; pargc: POpenSSL_C_INT; pargv: PPPAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CONF_cmd_value_type: function (cctx: PSSL_CONF_CTX; const cmd: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CONF_CTX_set_ssl: procedure (cctx: PSSL_CONF_CTX; ssl: PSSL); cdecl = nil;
-  SSL_CONF_CTX_set_ssl_ctx: procedure (cctx: PSSL_CONF_CTX; ctx: PSSL_CTX); cdecl = nil;
-  SSL_add_ssl_module: procedure ; cdecl = nil;
-  SSL_config: function (s: PSSL; const name: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_config: function (ctx: PSSL_CTX; const name: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  DTLSv1_listen: function (s: PSSL; client: PBIO_ADDr): TOpenSSL_C_INT; cdecl = nil;
-  SSL_enable_ct: function (s: PSSL; validation_mode: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_enable_ct: function (ctx: PSSL_CTX; validation_mode: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  SSL_ct_is_enabled: function (const s: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_ct_is_enabled: function (const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_default_ctlog_list_file: function (ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_ctlog_list_file: function (ctx: PSSL_CTX; const path: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set0_ctlog_store: procedure (ctx: PSSL_CTX; logs: PCTLOG_STORE); cdecl = nil;
-  SSL_set_security_level: procedure (s: PSSL; level: TOpenSSL_C_INT); cdecl = nil;
-  SSL_set_security_callback: procedure (s: PSSL; cb: SSL_security_callback); cdecl = nil;
-  SSL_get_security_callback: function (const s: PSSL): SSL_security_callback; cdecl = nil;
-  SSL_set0_security_ex_data: procedure (s: PSSL; ex: Pointer); cdecl = nil;
-  SSL_get0_security_ex_data: function (const s: PSSL): Pointer; cdecl = nil;
-  SSL_CTX_set_security_level: procedure (ctx: PSSL_CTX; level: TOpenSSL_C_INT); cdecl = nil;
-  SSL_CTX_get_security_level: function (const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_get0_security_ex_data: function (const ctx: PSSL_CTX): Pointer; cdecl = nil;
-  SSL_CTX_set0_security_ex_data: procedure (ctx: PSSL_CTX; ex: Pointer); cdecl = nil;
-  OPENSSL_init_ssl: function (opts: TOpenSSL_C_UINT64; const settings: POPENSSL_INIT_SETTINGS): TOpenSSL_C_INT; cdecl = nil;
-  SSL_free_buffers: function (ssl: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_alloc_buffers: function (ssl: PSSL): TOpenSSL_C_INT; cdecl = nil;
-  SSL_CTX_set_session_ticket_cb: function (ctx: PSSL_CTX; gen_cb: SSL_CTX_generate_session_ticket_fn; dec_cb: SSL_CTX_decrypt_session_ticket_fn; arg: Pointer): TOpenSSL_C_INT; cdecl = nil;
-  SSL_SESSION_set1_ticket_appdata: function (ss: PSSL_SESSION; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  SSL_SESSION_get0_ticket_appdata: function (ss: PSSL_SESSION; data: PPointer; len: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  DTLS_set_timer_cb: procedure (s: PSSL; cb: DTLS_timer_cb); cdecl = nil;
-  SSL_CTX_set_allow_early_data_cb: procedure (ctx: PSSL_CTX; cb: SSL_allow_early_data_cb_fN; arg: Pointer); cdecl = nil;
-  SSL_set_allow_early_data_cb: procedure (s: PSSL; cb: SSL_allow_early_data_cb_fN; arg: Pointer); cdecl = nil;
-  SSL_get0_peer_certificate: function (const s: PSSL): PX509; cdecl = nil; {introduced 3.3.0 }
-  SSL_get1_peer_certificate: function (const s: PSSL): PX509; cdecl = nil; {introduced 3.3.0 }
+  SSL_CTX_get_options: function (const ctx: PSSL_CTX): TOpenSSL_C_ULONG; cdecl = Load_SSL_CTX_get_options;
+  SSL_get_options: function (const s: PSSL): TOpenSSL_C_ULONG; cdecl = Load_SSL_get_options;
+  SSL_CTX_clear_options: function (ctx: PSSL_CTX; op: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl = Load_SSL_CTX_clear_options;
+  SSL_clear_options: function (s: PSSL; op: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl = Load_SSL_clear_options;
+  SSL_CTX_set_options: function (ctx: PSSL_CTX; op: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl = Load_SSL_CTX_set_options;
+  SSL_set_options: function (s: PSSL; op: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl = Load_SSL_set_options;
+  SSL_CTX_sess_set_new_cb: procedure (ctx: PSSL_CTX; new_session_cb: SSL_CTX_sess_new_cb); cdecl = Load_SSL_CTX_sess_set_new_cb;
+  SSL_CTX_sess_get_new_cb: function (ctx: PSSL_CTX): SSL_CTX_sess_new_cb; cdecl = Load_SSL_CTX_sess_get_new_cb;
+  SSL_CTX_sess_set_remove_cb: procedure (ctx: PSSL_CTX; remove_session_cb: SSL_CTX_sess_remove_cb); cdecl = Load_SSL_CTX_sess_set_remove_cb;
+  SSL_CTX_sess_get_remove_cb: function (ctx: PSSL_CTX): SSL_CTX_sess_remove_cb; cdecl = Load_SSL_CTX_sess_get_remove_cb;
+  SSL_CTX_set_info_callback: procedure (ctx: PSSL_CTX; cb: SSL_CTX_info_callback); cdecl = Load_SSL_CTX_set_info_callback;
+  SSL_CTX_get_info_callback: function (ctx: PSSL_CTX): SSL_CTX_info_callback; cdecl = Load_SSL_CTX_get_info_callback;
+  SSL_CTX_set_client_cert_cb: procedure (ctx: PSSL_CTX; client_cert_cb: SSL_CTX_client_cert_cb); cdecl = Load_SSL_CTX_set_client_cert_cb;
+  SSL_CTX_get_client_cert_cb: function (ctx: PSSL_CTX): SSL_CTX_client_cert_cb; cdecl = Load_SSL_CTX_get_client_cert_cb;
+  SSL_CTX_set_client_cert_engine: function (ctx: PSSL_CTX; e: PENGINE): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_client_cert_engine;
+  SSL_CTX_set_cookie_generate_cb: procedure (ctx: PSSL_CTX; app_gen_cookie_cb: SSL_CTX_cookie_verify_cb); cdecl = Load_SSL_CTX_set_cookie_generate_cb;
+  SSL_CTX_set_cookie_verify_cb: procedure (ctx: PSSL_CTX; app_verify_cookie_cb: SSL_CTX_set_cookie_verify_cb_app_verify_cookie_cb); cdecl = Load_SSL_CTX_set_cookie_verify_cb;
+  SSL_CTX_set_stateless_cookie_generate_cb: procedure (ctx: PSSL_CTX; gen_stateless_cookie_cb: SSL_CTX_set_stateless_cookie_generate_cb_gen_stateless_cookie_cb); cdecl = Load_SSL_CTX_set_stateless_cookie_generate_cb;
+  SSL_CTX_set_stateless_cookie_verify_cb: procedure (ctx: PSSL_CTX; verify_stateless_cookie_cb: SSL_CTX_set_stateless_cookie_verify_cb_verify_stateless_cookie_cb); cdecl = Load_SSL_CTX_set_stateless_cookie_verify_cb;
+  SSL_CTX_set_alpn_select_cb: procedure (ctx: PSSL_CTX; cb: SSL_CTX_alpn_select_cb_func; arg: Pointer); cdecl = Load_SSL_CTX_set_alpn_select_cb;
+  SSL_get0_alpn_selected: procedure (const ssl: PSSL; const data: PPByte; len: POpenSSL_C_UINT); cdecl = Load_SSL_get0_alpn_selected;
+  SSL_CTX_set_psk_client_callback: procedure (ctx: PSSL_CTX; cb: SSL_psk_client_cb_func); cdecl = Load_SSL_CTX_set_psk_client_callback;
+  SSL_set_psk_client_callback: procedure (ssl: PSSL; cb: SSL_psk_client_cb_func); cdecl = Load_SSL_set_psk_client_callback;
+  SSL_CTX_set_psk_server_callback: procedure (ctx: PSSL_CTX; cb: SSL_psk_server_cb_func); cdecl = Load_SSL_CTX_set_psk_server_callback;
+  SSL_set_psk_server_callback: procedure (ssl: PSSL; cb: SSL_psk_server_cb_func); cdecl = Load_SSL_set_psk_server_callback;
+  SSL_set_psk_find_session_callback: procedure (s: PSSL; cb: SSL_psk_find_session_cb_func); cdecl = Load_SSL_set_psk_find_session_callback;
+  SSL_CTX_set_psk_find_session_callback: procedure (ctx: PSSL_CTX; cb: SSL_psk_find_session_cb_func); cdecl = Load_SSL_CTX_set_psk_find_session_callback;
+  SSL_set_psk_use_session_callback: procedure (s: PSSL; cb: SSL_psk_use_session_cb_func); cdecl = Load_SSL_set_psk_use_session_callback;
+  SSL_CTX_set_psk_use_session_callback: procedure (ctx: PSSL_CTX; cb: SSL_psk_use_session_cb_func); cdecl = Load_SSL_CTX_set_psk_use_session_callback;
+  SSL_CTX_set_keylog_callback: procedure (ctx: PSSL_CTX; cb: SSL_CTX_keylog_cb_func); cdecl = Load_SSL_CTX_set_keylog_callback;
+  SSL_CTX_get_keylog_callback: function (const ctx: PSSL_CTX): SSL_CTX_keylog_cb_func; cdecl = Load_SSL_CTX_get_keylog_callback;
+  SSL_CTX_set_max_early_data: function (ctx: PSSL_CTX; max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_max_early_data;
+  SSL_CTX_get_max_early_data: function (const ctx: PSSL_CTX): TOpenSSL_C_UINT32; cdecl = Load_SSL_CTX_get_max_early_data;
+  SSL_set_max_early_data: function (s: PSSL; max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl = Load_SSL_set_max_early_data;
+  SSL_get_max_early_data: function (const s: PSSL): TOpenSSL_C_UINT32; cdecl = Load_SSL_get_max_early_data;
+  SSL_CTX_set_recv_max_early_data: function (ctx: PSSL_CTX; recv_max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_recv_max_early_data;
+  SSL_CTX_get_recv_max_early_data: function (const ctx: PSSL_CTX): TOpenSSL_C_UINT32; cdecl = Load_SSL_CTX_get_recv_max_early_data;
+  SSL_set_recv_max_early_data: function (s: PSSL; recv_max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl = Load_SSL_set_recv_max_early_data;
+  SSL_get_recv_max_early_data: function (const s: PSSL): TOpenSSL_C_UINT32; cdecl = Load_SSL_get_recv_max_early_data;
+  SSL_in_init: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_in_init;
+  SSL_in_before: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_in_before;
+  SSL_is_init_finished: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_is_init_finished;
+  SSL_get_finished: function (const s: PSSL; buf: Pointer; count: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = Load_SSL_get_finished;
+  SSL_get_peer_finished: function (const s: PSSL; buf: Pointer; count: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = Load_SSL_get_peer_finished;
+  BIO_f_ssl: function : PBIO_METHOD; cdecl = Load_BIO_f_ssl;
+  BIO_new_ssl: function (ctx: PSSL_CTX; client: TOpenSSL_C_INT): PBIO; cdecl = Load_BIO_new_ssl;
+  BIO_new_ssl_connect: function (ctx: PSSL_CTX): PBIO; cdecl = Load_BIO_new_ssl_connect;
+  BIO_new_buffer_ssl_connect: function (ctx: PSSL_CTX): PBIO; cdecl = Load_BIO_new_buffer_ssl_connect;
+  BIO_ssl_copy_session_id: function (to_: PBIO; from: PBIO): TOpenSSL_C_INT; cdecl = Load_BIO_ssl_copy_session_id;
+  SSL_CTX_set_cipher_list: function (v1: PSSL_CTX; const str: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_cipher_list;
+  SSL_CTX_new: function (const meth: PSSL_METHOD): PSSL_CTX; cdecl = Load_SSL_CTX_new;
+  SSL_CTX_set_timeout: function (ctx: PSSL_CTX; t: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set_timeout;
+  SSL_CTX_get_timeout: function (const ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_get_timeout;
+  SSL_CTX_get_cert_store: function (const v1: PSSL_CTX): PX509_STORE; cdecl = Load_SSL_CTX_get_cert_store;
+  SSL_want: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_want;
+  SSL_clear: function (s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_clear;
+  BIO_ssl_shutdown: procedure (ssl_bio: PBIO); cdecl = Load_BIO_ssl_shutdown;
+  SSL_CTX_up_ref: function (ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_up_ref;
+  SSL_CTX_free: procedure (v1: PSSL_CTX); cdecl = Load_SSL_CTX_free;
+  SSL_CTX_set_cert_store: procedure (v1: PSSL_CTX; v2: PX509_STORE); cdecl = Load_SSL_CTX_set_cert_store;
+  SSL_CTX_set1_cert_store: procedure (v1: PSSL_CTX; v2: PX509_STORE); cdecl = Load_SSL_CTX_set1_cert_store;
+  SSL_CTX_flush_sessions: procedure (ctx: PSSL_CTX; tm: TOpenSSL_C_LONG); cdecl = Load_SSL_CTX_flush_sessions;
+  SSL_get_current_cipher: function (const s: PSSL): PSSL_CIPHER; cdecl = Load_SSL_get_current_cipher;
+  SSL_get_pending_cipher: function (const s: PSSL): PSSL_CIPHER; cdecl = Load_SSL_get_pending_cipher;
+  SSL_CIPHER_get_bits: function (const c: PSSL_CIPHER; var alg_bits: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_CIPHER_get_bits;
+  SSL_CIPHER_get_version: function (const c: PSSL_CIPHER): PAnsiChar; cdecl = Load_SSL_CIPHER_get_version;
+  SSL_CIPHER_get_name: function (const c: PSSL_CIPHER): PAnsiChar; cdecl = Load_SSL_CIPHER_get_name;
+  SSL_CIPHER_standard_name: function (const c: PSSL_CIPHER): PAnsiChar; cdecl = Load_SSL_CIPHER_standard_name;
+  OPENSSL_cipher_name: function (const rfc_name: PAnsiChar): PAnsiChar; cdecl = Load_OPENSSL_cipher_name;
+  SSL_CIPHER_get_id: function (const c: PSSL_CIPHER): TOpenSSL_C_UINT32; cdecl = Load_SSL_CIPHER_get_id;
+  SSL_CIPHER_get_protocol_id: function (const c: PSSL_CIPHER): TOpenSSL_C_UINT16; cdecl = Load_SSL_CIPHER_get_protocol_id;
+  SSL_CIPHER_get_kx_nid: function (const c: PSSL_CIPHER): TOpenSSL_C_INT; cdecl = Load_SSL_CIPHER_get_kx_nid;
+  SSL_CIPHER_get_auth_nid: function (const c: PSSL_CIPHER): TOpenSSL_C_INT; cdecl = Load_SSL_CIPHER_get_auth_nid;
+  SSL_CIPHER_get_handshake_digest: function (const c: PSSL_CIPHER): PEVP_MD; cdecl = Load_SSL_CIPHER_get_handshake_digest;
+  SSL_CIPHER_is_aead: function (const c: PSSL_CIPHER): TOpenSSL_C_INT; cdecl = Load_SSL_CIPHER_is_aead;
+  SSL_get_fd: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_get_fd;
+  SSL_get_rfd: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_get_rfd;
+  SSL_get_wfd: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_get_wfd;
+  SSL_get_cipher_list: function (const s: PSSL; n: TOpenSSL_C_INT): PAnsiChar; cdecl = Load_SSL_get_cipher_list;
+  SSL_get_shared_ciphers: function (const s: PSSL; buf: PAnsiChar; size: TOpenSSL_C_INT): PAnsiChar; cdecl = Load_SSL_get_shared_ciphers;
+  SSL_get_read_ahead: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_get_read_ahead;
+  SSL_pending: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_pending;
+  SSL_has_pending: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_has_pending;
+  SSL_set_fd: function (s: PSSL; fd: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_set_fd;
+  SSL_set_rfd: function (s: PSSL; fd: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_set_rfd;
+  SSL_set_wfd: function (s: PSSL; fd: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_set_wfd;
+  SSL_set0_rbio: procedure (s: PSSL; rbio: PBIO); cdecl = Load_SSL_set0_rbio;
+  SSL_set0_wbio: procedure (s: PSSL; wbio: PBIO); cdecl = Load_SSL_set0_wbio;
+  SSL_set_bio: procedure (s: PSSL; rbio: PBIO; wbio: PBIO); cdecl = Load_SSL_set_bio;
+  SSL_get_rbio: function (const s: PSSL): PBIO; cdecl = Load_SSL_get_rbio;
+  SSL_get_wbio: function (const s: PSSL): PBIO; cdecl = Load_SSL_get_wbio;
+  SSL_set_cipher_list: function (s: PSSL; const str: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_set_cipher_list;
+  SSL_CTX_set_ciphersuites: function (ctx: PSSL_CTX; const str: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_ciphersuites;
+  SSL_set_ciphersuites: function (s: PSSL; const str: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_set_ciphersuites;
+  SSL_get_verify_mode: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_get_verify_mode;
+  SSL_get_verify_depth: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_get_verify_depth;
+  SSL_get_verify_callback: function (const s: PSSL): SSL_verify_cb; cdecl = Load_SSL_get_verify_callback;
+  SSL_set_read_ahead: procedure (s: PSSL; yes: TOpenSSL_C_INT); cdecl = Load_SSL_set_read_ahead;
+  SSL_set_verify: procedure (s: PSSL; mode: TOpenSSL_C_INT; callback: SSL_verify_cb); cdecl = Load_SSL_set_verify;
+  SSL_set_verify_depth: procedure (s: PSSL; depth: TOpenSSL_C_INT); cdecl = Load_SSL_set_verify_depth;
+  SSL_use_RSAPrivateKey: function (ssl: PSSL; rsa: PRSA): TOpenSSL_C_INT; cdecl = Load_SSL_use_RSAPrivateKey;
+  SSL_use_RSAPrivateKey_ASN1: function (ssl: PSSL; const d: PByte; len: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl = Load_SSL_use_RSAPrivateKey_ASN1;
+  SSL_use_PrivateKey: function (ssl: PSSL; pkey: PEVP_PKEY): TOpenSSL_C_INT; cdecl = Load_SSL_use_PrivateKey;
+  SSL_use_PrivateKey_ASN1: function (pk: TOpenSSL_C_INT; ssl: PSSL; const d: PByte; len: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl = Load_SSL_use_PrivateKey_ASN1;
+  SSL_use_certificate: function (ssl: PSSL; x: PX509): TOpenSSL_C_INT; cdecl = Load_SSL_use_certificate;
+  SSL_use_certificate_ASN1: function (ssl: PSSL; const d: PByte; len: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_use_certificate_ASN1;
+  SSL_CTX_use_serverinfo: function (ctx: PSSL_CTX; const serverinfo: PByte; serverinfo_length: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_use_serverinfo;
+  SSL_CTX_use_serverinfo_ex: function (ctx: PSSL_CTX; version: TOpenSSL_C_UINT; const serverinfo: PByte; serverinfo_length: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_use_serverinfo_ex;
+  SSL_CTX_use_serverinfo_file: function (ctx: PSSL_CTX; const file_: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_use_serverinfo_file;
+  SSL_use_RSAPrivateKey_file: function (ssl: PSSL; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_use_RSAPrivateKey_file;
+  SSL_use_PrivateKey_file: function (ssl: PSSL; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_use_PrivateKey_file;
+  SSL_use_certificate_file: function (ssl: PSSL; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_use_certificate_file;
+  SSL_CTX_use_RSAPrivateKey_file: function (ctx: PSSL_CTX; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_use_RSAPrivateKey_file;
+  SSL_CTX_use_PrivateKey_file: function (ctx: PSSL_CTX; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_use_PrivateKey_file;
+  SSL_CTX_use_certificate_file: function (ctx: PSSL_CTX; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_use_certificate_file;
+  SSL_CTX_use_certificate_chain_file: function (ctx: PSSL_CTX; const file_: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_use_certificate_chain_file;
+  SSL_use_certificate_chain_file: function (ssl: PSSL; const file_: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_use_certificate_chain_file;
+  SSL_load_client_CA_file: function (const file_: PAnsiChar): PSTACK_OF_X509_NAME; cdecl = Load_SSL_load_client_CA_file;
+  SSL_add_file_cert_subjects_to_stack: function (stackCAs: PSTACK_OF_X509_NAME; const file_: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_add_file_cert_subjects_to_stack;
+  SSL_add_dir_cert_subjects_to_stack: function (stackCAs: PSTACK_OF_X509_NAME; const dir_: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_add_dir_cert_subjects_to_stack;
+  SSL_state_string: function (const s: PSSL): PAnsiChar; cdecl = Load_SSL_state_string;
+  SSL_rstate_string: function (const s: PSSL): PAnsiChar; cdecl = Load_SSL_rstate_string;
+  SSL_state_string_long: function (const s: PSSL): PAnsiChar; cdecl = Load_SSL_state_string_long;
+  SSL_rstate_string_long: function (const s: PSSL): PAnsiChar; cdecl = Load_SSL_rstate_string_long;
+  SSL_SESSION_get_time: function (const s: PSSL_SESSION): TOpenSSL_C_LONG; cdecl = Load_SSL_SESSION_get_time;
+  SSL_SESSION_set_time: function (s: PSSL_SESSION; t: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_SESSION_set_time;
+  SSL_SESSION_get_timeout: function (const s: PSSL_SESSION): TOpenSSL_C_LONG; cdecl = Load_SSL_SESSION_get_timeout;
+  SSL_SESSION_set_timeout: function (s: PSSL_SESSION; t: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_SESSION_set_timeout;
+  SSL_SESSION_get_protocol_version: function (const s: PSSL_SESSION): TOpenSSL_C_INT; cdecl = Load_SSL_SESSION_get_protocol_version;
+  SSL_SESSION_set_protocol_version: function (s: PSSL_SESSION; version: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_SESSION_set_protocol_version;
+  SSL_SESSION_get0_hostname: function (const s: PSSL_SESSION): PAnsiChar; cdecl = Load_SSL_SESSION_get0_hostname;
+  SSL_SESSION_set1_hostname: function (s: PSSL_SESSION; const hostname: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_SESSION_set1_hostname;
+  SSL_SESSION_get0_alpn_selected: procedure (const s: PSSL_SESSION; const alpn: PPByte; len: POpenSSL_C_SIZET); cdecl = Load_SSL_SESSION_get0_alpn_selected;
+  SSL_SESSION_set1_alpn_selected: function (s: PSSL_SESSION; const alpn: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_SESSION_set1_alpn_selected;
+  SSL_SESSION_get0_cipher: function (const s: PSSL_SESSION): PSSL_CIPHER; cdecl = Load_SSL_SESSION_get0_cipher;
+  SSL_SESSION_set_cipher: function (s: PSSL_SESSION; const cipher: PSSL_CIPHER): TOpenSSL_C_INT; cdecl = Load_SSL_SESSION_set_cipher;
+  SSL_SESSION_has_ticket: function (const s: PSSL_SESSION): TOpenSSL_C_INT; cdecl = Load_SSL_SESSION_has_ticket;
+  SSL_SESSION_get_ticket_lifetime_hint: function (const s: PSSL_SESSION): TOpenSSL_C_ULONG; cdecl = Load_SSL_SESSION_get_ticket_lifetime_hint;
+  SSL_SESSION_get0_ticket: procedure (const s: PSSL_SESSION; const tick: PPByte; len: POpenSSL_C_SIZET); cdecl = Load_SSL_SESSION_get0_ticket;
+  SSL_SESSION_get_max_early_data: function (const s: PSSL_SESSION): TOpenSSL_C_UINT32; cdecl = Load_SSL_SESSION_get_max_early_data;
+  SSL_SESSION_set_max_early_data: function (s: PSSL_SESSION; max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl = Load_SSL_SESSION_set_max_early_data;
+  SSL_copy_session_id: function (to_: PSSL; const from: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_copy_session_id;
+  SSL_SESSION_get0_peer: function (s: PSSL_SESSION): PX509; cdecl = Load_SSL_SESSION_get0_peer;
+  SSL_SESSION_set1_id_context: function (s: PSSL_SESSION; const sid_ctx: PByte; sid_ctx_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = Load_SSL_SESSION_set1_id_context;
+  SSL_SESSION_set1_id: function (s: PSSL_SESSION; const sid: PByte; sid_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = Load_SSL_SESSION_set1_id;
+  SSL_SESSION_is_resumable: function (const s: PSSL_SESSION): TOpenSSL_C_INT; cdecl = Load_SSL_SESSION_is_resumable;
+  SSL_SESSION_new: function : PSSL_SESSION; cdecl = Load_SSL_SESSION_new;
+  SSL_SESSION_dup: function (src: PSSL_SESSION): PSSL_SESSION; cdecl = Load_SSL_SESSION_dup;
+  SSL_SESSION_get_id: function (const s: PSSL_SESSION; len: POpenSSL_C_UINT): PByte; cdecl = Load_SSL_SESSION_get_id;
+  SSL_SESSION_get0_id_context: function (const s: PSSL_SESSION; len: POpenSSL_C_UINT): PByte; cdecl = Load_SSL_SESSION_get0_id_context;
+  SSL_SESSION_get_compress_id: function (const s: PSSL_SESSION): TOpenSSL_C_UINT; cdecl = Load_SSL_SESSION_get_compress_id;
+  SSL_SESSION_print: function (fp: PBIO; const ses: PSSL_SESSION): TOpenSSL_C_INT; cdecl = Load_SSL_SESSION_print;
+  SSL_SESSION_print_keylog: function (bp: PBIO; const x: PSSL_SESSION): TOpenSSL_C_INT; cdecl = Load_SSL_SESSION_print_keylog;
+  SSL_SESSION_up_ref: function (ses: PSSL_SESSION): TOpenSSL_C_INT; cdecl = Load_SSL_SESSION_up_ref;
+  SSL_SESSION_free: procedure (ses: PSSL_SESSION); cdecl = Load_SSL_SESSION_free;
+  SSL_set_session: function (to_: PSSL; session: PSSL_SESSION): TOpenSSL_C_INT; cdecl = Load_SSL_set_session;
+  SSL_CTX_add_session: function (ctx: PSSL_CTX; session: PSSL_SESSION): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_add_session;
+  SSL_CTX_remove_session: function (ctx: PSSL_CTX; session: PSSL_SESSION): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_remove_session;
+  SSL_CTX_set_generate_session_id: function (ctx: PSSL_CTX; cb: GEN_SESSION_CB): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_generate_session_id;
+  SSL_set_generate_session_id: function (s: PSSL; cb: GEN_SESSION_CB): TOpenSSL_C_INT; cdecl = Load_SSL_set_generate_session_id;
+  SSL_has_matching_session_id: function (const s: PSSL; const id: PByte; id_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = Load_SSL_has_matching_session_id;
+  d2i_SSL_SESSION: function (a: PPSSL_SESSION; const pp: PPByte; length: TOpenSSL_C_LONG): PSSL_SESSION; cdecl = Load_d2i_SSL_SESSION;
+  SSL_CTX_get_verify_mode: function (const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_get_verify_mode;
+  SSL_CTX_get_verify_depth: function (const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_get_verify_depth;
+  SSL_CTX_get_verify_callback: function (const ctx: PSSL_CTX): SSL_verify_cb; cdecl = Load_SSL_CTX_get_verify_callback;
+  SSL_CTX_set_verify: procedure (ctx: PSSL_CTX; mode: TOpenSSL_C_INT; callback: SSL_verify_cb); cdecl = Load_SSL_CTX_set_verify;
+  SSL_CTX_set_verify_depth: procedure (ctx: PSSL_CTX; depth: TOpenSSL_C_INT); cdecl = Load_SSL_CTX_set_verify_depth;
+  SSL_CTX_set_cert_verify_callback: procedure (ctx: PSSL_CTX; cb: SSL_CTX_set_cert_verify_callback_cb; arg: Pointer); cdecl = Load_SSL_CTX_set_cert_verify_callback;
+  SSL_CTX_set_cert_cb: procedure (c: PSSL_CTX; cb: SSL_CTX_set_cert_cb_cb; arg: Pointer); cdecl = Load_SSL_CTX_set_cert_cb;
+  SSL_CTX_use_RSAPrivateKey: function (ctx: PSSL_CTX; rsa: PRSA): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_use_RSAPrivateKey;
+  SSL_CTX_use_RSAPrivateKey_ASN1: function (ctx: PSSL_CTX; const d: PByte; len: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_use_RSAPrivateKey_ASN1;
+  SSL_CTX_use_PrivateKey: function (ctx: PSSL_CTX; pkey: PEVP_PKEY): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_use_PrivateKey;
+  SSL_CTX_use_PrivateKey_ASN1: function (pk: TOpenSSL_C_INT; ctx: PSSL_CTX; const d: PByte; len: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_use_PrivateKey_ASN1;
+  SSL_CTX_use_certificate: function (ctx: PSSL_CTX; x: X509): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_use_certificate;
+  SSL_CTX_use_certificate_ASN1: function (ctx: PSSL_CTX; len: TOpenSSL_C_INT; const d: PByte): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_use_certificate_ASN1;
+  SSL_CTX_set_default_passwd_cb: procedure (ctx: PSSL_CTX; cb: pem_password_cb); cdecl = Load_SSL_CTX_set_default_passwd_cb;
+  SSL_CTX_set_default_passwd_cb_userdata: procedure (ctx: PSSL_CTX; u: Pointer); cdecl = Load_SSL_CTX_set_default_passwd_cb_userdata;
+  SSL_CTX_get_default_passwd_cb: function (ctx: PSSL_CTX): pem_password_cb; cdecl = Load_SSL_CTX_get_default_passwd_cb;
+  SSL_CTX_get_default_passwd_cb_userdata: function (ctx: PSSL_CTX): Pointer; cdecl = Load_SSL_CTX_get_default_passwd_cb_userdata;
+  SSL_set_default_passwd_cb: procedure (s: PSSL; cb: pem_password_cb); cdecl = Load_SSL_set_default_passwd_cb;
+  SSL_set_default_passwd_cb_userdata: procedure (s: PSSL; u: Pointer); cdecl = Load_SSL_set_default_passwd_cb_userdata;
+  SSL_get_default_passwd_cb: function (s: PSSL): pem_password_cb; cdecl = Load_SSL_get_default_passwd_cb;
+  SSL_get_default_passwd_cb_userdata: function (s: PSSL): Pointer; cdecl = Load_SSL_get_default_passwd_cb_userdata;
+  SSL_CTX_check_private_key: function (const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_check_private_key;
+  SSL_check_private_key: function (const ctx: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_check_private_key;
+  SSL_CTX_set_session_id_context: function (ctx: PSSL_CTX; const sid_ctx: PByte; sid_ctx_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_session_id_context;
+  SSL_new: function (ctx: PSSL_CTX): PSSL; cdecl = Load_SSL_new;
+  SSL_up_ref: function (s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_up_ref;
+  SSL_is_dtls: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_is_dtls;
+  SSL_set_session_id_context: function (ssl: PSSL; const sid_ctx: PByte; sid_ctx_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = Load_SSL_set_session_id_context;
+  SSL_CTX_set_purpose: function (ctx: PSSL_CTX; purpose: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_purpose;
+  SSL_set_purpose: function (ssl: PSSL; purpose: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_set_purpose;
+  SSL_CTX_set_trust: function (ctx: PSSL_CTX; trust: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_trust;
+  SSL_set_trust: function (ssl: PSSL; trust: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_set_trust;
+  SSL_set1_host: function (s: PSSL; const hostname: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_set1_host;
+  SSL_add1_host: function (s: PSSL; const hostname: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_add1_host;
+  SSL_get0_peername: function (s: PSSL): PAnsiChar; cdecl = Load_SSL_get0_peername;
+  SSL_set_hostflags: procedure (s: PSSL; flags: TOpenSSL_C_UINT); cdecl = Load_SSL_set_hostflags;
+  SSL_CTX_dane_enable: function (ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_dane_enable;
+  SSL_CTX_dane_mtype_set: function (ctx: PSSL_CTX; const md: PEVP_MD; mtype: TOpenSSL_C_UINT8; ord: TOpenSSL_C_UINT8): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_dane_mtype_set;
+  SSL_dane_enable: function (s: PSSL; const basedomain: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_dane_enable;
+  SSL_dane_tlsa_add: function (s: PSSL; usage: TOpenSSL_C_UINT8; selector: TOpenSSL_C_UINT8; mtype: TOpenSSL_C_UINT8; const data: PByte; dlen: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_dane_tlsa_add;
+  SSL_get0_dane_authority: function (s: PSSL; mcert: PPX509; mspki: PPEVP_PKEY): TOpenSSL_C_INT; cdecl = Load_SSL_get0_dane_authority;
+  SSL_get0_dane_tlsa: function (s: PSSL; usage: POpenSSL_C_UINT8; selector: POpenSSL_C_UINT8; mtype: POpenSSL_C_UINT8; const data: PPByte; dlen: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_get0_dane_tlsa;
+  SSL_get0_dane: function (ssl: PSSL): PSSL_DANE; cdecl = Load_SSL_get0_dane;
+  SSL_CTX_dane_set_flags: function (ctx: PSSL_CTX; flags: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl = Load_SSL_CTX_dane_set_flags;
+  SSL_CTX_dane_clear_flags: function (ctx: PSSL_CTX; flags: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl = Load_SSL_CTX_dane_clear_flags;
+  SSL_dane_set_flags: function (ssl: PSSL; flags: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl = Load_SSL_dane_set_flags;
+  SSL_dane_clear_flags: function (ssl: PSSL; flags: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl = Load_SSL_dane_clear_flags;
+  SSL_CTX_set1_param: function (ctx: PSSL_CTX; vpm: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set1_param;
+  SSL_set1_param: function (ssl: PSSL; vpm: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl = Load_SSL_set1_param;
+  SSL_CTX_get0_param: function (ctx: PSSL_CTX): PX509_VERIFY_PARAM; cdecl = Load_SSL_CTX_get0_param;
+  SSL_get0_param: function (ssl: PSSL): PX509_VERIFY_PARAM; cdecl = Load_SSL_get0_param;
+  SSL_CTX_set_srp_username: function (ctx: PSSL_CTX; name: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_srp_username;
+  SSL_CTX_set_srp_password: function (ctx: PSSL_CTX; password: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_srp_password;
+  SSL_CTX_set_srp_strength: function (ctx: PSSL_CTX; strength: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_srp_strength;
+  SSL_CTX_set_srp_client_pwd_callback: function (ctx: PSSL_CTX; cb: SSL_CTX_set_srp_client_pwd_callback_cb): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_srp_client_pwd_callback;
+  SSL_CTX_set_srp_verify_param_callback: function (ctx: PSSL_CTX; cb: SSL_CTX_set_srp_verify_param_callback_cb): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_srp_verify_param_callback;
+  SSL_CTX_set_srp_username_callback: function (ctx: PSSL_CTX; cb: SSL_CTX_set_srp_username_callback_cb): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_srp_username_callback;
+  SSL_CTX_set_srp_cb_arg: function (ctx: PSSL_CTX; arg: Pointer): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_srp_cb_arg;
+  SSL_set_srp_server_param: function (s: PSSL; const N: PBIGNUm; const g: PBIGNUm; sa: PBIGNUm; v: PBIGNUm; info: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_set_srp_server_param;
+  SSL_set_srp_server_param_pw: function (s: PSSL; const user: PAnsiChar; const pass: PAnsiChar; const grp: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_set_srp_server_param_pw;
+  SSL_CTX_set_client_hello_cb: procedure (c: PSSL_CTX; cb: SSL_client_hello_cb_fn; arg: Pointer); cdecl = Load_SSL_CTX_set_client_hello_cb;
+  SSL_client_hello_isv2: function (s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_client_hello_isv2;
+  SSL_client_hello_get0_legacy_version: function (s: PSSL): TOpenSSL_C_UINT; cdecl = Load_SSL_client_hello_get0_legacy_version;
+  SSL_client_hello_get0_random: function (s: PSSL; const out_: PPByte): TOpenSSL_C_SIZET; cdecl = Load_SSL_client_hello_get0_random;
+  SSL_client_hello_get0_session_id: function (s: PSSL; const out_: PPByte): TOpenSSL_C_SIZET; cdecl = Load_SSL_client_hello_get0_session_id;
+  SSL_client_hello_get0_ciphers: function (s: PSSL; const out_: PPByte): TOpenSSL_C_SIZET; cdecl = Load_SSL_client_hello_get0_ciphers;
+  SSL_client_hello_get0_compression_methods: function (s: PSSL; const out_: PPByte): TOpenSSL_C_SIZET; cdecl = Load_SSL_client_hello_get0_compression_methods;
+  SSL_client_hello_get1_extensions_present: function (s: PSSL; out_: PPOpenSSL_C_INT; outlen: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_client_hello_get1_extensions_present;
+  SSL_client_hello_get0_ext: function (s: PSSL; type_: TOpenSSL_C_UINT; const out_: PPByte; outlen: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_client_hello_get0_ext;
+  SSL_certs_clear: procedure (s: PSSL); cdecl = Load_SSL_certs_clear;
+  SSL_free: procedure (ssl: PSSL); cdecl = Load_SSL_free;
+  SSL_waiting_for_async: function (s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_waiting_for_async;
+  SSL_get_all_async_fds: function (s: PSSL; fds: POSSL_ASYNC_FD; numfds: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_get_all_async_fds;
+  SSL_get_changed_async_fds: function (s: PSSL; addfd: POSSL_ASYNC_FD; numaddfds: POpenSSL_C_SIZET; delfd: POSSL_ASYNC_FD; numdelfds: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_get_changed_async_fds;
+  SSL_accept: function (ssl: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_accept;
+  SSL_stateless: function (s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_stateless;
+  SSL_connect: function (ssl: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_connect;
+  SSL_read: function (ssl: PSSL; buf: Pointer; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_read;
+  SSL_read_ex: function (ssl: PSSL; buf: Pointer; num: TOpenSSL_C_SIZET; readbytes: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_read_ex;
+  SSL_read_early_data: function (s: PSSL; buf: Pointer; num: TOpenSSL_C_SIZET; readbytes: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_read_early_data;
+  SSL_peek: function (ssl: PSSL; buf: Pointer; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_peek;
+  SSL_peek_ex: function (ssl: PSSL; buf: Pointer; num: TOpenSSL_C_SIZET; readbytes: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_peek_ex;
+  SSL_write: function (ssl: PSSL; const buf: Pointer; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_write;
+  SSL_write_ex: function (s: PSSL; const buf: Pointer; num: TOpenSSL_C_SIZET; written: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_write_ex;
+  SSL_write_early_data: function (s: PSSL; const buf: Pointer; num: TOpenSSL_C_SIZET; written: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_write_early_data;
+  SSL_callback_ctrl: function (v1: PSSL; v2: TOpenSSL_C_INT; v3: SSL_callback_ctrl_v3): TOpenSSL_C_LONG; cdecl = Load_SSL_callback_ctrl;
+  SSL_ctrl: function (ssl: PSSL; cmd: TOpenSSL_C_INT; larg: TOpenSSL_C_LONG; parg: Pointer): TOpenSSL_C_LONG; cdecl = Load_SSL_ctrl;
+  SSL_CTX_ctrl: function (ctx: PSSL_CTX; cmd: TOpenSSL_C_INT; larg: TOpenSSL_C_LONG; parg: Pointer): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_ctrl;
+  SSL_CTX_callback_ctrl: function (v1: PSSL_CTX; v2: TOpenSSL_C_INT; v3: SSL_CTX_callback_ctrl_v3): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_callback_ctrl;
+  SSL_get_early_data_status: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_get_early_data_status;
+  SSL_get_error: function (const s: PSSL; ret_code: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_get_error;
+  SSL_get_version: function (const s: PSSL): PAnsiChar; cdecl = Load_SSL_get_version;
+  SSL_CTX_set_ssl_version: function (ctx: PSSL_CTX; const meth: PSSL_METHOD): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_ssl_version;
+  TLS_method: function : PSSL_METHOD; cdecl = Load_TLS_method;
+  TLS_server_method: function : PSSL_METHOD; cdecl = Load_TLS_server_method;
+  TLS_client_method: function : PSSL_METHOD; cdecl = Load_TLS_client_method;
+  SSL_do_handshake: function (s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_do_handshake;
+  SSL_key_update: function (s: PSSL; updatetype: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_key_update;
+  SSL_get_key_update_type: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_get_key_update_type;
+  SSL_renegotiate: function (s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_renegotiate;
+  SSL_renegotiate_abbreviated: function (s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_renegotiate_abbreviated;
+  SSL_new_session_ticket: function (s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_new_session_ticket;
+  SSL_shutdown: function (s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_shutdown;
+  SSL_CTX_set_post_handshake_auth: procedure (ctx: PSSL_CTX; val: TOpenSSL_C_INT); cdecl = Load_SSL_CTX_set_post_handshake_auth;
+  SSL_set_post_handshake_auth: procedure (s: PSSL; val: TOpenSSL_C_INT); cdecl = Load_SSL_set_post_handshake_auth;
+  SSL_renegotiate_pending: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_renegotiate_pending;
+  SSL_verify_client_post_handshake: function (s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_verify_client_post_handshake;
+  SSL_CTX_get_ssl_method: function (const ctx: PSSL_CTX): PSSL_METHOD; cdecl = Load_SSL_CTX_get_ssl_method;
+  SSL_get_ssl_method: function (const s: PSSL): PSSL_METHOD; cdecl = Load_SSL_get_ssl_method;
+  SSL_set_ssl_method: function (s: PSSL; const method: PSSL_METHOD): TOpenSSL_C_INT; cdecl = Load_SSL_set_ssl_method;
+  SSL_alert_type_string_long: function (value: TOpenSSL_C_INT): PAnsiChar; cdecl = Load_SSL_alert_type_string_long;
+  SSL_alert_type_string: function (value: TOpenSSL_C_INT): PAnsiChar; cdecl = Load_SSL_alert_type_string;
+  SSL_alert_desc_string_long: function (value: TOpenSSL_C_INT): PAnsiChar; cdecl = Load_SSL_alert_desc_string_long;
+  SSL_alert_desc_string: function (value: TOpenSSL_C_INT): PAnsiChar; cdecl = Load_SSL_alert_desc_string;
+  SSL_CTX_set_client_CA_list: procedure (ctx: PSSL_CTX; name_list: PSTACK_OF_X509_NAME); cdecl = Load_SSL_CTX_set_client_CA_list;
+  SSL_add_client_CA: function (ssl: PSSL; x: PX509): TOpenSSL_C_INT; cdecl = Load_SSL_add_client_CA;
+  SSL_CTX_add_client_CA: function (ctx: PSSL_CTX; x: PX509): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_add_client_CA;
+  SSL_set_connect_state: procedure (s: PSSL); cdecl = Load_SSL_set_connect_state;
+  SSL_set_accept_state: procedure (s: PSSL); cdecl = Load_SSL_set_accept_state;
+  SSL_CIPHER_description: function (cipher: PSSL_CIPHER; buf: PAnsiChar; size_ :TOpenSSL_C_INT): PAnsiChar; cdecl = Load_SSL_CIPHER_description;
+  SSL_dup: function (ssl: PSSL): PSSL; cdecl = Load_SSL_dup;
+  SSL_get_certificate: function (const ssl: PSSL): PX509; cdecl = Load_SSL_get_certificate;
+  SSL_get_privatekey: function (const ssl: PSSL): PEVP_PKEY; cdecl = Load_SSL_get_privatekey;
+  SSL_CTX_get0_certificate: function (const ctx: PSSL_CTX): PX509; cdecl = Load_SSL_CTX_get0_certificate;
+  SSL_CTX_get0_privatekey: function (const ctx: PSSL_CTX): PEVP_PKEY; cdecl = Load_SSL_CTX_get0_privatekey;
+  SSL_CTX_set_quiet_shutdown: procedure (ctx: PSSL_CTX; mode: TOpenSSL_C_INT); cdecl = Load_SSL_CTX_set_quiet_shutdown;
+  SSL_CTX_get_quiet_shutdown: function (const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_get_quiet_shutdown;
+  SSL_set_quiet_shutdown: procedure (ssl: PSSL; mode: TOpenSSL_C_INT); cdecl = Load_SSL_set_quiet_shutdown;
+  SSL_get_quiet_shutdown: function (const ssl: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_get_quiet_shutdown;
+  SSL_set_shutdown: procedure (ssl: PSSL; mode: TOpenSSL_C_INT); cdecl = Load_SSL_set_shutdown;
+  SSL_get_shutdown: function (const ssl: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_get_shutdown;
+  SSL_version: function (const ssl: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_version;
+  SSL_client_version: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_client_version;
+  SSL_CTX_set_default_verify_paths: function (ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_default_verify_paths;
+  SSL_CTX_set_default_verify_dir: function (ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_default_verify_dir;
+  SSL_CTX_set_default_verify_file: function (ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_default_verify_file;
+  SSL_CTX_load_verify_locations: function (ctx: PSSL_CTX; const CAfile: PAnsiChar; const CApath: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_load_verify_locations;
+  SSL_get_session: function (const ssl: PSSL): PSSL_SESSION; cdecl = Load_SSL_get_session;
+  SSL_get1_session: function (ssl: PSSL): PSSL_SESSION; cdecl = Load_SSL_get1_session;
+  SSL_get_SSL_CTX: function (const ssl: PSSL): PSSL_CTX; cdecl = Load_SSL_get_SSL_CTX;
+  SSL_set_SSL_CTX: function (ssl: PSSL; ctx: PSSL_CTX): PSSL_CTX; cdecl = Load_SSL_set_SSL_CTX;
+  SSL_set_info_callback: procedure (ssl: PSSL; cb: SSL_info_callback); cdecl = Load_SSL_set_info_callback;
+  SSL_get_info_callback: function (const ssl: PSSL): SSL_info_callback; cdecl = Load_SSL_get_info_callback;
+  SSL_get_state: function (const ssl: PSSL): OSSL_HANDSHAKE_STATE; cdecl = Load_SSL_get_state;
+  SSL_set_verify_result: procedure (ssl: PSSL; v: TOpenSSL_C_LONG); cdecl = Load_SSL_set_verify_result;
+  SSL_get_verify_result: function (const ssl: PSSL): TOpenSSL_C_LONG; cdecl = Load_SSL_get_verify_result;
+  SSL_get_client_random: function (const ssl: PSSL; out_: PByte; outlen: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = Load_SSL_get_client_random;
+  SSL_get_server_random: function (const ssl: PSSL; out_: PByte; outlen: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = Load_SSL_get_server_random;
+  SSL_SESSION_get_master_key: function (const sess: PSSL_SESSION; out_: PByte; outlen: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = Load_SSL_SESSION_get_master_key;
+  SSL_SESSION_set1_master_key: function (sess: PSSL_SESSION; const in_: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_SESSION_set1_master_key;
+  SSL_SESSION_get_max_fragment_length: function (const sess: PSSL_SESSION): TOpenSSL_C_UINT8; cdecl = Load_SSL_SESSION_get_max_fragment_length;
+  SSL_set_ex_data: function (ssl: PSSL; idx: TOpenSSL_C_INT; data: Pointer): TOpenSSL_C_INT; cdecl = Load_SSL_set_ex_data;
+  SSL_get_ex_data: function (const ssl: PSSL; idx: TOpenSSL_C_INT): Pointer; cdecl = Load_SSL_get_ex_data;
+  SSL_SESSION_set_ex_data: function (ss: PSSL_SESSION; idx: TOpenSSL_C_INT; data: Pointer): TOpenSSL_C_INT; cdecl = Load_SSL_SESSION_set_ex_data;
+  SSL_SESSION_get_ex_data: function (const ss: PSSL_SESSION; idx: TOpenSSL_C_INT): Pointer; cdecl = Load_SSL_SESSION_get_ex_data;
+  SSL_CTX_set_ex_data: function (ssl: PSSL_CTX; idx: TOpenSSL_C_INT; data: Pointer): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_ex_data;
+  SSL_CTX_get_ex_data: function (const ssl: PSSL_CTX; idx: TOpenSSL_C_INT): Pointer; cdecl = Load_SSL_CTX_get_ex_data;
+  SSL_get_ex_data_X509_STORE_CTX_idx: function : TOpenSSL_C_INT; cdecl = Load_SSL_get_ex_data_X509_STORE_CTX_idx;
+  SSL_CTX_set_default_read_buffer_len: procedure (ctx: PSSL_CTX; len: TOpenSSL_C_SIZET); cdecl = Load_SSL_CTX_set_default_read_buffer_len;
+  SSL_set_default_read_buffer_len: procedure (s: PSSL; len: TOpenSSL_C_SIZET); cdecl = Load_SSL_set_default_read_buffer_len;
+  SSL_CTX_set_tmp_dh_callback: procedure (ctx: PSSL_CTX; dh: SSL_CTX_set_tmp_dh_callback_dh); cdecl = Load_SSL_CTX_set_tmp_dh_callback;
+  SSL_set_tmp_dh_callback: procedure (ssl: PSSL; dh: SSL_set_tmp_dh_callback_dh); cdecl = Load_SSL_set_tmp_dh_callback;
+  SSL_CIPHER_find: function (ssl: PSSL; const ptr: PByte): PSSL_CIPHER; cdecl = Load_SSL_CIPHER_find;
+  SSL_CIPHER_get_cipher_nid: function (const c: PSSL_CIPHEr): TOpenSSL_C_INT; cdecl = Load_SSL_CIPHER_get_cipher_nid;
+  SSL_CIPHER_get_digest_nid: function (const c: PSSL_CIPHEr): TOpenSSL_C_INT; cdecl = Load_SSL_CIPHER_get_digest_nid;
+  SSL_set_session_ticket_ext: function (s: PSSL; ext_data: Pointer; ext_len: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_set_session_ticket_ext;
+  SSL_set_session_ticket_ext_cb: function (s: PSSL; cb: tls_session_ticket_ext_cb_fn; arg: Pointer): TOpenSSL_C_INT; cdecl = Load_SSL_set_session_ticket_ext_cb;
+  SSL_CTX_set_not_resumable_session_callback: procedure (ctx: PSSL_CTX; cb: SSL_CTX_set_not_resumable_session_callback_cb); cdecl = Load_SSL_CTX_set_not_resumable_session_callback;
+  SSL_set_not_resumable_session_callback: procedure (ssl: PSSL; cb: SSL_set_not_resumable_session_callback_cb); cdecl = Load_SSL_set_not_resumable_session_callback;
+  SSL_CTX_set_record_padding_callback: procedure (ctx: PSSL_CTX; cb: SSL_CTX_set_record_padding_callback_cb); cdecl = Load_SSL_CTX_set_record_padding_callback;
+  SSL_CTX_set_record_padding_callback_arg: procedure (ctx: PSSL_CTX; arg: Pointer); cdecl = Load_SSL_CTX_set_record_padding_callback_arg;
+  SSL_CTX_get_record_padding_callback_arg: function (const ctx: PSSL_CTX): Pointer; cdecl = Load_SSL_CTX_get_record_padding_callback_arg;
+  SSL_CTX_set_block_padding: function (ctx: PSSL_CTX; block_size: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_block_padding;
+  SSL_set_record_padding_callback: procedure (ssl: PSSL; cb: SSL_set_record_padding_callback_cb); cdecl = Load_SSL_set_record_padding_callback;
+  SSL_set_record_padding_callback_arg: procedure (ssl: PSSL; arg: Pointer); cdecl = Load_SSL_set_record_padding_callback_arg;
+  SSL_get_record_padding_callback_arg: function (const ssl: PSSL): Pointer; cdecl = Load_SSL_get_record_padding_callback_arg;
+  SSL_set_block_padding: function (ssl: PSSL; block_size: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_set_block_padding;
+  SSL_set_num_tickets: function (s: PSSL; num_tickets: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_set_num_tickets;
+  SSL_get_num_tickets: function (const s: PSSL): TOpenSSL_C_SIZET; cdecl = Load_SSL_get_num_tickets;
+  SSL_CTX_set_num_tickets: function (ctx: PSSL_CTX; num_tickets: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_num_tickets;
+  SSL_CTX_get_num_tickets: function (const ctx: PSSL_CTX): TOpenSSL_C_SIZET; cdecl = Load_SSL_CTX_get_num_tickets;
+  SSL_session_reused: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_session_reused;
+  SSL_is_server: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_is_server;
+  SSL_CONF_CTX_new: function : PSSL_CONF_CTX; cdecl = Load_SSL_CONF_CTX_new;
+  SSL_CONF_CTX_finish: function (cctx: PSSL_CONF_CTX): TOpenSSL_C_INT; cdecl = Load_SSL_CONF_CTX_finish;
+  SSL_CONF_CTX_free: procedure (cctx: PSSL_CONF_CTX); cdecl = Load_SSL_CONF_CTX_free;
+  SSL_CONF_CTX_set_flags: function (cctx: PSSL_CONF_CTX; flags: TOpenSSL_C_UINT): TOpenSSL_C_UINT; cdecl = Load_SSL_CONF_CTX_set_flags;
+  SSL_CONF_CTX_clear_flags: function (cctx: PSSL_CONF_CTX; flags: TOpenSSL_C_UINT): TOpenSSL_C_UINT; cdecl = Load_SSL_CONF_CTX_clear_flags;
+  SSL_CONF_CTX_set1_prefix: function (cctx: PSSL_CONF_CTX; const pre: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_CONF_CTX_set1_prefix;
+  SSL_CONF_cmd: function (cctx: PSSL_CONF_CTX; const cmd: PAnsiChar; const value: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_CONF_cmd;
+  SSL_CONF_cmd_argv: function (cctx: PSSL_CONF_CTX; pargc: POpenSSL_C_INT; pargv: PPPAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_CONF_cmd_argv;
+  SSL_CONF_cmd_value_type: function (cctx: PSSL_CONF_CTX; const cmd: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_CONF_cmd_value_type;
+  SSL_CONF_CTX_set_ssl: procedure (cctx: PSSL_CONF_CTX; ssl: PSSL); cdecl = Load_SSL_CONF_CTX_set_ssl;
+  SSL_CONF_CTX_set_ssl_ctx: procedure (cctx: PSSL_CONF_CTX; ctx: PSSL_CTX); cdecl = Load_SSL_CONF_CTX_set_ssl_ctx;
+  SSL_add_ssl_module: procedure ; cdecl = Load_SSL_add_ssl_module;
+  SSL_config: function (s: PSSL; const name: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_config;
+  SSL_CTX_config: function (ctx: PSSL_CTX; const name: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_config;
+  DTLSv1_listen: function (s: PSSL; client: PBIO_ADDr): TOpenSSL_C_INT; cdecl = Load_DTLSv1_listen;
+  SSL_enable_ct: function (s: PSSL; validation_mode: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_enable_ct;
+  SSL_CTX_enable_ct: function (ctx: PSSL_CTX; validation_mode: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_enable_ct;
+  SSL_ct_is_enabled: function (const s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_ct_is_enabled;
+  SSL_CTX_ct_is_enabled: function (const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_ct_is_enabled;
+  SSL_CTX_set_default_ctlog_list_file: function (ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_default_ctlog_list_file;
+  SSL_CTX_set_ctlog_list_file: function (ctx: PSSL_CTX; const path: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_ctlog_list_file;
+  SSL_CTX_set0_ctlog_store: procedure (ctx: PSSL_CTX; logs: PCTLOG_STORE); cdecl = Load_SSL_CTX_set0_ctlog_store;
+  SSL_set_security_level: procedure (s: PSSL; level: TOpenSSL_C_INT); cdecl = Load_SSL_set_security_level;
+  SSL_set_security_callback: procedure (s: PSSL; cb: SSL_security_callback); cdecl = Load_SSL_set_security_callback;
+  SSL_get_security_callback: function (const s: PSSL): SSL_security_callback; cdecl = Load_SSL_get_security_callback;
+  SSL_set0_security_ex_data: procedure (s: PSSL; ex: Pointer); cdecl = Load_SSL_set0_security_ex_data;
+  SSL_get0_security_ex_data: function (const s: PSSL): Pointer; cdecl = Load_SSL_get0_security_ex_data;
+  SSL_CTX_set_security_level: procedure (ctx: PSSL_CTX; level: TOpenSSL_C_INT); cdecl = Load_SSL_CTX_set_security_level;
+  SSL_CTX_get_security_level: function (const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_get_security_level;
+  SSL_CTX_get0_security_ex_data: function (const ctx: PSSL_CTX): Pointer; cdecl = Load_SSL_CTX_get0_security_ex_data;
+  SSL_CTX_set0_security_ex_data: procedure (ctx: PSSL_CTX; ex: Pointer); cdecl = Load_SSL_CTX_set0_security_ex_data;
+  OPENSSL_init_ssl: function (opts: TOpenSSL_C_UINT64; const settings: POPENSSL_INIT_SETTINGS): TOpenSSL_C_INT; cdecl = Load_OPENSSL_init_ssl;
+  SSL_free_buffers: function (ssl: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_free_buffers;
+  SSL_alloc_buffers: function (ssl: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_alloc_buffers;
+  SSL_CTX_set_session_ticket_cb: function (ctx: PSSL_CTX; gen_cb: SSL_CTX_generate_session_ticket_fn; dec_cb: SSL_CTX_decrypt_session_ticket_fn; arg: Pointer): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_session_ticket_cb;
+  SSL_SESSION_set1_ticket_appdata: function (ss: PSSL_SESSION; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_SESSION_set1_ticket_appdata;
+  SSL_SESSION_get0_ticket_appdata: function (ss: PSSL_SESSION; data: PPointer; len: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_SESSION_get0_ticket_appdata;
+  DTLS_set_timer_cb: procedure (s: PSSL; cb: DTLS_timer_cb); cdecl = Load_DTLS_set_timer_cb;
+  SSL_CTX_set_allow_early_data_cb: procedure (ctx: PSSL_CTX; cb: SSL_allow_early_data_cb_fN; arg: Pointer); cdecl = Load_SSL_CTX_set_allow_early_data_cb;
+  SSL_set_allow_early_data_cb: procedure (s: PSSL; cb: SSL_allow_early_data_cb_fN; arg: Pointer); cdecl = Load_SSL_set_allow_early_data_cb;
+  SSL_get0_peer_certificate: function (const s: PSSL): PX509; cdecl = Load_SSL_get0_peer_certificate; {introduced 3.3.0 }
+  SSL_get1_peer_certificate: function (const s: PSSL): PX509; cdecl = Load_SSL_get1_peer_certificate; {introduced 3.3.0 }
 
 
 
@@ -2378,79 +2854,79 @@ var
 
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 var
-  SSL_CTX_set_mode: function (ctx: PSSL_CTX; op: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_clear_mode: function (ctx: PSSL_CTX; op: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_sess_set_cache_size: function (ctx: PSSL_CTX; t: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_sess_get_cache_size: function (ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_set_session_cache_mode: function (ctx: PSSL_CTX; m: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_get_session_cache_mode: function (ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_clear_num_renegotiations: function (ssl: PSSL): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_total_renegotiations: function (ssl: PSSL): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_set_tmp_dh: function (ctx: PSSL_CTX; dh: PDH): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_set_tmp_ecdh: function (ctx: PSSL_CTX; ecdh: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_set_dh_auto: function (ctx: PSSL_CTX; onoff: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_set_dh_auto: function (s: PSSL; onoff: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_set_tmp_dh: function (ssl: PSSL; dh: PDH): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_set_tmp_ecdh: function (ssl: PSSL; ecdh: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_add_extra_chain_cert: function (ctx: PSSL_CTX; x509: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_get_extra_chain_certs: function (ctx: PSSL_CTX; px509: Pointer): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_get_extra_chain_certs_only: function (ctx: PSSL_CTX; px509: Pointer): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_clear_extra_chain_certs: function (ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_set0_chain: function (ctx: PSSL_CTX; sk: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_set1_chain: function (ctx: PSSL_CTX; sk: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_add0_chain_cert: function (ctx: PSSL_CTX; x509: PX509): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_add1_chain_cert: function (ctx: PSSL_CTX; x509: PX509): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_get0_chain_certs: function (ctx: PSSL_CTX; px509: Pointer): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_clear_chain_certs: function (ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_build_cert_chain: function (ctx: PSSL_CTX; flags: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_select_current_cert: function (ctx: PSSL_CTX; x509: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_set_current_cert: function (ctx: PSSL_CTX; op: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_set0_verify_cert_store: function (ctx: PSSL_CTX; st: Pointer): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_set1_verify_cert_store: function (ctx: PSSL_CTX; st: Pointer): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_set0_chain_cert_store: function (ctx: PSSL_CTX; st: Pointer): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_set1_chain_cert_store: function (ctx: PSSL_CTX; st: Pointer): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_set0_chain: function (s: PSSL; sk: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_set1_chain: function (s: PSSL; sk: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_add0_chain_cert: function (s: PSSL; x509: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_add1_chain_cert: function (s: PSSL; x509: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_get0_chain_certs: function (s: PSSL; px509: Pointer): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_clear_chain_certs: function (s: PSSL): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_build_cert_chain: function (s: PSSL; flags: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_select_current_cert: function (s: PSSL; x509: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_set_current_cert: function (s: PSSL; op: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_set0_verify_cert_store: function (s: PSSL; st: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_set1_verify_cert_store: function (s: PSSL; st: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_set0_chain_cert_store: function (s: PSSL; st: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_set1_chain_cert_store: function (s: PSSL; st: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_get1_groups: function (s: PSSL; glist: POpenSSL_C_INT): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_set1_groups: function (ctx: PSSL_CTX; glist: PByte; glistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_set1_groups_list: function (ctx: PSSL_CTX; s: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_set1_groups: function (s: PSSL; glist: PByte; glistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_set1_groups_list: function (s: PSSL; str: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_get_shared_group: function (s: PSSL; n: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_set1_sigalgs: function (ctx: PSSL_CTX; slist: POpenSSL_C_INT; slistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_set1_sigalgs_list: function (ctx: PSSL_CTX; s: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_set1_sigalgs: function (s: PSSL; slist: POpenSSL_C_INT; slistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_set1_sigalgs_list: function (s: PSSL; str: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_set1_client_sigalgs: function (ctx: PSSL_CTX; slist: POpenSSL_C_INT; slistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_set1_client_sigalgs_list: function (ctx: PSSL_CTX; s: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_set1_client_sigalgs: function (s: PSSL; slist: POpenSSL_C_INT; slistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_set1_client_sigalgs_list: function (s: PSSL; str: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_get0_certificate_types: function (s: PSSL; clist: PByte): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_CTX_set1_client_certificate_types: function (ctx: PSSL_CTX; clist: PByte; clistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_set1_client_certificate_types: function (s: PSSL; clist: PByte; clistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_get_signature_nid: function (s: PSSL; pn: Pointer): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_get_peer_signature_nid: function (s: PSSL; pn: Pointer): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_get_peer_tmp_key: function (s: PSSL; pk: Pointer): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_get_tmp_key: function (s: PSSL; pk: Pointer): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_get0_raw_cipherlist: function (s: PSSL; plst: Pointer): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_get0_ec_point_formats: function (s: PSSL; plst: Pointer): TOpenSSL_C_LONG; cdecl = nil; {removed 1.0.0}
-  SSL_get_app_data: function (const ssl: PSSL): Pointer; cdecl = nil; {removed 1.0.0}
-  SSL_set_app_data: function (ssl: PSSL; data: Pointer): TOpenSSL_C_INT; cdecl = nil; {removed 1.0.0}
-  SSLeay_add_ssl_algorithms: function : TOpenSSL_C_INT; cdecl = nil; {removed 1.0.0}
-  SSL_load_error_strings: procedure ; cdecl = nil; {removed 1.1.0}
-  SSL_get_peer_certificate: function (const s: PSSL): PX509; cdecl = nil; {removed 3.0.0}
-  SSL_library_init: function : TOpenSSL_C_INT; cdecl = nil; {removed 1.1.0}
+  SSL_CTX_set_mode: function (ctx: PSSL_CTX; op: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set_mode; {removed 1.0.0}
+  SSL_CTX_clear_mode: function (ctx: PSSL_CTX; op: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_clear_mode; {removed 1.0.0}
+  SSL_CTX_sess_set_cache_size: function (ctx: PSSL_CTX; t: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_sess_set_cache_size; {removed 1.0.0}
+  SSL_CTX_sess_get_cache_size: function (ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_sess_get_cache_size; {removed 1.0.0}
+  SSL_CTX_set_session_cache_mode: function (ctx: PSSL_CTX; m: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set_session_cache_mode; {removed 1.0.0}
+  SSL_CTX_get_session_cache_mode: function (ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_get_session_cache_mode; {removed 1.0.0}
+  SSL_clear_num_renegotiations: function (ssl: PSSL): TOpenSSL_C_LONG; cdecl = Load_SSL_clear_num_renegotiations; {removed 1.0.0}
+  SSL_total_renegotiations: function (ssl: PSSL): TOpenSSL_C_LONG; cdecl = Load_SSL_total_renegotiations; {removed 1.0.0}
+  SSL_CTX_set_tmp_dh: function (ctx: PSSL_CTX; dh: PDH): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set_tmp_dh; {removed 1.0.0}
+  SSL_CTX_set_tmp_ecdh: function (ctx: PSSL_CTX; ecdh: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set_tmp_ecdh; {removed 1.0.0}
+  SSL_CTX_set_dh_auto: function (ctx: PSSL_CTX; onoff: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set_dh_auto; {removed 1.0.0}
+  SSL_set_dh_auto: function (s: PSSL; onoff: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_set_dh_auto; {removed 1.0.0}
+  SSL_set_tmp_dh: function (ssl: PSSL; dh: PDH): TOpenSSL_C_LONG; cdecl = Load_SSL_set_tmp_dh; {removed 1.0.0}
+  SSL_set_tmp_ecdh: function (ssl: PSSL; ecdh: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_set_tmp_ecdh; {removed 1.0.0}
+  SSL_CTX_add_extra_chain_cert: function (ctx: PSSL_CTX; x509: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_add_extra_chain_cert; {removed 1.0.0}
+  SSL_CTX_get_extra_chain_certs: function (ctx: PSSL_CTX; px509: Pointer): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_get_extra_chain_certs; {removed 1.0.0}
+  SSL_CTX_get_extra_chain_certs_only: function (ctx: PSSL_CTX; px509: Pointer): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_get_extra_chain_certs_only; {removed 1.0.0}
+  SSL_CTX_clear_extra_chain_certs: function (ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_clear_extra_chain_certs; {removed 1.0.0}
+  SSL_CTX_set0_chain: function (ctx: PSSL_CTX; sk: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set0_chain; {removed 1.0.0}
+  SSL_CTX_set1_chain: function (ctx: PSSL_CTX; sk: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set1_chain; {removed 1.0.0}
+  SSL_CTX_add0_chain_cert: function (ctx: PSSL_CTX; x509: PX509): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_add0_chain_cert; {removed 1.0.0}
+  SSL_CTX_add1_chain_cert: function (ctx: PSSL_CTX; x509: PX509): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_add1_chain_cert; {removed 1.0.0}
+  SSL_CTX_get0_chain_certs: function (ctx: PSSL_CTX; px509: Pointer): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_get0_chain_certs; {removed 1.0.0}
+  SSL_CTX_clear_chain_certs: function (ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_clear_chain_certs; {removed 1.0.0}
+  SSL_CTX_build_cert_chain: function (ctx: PSSL_CTX; flags: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_build_cert_chain; {removed 1.0.0}
+  SSL_CTX_select_current_cert: function (ctx: PSSL_CTX; x509: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_select_current_cert; {removed 1.0.0}
+  SSL_CTX_set_current_cert: function (ctx: PSSL_CTX; op: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set_current_cert; {removed 1.0.0}
+  SSL_CTX_set0_verify_cert_store: function (ctx: PSSL_CTX; st: Pointer): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set0_verify_cert_store; {removed 1.0.0}
+  SSL_CTX_set1_verify_cert_store: function (ctx: PSSL_CTX; st: Pointer): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set1_verify_cert_store; {removed 1.0.0}
+  SSL_CTX_set0_chain_cert_store: function (ctx: PSSL_CTX; st: Pointer): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set0_chain_cert_store; {removed 1.0.0}
+  SSL_CTX_set1_chain_cert_store: function (ctx: PSSL_CTX; st: Pointer): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set1_chain_cert_store; {removed 1.0.0}
+  SSL_set0_chain: function (s: PSSL; sk: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_set0_chain; {removed 1.0.0}
+  SSL_set1_chain: function (s: PSSL; sk: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_set1_chain; {removed 1.0.0}
+  SSL_add0_chain_cert: function (s: PSSL; x509: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_add0_chain_cert; {removed 1.0.0}
+  SSL_add1_chain_cert: function (s: PSSL; x509: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_add1_chain_cert; {removed 1.0.0}
+  SSL_get0_chain_certs: function (s: PSSL; px509: Pointer): TOpenSSL_C_LONG; cdecl = Load_SSL_get0_chain_certs; {removed 1.0.0}
+  SSL_clear_chain_certs: function (s: PSSL): TOpenSSL_C_LONG; cdecl = Load_SSL_clear_chain_certs; {removed 1.0.0}
+  SSL_build_cert_chain: function (s: PSSL; flags: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_build_cert_chain; {removed 1.0.0}
+  SSL_select_current_cert: function (s: PSSL; x509: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_select_current_cert; {removed 1.0.0}
+  SSL_set_current_cert: function (s: PSSL; op: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_set_current_cert; {removed 1.0.0}
+  SSL_set0_verify_cert_store: function (s: PSSL; st: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_set0_verify_cert_store; {removed 1.0.0}
+  SSL_set1_verify_cert_store: function (s: PSSL; st: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_set1_verify_cert_store; {removed 1.0.0}
+  SSL_set0_chain_cert_store: function (s: PSSL; st: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_set0_chain_cert_store; {removed 1.0.0}
+  SSL_set1_chain_cert_store: function (s: PSSL; st: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_set1_chain_cert_store; {removed 1.0.0}
+  SSL_get1_groups: function (s: PSSL; glist: POpenSSL_C_INT): TOpenSSL_C_LONG; cdecl = Load_SSL_get1_groups; {removed 1.0.0}
+  SSL_CTX_set1_groups: function (ctx: PSSL_CTX; glist: PByte; glistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set1_groups; {removed 1.0.0}
+  SSL_CTX_set1_groups_list: function (ctx: PSSL_CTX; s: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set1_groups_list; {removed 1.0.0}
+  SSL_set1_groups: function (s: PSSL; glist: PByte; glistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_set1_groups; {removed 1.0.0}
+  SSL_set1_groups_list: function (s: PSSL; str: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_set1_groups_list; {removed 1.0.0}
+  SSL_get_shared_group: function (s: PSSL; n: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_get_shared_group; {removed 1.0.0}
+  SSL_CTX_set1_sigalgs: function (ctx: PSSL_CTX; slist: POpenSSL_C_INT; slistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set1_sigalgs; {removed 1.0.0}
+  SSL_CTX_set1_sigalgs_list: function (ctx: PSSL_CTX; s: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set1_sigalgs_list; {removed 1.0.0}
+  SSL_set1_sigalgs: function (s: PSSL; slist: POpenSSL_C_INT; slistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_set1_sigalgs; {removed 1.0.0}
+  SSL_set1_sigalgs_list: function (s: PSSL; str: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_set1_sigalgs_list; {removed 1.0.0}
+  SSL_CTX_set1_client_sigalgs: function (ctx: PSSL_CTX; slist: POpenSSL_C_INT; slistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set1_client_sigalgs; {removed 1.0.0}
+  SSL_CTX_set1_client_sigalgs_list: function (ctx: PSSL_CTX; s: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set1_client_sigalgs_list; {removed 1.0.0}
+  SSL_set1_client_sigalgs: function (s: PSSL; slist: POpenSSL_C_INT; slistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_set1_client_sigalgs; {removed 1.0.0}
+  SSL_set1_client_sigalgs_list: function (s: PSSL; str: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_set1_client_sigalgs_list; {removed 1.0.0}
+  SSL_get0_certificate_types: function (s: PSSL; clist: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_get0_certificate_types; {removed 1.0.0}
+  SSL_CTX_set1_client_certificate_types: function (ctx: PSSL_CTX; clist: PByte; clistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set1_client_certificate_types; {removed 1.0.0}
+  SSL_set1_client_certificate_types: function (s: PSSL; clist: PByte; clistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_set1_client_certificate_types; {removed 1.0.0}
+  SSL_get_signature_nid: function (s: PSSL; pn: Pointer): TOpenSSL_C_LONG; cdecl = Load_SSL_get_signature_nid; {removed 1.0.0}
+  SSL_get_peer_signature_nid: function (s: PSSL; pn: Pointer): TOpenSSL_C_LONG; cdecl = Load_SSL_get_peer_signature_nid; {removed 1.0.0}
+  SSL_get_peer_tmp_key: function (s: PSSL; pk: Pointer): TOpenSSL_C_LONG; cdecl = Load_SSL_get_peer_tmp_key; {removed 1.0.0}
+  SSL_get_tmp_key: function (s: PSSL; pk: Pointer): TOpenSSL_C_LONG; cdecl = Load_SSL_get_tmp_key; {removed 1.0.0}
+  SSL_get0_raw_cipherlist: function (s: PSSL; plst: Pointer): TOpenSSL_C_LONG; cdecl = Load_SSL_get0_raw_cipherlist; {removed 1.0.0}
+  SSL_get0_ec_point_formats: function (s: PSSL; plst: Pointer): TOpenSSL_C_LONG; cdecl = Load_SSL_get0_ec_point_formats; {removed 1.0.0}
+  SSL_get_app_data: function (const ssl: PSSL): Pointer; cdecl = Load_SSL_get_app_data; {removed 1.0.0}
+  SSL_set_app_data: function (ssl: PSSL; data: Pointer): TOpenSSL_C_INT; cdecl = Load_SSL_set_app_data; {removed 1.0.0}
+  SSLeay_add_ssl_algorithms: function : TOpenSSL_C_INT; cdecl = Load_SSLeay_add_ssl_algorithms; {removed 1.0.0}
+  SSL_load_error_strings: procedure ; cdecl = Load_SSL_load_error_strings; {removed 1.1.0}
+  SSL_get_peer_certificate: function (const s: PSSL): PX509; cdecl = Load_SSL_get_peer_certificate; {removed 3.0.0}
+  SSL_library_init: function : TOpenSSL_C_INT; cdecl = Load_SSL_library_init; {removed 1.1.0}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF}
 const
@@ -4720,6058 +5196,3761 @@ end;
 
 
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$WARN  NO_RETVAL OFF}
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_set_mode(ctx: PSSL_CTX; op: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_mode');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_clear_mode(ctx: PSSL_CTX; op: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_clear_mode');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_sess_set_cache_size(ctx: PSSL_CTX; t: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_sess_set_cache_size');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_sess_get_cache_size(ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_sess_get_cache_size');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_set_session_cache_mode(ctx: PSSL_CTX; m: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_session_cache_mode');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_get_session_cache_mode(ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_session_cache_mode');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_clear_num_renegotiations(ssl: PSSL): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_clear_num_renegotiations');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_total_renegotiations(ssl: PSSL): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_total_renegotiations');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_set_tmp_dh(ctx: PSSL_CTX; dh: PDH): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_tmp_dh');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_set_tmp_ecdh(ctx: PSSL_CTX; ecdh: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_tmp_ecdh');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_set_dh_auto(ctx: PSSL_CTX; onoff: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_dh_auto');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_set_dh_auto(s: PSSL; onoff: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_dh_auto');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_set_tmp_dh(ssl: PSSL; dh: PDH): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_tmp_dh');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_set_tmp_ecdh(ssl: PSSL; ecdh: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_tmp_ecdh');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_add_extra_chain_cert(ctx: PSSL_CTX; x509: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_add_extra_chain_cert');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_get_extra_chain_certs(ctx: PSSL_CTX; px509: Pointer): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_extra_chain_certs');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_get_extra_chain_certs_only(ctx: PSSL_CTX; px509: Pointer): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_extra_chain_certs_only');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_clear_extra_chain_certs(ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_clear_extra_chain_certs');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_set0_chain(ctx: PSSL_CTX; sk: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set0_chain');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_set1_chain(ctx: PSSL_CTX; sk: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set1_chain');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_add0_chain_cert(ctx: PSSL_CTX; x509: PX509): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_add0_chain_cert');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_add1_chain_cert(ctx: PSSL_CTX; x509: PX509): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_add1_chain_cert');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_get0_chain_certs(ctx: PSSL_CTX; px509: Pointer): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get0_chain_certs');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_clear_chain_certs(ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_clear_chain_certs');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_build_cert_chain(ctx: PSSL_CTX; flags: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_build_cert_chain');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_select_current_cert(ctx: PSSL_CTX; x509: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_select_current_cert');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_set_current_cert(ctx: PSSL_CTX; op: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_current_cert');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_set0_verify_cert_store(ctx: PSSL_CTX; st: Pointer): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set0_verify_cert_store');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_set1_verify_cert_store(ctx: PSSL_CTX; st: Pointer): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set1_verify_cert_store');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_set0_chain_cert_store(ctx: PSSL_CTX; st: Pointer): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set0_chain_cert_store');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_set1_chain_cert_store(ctx: PSSL_CTX; st: Pointer): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set1_chain_cert_store');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_set0_chain(s: PSSL; sk: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set0_chain');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_set1_chain(s: PSSL; sk: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set1_chain');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_add0_chain_cert(s: PSSL; x509: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_add0_chain_cert');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_add1_chain_cert(s: PSSL; x509: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_add1_chain_cert');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_get0_chain_certs(s: PSSL; px509: Pointer): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_chain_certs');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_clear_chain_certs(s: PSSL): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_clear_chain_certs');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_build_cert_chain(s: PSSL; flags: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_build_cert_chain');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_select_current_cert(s: PSSL; x509: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_select_current_cert');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_set_current_cert(s: PSSL; op: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_current_cert');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_set0_verify_cert_store(s: PSSL; st: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set0_verify_cert_store');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_set1_verify_cert_store(s: PSSL; st: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set1_verify_cert_store');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_set0_chain_cert_store(s: PSSL; st: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set0_chain_cert_store');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_set1_chain_cert_store(s: PSSL; st: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set1_chain_cert_store');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_get1_groups(s: PSSL; glist: POpenSSL_C_INT): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get1_groups');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_set1_groups(ctx: PSSL_CTX; glist: PByte; glistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set1_groups');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_set1_groups_list(ctx: PSSL_CTX; s: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set1_groups_list');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_set1_groups(s: PSSL; glist: PByte; glistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set1_groups');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_set1_groups_list(s: PSSL; str: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set1_groups_list');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_get_shared_group(s: PSSL; n: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_shared_group');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_set1_sigalgs(ctx: PSSL_CTX; slist: POpenSSL_C_INT; slistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set1_sigalgs');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_set1_sigalgs_list(ctx: PSSL_CTX; s: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set1_sigalgs_list');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_set1_sigalgs(s: PSSL; slist: POpenSSL_C_INT; slistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set1_sigalgs');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_set1_sigalgs_list(s: PSSL; str: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set1_sigalgs_list');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_set1_client_sigalgs(ctx: PSSL_CTX; slist: POpenSSL_C_INT; slistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set1_client_sigalgs');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_set1_client_sigalgs_list(ctx: PSSL_CTX; s: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set1_client_sigalgs_list');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_set1_client_sigalgs(s: PSSL; slist: POpenSSL_C_INT; slistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set1_client_sigalgs');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_set1_client_sigalgs_list(s: PSSL; str: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set1_client_sigalgs_list');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_get0_certificate_types(s: PSSL; clist: PByte): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_certificate_types');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_set1_client_certificate_types(ctx: PSSL_CTX; clist: PByte; clistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set1_client_certificate_types');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_set1_client_certificate_types(s: PSSL; clist: PByte; clistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set1_client_certificate_types');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_get_signature_nid(s: PSSL; pn: Pointer): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_signature_nid');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_get_peer_signature_nid(s: PSSL; pn: Pointer): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_peer_signature_nid');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_get_peer_tmp_key(s: PSSL; pk: Pointer): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_peer_tmp_key');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_get_tmp_key(s: PSSL; pk: Pointer): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_tmp_key');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_get0_raw_cipherlist(s: PSSL; plst: Pointer): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_raw_cipherlist');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_get0_ec_point_formats(s: PSSL; plst: Pointer): TOpenSSL_C_LONG; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_ec_point_formats');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_get_options(const ctx: PSSL_CTX): TOpenSSL_C_ULONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_options');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-function ERROR_SSL_get_options(const s: PSSL): TOpenSSL_C_ULONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_options');
-end;
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_clear_options(ctx: PSSL_CTX; op: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_clear_options');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-function ERROR_SSL_clear_options(s: PSSL; op: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_clear_options');
-end;
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_set_options(ctx: PSSL_CTX; op: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_options');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-function ERROR_SSL_set_options(s: PSSL; op: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_options');
-end;
-
-procedure ERROR_SSL_CTX_sess_set_new_cb(ctx: PSSL_CTX; new_session_cb: SSL_CTX_sess_new_cb); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_sess_set_new_cb');
-end;
-
-function ERROR_SSL_CTX_sess_get_new_cb(ctx: PSSL_CTX): SSL_CTX_sess_new_cb; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_sess_get_new_cb');
-end;
-
-procedure ERROR_SSL_CTX_sess_set_remove_cb(ctx: PSSL_CTX; remove_session_cb: SSL_CTX_sess_remove_cb); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_sess_set_remove_cb');
-end;
-
-function ERROR_SSL_CTX_sess_get_remove_cb(ctx: PSSL_CTX): SSL_CTX_sess_remove_cb; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_sess_get_remove_cb');
-end;
-
-procedure ERROR_SSL_CTX_set_info_callback(ctx: PSSL_CTX; cb: SSL_CTX_info_callback); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_info_callback');
-end;
-
-function ERROR_SSL_CTX_get_info_callback(ctx: PSSL_CTX): SSL_CTX_info_callback; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_info_callback');
-end;
-
-procedure ERROR_SSL_CTX_set_client_cert_cb(ctx: PSSL_CTX; client_cert_cb: SSL_CTX_client_cert_cb); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_client_cert_cb');
-end;
-
-function ERROR_SSL_CTX_get_client_cert_cb(ctx: PSSL_CTX): SSL_CTX_client_cert_cb; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_client_cert_cb');
-end;
-
-function ERROR_SSL_CTX_set_client_cert_engine(ctx: PSSL_CTX; e: PENGINE): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_client_cert_engine');
-end;
-
-procedure ERROR_SSL_CTX_set_cookie_generate_cb(ctx: PSSL_CTX; app_gen_cookie_cb: SSL_CTX_cookie_verify_cb); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_cookie_generate_cb');
-end;
-
-procedure ERROR_SSL_CTX_set_cookie_verify_cb(ctx: PSSL_CTX; app_verify_cookie_cb: SSL_CTX_set_cookie_verify_cb_app_verify_cookie_cb); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_cookie_verify_cb');
-end;
-
-procedure ERROR_SSL_CTX_set_stateless_cookie_generate_cb(ctx: PSSL_CTX; gen_stateless_cookie_cb: SSL_CTX_set_stateless_cookie_generate_cb_gen_stateless_cookie_cb); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_stateless_cookie_generate_cb');
-end;
-
-procedure ERROR_SSL_CTX_set_stateless_cookie_verify_cb(ctx: PSSL_CTX; verify_stateless_cookie_cb: SSL_CTX_set_stateless_cookie_verify_cb_verify_stateless_cookie_cb); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_stateless_cookie_verify_cb');
-end;
-
-procedure ERROR_SSL_CTX_set_alpn_select_cb(ctx: PSSL_CTX; cb: SSL_CTX_alpn_select_cb_func; arg: Pointer); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_alpn_select_cb');
-end;
-
-procedure ERROR_SSL_get0_alpn_selected(const ssl: PSSL; const data: PPByte; len: POpenSSL_C_UINT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_alpn_selected');
-end;
-
-procedure ERROR_SSL_CTX_set_psk_client_callback(ctx: PSSL_CTX; cb: SSL_psk_client_cb_func); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_psk_client_callback');
-end;
-
-procedure ERROR_SSL_set_psk_client_callback(ssl: PSSL; cb: SSL_psk_client_cb_func); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_psk_client_callback');
-end;
-
-procedure ERROR_SSL_CTX_set_psk_server_callback(ctx: PSSL_CTX; cb: SSL_psk_server_cb_func); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_psk_server_callback');
-end;
-
-procedure ERROR_SSL_set_psk_server_callback(ssl: PSSL; cb: SSL_psk_server_cb_func); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_psk_server_callback');
-end;
-
-procedure ERROR_SSL_set_psk_find_session_callback(s: PSSL; cb: SSL_psk_find_session_cb_func); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_psk_find_session_callback');
-end;
-
-procedure ERROR_SSL_CTX_set_psk_find_session_callback(ctx: PSSL_CTX; cb: SSL_psk_find_session_cb_func); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_psk_find_session_callback');
-end;
-
-procedure ERROR_SSL_set_psk_use_session_callback(s: PSSL; cb: SSL_psk_use_session_cb_func); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_psk_use_session_callback');
-end;
-
-procedure ERROR_SSL_CTX_set_psk_use_session_callback(ctx: PSSL_CTX; cb: SSL_psk_use_session_cb_func); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_psk_use_session_callback');
-end;
-
-procedure ERROR_SSL_CTX_set_keylog_callback(ctx: PSSL_CTX; cb: SSL_CTX_keylog_cb_func); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_keylog_callback');
-end;
-
-function ERROR_SSL_CTX_get_keylog_callback(const ctx: PSSL_CTX): SSL_CTX_keylog_cb_func; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_keylog_callback');
-end;
-
-function ERROR_SSL_CTX_set_max_early_data(ctx: PSSL_CTX; max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_max_early_data');
-end;
-
-function ERROR_SSL_CTX_get_max_early_data(const ctx: PSSL_CTX): TOpenSSL_C_UINT32; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_max_early_data');
-end;
-
-function ERROR_SSL_set_max_early_data(s: PSSL; max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_max_early_data');
-end;
-
-function ERROR_SSL_get_max_early_data(const s: PSSL): TOpenSSL_C_UINT32; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_max_early_data');
-end;
-
-function ERROR_SSL_CTX_set_recv_max_early_data(ctx: PSSL_CTX; recv_max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_recv_max_early_data');
-end;
-
-function ERROR_SSL_CTX_get_recv_max_early_data(const ctx: PSSL_CTX): TOpenSSL_C_UINT32; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_recv_max_early_data');
-end;
-
-function ERROR_SSL_set_recv_max_early_data(s: PSSL; recv_max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_recv_max_early_data');
-end;
-
-function ERROR_SSL_get_recv_max_early_data(const s: PSSL): TOpenSSL_C_UINT32; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_recv_max_early_data');
-end;
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_get_app_data(const ssl: PSSL): Pointer; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_app_data');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_set_app_data(ssl: PSSL; data: Pointer): TOpenSSL_C_INT; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_app_data');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-function ERROR_SSL_in_init(const s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_in_init');
-end;
-
-function ERROR_SSL_in_before(const s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_in_before');
-end;
-
-function ERROR_SSL_is_init_finished(const s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_is_init_finished');
-end;
-
-function ERROR_SSL_get_finished(const s: PSSL; buf: Pointer; count: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_finished');
-end;
-
-function ERROR_SSL_get_peer_finished(const s: PSSL; buf: Pointer; count: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_peer_finished');
-end;
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSLeay_add_ssl_algorithms: TOpenSSL_C_INT; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSLeay_add_ssl_algorithms');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-function ERROR_BIO_f_ssl: PBIO_METHOD; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('BIO_f_ssl');
-end;
-
-function ERROR_BIO_new_ssl(ctx: PSSL_CTX; client: TOpenSSL_C_INT): PBIO; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('BIO_new_ssl');
-end;
-
-function ERROR_BIO_new_ssl_connect(ctx: PSSL_CTX): PBIO; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('BIO_new_ssl_connect');
-end;
-
-function ERROR_BIO_new_buffer_ssl_connect(ctx: PSSL_CTX): PBIO; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('BIO_new_buffer_ssl_connect');
-end;
-
-function ERROR_BIO_ssl_copy_session_id(to_: PBIO; from: PBIO): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('BIO_ssl_copy_session_id');
-end;
-
-function ERROR_SSL_CTX_set_cipher_list(v1: PSSL_CTX; const str: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_cipher_list');
-end;
-
-function ERROR_SSL_CTX_new(const meth: PSSL_METHOD): PSSL_CTX; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_new');
-end;
-
-function ERROR_SSL_CTX_set_timeout(ctx: PSSL_CTX; t: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_timeout');
-end;
-
-function ERROR_SSL_CTX_get_timeout(const ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_timeout');
-end;
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_get_cert_store(const v1: PSSL_CTX): PX509_STORE; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_cert_store');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-function ERROR_SSL_want(const s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_want');
-end;
-
-function ERROR_SSL_clear(s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_clear');
-end;
-
-procedure ERROR_BIO_ssl_shutdown(ssl_bio: PBIO); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('BIO_ssl_shutdown');
-end;
-
-function ERROR_SSL_CTX_up_ref(ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_up_ref');
-end;
-
-procedure ERROR_SSL_CTX_free(v1: PSSL_CTX); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_free');
-end;
-
-procedure ERROR_SSL_CTX_set_cert_store(v1: PSSL_CTX; v2: PX509_STORE); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_cert_store');
-end;
-
-procedure ERROR_SSL_CTX_set1_cert_store(v1: PSSL_CTX; v2: PX509_STORE); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set1_cert_store');
-end;
-
-procedure ERROR_SSL_CTX_flush_sessions(ctx: PSSL_CTX; tm: TOpenSSL_C_LONG); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_flush_sessions');
-end;
-
-function ERROR_SSL_get_current_cipher(const s: PSSL): PSSL_CIPHER; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_current_cipher');
-end;
-
-function ERROR_SSL_get_pending_cipher(const s: PSSL): PSSL_CIPHER; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_pending_cipher');
-end;
-
-function ERROR_SSL_CIPHER_get_bits(const c: PSSL_CIPHER; var alg_bits: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_get_bits');
-end;
-
-function ERROR_SSL_CIPHER_get_version(const c: PSSL_CIPHER): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_get_version');
-end;
-
-function ERROR_SSL_CIPHER_get_name(const c: PSSL_CIPHER): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_get_name');
-end;
-
-function ERROR_SSL_CIPHER_standard_name(const c: PSSL_CIPHER): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_standard_name');
-end;
-
-function ERROR_OPENSSL_cipher_name(const rfc_name: PAnsiChar): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_cipher_name');
-end;
-
-function ERROR_SSL_CIPHER_get_id(const c: PSSL_CIPHER): TOpenSSL_C_UINT32; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_get_id');
-end;
-
-function ERROR_SSL_CIPHER_get_protocol_id(const c: PSSL_CIPHER): TOpenSSL_C_UINT16; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_get_protocol_id');
-end;
-
-function ERROR_SSL_CIPHER_get_kx_nid(const c: PSSL_CIPHER): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_get_kx_nid');
-end;
-
-function ERROR_SSL_CIPHER_get_auth_nid(const c: PSSL_CIPHER): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_get_auth_nid');
-end;
-
-function ERROR_SSL_CIPHER_get_handshake_digest(const c: PSSL_CIPHER): PEVP_MD; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_get_handshake_digest');
-end;
-
-function ERROR_SSL_CIPHER_is_aead(const c: PSSL_CIPHER): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_is_aead');
-end;
-
-function ERROR_SSL_get_fd(const s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_fd');
-end;
-
-function ERROR_SSL_get_rfd(const s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_rfd');
-end;
-
-function ERROR_SSL_get_wfd(const s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_wfd');
-end;
-
-function ERROR_SSL_get_cipher_list(const s: PSSL; n: TOpenSSL_C_INT): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_cipher_list');
-end;
-
-function ERROR_SSL_get_shared_ciphers(const s: PSSL; buf: PAnsiChar; size: TOpenSSL_C_INT): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_shared_ciphers');
-end;
-
-function ERROR_SSL_get_read_ahead(const s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_read_ahead');
-end;
-
-function ERROR_SSL_pending(const s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_pending');
-end;
-
-function ERROR_SSL_has_pending(const s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_has_pending');
-end;
-
-function ERROR_SSL_set_fd(s: PSSL; fd: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_fd');
-end;
-
-function ERROR_SSL_set_rfd(s: PSSL; fd: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_rfd');
-end;
-
-function ERROR_SSL_set_wfd(s: PSSL; fd: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_wfd');
-end;
-
-procedure ERROR_SSL_set0_rbio(s: PSSL; rbio: PBIO); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set0_rbio');
-end;
-
-procedure ERROR_SSL_set0_wbio(s: PSSL; wbio: PBIO); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set0_wbio');
-end;
-
-procedure ERROR_SSL_set_bio(s: PSSL; rbio: PBIO; wbio: PBIO); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_bio');
-end;
-
-function ERROR_SSL_get_rbio(const s: PSSL): PBIO; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_rbio');
-end;
-
-function ERROR_SSL_get_wbio(const s: PSSL): PBIO; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_wbio');
-end;
-
-function ERROR_SSL_set_cipher_list(s: PSSL; const str: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_cipher_list');
-end;
-
-function ERROR_SSL_CTX_set_ciphersuites(ctx: PSSL_CTX; const str: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_ciphersuites');
-end;
-
-function ERROR_SSL_set_ciphersuites(s: PSSL; const str: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_ciphersuites');
-end;
-
-function ERROR_SSL_get_verify_mode(const s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_verify_mode');
-end;
-
-function ERROR_SSL_get_verify_depth(const s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_verify_depth');
-end;
-
-function ERROR_SSL_get_verify_callback(const s: PSSL): SSL_verify_cb; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_verify_callback');
-end;
-
-procedure ERROR_SSL_set_read_ahead(s: PSSL; yes: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_read_ahead');
-end;
-
-procedure ERROR_SSL_set_verify(s: PSSL; mode: TOpenSSL_C_INT; callback: SSL_verify_cb); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_verify');
-end;
-
-procedure ERROR_SSL_set_verify_depth(s: PSSL; depth: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_verify_depth');
-end;
-
-function ERROR_SSL_use_RSAPrivateKey(ssl: PSSL; rsa: PRSA): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_use_RSAPrivateKey');
-end;
-
-function ERROR_SSL_use_RSAPrivateKey_ASN1(ssl: PSSL; const d: PByte; len: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_use_RSAPrivateKey_ASN1');
-end;
-
-function ERROR_SSL_use_PrivateKey(ssl: PSSL; pkey: PEVP_PKEY): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_use_PrivateKey');
-end;
-
-function ERROR_SSL_use_PrivateKey_ASN1(pk: TOpenSSL_C_INT; ssl: PSSL; const d: PByte; len: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_use_PrivateKey_ASN1');
-end;
-
-function ERROR_SSL_use_certificate(ssl: PSSL; x: PX509): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_use_certificate');
-end;
-
-function ERROR_SSL_use_certificate_ASN1(ssl: PSSL; const d: PByte; len: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_use_certificate_ASN1');
-end;
-
-function ERROR_SSL_CTX_use_serverinfo(ctx: PSSL_CTX; const serverinfo: PByte; serverinfo_length: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_serverinfo');
-end;
-
-function ERROR_SSL_CTX_use_serverinfo_ex(ctx: PSSL_CTX; version: TOpenSSL_C_UINT; const serverinfo: PByte; serverinfo_length: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_serverinfo_ex');
-end;
-
-function ERROR_SSL_CTX_use_serverinfo_file(ctx: PSSL_CTX; const file_: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_serverinfo_file');
-end;
-
-function ERROR_SSL_use_RSAPrivateKey_file(ssl: PSSL; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_use_RSAPrivateKey_file');
-end;
-
-function ERROR_SSL_use_PrivateKey_file(ssl: PSSL; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_use_PrivateKey_file');
-end;
-
-function ERROR_SSL_use_certificate_file(ssl: PSSL; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_use_certificate_file');
-end;
-
-function ERROR_SSL_CTX_use_RSAPrivateKey_file(ctx: PSSL_CTX; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_RSAPrivateKey_file');
-end;
-
-function ERROR_SSL_CTX_use_PrivateKey_file(ctx: PSSL_CTX; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_PrivateKey_file');
-end;
-
-function ERROR_SSL_CTX_use_certificate_file(ctx: PSSL_CTX; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_certificate_file');
-end;
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_use_certificate_chain_file(ctx: PSSL_CTX; const file_: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_certificate_chain_file');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-function ERROR_SSL_use_certificate_chain_file(ssl: PSSL; const file_: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_use_certificate_chain_file');
-end;
-
-function ERROR_SSL_load_client_CA_file(const file_: PAnsiChar): PSTACK_OF_X509_NAME; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_load_client_CA_file');
-end;
-
-function ERROR_SSL_add_file_cert_subjects_to_stack(stackCAs: PSTACK_OF_X509_NAME; const file_: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_add_file_cert_subjects_to_stack');
-end;
-
-function ERROR_SSL_add_dir_cert_subjects_to_stack(stackCAs: PSTACK_OF_X509_NAME; const dir_: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_add_dir_cert_subjects_to_stack');
-end;
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-procedure ERROR_SSL_load_error_strings; cdecl; {removed 1.1.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_load_error_strings');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-function ERROR_SSL_state_string(const s: PSSL): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_state_string');
-end;
-
-function ERROR_SSL_rstate_string(const s: PSSL): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_rstate_string');
-end;
-
-function ERROR_SSL_state_string_long(const s: PSSL): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_state_string_long');
-end;
-
-function ERROR_SSL_rstate_string_long(const s: PSSL): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_rstate_string_long');
-end;
-
-function ERROR_SSL_SESSION_get_time(const s: PSSL_SESSION): TOpenSSL_C_LONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get_time');
-end;
-
-function ERROR_SSL_SESSION_set_time(s: PSSL_SESSION; t: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set_time');
-end;
-
-function ERROR_SSL_SESSION_get_timeout(const s: PSSL_SESSION): TOpenSSL_C_LONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get_timeout');
-end;
-
-function ERROR_SSL_SESSION_set_timeout(s: PSSL_SESSION; t: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set_timeout');
-end;
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_SESSION_get_protocol_version(const s: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get_protocol_version');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-function ERROR_SSL_SESSION_set_protocol_version(s: PSSL_SESSION; version: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set_protocol_version');
-end;
-
-function ERROR_SSL_SESSION_get0_hostname(const s: PSSL_SESSION): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get0_hostname');
-end;
-
-function ERROR_SSL_SESSION_set1_hostname(s: PSSL_SESSION; const hostname: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set1_hostname');
-end;
-
-procedure ERROR_SSL_SESSION_get0_alpn_selected(const s: PSSL_SESSION; const alpn: PPByte; len: POpenSSL_C_SIZET); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get0_alpn_selected');
-end;
-
-function ERROR_SSL_SESSION_set1_alpn_selected(s: PSSL_SESSION; const alpn: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set1_alpn_selected');
-end;
-
-function ERROR_SSL_SESSION_get0_cipher(const s: PSSL_SESSION): PSSL_CIPHER; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get0_cipher');
-end;
-
-function ERROR_SSL_SESSION_set_cipher(s: PSSL_SESSION; const cipher: PSSL_CIPHER): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set_cipher');
-end;
-
-function ERROR_SSL_SESSION_has_ticket(const s: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_has_ticket');
-end;
-
-function ERROR_SSL_SESSION_get_ticket_lifetime_hint(const s: PSSL_SESSION): TOpenSSL_C_ULONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get_ticket_lifetime_hint');
-end;
-
-procedure ERROR_SSL_SESSION_get0_ticket(const s: PSSL_SESSION; const tick: PPByte; len: POpenSSL_C_SIZET); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get0_ticket');
-end;
-
-function ERROR_SSL_SESSION_get_max_early_data(const s: PSSL_SESSION): TOpenSSL_C_UINT32; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get_max_early_data');
-end;
-
-function ERROR_SSL_SESSION_set_max_early_data(s: PSSL_SESSION; max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set_max_early_data');
-end;
-
-function ERROR_SSL_copy_session_id(to_: PSSL; const from: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_copy_session_id');
-end;
-
-function ERROR_SSL_SESSION_get0_peer(s: PSSL_SESSION): PX509; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get0_peer');
-end;
-
-function ERROR_SSL_SESSION_set1_id_context(s: PSSL_SESSION; const sid_ctx: PByte; sid_ctx_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set1_id_context');
-end;
-
-function ERROR_SSL_SESSION_set1_id(s: PSSL_SESSION; const sid: PByte; sid_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set1_id');
-end;
-
-function ERROR_SSL_SESSION_is_resumable(const s: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_is_resumable');
-end;
-
-function ERROR_SSL_SESSION_new: PSSL_SESSION; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_new');
-end;
-
-function ERROR_SSL_SESSION_dup(src: PSSL_SESSION): PSSL_SESSION; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_dup');
-end;
-
-function ERROR_SSL_SESSION_get_id(const s: PSSL_SESSION; len: POpenSSL_C_UINT): PByte; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get_id');
-end;
-
-function ERROR_SSL_SESSION_get0_id_context(const s: PSSL_SESSION; len: POpenSSL_C_UINT): PByte; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get0_id_context');
-end;
-
-function ERROR_SSL_SESSION_get_compress_id(const s: PSSL_SESSION): TOpenSSL_C_UINT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get_compress_id');
-end;
-
-function ERROR_SSL_SESSION_print(fp: PBIO; const ses: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_print');
-end;
-
-function ERROR_SSL_SESSION_print_keylog(bp: PBIO; const x: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_print_keylog');
-end;
-
-function ERROR_SSL_SESSION_up_ref(ses: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_up_ref');
-end;
-
-procedure ERROR_SSL_SESSION_free(ses: PSSL_SESSION); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_free');
-end;
-
-function ERROR_SSL_set_session(to_: PSSL; session: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_session');
-end;
-
-function ERROR_SSL_CTX_add_session(ctx: PSSL_CTX; session: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_add_session');
-end;
-
-function ERROR_SSL_CTX_remove_session(ctx: PSSL_CTX; session: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_remove_session');
-end;
-
-function ERROR_SSL_CTX_set_generate_session_id(ctx: PSSL_CTX; cb: GEN_SESSION_CB): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_generate_session_id');
-end;
-
-function ERROR_SSL_set_generate_session_id(s: PSSL; cb: GEN_SESSION_CB): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_generate_session_id');
-end;
-
-function ERROR_SSL_has_matching_session_id(const s: PSSL; const id: PByte; id_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_has_matching_session_id');
-end;
-
-function ERROR_d2i_SSL_SESSION(a: PPSSL_SESSION; const pp: PPByte; length: TOpenSSL_C_LONG): PSSL_SESSION; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_SSL_SESSION');
-end;
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_get_peer_certificate(const s: PSSL): PX509; cdecl; {removed 3.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_peer_certificate');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-function ERROR_SSL_CTX_get_verify_mode(const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_verify_mode');
-end;
-
-function ERROR_SSL_CTX_get_verify_depth(const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_verify_depth');
-end;
-
-function ERROR_SSL_CTX_get_verify_callback(const ctx: PSSL_CTX): SSL_verify_cb; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_verify_callback');
-end;
-
-procedure ERROR_SSL_CTX_set_verify(ctx: PSSL_CTX; mode: TOpenSSL_C_INT; callback: SSL_verify_cb); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_verify');
-end;
-
-procedure ERROR_SSL_CTX_set_verify_depth(ctx: PSSL_CTX; depth: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_verify_depth');
-end;
-
-procedure ERROR_SSL_CTX_set_cert_verify_callback(ctx: PSSL_CTX; cb: SSL_CTX_set_cert_verify_callback_cb; arg: Pointer); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_cert_verify_callback');
-end;
-
-procedure ERROR_SSL_CTX_set_cert_cb(c: PSSL_CTX; cb: SSL_CTX_set_cert_cb_cb; arg: Pointer); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_cert_cb');
-end;
-
-function ERROR_SSL_CTX_use_RSAPrivateKey(ctx: PSSL_CTX; rsa: PRSA): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_RSAPrivateKey');
-end;
-
-function ERROR_SSL_CTX_use_RSAPrivateKey_ASN1(ctx: PSSL_CTX; const d: PByte; len: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_RSAPrivateKey_ASN1');
-end;
-
-function ERROR_SSL_CTX_use_PrivateKey(ctx: PSSL_CTX; pkey: PEVP_PKEY): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_PrivateKey');
-end;
-
-function ERROR_SSL_CTX_use_PrivateKey_ASN1(pk: TOpenSSL_C_INT; ctx: PSSL_CTX; const d: PByte; len: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_PrivateKey_ASN1');
-end;
-
-function ERROR_SSL_CTX_use_certificate(ctx: PSSL_CTX; x: X509): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_certificate');
-end;
-
-function ERROR_SSL_CTX_use_certificate_ASN1(ctx: PSSL_CTX; len: TOpenSSL_C_INT; const d: PByte): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_certificate_ASN1');
-end;
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-procedure ERROR_SSL_CTX_set_default_passwd_cb(ctx: PSSL_CTX; cb: pem_password_cb); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_default_passwd_cb');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-procedure ERROR_SSL_CTX_set_default_passwd_cb_userdata(ctx: PSSL_CTX; u: Pointer); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_default_passwd_cb_userdata');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_get_default_passwd_cb(ctx: PSSL_CTX): pem_password_cb; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_default_passwd_cb');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_CTX_get_default_passwd_cb_userdata(ctx: PSSL_CTX): Pointer; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_default_passwd_cb_userdata');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-procedure ERROR_SSL_set_default_passwd_cb(s: PSSL; cb: pem_password_cb); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_default_passwd_cb');
-end;
-
-procedure ERROR_SSL_set_default_passwd_cb_userdata(s: PSSL; u: Pointer); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_default_passwd_cb_userdata');
-end;
-
-function ERROR_SSL_get_default_passwd_cb(s: PSSL): pem_password_cb; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_default_passwd_cb');
-end;
-
-function ERROR_SSL_get_default_passwd_cb_userdata(s: PSSL): Pointer; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_default_passwd_cb_userdata');
-end;
-
-function ERROR_SSL_CTX_check_private_key(const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_check_private_key');
-end;
-
-function ERROR_SSL_check_private_key(const ctx: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_check_private_key');
-end;
-
-function ERROR_SSL_CTX_set_session_id_context(ctx: PSSL_CTX; const sid_ctx: PByte; sid_ctx_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_session_id_context');
-end;
-
-function ERROR_SSL_new(ctx: PSSL_CTX): PSSL; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_new');
-end;
-
-function ERROR_SSL_up_ref(s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_up_ref');
-end;
-
-function ERROR_SSL_is_dtls(const s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_is_dtls');
-end;
-
-function ERROR_SSL_set_session_id_context(ssl: PSSL; const sid_ctx: PByte; sid_ctx_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_session_id_context');
-end;
-
-function ERROR_SSL_CTX_set_purpose(ctx: PSSL_CTX; purpose: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_purpose');
-end;
-
-function ERROR_SSL_set_purpose(ssl: PSSL; purpose: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_purpose');
-end;
-
-function ERROR_SSL_CTX_set_trust(ctx: PSSL_CTX; trust: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_trust');
-end;
-
-function ERROR_SSL_set_trust(ssl: PSSL; trust: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_trust');
-end;
-
-function ERROR_SSL_set1_host(s: PSSL; const hostname: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set1_host');
-end;
-
-function ERROR_SSL_add1_host(s: PSSL; const hostname: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_add1_host');
-end;
-
-function ERROR_SSL_get0_peername(s: PSSL): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_peername');
-end;
-
-procedure ERROR_SSL_set_hostflags(s: PSSL; flags: TOpenSSL_C_UINT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_hostflags');
-end;
-
-function ERROR_SSL_CTX_dane_enable(ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_dane_enable');
-end;
-
-function ERROR_SSL_CTX_dane_mtype_set(ctx: PSSL_CTX; const md: PEVP_MD; mtype: TOpenSSL_C_UINT8; ord: TOpenSSL_C_UINT8): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_dane_mtype_set');
-end;
-
-function ERROR_SSL_dane_enable(s: PSSL; const basedomain: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_dane_enable');
-end;
-
-function ERROR_SSL_dane_tlsa_add(s: PSSL; usage: TOpenSSL_C_UINT8; selector: TOpenSSL_C_UINT8; mtype: TOpenSSL_C_UINT8; const data: PByte; dlen: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_dane_tlsa_add');
-end;
-
-function ERROR_SSL_get0_dane_authority(s: PSSL; mcert: PPX509; mspki: PPEVP_PKEY): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_dane_authority');
-end;
-
-function ERROR_SSL_get0_dane_tlsa(s: PSSL; usage: POpenSSL_C_UINT8; selector: POpenSSL_C_UINT8; mtype: POpenSSL_C_UINT8; const data: PPByte; dlen: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_dane_tlsa');
-end;
-
-function ERROR_SSL_get0_dane(ssl: PSSL): PSSL_DANE; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_dane');
-end;
-
-function ERROR_SSL_CTX_dane_set_flags(ctx: PSSL_CTX; flags: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_dane_set_flags');
-end;
-
-function ERROR_SSL_CTX_dane_clear_flags(ctx: PSSL_CTX; flags: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_dane_clear_flags');
-end;
-
-function ERROR_SSL_dane_set_flags(ssl: PSSL; flags: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_dane_set_flags');
-end;
-
-function ERROR_SSL_dane_clear_flags(ssl: PSSL; flags: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_dane_clear_flags');
-end;
-
-function ERROR_SSL_CTX_set1_param(ctx: PSSL_CTX; vpm: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set1_param');
-end;
-
-function ERROR_SSL_set1_param(ssl: PSSL; vpm: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set1_param');
-end;
-
-function ERROR_SSL_CTX_get0_param(ctx: PSSL_CTX): PX509_VERIFY_PARAM; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get0_param');
-end;
-
-function ERROR_SSL_get0_param(ssl: PSSL): PX509_VERIFY_PARAM; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_param');
-end;
-
-function ERROR_SSL_CTX_set_srp_username(ctx: PSSL_CTX; name: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_srp_username');
-end;
-
-function ERROR_SSL_CTX_set_srp_password(ctx: PSSL_CTX; password: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_srp_password');
-end;
-
-function ERROR_SSL_CTX_set_srp_strength(ctx: PSSL_CTX; strength: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_srp_strength');
-end;
-
-function ERROR_SSL_CTX_set_srp_client_pwd_callback(ctx: PSSL_CTX; cb: SSL_CTX_set_srp_client_pwd_callback_cb): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_srp_client_pwd_callback');
-end;
-
-function ERROR_SSL_CTX_set_srp_verify_param_callback(ctx: PSSL_CTX; cb: SSL_CTX_set_srp_verify_param_callback_cb): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_srp_verify_param_callback');
-end;
-
-function ERROR_SSL_CTX_set_srp_username_callback(ctx: PSSL_CTX; cb: SSL_CTX_set_srp_username_callback_cb): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_srp_username_callback');
-end;
-
-function ERROR_SSL_CTX_set_srp_cb_arg(ctx: PSSL_CTX; arg: Pointer): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_srp_cb_arg');
-end;
-
-function ERROR_SSL_set_srp_server_param(s: PSSL; const N: PBIGNUm; const g: PBIGNUm; sa: PBIGNUm; v: PBIGNUm; info: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_srp_server_param');
-end;
-
-function ERROR_SSL_set_srp_server_param_pw(s: PSSL; const user: PAnsiChar; const pass: PAnsiChar; const grp: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_srp_server_param_pw');
-end;
-
-procedure ERROR_SSL_CTX_set_client_hello_cb(c: PSSL_CTX; cb: SSL_client_hello_cb_fn; arg: Pointer); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_client_hello_cb');
-end;
-
-function ERROR_SSL_client_hello_isv2(s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_client_hello_isv2');
-end;
-
-function ERROR_SSL_client_hello_get0_legacy_version(s: PSSL): TOpenSSL_C_UINT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_client_hello_get0_legacy_version');
-end;
-
-function ERROR_SSL_client_hello_get0_random(s: PSSL; const out_: PPByte): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_client_hello_get0_random');
-end;
-
-function ERROR_SSL_client_hello_get0_session_id(s: PSSL; const out_: PPByte): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_client_hello_get0_session_id');
-end;
-
-function ERROR_SSL_client_hello_get0_ciphers(s: PSSL; const out_: PPByte): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_client_hello_get0_ciphers');
-end;
-
-function ERROR_SSL_client_hello_get0_compression_methods(s: PSSL; const out_: PPByte): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_client_hello_get0_compression_methods');
-end;
-
-function ERROR_SSL_client_hello_get1_extensions_present(s: PSSL; out_: PPOpenSSL_C_INT; outlen: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_client_hello_get1_extensions_present');
-end;
-
-function ERROR_SSL_client_hello_get0_ext(s: PSSL; type_: TOpenSSL_C_UINT; const out_: PPByte; outlen: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_client_hello_get0_ext');
-end;
-
-procedure ERROR_SSL_certs_clear(s: PSSL); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_certs_clear');
-end;
-
-procedure ERROR_SSL_free(ssl: PSSL); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_free');
-end;
-
-function ERROR_SSL_waiting_for_async(s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_waiting_for_async');
-end;
-
-function ERROR_SSL_get_all_async_fds(s: PSSL; fds: POSSL_ASYNC_FD; numfds: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_all_async_fds');
-end;
-
-function ERROR_SSL_get_changed_async_fds(s: PSSL; addfd: POSSL_ASYNC_FD; numaddfds: POpenSSL_C_SIZET; delfd: POSSL_ASYNC_FD; numdelfds: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_changed_async_fds');
-end;
-
-function ERROR_SSL_accept(ssl: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_accept');
-end;
-
-function ERROR_SSL_stateless(s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_stateless');
-end;
-
-function ERROR_SSL_connect(ssl: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_connect');
-end;
-
-function ERROR_SSL_read(ssl: PSSL; buf: Pointer; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_read');
-end;
-
-function ERROR_SSL_read_ex(ssl: PSSL; buf: Pointer; num: TOpenSSL_C_SIZET; readbytes: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_read_ex');
-end;
-
-function ERROR_SSL_read_early_data(s: PSSL; buf: Pointer; num: TOpenSSL_C_SIZET; readbytes: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_read_early_data');
-end;
-
-function ERROR_SSL_peek(ssl: PSSL; buf: Pointer; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_peek');
-end;
-
-function ERROR_SSL_peek_ex(ssl: PSSL; buf: Pointer; num: TOpenSSL_C_SIZET; readbytes: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_peek_ex');
-end;
-
-function ERROR_SSL_write(ssl: PSSL; const buf: Pointer; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_write');
-end;
-
-function ERROR_SSL_write_ex(s: PSSL; const buf: Pointer; num: TOpenSSL_C_SIZET; written: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_write_ex');
-end;
-
-function ERROR_SSL_write_early_data(s: PSSL; const buf: Pointer; num: TOpenSSL_C_SIZET; written: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_write_early_data');
-end;
-
-function ERROR_SSL_callback_ctrl(v1: PSSL; v2: TOpenSSL_C_INT; v3: SSL_callback_ctrl_v3): TOpenSSL_C_LONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_callback_ctrl');
-end;
-
-function ERROR_SSL_ctrl(ssl: PSSL; cmd: TOpenSSL_C_INT; larg: TOpenSSL_C_LONG; parg: Pointer): TOpenSSL_C_LONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_ctrl');
-end;
-
-function ERROR_SSL_CTX_ctrl(ctx: PSSL_CTX; cmd: TOpenSSL_C_INT; larg: TOpenSSL_C_LONG; parg: Pointer): TOpenSSL_C_LONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_ctrl');
-end;
-
-function ERROR_SSL_CTX_callback_ctrl(v1: PSSL_CTX; v2: TOpenSSL_C_INT; v3: SSL_CTX_callback_ctrl_v3): TOpenSSL_C_LONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_callback_ctrl');
-end;
-
-function ERROR_SSL_get_early_data_status(const s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_early_data_status');
-end;
-
-function ERROR_SSL_get_error(const s: PSSL; ret_code: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_error');
-end;
-
-function ERROR_SSL_get_version(const s: PSSL): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_version');
-end;
-
-function ERROR_SSL_CTX_set_ssl_version(ctx: PSSL_CTX; const meth: PSSL_METHOD): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_ssl_version');
-end;
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_TLS_method: PSSL_METHOD; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('TLS_method');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_TLS_server_method: PSSL_METHOD; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('TLS_server_method');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_TLS_client_method: PSSL_METHOD; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('TLS_client_method');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-function ERROR_SSL_do_handshake(s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_do_handshake');
-end;
-
-function ERROR_SSL_key_update(s: PSSL; updatetype: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_key_update');
-end;
-
-function ERROR_SSL_get_key_update_type(const s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_key_update_type');
-end;
-
-function ERROR_SSL_renegotiate(s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_renegotiate');
-end;
-
-function ERROR_SSL_renegotiate_abbreviated(s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_renegotiate_abbreviated');
-end;
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_new_session_ticket(s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_new_session_ticket');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-function ERROR_SSL_shutdown(s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_shutdown');
-end;
-
-procedure ERROR_SSL_CTX_set_post_handshake_auth(ctx: PSSL_CTX; val: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_post_handshake_auth');
-end;
-
-procedure ERROR_SSL_set_post_handshake_auth(s: PSSL; val: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_post_handshake_auth');
-end;
-
-function ERROR_SSL_renegotiate_pending(const s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_renegotiate_pending');
-end;
-
-function ERROR_SSL_verify_client_post_handshake(s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_verify_client_post_handshake');
-end;
-
-function ERROR_SSL_CTX_get_ssl_method(const ctx: PSSL_CTX): PSSL_METHOD; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_ssl_method');
-end;
-
-function ERROR_SSL_get_ssl_method(const s: PSSL): PSSL_METHOD; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_ssl_method');
-end;
-
-function ERROR_SSL_set_ssl_method(s: PSSL; const method: PSSL_METHOD): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_ssl_method');
-end;
-
-function ERROR_SSL_alert_type_string_long(value: TOpenSSL_C_INT): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_alert_type_string_long');
-end;
-
-function ERROR_SSL_alert_type_string(value: TOpenSSL_C_INT): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_alert_type_string');
-end;
-
-function ERROR_SSL_alert_desc_string_long(value: TOpenSSL_C_INT): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_alert_desc_string_long');
-end;
-
-function ERROR_SSL_alert_desc_string(value: TOpenSSL_C_INT): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_alert_desc_string');
-end;
-
-procedure ERROR_SSL_CTX_set_client_CA_list(ctx: PSSL_CTX; name_list: PSTACK_OF_X509_NAME); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_client_CA_list');
-end;
-
-function ERROR_SSL_add_client_CA(ssl: PSSL; x: PX509): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_add_client_CA');
-end;
-
-function ERROR_SSL_CTX_add_client_CA(ctx: PSSL_CTX; x: PX509): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_add_client_CA');
-end;
-
-procedure ERROR_SSL_set_connect_state(s: PSSL); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_connect_state');
-end;
-
-procedure ERROR_SSL_set_accept_state(s: PSSL); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_accept_state');
-end;
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_SSL_library_init: TOpenSSL_C_INT; cdecl; {removed 1.1.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_library_init');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-function ERROR_SSL_CIPHER_description(cipher: PSSL_CIPHER; buf: PAnsiChar; size_ :TOpenSSL_C_INT): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_description');
-end;
-
-function ERROR_SSL_dup(ssl: PSSL): PSSL; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_dup');
-end;
-
-function ERROR_SSL_get_certificate(const ssl: PSSL): PX509; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_certificate');
-end;
-
-function ERROR_SSL_get_privatekey(const ssl: PSSL): PEVP_PKEY; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_privatekey');
-end;
-
-function ERROR_SSL_CTX_get0_certificate(const ctx: PSSL_CTX): PX509; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get0_certificate');
-end;
-
-function ERROR_SSL_CTX_get0_privatekey(const ctx: PSSL_CTX): PEVP_PKEY; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get0_privatekey');
-end;
-
-procedure ERROR_SSL_CTX_set_quiet_shutdown(ctx: PSSL_CTX; mode: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_quiet_shutdown');
-end;
-
-function ERROR_SSL_CTX_get_quiet_shutdown(const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_quiet_shutdown');
-end;
-
-procedure ERROR_SSL_set_quiet_shutdown(ssl: PSSL; mode: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_quiet_shutdown');
-end;
-
-function ERROR_SSL_get_quiet_shutdown(const ssl: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_quiet_shutdown');
-end;
-
-procedure ERROR_SSL_set_shutdown(ssl: PSSL; mode: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_shutdown');
-end;
-
-function ERROR_SSL_get_shutdown(const ssl: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_shutdown');
-end;
-
-function ERROR_SSL_version(const ssl: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_version');
-end;
-
-function ERROR_SSL_client_version(const s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_client_version');
-end;
-
-function ERROR_SSL_CTX_set_default_verify_paths(ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_default_verify_paths');
-end;
-
-function ERROR_SSL_CTX_set_default_verify_dir(ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_default_verify_dir');
-end;
-
-function ERROR_SSL_CTX_set_default_verify_file(ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_default_verify_file');
-end;
-
-function ERROR_SSL_CTX_load_verify_locations(ctx: PSSL_CTX; const CAfile: PAnsiChar; const CApath: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_load_verify_locations');
-end;
-
-function ERROR_SSL_get_session(const ssl: PSSL): PSSL_SESSION; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_session');
-end;
-
-function ERROR_SSL_get1_session(ssl: PSSL): PSSL_SESSION; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get1_session');
-end;
-
-function ERROR_SSL_get_SSL_CTX(const ssl: PSSL): PSSL_CTX; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_SSL_CTX');
-end;
-
-function ERROR_SSL_set_SSL_CTX(ssl: PSSL; ctx: PSSL_CTX): PSSL_CTX; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_SSL_CTX');
-end;
-
-procedure ERROR_SSL_set_info_callback(ssl: PSSL; cb: SSL_info_callback); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_info_callback');
-end;
-
-function ERROR_SSL_get_info_callback(const ssl: PSSL): SSL_info_callback; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_info_callback');
-end;
-
-function ERROR_SSL_get_state(const ssl: PSSL): OSSL_HANDSHAKE_STATE; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_state');
-end;
-
-procedure ERROR_SSL_set_verify_result(ssl: PSSL; v: TOpenSSL_C_LONG); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_verify_result');
-end;
-
-function ERROR_SSL_get_verify_result(const ssl: PSSL): TOpenSSL_C_LONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_verify_result');
-end;
-
-function ERROR_SSL_get_client_random(const ssl: PSSL; out_: PByte; outlen: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_client_random');
-end;
-
-function ERROR_SSL_get_server_random(const ssl: PSSL; out_: PByte; outlen: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_server_random');
-end;
-
-function ERROR_SSL_SESSION_get_master_key(const sess: PSSL_SESSION; out_: PByte; outlen: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get_master_key');
-end;
-
-function ERROR_SSL_SESSION_set1_master_key(sess: PSSL_SESSION; const in_: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set1_master_key');
-end;
-
-function ERROR_SSL_SESSION_get_max_fragment_length(const sess: PSSL_SESSION): TOpenSSL_C_UINT8; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get_max_fragment_length');
-end;
-
-function ERROR_SSL_set_ex_data(ssl: PSSL; idx: TOpenSSL_C_INT; data: Pointer): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_ex_data');
-end;
-
-function ERROR_SSL_get_ex_data(const ssl: PSSL; idx: TOpenSSL_C_INT): Pointer; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_ex_data');
-end;
-
-function ERROR_SSL_SESSION_set_ex_data(ss: PSSL_SESSION; idx: TOpenSSL_C_INT; data: Pointer): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set_ex_data');
-end;
-
-function ERROR_SSL_SESSION_get_ex_data(const ss: PSSL_SESSION; idx: TOpenSSL_C_INT): Pointer; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get_ex_data');
-end;
-
-function ERROR_SSL_CTX_set_ex_data(ssl: PSSL_CTX; idx: TOpenSSL_C_INT; data: Pointer): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_ex_data');
-end;
-
-function ERROR_SSL_CTX_get_ex_data(const ssl: PSSL_CTX; idx: TOpenSSL_C_INT): Pointer; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_ex_data');
-end;
-
-function ERROR_SSL_get_ex_data_X509_STORE_CTX_idx: TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_ex_data_X509_STORE_CTX_idx');
-end;
-
-procedure ERROR_SSL_CTX_set_default_read_buffer_len(ctx: PSSL_CTX; len: TOpenSSL_C_SIZET); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_default_read_buffer_len');
-end;
-
-procedure ERROR_SSL_set_default_read_buffer_len(s: PSSL; len: TOpenSSL_C_SIZET); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_default_read_buffer_len');
-end;
-
-procedure ERROR_SSL_CTX_set_tmp_dh_callback(ctx: PSSL_CTX; dh: SSL_CTX_set_tmp_dh_callback_dh); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_tmp_dh_callback');
-end;
-
-procedure ERROR_SSL_set_tmp_dh_callback(ssl: PSSL; dh: SSL_set_tmp_dh_callback_dh); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_tmp_dh_callback');
-end;
-
-function ERROR_SSL_CIPHER_find(ssl: PSSL; const ptr: PByte): PSSL_CIPHER; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_find');
-end;
-
-function ERROR_SSL_CIPHER_get_cipher_nid(const c: PSSL_CIPHEr): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_get_cipher_nid');
-end;
-
-function ERROR_SSL_CIPHER_get_digest_nid(const c: PSSL_CIPHEr): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_get_digest_nid');
-end;
-
-function ERROR_SSL_set_session_ticket_ext(s: PSSL; ext_data: Pointer; ext_len: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_session_ticket_ext');
-end;
-
-function ERROR_SSL_set_session_ticket_ext_cb(s: PSSL; cb: tls_session_ticket_ext_cb_fn; arg: Pointer): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_session_ticket_ext_cb');
-end;
-
-procedure ERROR_SSL_CTX_set_not_resumable_session_callback(ctx: PSSL_CTX; cb: SSL_CTX_set_not_resumable_session_callback_cb); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_not_resumable_session_callback');
-end;
-
-procedure ERROR_SSL_set_not_resumable_session_callback(ssl: PSSL; cb: SSL_set_not_resumable_session_callback_cb); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_not_resumable_session_callback');
-end;
-
-procedure ERROR_SSL_CTX_set_record_padding_callback(ctx: PSSL_CTX; cb: SSL_CTX_set_record_padding_callback_cb); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_record_padding_callback');
-end;
-
-procedure ERROR_SSL_CTX_set_record_padding_callback_arg(ctx: PSSL_CTX; arg: Pointer); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_record_padding_callback_arg');
-end;
-
-function ERROR_SSL_CTX_get_record_padding_callback_arg(const ctx: PSSL_CTX): Pointer; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_record_padding_callback_arg');
-end;
-
-function ERROR_SSL_CTX_set_block_padding(ctx: PSSL_CTX; block_size: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_block_padding');
-end;
-
-procedure ERROR_SSL_set_record_padding_callback(ssl: PSSL; cb: SSL_set_record_padding_callback_cb); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_record_padding_callback');
-end;
-
-procedure ERROR_SSL_set_record_padding_callback_arg(ssl: PSSL; arg: Pointer); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_record_padding_callback_arg');
-end;
-
-function ERROR_SSL_get_record_padding_callback_arg(const ssl: PSSL): Pointer; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_record_padding_callback_arg');
-end;
-
-function ERROR_SSL_set_block_padding(ssl: PSSL; block_size: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_block_padding');
-end;
-
-function ERROR_SSL_set_num_tickets(s: PSSL; num_tickets: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_num_tickets');
-end;
-
-function ERROR_SSL_get_num_tickets(const s: PSSL): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_num_tickets');
-end;
-
-function ERROR_SSL_CTX_set_num_tickets(ctx: PSSL_CTX; num_tickets: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_num_tickets');
-end;
-
-function ERROR_SSL_CTX_get_num_tickets(const ctx: PSSL_CTX): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_num_tickets');
-end;
-
-function ERROR_SSL_session_reused(const s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_session_reused');
-end;
-
-function ERROR_SSL_is_server(const s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_is_server');
-end;
-
-function ERROR_SSL_CONF_CTX_new: PSSL_CONF_CTX; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_CTX_new');
-end;
-
-function ERROR_SSL_CONF_CTX_finish(cctx: PSSL_CONF_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_CTX_finish');
-end;
-
-procedure ERROR_SSL_CONF_CTX_free(cctx: PSSL_CONF_CTX); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_CTX_free');
-end;
-
-function ERROR_SSL_CONF_CTX_set_flags(cctx: PSSL_CONF_CTX; flags: TOpenSSL_C_UINT): TOpenSSL_C_UINT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_CTX_set_flags');
-end;
-
-function ERROR_SSL_CONF_CTX_clear_flags(cctx: PSSL_CONF_CTX; flags: TOpenSSL_C_UINT): TOpenSSL_C_UINT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_CTX_clear_flags');
-end;
-
-function ERROR_SSL_CONF_CTX_set1_prefix(cctx: PSSL_CONF_CTX; const pre: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_CTX_set1_prefix');
-end;
-
-function ERROR_SSL_CONF_cmd(cctx: PSSL_CONF_CTX; const cmd: PAnsiChar; const value: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_cmd');
-end;
-
-function ERROR_SSL_CONF_cmd_argv(cctx: PSSL_CONF_CTX; pargc: POpenSSL_C_INT; pargv: PPPAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_cmd_argv');
-end;
-
-function ERROR_SSL_CONF_cmd_value_type(cctx: PSSL_CONF_CTX; const cmd: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_cmd_value_type');
-end;
-
-procedure ERROR_SSL_CONF_CTX_set_ssl(cctx: PSSL_CONF_CTX; ssl: PSSL); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_CTX_set_ssl');
-end;
-
-procedure ERROR_SSL_CONF_CTX_set_ssl_ctx(cctx: PSSL_CONF_CTX; ctx: PSSL_CTX); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_CTX_set_ssl_ctx');
-end;
-
-procedure ERROR_SSL_add_ssl_module; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_add_ssl_module');
-end;
-
-function ERROR_SSL_config(s: PSSL; const name: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_config');
-end;
-
-function ERROR_SSL_CTX_config(ctx: PSSL_CTX; const name: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_config');
-end;
-
-function ERROR_DTLSv1_listen(s: PSSL; client: PBIO_ADDr): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DTLSv1_listen');
-end;
-
-function ERROR_SSL_enable_ct(s: PSSL; validation_mode: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_enable_ct');
-end;
-
-function ERROR_SSL_CTX_enable_ct(ctx: PSSL_CTX; validation_mode: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_enable_ct');
-end;
-
-function ERROR_SSL_ct_is_enabled(const s: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_ct_is_enabled');
-end;
-
-function ERROR_SSL_CTX_ct_is_enabled(const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_ct_is_enabled');
-end;
-
-function ERROR_SSL_CTX_set_default_ctlog_list_file(ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_default_ctlog_list_file');
-end;
-
-function ERROR_SSL_CTX_set_ctlog_list_file(ctx: PSSL_CTX; const path: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_ctlog_list_file');
-end;
-
-procedure ERROR_SSL_CTX_set0_ctlog_store(ctx: PSSL_CTX; logs: PCTLOG_STORE); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set0_ctlog_store');
-end;
-
-procedure ERROR_SSL_set_security_level(s: PSSL; level: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_security_level');
-end;
-
-procedure ERROR_SSL_set_security_callback(s: PSSL; cb: SSL_security_callback); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_security_callback');
-end;
-
-function ERROR_SSL_get_security_callback(const s: PSSL): SSL_security_callback; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_security_callback');
-end;
-
-procedure ERROR_SSL_set0_security_ex_data(s: PSSL; ex: Pointer); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set0_security_ex_data');
-end;
-
-function ERROR_SSL_get0_security_ex_data(const s: PSSL): Pointer; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_security_ex_data');
-end;
-
-procedure ERROR_SSL_CTX_set_security_level(ctx: PSSL_CTX; level: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_security_level');
-end;
-
-function ERROR_SSL_CTX_get_security_level(const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_security_level');
-end;
-
-function ERROR_SSL_CTX_get0_security_ex_data(const ctx: PSSL_CTX): Pointer; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get0_security_ex_data');
-end;
-
-procedure ERROR_SSL_CTX_set0_security_ex_data(ctx: PSSL_CTX; ex: Pointer); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set0_security_ex_data');
-end;
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_OPENSSL_init_ssl(opts: TOpenSSL_C_UINT64; const settings: POPENSSL_INIT_SETTINGS): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_init_ssl');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-function ERROR_SSL_free_buffers(ssl: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_free_buffers');
-end;
-
-function ERROR_SSL_alloc_buffers(ssl: PSSL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_alloc_buffers');
-end;
-
-function ERROR_SSL_CTX_set_session_ticket_cb(ctx: PSSL_CTX; gen_cb: SSL_CTX_generate_session_ticket_fn; dec_cb: SSL_CTX_decrypt_session_ticket_fn; arg: Pointer): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_session_ticket_cb');
-end;
-
-function ERROR_SSL_SESSION_set1_ticket_appdata(ss: PSSL_SESSION; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set1_ticket_appdata');
-end;
-
-function ERROR_SSL_SESSION_get0_ticket_appdata(ss: PSSL_SESSION; data: PPointer; len: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get0_ticket_appdata');
-end;
-
-procedure ERROR_DTLS_set_timer_cb(s: PSSL; cb: DTLS_timer_cb); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DTLS_set_timer_cb');
-end;
-
-procedure ERROR_SSL_CTX_set_allow_early_data_cb(ctx: PSSL_CTX; cb: SSL_allow_early_data_cb_fN; arg: Pointer); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_allow_early_data_cb');
-end;
-
-procedure ERROR_SSL_set_allow_early_data_cb(s: PSSL; cb: SSL_allow_early_data_cb_fN; arg: Pointer); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_allow_early_data_cb');
-end;
-
-function ERROR_SSL_get0_peer_certificate(const s: PSSL): PX509; cdecl; {introduced 3.3.0 }
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_peer_certificate');
-end;
-
-function ERROR_SSL_get1_peer_certificate(const s: PSSL): PX509; cdecl; {introduced 3.3.0 }
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get1_peer_certificate');
-end;
-
-{$WARN  NO_RETVAL ON}
-procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
-var FuncLoadError: boolean;
-begin
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_SSL_CTX_set_mode(ctx: PSSL_CTX; op: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_set_mode := LoadLibSSLFunction('SSL_CTX_set_mode');
-  FuncLoadError := not assigned(SSL_CTX_set_mode);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set_mode) then
     SSL_CTX_set_mode := @COMPAT_SSL_CTX_set_mode;
-    if SSL_CTX_set_mode_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_set_mode');
-  end;
+  Result := SSL_CTX_set_mode(ctx,op);
+end;
 
+function Load_SSL_CTX_clear_mode(ctx: PSSL_CTX; op: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_clear_mode := LoadLibSSLFunction('SSL_CTX_clear_mode');
-  FuncLoadError := not assigned(SSL_CTX_clear_mode);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_clear_mode) then
     SSL_CTX_clear_mode := @COMPAT_SSL_CTX_clear_mode;
-    if SSL_CTX_clear_mode_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_clear_mode');
-  end;
+  Result := SSL_CTX_clear_mode(ctx,op);
+end;
 
+function Load_SSL_CTX_sess_set_cache_size(ctx: PSSL_CTX; t: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_sess_set_cache_size := LoadLibSSLFunction('SSL_CTX_sess_set_cache_size');
-  FuncLoadError := not assigned(SSL_CTX_sess_set_cache_size);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_sess_set_cache_size) then
     SSL_CTX_sess_set_cache_size := @COMPAT_SSL_CTX_sess_set_cache_size;
-    if SSL_CTX_sess_set_cache_size_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_sess_set_cache_size');
-  end;
+  Result := SSL_CTX_sess_set_cache_size(ctx,t);
+end;
 
+function Load_SSL_CTX_sess_get_cache_size(ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_sess_get_cache_size := LoadLibSSLFunction('SSL_CTX_sess_get_cache_size');
-  FuncLoadError := not assigned(SSL_CTX_sess_get_cache_size);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_sess_get_cache_size) then
     SSL_CTX_sess_get_cache_size := @COMPAT_SSL_CTX_sess_get_cache_size;
-    if SSL_CTX_sess_get_cache_size_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_sess_get_cache_size');
-  end;
+  Result := SSL_CTX_sess_get_cache_size(ctx);
+end;
 
+function Load_SSL_CTX_set_session_cache_mode(ctx: PSSL_CTX; m: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_set_session_cache_mode := LoadLibSSLFunction('SSL_CTX_set_session_cache_mode');
-  FuncLoadError := not assigned(SSL_CTX_set_session_cache_mode);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set_session_cache_mode) then
     SSL_CTX_set_session_cache_mode := @COMPAT_SSL_CTX_set_session_cache_mode;
-    if SSL_CTX_set_session_cache_mode_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_set_session_cache_mode');
-  end;
+  Result := SSL_CTX_set_session_cache_mode(ctx,m);
+end;
 
+function Load_SSL_CTX_get_session_cache_mode(ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_get_session_cache_mode := LoadLibSSLFunction('SSL_CTX_get_session_cache_mode');
-  FuncLoadError := not assigned(SSL_CTX_get_session_cache_mode);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_get_session_cache_mode) then
     SSL_CTX_get_session_cache_mode := @COMPAT_SSL_CTX_get_session_cache_mode;
-    if SSL_CTX_get_session_cache_mode_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_get_session_cache_mode');
-  end;
+  Result := SSL_CTX_get_session_cache_mode(ctx);
+end;
 
+function Load_SSL_clear_num_renegotiations(ssl: PSSL): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_clear_num_renegotiations := LoadLibSSLFunction('SSL_clear_num_renegotiations');
-  FuncLoadError := not assigned(SSL_clear_num_renegotiations);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_clear_num_renegotiations) then
     SSL_clear_num_renegotiations := @COMPAT_SSL_clear_num_renegotiations;
-    if SSL_clear_num_renegotiations_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_clear_num_renegotiations');
-  end;
+  Result := SSL_clear_num_renegotiations(ssl);
+end;
 
+function Load_SSL_total_renegotiations(ssl: PSSL): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_total_renegotiations := LoadLibSSLFunction('SSL_total_renegotiations');
-  FuncLoadError := not assigned(SSL_total_renegotiations);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_total_renegotiations) then
     SSL_total_renegotiations := @COMPAT_SSL_total_renegotiations;
-    if SSL_total_renegotiations_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_total_renegotiations');
-  end;
+  Result := SSL_total_renegotiations(ssl);
+end;
 
+function Load_SSL_CTX_set_tmp_dh(ctx: PSSL_CTX; dh: PDH): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_set_tmp_dh := LoadLibSSLFunction('SSL_CTX_set_tmp_dh');
-  FuncLoadError := not assigned(SSL_CTX_set_tmp_dh);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set_tmp_dh) then
     SSL_CTX_set_tmp_dh := @COMPAT_SSL_CTX_set_tmp_dh;
-    if SSL_CTX_set_tmp_dh_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_set_tmp_dh');
-  end;
+  Result := SSL_CTX_set_tmp_dh(ctx,dh);
+end;
 
+function Load_SSL_CTX_set_tmp_ecdh(ctx: PSSL_CTX; ecdh: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_set_tmp_ecdh := LoadLibSSLFunction('SSL_CTX_set_tmp_ecdh');
-  FuncLoadError := not assigned(SSL_CTX_set_tmp_ecdh);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set_tmp_ecdh) then
     SSL_CTX_set_tmp_ecdh := @COMPAT_SSL_CTX_set_tmp_ecdh;
-    if SSL_CTX_set_tmp_ecdh_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_set_tmp_ecdh');
-  end;
+  Result := SSL_CTX_set_tmp_ecdh(ctx,ecdh);
+end;
 
+function Load_SSL_CTX_set_dh_auto(ctx: PSSL_CTX; onoff: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_set_dh_auto := LoadLibSSLFunction('SSL_CTX_set_dh_auto');
-  FuncLoadError := not assigned(SSL_CTX_set_dh_auto);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set_dh_auto) then
     SSL_CTX_set_dh_auto := @COMPAT_SSL_CTX_set_dh_auto;
-    if SSL_CTX_set_dh_auto_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_set_dh_auto');
-  end;
+  Result := SSL_CTX_set_dh_auto(ctx,onoff);
+end;
 
+function Load_SSL_set_dh_auto(s: PSSL; onoff: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_set_dh_auto := LoadLibSSLFunction('SSL_set_dh_auto');
-  FuncLoadError := not assigned(SSL_set_dh_auto);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_set_dh_auto) then
     SSL_set_dh_auto := @COMPAT_SSL_set_dh_auto;
-    if SSL_set_dh_auto_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_set_dh_auto');
-  end;
+  Result := SSL_set_dh_auto(s,onoff);
+end;
 
+function Load_SSL_set_tmp_dh(ssl: PSSL; dh: PDH): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_set_tmp_dh := LoadLibSSLFunction('SSL_set_tmp_dh');
-  FuncLoadError := not assigned(SSL_set_tmp_dh);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_set_tmp_dh) then
     SSL_set_tmp_dh := @COMPAT_SSL_set_tmp_dh;
-    if SSL_set_tmp_dh_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_set_tmp_dh');
-  end;
+  Result := SSL_set_tmp_dh(ssl,dh);
+end;
 
+function Load_SSL_set_tmp_ecdh(ssl: PSSL; ecdh: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_set_tmp_ecdh := LoadLibSSLFunction('SSL_set_tmp_ecdh');
-  FuncLoadError := not assigned(SSL_set_tmp_ecdh);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_set_tmp_ecdh) then
     SSL_set_tmp_ecdh := @COMPAT_SSL_set_tmp_ecdh;
-    if SSL_set_tmp_ecdh_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_set_tmp_ecdh');
-  end;
+  Result := SSL_set_tmp_ecdh(ssl,ecdh);
+end;
 
+function Load_SSL_CTX_add_extra_chain_cert(ctx: PSSL_CTX; x509: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_add_extra_chain_cert := LoadLibSSLFunction('SSL_CTX_add_extra_chain_cert');
-  FuncLoadError := not assigned(SSL_CTX_add_extra_chain_cert);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_add_extra_chain_cert) then
     SSL_CTX_add_extra_chain_cert := @COMPAT_SSL_CTX_add_extra_chain_cert;
-    if SSL_CTX_add_extra_chain_cert_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_add_extra_chain_cert');
-  end;
+  Result := SSL_CTX_add_extra_chain_cert(ctx,x509);
+end;
 
+function Load_SSL_CTX_get_extra_chain_certs(ctx: PSSL_CTX; px509: Pointer): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_get_extra_chain_certs := LoadLibSSLFunction('SSL_CTX_get_extra_chain_certs');
-  FuncLoadError := not assigned(SSL_CTX_get_extra_chain_certs);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_get_extra_chain_certs) then
     SSL_CTX_get_extra_chain_certs := @COMPAT_SSL_CTX_get_extra_chain_certs;
-    if SSL_CTX_get_extra_chain_certs_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_get_extra_chain_certs');
-  end;
+  Result := SSL_CTX_get_extra_chain_certs(ctx,px509);
+end;
 
+function Load_SSL_CTX_get_extra_chain_certs_only(ctx: PSSL_CTX; px509: Pointer): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_get_extra_chain_certs_only := LoadLibSSLFunction('SSL_CTX_get_extra_chain_certs_only');
-  FuncLoadError := not assigned(SSL_CTX_get_extra_chain_certs_only);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_get_extra_chain_certs_only) then
     SSL_CTX_get_extra_chain_certs_only := @COMPAT_SSL_CTX_get_extra_chain_certs_only;
-    if SSL_CTX_get_extra_chain_certs_only_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_get_extra_chain_certs_only');
-  end;
+  Result := SSL_CTX_get_extra_chain_certs_only(ctx,px509);
+end;
 
+function Load_SSL_CTX_clear_extra_chain_certs(ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_clear_extra_chain_certs := LoadLibSSLFunction('SSL_CTX_clear_extra_chain_certs');
-  FuncLoadError := not assigned(SSL_CTX_clear_extra_chain_certs);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_clear_extra_chain_certs) then
     SSL_CTX_clear_extra_chain_certs := @COMPAT_SSL_CTX_clear_extra_chain_certs;
-    if SSL_CTX_clear_extra_chain_certs_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_clear_extra_chain_certs');
-  end;
+  Result := SSL_CTX_clear_extra_chain_certs(ctx);
+end;
 
+function Load_SSL_CTX_set0_chain(ctx: PSSL_CTX; sk: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_set0_chain := LoadLibSSLFunction('SSL_CTX_set0_chain');
-  FuncLoadError := not assigned(SSL_CTX_set0_chain);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set0_chain) then
     SSL_CTX_set0_chain := @COMPAT_SSL_CTX_set0_chain;
-    if SSL_CTX_set0_chain_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_set0_chain');
-  end;
+  Result := SSL_CTX_set0_chain(ctx,sk);
+end;
 
+function Load_SSL_CTX_set1_chain(ctx: PSSL_CTX; sk: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_set1_chain := LoadLibSSLFunction('SSL_CTX_set1_chain');
-  FuncLoadError := not assigned(SSL_CTX_set1_chain);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set1_chain) then
     SSL_CTX_set1_chain := @COMPAT_SSL_CTX_set1_chain;
-    if SSL_CTX_set1_chain_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_set1_chain');
-  end;
+  Result := SSL_CTX_set1_chain(ctx,sk);
+end;
 
+function Load_SSL_CTX_add0_chain_cert(ctx: PSSL_CTX; x509: PX509): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_add0_chain_cert := LoadLibSSLFunction('SSL_CTX_add0_chain_cert');
-  FuncLoadError := not assigned(SSL_CTX_add0_chain_cert);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_add0_chain_cert) then
     SSL_CTX_add0_chain_cert := @COMPAT_SSL_CTX_add0_chain_cert;
-    if SSL_CTX_add0_chain_cert_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_add0_chain_cert');
-  end;
+  Result := SSL_CTX_add0_chain_cert(ctx,x509);
+end;
 
+function Load_SSL_CTX_add1_chain_cert(ctx: PSSL_CTX; x509: PX509): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_add1_chain_cert := LoadLibSSLFunction('SSL_CTX_add1_chain_cert');
-  FuncLoadError := not assigned(SSL_CTX_add1_chain_cert);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_add1_chain_cert) then
     SSL_CTX_add1_chain_cert := @COMPAT_SSL_CTX_add1_chain_cert;
-    if SSL_CTX_add1_chain_cert_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_add1_chain_cert');
-  end;
+  Result := SSL_CTX_add1_chain_cert(ctx,x509);
+end;
 
+function Load_SSL_CTX_get0_chain_certs(ctx: PSSL_CTX; px509: Pointer): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_get0_chain_certs := LoadLibSSLFunction('SSL_CTX_get0_chain_certs');
-  FuncLoadError := not assigned(SSL_CTX_get0_chain_certs);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_get0_chain_certs) then
     SSL_CTX_get0_chain_certs := @COMPAT_SSL_CTX_get0_chain_certs;
-    if SSL_CTX_get0_chain_certs_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_get0_chain_certs');
-  end;
+  Result := SSL_CTX_get0_chain_certs(ctx,px509);
+end;
 
+function Load_SSL_CTX_clear_chain_certs(ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_clear_chain_certs := LoadLibSSLFunction('SSL_CTX_clear_chain_certs');
-  FuncLoadError := not assigned(SSL_CTX_clear_chain_certs);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_clear_chain_certs) then
     SSL_CTX_clear_chain_certs := @COMPAT_SSL_CTX_clear_chain_certs;
-    if SSL_CTX_clear_chain_certs_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_clear_chain_certs');
-  end;
+  Result := SSL_CTX_clear_chain_certs(ctx);
+end;
 
+function Load_SSL_CTX_build_cert_chain(ctx: PSSL_CTX; flags: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_build_cert_chain := LoadLibSSLFunction('SSL_CTX_build_cert_chain');
-  FuncLoadError := not assigned(SSL_CTX_build_cert_chain);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_build_cert_chain) then
     SSL_CTX_build_cert_chain := @COMPAT_SSL_CTX_build_cert_chain;
-    if SSL_CTX_build_cert_chain_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_build_cert_chain');
-  end;
+  Result := SSL_CTX_build_cert_chain(ctx,flags);
+end;
 
+function Load_SSL_CTX_select_current_cert(ctx: PSSL_CTX; x509: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_select_current_cert := LoadLibSSLFunction('SSL_CTX_select_current_cert');
-  FuncLoadError := not assigned(SSL_CTX_select_current_cert);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_select_current_cert) then
     SSL_CTX_select_current_cert := @COMPAT_SSL_CTX_select_current_cert;
-    if SSL_CTX_select_current_cert_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_select_current_cert');
-  end;
+  Result := SSL_CTX_select_current_cert(ctx,x509);
+end;
 
+function Load_SSL_CTX_set_current_cert(ctx: PSSL_CTX; op: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_set_current_cert := LoadLibSSLFunction('SSL_CTX_set_current_cert');
-  FuncLoadError := not assigned(SSL_CTX_set_current_cert);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set_current_cert) then
     SSL_CTX_set_current_cert := @COMPAT_SSL_CTX_set_current_cert;
-    if SSL_CTX_set_current_cert_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_set_current_cert');
-  end;
+  Result := SSL_CTX_set_current_cert(ctx,op);
+end;
 
+function Load_SSL_CTX_set0_verify_cert_store(ctx: PSSL_CTX; st: Pointer): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_set0_verify_cert_store := LoadLibSSLFunction('SSL_CTX_set0_verify_cert_store');
-  FuncLoadError := not assigned(SSL_CTX_set0_verify_cert_store);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set0_verify_cert_store) then
     SSL_CTX_set0_verify_cert_store := @COMPAT_SSL_CTX_set0_verify_cert_store;
-    if SSL_CTX_set0_verify_cert_store_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_set0_verify_cert_store');
-  end;
+  Result := SSL_CTX_set0_verify_cert_store(ctx,st);
+end;
 
+function Load_SSL_CTX_set1_verify_cert_store(ctx: PSSL_CTX; st: Pointer): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_set1_verify_cert_store := LoadLibSSLFunction('SSL_CTX_set1_verify_cert_store');
-  FuncLoadError := not assigned(SSL_CTX_set1_verify_cert_store);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set1_verify_cert_store) then
     SSL_CTX_set1_verify_cert_store := @COMPAT_SSL_CTX_set1_verify_cert_store;
-    if SSL_CTX_set1_verify_cert_store_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_set1_verify_cert_store');
-  end;
+  Result := SSL_CTX_set1_verify_cert_store(ctx,st);
+end;
 
+function Load_SSL_CTX_set0_chain_cert_store(ctx: PSSL_CTX; st: Pointer): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_set0_chain_cert_store := LoadLibSSLFunction('SSL_CTX_set0_chain_cert_store');
-  FuncLoadError := not assigned(SSL_CTX_set0_chain_cert_store);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set0_chain_cert_store) then
     SSL_CTX_set0_chain_cert_store := @COMPAT_SSL_CTX_set0_chain_cert_store;
-    if SSL_CTX_set0_chain_cert_store_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_set0_chain_cert_store');
-  end;
+  Result := SSL_CTX_set0_chain_cert_store(ctx,st);
+end;
 
+function Load_SSL_CTX_set1_chain_cert_store(ctx: PSSL_CTX; st: Pointer): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_set1_chain_cert_store := LoadLibSSLFunction('SSL_CTX_set1_chain_cert_store');
-  FuncLoadError := not assigned(SSL_CTX_set1_chain_cert_store);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set1_chain_cert_store) then
     SSL_CTX_set1_chain_cert_store := @COMPAT_SSL_CTX_set1_chain_cert_store;
-    if SSL_CTX_set1_chain_cert_store_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_set1_chain_cert_store');
-  end;
+  Result := SSL_CTX_set1_chain_cert_store(ctx,st);
+end;
 
+function Load_SSL_set0_chain(s: PSSL; sk: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_set0_chain := LoadLibSSLFunction('SSL_set0_chain');
-  FuncLoadError := not assigned(SSL_set0_chain);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_set0_chain) then
     SSL_set0_chain := @COMPAT_SSL_set0_chain;
-    if SSL_set0_chain_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_set0_chain');
-  end;
+  Result := SSL_set0_chain(s,sk);
+end;
 
+function Load_SSL_set1_chain(s: PSSL; sk: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_set1_chain := LoadLibSSLFunction('SSL_set1_chain');
-  FuncLoadError := not assigned(SSL_set1_chain);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_set1_chain) then
     SSL_set1_chain := @COMPAT_SSL_set1_chain;
-    if SSL_set1_chain_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_set1_chain');
-  end;
+  Result := SSL_set1_chain(s,sk);
+end;
 
+function Load_SSL_add0_chain_cert(s: PSSL; x509: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_add0_chain_cert := LoadLibSSLFunction('SSL_add0_chain_cert');
-  FuncLoadError := not assigned(SSL_add0_chain_cert);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_add0_chain_cert) then
     SSL_add0_chain_cert := @COMPAT_SSL_add0_chain_cert;
-    if SSL_add0_chain_cert_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_add0_chain_cert');
-  end;
+  Result := SSL_add0_chain_cert(s,x509);
+end;
 
+function Load_SSL_add1_chain_cert(s: PSSL; x509: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_add1_chain_cert := LoadLibSSLFunction('SSL_add1_chain_cert');
-  FuncLoadError := not assigned(SSL_add1_chain_cert);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_add1_chain_cert) then
     SSL_add1_chain_cert := @COMPAT_SSL_add1_chain_cert;
-    if SSL_add1_chain_cert_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_add1_chain_cert');
-  end;
+  Result := SSL_add1_chain_cert(s,x509);
+end;
 
+function Load_SSL_get0_chain_certs(s: PSSL; px509: Pointer): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_get0_chain_certs := LoadLibSSLFunction('SSL_get0_chain_certs');
-  FuncLoadError := not assigned(SSL_get0_chain_certs);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_get0_chain_certs) then
     SSL_get0_chain_certs := @COMPAT_SSL_get0_chain_certs;
-    if SSL_get0_chain_certs_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_get0_chain_certs');
-  end;
+  Result := SSL_get0_chain_certs(s,px509);
+end;
 
+function Load_SSL_clear_chain_certs(s: PSSL): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_clear_chain_certs := LoadLibSSLFunction('SSL_clear_chain_certs');
-  FuncLoadError := not assigned(SSL_clear_chain_certs);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_clear_chain_certs) then
     SSL_clear_chain_certs := @COMPAT_SSL_clear_chain_certs;
-    if SSL_clear_chain_certs_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_clear_chain_certs');
-  end;
+  Result := SSL_clear_chain_certs(s);
+end;
 
+function Load_SSL_build_cert_chain(s: PSSL; flags: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_build_cert_chain := LoadLibSSLFunction('SSL_build_cert_chain');
-  FuncLoadError := not assigned(SSL_build_cert_chain);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_build_cert_chain) then
     SSL_build_cert_chain := @COMPAT_SSL_build_cert_chain;
-    if SSL_build_cert_chain_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_build_cert_chain');
-  end;
+  Result := SSL_build_cert_chain(s,flags);
+end;
 
+function Load_SSL_select_current_cert(s: PSSL; x509: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_select_current_cert := LoadLibSSLFunction('SSL_select_current_cert');
-  FuncLoadError := not assigned(SSL_select_current_cert);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_select_current_cert) then
     SSL_select_current_cert := @COMPAT_SSL_select_current_cert;
-    if SSL_select_current_cert_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_select_current_cert');
-  end;
+  Result := SSL_select_current_cert(s,x509);
+end;
 
+function Load_SSL_set_current_cert(s: PSSL; op: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_set_current_cert := LoadLibSSLFunction('SSL_set_current_cert');
-  FuncLoadError := not assigned(SSL_set_current_cert);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_set_current_cert) then
     SSL_set_current_cert := @COMPAT_SSL_set_current_cert;
-    if SSL_set_current_cert_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_set_current_cert');
-  end;
+  Result := SSL_set_current_cert(s,op);
+end;
 
+function Load_SSL_set0_verify_cert_store(s: PSSL; st: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_set0_verify_cert_store := LoadLibSSLFunction('SSL_set0_verify_cert_store');
-  FuncLoadError := not assigned(SSL_set0_verify_cert_store);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_set0_verify_cert_store) then
     SSL_set0_verify_cert_store := @COMPAT_SSL_set0_verify_cert_store;
-    if SSL_set0_verify_cert_store_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_set0_verify_cert_store');
-  end;
+  Result := SSL_set0_verify_cert_store(s,st);
+end;
 
+function Load_SSL_set1_verify_cert_store(s: PSSL; st: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_set1_verify_cert_store := LoadLibSSLFunction('SSL_set1_verify_cert_store');
-  FuncLoadError := not assigned(SSL_set1_verify_cert_store);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_set1_verify_cert_store) then
     SSL_set1_verify_cert_store := @COMPAT_SSL_set1_verify_cert_store;
-    if SSL_set1_verify_cert_store_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_set1_verify_cert_store');
-  end;
+  Result := SSL_set1_verify_cert_store(s,st);
+end;
 
+function Load_SSL_set0_chain_cert_store(s: PSSL; st: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_set0_chain_cert_store := LoadLibSSLFunction('SSL_set0_chain_cert_store');
-  FuncLoadError := not assigned(SSL_set0_chain_cert_store);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_set0_chain_cert_store) then
     SSL_set0_chain_cert_store := @COMPAT_SSL_set0_chain_cert_store;
-    if SSL_set0_chain_cert_store_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_set0_chain_cert_store');
-  end;
+  Result := SSL_set0_chain_cert_store(s,st);
+end;
 
+function Load_SSL_set1_chain_cert_store(s: PSSL; st: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_set1_chain_cert_store := LoadLibSSLFunction('SSL_set1_chain_cert_store');
-  FuncLoadError := not assigned(SSL_set1_chain_cert_store);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_set1_chain_cert_store) then
     SSL_set1_chain_cert_store := @COMPAT_SSL_set1_chain_cert_store;
-    if SSL_set1_chain_cert_store_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_set1_chain_cert_store');
-  end;
+  Result := SSL_set1_chain_cert_store(s,st);
+end;
 
+function Load_SSL_get1_groups(s: PSSL; glist: POpenSSL_C_INT): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_get1_groups := LoadLibSSLFunction('SSL_get1_groups');
-  FuncLoadError := not assigned(SSL_get1_groups);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_get1_groups) then
     SSL_get1_groups := @COMPAT_SSL_get1_groups;
-    if SSL_get1_groups_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_get1_groups');
-  end;
+  Result := SSL_get1_groups(s,glist);
+end;
 
+function Load_SSL_CTX_set1_groups(ctx: PSSL_CTX; glist: PByte; glistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_set1_groups := LoadLibSSLFunction('SSL_CTX_set1_groups');
-  FuncLoadError := not assigned(SSL_CTX_set1_groups);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set1_groups) then
     SSL_CTX_set1_groups := @COMPAT_SSL_CTX_set1_groups;
-    if SSL_CTX_set1_groups_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_set1_groups');
-  end;
+  Result := SSL_CTX_set1_groups(ctx,glist,glistlen);
+end;
 
+function Load_SSL_CTX_set1_groups_list(ctx: PSSL_CTX; s: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_set1_groups_list := LoadLibSSLFunction('SSL_CTX_set1_groups_list');
-  FuncLoadError := not assigned(SSL_CTX_set1_groups_list);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set1_groups_list) then
     SSL_CTX_set1_groups_list := @COMPAT_SSL_CTX_set1_groups_list;
-    if SSL_CTX_set1_groups_list_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_set1_groups_list');
-  end;
+  Result := SSL_CTX_set1_groups_list(ctx,s);
+end;
 
+function Load_SSL_set1_groups(s: PSSL; glist: PByte; glistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_set1_groups := LoadLibSSLFunction('SSL_set1_groups');
-  FuncLoadError := not assigned(SSL_set1_groups);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_set1_groups) then
     SSL_set1_groups := @COMPAT_SSL_set1_groups;
-    if SSL_set1_groups_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_set1_groups');
-  end;
+  Result := SSL_set1_groups(s,glist,glistlen);
+end;
 
+function Load_SSL_set1_groups_list(s: PSSL; str: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_set1_groups_list := LoadLibSSLFunction('SSL_set1_groups_list');
-  FuncLoadError := not assigned(SSL_set1_groups_list);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_set1_groups_list) then
     SSL_set1_groups_list := @COMPAT_SSL_set1_groups_list;
-    if SSL_set1_groups_list_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_set1_groups_list');
-  end;
+  Result := SSL_set1_groups_list(s,str);
+end;
 
+function Load_SSL_get_shared_group(s: PSSL; n: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_get_shared_group := LoadLibSSLFunction('SSL_get_shared_group');
-  FuncLoadError := not assigned(SSL_get_shared_group);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_get_shared_group) then
     SSL_get_shared_group := @COMPAT_SSL_get_shared_group;
-    if SSL_get_shared_group_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_get_shared_group');
-  end;
+  Result := SSL_get_shared_group(s,n);
+end;
 
+function Load_SSL_CTX_set1_sigalgs(ctx: PSSL_CTX; slist: POpenSSL_C_INT; slistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_set1_sigalgs := LoadLibSSLFunction('SSL_CTX_set1_sigalgs');
-  FuncLoadError := not assigned(SSL_CTX_set1_sigalgs);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set1_sigalgs) then
     SSL_CTX_set1_sigalgs := @COMPAT_SSL_CTX_set1_sigalgs;
-    if SSL_CTX_set1_sigalgs_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_set1_sigalgs');
-  end;
+  Result := SSL_CTX_set1_sigalgs(ctx,slist,slistlen);
+end;
 
+function Load_SSL_CTX_set1_sigalgs_list(ctx: PSSL_CTX; s: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_set1_sigalgs_list := LoadLibSSLFunction('SSL_CTX_set1_sigalgs_list');
-  FuncLoadError := not assigned(SSL_CTX_set1_sigalgs_list);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set1_sigalgs_list) then
     SSL_CTX_set1_sigalgs_list := @COMPAT_SSL_CTX_set1_sigalgs_list;
-    if SSL_CTX_set1_sigalgs_list_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_set1_sigalgs_list');
-  end;
+  Result := SSL_CTX_set1_sigalgs_list(ctx,s);
+end;
 
+function Load_SSL_set1_sigalgs(s: PSSL; slist: POpenSSL_C_INT; slistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_set1_sigalgs := LoadLibSSLFunction('SSL_set1_sigalgs');
-  FuncLoadError := not assigned(SSL_set1_sigalgs);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_set1_sigalgs) then
     SSL_set1_sigalgs := @COMPAT_SSL_set1_sigalgs;
-    if SSL_set1_sigalgs_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_set1_sigalgs');
-  end;
+  Result := SSL_set1_sigalgs(s,slist,slistlen);
+end;
 
+function Load_SSL_set1_sigalgs_list(s: PSSL; str: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_set1_sigalgs_list := LoadLibSSLFunction('SSL_set1_sigalgs_list');
-  FuncLoadError := not assigned(SSL_set1_sigalgs_list);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_set1_sigalgs_list) then
     SSL_set1_sigalgs_list := @COMPAT_SSL_set1_sigalgs_list;
-    if SSL_set1_sigalgs_list_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_set1_sigalgs_list');
-  end;
+  Result := SSL_set1_sigalgs_list(s,str);
+end;
 
+function Load_SSL_CTX_set1_client_sigalgs(ctx: PSSL_CTX; slist: POpenSSL_C_INT; slistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_set1_client_sigalgs := LoadLibSSLFunction('SSL_CTX_set1_client_sigalgs');
-  FuncLoadError := not assigned(SSL_CTX_set1_client_sigalgs);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set1_client_sigalgs) then
     SSL_CTX_set1_client_sigalgs := @COMPAT_SSL_CTX_set1_client_sigalgs;
-    if SSL_CTX_set1_client_sigalgs_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_set1_client_sigalgs');
-  end;
+  Result := SSL_CTX_set1_client_sigalgs(ctx,slist,slistlen);
+end;
 
+function Load_SSL_CTX_set1_client_sigalgs_list(ctx: PSSL_CTX; s: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_set1_client_sigalgs_list := LoadLibSSLFunction('SSL_CTX_set1_client_sigalgs_list');
-  FuncLoadError := not assigned(SSL_CTX_set1_client_sigalgs_list);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set1_client_sigalgs_list) then
     SSL_CTX_set1_client_sigalgs_list := @COMPAT_SSL_CTX_set1_client_sigalgs_list;
-    if SSL_CTX_set1_client_sigalgs_list_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_set1_client_sigalgs_list');
-  end;
+  Result := SSL_CTX_set1_client_sigalgs_list(ctx,s);
+end;
 
+function Load_SSL_set1_client_sigalgs(s: PSSL; slist: POpenSSL_C_INT; slistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_set1_client_sigalgs := LoadLibSSLFunction('SSL_set1_client_sigalgs');
-  FuncLoadError := not assigned(SSL_set1_client_sigalgs);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_set1_client_sigalgs) then
     SSL_set1_client_sigalgs := @COMPAT_SSL_set1_client_sigalgs;
-    if SSL_set1_client_sigalgs_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_set1_client_sigalgs');
-  end;
+  Result := SSL_set1_client_sigalgs(s,slist,slistlen);
+end;
 
+function Load_SSL_set1_client_sigalgs_list(s: PSSL; str: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_set1_client_sigalgs_list := LoadLibSSLFunction('SSL_set1_client_sigalgs_list');
-  FuncLoadError := not assigned(SSL_set1_client_sigalgs_list);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_set1_client_sigalgs_list) then
     SSL_set1_client_sigalgs_list := @COMPAT_SSL_set1_client_sigalgs_list;
-    if SSL_set1_client_sigalgs_list_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_set1_client_sigalgs_list');
-  end;
+  Result := SSL_set1_client_sigalgs_list(s,str);
+end;
 
+function Load_SSL_get0_certificate_types(s: PSSL; clist: PByte): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_get0_certificate_types := LoadLibSSLFunction('SSL_get0_certificate_types');
-  FuncLoadError := not assigned(SSL_get0_certificate_types);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_get0_certificate_types) then
     SSL_get0_certificate_types := @COMPAT_SSL_get0_certificate_types;
-    if SSL_get0_certificate_types_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_get0_certificate_types');
-  end;
+  Result := SSL_get0_certificate_types(s,clist);
+end;
 
+function Load_SSL_CTX_set1_client_certificate_types(ctx: PSSL_CTX; clist: PByte; clistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_set1_client_certificate_types := LoadLibSSLFunction('SSL_CTX_set1_client_certificate_types');
-  FuncLoadError := not assigned(SSL_CTX_set1_client_certificate_types);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set1_client_certificate_types) then
     SSL_CTX_set1_client_certificate_types := @COMPAT_SSL_CTX_set1_client_certificate_types;
-    if SSL_CTX_set1_client_certificate_types_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_CTX_set1_client_certificate_types');
-  end;
+  Result := SSL_CTX_set1_client_certificate_types(ctx,clist,clistlen);
+end;
 
+function Load_SSL_set1_client_certificate_types(s: PSSL; clist: PByte; clistlen: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_set1_client_certificate_types := LoadLibSSLFunction('SSL_set1_client_certificate_types');
-  FuncLoadError := not assigned(SSL_set1_client_certificate_types);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_set1_client_certificate_types) then
     SSL_set1_client_certificate_types := @COMPAT_SSL_set1_client_certificate_types;
-    if SSL_set1_client_certificate_types_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_set1_client_certificate_types');
-  end;
+  Result := SSL_set1_client_certificate_types(s,clist,clistlen);
+end;
 
+function Load_SSL_get_signature_nid(s: PSSL; pn: Pointer): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_get_signature_nid := LoadLibSSLFunction('SSL_get_signature_nid');
-  FuncLoadError := not assigned(SSL_get_signature_nid);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_get_signature_nid) then
     SSL_get_signature_nid := @COMPAT_SSL_get_signature_nid;
-    if SSL_get_signature_nid_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_get_signature_nid');
-  end;
+  Result := SSL_get_signature_nid(s,pn);
+end;
 
+function Load_SSL_get_peer_signature_nid(s: PSSL; pn: Pointer): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_get_peer_signature_nid := LoadLibSSLFunction('SSL_get_peer_signature_nid');
-  FuncLoadError := not assigned(SSL_get_peer_signature_nid);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_get_peer_signature_nid) then
     SSL_get_peer_signature_nid := @COMPAT_SSL_get_peer_signature_nid;
-    if SSL_get_peer_signature_nid_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_get_peer_signature_nid');
-  end;
+  Result := SSL_get_peer_signature_nid(s,pn);
+end;
 
+function Load_SSL_get_peer_tmp_key(s: PSSL; pk: Pointer): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_get_peer_tmp_key := LoadLibSSLFunction('SSL_get_peer_tmp_key');
-  FuncLoadError := not assigned(SSL_get_peer_tmp_key);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_get_peer_tmp_key) then
     SSL_get_peer_tmp_key := @COMPAT_SSL_get_peer_tmp_key;
-    if SSL_get_peer_tmp_key_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_get_peer_tmp_key');
-  end;
+  Result := SSL_get_peer_tmp_key(s,pk);
+end;
 
+function Load_SSL_get_tmp_key(s: PSSL; pk: Pointer): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_get_tmp_key := LoadLibSSLFunction('SSL_get_tmp_key');
-  FuncLoadError := not assigned(SSL_get_tmp_key);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_get_tmp_key) then
     SSL_get_tmp_key := @COMPAT_SSL_get_tmp_key;
-    if SSL_get_tmp_key_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_get_tmp_key');
-  end;
+  Result := SSL_get_tmp_key(s,pk);
+end;
 
+function Load_SSL_get0_raw_cipherlist(s: PSSL; plst: Pointer): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_get0_raw_cipherlist := LoadLibSSLFunction('SSL_get0_raw_cipherlist');
-  FuncLoadError := not assigned(SSL_get0_raw_cipherlist);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_get0_raw_cipherlist) then
     SSL_get0_raw_cipherlist := @COMPAT_SSL_get0_raw_cipherlist;
-    if SSL_get0_raw_cipherlist_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_get0_raw_cipherlist');
-  end;
+  Result := SSL_get0_raw_cipherlist(s,plst);
+end;
 
+function Load_SSL_get0_ec_point_formats(s: PSSL; plst: Pointer): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_get0_ec_point_formats := LoadLibSSLFunction('SSL_get0_ec_point_formats');
-  FuncLoadError := not assigned(SSL_get0_ec_point_formats);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_get0_ec_point_formats) then
     SSL_get0_ec_point_formats := @COMPAT_SSL_get0_ec_point_formats;
-    if SSL_get0_ec_point_formats_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_get0_ec_point_formats');
-  end;
+  Result := SSL_get0_ec_point_formats(s,plst);
+end;
 
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_SSL_CTX_get_options(const ctx: PSSL_CTX): TOpenSSL_C_ULONG; cdecl;
+begin
   SSL_CTX_get_options := LoadLibSSLFunction('SSL_CTX_get_options');
-  FuncLoadError := not assigned(SSL_CTX_get_options);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_get_options) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     SSL_CTX_get_options := @COMPAT_SSL_CTX_get_options;
 {$ELSE}
-    SSL_CTX_get_options :=  @ERROR_SSL_CTX_get_options;
-{$ENDIF}
-  end;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_options');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  Result := SSL_CTX_get_options(ctx);
+end;
 
+function Load_SSL_get_options(const s: PSSL): TOpenSSL_C_ULONG; cdecl;
+begin
   SSL_get_options := LoadLibSSLFunction('SSL_get_options');
-  FuncLoadError := not assigned(SSL_get_options);
-  if FuncLoadError then
-  begin
-    SSL_get_options :=  @ERROR_SSL_get_options;
-  end;
+  if not assigned(SSL_get_options) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_options');
+  Result := SSL_get_options(s);
+end;
 
+function Load_SSL_CTX_clear_options(ctx: PSSL_CTX; op: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
+begin
   SSL_CTX_clear_options := LoadLibSSLFunction('SSL_CTX_clear_options');
-  FuncLoadError := not assigned(SSL_CTX_clear_options);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_clear_options) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     SSL_CTX_clear_options := @COMPAT_SSL_CTX_clear_options;
 {$ELSE}
-    SSL_CTX_clear_options :=  @ERROR_SSL_CTX_clear_options;
-{$ENDIF}
-  end;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_clear_options');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  Result := SSL_CTX_clear_options(ctx,op);
+end;
 
+function Load_SSL_clear_options(s: PSSL; op: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
+begin
   SSL_clear_options := LoadLibSSLFunction('SSL_clear_options');
-  FuncLoadError := not assigned(SSL_clear_options);
-  if FuncLoadError then
-  begin
-    SSL_clear_options :=  @ERROR_SSL_clear_options;
-  end;
+  if not assigned(SSL_clear_options) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_clear_options');
+  Result := SSL_clear_options(s,op);
+end;
 
+function Load_SSL_CTX_set_options(ctx: PSSL_CTX; op: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
+begin
   SSL_CTX_set_options := LoadLibSSLFunction('SSL_CTX_set_options');
-  FuncLoadError := not assigned(SSL_CTX_set_options);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set_options) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     SSL_CTX_set_options := @COMPAT_SSL_CTX_set_options;
 {$ELSE}
-    SSL_CTX_set_options :=  @ERROR_SSL_CTX_set_options;
-{$ENDIF}
-  end;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_options');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  Result := SSL_CTX_set_options(ctx,op);
+end;
 
+function Load_SSL_set_options(s: PSSL; op: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
+begin
   SSL_set_options := LoadLibSSLFunction('SSL_set_options');
-  FuncLoadError := not assigned(SSL_set_options);
-  if FuncLoadError then
-  begin
-    SSL_set_options :=  @ERROR_SSL_set_options;
-  end;
+  if not assigned(SSL_set_options) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_options');
+  Result := SSL_set_options(s,op);
+end;
 
+procedure Load_SSL_CTX_sess_set_new_cb(ctx: PSSL_CTX; new_session_cb: SSL_CTX_sess_new_cb); cdecl;
+begin
   SSL_CTX_sess_set_new_cb := LoadLibSSLFunction('SSL_CTX_sess_set_new_cb');
-  FuncLoadError := not assigned(SSL_CTX_sess_set_new_cb);
-  if FuncLoadError then
-  begin
-    SSL_CTX_sess_set_new_cb :=  @ERROR_SSL_CTX_sess_set_new_cb;
-  end;
+  if not assigned(SSL_CTX_sess_set_new_cb) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_sess_set_new_cb');
+  SSL_CTX_sess_set_new_cb(ctx,new_session_cb);
+end;
 
+function Load_SSL_CTX_sess_get_new_cb(ctx: PSSL_CTX): SSL_CTX_sess_new_cb; cdecl;
+begin
   SSL_CTX_sess_get_new_cb := LoadLibSSLFunction('SSL_CTX_sess_get_new_cb');
-  FuncLoadError := not assigned(SSL_CTX_sess_get_new_cb);
-  if FuncLoadError then
-  begin
-    SSL_CTX_sess_get_new_cb :=  @ERROR_SSL_CTX_sess_get_new_cb;
-  end;
+  if not assigned(SSL_CTX_sess_get_new_cb) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_sess_get_new_cb');
+  Result := SSL_CTX_sess_get_new_cb(ctx);
+end;
 
+procedure Load_SSL_CTX_sess_set_remove_cb(ctx: PSSL_CTX; remove_session_cb: SSL_CTX_sess_remove_cb); cdecl;
+begin
   SSL_CTX_sess_set_remove_cb := LoadLibSSLFunction('SSL_CTX_sess_set_remove_cb');
-  FuncLoadError := not assigned(SSL_CTX_sess_set_remove_cb);
-  if FuncLoadError then
-  begin
-    SSL_CTX_sess_set_remove_cb :=  @ERROR_SSL_CTX_sess_set_remove_cb;
-  end;
+  if not assigned(SSL_CTX_sess_set_remove_cb) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_sess_set_remove_cb');
+  SSL_CTX_sess_set_remove_cb(ctx,remove_session_cb);
+end;
 
+function Load_SSL_CTX_sess_get_remove_cb(ctx: PSSL_CTX): SSL_CTX_sess_remove_cb; cdecl;
+begin
   SSL_CTX_sess_get_remove_cb := LoadLibSSLFunction('SSL_CTX_sess_get_remove_cb');
-  FuncLoadError := not assigned(SSL_CTX_sess_get_remove_cb);
-  if FuncLoadError then
-  begin
-    SSL_CTX_sess_get_remove_cb :=  @ERROR_SSL_CTX_sess_get_remove_cb;
-  end;
+  if not assigned(SSL_CTX_sess_get_remove_cb) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_sess_get_remove_cb');
+  Result := SSL_CTX_sess_get_remove_cb(ctx);
+end;
 
+procedure Load_SSL_CTX_set_info_callback(ctx: PSSL_CTX; cb: SSL_CTX_info_callback); cdecl;
+begin
   SSL_CTX_set_info_callback := LoadLibSSLFunction('SSL_CTX_set_info_callback');
-  FuncLoadError := not assigned(SSL_CTX_set_info_callback);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_info_callback :=  @ERROR_SSL_CTX_set_info_callback;
-  end;
+  if not assigned(SSL_CTX_set_info_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_info_callback');
+  SSL_CTX_set_info_callback(ctx,cb);
+end;
 
+function Load_SSL_CTX_get_info_callback(ctx: PSSL_CTX): SSL_CTX_info_callback; cdecl;
+begin
   SSL_CTX_get_info_callback := LoadLibSSLFunction('SSL_CTX_get_info_callback');
-  FuncLoadError := not assigned(SSL_CTX_get_info_callback);
-  if FuncLoadError then
-  begin
-    SSL_CTX_get_info_callback :=  @ERROR_SSL_CTX_get_info_callback;
-  end;
+  if not assigned(SSL_CTX_get_info_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_info_callback');
+  Result := SSL_CTX_get_info_callback(ctx);
+end;
 
+procedure Load_SSL_CTX_set_client_cert_cb(ctx: PSSL_CTX; client_cert_cb: SSL_CTX_client_cert_cb); cdecl;
+begin
   SSL_CTX_set_client_cert_cb := LoadLibSSLFunction('SSL_CTX_set_client_cert_cb');
-  FuncLoadError := not assigned(SSL_CTX_set_client_cert_cb);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_client_cert_cb :=  @ERROR_SSL_CTX_set_client_cert_cb;
-  end;
+  if not assigned(SSL_CTX_set_client_cert_cb) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_client_cert_cb');
+  SSL_CTX_set_client_cert_cb(ctx,client_cert_cb);
+end;
 
+function Load_SSL_CTX_get_client_cert_cb(ctx: PSSL_CTX): SSL_CTX_client_cert_cb; cdecl;
+begin
   SSL_CTX_get_client_cert_cb := LoadLibSSLFunction('SSL_CTX_get_client_cert_cb');
-  FuncLoadError := not assigned(SSL_CTX_get_client_cert_cb);
-  if FuncLoadError then
-  begin
-    SSL_CTX_get_client_cert_cb :=  @ERROR_SSL_CTX_get_client_cert_cb;
-  end;
+  if not assigned(SSL_CTX_get_client_cert_cb) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_client_cert_cb');
+  Result := SSL_CTX_get_client_cert_cb(ctx);
+end;
 
+function Load_SSL_CTX_set_client_cert_engine(ctx: PSSL_CTX; e: PENGINE): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_client_cert_engine := LoadLibSSLFunction('SSL_CTX_set_client_cert_engine');
-  FuncLoadError := not assigned(SSL_CTX_set_client_cert_engine);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_client_cert_engine :=  @ERROR_SSL_CTX_set_client_cert_engine;
-  end;
+  if not assigned(SSL_CTX_set_client_cert_engine) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_client_cert_engine');
+  Result := SSL_CTX_set_client_cert_engine(ctx,e);
+end;
 
+procedure Load_SSL_CTX_set_cookie_generate_cb(ctx: PSSL_CTX; app_gen_cookie_cb: SSL_CTX_cookie_verify_cb); cdecl;
+begin
   SSL_CTX_set_cookie_generate_cb := LoadLibSSLFunction('SSL_CTX_set_cookie_generate_cb');
-  FuncLoadError := not assigned(SSL_CTX_set_cookie_generate_cb);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_cookie_generate_cb :=  @ERROR_SSL_CTX_set_cookie_generate_cb;
-  end;
+  if not assigned(SSL_CTX_set_cookie_generate_cb) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_cookie_generate_cb');
+  SSL_CTX_set_cookie_generate_cb(ctx,app_gen_cookie_cb);
+end;
 
+procedure Load_SSL_CTX_set_cookie_verify_cb(ctx: PSSL_CTX; app_verify_cookie_cb: SSL_CTX_set_cookie_verify_cb_app_verify_cookie_cb); cdecl;
+begin
   SSL_CTX_set_cookie_verify_cb := LoadLibSSLFunction('SSL_CTX_set_cookie_verify_cb');
-  FuncLoadError := not assigned(SSL_CTX_set_cookie_verify_cb);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_cookie_verify_cb :=  @ERROR_SSL_CTX_set_cookie_verify_cb;
-  end;
+  if not assigned(SSL_CTX_set_cookie_verify_cb) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_cookie_verify_cb');
+  SSL_CTX_set_cookie_verify_cb(ctx,app_verify_cookie_cb);
+end;
 
+procedure Load_SSL_CTX_set_stateless_cookie_generate_cb(ctx: PSSL_CTX; gen_stateless_cookie_cb: SSL_CTX_set_stateless_cookie_generate_cb_gen_stateless_cookie_cb); cdecl;
+begin
   SSL_CTX_set_stateless_cookie_generate_cb := LoadLibSSLFunction('SSL_CTX_set_stateless_cookie_generate_cb');
-  FuncLoadError := not assigned(SSL_CTX_set_stateless_cookie_generate_cb);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_stateless_cookie_generate_cb :=  @ERROR_SSL_CTX_set_stateless_cookie_generate_cb;
-  end;
+  if not assigned(SSL_CTX_set_stateless_cookie_generate_cb) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_stateless_cookie_generate_cb');
+  SSL_CTX_set_stateless_cookie_generate_cb(ctx,gen_stateless_cookie_cb);
+end;
 
+procedure Load_SSL_CTX_set_stateless_cookie_verify_cb(ctx: PSSL_CTX; verify_stateless_cookie_cb: SSL_CTX_set_stateless_cookie_verify_cb_verify_stateless_cookie_cb); cdecl;
+begin
   SSL_CTX_set_stateless_cookie_verify_cb := LoadLibSSLFunction('SSL_CTX_set_stateless_cookie_verify_cb');
-  FuncLoadError := not assigned(SSL_CTX_set_stateless_cookie_verify_cb);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_stateless_cookie_verify_cb :=  @ERROR_SSL_CTX_set_stateless_cookie_verify_cb;
-  end;
+  if not assigned(SSL_CTX_set_stateless_cookie_verify_cb) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_stateless_cookie_verify_cb');
+  SSL_CTX_set_stateless_cookie_verify_cb(ctx,verify_stateless_cookie_cb);
+end;
 
+procedure Load_SSL_CTX_set_alpn_select_cb(ctx: PSSL_CTX; cb: SSL_CTX_alpn_select_cb_func; arg: Pointer); cdecl;
+begin
   SSL_CTX_set_alpn_select_cb := LoadLibSSLFunction('SSL_CTX_set_alpn_select_cb');
-  FuncLoadError := not assigned(SSL_CTX_set_alpn_select_cb);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_alpn_select_cb :=  @ERROR_SSL_CTX_set_alpn_select_cb;
-  end;
+  if not assigned(SSL_CTX_set_alpn_select_cb) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_alpn_select_cb');
+  SSL_CTX_set_alpn_select_cb(ctx,cb,arg);
+end;
 
+procedure Load_SSL_get0_alpn_selected(const ssl: PSSL; const data: PPByte; len: POpenSSL_C_UINT); cdecl;
+begin
   SSL_get0_alpn_selected := LoadLibSSLFunction('SSL_get0_alpn_selected');
-  FuncLoadError := not assigned(SSL_get0_alpn_selected);
-  if FuncLoadError then
-  begin
-    SSL_get0_alpn_selected :=  @ERROR_SSL_get0_alpn_selected;
-  end;
+  if not assigned(SSL_get0_alpn_selected) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_alpn_selected');
+  SSL_get0_alpn_selected(ssl,data,len);
+end;
 
+procedure Load_SSL_CTX_set_psk_client_callback(ctx: PSSL_CTX; cb: SSL_psk_client_cb_func); cdecl;
+begin
   SSL_CTX_set_psk_client_callback := LoadLibSSLFunction('SSL_CTX_set_psk_client_callback');
-  FuncLoadError := not assigned(SSL_CTX_set_psk_client_callback);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_psk_client_callback :=  @ERROR_SSL_CTX_set_psk_client_callback;
-  end;
+  if not assigned(SSL_CTX_set_psk_client_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_psk_client_callback');
+  SSL_CTX_set_psk_client_callback(ctx,cb);
+end;
 
+procedure Load_SSL_set_psk_client_callback(ssl: PSSL; cb: SSL_psk_client_cb_func); cdecl;
+begin
   SSL_set_psk_client_callback := LoadLibSSLFunction('SSL_set_psk_client_callback');
-  FuncLoadError := not assigned(SSL_set_psk_client_callback);
-  if FuncLoadError then
-  begin
-    SSL_set_psk_client_callback :=  @ERROR_SSL_set_psk_client_callback;
-  end;
+  if not assigned(SSL_set_psk_client_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_psk_client_callback');
+  SSL_set_psk_client_callback(ssl,cb);
+end;
 
+procedure Load_SSL_CTX_set_psk_server_callback(ctx: PSSL_CTX; cb: SSL_psk_server_cb_func); cdecl;
+begin
   SSL_CTX_set_psk_server_callback := LoadLibSSLFunction('SSL_CTX_set_psk_server_callback');
-  FuncLoadError := not assigned(SSL_CTX_set_psk_server_callback);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_psk_server_callback :=  @ERROR_SSL_CTX_set_psk_server_callback;
-  end;
+  if not assigned(SSL_CTX_set_psk_server_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_psk_server_callback');
+  SSL_CTX_set_psk_server_callback(ctx,cb);
+end;
 
+procedure Load_SSL_set_psk_server_callback(ssl: PSSL; cb: SSL_psk_server_cb_func); cdecl;
+begin
   SSL_set_psk_server_callback := LoadLibSSLFunction('SSL_set_psk_server_callback');
-  FuncLoadError := not assigned(SSL_set_psk_server_callback);
-  if FuncLoadError then
-  begin
-    SSL_set_psk_server_callback :=  @ERROR_SSL_set_psk_server_callback;
-  end;
+  if not assigned(SSL_set_psk_server_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_psk_server_callback');
+  SSL_set_psk_server_callback(ssl,cb);
+end;
 
+procedure Load_SSL_set_psk_find_session_callback(s: PSSL; cb: SSL_psk_find_session_cb_func); cdecl;
+begin
   SSL_set_psk_find_session_callback := LoadLibSSLFunction('SSL_set_psk_find_session_callback');
-  FuncLoadError := not assigned(SSL_set_psk_find_session_callback);
-  if FuncLoadError then
-  begin
-    SSL_set_psk_find_session_callback :=  @ERROR_SSL_set_psk_find_session_callback;
-  end;
+  if not assigned(SSL_set_psk_find_session_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_psk_find_session_callback');
+  SSL_set_psk_find_session_callback(s,cb);
+end;
 
+procedure Load_SSL_CTX_set_psk_find_session_callback(ctx: PSSL_CTX; cb: SSL_psk_find_session_cb_func); cdecl;
+begin
   SSL_CTX_set_psk_find_session_callback := LoadLibSSLFunction('SSL_CTX_set_psk_find_session_callback');
-  FuncLoadError := not assigned(SSL_CTX_set_psk_find_session_callback);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_psk_find_session_callback :=  @ERROR_SSL_CTX_set_psk_find_session_callback;
-  end;
+  if not assigned(SSL_CTX_set_psk_find_session_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_psk_find_session_callback');
+  SSL_CTX_set_psk_find_session_callback(ctx,cb);
+end;
 
+procedure Load_SSL_set_psk_use_session_callback(s: PSSL; cb: SSL_psk_use_session_cb_func); cdecl;
+begin
   SSL_set_psk_use_session_callback := LoadLibSSLFunction('SSL_set_psk_use_session_callback');
-  FuncLoadError := not assigned(SSL_set_psk_use_session_callback);
-  if FuncLoadError then
-  begin
-    SSL_set_psk_use_session_callback :=  @ERROR_SSL_set_psk_use_session_callback;
-  end;
+  if not assigned(SSL_set_psk_use_session_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_psk_use_session_callback');
+  SSL_set_psk_use_session_callback(s,cb);
+end;
 
+procedure Load_SSL_CTX_set_psk_use_session_callback(ctx: PSSL_CTX; cb: SSL_psk_use_session_cb_func); cdecl;
+begin
   SSL_CTX_set_psk_use_session_callback := LoadLibSSLFunction('SSL_CTX_set_psk_use_session_callback');
-  FuncLoadError := not assigned(SSL_CTX_set_psk_use_session_callback);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_psk_use_session_callback :=  @ERROR_SSL_CTX_set_psk_use_session_callback;
-  end;
+  if not assigned(SSL_CTX_set_psk_use_session_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_psk_use_session_callback');
+  SSL_CTX_set_psk_use_session_callback(ctx,cb);
+end;
 
+procedure Load_SSL_CTX_set_keylog_callback(ctx: PSSL_CTX; cb: SSL_CTX_keylog_cb_func); cdecl;
+begin
   SSL_CTX_set_keylog_callback := LoadLibSSLFunction('SSL_CTX_set_keylog_callback');
-  FuncLoadError := not assigned(SSL_CTX_set_keylog_callback);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_keylog_callback :=  @ERROR_SSL_CTX_set_keylog_callback;
-  end;
+  if not assigned(SSL_CTX_set_keylog_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_keylog_callback');
+  SSL_CTX_set_keylog_callback(ctx,cb);
+end;
 
+function Load_SSL_CTX_get_keylog_callback(const ctx: PSSL_CTX): SSL_CTX_keylog_cb_func; cdecl;
+begin
   SSL_CTX_get_keylog_callback := LoadLibSSLFunction('SSL_CTX_get_keylog_callback');
-  FuncLoadError := not assigned(SSL_CTX_get_keylog_callback);
-  if FuncLoadError then
-  begin
-    SSL_CTX_get_keylog_callback :=  @ERROR_SSL_CTX_get_keylog_callback;
-  end;
+  if not assigned(SSL_CTX_get_keylog_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_keylog_callback');
+  Result := SSL_CTX_get_keylog_callback(ctx);
+end;
 
+function Load_SSL_CTX_set_max_early_data(ctx: PSSL_CTX; max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_max_early_data := LoadLibSSLFunction('SSL_CTX_set_max_early_data');
-  FuncLoadError := not assigned(SSL_CTX_set_max_early_data);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_max_early_data :=  @ERROR_SSL_CTX_set_max_early_data;
-  end;
+  if not assigned(SSL_CTX_set_max_early_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_max_early_data');
+  Result := SSL_CTX_set_max_early_data(ctx,max_early_data);
+end;
 
+function Load_SSL_CTX_get_max_early_data(const ctx: PSSL_CTX): TOpenSSL_C_UINT32; cdecl;
+begin
   SSL_CTX_get_max_early_data := LoadLibSSLFunction('SSL_CTX_get_max_early_data');
-  FuncLoadError := not assigned(SSL_CTX_get_max_early_data);
-  if FuncLoadError then
-  begin
-    SSL_CTX_get_max_early_data :=  @ERROR_SSL_CTX_get_max_early_data;
-  end;
+  if not assigned(SSL_CTX_get_max_early_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_max_early_data');
+  Result := SSL_CTX_get_max_early_data(ctx);
+end;
 
+function Load_SSL_set_max_early_data(s: PSSL; max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set_max_early_data := LoadLibSSLFunction('SSL_set_max_early_data');
-  FuncLoadError := not assigned(SSL_set_max_early_data);
-  if FuncLoadError then
-  begin
-    SSL_set_max_early_data :=  @ERROR_SSL_set_max_early_data;
-  end;
+  if not assigned(SSL_set_max_early_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_max_early_data');
+  Result := SSL_set_max_early_data(s,max_early_data);
+end;
 
+function Load_SSL_get_max_early_data(const s: PSSL): TOpenSSL_C_UINT32; cdecl;
+begin
   SSL_get_max_early_data := LoadLibSSLFunction('SSL_get_max_early_data');
-  FuncLoadError := not assigned(SSL_get_max_early_data);
-  if FuncLoadError then
-  begin
-    SSL_get_max_early_data :=  @ERROR_SSL_get_max_early_data;
-  end;
+  if not assigned(SSL_get_max_early_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_max_early_data');
+  Result := SSL_get_max_early_data(s);
+end;
 
+function Load_SSL_CTX_set_recv_max_early_data(ctx: PSSL_CTX; recv_max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_recv_max_early_data := LoadLibSSLFunction('SSL_CTX_set_recv_max_early_data');
-  FuncLoadError := not assigned(SSL_CTX_set_recv_max_early_data);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_recv_max_early_data :=  @ERROR_SSL_CTX_set_recv_max_early_data;
-  end;
+  if not assigned(SSL_CTX_set_recv_max_early_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_recv_max_early_data');
+  Result := SSL_CTX_set_recv_max_early_data(ctx,recv_max_early_data);
+end;
 
+function Load_SSL_CTX_get_recv_max_early_data(const ctx: PSSL_CTX): TOpenSSL_C_UINT32; cdecl;
+begin
   SSL_CTX_get_recv_max_early_data := LoadLibSSLFunction('SSL_CTX_get_recv_max_early_data');
-  FuncLoadError := not assigned(SSL_CTX_get_recv_max_early_data);
-  if FuncLoadError then
-  begin
-    SSL_CTX_get_recv_max_early_data :=  @ERROR_SSL_CTX_get_recv_max_early_data;
-  end;
+  if not assigned(SSL_CTX_get_recv_max_early_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_recv_max_early_data');
+  Result := SSL_CTX_get_recv_max_early_data(ctx);
+end;
 
+function Load_SSL_set_recv_max_early_data(s: PSSL; recv_max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set_recv_max_early_data := LoadLibSSLFunction('SSL_set_recv_max_early_data');
-  FuncLoadError := not assigned(SSL_set_recv_max_early_data);
-  if FuncLoadError then
-  begin
-    SSL_set_recv_max_early_data :=  @ERROR_SSL_set_recv_max_early_data;
-  end;
+  if not assigned(SSL_set_recv_max_early_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_recv_max_early_data');
+  Result := SSL_set_recv_max_early_data(s,recv_max_early_data);
+end;
 
+function Load_SSL_get_recv_max_early_data(const s: PSSL): TOpenSSL_C_UINT32; cdecl;
+begin
   SSL_get_recv_max_early_data := LoadLibSSLFunction('SSL_get_recv_max_early_data');
-  FuncLoadError := not assigned(SSL_get_recv_max_early_data);
-  if FuncLoadError then
-  begin
-    SSL_get_recv_max_early_data :=  @ERROR_SSL_get_recv_max_early_data;
-  end;
+  if not assigned(SSL_get_recv_max_early_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_recv_max_early_data');
+  Result := SSL_get_recv_max_early_data(s);
+end;
 
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_SSL_get_app_data(const ssl: PSSL): Pointer; cdecl;
+begin
   SSL_get_app_data := LoadLibSSLFunction('SSL_get_app_data');
-  FuncLoadError := not assigned(SSL_get_app_data);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_get_app_data) then
     SSL_get_app_data := @COMPAT_SSL_get_app_data;
-    if SSL_get_app_data_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_get_app_data');
-  end;
+  Result := SSL_get_app_data(ssl);
+end;
 
+function Load_SSL_set_app_data(ssl: PSSL; data: Pointer): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set_app_data := LoadLibSSLFunction('SSL_set_app_data');
-  FuncLoadError := not assigned(SSL_set_app_data);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_set_app_data) then
     SSL_set_app_data := @COMPAT_SSL_set_app_data;
-    if SSL_set_app_data_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_set_app_data');
-  end;
+  Result := SSL_set_app_data(ssl,data);
+end;
 
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_SSL_in_init(const s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_in_init := LoadLibSSLFunction('SSL_in_init');
-  FuncLoadError := not assigned(SSL_in_init);
-  if FuncLoadError then
-  begin
-    SSL_in_init :=  @ERROR_SSL_in_init;
-  end;
+  if not assigned(SSL_in_init) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_in_init');
+  Result := SSL_in_init(s);
+end;
 
+function Load_SSL_in_before(const s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_in_before := LoadLibSSLFunction('SSL_in_before');
-  FuncLoadError := not assigned(SSL_in_before);
-  if FuncLoadError then
-  begin
-    SSL_in_before :=  @ERROR_SSL_in_before;
-  end;
+  if not assigned(SSL_in_before) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_in_before');
+  Result := SSL_in_before(s);
+end;
 
+function Load_SSL_is_init_finished(const s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_is_init_finished := LoadLibSSLFunction('SSL_is_init_finished');
-  FuncLoadError := not assigned(SSL_is_init_finished);
-  if FuncLoadError then
-  begin
-    SSL_is_init_finished :=  @ERROR_SSL_is_init_finished;
-  end;
+  if not assigned(SSL_is_init_finished) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_is_init_finished');
+  Result := SSL_is_init_finished(s);
+end;
 
+function Load_SSL_get_finished(const s: PSSL; buf: Pointer; count: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+begin
   SSL_get_finished := LoadLibSSLFunction('SSL_get_finished');
-  FuncLoadError := not assigned(SSL_get_finished);
-  if FuncLoadError then
-  begin
-    SSL_get_finished :=  @ERROR_SSL_get_finished;
-  end;
+  if not assigned(SSL_get_finished) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_finished');
+  Result := SSL_get_finished(s,buf,count);
+end;
 
+function Load_SSL_get_peer_finished(const s: PSSL; buf: Pointer; count: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+begin
   SSL_get_peer_finished := LoadLibSSLFunction('SSL_get_peer_finished');
-  FuncLoadError := not assigned(SSL_get_peer_finished);
-  if FuncLoadError then
-  begin
-    SSL_get_peer_finished :=  @ERROR_SSL_get_peer_finished;
-  end;
+  if not assigned(SSL_get_peer_finished) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_peer_finished');
+  Result := SSL_get_peer_finished(s,buf,count);
+end;
 
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_SSLeay_add_ssl_algorithms: TOpenSSL_C_INT; cdecl;
+begin
   SSLeay_add_ssl_algorithms := LoadLibSSLFunction('SSLeay_add_ssl_algorithms');
-  FuncLoadError := not assigned(SSLeay_add_ssl_algorithms);
-  if FuncLoadError then
-  begin
+  if not assigned(SSLeay_add_ssl_algorithms) then
     SSLeay_add_ssl_algorithms := @COMPAT_SSLeay_add_ssl_algorithms;
-    if SSLeay_add_ssl_algorithms_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSLeay_add_ssl_algorithms');
-  end;
+  Result := SSLeay_add_ssl_algorithms();
+end;
 
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_BIO_f_ssl: PBIO_METHOD; cdecl;
+begin
   BIO_f_ssl := LoadLibSSLFunction('BIO_f_ssl');
-  FuncLoadError := not assigned(BIO_f_ssl);
-  if FuncLoadError then
-  begin
-    BIO_f_ssl :=  @ERROR_BIO_f_ssl;
-  end;
+  if not assigned(BIO_f_ssl) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('BIO_f_ssl');
+  Result := BIO_f_ssl();
+end;
 
+function Load_BIO_new_ssl(ctx: PSSL_CTX; client: TOpenSSL_C_INT): PBIO; cdecl;
+begin
   BIO_new_ssl := LoadLibSSLFunction('BIO_new_ssl');
-  FuncLoadError := not assigned(BIO_new_ssl);
-  if FuncLoadError then
-  begin
-    BIO_new_ssl :=  @ERROR_BIO_new_ssl;
-  end;
+  if not assigned(BIO_new_ssl) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('BIO_new_ssl');
+  Result := BIO_new_ssl(ctx,client);
+end;
 
+function Load_BIO_new_ssl_connect(ctx: PSSL_CTX): PBIO; cdecl;
+begin
   BIO_new_ssl_connect := LoadLibSSLFunction('BIO_new_ssl_connect');
-  FuncLoadError := not assigned(BIO_new_ssl_connect);
-  if FuncLoadError then
-  begin
-    BIO_new_ssl_connect :=  @ERROR_BIO_new_ssl_connect;
-  end;
+  if not assigned(BIO_new_ssl_connect) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('BIO_new_ssl_connect');
+  Result := BIO_new_ssl_connect(ctx);
+end;
 
+function Load_BIO_new_buffer_ssl_connect(ctx: PSSL_CTX): PBIO; cdecl;
+begin
   BIO_new_buffer_ssl_connect := LoadLibSSLFunction('BIO_new_buffer_ssl_connect');
-  FuncLoadError := not assigned(BIO_new_buffer_ssl_connect);
-  if FuncLoadError then
-  begin
-    BIO_new_buffer_ssl_connect :=  @ERROR_BIO_new_buffer_ssl_connect;
-  end;
+  if not assigned(BIO_new_buffer_ssl_connect) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('BIO_new_buffer_ssl_connect');
+  Result := BIO_new_buffer_ssl_connect(ctx);
+end;
 
+function Load_BIO_ssl_copy_session_id(to_: PBIO; from: PBIO): TOpenSSL_C_INT; cdecl;
+begin
   BIO_ssl_copy_session_id := LoadLibSSLFunction('BIO_ssl_copy_session_id');
-  FuncLoadError := not assigned(BIO_ssl_copy_session_id);
-  if FuncLoadError then
-  begin
-    BIO_ssl_copy_session_id :=  @ERROR_BIO_ssl_copy_session_id;
-  end;
+  if not assigned(BIO_ssl_copy_session_id) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('BIO_ssl_copy_session_id');
+  Result := BIO_ssl_copy_session_id(to_,from);
+end;
 
+function Load_SSL_CTX_set_cipher_list(v1: PSSL_CTX; const str: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_cipher_list := LoadLibSSLFunction('SSL_CTX_set_cipher_list');
-  FuncLoadError := not assigned(SSL_CTX_set_cipher_list);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_cipher_list :=  @ERROR_SSL_CTX_set_cipher_list;
-  end;
+  if not assigned(SSL_CTX_set_cipher_list) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_cipher_list');
+  Result := SSL_CTX_set_cipher_list(v1,str);
+end;
 
+function Load_SSL_CTX_new(const meth: PSSL_METHOD): PSSL_CTX; cdecl;
+begin
   SSL_CTX_new := LoadLibSSLFunction('SSL_CTX_new');
-  FuncLoadError := not assigned(SSL_CTX_new);
-  if FuncLoadError then
-  begin
-    SSL_CTX_new :=  @ERROR_SSL_CTX_new;
-  end;
+  if not assigned(SSL_CTX_new) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_new');
+  Result := SSL_CTX_new(meth);
+end;
 
+function Load_SSL_CTX_set_timeout(ctx: PSSL_CTX; t: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_set_timeout := LoadLibSSLFunction('SSL_CTX_set_timeout');
-  FuncLoadError := not assigned(SSL_CTX_set_timeout);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_timeout :=  @ERROR_SSL_CTX_set_timeout;
-  end;
+  if not assigned(SSL_CTX_set_timeout) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_timeout');
+  Result := SSL_CTX_set_timeout(ctx,t);
+end;
 
+function Load_SSL_CTX_get_timeout(const ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_get_timeout := LoadLibSSLFunction('SSL_CTX_get_timeout');
-  FuncLoadError := not assigned(SSL_CTX_get_timeout);
-  if FuncLoadError then
-  begin
-    SSL_CTX_get_timeout :=  @ERROR_SSL_CTX_get_timeout;
-  end;
+  if not assigned(SSL_CTX_get_timeout) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_timeout');
+  Result := SSL_CTX_get_timeout(ctx);
+end;
 
+function Load_SSL_CTX_get_cert_store(const v1: PSSL_CTX): PX509_STORE; cdecl;
+begin
   SSL_CTX_get_cert_store := LoadLibSSLFunction('SSL_CTX_get_cert_store');
-  FuncLoadError := not assigned(SSL_CTX_get_cert_store);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_get_cert_store) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     SSL_CTX_get_cert_store := @COMPAT_SSL_CTX_get_cert_store;
 {$ELSE}
-    SSL_CTX_get_cert_store :=  @ERROR_SSL_CTX_get_cert_store;
-{$ENDIF}
-  end;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_cert_store');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  Result := SSL_CTX_get_cert_store(v1);
+end;
 
+function Load_SSL_want(const s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_want := LoadLibSSLFunction('SSL_want');
-  FuncLoadError := not assigned(SSL_want);
-  if FuncLoadError then
-  begin
-    SSL_want :=  @ERROR_SSL_want;
-  end;
+  if not assigned(SSL_want) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_want');
+  Result := SSL_want(s);
+end;
 
+function Load_SSL_clear(s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_clear := LoadLibSSLFunction('SSL_clear');
-  FuncLoadError := not assigned(SSL_clear);
-  if FuncLoadError then
-  begin
-    SSL_clear :=  @ERROR_SSL_clear;
-  end;
+  if not assigned(SSL_clear) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_clear');
+  Result := SSL_clear(s);
+end;
 
+procedure Load_BIO_ssl_shutdown(ssl_bio: PBIO); cdecl;
+begin
   BIO_ssl_shutdown := LoadLibSSLFunction('BIO_ssl_shutdown');
-  FuncLoadError := not assigned(BIO_ssl_shutdown);
-  if FuncLoadError then
-  begin
-    BIO_ssl_shutdown :=  @ERROR_BIO_ssl_shutdown;
-  end;
+  if not assigned(BIO_ssl_shutdown) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('BIO_ssl_shutdown');
+  BIO_ssl_shutdown(ssl_bio);
+end;
 
+function Load_SSL_CTX_up_ref(ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_up_ref := LoadLibSSLFunction('SSL_CTX_up_ref');
-  FuncLoadError := not assigned(SSL_CTX_up_ref);
-  if FuncLoadError then
-  begin
-    SSL_CTX_up_ref :=  @ERROR_SSL_CTX_up_ref;
-  end;
+  if not assigned(SSL_CTX_up_ref) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_up_ref');
+  Result := SSL_CTX_up_ref(ctx);
+end;
 
+procedure Load_SSL_CTX_free(v1: PSSL_CTX); cdecl;
+begin
   SSL_CTX_free := LoadLibSSLFunction('SSL_CTX_free');
-  FuncLoadError := not assigned(SSL_CTX_free);
-  if FuncLoadError then
-  begin
-    SSL_CTX_free :=  @ERROR_SSL_CTX_free;
-  end;
+  if not assigned(SSL_CTX_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_free');
+  SSL_CTX_free(v1);
+end;
 
+procedure Load_SSL_CTX_set_cert_store(v1: PSSL_CTX; v2: PX509_STORE); cdecl;
+begin
   SSL_CTX_set_cert_store := LoadLibSSLFunction('SSL_CTX_set_cert_store');
-  FuncLoadError := not assigned(SSL_CTX_set_cert_store);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_cert_store :=  @ERROR_SSL_CTX_set_cert_store;
-  end;
+  if not assigned(SSL_CTX_set_cert_store) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_cert_store');
+  SSL_CTX_set_cert_store(v1,v2);
+end;
 
+procedure Load_SSL_CTX_set1_cert_store(v1: PSSL_CTX; v2: PX509_STORE); cdecl;
+begin
   SSL_CTX_set1_cert_store := LoadLibSSLFunction('SSL_CTX_set1_cert_store');
-  FuncLoadError := not assigned(SSL_CTX_set1_cert_store);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set1_cert_store :=  @ERROR_SSL_CTX_set1_cert_store;
-  end;
+  if not assigned(SSL_CTX_set1_cert_store) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set1_cert_store');
+  SSL_CTX_set1_cert_store(v1,v2);
+end;
 
+procedure Load_SSL_CTX_flush_sessions(ctx: PSSL_CTX; tm: TOpenSSL_C_LONG); cdecl;
+begin
   SSL_CTX_flush_sessions := LoadLibSSLFunction('SSL_CTX_flush_sessions');
-  FuncLoadError := not assigned(SSL_CTX_flush_sessions);
-  if FuncLoadError then
-  begin
-    SSL_CTX_flush_sessions :=  @ERROR_SSL_CTX_flush_sessions;
-  end;
+  if not assigned(SSL_CTX_flush_sessions) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_flush_sessions');
+  SSL_CTX_flush_sessions(ctx,tm);
+end;
 
+function Load_SSL_get_current_cipher(const s: PSSL): PSSL_CIPHER; cdecl;
+begin
   SSL_get_current_cipher := LoadLibSSLFunction('SSL_get_current_cipher');
-  FuncLoadError := not assigned(SSL_get_current_cipher);
-  if FuncLoadError then
-  begin
-    SSL_get_current_cipher :=  @ERROR_SSL_get_current_cipher;
-  end;
+  if not assigned(SSL_get_current_cipher) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_current_cipher');
+  Result := SSL_get_current_cipher(s);
+end;
 
+function Load_SSL_get_pending_cipher(const s: PSSL): PSSL_CIPHER; cdecl;
+begin
   SSL_get_pending_cipher := LoadLibSSLFunction('SSL_get_pending_cipher');
-  FuncLoadError := not assigned(SSL_get_pending_cipher);
-  if FuncLoadError then
-  begin
-    SSL_get_pending_cipher :=  @ERROR_SSL_get_pending_cipher;
-  end;
+  if not assigned(SSL_get_pending_cipher) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_pending_cipher');
+  Result := SSL_get_pending_cipher(s);
+end;
 
+function Load_SSL_CIPHER_get_bits(const c: PSSL_CIPHER; var alg_bits: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CIPHER_get_bits := LoadLibSSLFunction('SSL_CIPHER_get_bits');
-  FuncLoadError := not assigned(SSL_CIPHER_get_bits);
-  if FuncLoadError then
-  begin
-    SSL_CIPHER_get_bits :=  @ERROR_SSL_CIPHER_get_bits;
-  end;
+  if not assigned(SSL_CIPHER_get_bits) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_get_bits');
+  Result := SSL_CIPHER_get_bits(c,alg_bits);
+end;
 
+function Load_SSL_CIPHER_get_version(const c: PSSL_CIPHER): PAnsiChar; cdecl;
+begin
   SSL_CIPHER_get_version := LoadLibSSLFunction('SSL_CIPHER_get_version');
-  FuncLoadError := not assigned(SSL_CIPHER_get_version);
-  if FuncLoadError then
-  begin
-    SSL_CIPHER_get_version :=  @ERROR_SSL_CIPHER_get_version;
-  end;
+  if not assigned(SSL_CIPHER_get_version) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_get_version');
+  Result := SSL_CIPHER_get_version(c);
+end;
 
+function Load_SSL_CIPHER_get_name(const c: PSSL_CIPHER): PAnsiChar; cdecl;
+begin
   SSL_CIPHER_get_name := LoadLibSSLFunction('SSL_CIPHER_get_name');
-  FuncLoadError := not assigned(SSL_CIPHER_get_name);
-  if FuncLoadError then
-  begin
-    SSL_CIPHER_get_name :=  @ERROR_SSL_CIPHER_get_name;
-  end;
+  if not assigned(SSL_CIPHER_get_name) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_get_name');
+  Result := SSL_CIPHER_get_name(c);
+end;
 
+function Load_SSL_CIPHER_standard_name(const c: PSSL_CIPHER): PAnsiChar; cdecl;
+begin
   SSL_CIPHER_standard_name := LoadLibSSLFunction('SSL_CIPHER_standard_name');
-  FuncLoadError := not assigned(SSL_CIPHER_standard_name);
-  if FuncLoadError then
-  begin
-    SSL_CIPHER_standard_name :=  @ERROR_SSL_CIPHER_standard_name;
-  end;
+  if not assigned(SSL_CIPHER_standard_name) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_standard_name');
+  Result := SSL_CIPHER_standard_name(c);
+end;
 
+function Load_OPENSSL_cipher_name(const rfc_name: PAnsiChar): PAnsiChar; cdecl;
+begin
   OPENSSL_cipher_name := LoadLibSSLFunction('OPENSSL_cipher_name');
-  FuncLoadError := not assigned(OPENSSL_cipher_name);
-  if FuncLoadError then
-  begin
-    OPENSSL_cipher_name :=  @ERROR_OPENSSL_cipher_name;
-  end;
+  if not assigned(OPENSSL_cipher_name) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_cipher_name');
+  Result := OPENSSL_cipher_name(rfc_name);
+end;
 
+function Load_SSL_CIPHER_get_id(const c: PSSL_CIPHER): TOpenSSL_C_UINT32; cdecl;
+begin
   SSL_CIPHER_get_id := LoadLibSSLFunction('SSL_CIPHER_get_id');
-  FuncLoadError := not assigned(SSL_CIPHER_get_id);
-  if FuncLoadError then
-  begin
-    SSL_CIPHER_get_id :=  @ERROR_SSL_CIPHER_get_id;
-  end;
+  if not assigned(SSL_CIPHER_get_id) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_get_id');
+  Result := SSL_CIPHER_get_id(c);
+end;
 
+function Load_SSL_CIPHER_get_protocol_id(const c: PSSL_CIPHER): TOpenSSL_C_UINT16; cdecl;
+begin
   SSL_CIPHER_get_protocol_id := LoadLibSSLFunction('SSL_CIPHER_get_protocol_id');
-  FuncLoadError := not assigned(SSL_CIPHER_get_protocol_id);
-  if FuncLoadError then
-  begin
-    SSL_CIPHER_get_protocol_id :=  @ERROR_SSL_CIPHER_get_protocol_id;
-  end;
+  if not assigned(SSL_CIPHER_get_protocol_id) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_get_protocol_id');
+  Result := SSL_CIPHER_get_protocol_id(c);
+end;
 
+function Load_SSL_CIPHER_get_kx_nid(const c: PSSL_CIPHER): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CIPHER_get_kx_nid := LoadLibSSLFunction('SSL_CIPHER_get_kx_nid');
-  FuncLoadError := not assigned(SSL_CIPHER_get_kx_nid);
-  if FuncLoadError then
-  begin
-    SSL_CIPHER_get_kx_nid :=  @ERROR_SSL_CIPHER_get_kx_nid;
-  end;
+  if not assigned(SSL_CIPHER_get_kx_nid) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_get_kx_nid');
+  Result := SSL_CIPHER_get_kx_nid(c);
+end;
 
+function Load_SSL_CIPHER_get_auth_nid(const c: PSSL_CIPHER): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CIPHER_get_auth_nid := LoadLibSSLFunction('SSL_CIPHER_get_auth_nid');
-  FuncLoadError := not assigned(SSL_CIPHER_get_auth_nid);
-  if FuncLoadError then
-  begin
-    SSL_CIPHER_get_auth_nid :=  @ERROR_SSL_CIPHER_get_auth_nid;
-  end;
+  if not assigned(SSL_CIPHER_get_auth_nid) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_get_auth_nid');
+  Result := SSL_CIPHER_get_auth_nid(c);
+end;
 
+function Load_SSL_CIPHER_get_handshake_digest(const c: PSSL_CIPHER): PEVP_MD; cdecl;
+begin
   SSL_CIPHER_get_handshake_digest := LoadLibSSLFunction('SSL_CIPHER_get_handshake_digest');
-  FuncLoadError := not assigned(SSL_CIPHER_get_handshake_digest);
-  if FuncLoadError then
-  begin
-    SSL_CIPHER_get_handshake_digest :=  @ERROR_SSL_CIPHER_get_handshake_digest;
-  end;
+  if not assigned(SSL_CIPHER_get_handshake_digest) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_get_handshake_digest');
+  Result := SSL_CIPHER_get_handshake_digest(c);
+end;
 
+function Load_SSL_CIPHER_is_aead(const c: PSSL_CIPHER): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CIPHER_is_aead := LoadLibSSLFunction('SSL_CIPHER_is_aead');
-  FuncLoadError := not assigned(SSL_CIPHER_is_aead);
-  if FuncLoadError then
-  begin
-    SSL_CIPHER_is_aead :=  @ERROR_SSL_CIPHER_is_aead;
-  end;
+  if not assigned(SSL_CIPHER_is_aead) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_is_aead');
+  Result := SSL_CIPHER_is_aead(c);
+end;
 
+function Load_SSL_get_fd(const s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_get_fd := LoadLibSSLFunction('SSL_get_fd');
-  FuncLoadError := not assigned(SSL_get_fd);
-  if FuncLoadError then
-  begin
-    SSL_get_fd :=  @ERROR_SSL_get_fd;
-  end;
+  if not assigned(SSL_get_fd) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_fd');
+  Result := SSL_get_fd(s);
+end;
 
+function Load_SSL_get_rfd(const s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_get_rfd := LoadLibSSLFunction('SSL_get_rfd');
-  FuncLoadError := not assigned(SSL_get_rfd);
-  if FuncLoadError then
-  begin
-    SSL_get_rfd :=  @ERROR_SSL_get_rfd;
-  end;
+  if not assigned(SSL_get_rfd) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_rfd');
+  Result := SSL_get_rfd(s);
+end;
 
+function Load_SSL_get_wfd(const s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_get_wfd := LoadLibSSLFunction('SSL_get_wfd');
-  FuncLoadError := not assigned(SSL_get_wfd);
-  if FuncLoadError then
-  begin
-    SSL_get_wfd :=  @ERROR_SSL_get_wfd;
-  end;
+  if not assigned(SSL_get_wfd) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_wfd');
+  Result := SSL_get_wfd(s);
+end;
 
+function Load_SSL_get_cipher_list(const s: PSSL; n: TOpenSSL_C_INT): PAnsiChar; cdecl;
+begin
   SSL_get_cipher_list := LoadLibSSLFunction('SSL_get_cipher_list');
-  FuncLoadError := not assigned(SSL_get_cipher_list);
-  if FuncLoadError then
-  begin
-    SSL_get_cipher_list :=  @ERROR_SSL_get_cipher_list;
-  end;
+  if not assigned(SSL_get_cipher_list) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_cipher_list');
+  Result := SSL_get_cipher_list(s,n);
+end;
 
+function Load_SSL_get_shared_ciphers(const s: PSSL; buf: PAnsiChar; size: TOpenSSL_C_INT): PAnsiChar; cdecl;
+begin
   SSL_get_shared_ciphers := LoadLibSSLFunction('SSL_get_shared_ciphers');
-  FuncLoadError := not assigned(SSL_get_shared_ciphers);
-  if FuncLoadError then
-  begin
-    SSL_get_shared_ciphers :=  @ERROR_SSL_get_shared_ciphers;
-  end;
+  if not assigned(SSL_get_shared_ciphers) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_shared_ciphers');
+  Result := SSL_get_shared_ciphers(s,buf,size);
+end;
 
+function Load_SSL_get_read_ahead(const s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_get_read_ahead := LoadLibSSLFunction('SSL_get_read_ahead');
-  FuncLoadError := not assigned(SSL_get_read_ahead);
-  if FuncLoadError then
-  begin
-    SSL_get_read_ahead :=  @ERROR_SSL_get_read_ahead;
-  end;
+  if not assigned(SSL_get_read_ahead) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_read_ahead');
+  Result := SSL_get_read_ahead(s);
+end;
 
+function Load_SSL_pending(const s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_pending := LoadLibSSLFunction('SSL_pending');
-  FuncLoadError := not assigned(SSL_pending);
-  if FuncLoadError then
-  begin
-    SSL_pending :=  @ERROR_SSL_pending;
-  end;
+  if not assigned(SSL_pending) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_pending');
+  Result := SSL_pending(s);
+end;
 
+function Load_SSL_has_pending(const s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_has_pending := LoadLibSSLFunction('SSL_has_pending');
-  FuncLoadError := not assigned(SSL_has_pending);
-  if FuncLoadError then
-  begin
-    SSL_has_pending :=  @ERROR_SSL_has_pending;
-  end;
+  if not assigned(SSL_has_pending) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_has_pending');
+  Result := SSL_has_pending(s);
+end;
 
+function Load_SSL_set_fd(s: PSSL; fd: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set_fd := LoadLibSSLFunction('SSL_set_fd');
-  FuncLoadError := not assigned(SSL_set_fd);
-  if FuncLoadError then
-  begin
-    SSL_set_fd :=  @ERROR_SSL_set_fd;
-  end;
+  if not assigned(SSL_set_fd) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_fd');
+  Result := SSL_set_fd(s,fd);
+end;
 
+function Load_SSL_set_rfd(s: PSSL; fd: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set_rfd := LoadLibSSLFunction('SSL_set_rfd');
-  FuncLoadError := not assigned(SSL_set_rfd);
-  if FuncLoadError then
-  begin
-    SSL_set_rfd :=  @ERROR_SSL_set_rfd;
-  end;
+  if not assigned(SSL_set_rfd) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_rfd');
+  Result := SSL_set_rfd(s,fd);
+end;
 
+function Load_SSL_set_wfd(s: PSSL; fd: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set_wfd := LoadLibSSLFunction('SSL_set_wfd');
-  FuncLoadError := not assigned(SSL_set_wfd);
-  if FuncLoadError then
-  begin
-    SSL_set_wfd :=  @ERROR_SSL_set_wfd;
-  end;
+  if not assigned(SSL_set_wfd) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_wfd');
+  Result := SSL_set_wfd(s,fd);
+end;
 
+procedure Load_SSL_set0_rbio(s: PSSL; rbio: PBIO); cdecl;
+begin
   SSL_set0_rbio := LoadLibSSLFunction('SSL_set0_rbio');
-  FuncLoadError := not assigned(SSL_set0_rbio);
-  if FuncLoadError then
-  begin
-    SSL_set0_rbio :=  @ERROR_SSL_set0_rbio;
-  end;
+  if not assigned(SSL_set0_rbio) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set0_rbio');
+  SSL_set0_rbio(s,rbio);
+end;
 
+procedure Load_SSL_set0_wbio(s: PSSL; wbio: PBIO); cdecl;
+begin
   SSL_set0_wbio := LoadLibSSLFunction('SSL_set0_wbio');
-  FuncLoadError := not assigned(SSL_set0_wbio);
-  if FuncLoadError then
-  begin
-    SSL_set0_wbio :=  @ERROR_SSL_set0_wbio;
-  end;
+  if not assigned(SSL_set0_wbio) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set0_wbio');
+  SSL_set0_wbio(s,wbio);
+end;
 
+procedure Load_SSL_set_bio(s: PSSL; rbio: PBIO; wbio: PBIO); cdecl;
+begin
   SSL_set_bio := LoadLibSSLFunction('SSL_set_bio');
-  FuncLoadError := not assigned(SSL_set_bio);
-  if FuncLoadError then
-  begin
-    SSL_set_bio :=  @ERROR_SSL_set_bio;
-  end;
+  if not assigned(SSL_set_bio) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_bio');
+  SSL_set_bio(s,rbio,wbio);
+end;
 
+function Load_SSL_get_rbio(const s: PSSL): PBIO; cdecl;
+begin
   SSL_get_rbio := LoadLibSSLFunction('SSL_get_rbio');
-  FuncLoadError := not assigned(SSL_get_rbio);
-  if FuncLoadError then
-  begin
-    SSL_get_rbio :=  @ERROR_SSL_get_rbio;
-  end;
+  if not assigned(SSL_get_rbio) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_rbio');
+  Result := SSL_get_rbio(s);
+end;
 
+function Load_SSL_get_wbio(const s: PSSL): PBIO; cdecl;
+begin
   SSL_get_wbio := LoadLibSSLFunction('SSL_get_wbio');
-  FuncLoadError := not assigned(SSL_get_wbio);
-  if FuncLoadError then
-  begin
-    SSL_get_wbio :=  @ERROR_SSL_get_wbio;
-  end;
+  if not assigned(SSL_get_wbio) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_wbio');
+  Result := SSL_get_wbio(s);
+end;
 
+function Load_SSL_set_cipher_list(s: PSSL; const str: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set_cipher_list := LoadLibSSLFunction('SSL_set_cipher_list');
-  FuncLoadError := not assigned(SSL_set_cipher_list);
-  if FuncLoadError then
-  begin
-    SSL_set_cipher_list :=  @ERROR_SSL_set_cipher_list;
-  end;
+  if not assigned(SSL_set_cipher_list) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_cipher_list');
+  Result := SSL_set_cipher_list(s,str);
+end;
 
+function Load_SSL_CTX_set_ciphersuites(ctx: PSSL_CTX; const str: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_ciphersuites := LoadLibSSLFunction('SSL_CTX_set_ciphersuites');
-  FuncLoadError := not assigned(SSL_CTX_set_ciphersuites);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_ciphersuites :=  @ERROR_SSL_CTX_set_ciphersuites;
-  end;
+  if not assigned(SSL_CTX_set_ciphersuites) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_ciphersuites');
+  Result := SSL_CTX_set_ciphersuites(ctx,str);
+end;
 
+function Load_SSL_set_ciphersuites(s: PSSL; const str: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set_ciphersuites := LoadLibSSLFunction('SSL_set_ciphersuites');
-  FuncLoadError := not assigned(SSL_set_ciphersuites);
-  if FuncLoadError then
-  begin
-    SSL_set_ciphersuites :=  @ERROR_SSL_set_ciphersuites;
-  end;
+  if not assigned(SSL_set_ciphersuites) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_ciphersuites');
+  Result := SSL_set_ciphersuites(s,str);
+end;
 
+function Load_SSL_get_verify_mode(const s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_get_verify_mode := LoadLibSSLFunction('SSL_get_verify_mode');
-  FuncLoadError := not assigned(SSL_get_verify_mode);
-  if FuncLoadError then
-  begin
-    SSL_get_verify_mode :=  @ERROR_SSL_get_verify_mode;
-  end;
+  if not assigned(SSL_get_verify_mode) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_verify_mode');
+  Result := SSL_get_verify_mode(s);
+end;
 
+function Load_SSL_get_verify_depth(const s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_get_verify_depth := LoadLibSSLFunction('SSL_get_verify_depth');
-  FuncLoadError := not assigned(SSL_get_verify_depth);
-  if FuncLoadError then
-  begin
-    SSL_get_verify_depth :=  @ERROR_SSL_get_verify_depth;
-  end;
+  if not assigned(SSL_get_verify_depth) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_verify_depth');
+  Result := SSL_get_verify_depth(s);
+end;
 
+function Load_SSL_get_verify_callback(const s: PSSL): SSL_verify_cb; cdecl;
+begin
   SSL_get_verify_callback := LoadLibSSLFunction('SSL_get_verify_callback');
-  FuncLoadError := not assigned(SSL_get_verify_callback);
-  if FuncLoadError then
-  begin
-    SSL_get_verify_callback :=  @ERROR_SSL_get_verify_callback;
-  end;
+  if not assigned(SSL_get_verify_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_verify_callback');
+  Result := SSL_get_verify_callback(s);
+end;
 
+procedure Load_SSL_set_read_ahead(s: PSSL; yes: TOpenSSL_C_INT); cdecl;
+begin
   SSL_set_read_ahead := LoadLibSSLFunction('SSL_set_read_ahead');
-  FuncLoadError := not assigned(SSL_set_read_ahead);
-  if FuncLoadError then
-  begin
-    SSL_set_read_ahead :=  @ERROR_SSL_set_read_ahead;
-  end;
+  if not assigned(SSL_set_read_ahead) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_read_ahead');
+  SSL_set_read_ahead(s,yes);
+end;
 
+procedure Load_SSL_set_verify(s: PSSL; mode: TOpenSSL_C_INT; callback: SSL_verify_cb); cdecl;
+begin
   SSL_set_verify := LoadLibSSLFunction('SSL_set_verify');
-  FuncLoadError := not assigned(SSL_set_verify);
-  if FuncLoadError then
-  begin
-    SSL_set_verify :=  @ERROR_SSL_set_verify;
-  end;
+  if not assigned(SSL_set_verify) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_verify');
+  SSL_set_verify(s,mode,callback);
+end;
 
+procedure Load_SSL_set_verify_depth(s: PSSL; depth: TOpenSSL_C_INT); cdecl;
+begin
   SSL_set_verify_depth := LoadLibSSLFunction('SSL_set_verify_depth');
-  FuncLoadError := not assigned(SSL_set_verify_depth);
-  if FuncLoadError then
-  begin
-    SSL_set_verify_depth :=  @ERROR_SSL_set_verify_depth;
-  end;
+  if not assigned(SSL_set_verify_depth) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_verify_depth');
+  SSL_set_verify_depth(s,depth);
+end;
 
+function Load_SSL_use_RSAPrivateKey(ssl: PSSL; rsa: PRSA): TOpenSSL_C_INT; cdecl;
+begin
   SSL_use_RSAPrivateKey := LoadLibSSLFunction('SSL_use_RSAPrivateKey');
-  FuncLoadError := not assigned(SSL_use_RSAPrivateKey);
-  if FuncLoadError then
-  begin
-    SSL_use_RSAPrivateKey :=  @ERROR_SSL_use_RSAPrivateKey;
-  end;
+  if not assigned(SSL_use_RSAPrivateKey) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_use_RSAPrivateKey');
+  Result := SSL_use_RSAPrivateKey(ssl,rsa);
+end;
 
+function Load_SSL_use_RSAPrivateKey_ASN1(ssl: PSSL; const d: PByte; len: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
+begin
   SSL_use_RSAPrivateKey_ASN1 := LoadLibSSLFunction('SSL_use_RSAPrivateKey_ASN1');
-  FuncLoadError := not assigned(SSL_use_RSAPrivateKey_ASN1);
-  if FuncLoadError then
-  begin
-    SSL_use_RSAPrivateKey_ASN1 :=  @ERROR_SSL_use_RSAPrivateKey_ASN1;
-  end;
+  if not assigned(SSL_use_RSAPrivateKey_ASN1) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_use_RSAPrivateKey_ASN1');
+  Result := SSL_use_RSAPrivateKey_ASN1(ssl,d,len);
+end;
 
+function Load_SSL_use_PrivateKey(ssl: PSSL; pkey: PEVP_PKEY): TOpenSSL_C_INT; cdecl;
+begin
   SSL_use_PrivateKey := LoadLibSSLFunction('SSL_use_PrivateKey');
-  FuncLoadError := not assigned(SSL_use_PrivateKey);
-  if FuncLoadError then
-  begin
-    SSL_use_PrivateKey :=  @ERROR_SSL_use_PrivateKey;
-  end;
+  if not assigned(SSL_use_PrivateKey) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_use_PrivateKey');
+  Result := SSL_use_PrivateKey(ssl,pkey);
+end;
 
+function Load_SSL_use_PrivateKey_ASN1(pk: TOpenSSL_C_INT; ssl: PSSL; const d: PByte; len: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
+begin
   SSL_use_PrivateKey_ASN1 := LoadLibSSLFunction('SSL_use_PrivateKey_ASN1');
-  FuncLoadError := not assigned(SSL_use_PrivateKey_ASN1);
-  if FuncLoadError then
-  begin
-    SSL_use_PrivateKey_ASN1 :=  @ERROR_SSL_use_PrivateKey_ASN1;
-  end;
+  if not assigned(SSL_use_PrivateKey_ASN1) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_use_PrivateKey_ASN1');
+  Result := SSL_use_PrivateKey_ASN1(pk,ssl,d,len);
+end;
 
+function Load_SSL_use_certificate(ssl: PSSL; x: PX509): TOpenSSL_C_INT; cdecl;
+begin
   SSL_use_certificate := LoadLibSSLFunction('SSL_use_certificate');
-  FuncLoadError := not assigned(SSL_use_certificate);
-  if FuncLoadError then
-  begin
-    SSL_use_certificate :=  @ERROR_SSL_use_certificate;
-  end;
+  if not assigned(SSL_use_certificate) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_use_certificate');
+  Result := SSL_use_certificate(ssl,x);
+end;
 
+function Load_SSL_use_certificate_ASN1(ssl: PSSL; const d: PByte; len: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_use_certificate_ASN1 := LoadLibSSLFunction('SSL_use_certificate_ASN1');
-  FuncLoadError := not assigned(SSL_use_certificate_ASN1);
-  if FuncLoadError then
-  begin
-    SSL_use_certificate_ASN1 :=  @ERROR_SSL_use_certificate_ASN1;
-  end;
+  if not assigned(SSL_use_certificate_ASN1) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_use_certificate_ASN1');
+  Result := SSL_use_certificate_ASN1(ssl,d,len);
+end;
 
+function Load_SSL_CTX_use_serverinfo(ctx: PSSL_CTX; const serverinfo: PByte; serverinfo_length: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_use_serverinfo := LoadLibSSLFunction('SSL_CTX_use_serverinfo');
-  FuncLoadError := not assigned(SSL_CTX_use_serverinfo);
-  if FuncLoadError then
-  begin
-    SSL_CTX_use_serverinfo :=  @ERROR_SSL_CTX_use_serverinfo;
-  end;
+  if not assigned(SSL_CTX_use_serverinfo) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_serverinfo');
+  Result := SSL_CTX_use_serverinfo(ctx,serverinfo,serverinfo_length);
+end;
 
+function Load_SSL_CTX_use_serverinfo_ex(ctx: PSSL_CTX; version: TOpenSSL_C_UINT; const serverinfo: PByte; serverinfo_length: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_use_serverinfo_ex := LoadLibSSLFunction('SSL_CTX_use_serverinfo_ex');
-  FuncLoadError := not assigned(SSL_CTX_use_serverinfo_ex);
-  if FuncLoadError then
-  begin
-    SSL_CTX_use_serverinfo_ex :=  @ERROR_SSL_CTX_use_serverinfo_ex;
-  end;
+  if not assigned(SSL_CTX_use_serverinfo_ex) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_serverinfo_ex');
+  Result := SSL_CTX_use_serverinfo_ex(ctx,version,serverinfo,serverinfo_length);
+end;
 
+function Load_SSL_CTX_use_serverinfo_file(ctx: PSSL_CTX; const file_: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_use_serverinfo_file := LoadLibSSLFunction('SSL_CTX_use_serverinfo_file');
-  FuncLoadError := not assigned(SSL_CTX_use_serverinfo_file);
-  if FuncLoadError then
-  begin
-    SSL_CTX_use_serverinfo_file :=  @ERROR_SSL_CTX_use_serverinfo_file;
-  end;
+  if not assigned(SSL_CTX_use_serverinfo_file) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_serverinfo_file');
+  Result := SSL_CTX_use_serverinfo_file(ctx,file_);
+end;
 
+function Load_SSL_use_RSAPrivateKey_file(ssl: PSSL; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_use_RSAPrivateKey_file := LoadLibSSLFunction('SSL_use_RSAPrivateKey_file');
-  FuncLoadError := not assigned(SSL_use_RSAPrivateKey_file);
-  if FuncLoadError then
-  begin
-    SSL_use_RSAPrivateKey_file :=  @ERROR_SSL_use_RSAPrivateKey_file;
-  end;
+  if not assigned(SSL_use_RSAPrivateKey_file) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_use_RSAPrivateKey_file');
+  Result := SSL_use_RSAPrivateKey_file(ssl,file_,type_);
+end;
 
+function Load_SSL_use_PrivateKey_file(ssl: PSSL; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_use_PrivateKey_file := LoadLibSSLFunction('SSL_use_PrivateKey_file');
-  FuncLoadError := not assigned(SSL_use_PrivateKey_file);
-  if FuncLoadError then
-  begin
-    SSL_use_PrivateKey_file :=  @ERROR_SSL_use_PrivateKey_file;
-  end;
+  if not assigned(SSL_use_PrivateKey_file) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_use_PrivateKey_file');
+  Result := SSL_use_PrivateKey_file(ssl,file_,type_);
+end;
 
+function Load_SSL_use_certificate_file(ssl: PSSL; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_use_certificate_file := LoadLibSSLFunction('SSL_use_certificate_file');
-  FuncLoadError := not assigned(SSL_use_certificate_file);
-  if FuncLoadError then
-  begin
-    SSL_use_certificate_file :=  @ERROR_SSL_use_certificate_file;
-  end;
+  if not assigned(SSL_use_certificate_file) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_use_certificate_file');
+  Result := SSL_use_certificate_file(ssl,file_,type_);
+end;
 
+function Load_SSL_CTX_use_RSAPrivateKey_file(ctx: PSSL_CTX; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_use_RSAPrivateKey_file := LoadLibSSLFunction('SSL_CTX_use_RSAPrivateKey_file');
-  FuncLoadError := not assigned(SSL_CTX_use_RSAPrivateKey_file);
-  if FuncLoadError then
-  begin
-    SSL_CTX_use_RSAPrivateKey_file :=  @ERROR_SSL_CTX_use_RSAPrivateKey_file;
-  end;
+  if not assigned(SSL_CTX_use_RSAPrivateKey_file) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_RSAPrivateKey_file');
+  Result := SSL_CTX_use_RSAPrivateKey_file(ctx,file_,type_);
+end;
 
+function Load_SSL_CTX_use_PrivateKey_file(ctx: PSSL_CTX; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_use_PrivateKey_file := LoadLibSSLFunction('SSL_CTX_use_PrivateKey_file');
-  FuncLoadError := not assigned(SSL_CTX_use_PrivateKey_file);
-  if FuncLoadError then
-  begin
-    SSL_CTX_use_PrivateKey_file :=  @ERROR_SSL_CTX_use_PrivateKey_file;
-  end;
+  if not assigned(SSL_CTX_use_PrivateKey_file) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_PrivateKey_file');
+  Result := SSL_CTX_use_PrivateKey_file(ctx,file_,type_);
+end;
 
+function Load_SSL_CTX_use_certificate_file(ctx: PSSL_CTX; const file_: PAnsiChar; type_: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_use_certificate_file := LoadLibSSLFunction('SSL_CTX_use_certificate_file');
-  FuncLoadError := not assigned(SSL_CTX_use_certificate_file);
-  if FuncLoadError then
-  begin
-    SSL_CTX_use_certificate_file :=  @ERROR_SSL_CTX_use_certificate_file;
-  end;
+  if not assigned(SSL_CTX_use_certificate_file) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_certificate_file');
+  Result := SSL_CTX_use_certificate_file(ctx,file_,type_);
+end;
 
+function Load_SSL_CTX_use_certificate_chain_file(ctx: PSSL_CTX; const file_: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_use_certificate_chain_file := LoadLibSSLFunction('SSL_CTX_use_certificate_chain_file');
-  FuncLoadError := not assigned(SSL_CTX_use_certificate_chain_file);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_use_certificate_chain_file) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     SSL_CTX_use_certificate_chain_file := @COMPAT_SSL_CTX_use_certificate_chain_file;
 {$ELSE}
-    SSL_CTX_use_certificate_chain_file :=  @ERROR_SSL_CTX_use_certificate_chain_file;
-{$ENDIF}
-  end;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_certificate_chain_file');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  Result := SSL_CTX_use_certificate_chain_file(ctx,file_);
+end;
 
+function Load_SSL_use_certificate_chain_file(ssl: PSSL; const file_: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_use_certificate_chain_file := LoadLibSSLFunction('SSL_use_certificate_chain_file');
-  FuncLoadError := not assigned(SSL_use_certificate_chain_file);
-  if FuncLoadError then
-  begin
-    SSL_use_certificate_chain_file :=  @ERROR_SSL_use_certificate_chain_file;
-  end;
+  if not assigned(SSL_use_certificate_chain_file) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_use_certificate_chain_file');
+  Result := SSL_use_certificate_chain_file(ssl,file_);
+end;
 
+function Load_SSL_load_client_CA_file(const file_: PAnsiChar): PSTACK_OF_X509_NAME; cdecl;
+begin
   SSL_load_client_CA_file := LoadLibSSLFunction('SSL_load_client_CA_file');
-  FuncLoadError := not assigned(SSL_load_client_CA_file);
-  if FuncLoadError then
-  begin
-    SSL_load_client_CA_file :=  @ERROR_SSL_load_client_CA_file;
-  end;
+  if not assigned(SSL_load_client_CA_file) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_load_client_CA_file');
+  Result := SSL_load_client_CA_file(file_);
+end;
 
+function Load_SSL_add_file_cert_subjects_to_stack(stackCAs: PSTACK_OF_X509_NAME; const file_: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_add_file_cert_subjects_to_stack := LoadLibSSLFunction('SSL_add_file_cert_subjects_to_stack');
-  FuncLoadError := not assigned(SSL_add_file_cert_subjects_to_stack);
-  if FuncLoadError then
-  begin
-    SSL_add_file_cert_subjects_to_stack :=  @ERROR_SSL_add_file_cert_subjects_to_stack;
-  end;
+  if not assigned(SSL_add_file_cert_subjects_to_stack) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_add_file_cert_subjects_to_stack');
+  Result := SSL_add_file_cert_subjects_to_stack(stackCAs,file_);
+end;
 
+function Load_SSL_add_dir_cert_subjects_to_stack(stackCAs: PSTACK_OF_X509_NAME; const dir_: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_add_dir_cert_subjects_to_stack := LoadLibSSLFunction('SSL_add_dir_cert_subjects_to_stack');
-  FuncLoadError := not assigned(SSL_add_dir_cert_subjects_to_stack);
-  if FuncLoadError then
-  begin
-    SSL_add_dir_cert_subjects_to_stack :=  @ERROR_SSL_add_dir_cert_subjects_to_stack;
-  end;
+  if not assigned(SSL_add_dir_cert_subjects_to_stack) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_add_dir_cert_subjects_to_stack');
+  Result := SSL_add_dir_cert_subjects_to_stack(stackCAs,dir_);
+end;
 
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+procedure Load_SSL_load_error_strings; cdecl;
+begin
   SSL_load_error_strings := LoadLibSSLFunction('SSL_load_error_strings');
-  FuncLoadError := not assigned(SSL_load_error_strings);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_load_error_strings) then
     SSL_load_error_strings := @COMPAT_SSL_load_error_strings;
-    if SSL_load_error_strings_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_load_error_strings');
-  end;
+  SSL_load_error_strings();
+end;
 
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_SSL_state_string(const s: PSSL): PAnsiChar; cdecl;
+begin
   SSL_state_string := LoadLibSSLFunction('SSL_state_string');
-  FuncLoadError := not assigned(SSL_state_string);
-  if FuncLoadError then
-  begin
-    SSL_state_string :=  @ERROR_SSL_state_string;
-  end;
+  if not assigned(SSL_state_string) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_state_string');
+  Result := SSL_state_string(s);
+end;
 
+function Load_SSL_rstate_string(const s: PSSL): PAnsiChar; cdecl;
+begin
   SSL_rstate_string := LoadLibSSLFunction('SSL_rstate_string');
-  FuncLoadError := not assigned(SSL_rstate_string);
-  if FuncLoadError then
-  begin
-    SSL_rstate_string :=  @ERROR_SSL_rstate_string;
-  end;
+  if not assigned(SSL_rstate_string) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_rstate_string');
+  Result := SSL_rstate_string(s);
+end;
 
+function Load_SSL_state_string_long(const s: PSSL): PAnsiChar; cdecl;
+begin
   SSL_state_string_long := LoadLibSSLFunction('SSL_state_string_long');
-  FuncLoadError := not assigned(SSL_state_string_long);
-  if FuncLoadError then
-  begin
-    SSL_state_string_long :=  @ERROR_SSL_state_string_long;
-  end;
+  if not assigned(SSL_state_string_long) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_state_string_long');
+  Result := SSL_state_string_long(s);
+end;
 
+function Load_SSL_rstate_string_long(const s: PSSL): PAnsiChar; cdecl;
+begin
   SSL_rstate_string_long := LoadLibSSLFunction('SSL_rstate_string_long');
-  FuncLoadError := not assigned(SSL_rstate_string_long);
-  if FuncLoadError then
-  begin
-    SSL_rstate_string_long :=  @ERROR_SSL_rstate_string_long;
-  end;
+  if not assigned(SSL_rstate_string_long) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_rstate_string_long');
+  Result := SSL_rstate_string_long(s);
+end;
 
+function Load_SSL_SESSION_get_time(const s: PSSL_SESSION): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_SESSION_get_time := LoadLibSSLFunction('SSL_SESSION_get_time');
-  FuncLoadError := not assigned(SSL_SESSION_get_time);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_get_time :=  @ERROR_SSL_SESSION_get_time;
-  end;
+  if not assigned(SSL_SESSION_get_time) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get_time');
+  Result := SSL_SESSION_get_time(s);
+end;
 
+function Load_SSL_SESSION_set_time(s: PSSL_SESSION; t: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_SESSION_set_time := LoadLibSSLFunction('SSL_SESSION_set_time');
-  FuncLoadError := not assigned(SSL_SESSION_set_time);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_set_time :=  @ERROR_SSL_SESSION_set_time;
-  end;
+  if not assigned(SSL_SESSION_set_time) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set_time');
+  Result := SSL_SESSION_set_time(s,t);
+end;
 
+function Load_SSL_SESSION_get_timeout(const s: PSSL_SESSION): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_SESSION_get_timeout := LoadLibSSLFunction('SSL_SESSION_get_timeout');
-  FuncLoadError := not assigned(SSL_SESSION_get_timeout);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_get_timeout :=  @ERROR_SSL_SESSION_get_timeout;
-  end;
+  if not assigned(SSL_SESSION_get_timeout) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get_timeout');
+  Result := SSL_SESSION_get_timeout(s);
+end;
 
+function Load_SSL_SESSION_set_timeout(s: PSSL_SESSION; t: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_SESSION_set_timeout := LoadLibSSLFunction('SSL_SESSION_set_timeout');
-  FuncLoadError := not assigned(SSL_SESSION_set_timeout);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_set_timeout :=  @ERROR_SSL_SESSION_set_timeout;
-  end;
+  if not assigned(SSL_SESSION_set_timeout) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set_timeout');
+  Result := SSL_SESSION_set_timeout(s,t);
+end;
 
+function Load_SSL_SESSION_get_protocol_version(const s: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
+begin
   SSL_SESSION_get_protocol_version := LoadLibSSLFunction('SSL_SESSION_get_protocol_version');
-  FuncLoadError := not assigned(SSL_SESSION_get_protocol_version);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_SESSION_get_protocol_version) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     SSL_SESSION_get_protocol_version := @COMPAT_SSL_SESSION_get_protocol_version;
 {$ELSE}
-    SSL_SESSION_get_protocol_version :=  @ERROR_SSL_SESSION_get_protocol_version;
-{$ENDIF}
-  end;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get_protocol_version');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  Result := SSL_SESSION_get_protocol_version(s);
+end;
 
+function Load_SSL_SESSION_set_protocol_version(s: PSSL_SESSION; version: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_SESSION_set_protocol_version := LoadLibSSLFunction('SSL_SESSION_set_protocol_version');
-  FuncLoadError := not assigned(SSL_SESSION_set_protocol_version);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_set_protocol_version :=  @ERROR_SSL_SESSION_set_protocol_version;
-  end;
+  if not assigned(SSL_SESSION_set_protocol_version) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set_protocol_version');
+  Result := SSL_SESSION_set_protocol_version(s,version);
+end;
 
+function Load_SSL_SESSION_get0_hostname(const s: PSSL_SESSION): PAnsiChar; cdecl;
+begin
   SSL_SESSION_get0_hostname := LoadLibSSLFunction('SSL_SESSION_get0_hostname');
-  FuncLoadError := not assigned(SSL_SESSION_get0_hostname);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_get0_hostname :=  @ERROR_SSL_SESSION_get0_hostname;
-  end;
+  if not assigned(SSL_SESSION_get0_hostname) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get0_hostname');
+  Result := SSL_SESSION_get0_hostname(s);
+end;
 
+function Load_SSL_SESSION_set1_hostname(s: PSSL_SESSION; const hostname: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_SESSION_set1_hostname := LoadLibSSLFunction('SSL_SESSION_set1_hostname');
-  FuncLoadError := not assigned(SSL_SESSION_set1_hostname);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_set1_hostname :=  @ERROR_SSL_SESSION_set1_hostname;
-  end;
+  if not assigned(SSL_SESSION_set1_hostname) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set1_hostname');
+  Result := SSL_SESSION_set1_hostname(s,hostname);
+end;
 
+procedure Load_SSL_SESSION_get0_alpn_selected(const s: PSSL_SESSION; const alpn: PPByte; len: POpenSSL_C_SIZET); cdecl;
+begin
   SSL_SESSION_get0_alpn_selected := LoadLibSSLFunction('SSL_SESSION_get0_alpn_selected');
-  FuncLoadError := not assigned(SSL_SESSION_get0_alpn_selected);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_get0_alpn_selected :=  @ERROR_SSL_SESSION_get0_alpn_selected;
-  end;
+  if not assigned(SSL_SESSION_get0_alpn_selected) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get0_alpn_selected');
+  SSL_SESSION_get0_alpn_selected(s,alpn,len);
+end;
 
+function Load_SSL_SESSION_set1_alpn_selected(s: PSSL_SESSION; const alpn: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   SSL_SESSION_set1_alpn_selected := LoadLibSSLFunction('SSL_SESSION_set1_alpn_selected');
-  FuncLoadError := not assigned(SSL_SESSION_set1_alpn_selected);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_set1_alpn_selected :=  @ERROR_SSL_SESSION_set1_alpn_selected;
-  end;
+  if not assigned(SSL_SESSION_set1_alpn_selected) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set1_alpn_selected');
+  Result := SSL_SESSION_set1_alpn_selected(s,alpn,len);
+end;
 
+function Load_SSL_SESSION_get0_cipher(const s: PSSL_SESSION): PSSL_CIPHER; cdecl;
+begin
   SSL_SESSION_get0_cipher := LoadLibSSLFunction('SSL_SESSION_get0_cipher');
-  FuncLoadError := not assigned(SSL_SESSION_get0_cipher);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_get0_cipher :=  @ERROR_SSL_SESSION_get0_cipher;
-  end;
+  if not assigned(SSL_SESSION_get0_cipher) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get0_cipher');
+  Result := SSL_SESSION_get0_cipher(s);
+end;
 
+function Load_SSL_SESSION_set_cipher(s: PSSL_SESSION; const cipher: PSSL_CIPHER): TOpenSSL_C_INT; cdecl;
+begin
   SSL_SESSION_set_cipher := LoadLibSSLFunction('SSL_SESSION_set_cipher');
-  FuncLoadError := not assigned(SSL_SESSION_set_cipher);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_set_cipher :=  @ERROR_SSL_SESSION_set_cipher;
-  end;
+  if not assigned(SSL_SESSION_set_cipher) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set_cipher');
+  Result := SSL_SESSION_set_cipher(s,cipher);
+end;
 
+function Load_SSL_SESSION_has_ticket(const s: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
+begin
   SSL_SESSION_has_ticket := LoadLibSSLFunction('SSL_SESSION_has_ticket');
-  FuncLoadError := not assigned(SSL_SESSION_has_ticket);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_has_ticket :=  @ERROR_SSL_SESSION_has_ticket;
-  end;
+  if not assigned(SSL_SESSION_has_ticket) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_has_ticket');
+  Result := SSL_SESSION_has_ticket(s);
+end;
 
+function Load_SSL_SESSION_get_ticket_lifetime_hint(const s: PSSL_SESSION): TOpenSSL_C_ULONG; cdecl;
+begin
   SSL_SESSION_get_ticket_lifetime_hint := LoadLibSSLFunction('SSL_SESSION_get_ticket_lifetime_hint');
-  FuncLoadError := not assigned(SSL_SESSION_get_ticket_lifetime_hint);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_get_ticket_lifetime_hint :=  @ERROR_SSL_SESSION_get_ticket_lifetime_hint;
-  end;
+  if not assigned(SSL_SESSION_get_ticket_lifetime_hint) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get_ticket_lifetime_hint');
+  Result := SSL_SESSION_get_ticket_lifetime_hint(s);
+end;
 
+procedure Load_SSL_SESSION_get0_ticket(const s: PSSL_SESSION; const tick: PPByte; len: POpenSSL_C_SIZET); cdecl;
+begin
   SSL_SESSION_get0_ticket := LoadLibSSLFunction('SSL_SESSION_get0_ticket');
-  FuncLoadError := not assigned(SSL_SESSION_get0_ticket);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_get0_ticket :=  @ERROR_SSL_SESSION_get0_ticket;
-  end;
+  if not assigned(SSL_SESSION_get0_ticket) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get0_ticket');
+  SSL_SESSION_get0_ticket(s,tick,len);
+end;
 
+function Load_SSL_SESSION_get_max_early_data(const s: PSSL_SESSION): TOpenSSL_C_UINT32; cdecl;
+begin
   SSL_SESSION_get_max_early_data := LoadLibSSLFunction('SSL_SESSION_get_max_early_data');
-  FuncLoadError := not assigned(SSL_SESSION_get_max_early_data);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_get_max_early_data :=  @ERROR_SSL_SESSION_get_max_early_data;
-  end;
+  if not assigned(SSL_SESSION_get_max_early_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get_max_early_data');
+  Result := SSL_SESSION_get_max_early_data(s);
+end;
 
+function Load_SSL_SESSION_set_max_early_data(s: PSSL_SESSION; max_early_data: TOpenSSL_C_UINT32): TOpenSSL_C_INT; cdecl;
+begin
   SSL_SESSION_set_max_early_data := LoadLibSSLFunction('SSL_SESSION_set_max_early_data');
-  FuncLoadError := not assigned(SSL_SESSION_set_max_early_data);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_set_max_early_data :=  @ERROR_SSL_SESSION_set_max_early_data;
-  end;
+  if not assigned(SSL_SESSION_set_max_early_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set_max_early_data');
+  Result := SSL_SESSION_set_max_early_data(s,max_early_data);
+end;
 
+function Load_SSL_copy_session_id(to_: PSSL; const from: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_copy_session_id := LoadLibSSLFunction('SSL_copy_session_id');
-  FuncLoadError := not assigned(SSL_copy_session_id);
-  if FuncLoadError then
-  begin
-    SSL_copy_session_id :=  @ERROR_SSL_copy_session_id;
-  end;
+  if not assigned(SSL_copy_session_id) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_copy_session_id');
+  Result := SSL_copy_session_id(to_,from);
+end;
 
+function Load_SSL_SESSION_get0_peer(s: PSSL_SESSION): PX509; cdecl;
+begin
   SSL_SESSION_get0_peer := LoadLibSSLFunction('SSL_SESSION_get0_peer');
-  FuncLoadError := not assigned(SSL_SESSION_get0_peer);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_get0_peer :=  @ERROR_SSL_SESSION_get0_peer;
-  end;
+  if not assigned(SSL_SESSION_get0_peer) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get0_peer');
+  Result := SSL_SESSION_get0_peer(s);
+end;
 
+function Load_SSL_SESSION_set1_id_context(s: PSSL_SESSION; const sid_ctx: PByte; sid_ctx_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_SESSION_set1_id_context := LoadLibSSLFunction('SSL_SESSION_set1_id_context');
-  FuncLoadError := not assigned(SSL_SESSION_set1_id_context);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_set1_id_context :=  @ERROR_SSL_SESSION_set1_id_context;
-  end;
+  if not assigned(SSL_SESSION_set1_id_context) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set1_id_context');
+  Result := SSL_SESSION_set1_id_context(s,sid_ctx,sid_ctx_len);
+end;
 
+function Load_SSL_SESSION_set1_id(s: PSSL_SESSION; const sid: PByte; sid_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_SESSION_set1_id := LoadLibSSLFunction('SSL_SESSION_set1_id');
-  FuncLoadError := not assigned(SSL_SESSION_set1_id);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_set1_id :=  @ERROR_SSL_SESSION_set1_id;
-  end;
+  if not assigned(SSL_SESSION_set1_id) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set1_id');
+  Result := SSL_SESSION_set1_id(s,sid,sid_len);
+end;
 
+function Load_SSL_SESSION_is_resumable(const s: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
+begin
   SSL_SESSION_is_resumable := LoadLibSSLFunction('SSL_SESSION_is_resumable');
-  FuncLoadError := not assigned(SSL_SESSION_is_resumable);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_is_resumable :=  @ERROR_SSL_SESSION_is_resumable;
-  end;
+  if not assigned(SSL_SESSION_is_resumable) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_is_resumable');
+  Result := SSL_SESSION_is_resumable(s);
+end;
 
+function Load_SSL_SESSION_new: PSSL_SESSION; cdecl;
+begin
   SSL_SESSION_new := LoadLibSSLFunction('SSL_SESSION_new');
-  FuncLoadError := not assigned(SSL_SESSION_new);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_new :=  @ERROR_SSL_SESSION_new;
-  end;
+  if not assigned(SSL_SESSION_new) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_new');
+  Result := SSL_SESSION_new();
+end;
 
+function Load_SSL_SESSION_dup(src: PSSL_SESSION): PSSL_SESSION; cdecl;
+begin
   SSL_SESSION_dup := LoadLibSSLFunction('SSL_SESSION_dup');
-  FuncLoadError := not assigned(SSL_SESSION_dup);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_dup :=  @ERROR_SSL_SESSION_dup;
-  end;
+  if not assigned(SSL_SESSION_dup) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_dup');
+  Result := SSL_SESSION_dup(src);
+end;
 
+function Load_SSL_SESSION_get_id(const s: PSSL_SESSION; len: POpenSSL_C_UINT): PByte; cdecl;
+begin
   SSL_SESSION_get_id := LoadLibSSLFunction('SSL_SESSION_get_id');
-  FuncLoadError := not assigned(SSL_SESSION_get_id);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_get_id :=  @ERROR_SSL_SESSION_get_id;
-  end;
+  if not assigned(SSL_SESSION_get_id) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get_id');
+  Result := SSL_SESSION_get_id(s,len);
+end;
 
+function Load_SSL_SESSION_get0_id_context(const s: PSSL_SESSION; len: POpenSSL_C_UINT): PByte; cdecl;
+begin
   SSL_SESSION_get0_id_context := LoadLibSSLFunction('SSL_SESSION_get0_id_context');
-  FuncLoadError := not assigned(SSL_SESSION_get0_id_context);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_get0_id_context :=  @ERROR_SSL_SESSION_get0_id_context;
-  end;
+  if not assigned(SSL_SESSION_get0_id_context) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get0_id_context');
+  Result := SSL_SESSION_get0_id_context(s,len);
+end;
 
+function Load_SSL_SESSION_get_compress_id(const s: PSSL_SESSION): TOpenSSL_C_UINT; cdecl;
+begin
   SSL_SESSION_get_compress_id := LoadLibSSLFunction('SSL_SESSION_get_compress_id');
-  FuncLoadError := not assigned(SSL_SESSION_get_compress_id);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_get_compress_id :=  @ERROR_SSL_SESSION_get_compress_id;
-  end;
+  if not assigned(SSL_SESSION_get_compress_id) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get_compress_id');
+  Result := SSL_SESSION_get_compress_id(s);
+end;
 
+function Load_SSL_SESSION_print(fp: PBIO; const ses: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
+begin
   SSL_SESSION_print := LoadLibSSLFunction('SSL_SESSION_print');
-  FuncLoadError := not assigned(SSL_SESSION_print);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_print :=  @ERROR_SSL_SESSION_print;
-  end;
+  if not assigned(SSL_SESSION_print) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_print');
+  Result := SSL_SESSION_print(fp,ses);
+end;
 
+function Load_SSL_SESSION_print_keylog(bp: PBIO; const x: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
+begin
   SSL_SESSION_print_keylog := LoadLibSSLFunction('SSL_SESSION_print_keylog');
-  FuncLoadError := not assigned(SSL_SESSION_print_keylog);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_print_keylog :=  @ERROR_SSL_SESSION_print_keylog;
-  end;
+  if not assigned(SSL_SESSION_print_keylog) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_print_keylog');
+  Result := SSL_SESSION_print_keylog(bp,x);
+end;
 
+function Load_SSL_SESSION_up_ref(ses: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
+begin
   SSL_SESSION_up_ref := LoadLibSSLFunction('SSL_SESSION_up_ref');
-  FuncLoadError := not assigned(SSL_SESSION_up_ref);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_up_ref :=  @ERROR_SSL_SESSION_up_ref;
-  end;
+  if not assigned(SSL_SESSION_up_ref) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_up_ref');
+  Result := SSL_SESSION_up_ref(ses);
+end;
 
+procedure Load_SSL_SESSION_free(ses: PSSL_SESSION); cdecl;
+begin
   SSL_SESSION_free := LoadLibSSLFunction('SSL_SESSION_free');
-  FuncLoadError := not assigned(SSL_SESSION_free);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_free :=  @ERROR_SSL_SESSION_free;
-  end;
+  if not assigned(SSL_SESSION_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_free');
+  SSL_SESSION_free(ses);
+end;
 
+function Load_SSL_set_session(to_: PSSL; session: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set_session := LoadLibSSLFunction('SSL_set_session');
-  FuncLoadError := not assigned(SSL_set_session);
-  if FuncLoadError then
-  begin
-    SSL_set_session :=  @ERROR_SSL_set_session;
-  end;
+  if not assigned(SSL_set_session) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_session');
+  Result := SSL_set_session(to_,session);
+end;
 
+function Load_SSL_CTX_add_session(ctx: PSSL_CTX; session: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_add_session := LoadLibSSLFunction('SSL_CTX_add_session');
-  FuncLoadError := not assigned(SSL_CTX_add_session);
-  if FuncLoadError then
-  begin
-    SSL_CTX_add_session :=  @ERROR_SSL_CTX_add_session;
-  end;
+  if not assigned(SSL_CTX_add_session) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_add_session');
+  Result := SSL_CTX_add_session(ctx,session);
+end;
 
+function Load_SSL_CTX_remove_session(ctx: PSSL_CTX; session: PSSL_SESSION): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_remove_session := LoadLibSSLFunction('SSL_CTX_remove_session');
-  FuncLoadError := not assigned(SSL_CTX_remove_session);
-  if FuncLoadError then
-  begin
-    SSL_CTX_remove_session :=  @ERROR_SSL_CTX_remove_session;
-  end;
+  if not assigned(SSL_CTX_remove_session) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_remove_session');
+  Result := SSL_CTX_remove_session(ctx,session);
+end;
 
+function Load_SSL_CTX_set_generate_session_id(ctx: PSSL_CTX; cb: GEN_SESSION_CB): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_generate_session_id := LoadLibSSLFunction('SSL_CTX_set_generate_session_id');
-  FuncLoadError := not assigned(SSL_CTX_set_generate_session_id);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_generate_session_id :=  @ERROR_SSL_CTX_set_generate_session_id;
-  end;
+  if not assigned(SSL_CTX_set_generate_session_id) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_generate_session_id');
+  Result := SSL_CTX_set_generate_session_id(ctx,cb);
+end;
 
+function Load_SSL_set_generate_session_id(s: PSSL; cb: GEN_SESSION_CB): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set_generate_session_id := LoadLibSSLFunction('SSL_set_generate_session_id');
-  FuncLoadError := not assigned(SSL_set_generate_session_id);
-  if FuncLoadError then
-  begin
-    SSL_set_generate_session_id :=  @ERROR_SSL_set_generate_session_id;
-  end;
+  if not assigned(SSL_set_generate_session_id) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_generate_session_id');
+  Result := SSL_set_generate_session_id(s,cb);
+end;
 
+function Load_SSL_has_matching_session_id(const s: PSSL; const id: PByte; id_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_has_matching_session_id := LoadLibSSLFunction('SSL_has_matching_session_id');
-  FuncLoadError := not assigned(SSL_has_matching_session_id);
-  if FuncLoadError then
-  begin
-    SSL_has_matching_session_id :=  @ERROR_SSL_has_matching_session_id;
-  end;
+  if not assigned(SSL_has_matching_session_id) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_has_matching_session_id');
+  Result := SSL_has_matching_session_id(s,id,id_len);
+end;
 
+function Load_d2i_SSL_SESSION(a: PPSSL_SESSION; const pp: PPByte; length: TOpenSSL_C_LONG): PSSL_SESSION; cdecl;
+begin
   d2i_SSL_SESSION := LoadLibSSLFunction('d2i_SSL_SESSION');
-  FuncLoadError := not assigned(d2i_SSL_SESSION);
-  if FuncLoadError then
-  begin
-    d2i_SSL_SESSION :=  @ERROR_d2i_SSL_SESSION;
-  end;
+  if not assigned(d2i_SSL_SESSION) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_SSL_SESSION');
+  Result := d2i_SSL_SESSION(a,pp,length);
+end;
 
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_SSL_get_peer_certificate(const s: PSSL): PX509; cdecl;
+begin
   SSL_get_peer_certificate := LoadLibSSLFunction('SSL_get_peer_certificate');
-  FuncLoadError := not assigned(SSL_get_peer_certificate);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_get_peer_certificate) then
     SSL_get_peer_certificate := @COMPAT_SSL_get_peer_certificate;
-    if SSL_get_peer_certificate_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_get_peer_certificate');
-  end;
+  Result := SSL_get_peer_certificate(s);
+end;
 
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_SSL_CTX_get_verify_mode(const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_get_verify_mode := LoadLibSSLFunction('SSL_CTX_get_verify_mode');
-  FuncLoadError := not assigned(SSL_CTX_get_verify_mode);
-  if FuncLoadError then
-  begin
-    SSL_CTX_get_verify_mode :=  @ERROR_SSL_CTX_get_verify_mode;
-  end;
+  if not assigned(SSL_CTX_get_verify_mode) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_verify_mode');
+  Result := SSL_CTX_get_verify_mode(ctx);
+end;
 
+function Load_SSL_CTX_get_verify_depth(const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_get_verify_depth := LoadLibSSLFunction('SSL_CTX_get_verify_depth');
-  FuncLoadError := not assigned(SSL_CTX_get_verify_depth);
-  if FuncLoadError then
-  begin
-    SSL_CTX_get_verify_depth :=  @ERROR_SSL_CTX_get_verify_depth;
-  end;
+  if not assigned(SSL_CTX_get_verify_depth) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_verify_depth');
+  Result := SSL_CTX_get_verify_depth(ctx);
+end;
 
+function Load_SSL_CTX_get_verify_callback(const ctx: PSSL_CTX): SSL_verify_cb; cdecl;
+begin
   SSL_CTX_get_verify_callback := LoadLibSSLFunction('SSL_CTX_get_verify_callback');
-  FuncLoadError := not assigned(SSL_CTX_get_verify_callback);
-  if FuncLoadError then
-  begin
-    SSL_CTX_get_verify_callback :=  @ERROR_SSL_CTX_get_verify_callback;
-  end;
+  if not assigned(SSL_CTX_get_verify_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_verify_callback');
+  Result := SSL_CTX_get_verify_callback(ctx);
+end;
 
+procedure Load_SSL_CTX_set_verify(ctx: PSSL_CTX; mode: TOpenSSL_C_INT; callback: SSL_verify_cb); cdecl;
+begin
   SSL_CTX_set_verify := LoadLibSSLFunction('SSL_CTX_set_verify');
-  FuncLoadError := not assigned(SSL_CTX_set_verify);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_verify :=  @ERROR_SSL_CTX_set_verify;
-  end;
+  if not assigned(SSL_CTX_set_verify) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_verify');
+  SSL_CTX_set_verify(ctx,mode,callback);
+end;
 
+procedure Load_SSL_CTX_set_verify_depth(ctx: PSSL_CTX; depth: TOpenSSL_C_INT); cdecl;
+begin
   SSL_CTX_set_verify_depth := LoadLibSSLFunction('SSL_CTX_set_verify_depth');
-  FuncLoadError := not assigned(SSL_CTX_set_verify_depth);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_verify_depth :=  @ERROR_SSL_CTX_set_verify_depth;
-  end;
+  if not assigned(SSL_CTX_set_verify_depth) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_verify_depth');
+  SSL_CTX_set_verify_depth(ctx,depth);
+end;
 
+procedure Load_SSL_CTX_set_cert_verify_callback(ctx: PSSL_CTX; cb: SSL_CTX_set_cert_verify_callback_cb; arg: Pointer); cdecl;
+begin
   SSL_CTX_set_cert_verify_callback := LoadLibSSLFunction('SSL_CTX_set_cert_verify_callback');
-  FuncLoadError := not assigned(SSL_CTX_set_cert_verify_callback);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_cert_verify_callback :=  @ERROR_SSL_CTX_set_cert_verify_callback;
-  end;
+  if not assigned(SSL_CTX_set_cert_verify_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_cert_verify_callback');
+  SSL_CTX_set_cert_verify_callback(ctx,cb,arg);
+end;
 
+procedure Load_SSL_CTX_set_cert_cb(c: PSSL_CTX; cb: SSL_CTX_set_cert_cb_cb; arg: Pointer); cdecl;
+begin
   SSL_CTX_set_cert_cb := LoadLibSSLFunction('SSL_CTX_set_cert_cb');
-  FuncLoadError := not assigned(SSL_CTX_set_cert_cb);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_cert_cb :=  @ERROR_SSL_CTX_set_cert_cb;
-  end;
+  if not assigned(SSL_CTX_set_cert_cb) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_cert_cb');
+  SSL_CTX_set_cert_cb(c,cb,arg);
+end;
 
+function Load_SSL_CTX_use_RSAPrivateKey(ctx: PSSL_CTX; rsa: PRSA): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_use_RSAPrivateKey := LoadLibSSLFunction('SSL_CTX_use_RSAPrivateKey');
-  FuncLoadError := not assigned(SSL_CTX_use_RSAPrivateKey);
-  if FuncLoadError then
-  begin
-    SSL_CTX_use_RSAPrivateKey :=  @ERROR_SSL_CTX_use_RSAPrivateKey;
-  end;
+  if not assigned(SSL_CTX_use_RSAPrivateKey) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_RSAPrivateKey');
+  Result := SSL_CTX_use_RSAPrivateKey(ctx,rsa);
+end;
 
+function Load_SSL_CTX_use_RSAPrivateKey_ASN1(ctx: PSSL_CTX; const d: PByte; len: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_use_RSAPrivateKey_ASN1 := LoadLibSSLFunction('SSL_CTX_use_RSAPrivateKey_ASN1');
-  FuncLoadError := not assigned(SSL_CTX_use_RSAPrivateKey_ASN1);
-  if FuncLoadError then
-  begin
-    SSL_CTX_use_RSAPrivateKey_ASN1 :=  @ERROR_SSL_CTX_use_RSAPrivateKey_ASN1;
-  end;
+  if not assigned(SSL_CTX_use_RSAPrivateKey_ASN1) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_RSAPrivateKey_ASN1');
+  Result := SSL_CTX_use_RSAPrivateKey_ASN1(ctx,d,len);
+end;
 
+function Load_SSL_CTX_use_PrivateKey(ctx: PSSL_CTX; pkey: PEVP_PKEY): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_use_PrivateKey := LoadLibSSLFunction('SSL_CTX_use_PrivateKey');
-  FuncLoadError := not assigned(SSL_CTX_use_PrivateKey);
-  if FuncLoadError then
-  begin
-    SSL_CTX_use_PrivateKey :=  @ERROR_SSL_CTX_use_PrivateKey;
-  end;
+  if not assigned(SSL_CTX_use_PrivateKey) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_PrivateKey');
+  Result := SSL_CTX_use_PrivateKey(ctx,pkey);
+end;
 
+function Load_SSL_CTX_use_PrivateKey_ASN1(pk: TOpenSSL_C_INT; ctx: PSSL_CTX; const d: PByte; len: TOpenSSL_C_LONG): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_use_PrivateKey_ASN1 := LoadLibSSLFunction('SSL_CTX_use_PrivateKey_ASN1');
-  FuncLoadError := not assigned(SSL_CTX_use_PrivateKey_ASN1);
-  if FuncLoadError then
-  begin
-    SSL_CTX_use_PrivateKey_ASN1 :=  @ERROR_SSL_CTX_use_PrivateKey_ASN1;
-  end;
+  if not assigned(SSL_CTX_use_PrivateKey_ASN1) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_PrivateKey_ASN1');
+  Result := SSL_CTX_use_PrivateKey_ASN1(pk,ctx,d,len);
+end;
 
+function Load_SSL_CTX_use_certificate(ctx: PSSL_CTX; x: X509): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_use_certificate := LoadLibSSLFunction('SSL_CTX_use_certificate');
-  FuncLoadError := not assigned(SSL_CTX_use_certificate);
-  if FuncLoadError then
-  begin
-    SSL_CTX_use_certificate :=  @ERROR_SSL_CTX_use_certificate;
-  end;
+  if not assigned(SSL_CTX_use_certificate) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_certificate');
+  Result := SSL_CTX_use_certificate(ctx,x);
+end;
 
+function Load_SSL_CTX_use_certificate_ASN1(ctx: PSSL_CTX; len: TOpenSSL_C_INT; const d: PByte): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_use_certificate_ASN1 := LoadLibSSLFunction('SSL_CTX_use_certificate_ASN1');
-  FuncLoadError := not assigned(SSL_CTX_use_certificate_ASN1);
-  if FuncLoadError then
-  begin
-    SSL_CTX_use_certificate_ASN1 :=  @ERROR_SSL_CTX_use_certificate_ASN1;
-  end;
+  if not assigned(SSL_CTX_use_certificate_ASN1) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_use_certificate_ASN1');
+  Result := SSL_CTX_use_certificate_ASN1(ctx,len,d);
+end;
 
+procedure Load_SSL_CTX_set_default_passwd_cb(ctx: PSSL_CTX; cb: pem_password_cb); cdecl;
+begin
   SSL_CTX_set_default_passwd_cb := LoadLibSSLFunction('SSL_CTX_set_default_passwd_cb');
-  FuncLoadError := not assigned(SSL_CTX_set_default_passwd_cb);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set_default_passwd_cb) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     SSL_CTX_set_default_passwd_cb := @COMPAT_SSL_CTX_set_default_passwd_cb;
 {$ELSE}
-    SSL_CTX_set_default_passwd_cb :=  @ERROR_SSL_CTX_set_default_passwd_cb;
-{$ENDIF}
-  end;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_default_passwd_cb');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  SSL_CTX_set_default_passwd_cb(ctx,cb);
+end;
 
+procedure Load_SSL_CTX_set_default_passwd_cb_userdata(ctx: PSSL_CTX; u: Pointer); cdecl;
+begin
   SSL_CTX_set_default_passwd_cb_userdata := LoadLibSSLFunction('SSL_CTX_set_default_passwd_cb_userdata');
-  FuncLoadError := not assigned(SSL_CTX_set_default_passwd_cb_userdata);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_set_default_passwd_cb_userdata) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     SSL_CTX_set_default_passwd_cb_userdata := @COMPAT_SSL_CTX_set_default_passwd_cb_userdata;
 {$ELSE}
-    SSL_CTX_set_default_passwd_cb_userdata :=  @ERROR_SSL_CTX_set_default_passwd_cb_userdata;
-{$ENDIF}
-  end;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_default_passwd_cb_userdata');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  SSL_CTX_set_default_passwd_cb_userdata(ctx,u);
+end;
 
+function Load_SSL_CTX_get_default_passwd_cb(ctx: PSSL_CTX): pem_password_cb; cdecl;
+begin
   SSL_CTX_get_default_passwd_cb := LoadLibSSLFunction('SSL_CTX_get_default_passwd_cb');
-  FuncLoadError := not assigned(SSL_CTX_get_default_passwd_cb);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_get_default_passwd_cb) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     SSL_CTX_get_default_passwd_cb := @COMPAT_SSL_CTX_get_default_passwd_cb;
 {$ELSE}
-    SSL_CTX_get_default_passwd_cb :=  @ERROR_SSL_CTX_get_default_passwd_cb;
-{$ENDIF}
-  end;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_default_passwd_cb');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  Result := SSL_CTX_get_default_passwd_cb(ctx);
+end;
 
+function Load_SSL_CTX_get_default_passwd_cb_userdata(ctx: PSSL_CTX): Pointer; cdecl;
+begin
   SSL_CTX_get_default_passwd_cb_userdata := LoadLibSSLFunction('SSL_CTX_get_default_passwd_cb_userdata');
-  FuncLoadError := not assigned(SSL_CTX_get_default_passwd_cb_userdata);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_CTX_get_default_passwd_cb_userdata) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     SSL_CTX_get_default_passwd_cb_userdata := @COMPAT_SSL_CTX_get_default_passwd_cb_userdata;
 {$ELSE}
-    SSL_CTX_get_default_passwd_cb_userdata :=  @ERROR_SSL_CTX_get_default_passwd_cb_userdata;
-{$ENDIF}
-  end;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_default_passwd_cb_userdata');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  Result := SSL_CTX_get_default_passwd_cb_userdata(ctx);
+end;
 
+procedure Load_SSL_set_default_passwd_cb(s: PSSL; cb: pem_password_cb); cdecl;
+begin
   SSL_set_default_passwd_cb := LoadLibSSLFunction('SSL_set_default_passwd_cb');
-  FuncLoadError := not assigned(SSL_set_default_passwd_cb);
-  if FuncLoadError then
-  begin
-    SSL_set_default_passwd_cb :=  @ERROR_SSL_set_default_passwd_cb;
-  end;
+  if not assigned(SSL_set_default_passwd_cb) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_default_passwd_cb');
+  SSL_set_default_passwd_cb(s,cb);
+end;
 
+procedure Load_SSL_set_default_passwd_cb_userdata(s: PSSL; u: Pointer); cdecl;
+begin
   SSL_set_default_passwd_cb_userdata := LoadLibSSLFunction('SSL_set_default_passwd_cb_userdata');
-  FuncLoadError := not assigned(SSL_set_default_passwd_cb_userdata);
-  if FuncLoadError then
-  begin
-    SSL_set_default_passwd_cb_userdata :=  @ERROR_SSL_set_default_passwd_cb_userdata;
-  end;
+  if not assigned(SSL_set_default_passwd_cb_userdata) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_default_passwd_cb_userdata');
+  SSL_set_default_passwd_cb_userdata(s,u);
+end;
 
+function Load_SSL_get_default_passwd_cb(s: PSSL): pem_password_cb; cdecl;
+begin
   SSL_get_default_passwd_cb := LoadLibSSLFunction('SSL_get_default_passwd_cb');
-  FuncLoadError := not assigned(SSL_get_default_passwd_cb);
-  if FuncLoadError then
-  begin
-    SSL_get_default_passwd_cb :=  @ERROR_SSL_get_default_passwd_cb;
-  end;
+  if not assigned(SSL_get_default_passwd_cb) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_default_passwd_cb');
+  Result := SSL_get_default_passwd_cb(s);
+end;
 
+function Load_SSL_get_default_passwd_cb_userdata(s: PSSL): Pointer; cdecl;
+begin
   SSL_get_default_passwd_cb_userdata := LoadLibSSLFunction('SSL_get_default_passwd_cb_userdata');
-  FuncLoadError := not assigned(SSL_get_default_passwd_cb_userdata);
-  if FuncLoadError then
-  begin
-    SSL_get_default_passwd_cb_userdata :=  @ERROR_SSL_get_default_passwd_cb_userdata;
-  end;
+  if not assigned(SSL_get_default_passwd_cb_userdata) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_default_passwd_cb_userdata');
+  Result := SSL_get_default_passwd_cb_userdata(s);
+end;
 
+function Load_SSL_CTX_check_private_key(const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_check_private_key := LoadLibSSLFunction('SSL_CTX_check_private_key');
-  FuncLoadError := not assigned(SSL_CTX_check_private_key);
-  if FuncLoadError then
-  begin
-    SSL_CTX_check_private_key :=  @ERROR_SSL_CTX_check_private_key;
-  end;
+  if not assigned(SSL_CTX_check_private_key) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_check_private_key');
+  Result := SSL_CTX_check_private_key(ctx);
+end;
 
+function Load_SSL_check_private_key(const ctx: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_check_private_key := LoadLibSSLFunction('SSL_check_private_key');
-  FuncLoadError := not assigned(SSL_check_private_key);
-  if FuncLoadError then
-  begin
-    SSL_check_private_key :=  @ERROR_SSL_check_private_key;
-  end;
+  if not assigned(SSL_check_private_key) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_check_private_key');
+  Result := SSL_check_private_key(ctx);
+end;
 
+function Load_SSL_CTX_set_session_id_context(ctx: PSSL_CTX; const sid_ctx: PByte; sid_ctx_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_session_id_context := LoadLibSSLFunction('SSL_CTX_set_session_id_context');
-  FuncLoadError := not assigned(SSL_CTX_set_session_id_context);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_session_id_context :=  @ERROR_SSL_CTX_set_session_id_context;
-  end;
+  if not assigned(SSL_CTX_set_session_id_context) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_session_id_context');
+  Result := SSL_CTX_set_session_id_context(ctx,sid_ctx,sid_ctx_len);
+end;
 
+function Load_SSL_new(ctx: PSSL_CTX): PSSL; cdecl;
+begin
   SSL_new := LoadLibSSLFunction('SSL_new');
-  FuncLoadError := not assigned(SSL_new);
-  if FuncLoadError then
-  begin
-    SSL_new :=  @ERROR_SSL_new;
-  end;
+  if not assigned(SSL_new) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_new');
+  Result := SSL_new(ctx);
+end;
 
+function Load_SSL_up_ref(s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_up_ref := LoadLibSSLFunction('SSL_up_ref');
-  FuncLoadError := not assigned(SSL_up_ref);
-  if FuncLoadError then
-  begin
-    SSL_up_ref :=  @ERROR_SSL_up_ref;
-  end;
+  if not assigned(SSL_up_ref) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_up_ref');
+  Result := SSL_up_ref(s);
+end;
 
+function Load_SSL_is_dtls(const s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_is_dtls := LoadLibSSLFunction('SSL_is_dtls');
-  FuncLoadError := not assigned(SSL_is_dtls);
-  if FuncLoadError then
-  begin
-    SSL_is_dtls :=  @ERROR_SSL_is_dtls;
-  end;
+  if not assigned(SSL_is_dtls) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_is_dtls');
+  Result := SSL_is_dtls(s);
+end;
 
+function Load_SSL_set_session_id_context(ssl: PSSL; const sid_ctx: PByte; sid_ctx_len: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set_session_id_context := LoadLibSSLFunction('SSL_set_session_id_context');
-  FuncLoadError := not assigned(SSL_set_session_id_context);
-  if FuncLoadError then
-  begin
-    SSL_set_session_id_context :=  @ERROR_SSL_set_session_id_context;
-  end;
+  if not assigned(SSL_set_session_id_context) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_session_id_context');
+  Result := SSL_set_session_id_context(ssl,sid_ctx,sid_ctx_len);
+end;
 
+function Load_SSL_CTX_set_purpose(ctx: PSSL_CTX; purpose: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_purpose := LoadLibSSLFunction('SSL_CTX_set_purpose');
-  FuncLoadError := not assigned(SSL_CTX_set_purpose);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_purpose :=  @ERROR_SSL_CTX_set_purpose;
-  end;
+  if not assigned(SSL_CTX_set_purpose) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_purpose');
+  Result := SSL_CTX_set_purpose(ctx,purpose);
+end;
 
+function Load_SSL_set_purpose(ssl: PSSL; purpose: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set_purpose := LoadLibSSLFunction('SSL_set_purpose');
-  FuncLoadError := not assigned(SSL_set_purpose);
-  if FuncLoadError then
-  begin
-    SSL_set_purpose :=  @ERROR_SSL_set_purpose;
-  end;
+  if not assigned(SSL_set_purpose) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_purpose');
+  Result := SSL_set_purpose(ssl,purpose);
+end;
 
+function Load_SSL_CTX_set_trust(ctx: PSSL_CTX; trust: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_trust := LoadLibSSLFunction('SSL_CTX_set_trust');
-  FuncLoadError := not assigned(SSL_CTX_set_trust);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_trust :=  @ERROR_SSL_CTX_set_trust;
-  end;
+  if not assigned(SSL_CTX_set_trust) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_trust');
+  Result := SSL_CTX_set_trust(ctx,trust);
+end;
 
+function Load_SSL_set_trust(ssl: PSSL; trust: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set_trust := LoadLibSSLFunction('SSL_set_trust');
-  FuncLoadError := not assigned(SSL_set_trust);
-  if FuncLoadError then
-  begin
-    SSL_set_trust :=  @ERROR_SSL_set_trust;
-  end;
+  if not assigned(SSL_set_trust) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_trust');
+  Result := SSL_set_trust(ssl,trust);
+end;
 
+function Load_SSL_set1_host(s: PSSL; const hostname: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set1_host := LoadLibSSLFunction('SSL_set1_host');
-  FuncLoadError := not assigned(SSL_set1_host);
-  if FuncLoadError then
-  begin
-    SSL_set1_host :=  @ERROR_SSL_set1_host;
-  end;
+  if not assigned(SSL_set1_host) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set1_host');
+  Result := SSL_set1_host(s,hostname);
+end;
 
+function Load_SSL_add1_host(s: PSSL; const hostname: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_add1_host := LoadLibSSLFunction('SSL_add1_host');
-  FuncLoadError := not assigned(SSL_add1_host);
-  if FuncLoadError then
-  begin
-    SSL_add1_host :=  @ERROR_SSL_add1_host;
-  end;
+  if not assigned(SSL_add1_host) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_add1_host');
+  Result := SSL_add1_host(s,hostname);
+end;
 
+function Load_SSL_get0_peername(s: PSSL): PAnsiChar; cdecl;
+begin
   SSL_get0_peername := LoadLibSSLFunction('SSL_get0_peername');
-  FuncLoadError := not assigned(SSL_get0_peername);
-  if FuncLoadError then
-  begin
-    SSL_get0_peername :=  @ERROR_SSL_get0_peername;
-  end;
+  if not assigned(SSL_get0_peername) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_peername');
+  Result := SSL_get0_peername(s);
+end;
 
+procedure Load_SSL_set_hostflags(s: PSSL; flags: TOpenSSL_C_UINT); cdecl;
+begin
   SSL_set_hostflags := LoadLibSSLFunction('SSL_set_hostflags');
-  FuncLoadError := not assigned(SSL_set_hostflags);
-  if FuncLoadError then
-  begin
-    SSL_set_hostflags :=  @ERROR_SSL_set_hostflags;
-  end;
+  if not assigned(SSL_set_hostflags) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_hostflags');
+  SSL_set_hostflags(s,flags);
+end;
 
+function Load_SSL_CTX_dane_enable(ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_dane_enable := LoadLibSSLFunction('SSL_CTX_dane_enable');
-  FuncLoadError := not assigned(SSL_CTX_dane_enable);
-  if FuncLoadError then
-  begin
-    SSL_CTX_dane_enable :=  @ERROR_SSL_CTX_dane_enable;
-  end;
+  if not assigned(SSL_CTX_dane_enable) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_dane_enable');
+  Result := SSL_CTX_dane_enable(ctx);
+end;
 
+function Load_SSL_CTX_dane_mtype_set(ctx: PSSL_CTX; const md: PEVP_MD; mtype: TOpenSSL_C_UINT8; ord: TOpenSSL_C_UINT8): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_dane_mtype_set := LoadLibSSLFunction('SSL_CTX_dane_mtype_set');
-  FuncLoadError := not assigned(SSL_CTX_dane_mtype_set);
-  if FuncLoadError then
-  begin
-    SSL_CTX_dane_mtype_set :=  @ERROR_SSL_CTX_dane_mtype_set;
-  end;
+  if not assigned(SSL_CTX_dane_mtype_set) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_dane_mtype_set');
+  Result := SSL_CTX_dane_mtype_set(ctx,md,mtype,ord);
+end;
 
+function Load_SSL_dane_enable(s: PSSL; const basedomain: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_dane_enable := LoadLibSSLFunction('SSL_dane_enable');
-  FuncLoadError := not assigned(SSL_dane_enable);
-  if FuncLoadError then
-  begin
-    SSL_dane_enable :=  @ERROR_SSL_dane_enable;
-  end;
+  if not assigned(SSL_dane_enable) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_dane_enable');
+  Result := SSL_dane_enable(s,basedomain);
+end;
 
+function Load_SSL_dane_tlsa_add(s: PSSL; usage: TOpenSSL_C_UINT8; selector: TOpenSSL_C_UINT8; mtype: TOpenSSL_C_UINT8; const data: PByte; dlen: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   SSL_dane_tlsa_add := LoadLibSSLFunction('SSL_dane_tlsa_add');
-  FuncLoadError := not assigned(SSL_dane_tlsa_add);
-  if FuncLoadError then
-  begin
-    SSL_dane_tlsa_add :=  @ERROR_SSL_dane_tlsa_add;
-  end;
+  if not assigned(SSL_dane_tlsa_add) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_dane_tlsa_add');
+  Result := SSL_dane_tlsa_add(s,usage,selector,mtype,data,dlen);
+end;
 
+function Load_SSL_get0_dane_authority(s: PSSL; mcert: PPX509; mspki: PPEVP_PKEY): TOpenSSL_C_INT; cdecl;
+begin
   SSL_get0_dane_authority := LoadLibSSLFunction('SSL_get0_dane_authority');
-  FuncLoadError := not assigned(SSL_get0_dane_authority);
-  if FuncLoadError then
-  begin
-    SSL_get0_dane_authority :=  @ERROR_SSL_get0_dane_authority;
-  end;
+  if not assigned(SSL_get0_dane_authority) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_dane_authority');
+  Result := SSL_get0_dane_authority(s,mcert,mspki);
+end;
 
+function Load_SSL_get0_dane_tlsa(s: PSSL; usage: POpenSSL_C_UINT8; selector: POpenSSL_C_UINT8; mtype: POpenSSL_C_UINT8; const data: PPByte; dlen: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   SSL_get0_dane_tlsa := LoadLibSSLFunction('SSL_get0_dane_tlsa');
-  FuncLoadError := not assigned(SSL_get0_dane_tlsa);
-  if FuncLoadError then
-  begin
-    SSL_get0_dane_tlsa :=  @ERROR_SSL_get0_dane_tlsa;
-  end;
+  if not assigned(SSL_get0_dane_tlsa) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_dane_tlsa');
+  Result := SSL_get0_dane_tlsa(s,usage,selector,mtype,data,dlen);
+end;
 
+function Load_SSL_get0_dane(ssl: PSSL): PSSL_DANE; cdecl;
+begin
   SSL_get0_dane := LoadLibSSLFunction('SSL_get0_dane');
-  FuncLoadError := not assigned(SSL_get0_dane);
-  if FuncLoadError then
-  begin
-    SSL_get0_dane :=  @ERROR_SSL_get0_dane;
-  end;
+  if not assigned(SSL_get0_dane) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_dane');
+  Result := SSL_get0_dane(ssl);
+end;
 
+function Load_SSL_CTX_dane_set_flags(ctx: PSSL_CTX; flags: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
+begin
   SSL_CTX_dane_set_flags := LoadLibSSLFunction('SSL_CTX_dane_set_flags');
-  FuncLoadError := not assigned(SSL_CTX_dane_set_flags);
-  if FuncLoadError then
-  begin
-    SSL_CTX_dane_set_flags :=  @ERROR_SSL_CTX_dane_set_flags;
-  end;
+  if not assigned(SSL_CTX_dane_set_flags) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_dane_set_flags');
+  Result := SSL_CTX_dane_set_flags(ctx,flags);
+end;
 
+function Load_SSL_CTX_dane_clear_flags(ctx: PSSL_CTX; flags: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
+begin
   SSL_CTX_dane_clear_flags := LoadLibSSLFunction('SSL_CTX_dane_clear_flags');
-  FuncLoadError := not assigned(SSL_CTX_dane_clear_flags);
-  if FuncLoadError then
-  begin
-    SSL_CTX_dane_clear_flags :=  @ERROR_SSL_CTX_dane_clear_flags;
-  end;
+  if not assigned(SSL_CTX_dane_clear_flags) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_dane_clear_flags');
+  Result := SSL_CTX_dane_clear_flags(ctx,flags);
+end;
 
+function Load_SSL_dane_set_flags(ssl: PSSL; flags: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
+begin
   SSL_dane_set_flags := LoadLibSSLFunction('SSL_dane_set_flags');
-  FuncLoadError := not assigned(SSL_dane_set_flags);
-  if FuncLoadError then
-  begin
-    SSL_dane_set_flags :=  @ERROR_SSL_dane_set_flags;
-  end;
+  if not assigned(SSL_dane_set_flags) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_dane_set_flags');
+  Result := SSL_dane_set_flags(ssl,flags);
+end;
 
+function Load_SSL_dane_clear_flags(ssl: PSSL; flags: TOpenSSL_C_ULONG): TOpenSSL_C_ULONG; cdecl;
+begin
   SSL_dane_clear_flags := LoadLibSSLFunction('SSL_dane_clear_flags');
-  FuncLoadError := not assigned(SSL_dane_clear_flags);
-  if FuncLoadError then
-  begin
-    SSL_dane_clear_flags :=  @ERROR_SSL_dane_clear_flags;
-  end;
+  if not assigned(SSL_dane_clear_flags) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_dane_clear_flags');
+  Result := SSL_dane_clear_flags(ssl,flags);
+end;
 
+function Load_SSL_CTX_set1_param(ctx: PSSL_CTX; vpm: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set1_param := LoadLibSSLFunction('SSL_CTX_set1_param');
-  FuncLoadError := not assigned(SSL_CTX_set1_param);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set1_param :=  @ERROR_SSL_CTX_set1_param;
-  end;
+  if not assigned(SSL_CTX_set1_param) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set1_param');
+  Result := SSL_CTX_set1_param(ctx,vpm);
+end;
 
+function Load_SSL_set1_param(ssl: PSSL; vpm: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set1_param := LoadLibSSLFunction('SSL_set1_param');
-  FuncLoadError := not assigned(SSL_set1_param);
-  if FuncLoadError then
-  begin
-    SSL_set1_param :=  @ERROR_SSL_set1_param;
-  end;
+  if not assigned(SSL_set1_param) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set1_param');
+  Result := SSL_set1_param(ssl,vpm);
+end;
 
+function Load_SSL_CTX_get0_param(ctx: PSSL_CTX): PX509_VERIFY_PARAM; cdecl;
+begin
   SSL_CTX_get0_param := LoadLibSSLFunction('SSL_CTX_get0_param');
-  FuncLoadError := not assigned(SSL_CTX_get0_param);
-  if FuncLoadError then
-  begin
-    SSL_CTX_get0_param :=  @ERROR_SSL_CTX_get0_param;
-  end;
+  if not assigned(SSL_CTX_get0_param) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get0_param');
+  Result := SSL_CTX_get0_param(ctx);
+end;
 
+function Load_SSL_get0_param(ssl: PSSL): PX509_VERIFY_PARAM; cdecl;
+begin
   SSL_get0_param := LoadLibSSLFunction('SSL_get0_param');
-  FuncLoadError := not assigned(SSL_get0_param);
-  if FuncLoadError then
-  begin
-    SSL_get0_param :=  @ERROR_SSL_get0_param;
-  end;
+  if not assigned(SSL_get0_param) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_param');
+  Result := SSL_get0_param(ssl);
+end;
 
+function Load_SSL_CTX_set_srp_username(ctx: PSSL_CTX; name: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_srp_username := LoadLibSSLFunction('SSL_CTX_set_srp_username');
-  FuncLoadError := not assigned(SSL_CTX_set_srp_username);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_srp_username :=  @ERROR_SSL_CTX_set_srp_username;
-  end;
+  if not assigned(SSL_CTX_set_srp_username) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_srp_username');
+  Result := SSL_CTX_set_srp_username(ctx,name);
+end;
 
+function Load_SSL_CTX_set_srp_password(ctx: PSSL_CTX; password: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_srp_password := LoadLibSSLFunction('SSL_CTX_set_srp_password');
-  FuncLoadError := not assigned(SSL_CTX_set_srp_password);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_srp_password :=  @ERROR_SSL_CTX_set_srp_password;
-  end;
+  if not assigned(SSL_CTX_set_srp_password) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_srp_password');
+  Result := SSL_CTX_set_srp_password(ctx,password);
+end;
 
+function Load_SSL_CTX_set_srp_strength(ctx: PSSL_CTX; strength: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_srp_strength := LoadLibSSLFunction('SSL_CTX_set_srp_strength');
-  FuncLoadError := not assigned(SSL_CTX_set_srp_strength);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_srp_strength :=  @ERROR_SSL_CTX_set_srp_strength;
-  end;
+  if not assigned(SSL_CTX_set_srp_strength) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_srp_strength');
+  Result := SSL_CTX_set_srp_strength(ctx,strength);
+end;
 
+function Load_SSL_CTX_set_srp_client_pwd_callback(ctx: PSSL_CTX; cb: SSL_CTX_set_srp_client_pwd_callback_cb): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_srp_client_pwd_callback := LoadLibSSLFunction('SSL_CTX_set_srp_client_pwd_callback');
-  FuncLoadError := not assigned(SSL_CTX_set_srp_client_pwd_callback);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_srp_client_pwd_callback :=  @ERROR_SSL_CTX_set_srp_client_pwd_callback;
-  end;
+  if not assigned(SSL_CTX_set_srp_client_pwd_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_srp_client_pwd_callback');
+  Result := SSL_CTX_set_srp_client_pwd_callback(ctx,cb);
+end;
 
+function Load_SSL_CTX_set_srp_verify_param_callback(ctx: PSSL_CTX; cb: SSL_CTX_set_srp_verify_param_callback_cb): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_srp_verify_param_callback := LoadLibSSLFunction('SSL_CTX_set_srp_verify_param_callback');
-  FuncLoadError := not assigned(SSL_CTX_set_srp_verify_param_callback);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_srp_verify_param_callback :=  @ERROR_SSL_CTX_set_srp_verify_param_callback;
-  end;
+  if not assigned(SSL_CTX_set_srp_verify_param_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_srp_verify_param_callback');
+  Result := SSL_CTX_set_srp_verify_param_callback(ctx,cb);
+end;
 
+function Load_SSL_CTX_set_srp_username_callback(ctx: PSSL_CTX; cb: SSL_CTX_set_srp_username_callback_cb): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_srp_username_callback := LoadLibSSLFunction('SSL_CTX_set_srp_username_callback');
-  FuncLoadError := not assigned(SSL_CTX_set_srp_username_callback);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_srp_username_callback :=  @ERROR_SSL_CTX_set_srp_username_callback;
-  end;
+  if not assigned(SSL_CTX_set_srp_username_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_srp_username_callback');
+  Result := SSL_CTX_set_srp_username_callback(ctx,cb);
+end;
 
+function Load_SSL_CTX_set_srp_cb_arg(ctx: PSSL_CTX; arg: Pointer): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_srp_cb_arg := LoadLibSSLFunction('SSL_CTX_set_srp_cb_arg');
-  FuncLoadError := not assigned(SSL_CTX_set_srp_cb_arg);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_srp_cb_arg :=  @ERROR_SSL_CTX_set_srp_cb_arg;
-  end;
+  if not assigned(SSL_CTX_set_srp_cb_arg) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_srp_cb_arg');
+  Result := SSL_CTX_set_srp_cb_arg(ctx,arg);
+end;
 
+function Load_SSL_set_srp_server_param(s: PSSL; const N: PBIGNUm; const g: PBIGNUm; sa: PBIGNUm; v: PBIGNUm; info: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set_srp_server_param := LoadLibSSLFunction('SSL_set_srp_server_param');
-  FuncLoadError := not assigned(SSL_set_srp_server_param);
-  if FuncLoadError then
-  begin
-    SSL_set_srp_server_param :=  @ERROR_SSL_set_srp_server_param;
-  end;
+  if not assigned(SSL_set_srp_server_param) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_srp_server_param');
+  Result := SSL_set_srp_server_param(s,N,g,sa,v,info);
+end;
 
+function Load_SSL_set_srp_server_param_pw(s: PSSL; const user: PAnsiChar; const pass: PAnsiChar; const grp: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set_srp_server_param_pw := LoadLibSSLFunction('SSL_set_srp_server_param_pw');
-  FuncLoadError := not assigned(SSL_set_srp_server_param_pw);
-  if FuncLoadError then
-  begin
-    SSL_set_srp_server_param_pw :=  @ERROR_SSL_set_srp_server_param_pw;
-  end;
+  if not assigned(SSL_set_srp_server_param_pw) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_srp_server_param_pw');
+  Result := SSL_set_srp_server_param_pw(s,user,pass,grp);
+end;
 
+procedure Load_SSL_CTX_set_client_hello_cb(c: PSSL_CTX; cb: SSL_client_hello_cb_fn; arg: Pointer); cdecl;
+begin
   SSL_CTX_set_client_hello_cb := LoadLibSSLFunction('SSL_CTX_set_client_hello_cb');
-  FuncLoadError := not assigned(SSL_CTX_set_client_hello_cb);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_client_hello_cb :=  @ERROR_SSL_CTX_set_client_hello_cb;
-  end;
+  if not assigned(SSL_CTX_set_client_hello_cb) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_client_hello_cb');
+  SSL_CTX_set_client_hello_cb(c,cb,arg);
+end;
 
+function Load_SSL_client_hello_isv2(s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_client_hello_isv2 := LoadLibSSLFunction('SSL_client_hello_isv2');
-  FuncLoadError := not assigned(SSL_client_hello_isv2);
-  if FuncLoadError then
-  begin
-    SSL_client_hello_isv2 :=  @ERROR_SSL_client_hello_isv2;
-  end;
+  if not assigned(SSL_client_hello_isv2) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_client_hello_isv2');
+  Result := SSL_client_hello_isv2(s);
+end;
 
+function Load_SSL_client_hello_get0_legacy_version(s: PSSL): TOpenSSL_C_UINT; cdecl;
+begin
   SSL_client_hello_get0_legacy_version := LoadLibSSLFunction('SSL_client_hello_get0_legacy_version');
-  FuncLoadError := not assigned(SSL_client_hello_get0_legacy_version);
-  if FuncLoadError then
-  begin
-    SSL_client_hello_get0_legacy_version :=  @ERROR_SSL_client_hello_get0_legacy_version;
-  end;
+  if not assigned(SSL_client_hello_get0_legacy_version) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_client_hello_get0_legacy_version');
+  Result := SSL_client_hello_get0_legacy_version(s);
+end;
 
+function Load_SSL_client_hello_get0_random(s: PSSL; const out_: PPByte): TOpenSSL_C_SIZET; cdecl;
+begin
   SSL_client_hello_get0_random := LoadLibSSLFunction('SSL_client_hello_get0_random');
-  FuncLoadError := not assigned(SSL_client_hello_get0_random);
-  if FuncLoadError then
-  begin
-    SSL_client_hello_get0_random :=  @ERROR_SSL_client_hello_get0_random;
-  end;
+  if not assigned(SSL_client_hello_get0_random) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_client_hello_get0_random');
+  Result := SSL_client_hello_get0_random(s,out_);
+end;
 
+function Load_SSL_client_hello_get0_session_id(s: PSSL; const out_: PPByte): TOpenSSL_C_SIZET; cdecl;
+begin
   SSL_client_hello_get0_session_id := LoadLibSSLFunction('SSL_client_hello_get0_session_id');
-  FuncLoadError := not assigned(SSL_client_hello_get0_session_id);
-  if FuncLoadError then
-  begin
-    SSL_client_hello_get0_session_id :=  @ERROR_SSL_client_hello_get0_session_id;
-  end;
+  if not assigned(SSL_client_hello_get0_session_id) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_client_hello_get0_session_id');
+  Result := SSL_client_hello_get0_session_id(s,out_);
+end;
 
+function Load_SSL_client_hello_get0_ciphers(s: PSSL; const out_: PPByte): TOpenSSL_C_SIZET; cdecl;
+begin
   SSL_client_hello_get0_ciphers := LoadLibSSLFunction('SSL_client_hello_get0_ciphers');
-  FuncLoadError := not assigned(SSL_client_hello_get0_ciphers);
-  if FuncLoadError then
-  begin
-    SSL_client_hello_get0_ciphers :=  @ERROR_SSL_client_hello_get0_ciphers;
-  end;
+  if not assigned(SSL_client_hello_get0_ciphers) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_client_hello_get0_ciphers');
+  Result := SSL_client_hello_get0_ciphers(s,out_);
+end;
 
+function Load_SSL_client_hello_get0_compression_methods(s: PSSL; const out_: PPByte): TOpenSSL_C_SIZET; cdecl;
+begin
   SSL_client_hello_get0_compression_methods := LoadLibSSLFunction('SSL_client_hello_get0_compression_methods');
-  FuncLoadError := not assigned(SSL_client_hello_get0_compression_methods);
-  if FuncLoadError then
-  begin
-    SSL_client_hello_get0_compression_methods :=  @ERROR_SSL_client_hello_get0_compression_methods;
-  end;
+  if not assigned(SSL_client_hello_get0_compression_methods) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_client_hello_get0_compression_methods');
+  Result := SSL_client_hello_get0_compression_methods(s,out_);
+end;
 
+function Load_SSL_client_hello_get1_extensions_present(s: PSSL; out_: PPOpenSSL_C_INT; outlen: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   SSL_client_hello_get1_extensions_present := LoadLibSSLFunction('SSL_client_hello_get1_extensions_present');
-  FuncLoadError := not assigned(SSL_client_hello_get1_extensions_present);
-  if FuncLoadError then
-  begin
-    SSL_client_hello_get1_extensions_present :=  @ERROR_SSL_client_hello_get1_extensions_present;
-  end;
+  if not assigned(SSL_client_hello_get1_extensions_present) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_client_hello_get1_extensions_present');
+  Result := SSL_client_hello_get1_extensions_present(s,out_,outlen);
+end;
 
+function Load_SSL_client_hello_get0_ext(s: PSSL; type_: TOpenSSL_C_UINT; const out_: PPByte; outlen: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   SSL_client_hello_get0_ext := LoadLibSSLFunction('SSL_client_hello_get0_ext');
-  FuncLoadError := not assigned(SSL_client_hello_get0_ext);
-  if FuncLoadError then
-  begin
-    SSL_client_hello_get0_ext :=  @ERROR_SSL_client_hello_get0_ext;
-  end;
+  if not assigned(SSL_client_hello_get0_ext) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_client_hello_get0_ext');
+  Result := SSL_client_hello_get0_ext(s,type_,out_,outlen);
+end;
 
+procedure Load_SSL_certs_clear(s: PSSL); cdecl;
+begin
   SSL_certs_clear := LoadLibSSLFunction('SSL_certs_clear');
-  FuncLoadError := not assigned(SSL_certs_clear);
-  if FuncLoadError then
-  begin
-    SSL_certs_clear :=  @ERROR_SSL_certs_clear;
-  end;
+  if not assigned(SSL_certs_clear) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_certs_clear');
+  SSL_certs_clear(s);
+end;
 
+procedure Load_SSL_free(ssl: PSSL); cdecl;
+begin
   SSL_free := LoadLibSSLFunction('SSL_free');
-  FuncLoadError := not assigned(SSL_free);
-  if FuncLoadError then
-  begin
-    SSL_free :=  @ERROR_SSL_free;
-  end;
+  if not assigned(SSL_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_free');
+  SSL_free(ssl);
+end;
 
+function Load_SSL_waiting_for_async(s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_waiting_for_async := LoadLibSSLFunction('SSL_waiting_for_async');
-  FuncLoadError := not assigned(SSL_waiting_for_async);
-  if FuncLoadError then
-  begin
-    SSL_waiting_for_async :=  @ERROR_SSL_waiting_for_async;
-  end;
+  if not assigned(SSL_waiting_for_async) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_waiting_for_async');
+  Result := SSL_waiting_for_async(s);
+end;
 
+function Load_SSL_get_all_async_fds(s: PSSL; fds: POSSL_ASYNC_FD; numfds: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   SSL_get_all_async_fds := LoadLibSSLFunction('SSL_get_all_async_fds');
-  FuncLoadError := not assigned(SSL_get_all_async_fds);
-  if FuncLoadError then
-  begin
-    SSL_get_all_async_fds :=  @ERROR_SSL_get_all_async_fds;
-  end;
+  if not assigned(SSL_get_all_async_fds) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_all_async_fds');
+  Result := SSL_get_all_async_fds(s,fds,numfds);
+end;
 
+function Load_SSL_get_changed_async_fds(s: PSSL; addfd: POSSL_ASYNC_FD; numaddfds: POpenSSL_C_SIZET; delfd: POSSL_ASYNC_FD; numdelfds: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   SSL_get_changed_async_fds := LoadLibSSLFunction('SSL_get_changed_async_fds');
-  FuncLoadError := not assigned(SSL_get_changed_async_fds);
-  if FuncLoadError then
-  begin
-    SSL_get_changed_async_fds :=  @ERROR_SSL_get_changed_async_fds;
-  end;
+  if not assigned(SSL_get_changed_async_fds) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_changed_async_fds');
+  Result := SSL_get_changed_async_fds(s,addfd,numaddfds,delfd,numdelfds);
+end;
 
+function Load_SSL_accept(ssl: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_accept := LoadLibSSLFunction('SSL_accept');
-  FuncLoadError := not assigned(SSL_accept);
-  if FuncLoadError then
-  begin
-    SSL_accept :=  @ERROR_SSL_accept;
-  end;
+  if not assigned(SSL_accept) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_accept');
+  Result := SSL_accept(ssl);
+end;
 
+function Load_SSL_stateless(s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_stateless := LoadLibSSLFunction('SSL_stateless');
-  FuncLoadError := not assigned(SSL_stateless);
-  if FuncLoadError then
-  begin
-    SSL_stateless :=  @ERROR_SSL_stateless;
-  end;
+  if not assigned(SSL_stateless) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_stateless');
+  Result := SSL_stateless(s);
+end;
 
+function Load_SSL_connect(ssl: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_connect := LoadLibSSLFunction('SSL_connect');
-  FuncLoadError := not assigned(SSL_connect);
-  if FuncLoadError then
-  begin
-    SSL_connect :=  @ERROR_SSL_connect;
-  end;
+  if not assigned(SSL_connect) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_connect');
+  Result := SSL_connect(ssl);
+end;
 
+function Load_SSL_read(ssl: PSSL; buf: Pointer; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_read := LoadLibSSLFunction('SSL_read');
-  FuncLoadError := not assigned(SSL_read);
-  if FuncLoadError then
-  begin
-    SSL_read :=  @ERROR_SSL_read;
-  end;
+  if not assigned(SSL_read) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_read');
+  Result := SSL_read(ssl,buf,num);
+end;
 
+function Load_SSL_read_ex(ssl: PSSL; buf: Pointer; num: TOpenSSL_C_SIZET; readbytes: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   SSL_read_ex := LoadLibSSLFunction('SSL_read_ex');
-  FuncLoadError := not assigned(SSL_read_ex);
-  if FuncLoadError then
-  begin
-    SSL_read_ex :=  @ERROR_SSL_read_ex;
-  end;
+  if not assigned(SSL_read_ex) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_read_ex');
+  Result := SSL_read_ex(ssl,buf,num,readbytes);
+end;
 
+function Load_SSL_read_early_data(s: PSSL; buf: Pointer; num: TOpenSSL_C_SIZET; readbytes: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   SSL_read_early_data := LoadLibSSLFunction('SSL_read_early_data');
-  FuncLoadError := not assigned(SSL_read_early_data);
-  if FuncLoadError then
-  begin
-    SSL_read_early_data :=  @ERROR_SSL_read_early_data;
-  end;
+  if not assigned(SSL_read_early_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_read_early_data');
+  Result := SSL_read_early_data(s,buf,num,readbytes);
+end;
 
+function Load_SSL_peek(ssl: PSSL; buf: Pointer; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_peek := LoadLibSSLFunction('SSL_peek');
-  FuncLoadError := not assigned(SSL_peek);
-  if FuncLoadError then
-  begin
-    SSL_peek :=  @ERROR_SSL_peek;
-  end;
+  if not assigned(SSL_peek) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_peek');
+  Result := SSL_peek(ssl,buf,num);
+end;
 
+function Load_SSL_peek_ex(ssl: PSSL; buf: Pointer; num: TOpenSSL_C_SIZET; readbytes: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   SSL_peek_ex := LoadLibSSLFunction('SSL_peek_ex');
-  FuncLoadError := not assigned(SSL_peek_ex);
-  if FuncLoadError then
-  begin
-    SSL_peek_ex :=  @ERROR_SSL_peek_ex;
-  end;
+  if not assigned(SSL_peek_ex) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_peek_ex');
+  Result := SSL_peek_ex(ssl,buf,num,readbytes);
+end;
 
+function Load_SSL_write(ssl: PSSL; const buf: Pointer; num: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_write := LoadLibSSLFunction('SSL_write');
-  FuncLoadError := not assigned(SSL_write);
-  if FuncLoadError then
-  begin
-    SSL_write :=  @ERROR_SSL_write;
-  end;
+  if not assigned(SSL_write) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_write');
+  Result := SSL_write(ssl,buf,num);
+end;
 
+function Load_SSL_write_ex(s: PSSL; const buf: Pointer; num: TOpenSSL_C_SIZET; written: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   SSL_write_ex := LoadLibSSLFunction('SSL_write_ex');
-  FuncLoadError := not assigned(SSL_write_ex);
-  if FuncLoadError then
-  begin
-    SSL_write_ex :=  @ERROR_SSL_write_ex;
-  end;
+  if not assigned(SSL_write_ex) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_write_ex');
+  Result := SSL_write_ex(s,buf,num,written);
+end;
 
+function Load_SSL_write_early_data(s: PSSL; const buf: Pointer; num: TOpenSSL_C_SIZET; written: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   SSL_write_early_data := LoadLibSSLFunction('SSL_write_early_data');
-  FuncLoadError := not assigned(SSL_write_early_data);
-  if FuncLoadError then
-  begin
-    SSL_write_early_data :=  @ERROR_SSL_write_early_data;
-  end;
+  if not assigned(SSL_write_early_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_write_early_data');
+  Result := SSL_write_early_data(s,buf,num,written);
+end;
 
+function Load_SSL_callback_ctrl(v1: PSSL; v2: TOpenSSL_C_INT; v3: SSL_callback_ctrl_v3): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_callback_ctrl := LoadLibSSLFunction('SSL_callback_ctrl');
-  FuncLoadError := not assigned(SSL_callback_ctrl);
-  if FuncLoadError then
-  begin
-    SSL_callback_ctrl :=  @ERROR_SSL_callback_ctrl;
-  end;
+  if not assigned(SSL_callback_ctrl) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_callback_ctrl');
+  Result := SSL_callback_ctrl(v1,v2,v3);
+end;
 
+function Load_SSL_ctrl(ssl: PSSL; cmd: TOpenSSL_C_INT; larg: TOpenSSL_C_LONG; parg: Pointer): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_ctrl := LoadLibSSLFunction('SSL_ctrl');
-  FuncLoadError := not assigned(SSL_ctrl);
-  if FuncLoadError then
-  begin
-    SSL_ctrl :=  @ERROR_SSL_ctrl;
-  end;
+  if not assigned(SSL_ctrl) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_ctrl');
+  Result := SSL_ctrl(ssl,cmd,larg,parg);
+end;
 
+function Load_SSL_CTX_ctrl(ctx: PSSL_CTX; cmd: TOpenSSL_C_INT; larg: TOpenSSL_C_LONG; parg: Pointer): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_ctrl := LoadLibSSLFunction('SSL_CTX_ctrl');
-  FuncLoadError := not assigned(SSL_CTX_ctrl);
-  if FuncLoadError then
-  begin
-    SSL_CTX_ctrl :=  @ERROR_SSL_CTX_ctrl;
-  end;
+  if not assigned(SSL_CTX_ctrl) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_ctrl');
+  Result := SSL_CTX_ctrl(ctx,cmd,larg,parg);
+end;
 
+function Load_SSL_CTX_callback_ctrl(v1: PSSL_CTX; v2: TOpenSSL_C_INT; v3: SSL_CTX_callback_ctrl_v3): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_CTX_callback_ctrl := LoadLibSSLFunction('SSL_CTX_callback_ctrl');
-  FuncLoadError := not assigned(SSL_CTX_callback_ctrl);
-  if FuncLoadError then
-  begin
-    SSL_CTX_callback_ctrl :=  @ERROR_SSL_CTX_callback_ctrl;
-  end;
+  if not assigned(SSL_CTX_callback_ctrl) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_callback_ctrl');
+  Result := SSL_CTX_callback_ctrl(v1,v2,v3);
+end;
 
+function Load_SSL_get_early_data_status(const s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_get_early_data_status := LoadLibSSLFunction('SSL_get_early_data_status');
-  FuncLoadError := not assigned(SSL_get_early_data_status);
-  if FuncLoadError then
-  begin
-    SSL_get_early_data_status :=  @ERROR_SSL_get_early_data_status;
-  end;
+  if not assigned(SSL_get_early_data_status) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_early_data_status');
+  Result := SSL_get_early_data_status(s);
+end;
 
+function Load_SSL_get_error(const s: PSSL; ret_code: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_get_error := LoadLibSSLFunction('SSL_get_error');
-  FuncLoadError := not assigned(SSL_get_error);
-  if FuncLoadError then
-  begin
-    SSL_get_error :=  @ERROR_SSL_get_error;
-  end;
+  if not assigned(SSL_get_error) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_error');
+  Result := SSL_get_error(s,ret_code);
+end;
 
+function Load_SSL_get_version(const s: PSSL): PAnsiChar; cdecl;
+begin
   SSL_get_version := LoadLibSSLFunction('SSL_get_version');
-  FuncLoadError := not assigned(SSL_get_version);
-  if FuncLoadError then
-  begin
-    SSL_get_version :=  @ERROR_SSL_get_version;
-  end;
+  if not assigned(SSL_get_version) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_version');
+  Result := SSL_get_version(s);
+end;
 
+function Load_SSL_CTX_set_ssl_version(ctx: PSSL_CTX; const meth: PSSL_METHOD): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_ssl_version := LoadLibSSLFunction('SSL_CTX_set_ssl_version');
-  FuncLoadError := not assigned(SSL_CTX_set_ssl_version);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_ssl_version :=  @ERROR_SSL_CTX_set_ssl_version;
-  end;
+  if not assigned(SSL_CTX_set_ssl_version) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_ssl_version');
+  Result := SSL_CTX_set_ssl_version(ctx,meth);
+end;
 
+function Load_TLS_method: PSSL_METHOD; cdecl;
+begin
   TLS_method := LoadLibSSLFunction('TLS_method');
-  FuncLoadError := not assigned(TLS_method);
-  if FuncLoadError then
-  begin
+  if not assigned(TLS_method) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     TLS_method := @COMPAT_TLS_method;
 {$ELSE}
-    TLS_method :=  @ERROR_TLS_method;
-{$ENDIF}
-  end;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('TLS_method');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  Result := TLS_method();
+end;
 
+function Load_TLS_server_method: PSSL_METHOD; cdecl;
+begin
   TLS_server_method := LoadLibSSLFunction('TLS_server_method');
-  FuncLoadError := not assigned(TLS_server_method);
-  if FuncLoadError then
-  begin
+  if not assigned(TLS_server_method) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     TLS_server_method := @COMPAT_TLS_server_method;
 {$ELSE}
-    TLS_server_method :=  @ERROR_TLS_server_method;
-{$ENDIF}
-  end;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('TLS_server_method');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  Result := TLS_server_method();
+end;
 
+function Load_TLS_client_method: PSSL_METHOD; cdecl;
+begin
   TLS_client_method := LoadLibSSLFunction('TLS_client_method');
-  FuncLoadError := not assigned(TLS_client_method);
-  if FuncLoadError then
-  begin
+  if not assigned(TLS_client_method) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     TLS_client_method := @COMPAT_TLS_client_method;
 {$ELSE}
-    TLS_client_method :=  @ERROR_TLS_client_method;
-{$ENDIF}
-  end;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('TLS_client_method');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  Result := TLS_client_method();
+end;
 
+function Load_SSL_do_handshake(s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_do_handshake := LoadLibSSLFunction('SSL_do_handshake');
-  FuncLoadError := not assigned(SSL_do_handshake);
-  if FuncLoadError then
-  begin
-    SSL_do_handshake :=  @ERROR_SSL_do_handshake;
-  end;
+  if not assigned(SSL_do_handshake) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_do_handshake');
+  Result := SSL_do_handshake(s);
+end;
 
+function Load_SSL_key_update(s: PSSL; updatetype: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_key_update := LoadLibSSLFunction('SSL_key_update');
-  FuncLoadError := not assigned(SSL_key_update);
-  if FuncLoadError then
-  begin
-    SSL_key_update :=  @ERROR_SSL_key_update;
-  end;
+  if not assigned(SSL_key_update) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_key_update');
+  Result := SSL_key_update(s,updatetype);
+end;
 
+function Load_SSL_get_key_update_type(const s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_get_key_update_type := LoadLibSSLFunction('SSL_get_key_update_type');
-  FuncLoadError := not assigned(SSL_get_key_update_type);
-  if FuncLoadError then
-  begin
-    SSL_get_key_update_type :=  @ERROR_SSL_get_key_update_type;
-  end;
+  if not assigned(SSL_get_key_update_type) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_key_update_type');
+  Result := SSL_get_key_update_type(s);
+end;
 
+function Load_SSL_renegotiate(s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_renegotiate := LoadLibSSLFunction('SSL_renegotiate');
-  FuncLoadError := not assigned(SSL_renegotiate);
-  if FuncLoadError then
-  begin
-    SSL_renegotiate :=  @ERROR_SSL_renegotiate;
-  end;
+  if not assigned(SSL_renegotiate) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_renegotiate');
+  Result := SSL_renegotiate(s);
+end;
 
+function Load_SSL_renegotiate_abbreviated(s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_renegotiate_abbreviated := LoadLibSSLFunction('SSL_renegotiate_abbreviated');
-  FuncLoadError := not assigned(SSL_renegotiate_abbreviated);
-  if FuncLoadError then
-  begin
-    SSL_renegotiate_abbreviated :=  @ERROR_SSL_renegotiate_abbreviated;
-  end;
+  if not assigned(SSL_renegotiate_abbreviated) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_renegotiate_abbreviated');
+  Result := SSL_renegotiate_abbreviated(s);
+end;
 
+function Load_SSL_new_session_ticket(s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_new_session_ticket := LoadLibSSLFunction('SSL_new_session_ticket');
-  FuncLoadError := not assigned(SSL_new_session_ticket);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_new_session_ticket) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     SSL_new_session_ticket := @COMPAT_SSL_new_session_ticket;
 {$ELSE}
-    SSL_new_session_ticket :=  @ERROR_SSL_new_session_ticket;
-{$ENDIF}
-  end;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_new_session_ticket');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  Result := SSL_new_session_ticket(s);
+end;
 
+function Load_SSL_shutdown(s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_shutdown := LoadLibSSLFunction('SSL_shutdown');
-  FuncLoadError := not assigned(SSL_shutdown);
-  if FuncLoadError then
-  begin
-    SSL_shutdown :=  @ERROR_SSL_shutdown;
-  end;
+  if not assigned(SSL_shutdown) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_shutdown');
+  Result := SSL_shutdown(s);
+end;
 
+procedure Load_SSL_CTX_set_post_handshake_auth(ctx: PSSL_CTX; val: TOpenSSL_C_INT); cdecl;
+begin
   SSL_CTX_set_post_handshake_auth := LoadLibSSLFunction('SSL_CTX_set_post_handshake_auth');
-  FuncLoadError := not assigned(SSL_CTX_set_post_handshake_auth);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_post_handshake_auth :=  @ERROR_SSL_CTX_set_post_handshake_auth;
-  end;
+  if not assigned(SSL_CTX_set_post_handshake_auth) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_post_handshake_auth');
+  SSL_CTX_set_post_handshake_auth(ctx,val);
+end;
 
+procedure Load_SSL_set_post_handshake_auth(s: PSSL; val: TOpenSSL_C_INT); cdecl;
+begin
   SSL_set_post_handshake_auth := LoadLibSSLFunction('SSL_set_post_handshake_auth');
-  FuncLoadError := not assigned(SSL_set_post_handshake_auth);
-  if FuncLoadError then
-  begin
-    SSL_set_post_handshake_auth :=  @ERROR_SSL_set_post_handshake_auth;
-  end;
+  if not assigned(SSL_set_post_handshake_auth) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_post_handshake_auth');
+  SSL_set_post_handshake_auth(s,val);
+end;
 
+function Load_SSL_renegotiate_pending(const s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_renegotiate_pending := LoadLibSSLFunction('SSL_renegotiate_pending');
-  FuncLoadError := not assigned(SSL_renegotiate_pending);
-  if FuncLoadError then
-  begin
-    SSL_renegotiate_pending :=  @ERROR_SSL_renegotiate_pending;
-  end;
+  if not assigned(SSL_renegotiate_pending) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_renegotiate_pending');
+  Result := SSL_renegotiate_pending(s);
+end;
 
+function Load_SSL_verify_client_post_handshake(s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_verify_client_post_handshake := LoadLibSSLFunction('SSL_verify_client_post_handshake');
-  FuncLoadError := not assigned(SSL_verify_client_post_handshake);
-  if FuncLoadError then
-  begin
-    SSL_verify_client_post_handshake :=  @ERROR_SSL_verify_client_post_handshake;
-  end;
+  if not assigned(SSL_verify_client_post_handshake) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_verify_client_post_handshake');
+  Result := SSL_verify_client_post_handshake(s);
+end;
 
+function Load_SSL_CTX_get_ssl_method(const ctx: PSSL_CTX): PSSL_METHOD; cdecl;
+begin
   SSL_CTX_get_ssl_method := LoadLibSSLFunction('SSL_CTX_get_ssl_method');
-  FuncLoadError := not assigned(SSL_CTX_get_ssl_method);
-  if FuncLoadError then
-  begin
-    SSL_CTX_get_ssl_method :=  @ERROR_SSL_CTX_get_ssl_method;
-  end;
+  if not assigned(SSL_CTX_get_ssl_method) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_ssl_method');
+  Result := SSL_CTX_get_ssl_method(ctx);
+end;
 
+function Load_SSL_get_ssl_method(const s: PSSL): PSSL_METHOD; cdecl;
+begin
   SSL_get_ssl_method := LoadLibSSLFunction('SSL_get_ssl_method');
-  FuncLoadError := not assigned(SSL_get_ssl_method);
-  if FuncLoadError then
-  begin
-    SSL_get_ssl_method :=  @ERROR_SSL_get_ssl_method;
-  end;
+  if not assigned(SSL_get_ssl_method) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_ssl_method');
+  Result := SSL_get_ssl_method(s);
+end;
 
+function Load_SSL_set_ssl_method(s: PSSL; const method: PSSL_METHOD): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set_ssl_method := LoadLibSSLFunction('SSL_set_ssl_method');
-  FuncLoadError := not assigned(SSL_set_ssl_method);
-  if FuncLoadError then
-  begin
-    SSL_set_ssl_method :=  @ERROR_SSL_set_ssl_method;
-  end;
+  if not assigned(SSL_set_ssl_method) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_ssl_method');
+  Result := SSL_set_ssl_method(s,method);
+end;
 
+function Load_SSL_alert_type_string_long(value: TOpenSSL_C_INT): PAnsiChar; cdecl;
+begin
   SSL_alert_type_string_long := LoadLibSSLFunction('SSL_alert_type_string_long');
-  FuncLoadError := not assigned(SSL_alert_type_string_long);
-  if FuncLoadError then
-  begin
-    SSL_alert_type_string_long :=  @ERROR_SSL_alert_type_string_long;
-  end;
+  if not assigned(SSL_alert_type_string_long) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_alert_type_string_long');
+  Result := SSL_alert_type_string_long(value);
+end;
 
+function Load_SSL_alert_type_string(value: TOpenSSL_C_INT): PAnsiChar; cdecl;
+begin
   SSL_alert_type_string := LoadLibSSLFunction('SSL_alert_type_string');
-  FuncLoadError := not assigned(SSL_alert_type_string);
-  if FuncLoadError then
-  begin
-    SSL_alert_type_string :=  @ERROR_SSL_alert_type_string;
-  end;
+  if not assigned(SSL_alert_type_string) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_alert_type_string');
+  Result := SSL_alert_type_string(value);
+end;
 
+function Load_SSL_alert_desc_string_long(value: TOpenSSL_C_INT): PAnsiChar; cdecl;
+begin
   SSL_alert_desc_string_long := LoadLibSSLFunction('SSL_alert_desc_string_long');
-  FuncLoadError := not assigned(SSL_alert_desc_string_long);
-  if FuncLoadError then
-  begin
-    SSL_alert_desc_string_long :=  @ERROR_SSL_alert_desc_string_long;
-  end;
+  if not assigned(SSL_alert_desc_string_long) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_alert_desc_string_long');
+  Result := SSL_alert_desc_string_long(value);
+end;
 
+function Load_SSL_alert_desc_string(value: TOpenSSL_C_INT): PAnsiChar; cdecl;
+begin
   SSL_alert_desc_string := LoadLibSSLFunction('SSL_alert_desc_string');
-  FuncLoadError := not assigned(SSL_alert_desc_string);
-  if FuncLoadError then
-  begin
-    SSL_alert_desc_string :=  @ERROR_SSL_alert_desc_string;
-  end;
+  if not assigned(SSL_alert_desc_string) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_alert_desc_string');
+  Result := SSL_alert_desc_string(value);
+end;
 
+procedure Load_SSL_CTX_set_client_CA_list(ctx: PSSL_CTX; name_list: PSTACK_OF_X509_NAME); cdecl;
+begin
   SSL_CTX_set_client_CA_list := LoadLibSSLFunction('SSL_CTX_set_client_CA_list');
-  FuncLoadError := not assigned(SSL_CTX_set_client_CA_list);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_client_CA_list :=  @ERROR_SSL_CTX_set_client_CA_list;
-  end;
+  if not assigned(SSL_CTX_set_client_CA_list) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_client_CA_list');
+  SSL_CTX_set_client_CA_list(ctx,name_list);
+end;
 
+function Load_SSL_add_client_CA(ssl: PSSL; x: PX509): TOpenSSL_C_INT; cdecl;
+begin
   SSL_add_client_CA := LoadLibSSLFunction('SSL_add_client_CA');
-  FuncLoadError := not assigned(SSL_add_client_CA);
-  if FuncLoadError then
-  begin
-    SSL_add_client_CA :=  @ERROR_SSL_add_client_CA;
-  end;
+  if not assigned(SSL_add_client_CA) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_add_client_CA');
+  Result := SSL_add_client_CA(ssl,x);
+end;
 
+function Load_SSL_CTX_add_client_CA(ctx: PSSL_CTX; x: PX509): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_add_client_CA := LoadLibSSLFunction('SSL_CTX_add_client_CA');
-  FuncLoadError := not assigned(SSL_CTX_add_client_CA);
-  if FuncLoadError then
-  begin
-    SSL_CTX_add_client_CA :=  @ERROR_SSL_CTX_add_client_CA;
-  end;
+  if not assigned(SSL_CTX_add_client_CA) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_add_client_CA');
+  Result := SSL_CTX_add_client_CA(ctx,x);
+end;
 
+procedure Load_SSL_set_connect_state(s: PSSL); cdecl;
+begin
   SSL_set_connect_state := LoadLibSSLFunction('SSL_set_connect_state');
-  FuncLoadError := not assigned(SSL_set_connect_state);
-  if FuncLoadError then
-  begin
-    SSL_set_connect_state :=  @ERROR_SSL_set_connect_state;
-  end;
+  if not assigned(SSL_set_connect_state) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_connect_state');
+  SSL_set_connect_state(s);
+end;
 
+procedure Load_SSL_set_accept_state(s: PSSL); cdecl;
+begin
   SSL_set_accept_state := LoadLibSSLFunction('SSL_set_accept_state');
-  FuncLoadError := not assigned(SSL_set_accept_state);
-  if FuncLoadError then
-  begin
-    SSL_set_accept_state :=  @ERROR_SSL_set_accept_state;
-  end;
+  if not assigned(SSL_set_accept_state) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_accept_state');
+  SSL_set_accept_state(s);
+end;
 
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_SSL_library_init: TOpenSSL_C_INT; cdecl;
+begin
   SSL_library_init := LoadLibSSLFunction('SSL_library_init');
-  FuncLoadError := not assigned(SSL_library_init);
-  if FuncLoadError then
-  begin
+  if not assigned(SSL_library_init) then
     SSL_library_init := @COMPAT_SSL_library_init;
-    if SSL_library_init_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_library_init');
-  end;
+  Result := SSL_library_init();
+end;
 
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_SSL_CIPHER_description(cipher: PSSL_CIPHER; buf: PAnsiChar; size_ :TOpenSSL_C_INT): PAnsiChar; cdecl;
+begin
   SSL_CIPHER_description := LoadLibSSLFunction('SSL_CIPHER_description');
-  FuncLoadError := not assigned(SSL_CIPHER_description);
-  if FuncLoadError then
-  begin
-    SSL_CIPHER_description :=  @ERROR_SSL_CIPHER_description;
-  end;
+  if not assigned(SSL_CIPHER_description) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_description');
+  Result := SSL_CIPHER_description(cipher,buf,size_);
+end;
 
+function Load_SSL_dup(ssl: PSSL): PSSL; cdecl;
+begin
   SSL_dup := LoadLibSSLFunction('SSL_dup');
-  FuncLoadError := not assigned(SSL_dup);
-  if FuncLoadError then
-  begin
-    SSL_dup :=  @ERROR_SSL_dup;
-  end;
+  if not assigned(SSL_dup) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_dup');
+  Result := SSL_dup(ssl);
+end;
 
+function Load_SSL_get_certificate(const ssl: PSSL): PX509; cdecl;
+begin
   SSL_get_certificate := LoadLibSSLFunction('SSL_get_certificate');
-  FuncLoadError := not assigned(SSL_get_certificate);
-  if FuncLoadError then
-  begin
-    SSL_get_certificate :=  @ERROR_SSL_get_certificate;
-  end;
+  if not assigned(SSL_get_certificate) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_certificate');
+  Result := SSL_get_certificate(ssl);
+end;
 
+function Load_SSL_get_privatekey(const ssl: PSSL): PEVP_PKEY; cdecl;
+begin
   SSL_get_privatekey := LoadLibSSLFunction('SSL_get_privatekey');
-  FuncLoadError := not assigned(SSL_get_privatekey);
-  if FuncLoadError then
-  begin
-    SSL_get_privatekey :=  @ERROR_SSL_get_privatekey;
-  end;
+  if not assigned(SSL_get_privatekey) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_privatekey');
+  Result := SSL_get_privatekey(ssl);
+end;
 
+function Load_SSL_CTX_get0_certificate(const ctx: PSSL_CTX): PX509; cdecl;
+begin
   SSL_CTX_get0_certificate := LoadLibSSLFunction('SSL_CTX_get0_certificate');
-  FuncLoadError := not assigned(SSL_CTX_get0_certificate);
-  if FuncLoadError then
-  begin
-    SSL_CTX_get0_certificate :=  @ERROR_SSL_CTX_get0_certificate;
-  end;
+  if not assigned(SSL_CTX_get0_certificate) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get0_certificate');
+  Result := SSL_CTX_get0_certificate(ctx);
+end;
 
+function Load_SSL_CTX_get0_privatekey(const ctx: PSSL_CTX): PEVP_PKEY; cdecl;
+begin
   SSL_CTX_get0_privatekey := LoadLibSSLFunction('SSL_CTX_get0_privatekey');
-  FuncLoadError := not assigned(SSL_CTX_get0_privatekey);
-  if FuncLoadError then
-  begin
-    SSL_CTX_get0_privatekey :=  @ERROR_SSL_CTX_get0_privatekey;
-  end;
+  if not assigned(SSL_CTX_get0_privatekey) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get0_privatekey');
+  Result := SSL_CTX_get0_privatekey(ctx);
+end;
 
+procedure Load_SSL_CTX_set_quiet_shutdown(ctx: PSSL_CTX; mode: TOpenSSL_C_INT); cdecl;
+begin
   SSL_CTX_set_quiet_shutdown := LoadLibSSLFunction('SSL_CTX_set_quiet_shutdown');
-  FuncLoadError := not assigned(SSL_CTX_set_quiet_shutdown);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_quiet_shutdown :=  @ERROR_SSL_CTX_set_quiet_shutdown;
-  end;
+  if not assigned(SSL_CTX_set_quiet_shutdown) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_quiet_shutdown');
+  SSL_CTX_set_quiet_shutdown(ctx,mode);
+end;
 
+function Load_SSL_CTX_get_quiet_shutdown(const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_get_quiet_shutdown := LoadLibSSLFunction('SSL_CTX_get_quiet_shutdown');
-  FuncLoadError := not assigned(SSL_CTX_get_quiet_shutdown);
-  if FuncLoadError then
-  begin
-    SSL_CTX_get_quiet_shutdown :=  @ERROR_SSL_CTX_get_quiet_shutdown;
-  end;
+  if not assigned(SSL_CTX_get_quiet_shutdown) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_quiet_shutdown');
+  Result := SSL_CTX_get_quiet_shutdown(ctx);
+end;
 
+procedure Load_SSL_set_quiet_shutdown(ssl: PSSL; mode: TOpenSSL_C_INT); cdecl;
+begin
   SSL_set_quiet_shutdown := LoadLibSSLFunction('SSL_set_quiet_shutdown');
-  FuncLoadError := not assigned(SSL_set_quiet_shutdown);
-  if FuncLoadError then
-  begin
-    SSL_set_quiet_shutdown :=  @ERROR_SSL_set_quiet_shutdown;
-  end;
+  if not assigned(SSL_set_quiet_shutdown) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_quiet_shutdown');
+  SSL_set_quiet_shutdown(ssl,mode);
+end;
 
+function Load_SSL_get_quiet_shutdown(const ssl: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_get_quiet_shutdown := LoadLibSSLFunction('SSL_get_quiet_shutdown');
-  FuncLoadError := not assigned(SSL_get_quiet_shutdown);
-  if FuncLoadError then
-  begin
-    SSL_get_quiet_shutdown :=  @ERROR_SSL_get_quiet_shutdown;
-  end;
+  if not assigned(SSL_get_quiet_shutdown) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_quiet_shutdown');
+  Result := SSL_get_quiet_shutdown(ssl);
+end;
 
+procedure Load_SSL_set_shutdown(ssl: PSSL; mode: TOpenSSL_C_INT); cdecl;
+begin
   SSL_set_shutdown := LoadLibSSLFunction('SSL_set_shutdown');
-  FuncLoadError := not assigned(SSL_set_shutdown);
-  if FuncLoadError then
-  begin
-    SSL_set_shutdown :=  @ERROR_SSL_set_shutdown;
-  end;
+  if not assigned(SSL_set_shutdown) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_shutdown');
+  SSL_set_shutdown(ssl,mode);
+end;
 
+function Load_SSL_get_shutdown(const ssl: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_get_shutdown := LoadLibSSLFunction('SSL_get_shutdown');
-  FuncLoadError := not assigned(SSL_get_shutdown);
-  if FuncLoadError then
-  begin
-    SSL_get_shutdown :=  @ERROR_SSL_get_shutdown;
-  end;
+  if not assigned(SSL_get_shutdown) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_shutdown');
+  Result := SSL_get_shutdown(ssl);
+end;
 
+function Load_SSL_version(const ssl: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_version := LoadLibSSLFunction('SSL_version');
-  FuncLoadError := not assigned(SSL_version);
-  if FuncLoadError then
-  begin
-    SSL_version :=  @ERROR_SSL_version;
-  end;
+  if not assigned(SSL_version) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_version');
+  Result := SSL_version(ssl);
+end;
 
+function Load_SSL_client_version(const s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_client_version := LoadLibSSLFunction('SSL_client_version');
-  FuncLoadError := not assigned(SSL_client_version);
-  if FuncLoadError then
-  begin
-    SSL_client_version :=  @ERROR_SSL_client_version;
-  end;
+  if not assigned(SSL_client_version) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_client_version');
+  Result := SSL_client_version(s);
+end;
 
+function Load_SSL_CTX_set_default_verify_paths(ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_default_verify_paths := LoadLibSSLFunction('SSL_CTX_set_default_verify_paths');
-  FuncLoadError := not assigned(SSL_CTX_set_default_verify_paths);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_default_verify_paths :=  @ERROR_SSL_CTX_set_default_verify_paths;
-  end;
+  if not assigned(SSL_CTX_set_default_verify_paths) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_default_verify_paths');
+  Result := SSL_CTX_set_default_verify_paths(ctx);
+end;
 
+function Load_SSL_CTX_set_default_verify_dir(ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_default_verify_dir := LoadLibSSLFunction('SSL_CTX_set_default_verify_dir');
-  FuncLoadError := not assigned(SSL_CTX_set_default_verify_dir);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_default_verify_dir :=  @ERROR_SSL_CTX_set_default_verify_dir;
-  end;
+  if not assigned(SSL_CTX_set_default_verify_dir) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_default_verify_dir');
+  Result := SSL_CTX_set_default_verify_dir(ctx);
+end;
 
+function Load_SSL_CTX_set_default_verify_file(ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_default_verify_file := LoadLibSSLFunction('SSL_CTX_set_default_verify_file');
-  FuncLoadError := not assigned(SSL_CTX_set_default_verify_file);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_default_verify_file :=  @ERROR_SSL_CTX_set_default_verify_file;
-  end;
+  if not assigned(SSL_CTX_set_default_verify_file) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_default_verify_file');
+  Result := SSL_CTX_set_default_verify_file(ctx);
+end;
 
+function Load_SSL_CTX_load_verify_locations(ctx: PSSL_CTX; const CAfile: PAnsiChar; const CApath: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_load_verify_locations := LoadLibSSLFunction('SSL_CTX_load_verify_locations');
-  FuncLoadError := not assigned(SSL_CTX_load_verify_locations);
-  if FuncLoadError then
-  begin
-    SSL_CTX_load_verify_locations :=  @ERROR_SSL_CTX_load_verify_locations;
-  end;
+  if not assigned(SSL_CTX_load_verify_locations) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_load_verify_locations');
+  Result := SSL_CTX_load_verify_locations(ctx,CAfile,CApath);
+end;
 
+function Load_SSL_get_session(const ssl: PSSL): PSSL_SESSION; cdecl;
+begin
   SSL_get_session := LoadLibSSLFunction('SSL_get_session');
-  FuncLoadError := not assigned(SSL_get_session);
-  if FuncLoadError then
-  begin
-    SSL_get_session :=  @ERROR_SSL_get_session;
-  end;
+  if not assigned(SSL_get_session) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_session');
+  Result := SSL_get_session(ssl);
+end;
 
+function Load_SSL_get1_session(ssl: PSSL): PSSL_SESSION; cdecl;
+begin
   SSL_get1_session := LoadLibSSLFunction('SSL_get1_session');
-  FuncLoadError := not assigned(SSL_get1_session);
-  if FuncLoadError then
-  begin
-    SSL_get1_session :=  @ERROR_SSL_get1_session;
-  end;
+  if not assigned(SSL_get1_session) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get1_session');
+  Result := SSL_get1_session(ssl);
+end;
 
+function Load_SSL_get_SSL_CTX(const ssl: PSSL): PSSL_CTX; cdecl;
+begin
   SSL_get_SSL_CTX := LoadLibSSLFunction('SSL_get_SSL_CTX');
-  FuncLoadError := not assigned(SSL_get_SSL_CTX);
-  if FuncLoadError then
-  begin
-    SSL_get_SSL_CTX :=  @ERROR_SSL_get_SSL_CTX;
-  end;
+  if not assigned(SSL_get_SSL_CTX) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_SSL_CTX');
+  Result := SSL_get_SSL_CTX(ssl);
+end;
 
+function Load_SSL_set_SSL_CTX(ssl: PSSL; ctx: PSSL_CTX): PSSL_CTX; cdecl;
+begin
   SSL_set_SSL_CTX := LoadLibSSLFunction('SSL_set_SSL_CTX');
-  FuncLoadError := not assigned(SSL_set_SSL_CTX);
-  if FuncLoadError then
-  begin
-    SSL_set_SSL_CTX :=  @ERROR_SSL_set_SSL_CTX;
-  end;
+  if not assigned(SSL_set_SSL_CTX) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_SSL_CTX');
+  Result := SSL_set_SSL_CTX(ssl,ctx);
+end;
 
+procedure Load_SSL_set_info_callback(ssl: PSSL; cb: SSL_info_callback); cdecl;
+begin
   SSL_set_info_callback := LoadLibSSLFunction('SSL_set_info_callback');
-  FuncLoadError := not assigned(SSL_set_info_callback);
-  if FuncLoadError then
-  begin
-    SSL_set_info_callback :=  @ERROR_SSL_set_info_callback;
-  end;
+  if not assigned(SSL_set_info_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_info_callback');
+  SSL_set_info_callback(ssl,cb);
+end;
 
+function Load_SSL_get_info_callback(const ssl: PSSL): SSL_info_callback; cdecl;
+begin
   SSL_get_info_callback := LoadLibSSLFunction('SSL_get_info_callback');
-  FuncLoadError := not assigned(SSL_get_info_callback);
-  if FuncLoadError then
-  begin
-    SSL_get_info_callback :=  @ERROR_SSL_get_info_callback;
-  end;
+  if not assigned(SSL_get_info_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_info_callback');
+  Result := SSL_get_info_callback(ssl);
+end;
 
+function Load_SSL_get_state(const ssl: PSSL): OSSL_HANDSHAKE_STATE; cdecl;
+begin
   SSL_get_state := LoadLibSSLFunction('SSL_get_state');
-  FuncLoadError := not assigned(SSL_get_state);
-  if FuncLoadError then
-  begin
-    SSL_get_state :=  @ERROR_SSL_get_state;
-  end;
+  if not assigned(SSL_get_state) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_state');
+  Result := SSL_get_state(ssl);
+end;
 
+procedure Load_SSL_set_verify_result(ssl: PSSL; v: TOpenSSL_C_LONG); cdecl;
+begin
   SSL_set_verify_result := LoadLibSSLFunction('SSL_set_verify_result');
-  FuncLoadError := not assigned(SSL_set_verify_result);
-  if FuncLoadError then
-  begin
-    SSL_set_verify_result :=  @ERROR_SSL_set_verify_result;
-  end;
+  if not assigned(SSL_set_verify_result) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_verify_result');
+  SSL_set_verify_result(ssl,v);
+end;
 
+function Load_SSL_get_verify_result(const ssl: PSSL): TOpenSSL_C_LONG; cdecl;
+begin
   SSL_get_verify_result := LoadLibSSLFunction('SSL_get_verify_result');
-  FuncLoadError := not assigned(SSL_get_verify_result);
-  if FuncLoadError then
-  begin
-    SSL_get_verify_result :=  @ERROR_SSL_get_verify_result;
-  end;
+  if not assigned(SSL_get_verify_result) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_verify_result');
+  Result := SSL_get_verify_result(ssl);
+end;
 
+function Load_SSL_get_client_random(const ssl: PSSL; out_: PByte; outlen: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+begin
   SSL_get_client_random := LoadLibSSLFunction('SSL_get_client_random');
-  FuncLoadError := not assigned(SSL_get_client_random);
-  if FuncLoadError then
-  begin
-    SSL_get_client_random :=  @ERROR_SSL_get_client_random;
-  end;
+  if not assigned(SSL_get_client_random) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_client_random');
+  Result := SSL_get_client_random(ssl,out_,outlen);
+end;
 
+function Load_SSL_get_server_random(const ssl: PSSL; out_: PByte; outlen: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+begin
   SSL_get_server_random := LoadLibSSLFunction('SSL_get_server_random');
-  FuncLoadError := not assigned(SSL_get_server_random);
-  if FuncLoadError then
-  begin
-    SSL_get_server_random :=  @ERROR_SSL_get_server_random;
-  end;
+  if not assigned(SSL_get_server_random) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_server_random');
+  Result := SSL_get_server_random(ssl,out_,outlen);
+end;
 
+function Load_SSL_SESSION_get_master_key(const sess: PSSL_SESSION; out_: PByte; outlen: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+begin
   SSL_SESSION_get_master_key := LoadLibSSLFunction('SSL_SESSION_get_master_key');
-  FuncLoadError := not assigned(SSL_SESSION_get_master_key);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_get_master_key :=  @ERROR_SSL_SESSION_get_master_key;
-  end;
+  if not assigned(SSL_SESSION_get_master_key) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get_master_key');
+  Result := SSL_SESSION_get_master_key(sess,out_,outlen);
+end;
 
+function Load_SSL_SESSION_set1_master_key(sess: PSSL_SESSION; const in_: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   SSL_SESSION_set1_master_key := LoadLibSSLFunction('SSL_SESSION_set1_master_key');
-  FuncLoadError := not assigned(SSL_SESSION_set1_master_key);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_set1_master_key :=  @ERROR_SSL_SESSION_set1_master_key;
-  end;
+  if not assigned(SSL_SESSION_set1_master_key) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set1_master_key');
+  Result := SSL_SESSION_set1_master_key(sess,in_,len);
+end;
 
+function Load_SSL_SESSION_get_max_fragment_length(const sess: PSSL_SESSION): TOpenSSL_C_UINT8; cdecl;
+begin
   SSL_SESSION_get_max_fragment_length := LoadLibSSLFunction('SSL_SESSION_get_max_fragment_length');
-  FuncLoadError := not assigned(SSL_SESSION_get_max_fragment_length);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_get_max_fragment_length :=  @ERROR_SSL_SESSION_get_max_fragment_length;
-  end;
+  if not assigned(SSL_SESSION_get_max_fragment_length) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get_max_fragment_length');
+  Result := SSL_SESSION_get_max_fragment_length(sess);
+end;
 
+function Load_SSL_set_ex_data(ssl: PSSL; idx: TOpenSSL_C_INT; data: Pointer): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set_ex_data := LoadLibSSLFunction('SSL_set_ex_data');
-  FuncLoadError := not assigned(SSL_set_ex_data);
-  if FuncLoadError then
-  begin
-    SSL_set_ex_data :=  @ERROR_SSL_set_ex_data;
-  end;
+  if not assigned(SSL_set_ex_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_ex_data');
+  Result := SSL_set_ex_data(ssl,idx,data);
+end;
 
+function Load_SSL_get_ex_data(const ssl: PSSL; idx: TOpenSSL_C_INT): Pointer; cdecl;
+begin
   SSL_get_ex_data := LoadLibSSLFunction('SSL_get_ex_data');
-  FuncLoadError := not assigned(SSL_get_ex_data);
-  if FuncLoadError then
-  begin
-    SSL_get_ex_data :=  @ERROR_SSL_get_ex_data;
-  end;
+  if not assigned(SSL_get_ex_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_ex_data');
+  Result := SSL_get_ex_data(ssl,idx);
+end;
 
+function Load_SSL_SESSION_set_ex_data(ss: PSSL_SESSION; idx: TOpenSSL_C_INT; data: Pointer): TOpenSSL_C_INT; cdecl;
+begin
   SSL_SESSION_set_ex_data := LoadLibSSLFunction('SSL_SESSION_set_ex_data');
-  FuncLoadError := not assigned(SSL_SESSION_set_ex_data);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_set_ex_data :=  @ERROR_SSL_SESSION_set_ex_data;
-  end;
+  if not assigned(SSL_SESSION_set_ex_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set_ex_data');
+  Result := SSL_SESSION_set_ex_data(ss,idx,data);
+end;
 
+function Load_SSL_SESSION_get_ex_data(const ss: PSSL_SESSION; idx: TOpenSSL_C_INT): Pointer; cdecl;
+begin
   SSL_SESSION_get_ex_data := LoadLibSSLFunction('SSL_SESSION_get_ex_data');
-  FuncLoadError := not assigned(SSL_SESSION_get_ex_data);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_get_ex_data :=  @ERROR_SSL_SESSION_get_ex_data;
-  end;
+  if not assigned(SSL_SESSION_get_ex_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get_ex_data');
+  Result := SSL_SESSION_get_ex_data(ss,idx);
+end;
 
+function Load_SSL_CTX_set_ex_data(ssl: PSSL_CTX; idx: TOpenSSL_C_INT; data: Pointer): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_ex_data := LoadLibSSLFunction('SSL_CTX_set_ex_data');
-  FuncLoadError := not assigned(SSL_CTX_set_ex_data);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_ex_data :=  @ERROR_SSL_CTX_set_ex_data;
-  end;
+  if not assigned(SSL_CTX_set_ex_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_ex_data');
+  Result := SSL_CTX_set_ex_data(ssl,idx,data);
+end;
 
+function Load_SSL_CTX_get_ex_data(const ssl: PSSL_CTX; idx: TOpenSSL_C_INT): Pointer; cdecl;
+begin
   SSL_CTX_get_ex_data := LoadLibSSLFunction('SSL_CTX_get_ex_data');
-  FuncLoadError := not assigned(SSL_CTX_get_ex_data);
-  if FuncLoadError then
-  begin
-    SSL_CTX_get_ex_data :=  @ERROR_SSL_CTX_get_ex_data;
-  end;
+  if not assigned(SSL_CTX_get_ex_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_ex_data');
+  Result := SSL_CTX_get_ex_data(ssl,idx);
+end;
 
+function Load_SSL_get_ex_data_X509_STORE_CTX_idx: TOpenSSL_C_INT; cdecl;
+begin
   SSL_get_ex_data_X509_STORE_CTX_idx := LoadLibSSLFunction('SSL_get_ex_data_X509_STORE_CTX_idx');
-  FuncLoadError := not assigned(SSL_get_ex_data_X509_STORE_CTX_idx);
-  if FuncLoadError then
-  begin
-    SSL_get_ex_data_X509_STORE_CTX_idx :=  @ERROR_SSL_get_ex_data_X509_STORE_CTX_idx;
-  end;
+  if not assigned(SSL_get_ex_data_X509_STORE_CTX_idx) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_ex_data_X509_STORE_CTX_idx');
+  Result := SSL_get_ex_data_X509_STORE_CTX_idx();
+end;
 
+procedure Load_SSL_CTX_set_default_read_buffer_len(ctx: PSSL_CTX; len: TOpenSSL_C_SIZET); cdecl;
+begin
   SSL_CTX_set_default_read_buffer_len := LoadLibSSLFunction('SSL_CTX_set_default_read_buffer_len');
-  FuncLoadError := not assigned(SSL_CTX_set_default_read_buffer_len);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_default_read_buffer_len :=  @ERROR_SSL_CTX_set_default_read_buffer_len;
-  end;
+  if not assigned(SSL_CTX_set_default_read_buffer_len) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_default_read_buffer_len');
+  SSL_CTX_set_default_read_buffer_len(ctx,len);
+end;
 
+procedure Load_SSL_set_default_read_buffer_len(s: PSSL; len: TOpenSSL_C_SIZET); cdecl;
+begin
   SSL_set_default_read_buffer_len := LoadLibSSLFunction('SSL_set_default_read_buffer_len');
-  FuncLoadError := not assigned(SSL_set_default_read_buffer_len);
-  if FuncLoadError then
-  begin
-    SSL_set_default_read_buffer_len :=  @ERROR_SSL_set_default_read_buffer_len;
-  end;
+  if not assigned(SSL_set_default_read_buffer_len) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_default_read_buffer_len');
+  SSL_set_default_read_buffer_len(s,len);
+end;
 
+procedure Load_SSL_CTX_set_tmp_dh_callback(ctx: PSSL_CTX; dh: SSL_CTX_set_tmp_dh_callback_dh); cdecl;
+begin
   SSL_CTX_set_tmp_dh_callback := LoadLibSSLFunction('SSL_CTX_set_tmp_dh_callback');
-  FuncLoadError := not assigned(SSL_CTX_set_tmp_dh_callback);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_tmp_dh_callback :=  @ERROR_SSL_CTX_set_tmp_dh_callback;
-  end;
+  if not assigned(SSL_CTX_set_tmp_dh_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_tmp_dh_callback');
+  SSL_CTX_set_tmp_dh_callback(ctx,dh);
+end;
 
+procedure Load_SSL_set_tmp_dh_callback(ssl: PSSL; dh: SSL_set_tmp_dh_callback_dh); cdecl;
+begin
   SSL_set_tmp_dh_callback := LoadLibSSLFunction('SSL_set_tmp_dh_callback');
-  FuncLoadError := not assigned(SSL_set_tmp_dh_callback);
-  if FuncLoadError then
-  begin
-    SSL_set_tmp_dh_callback :=  @ERROR_SSL_set_tmp_dh_callback;
-  end;
+  if not assigned(SSL_set_tmp_dh_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_tmp_dh_callback');
+  SSL_set_tmp_dh_callback(ssl,dh);
+end;
 
+function Load_SSL_CIPHER_find(ssl: PSSL; const ptr: PByte): PSSL_CIPHER; cdecl;
+begin
   SSL_CIPHER_find := LoadLibSSLFunction('SSL_CIPHER_find');
-  FuncLoadError := not assigned(SSL_CIPHER_find);
-  if FuncLoadError then
-  begin
-    SSL_CIPHER_find :=  @ERROR_SSL_CIPHER_find;
-  end;
+  if not assigned(SSL_CIPHER_find) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_find');
+  Result := SSL_CIPHER_find(ssl,ptr);
+end;
 
+function Load_SSL_CIPHER_get_cipher_nid(const c: PSSL_CIPHEr): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CIPHER_get_cipher_nid := LoadLibSSLFunction('SSL_CIPHER_get_cipher_nid');
-  FuncLoadError := not assigned(SSL_CIPHER_get_cipher_nid);
-  if FuncLoadError then
-  begin
-    SSL_CIPHER_get_cipher_nid :=  @ERROR_SSL_CIPHER_get_cipher_nid;
-  end;
+  if not assigned(SSL_CIPHER_get_cipher_nid) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_get_cipher_nid');
+  Result := SSL_CIPHER_get_cipher_nid(c);
+end;
 
+function Load_SSL_CIPHER_get_digest_nid(const c: PSSL_CIPHEr): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CIPHER_get_digest_nid := LoadLibSSLFunction('SSL_CIPHER_get_digest_nid');
-  FuncLoadError := not assigned(SSL_CIPHER_get_digest_nid);
-  if FuncLoadError then
-  begin
-    SSL_CIPHER_get_digest_nid :=  @ERROR_SSL_CIPHER_get_digest_nid;
-  end;
+  if not assigned(SSL_CIPHER_get_digest_nid) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CIPHER_get_digest_nid');
+  Result := SSL_CIPHER_get_digest_nid(c);
+end;
 
+function Load_SSL_set_session_ticket_ext(s: PSSL; ext_data: Pointer; ext_len: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set_session_ticket_ext := LoadLibSSLFunction('SSL_set_session_ticket_ext');
-  FuncLoadError := not assigned(SSL_set_session_ticket_ext);
-  if FuncLoadError then
-  begin
-    SSL_set_session_ticket_ext :=  @ERROR_SSL_set_session_ticket_ext;
-  end;
+  if not assigned(SSL_set_session_ticket_ext) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_session_ticket_ext');
+  Result := SSL_set_session_ticket_ext(s,ext_data,ext_len);
+end;
 
+function Load_SSL_set_session_ticket_ext_cb(s: PSSL; cb: tls_session_ticket_ext_cb_fn; arg: Pointer): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set_session_ticket_ext_cb := LoadLibSSLFunction('SSL_set_session_ticket_ext_cb');
-  FuncLoadError := not assigned(SSL_set_session_ticket_ext_cb);
-  if FuncLoadError then
-  begin
-    SSL_set_session_ticket_ext_cb :=  @ERROR_SSL_set_session_ticket_ext_cb;
-  end;
+  if not assigned(SSL_set_session_ticket_ext_cb) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_session_ticket_ext_cb');
+  Result := SSL_set_session_ticket_ext_cb(s,cb,arg);
+end;
 
+procedure Load_SSL_CTX_set_not_resumable_session_callback(ctx: PSSL_CTX; cb: SSL_CTX_set_not_resumable_session_callback_cb); cdecl;
+begin
   SSL_CTX_set_not_resumable_session_callback := LoadLibSSLFunction('SSL_CTX_set_not_resumable_session_callback');
-  FuncLoadError := not assigned(SSL_CTX_set_not_resumable_session_callback);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_not_resumable_session_callback :=  @ERROR_SSL_CTX_set_not_resumable_session_callback;
-  end;
+  if not assigned(SSL_CTX_set_not_resumable_session_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_not_resumable_session_callback');
+  SSL_CTX_set_not_resumable_session_callback(ctx,cb);
+end;
 
+procedure Load_SSL_set_not_resumable_session_callback(ssl: PSSL; cb: SSL_set_not_resumable_session_callback_cb); cdecl;
+begin
   SSL_set_not_resumable_session_callback := LoadLibSSLFunction('SSL_set_not_resumable_session_callback');
-  FuncLoadError := not assigned(SSL_set_not_resumable_session_callback);
-  if FuncLoadError then
-  begin
-    SSL_set_not_resumable_session_callback :=  @ERROR_SSL_set_not_resumable_session_callback;
-  end;
+  if not assigned(SSL_set_not_resumable_session_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_not_resumable_session_callback');
+  SSL_set_not_resumable_session_callback(ssl,cb);
+end;
 
+procedure Load_SSL_CTX_set_record_padding_callback(ctx: PSSL_CTX; cb: SSL_CTX_set_record_padding_callback_cb); cdecl;
+begin
   SSL_CTX_set_record_padding_callback := LoadLibSSLFunction('SSL_CTX_set_record_padding_callback');
-  FuncLoadError := not assigned(SSL_CTX_set_record_padding_callback);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_record_padding_callback :=  @ERROR_SSL_CTX_set_record_padding_callback;
-  end;
+  if not assigned(SSL_CTX_set_record_padding_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_record_padding_callback');
+  SSL_CTX_set_record_padding_callback(ctx,cb);
+end;
 
+procedure Load_SSL_CTX_set_record_padding_callback_arg(ctx: PSSL_CTX; arg: Pointer); cdecl;
+begin
   SSL_CTX_set_record_padding_callback_arg := LoadLibSSLFunction('SSL_CTX_set_record_padding_callback_arg');
-  FuncLoadError := not assigned(SSL_CTX_set_record_padding_callback_arg);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_record_padding_callback_arg :=  @ERROR_SSL_CTX_set_record_padding_callback_arg;
-  end;
+  if not assigned(SSL_CTX_set_record_padding_callback_arg) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_record_padding_callback_arg');
+  SSL_CTX_set_record_padding_callback_arg(ctx,arg);
+end;
 
+function Load_SSL_CTX_get_record_padding_callback_arg(const ctx: PSSL_CTX): Pointer; cdecl;
+begin
   SSL_CTX_get_record_padding_callback_arg := LoadLibSSLFunction('SSL_CTX_get_record_padding_callback_arg');
-  FuncLoadError := not assigned(SSL_CTX_get_record_padding_callback_arg);
-  if FuncLoadError then
-  begin
-    SSL_CTX_get_record_padding_callback_arg :=  @ERROR_SSL_CTX_get_record_padding_callback_arg;
-  end;
+  if not assigned(SSL_CTX_get_record_padding_callback_arg) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_record_padding_callback_arg');
+  Result := SSL_CTX_get_record_padding_callback_arg(ctx);
+end;
 
+function Load_SSL_CTX_set_block_padding(ctx: PSSL_CTX; block_size: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_block_padding := LoadLibSSLFunction('SSL_CTX_set_block_padding');
-  FuncLoadError := not assigned(SSL_CTX_set_block_padding);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_block_padding :=  @ERROR_SSL_CTX_set_block_padding;
-  end;
+  if not assigned(SSL_CTX_set_block_padding) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_block_padding');
+  Result := SSL_CTX_set_block_padding(ctx,block_size);
+end;
 
+procedure Load_SSL_set_record_padding_callback(ssl: PSSL; cb: SSL_set_record_padding_callback_cb); cdecl;
+begin
   SSL_set_record_padding_callback := LoadLibSSLFunction('SSL_set_record_padding_callback');
-  FuncLoadError := not assigned(SSL_set_record_padding_callback);
-  if FuncLoadError then
-  begin
-    SSL_set_record_padding_callback :=  @ERROR_SSL_set_record_padding_callback;
-  end;
+  if not assigned(SSL_set_record_padding_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_record_padding_callback');
+  SSL_set_record_padding_callback(ssl,cb);
+end;
 
+procedure Load_SSL_set_record_padding_callback_arg(ssl: PSSL; arg: Pointer); cdecl;
+begin
   SSL_set_record_padding_callback_arg := LoadLibSSLFunction('SSL_set_record_padding_callback_arg');
-  FuncLoadError := not assigned(SSL_set_record_padding_callback_arg);
-  if FuncLoadError then
-  begin
-    SSL_set_record_padding_callback_arg :=  @ERROR_SSL_set_record_padding_callback_arg;
-  end;
+  if not assigned(SSL_set_record_padding_callback_arg) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_record_padding_callback_arg');
+  SSL_set_record_padding_callback_arg(ssl,arg);
+end;
 
+function Load_SSL_get_record_padding_callback_arg(const ssl: PSSL): Pointer; cdecl;
+begin
   SSL_get_record_padding_callback_arg := LoadLibSSLFunction('SSL_get_record_padding_callback_arg');
-  FuncLoadError := not assigned(SSL_get_record_padding_callback_arg);
-  if FuncLoadError then
-  begin
-    SSL_get_record_padding_callback_arg :=  @ERROR_SSL_get_record_padding_callback_arg;
-  end;
+  if not assigned(SSL_get_record_padding_callback_arg) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_record_padding_callback_arg');
+  Result := SSL_get_record_padding_callback_arg(ssl);
+end;
 
+function Load_SSL_set_block_padding(ssl: PSSL; block_size: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set_block_padding := LoadLibSSLFunction('SSL_set_block_padding');
-  FuncLoadError := not assigned(SSL_set_block_padding);
-  if FuncLoadError then
-  begin
-    SSL_set_block_padding :=  @ERROR_SSL_set_block_padding;
-  end;
+  if not assigned(SSL_set_block_padding) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_block_padding');
+  Result := SSL_set_block_padding(ssl,block_size);
+end;
 
+function Load_SSL_set_num_tickets(s: PSSL; num_tickets: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   SSL_set_num_tickets := LoadLibSSLFunction('SSL_set_num_tickets');
-  FuncLoadError := not assigned(SSL_set_num_tickets);
-  if FuncLoadError then
-  begin
-    SSL_set_num_tickets :=  @ERROR_SSL_set_num_tickets;
-  end;
+  if not assigned(SSL_set_num_tickets) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_num_tickets');
+  Result := SSL_set_num_tickets(s,num_tickets);
+end;
 
+function Load_SSL_get_num_tickets(const s: PSSL): TOpenSSL_C_SIZET; cdecl;
+begin
   SSL_get_num_tickets := LoadLibSSLFunction('SSL_get_num_tickets');
-  FuncLoadError := not assigned(SSL_get_num_tickets);
-  if FuncLoadError then
-  begin
-    SSL_get_num_tickets :=  @ERROR_SSL_get_num_tickets;
-  end;
+  if not assigned(SSL_get_num_tickets) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_num_tickets');
+  Result := SSL_get_num_tickets(s);
+end;
 
+function Load_SSL_CTX_set_num_tickets(ctx: PSSL_CTX; num_tickets: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_num_tickets := LoadLibSSLFunction('SSL_CTX_set_num_tickets');
-  FuncLoadError := not assigned(SSL_CTX_set_num_tickets);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_num_tickets :=  @ERROR_SSL_CTX_set_num_tickets;
-  end;
+  if not assigned(SSL_CTX_set_num_tickets) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_num_tickets');
+  Result := SSL_CTX_set_num_tickets(ctx,num_tickets);
+end;
 
+function Load_SSL_CTX_get_num_tickets(const ctx: PSSL_CTX): TOpenSSL_C_SIZET; cdecl;
+begin
   SSL_CTX_get_num_tickets := LoadLibSSLFunction('SSL_CTX_get_num_tickets');
-  FuncLoadError := not assigned(SSL_CTX_get_num_tickets);
-  if FuncLoadError then
-  begin
-    SSL_CTX_get_num_tickets :=  @ERROR_SSL_CTX_get_num_tickets;
-  end;
+  if not assigned(SSL_CTX_get_num_tickets) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_num_tickets');
+  Result := SSL_CTX_get_num_tickets(ctx);
+end;
 
+function Load_SSL_session_reused(const s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_session_reused := LoadLibSSLFunction('SSL_session_reused');
-  FuncLoadError := not assigned(SSL_session_reused);
-  if FuncLoadError then
-  begin
-    SSL_session_reused :=  @ERROR_SSL_session_reused;
-  end;
+  if not assigned(SSL_session_reused) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_session_reused');
+  Result := SSL_session_reused(s);
+end;
 
+function Load_SSL_is_server(const s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_is_server := LoadLibSSLFunction('SSL_is_server');
-  FuncLoadError := not assigned(SSL_is_server);
-  if FuncLoadError then
-  begin
-    SSL_is_server :=  @ERROR_SSL_is_server;
-  end;
+  if not assigned(SSL_is_server) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_is_server');
+  Result := SSL_is_server(s);
+end;
 
+function Load_SSL_CONF_CTX_new: PSSL_CONF_CTX; cdecl;
+begin
   SSL_CONF_CTX_new := LoadLibSSLFunction('SSL_CONF_CTX_new');
-  FuncLoadError := not assigned(SSL_CONF_CTX_new);
-  if FuncLoadError then
-  begin
-    SSL_CONF_CTX_new :=  @ERROR_SSL_CONF_CTX_new;
-  end;
+  if not assigned(SSL_CONF_CTX_new) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_CTX_new');
+  Result := SSL_CONF_CTX_new();
+end;
 
+function Load_SSL_CONF_CTX_finish(cctx: PSSL_CONF_CTX): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CONF_CTX_finish := LoadLibSSLFunction('SSL_CONF_CTX_finish');
-  FuncLoadError := not assigned(SSL_CONF_CTX_finish);
-  if FuncLoadError then
-  begin
-    SSL_CONF_CTX_finish :=  @ERROR_SSL_CONF_CTX_finish;
-  end;
+  if not assigned(SSL_CONF_CTX_finish) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_CTX_finish');
+  Result := SSL_CONF_CTX_finish(cctx);
+end;
 
+procedure Load_SSL_CONF_CTX_free(cctx: PSSL_CONF_CTX); cdecl;
+begin
   SSL_CONF_CTX_free := LoadLibSSLFunction('SSL_CONF_CTX_free');
-  FuncLoadError := not assigned(SSL_CONF_CTX_free);
-  if FuncLoadError then
-  begin
-    SSL_CONF_CTX_free :=  @ERROR_SSL_CONF_CTX_free;
-  end;
+  if not assigned(SSL_CONF_CTX_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_CTX_free');
+  SSL_CONF_CTX_free(cctx);
+end;
 
+function Load_SSL_CONF_CTX_set_flags(cctx: PSSL_CONF_CTX; flags: TOpenSSL_C_UINT): TOpenSSL_C_UINT; cdecl;
+begin
   SSL_CONF_CTX_set_flags := LoadLibSSLFunction('SSL_CONF_CTX_set_flags');
-  FuncLoadError := not assigned(SSL_CONF_CTX_set_flags);
-  if FuncLoadError then
-  begin
-    SSL_CONF_CTX_set_flags :=  @ERROR_SSL_CONF_CTX_set_flags;
-  end;
+  if not assigned(SSL_CONF_CTX_set_flags) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_CTX_set_flags');
+  Result := SSL_CONF_CTX_set_flags(cctx,flags);
+end;
 
+function Load_SSL_CONF_CTX_clear_flags(cctx: PSSL_CONF_CTX; flags: TOpenSSL_C_UINT): TOpenSSL_C_UINT; cdecl;
+begin
   SSL_CONF_CTX_clear_flags := LoadLibSSLFunction('SSL_CONF_CTX_clear_flags');
-  FuncLoadError := not assigned(SSL_CONF_CTX_clear_flags);
-  if FuncLoadError then
-  begin
-    SSL_CONF_CTX_clear_flags :=  @ERROR_SSL_CONF_CTX_clear_flags;
-  end;
+  if not assigned(SSL_CONF_CTX_clear_flags) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_CTX_clear_flags');
+  Result := SSL_CONF_CTX_clear_flags(cctx,flags);
+end;
 
+function Load_SSL_CONF_CTX_set1_prefix(cctx: PSSL_CONF_CTX; const pre: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CONF_CTX_set1_prefix := LoadLibSSLFunction('SSL_CONF_CTX_set1_prefix');
-  FuncLoadError := not assigned(SSL_CONF_CTX_set1_prefix);
-  if FuncLoadError then
-  begin
-    SSL_CONF_CTX_set1_prefix :=  @ERROR_SSL_CONF_CTX_set1_prefix;
-  end;
+  if not assigned(SSL_CONF_CTX_set1_prefix) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_CTX_set1_prefix');
+  Result := SSL_CONF_CTX_set1_prefix(cctx,pre);
+end;
 
+function Load_SSL_CONF_cmd(cctx: PSSL_CONF_CTX; const cmd: PAnsiChar; const value: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CONF_cmd := LoadLibSSLFunction('SSL_CONF_cmd');
-  FuncLoadError := not assigned(SSL_CONF_cmd);
-  if FuncLoadError then
-  begin
-    SSL_CONF_cmd :=  @ERROR_SSL_CONF_cmd;
-  end;
+  if not assigned(SSL_CONF_cmd) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_cmd');
+  Result := SSL_CONF_cmd(cctx,cmd,value);
+end;
 
+function Load_SSL_CONF_cmd_argv(cctx: PSSL_CONF_CTX; pargc: POpenSSL_C_INT; pargv: PPPAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CONF_cmd_argv := LoadLibSSLFunction('SSL_CONF_cmd_argv');
-  FuncLoadError := not assigned(SSL_CONF_cmd_argv);
-  if FuncLoadError then
-  begin
-    SSL_CONF_cmd_argv :=  @ERROR_SSL_CONF_cmd_argv;
-  end;
+  if not assigned(SSL_CONF_cmd_argv) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_cmd_argv');
+  Result := SSL_CONF_cmd_argv(cctx,pargc,pargv);
+end;
 
+function Load_SSL_CONF_cmd_value_type(cctx: PSSL_CONF_CTX; const cmd: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CONF_cmd_value_type := LoadLibSSLFunction('SSL_CONF_cmd_value_type');
-  FuncLoadError := not assigned(SSL_CONF_cmd_value_type);
-  if FuncLoadError then
-  begin
-    SSL_CONF_cmd_value_type :=  @ERROR_SSL_CONF_cmd_value_type;
-  end;
+  if not assigned(SSL_CONF_cmd_value_type) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_cmd_value_type');
+  Result := SSL_CONF_cmd_value_type(cctx,cmd);
+end;
 
+procedure Load_SSL_CONF_CTX_set_ssl(cctx: PSSL_CONF_CTX; ssl: PSSL); cdecl;
+begin
   SSL_CONF_CTX_set_ssl := LoadLibSSLFunction('SSL_CONF_CTX_set_ssl');
-  FuncLoadError := not assigned(SSL_CONF_CTX_set_ssl);
-  if FuncLoadError then
-  begin
-    SSL_CONF_CTX_set_ssl :=  @ERROR_SSL_CONF_CTX_set_ssl;
-  end;
+  if not assigned(SSL_CONF_CTX_set_ssl) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_CTX_set_ssl');
+  SSL_CONF_CTX_set_ssl(cctx,ssl);
+end;
 
+procedure Load_SSL_CONF_CTX_set_ssl_ctx(cctx: PSSL_CONF_CTX; ctx: PSSL_CTX); cdecl;
+begin
   SSL_CONF_CTX_set_ssl_ctx := LoadLibSSLFunction('SSL_CONF_CTX_set_ssl_ctx');
-  FuncLoadError := not assigned(SSL_CONF_CTX_set_ssl_ctx);
-  if FuncLoadError then
-  begin
-    SSL_CONF_CTX_set_ssl_ctx :=  @ERROR_SSL_CONF_CTX_set_ssl_ctx;
-  end;
+  if not assigned(SSL_CONF_CTX_set_ssl_ctx) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CONF_CTX_set_ssl_ctx');
+  SSL_CONF_CTX_set_ssl_ctx(cctx,ctx);
+end;
 
+procedure Load_SSL_add_ssl_module; cdecl;
+begin
   SSL_add_ssl_module := LoadLibSSLFunction('SSL_add_ssl_module');
-  FuncLoadError := not assigned(SSL_add_ssl_module);
-  if FuncLoadError then
-  begin
-    SSL_add_ssl_module :=  @ERROR_SSL_add_ssl_module;
-  end;
+  if not assigned(SSL_add_ssl_module) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_add_ssl_module');
+  SSL_add_ssl_module();
+end;
 
+function Load_SSL_config(s: PSSL; const name: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_config := LoadLibSSLFunction('SSL_config');
-  FuncLoadError := not assigned(SSL_config);
-  if FuncLoadError then
-  begin
-    SSL_config :=  @ERROR_SSL_config;
-  end;
+  if not assigned(SSL_config) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_config');
+  Result := SSL_config(s,name);
+end;
 
+function Load_SSL_CTX_config(ctx: PSSL_CTX; const name: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_config := LoadLibSSLFunction('SSL_CTX_config');
-  FuncLoadError := not assigned(SSL_CTX_config);
-  if FuncLoadError then
-  begin
-    SSL_CTX_config :=  @ERROR_SSL_CTX_config;
-  end;
+  if not assigned(SSL_CTX_config) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_config');
+  Result := SSL_CTX_config(ctx,name);
+end;
 
+function Load_DTLSv1_listen(s: PSSL; client: PBIO_ADDr): TOpenSSL_C_INT; cdecl;
+begin
   DTLSv1_listen := LoadLibSSLFunction('DTLSv1_listen');
-  FuncLoadError := not assigned(DTLSv1_listen);
-  if FuncLoadError then
-  begin
-    DTLSv1_listen :=  @ERROR_DTLSv1_listen;
-  end;
+  if not assigned(DTLSv1_listen) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DTLSv1_listen');
+  Result := DTLSv1_listen(s,client);
+end;
 
+function Load_SSL_enable_ct(s: PSSL; validation_mode: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_enable_ct := LoadLibSSLFunction('SSL_enable_ct');
-  FuncLoadError := not assigned(SSL_enable_ct);
-  if FuncLoadError then
-  begin
-    SSL_enable_ct :=  @ERROR_SSL_enable_ct;
-  end;
+  if not assigned(SSL_enable_ct) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_enable_ct');
+  Result := SSL_enable_ct(s,validation_mode);
+end;
 
+function Load_SSL_CTX_enable_ct(ctx: PSSL_CTX; validation_mode: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_enable_ct := LoadLibSSLFunction('SSL_CTX_enable_ct');
-  FuncLoadError := not assigned(SSL_CTX_enable_ct);
-  if FuncLoadError then
-  begin
-    SSL_CTX_enable_ct :=  @ERROR_SSL_CTX_enable_ct;
-  end;
+  if not assigned(SSL_CTX_enable_ct) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_enable_ct');
+  Result := SSL_CTX_enable_ct(ctx,validation_mode);
+end;
 
+function Load_SSL_ct_is_enabled(const s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_ct_is_enabled := LoadLibSSLFunction('SSL_ct_is_enabled');
-  FuncLoadError := not assigned(SSL_ct_is_enabled);
-  if FuncLoadError then
-  begin
-    SSL_ct_is_enabled :=  @ERROR_SSL_ct_is_enabled;
-  end;
+  if not assigned(SSL_ct_is_enabled) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_ct_is_enabled');
+  Result := SSL_ct_is_enabled(s);
+end;
 
+function Load_SSL_CTX_ct_is_enabled(const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_ct_is_enabled := LoadLibSSLFunction('SSL_CTX_ct_is_enabled');
-  FuncLoadError := not assigned(SSL_CTX_ct_is_enabled);
-  if FuncLoadError then
-  begin
-    SSL_CTX_ct_is_enabled :=  @ERROR_SSL_CTX_ct_is_enabled;
-  end;
+  if not assigned(SSL_CTX_ct_is_enabled) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_ct_is_enabled');
+  Result := SSL_CTX_ct_is_enabled(ctx);
+end;
 
+function Load_SSL_CTX_set_default_ctlog_list_file(ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_default_ctlog_list_file := LoadLibSSLFunction('SSL_CTX_set_default_ctlog_list_file');
-  FuncLoadError := not assigned(SSL_CTX_set_default_ctlog_list_file);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_default_ctlog_list_file :=  @ERROR_SSL_CTX_set_default_ctlog_list_file;
-  end;
+  if not assigned(SSL_CTX_set_default_ctlog_list_file) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_default_ctlog_list_file');
+  Result := SSL_CTX_set_default_ctlog_list_file(ctx);
+end;
 
+function Load_SSL_CTX_set_ctlog_list_file(ctx: PSSL_CTX; const path: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_ctlog_list_file := LoadLibSSLFunction('SSL_CTX_set_ctlog_list_file');
-  FuncLoadError := not assigned(SSL_CTX_set_ctlog_list_file);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_ctlog_list_file :=  @ERROR_SSL_CTX_set_ctlog_list_file;
-  end;
+  if not assigned(SSL_CTX_set_ctlog_list_file) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_ctlog_list_file');
+  Result := SSL_CTX_set_ctlog_list_file(ctx,path);
+end;
 
+procedure Load_SSL_CTX_set0_ctlog_store(ctx: PSSL_CTX; logs: PCTLOG_STORE); cdecl;
+begin
   SSL_CTX_set0_ctlog_store := LoadLibSSLFunction('SSL_CTX_set0_ctlog_store');
-  FuncLoadError := not assigned(SSL_CTX_set0_ctlog_store);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set0_ctlog_store :=  @ERROR_SSL_CTX_set0_ctlog_store;
-  end;
+  if not assigned(SSL_CTX_set0_ctlog_store) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set0_ctlog_store');
+  SSL_CTX_set0_ctlog_store(ctx,logs);
+end;
 
+procedure Load_SSL_set_security_level(s: PSSL; level: TOpenSSL_C_INT); cdecl;
+begin
   SSL_set_security_level := LoadLibSSLFunction('SSL_set_security_level');
-  FuncLoadError := not assigned(SSL_set_security_level);
-  if FuncLoadError then
-  begin
-    SSL_set_security_level :=  @ERROR_SSL_set_security_level;
-  end;
+  if not assigned(SSL_set_security_level) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_security_level');
+  SSL_set_security_level(s,level);
+end;
 
+procedure Load_SSL_set_security_callback(s: PSSL; cb: SSL_security_callback); cdecl;
+begin
   SSL_set_security_callback := LoadLibSSLFunction('SSL_set_security_callback');
-  FuncLoadError := not assigned(SSL_set_security_callback);
-  if FuncLoadError then
-  begin
-    SSL_set_security_callback :=  @ERROR_SSL_set_security_callback;
-  end;
+  if not assigned(SSL_set_security_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_security_callback');
+  SSL_set_security_callback(s,cb);
+end;
 
+function Load_SSL_get_security_callback(const s: PSSL): SSL_security_callback; cdecl;
+begin
   SSL_get_security_callback := LoadLibSSLFunction('SSL_get_security_callback');
-  FuncLoadError := not assigned(SSL_get_security_callback);
-  if FuncLoadError then
-  begin
-    SSL_get_security_callback :=  @ERROR_SSL_get_security_callback;
-  end;
+  if not assigned(SSL_get_security_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_security_callback');
+  Result := SSL_get_security_callback(s);
+end;
 
+procedure Load_SSL_set0_security_ex_data(s: PSSL; ex: Pointer); cdecl;
+begin
   SSL_set0_security_ex_data := LoadLibSSLFunction('SSL_set0_security_ex_data');
-  FuncLoadError := not assigned(SSL_set0_security_ex_data);
-  if FuncLoadError then
-  begin
-    SSL_set0_security_ex_data :=  @ERROR_SSL_set0_security_ex_data;
-  end;
+  if not assigned(SSL_set0_security_ex_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set0_security_ex_data');
+  SSL_set0_security_ex_data(s,ex);
+end;
 
+function Load_SSL_get0_security_ex_data(const s: PSSL): Pointer; cdecl;
+begin
   SSL_get0_security_ex_data := LoadLibSSLFunction('SSL_get0_security_ex_data');
-  FuncLoadError := not assigned(SSL_get0_security_ex_data);
-  if FuncLoadError then
-  begin
-    SSL_get0_security_ex_data :=  @ERROR_SSL_get0_security_ex_data;
-  end;
+  if not assigned(SSL_get0_security_ex_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_security_ex_data');
+  Result := SSL_get0_security_ex_data(s);
+end;
 
+procedure Load_SSL_CTX_set_security_level(ctx: PSSL_CTX; level: TOpenSSL_C_INT); cdecl;
+begin
   SSL_CTX_set_security_level := LoadLibSSLFunction('SSL_CTX_set_security_level');
-  FuncLoadError := not assigned(SSL_CTX_set_security_level);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_security_level :=  @ERROR_SSL_CTX_set_security_level;
-  end;
+  if not assigned(SSL_CTX_set_security_level) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_security_level');
+  SSL_CTX_set_security_level(ctx,level);
+end;
 
+function Load_SSL_CTX_get_security_level(const ctx: PSSL_CTX): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_get_security_level := LoadLibSSLFunction('SSL_CTX_get_security_level');
-  FuncLoadError := not assigned(SSL_CTX_get_security_level);
-  if FuncLoadError then
-  begin
-    SSL_CTX_get_security_level :=  @ERROR_SSL_CTX_get_security_level;
-  end;
+  if not assigned(SSL_CTX_get_security_level) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get_security_level');
+  Result := SSL_CTX_get_security_level(ctx);
+end;
 
+function Load_SSL_CTX_get0_security_ex_data(const ctx: PSSL_CTX): Pointer; cdecl;
+begin
   SSL_CTX_get0_security_ex_data := LoadLibSSLFunction('SSL_CTX_get0_security_ex_data');
-  FuncLoadError := not assigned(SSL_CTX_get0_security_ex_data);
-  if FuncLoadError then
-  begin
-    SSL_CTX_get0_security_ex_data :=  @ERROR_SSL_CTX_get0_security_ex_data;
-  end;
+  if not assigned(SSL_CTX_get0_security_ex_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_get0_security_ex_data');
+  Result := SSL_CTX_get0_security_ex_data(ctx);
+end;
 
+procedure Load_SSL_CTX_set0_security_ex_data(ctx: PSSL_CTX; ex: Pointer); cdecl;
+begin
   SSL_CTX_set0_security_ex_data := LoadLibSSLFunction('SSL_CTX_set0_security_ex_data');
-  FuncLoadError := not assigned(SSL_CTX_set0_security_ex_data);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set0_security_ex_data :=  @ERROR_SSL_CTX_set0_security_ex_data;
-  end;
+  if not assigned(SSL_CTX_set0_security_ex_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set0_security_ex_data');
+  SSL_CTX_set0_security_ex_data(ctx,ex);
+end;
 
+function Load_OPENSSL_init_ssl(opts: TOpenSSL_C_UINT64; const settings: POPENSSL_INIT_SETTINGS): TOpenSSL_C_INT; cdecl;
+begin
   OPENSSL_init_ssl := LoadLibSSLFunction('OPENSSL_init_ssl');
-  FuncLoadError := not assigned(OPENSSL_init_ssl);
-  if FuncLoadError then
-  begin
+  if not assigned(OPENSSL_init_ssl) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     OPENSSL_init_ssl := @COMPAT_OPENSSL_init_ssl;
 {$ELSE}
-    OPENSSL_init_ssl :=  @ERROR_OPENSSL_init_ssl;
-{$ENDIF}
-  end;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_init_ssl');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  Result := OPENSSL_init_ssl(opts,settings);
+end;
 
+function Load_SSL_free_buffers(ssl: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_free_buffers := LoadLibSSLFunction('SSL_free_buffers');
-  FuncLoadError := not assigned(SSL_free_buffers);
-  if FuncLoadError then
-  begin
-    SSL_free_buffers :=  @ERROR_SSL_free_buffers;
-  end;
+  if not assigned(SSL_free_buffers) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_free_buffers');
+  Result := SSL_free_buffers(ssl);
+end;
 
+function Load_SSL_alloc_buffers(ssl: PSSL): TOpenSSL_C_INT; cdecl;
+begin
   SSL_alloc_buffers := LoadLibSSLFunction('SSL_alloc_buffers');
-  FuncLoadError := not assigned(SSL_alloc_buffers);
-  if FuncLoadError then
-  begin
-    SSL_alloc_buffers :=  @ERROR_SSL_alloc_buffers;
-  end;
+  if not assigned(SSL_alloc_buffers) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_alloc_buffers');
+  Result := SSL_alloc_buffers(ssl);
+end;
 
+function Load_SSL_CTX_set_session_ticket_cb(ctx: PSSL_CTX; gen_cb: SSL_CTX_generate_session_ticket_fn; dec_cb: SSL_CTX_decrypt_session_ticket_fn; arg: Pointer): TOpenSSL_C_INT; cdecl;
+begin
   SSL_CTX_set_session_ticket_cb := LoadLibSSLFunction('SSL_CTX_set_session_ticket_cb');
-  FuncLoadError := not assigned(SSL_CTX_set_session_ticket_cb);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_session_ticket_cb :=  @ERROR_SSL_CTX_set_session_ticket_cb;
-  end;
+  if not assigned(SSL_CTX_set_session_ticket_cb) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_session_ticket_cb');
+  Result := SSL_CTX_set_session_ticket_cb(ctx,gen_cb,dec_cb,arg);
+end;
 
+function Load_SSL_SESSION_set1_ticket_appdata(ss: PSSL_SESSION; const data: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   SSL_SESSION_set1_ticket_appdata := LoadLibSSLFunction('SSL_SESSION_set1_ticket_appdata');
-  FuncLoadError := not assigned(SSL_SESSION_set1_ticket_appdata);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_set1_ticket_appdata :=  @ERROR_SSL_SESSION_set1_ticket_appdata;
-  end;
+  if not assigned(SSL_SESSION_set1_ticket_appdata) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_set1_ticket_appdata');
+  Result := SSL_SESSION_set1_ticket_appdata(ss,data,len);
+end;
 
+function Load_SSL_SESSION_get0_ticket_appdata(ss: PSSL_SESSION; data: PPointer; len: POpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   SSL_SESSION_get0_ticket_appdata := LoadLibSSLFunction('SSL_SESSION_get0_ticket_appdata');
-  FuncLoadError := not assigned(SSL_SESSION_get0_ticket_appdata);
-  if FuncLoadError then
-  begin
-    SSL_SESSION_get0_ticket_appdata :=  @ERROR_SSL_SESSION_get0_ticket_appdata;
-  end;
+  if not assigned(SSL_SESSION_get0_ticket_appdata) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_SESSION_get0_ticket_appdata');
+  Result := SSL_SESSION_get0_ticket_appdata(ss,data,len);
+end;
 
+procedure Load_DTLS_set_timer_cb(s: PSSL; cb: DTLS_timer_cb); cdecl;
+begin
   DTLS_set_timer_cb := LoadLibSSLFunction('DTLS_set_timer_cb');
-  FuncLoadError := not assigned(DTLS_set_timer_cb);
-  if FuncLoadError then
-  begin
-    DTLS_set_timer_cb :=  @ERROR_DTLS_set_timer_cb;
-  end;
+  if not assigned(DTLS_set_timer_cb) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DTLS_set_timer_cb');
+  DTLS_set_timer_cb(s,cb);
+end;
 
+procedure Load_SSL_CTX_set_allow_early_data_cb(ctx: PSSL_CTX; cb: SSL_allow_early_data_cb_fN; arg: Pointer); cdecl;
+begin
   SSL_CTX_set_allow_early_data_cb := LoadLibSSLFunction('SSL_CTX_set_allow_early_data_cb');
-  FuncLoadError := not assigned(SSL_CTX_set_allow_early_data_cb);
-  if FuncLoadError then
-  begin
-    SSL_CTX_set_allow_early_data_cb :=  @ERROR_SSL_CTX_set_allow_early_data_cb;
-  end;
+  if not assigned(SSL_CTX_set_allow_early_data_cb) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_allow_early_data_cb');
+  SSL_CTX_set_allow_early_data_cb(ctx,cb,arg);
+end;
 
+procedure Load_SSL_set_allow_early_data_cb(s: PSSL; cb: SSL_allow_early_data_cb_fN; arg: Pointer); cdecl;
+begin
   SSL_set_allow_early_data_cb := LoadLibSSLFunction('SSL_set_allow_early_data_cb');
-  FuncLoadError := not assigned(SSL_set_allow_early_data_cb);
-  if FuncLoadError then
-  begin
-    SSL_set_allow_early_data_cb :=  @ERROR_SSL_set_allow_early_data_cb;
-  end;
+  if not assigned(SSL_set_allow_early_data_cb) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_allow_early_data_cb');
+  SSL_set_allow_early_data_cb(s,cb,arg);
+end;
 
+function Load_SSL_get0_peer_certificate(const s: PSSL): PX509; cdecl;
+begin
+  SSL_get0_peer_certificate := LoadLibSSLFunction('SSL_get0_peer_certificate');
+  if not assigned(SSL_get0_peer_certificate) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_peer_certificate');
+  Result := SSL_get0_peer_certificate(s);
+end;
+
+function Load_SSL_get1_peer_certificate(const s: PSSL): PX509; cdecl;
+begin
+  SSL_get1_peer_certificate := LoadLibSSLFunction('SSL_get1_peer_certificate');
+  if not assigned(SSL_get1_peer_certificate) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get1_peer_certificate');
+  Result := SSL_get1_peer_certificate(s);
+end;
+
+procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
+var FuncLoadError: boolean;
+begin
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
   SSLv2_method := LoadLibSSLFunction('SSLv2_method');
   FuncLoadError := not assigned(SSLv2_method);
@@ -10900,502 +9079,480 @@ begin
   end;
 
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-  SSL_get0_peer_certificate := LoadLibSSLFunction('SSL_get0_peer_certificate');
-  FuncLoadError := not assigned(SSL_get0_peer_certificate);
-  if FuncLoadError then
-  begin
-    SSL_get0_peer_certificate :=  @ERROR_SSL_get0_peer_certificate;
-    if LibVersion < SSL_get0_peer_certificate_introduced then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_get0_peer_certificate');
-  end;
-
-  SSL_get1_peer_certificate := LoadLibSSLFunction('SSL_get1_peer_certificate');
-  FuncLoadError := not assigned(SSL_get1_peer_certificate);
-  if FuncLoadError then
-  begin
-    SSL_get1_peer_certificate :=  @ERROR_SSL_get1_peer_certificate;
-    if LibVersion < SSL_get1_peer_certificate_introduced then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSL_get1_peer_certificate');
-  end;
-
 end;
 
 procedure UnLoad;
 begin
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  SSL_CTX_set_mode := nil;
-  SSL_CTX_clear_mode := nil;
-  SSL_CTX_sess_set_cache_size := nil;
-  SSL_CTX_sess_get_cache_size := nil;
-  SSL_CTX_set_session_cache_mode := nil;
-  SSL_CTX_get_session_cache_mode := nil;
-  SSL_clear_num_renegotiations := nil;
-  SSL_total_renegotiations := nil;
-  SSL_CTX_set_tmp_dh := nil;
-  SSL_CTX_set_tmp_ecdh := nil;
-  SSL_CTX_set_dh_auto := nil;
-  SSL_set_dh_auto := nil;
-  SSL_set_tmp_dh := nil;
-  SSL_set_tmp_ecdh := nil;
-  SSL_CTX_add_extra_chain_cert := nil;
-  SSL_CTX_get_extra_chain_certs := nil;
-  SSL_CTX_get_extra_chain_certs_only := nil;
-  SSL_CTX_clear_extra_chain_certs := nil;
-  SSL_CTX_set0_chain := nil;
-  SSL_CTX_set1_chain := nil;
-  SSL_CTX_add0_chain_cert := nil;
-  SSL_CTX_add1_chain_cert := nil;
-  SSL_CTX_get0_chain_certs := nil;
-  SSL_CTX_clear_chain_certs := nil;
-  SSL_CTX_build_cert_chain := nil;
-  SSL_CTX_select_current_cert := nil;
-  SSL_CTX_set_current_cert := nil;
-  SSL_CTX_set0_verify_cert_store := nil;
-  SSL_CTX_set1_verify_cert_store := nil;
-  SSL_CTX_set0_chain_cert_store := nil;
-  SSL_CTX_set1_chain_cert_store := nil;
-  SSL_set0_chain := nil;
-  SSL_set1_chain := nil;
-  SSL_add0_chain_cert := nil;
-  SSL_add1_chain_cert := nil;
-  SSL_get0_chain_certs := nil;
-  SSL_clear_chain_certs := nil;
-  SSL_build_cert_chain := nil;
-  SSL_select_current_cert := nil;
-  SSL_set_current_cert := nil;
-  SSL_set0_verify_cert_store := nil;
-  SSL_set1_verify_cert_store := nil;
-  SSL_set0_chain_cert_store := nil;
-  SSL_set1_chain_cert_store := nil;
-  SSL_get1_groups := nil;
-  SSL_CTX_set1_groups := nil;
-  SSL_CTX_set1_groups_list := nil;
-  SSL_set1_groups := nil;
-  SSL_set1_groups_list := nil;
-  SSL_get_shared_group := nil;
-  SSL_CTX_set1_sigalgs := nil;
-  SSL_CTX_set1_sigalgs_list := nil;
-  SSL_set1_sigalgs := nil;
-  SSL_set1_sigalgs_list := nil;
-  SSL_CTX_set1_client_sigalgs := nil;
-  SSL_CTX_set1_client_sigalgs_list := nil;
-  SSL_set1_client_sigalgs := nil;
-  SSL_set1_client_sigalgs_list := nil;
-  SSL_get0_certificate_types := nil;
-  SSL_CTX_set1_client_certificate_types := nil;
-  SSL_set1_client_certificate_types := nil;
-  SSL_get_signature_nid := nil;
-  SSL_get_peer_signature_nid := nil;
-  SSL_get_peer_tmp_key := nil;
-  SSL_get_tmp_key := nil;
-  SSL_get0_raw_cipherlist := nil;
-  SSL_get0_ec_point_formats := nil;
+  SSL_CTX_set_mode := Load_SSL_CTX_set_mode;
+  SSL_CTX_clear_mode := Load_SSL_CTX_clear_mode;
+  SSL_CTX_sess_set_cache_size := Load_SSL_CTX_sess_set_cache_size;
+  SSL_CTX_sess_get_cache_size := Load_SSL_CTX_sess_get_cache_size;
+  SSL_CTX_set_session_cache_mode := Load_SSL_CTX_set_session_cache_mode;
+  SSL_CTX_get_session_cache_mode := Load_SSL_CTX_get_session_cache_mode;
+  SSL_clear_num_renegotiations := Load_SSL_clear_num_renegotiations;
+  SSL_total_renegotiations := Load_SSL_total_renegotiations;
+  SSL_CTX_set_tmp_dh := Load_SSL_CTX_set_tmp_dh;
+  SSL_CTX_set_tmp_ecdh := Load_SSL_CTX_set_tmp_ecdh;
+  SSL_CTX_set_dh_auto := Load_SSL_CTX_set_dh_auto;
+  SSL_set_dh_auto := Load_SSL_set_dh_auto;
+  SSL_set_tmp_dh := Load_SSL_set_tmp_dh;
+  SSL_set_tmp_ecdh := Load_SSL_set_tmp_ecdh;
+  SSL_CTX_add_extra_chain_cert := Load_SSL_CTX_add_extra_chain_cert;
+  SSL_CTX_get_extra_chain_certs := Load_SSL_CTX_get_extra_chain_certs;
+  SSL_CTX_get_extra_chain_certs_only := Load_SSL_CTX_get_extra_chain_certs_only;
+  SSL_CTX_clear_extra_chain_certs := Load_SSL_CTX_clear_extra_chain_certs;
+  SSL_CTX_set0_chain := Load_SSL_CTX_set0_chain;
+  SSL_CTX_set1_chain := Load_SSL_CTX_set1_chain;
+  SSL_CTX_add0_chain_cert := Load_SSL_CTX_add0_chain_cert;
+  SSL_CTX_add1_chain_cert := Load_SSL_CTX_add1_chain_cert;
+  SSL_CTX_get0_chain_certs := Load_SSL_CTX_get0_chain_certs;
+  SSL_CTX_clear_chain_certs := Load_SSL_CTX_clear_chain_certs;
+  SSL_CTX_build_cert_chain := Load_SSL_CTX_build_cert_chain;
+  SSL_CTX_select_current_cert := Load_SSL_CTX_select_current_cert;
+  SSL_CTX_set_current_cert := Load_SSL_CTX_set_current_cert;
+  SSL_CTX_set0_verify_cert_store := Load_SSL_CTX_set0_verify_cert_store;
+  SSL_CTX_set1_verify_cert_store := Load_SSL_CTX_set1_verify_cert_store;
+  SSL_CTX_set0_chain_cert_store := Load_SSL_CTX_set0_chain_cert_store;
+  SSL_CTX_set1_chain_cert_store := Load_SSL_CTX_set1_chain_cert_store;
+  SSL_set0_chain := Load_SSL_set0_chain;
+  SSL_set1_chain := Load_SSL_set1_chain;
+  SSL_add0_chain_cert := Load_SSL_add0_chain_cert;
+  SSL_add1_chain_cert := Load_SSL_add1_chain_cert;
+  SSL_get0_chain_certs := Load_SSL_get0_chain_certs;
+  SSL_clear_chain_certs := Load_SSL_clear_chain_certs;
+  SSL_build_cert_chain := Load_SSL_build_cert_chain;
+  SSL_select_current_cert := Load_SSL_select_current_cert;
+  SSL_set_current_cert := Load_SSL_set_current_cert;
+  SSL_set0_verify_cert_store := Load_SSL_set0_verify_cert_store;
+  SSL_set1_verify_cert_store := Load_SSL_set1_verify_cert_store;
+  SSL_set0_chain_cert_store := Load_SSL_set0_chain_cert_store;
+  SSL_set1_chain_cert_store := Load_SSL_set1_chain_cert_store;
+  SSL_get1_groups := Load_SSL_get1_groups;
+  SSL_CTX_set1_groups := Load_SSL_CTX_set1_groups;
+  SSL_CTX_set1_groups_list := Load_SSL_CTX_set1_groups_list;
+  SSL_set1_groups := Load_SSL_set1_groups;
+  SSL_set1_groups_list := Load_SSL_set1_groups_list;
+  SSL_get_shared_group := Load_SSL_get_shared_group;
+  SSL_CTX_set1_sigalgs := Load_SSL_CTX_set1_sigalgs;
+  SSL_CTX_set1_sigalgs_list := Load_SSL_CTX_set1_sigalgs_list;
+  SSL_set1_sigalgs := Load_SSL_set1_sigalgs;
+  SSL_set1_sigalgs_list := Load_SSL_set1_sigalgs_list;
+  SSL_CTX_set1_client_sigalgs := Load_SSL_CTX_set1_client_sigalgs;
+  SSL_CTX_set1_client_sigalgs_list := Load_SSL_CTX_set1_client_sigalgs_list;
+  SSL_set1_client_sigalgs := Load_SSL_set1_client_sigalgs;
+  SSL_set1_client_sigalgs_list := Load_SSL_set1_client_sigalgs_list;
+  SSL_get0_certificate_types := Load_SSL_get0_certificate_types;
+  SSL_CTX_set1_client_certificate_types := Load_SSL_CTX_set1_client_certificate_types;
+  SSL_set1_client_certificate_types := Load_SSL_set1_client_certificate_types;
+  SSL_get_signature_nid := Load_SSL_get_signature_nid;
+  SSL_get_peer_signature_nid := Load_SSL_get_peer_signature_nid;
+  SSL_get_peer_tmp_key := Load_SSL_get_peer_tmp_key;
+  SSL_get_tmp_key := Load_SSL_get_tmp_key;
+  SSL_get0_raw_cipherlist := Load_SSL_get0_raw_cipherlist;
+  SSL_get0_ec_point_formats := Load_SSL_get0_ec_point_formats;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-  SSL_CTX_get_options := nil;
-  SSL_get_options := nil;
-  SSL_CTX_clear_options := nil;
-  SSL_clear_options := nil;
-  SSL_CTX_set_options := nil;
-  SSL_set_options := nil;
-  SSL_CTX_sess_set_new_cb := nil;
-  SSL_CTX_sess_get_new_cb := nil;
-  SSL_CTX_sess_set_remove_cb := nil;
-  SSL_CTX_sess_get_remove_cb := nil;
-  SSL_CTX_set_info_callback := nil;
-  SSL_CTX_get_info_callback := nil;
-  SSL_CTX_set_client_cert_cb := nil;
-  SSL_CTX_get_client_cert_cb := nil;
-  SSL_CTX_set_client_cert_engine := nil;
-  SSL_CTX_set_cookie_generate_cb := nil;
-  SSL_CTX_set_cookie_verify_cb := nil;
-  SSL_CTX_set_stateless_cookie_generate_cb := nil;
-  SSL_CTX_set_stateless_cookie_verify_cb := nil;
-  SSL_CTX_set_alpn_select_cb := nil;
-  SSL_get0_alpn_selected := nil;
-  SSL_CTX_set_psk_client_callback := nil;
-  SSL_set_psk_client_callback := nil;
-  SSL_CTX_set_psk_server_callback := nil;
-  SSL_set_psk_server_callback := nil;
-  SSL_set_psk_find_session_callback := nil;
-  SSL_CTX_set_psk_find_session_callback := nil;
-  SSL_set_psk_use_session_callback := nil;
-  SSL_CTX_set_psk_use_session_callback := nil;
-  SSL_CTX_set_keylog_callback := nil;
-  SSL_CTX_get_keylog_callback := nil;
-  SSL_CTX_set_max_early_data := nil;
-  SSL_CTX_get_max_early_data := nil;
-  SSL_set_max_early_data := nil;
-  SSL_get_max_early_data := nil;
-  SSL_CTX_set_recv_max_early_data := nil;
-  SSL_CTX_get_recv_max_early_data := nil;
-  SSL_set_recv_max_early_data := nil;
-  SSL_get_recv_max_early_data := nil;
+  SSL_CTX_get_options := Load_SSL_CTX_get_options;
+  SSL_get_options := Load_SSL_get_options;
+  SSL_CTX_clear_options := Load_SSL_CTX_clear_options;
+  SSL_clear_options := Load_SSL_clear_options;
+  SSL_CTX_set_options := Load_SSL_CTX_set_options;
+  SSL_set_options := Load_SSL_set_options;
+  SSL_CTX_sess_set_new_cb := Load_SSL_CTX_sess_set_new_cb;
+  SSL_CTX_sess_get_new_cb := Load_SSL_CTX_sess_get_new_cb;
+  SSL_CTX_sess_set_remove_cb := Load_SSL_CTX_sess_set_remove_cb;
+  SSL_CTX_sess_get_remove_cb := Load_SSL_CTX_sess_get_remove_cb;
+  SSL_CTX_set_info_callback := Load_SSL_CTX_set_info_callback;
+  SSL_CTX_get_info_callback := Load_SSL_CTX_get_info_callback;
+  SSL_CTX_set_client_cert_cb := Load_SSL_CTX_set_client_cert_cb;
+  SSL_CTX_get_client_cert_cb := Load_SSL_CTX_get_client_cert_cb;
+  SSL_CTX_set_client_cert_engine := Load_SSL_CTX_set_client_cert_engine;
+  SSL_CTX_set_cookie_generate_cb := Load_SSL_CTX_set_cookie_generate_cb;
+  SSL_CTX_set_cookie_verify_cb := Load_SSL_CTX_set_cookie_verify_cb;
+  SSL_CTX_set_stateless_cookie_generate_cb := Load_SSL_CTX_set_stateless_cookie_generate_cb;
+  SSL_CTX_set_stateless_cookie_verify_cb := Load_SSL_CTX_set_stateless_cookie_verify_cb;
+  SSL_CTX_set_alpn_select_cb := Load_SSL_CTX_set_alpn_select_cb;
+  SSL_get0_alpn_selected := Load_SSL_get0_alpn_selected;
+  SSL_CTX_set_psk_client_callback := Load_SSL_CTX_set_psk_client_callback;
+  SSL_set_psk_client_callback := Load_SSL_set_psk_client_callback;
+  SSL_CTX_set_psk_server_callback := Load_SSL_CTX_set_psk_server_callback;
+  SSL_set_psk_server_callback := Load_SSL_set_psk_server_callback;
+  SSL_set_psk_find_session_callback := Load_SSL_set_psk_find_session_callback;
+  SSL_CTX_set_psk_find_session_callback := Load_SSL_CTX_set_psk_find_session_callback;
+  SSL_set_psk_use_session_callback := Load_SSL_set_psk_use_session_callback;
+  SSL_CTX_set_psk_use_session_callback := Load_SSL_CTX_set_psk_use_session_callback;
+  SSL_CTX_set_keylog_callback := Load_SSL_CTX_set_keylog_callback;
+  SSL_CTX_get_keylog_callback := Load_SSL_CTX_get_keylog_callback;
+  SSL_CTX_set_max_early_data := Load_SSL_CTX_set_max_early_data;
+  SSL_CTX_get_max_early_data := Load_SSL_CTX_get_max_early_data;
+  SSL_set_max_early_data := Load_SSL_set_max_early_data;
+  SSL_get_max_early_data := Load_SSL_get_max_early_data;
+  SSL_CTX_set_recv_max_early_data := Load_SSL_CTX_set_recv_max_early_data;
+  SSL_CTX_get_recv_max_early_data := Load_SSL_CTX_get_recv_max_early_data;
+  SSL_set_recv_max_early_data := Load_SSL_set_recv_max_early_data;
+  SSL_get_recv_max_early_data := Load_SSL_get_recv_max_early_data;
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  SSL_get_app_data := nil;
-  SSL_set_app_data := nil;
+  SSL_get_app_data := Load_SSL_get_app_data;
+  SSL_set_app_data := Load_SSL_set_app_data;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-  SSL_in_init := nil;
-  SSL_in_before := nil;
-  SSL_is_init_finished := nil;
-  SSL_get_finished := nil;
-  SSL_get_peer_finished := nil;
+  SSL_in_init := Load_SSL_in_init;
+  SSL_in_before := Load_SSL_in_before;
+  SSL_is_init_finished := Load_SSL_is_init_finished;
+  SSL_get_finished := Load_SSL_get_finished;
+  SSL_get_peer_finished := Load_SSL_get_peer_finished;
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  SSLeay_add_ssl_algorithms := nil;
+  SSLeay_add_ssl_algorithms := Load_SSLeay_add_ssl_algorithms;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-  BIO_f_ssl := nil;
-  BIO_new_ssl := nil;
-  BIO_new_ssl_connect := nil;
-  BIO_new_buffer_ssl_connect := nil;
-  BIO_ssl_copy_session_id := nil;
-  SSL_CTX_set_cipher_list := nil;
-  SSL_CTX_new := nil;
-  SSL_CTX_set_timeout := nil;
-  SSL_CTX_get_timeout := nil;
-  SSL_CTX_get_cert_store := nil;
-  SSL_want := nil;
-  SSL_clear := nil;
-  BIO_ssl_shutdown := nil;
-  SSL_CTX_up_ref := nil;
-  SSL_CTX_free := nil;
-  SSL_CTX_set_cert_store := nil;
-  SSL_CTX_set1_cert_store := nil;
-  SSL_CTX_flush_sessions := nil;
-  SSL_get_current_cipher := nil;
-  SSL_get_pending_cipher := nil;
-  SSL_CIPHER_get_bits := nil;
-  SSL_CIPHER_get_version := nil;
-  SSL_CIPHER_get_name := nil;
-  SSL_CIPHER_standard_name := nil;
-  OPENSSL_cipher_name := nil;
-  SSL_CIPHER_get_id := nil;
-  SSL_CIPHER_get_protocol_id := nil;
-  SSL_CIPHER_get_kx_nid := nil;
-  SSL_CIPHER_get_auth_nid := nil;
-  SSL_CIPHER_get_handshake_digest := nil;
-  SSL_CIPHER_is_aead := nil;
-  SSL_get_fd := nil;
-  SSL_get_rfd := nil;
-  SSL_get_wfd := nil;
-  SSL_get_cipher_list := nil;
-  SSL_get_shared_ciphers := nil;
-  SSL_get_read_ahead := nil;
-  SSL_pending := nil;
-  SSL_has_pending := nil;
-  SSL_set_fd := nil;
-  SSL_set_rfd := nil;
-  SSL_set_wfd := nil;
-  SSL_set0_rbio := nil;
-  SSL_set0_wbio := nil;
-  SSL_set_bio := nil;
-  SSL_get_rbio := nil;
-  SSL_get_wbio := nil;
-  SSL_set_cipher_list := nil;
-  SSL_CTX_set_ciphersuites := nil;
-  SSL_set_ciphersuites := nil;
-  SSL_get_verify_mode := nil;
-  SSL_get_verify_depth := nil;
-  SSL_get_verify_callback := nil;
-  SSL_set_read_ahead := nil;
-  SSL_set_verify := nil;
-  SSL_set_verify_depth := nil;
-  SSL_use_RSAPrivateKey := nil;
-  SSL_use_RSAPrivateKey_ASN1 := nil;
-  SSL_use_PrivateKey := nil;
-  SSL_use_PrivateKey_ASN1 := nil;
-  SSL_use_certificate := nil;
-  SSL_use_certificate_ASN1 := nil;
-  SSL_CTX_use_serverinfo := nil;
-  SSL_CTX_use_serverinfo_ex := nil;
-  SSL_CTX_use_serverinfo_file := nil;
-  SSL_use_RSAPrivateKey_file := nil;
-  SSL_use_PrivateKey_file := nil;
-  SSL_use_certificate_file := nil;
-  SSL_CTX_use_RSAPrivateKey_file := nil;
-  SSL_CTX_use_PrivateKey_file := nil;
-  SSL_CTX_use_certificate_file := nil;
-  SSL_CTX_use_certificate_chain_file := nil;
-  SSL_use_certificate_chain_file := nil;
-  SSL_load_client_CA_file := nil;
-  SSL_add_file_cert_subjects_to_stack := nil;
-  SSL_add_dir_cert_subjects_to_stack := nil;
+  BIO_f_ssl := Load_BIO_f_ssl;
+  BIO_new_ssl := Load_BIO_new_ssl;
+  BIO_new_ssl_connect := Load_BIO_new_ssl_connect;
+  BIO_new_buffer_ssl_connect := Load_BIO_new_buffer_ssl_connect;
+  BIO_ssl_copy_session_id := Load_BIO_ssl_copy_session_id;
+  SSL_CTX_set_cipher_list := Load_SSL_CTX_set_cipher_list;
+  SSL_CTX_new := Load_SSL_CTX_new;
+  SSL_CTX_set_timeout := Load_SSL_CTX_set_timeout;
+  SSL_CTX_get_timeout := Load_SSL_CTX_get_timeout;
+  SSL_CTX_get_cert_store := Load_SSL_CTX_get_cert_store;
+  SSL_want := Load_SSL_want;
+  SSL_clear := Load_SSL_clear;
+  BIO_ssl_shutdown := Load_BIO_ssl_shutdown;
+  SSL_CTX_up_ref := Load_SSL_CTX_up_ref;
+  SSL_CTX_free := Load_SSL_CTX_free;
+  SSL_CTX_set_cert_store := Load_SSL_CTX_set_cert_store;
+  SSL_CTX_set1_cert_store := Load_SSL_CTX_set1_cert_store;
+  SSL_CTX_flush_sessions := Load_SSL_CTX_flush_sessions;
+  SSL_get_current_cipher := Load_SSL_get_current_cipher;
+  SSL_get_pending_cipher := Load_SSL_get_pending_cipher;
+  SSL_CIPHER_get_bits := Load_SSL_CIPHER_get_bits;
+  SSL_CIPHER_get_version := Load_SSL_CIPHER_get_version;
+  SSL_CIPHER_get_name := Load_SSL_CIPHER_get_name;
+  SSL_CIPHER_standard_name := Load_SSL_CIPHER_standard_name;
+  OPENSSL_cipher_name := Load_OPENSSL_cipher_name;
+  SSL_CIPHER_get_id := Load_SSL_CIPHER_get_id;
+  SSL_CIPHER_get_protocol_id := Load_SSL_CIPHER_get_protocol_id;
+  SSL_CIPHER_get_kx_nid := Load_SSL_CIPHER_get_kx_nid;
+  SSL_CIPHER_get_auth_nid := Load_SSL_CIPHER_get_auth_nid;
+  SSL_CIPHER_get_handshake_digest := Load_SSL_CIPHER_get_handshake_digest;
+  SSL_CIPHER_is_aead := Load_SSL_CIPHER_is_aead;
+  SSL_get_fd := Load_SSL_get_fd;
+  SSL_get_rfd := Load_SSL_get_rfd;
+  SSL_get_wfd := Load_SSL_get_wfd;
+  SSL_get_cipher_list := Load_SSL_get_cipher_list;
+  SSL_get_shared_ciphers := Load_SSL_get_shared_ciphers;
+  SSL_get_read_ahead := Load_SSL_get_read_ahead;
+  SSL_pending := Load_SSL_pending;
+  SSL_has_pending := Load_SSL_has_pending;
+  SSL_set_fd := Load_SSL_set_fd;
+  SSL_set_rfd := Load_SSL_set_rfd;
+  SSL_set_wfd := Load_SSL_set_wfd;
+  SSL_set0_rbio := Load_SSL_set0_rbio;
+  SSL_set0_wbio := Load_SSL_set0_wbio;
+  SSL_set_bio := Load_SSL_set_bio;
+  SSL_get_rbio := Load_SSL_get_rbio;
+  SSL_get_wbio := Load_SSL_get_wbio;
+  SSL_set_cipher_list := Load_SSL_set_cipher_list;
+  SSL_CTX_set_ciphersuites := Load_SSL_CTX_set_ciphersuites;
+  SSL_set_ciphersuites := Load_SSL_set_ciphersuites;
+  SSL_get_verify_mode := Load_SSL_get_verify_mode;
+  SSL_get_verify_depth := Load_SSL_get_verify_depth;
+  SSL_get_verify_callback := Load_SSL_get_verify_callback;
+  SSL_set_read_ahead := Load_SSL_set_read_ahead;
+  SSL_set_verify := Load_SSL_set_verify;
+  SSL_set_verify_depth := Load_SSL_set_verify_depth;
+  SSL_use_RSAPrivateKey := Load_SSL_use_RSAPrivateKey;
+  SSL_use_RSAPrivateKey_ASN1 := Load_SSL_use_RSAPrivateKey_ASN1;
+  SSL_use_PrivateKey := Load_SSL_use_PrivateKey;
+  SSL_use_PrivateKey_ASN1 := Load_SSL_use_PrivateKey_ASN1;
+  SSL_use_certificate := Load_SSL_use_certificate;
+  SSL_use_certificate_ASN1 := Load_SSL_use_certificate_ASN1;
+  SSL_CTX_use_serverinfo := Load_SSL_CTX_use_serverinfo;
+  SSL_CTX_use_serverinfo_ex := Load_SSL_CTX_use_serverinfo_ex;
+  SSL_CTX_use_serverinfo_file := Load_SSL_CTX_use_serverinfo_file;
+  SSL_use_RSAPrivateKey_file := Load_SSL_use_RSAPrivateKey_file;
+  SSL_use_PrivateKey_file := Load_SSL_use_PrivateKey_file;
+  SSL_use_certificate_file := Load_SSL_use_certificate_file;
+  SSL_CTX_use_RSAPrivateKey_file := Load_SSL_CTX_use_RSAPrivateKey_file;
+  SSL_CTX_use_PrivateKey_file := Load_SSL_CTX_use_PrivateKey_file;
+  SSL_CTX_use_certificate_file := Load_SSL_CTX_use_certificate_file;
+  SSL_CTX_use_certificate_chain_file := Load_SSL_CTX_use_certificate_chain_file;
+  SSL_use_certificate_chain_file := Load_SSL_use_certificate_chain_file;
+  SSL_load_client_CA_file := Load_SSL_load_client_CA_file;
+  SSL_add_file_cert_subjects_to_stack := Load_SSL_add_file_cert_subjects_to_stack;
+  SSL_add_dir_cert_subjects_to_stack := Load_SSL_add_dir_cert_subjects_to_stack;
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  SSL_load_error_strings := nil;
+  SSL_load_error_strings := Load_SSL_load_error_strings;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-  SSL_state_string := nil;
-  SSL_rstate_string := nil;
-  SSL_state_string_long := nil;
-  SSL_rstate_string_long := nil;
-  SSL_SESSION_get_time := nil;
-  SSL_SESSION_set_time := nil;
-  SSL_SESSION_get_timeout := nil;
-  SSL_SESSION_set_timeout := nil;
-  SSL_SESSION_get_protocol_version := nil;
-  SSL_SESSION_set_protocol_version := nil;
-  SSL_SESSION_get0_hostname := nil;
-  SSL_SESSION_set1_hostname := nil;
-  SSL_SESSION_get0_alpn_selected := nil;
-  SSL_SESSION_set1_alpn_selected := nil;
-  SSL_SESSION_get0_cipher := nil;
-  SSL_SESSION_set_cipher := nil;
-  SSL_SESSION_has_ticket := nil;
-  SSL_SESSION_get_ticket_lifetime_hint := nil;
-  SSL_SESSION_get0_ticket := nil;
-  SSL_SESSION_get_max_early_data := nil;
-  SSL_SESSION_set_max_early_data := nil;
-  SSL_copy_session_id := nil;
-  SSL_SESSION_get0_peer := nil;
-  SSL_SESSION_set1_id_context := nil;
-  SSL_SESSION_set1_id := nil;
-  SSL_SESSION_is_resumable := nil;
-  SSL_SESSION_new := nil;
-  SSL_SESSION_dup := nil;
-  SSL_SESSION_get_id := nil;
-  SSL_SESSION_get0_id_context := nil;
-  SSL_SESSION_get_compress_id := nil;
-  SSL_SESSION_print := nil;
-  SSL_SESSION_print_keylog := nil;
-  SSL_SESSION_up_ref := nil;
-  SSL_SESSION_free := nil;
-  SSL_set_session := nil;
-  SSL_CTX_add_session := nil;
-  SSL_CTX_remove_session := nil;
-  SSL_CTX_set_generate_session_id := nil;
-  SSL_set_generate_session_id := nil;
-  SSL_has_matching_session_id := nil;
-  d2i_SSL_SESSION := nil;
+  SSL_state_string := Load_SSL_state_string;
+  SSL_rstate_string := Load_SSL_rstate_string;
+  SSL_state_string_long := Load_SSL_state_string_long;
+  SSL_rstate_string_long := Load_SSL_rstate_string_long;
+  SSL_SESSION_get_time := Load_SSL_SESSION_get_time;
+  SSL_SESSION_set_time := Load_SSL_SESSION_set_time;
+  SSL_SESSION_get_timeout := Load_SSL_SESSION_get_timeout;
+  SSL_SESSION_set_timeout := Load_SSL_SESSION_set_timeout;
+  SSL_SESSION_get_protocol_version := Load_SSL_SESSION_get_protocol_version;
+  SSL_SESSION_set_protocol_version := Load_SSL_SESSION_set_protocol_version;
+  SSL_SESSION_get0_hostname := Load_SSL_SESSION_get0_hostname;
+  SSL_SESSION_set1_hostname := Load_SSL_SESSION_set1_hostname;
+  SSL_SESSION_get0_alpn_selected := Load_SSL_SESSION_get0_alpn_selected;
+  SSL_SESSION_set1_alpn_selected := Load_SSL_SESSION_set1_alpn_selected;
+  SSL_SESSION_get0_cipher := Load_SSL_SESSION_get0_cipher;
+  SSL_SESSION_set_cipher := Load_SSL_SESSION_set_cipher;
+  SSL_SESSION_has_ticket := Load_SSL_SESSION_has_ticket;
+  SSL_SESSION_get_ticket_lifetime_hint := Load_SSL_SESSION_get_ticket_lifetime_hint;
+  SSL_SESSION_get0_ticket := Load_SSL_SESSION_get0_ticket;
+  SSL_SESSION_get_max_early_data := Load_SSL_SESSION_get_max_early_data;
+  SSL_SESSION_set_max_early_data := Load_SSL_SESSION_set_max_early_data;
+  SSL_copy_session_id := Load_SSL_copy_session_id;
+  SSL_SESSION_get0_peer := Load_SSL_SESSION_get0_peer;
+  SSL_SESSION_set1_id_context := Load_SSL_SESSION_set1_id_context;
+  SSL_SESSION_set1_id := Load_SSL_SESSION_set1_id;
+  SSL_SESSION_is_resumable := Load_SSL_SESSION_is_resumable;
+  SSL_SESSION_new := Load_SSL_SESSION_new;
+  SSL_SESSION_dup := Load_SSL_SESSION_dup;
+  SSL_SESSION_get_id := Load_SSL_SESSION_get_id;
+  SSL_SESSION_get0_id_context := Load_SSL_SESSION_get0_id_context;
+  SSL_SESSION_get_compress_id := Load_SSL_SESSION_get_compress_id;
+  SSL_SESSION_print := Load_SSL_SESSION_print;
+  SSL_SESSION_print_keylog := Load_SSL_SESSION_print_keylog;
+  SSL_SESSION_up_ref := Load_SSL_SESSION_up_ref;
+  SSL_SESSION_free := Load_SSL_SESSION_free;
+  SSL_set_session := Load_SSL_set_session;
+  SSL_CTX_add_session := Load_SSL_CTX_add_session;
+  SSL_CTX_remove_session := Load_SSL_CTX_remove_session;
+  SSL_CTX_set_generate_session_id := Load_SSL_CTX_set_generate_session_id;
+  SSL_set_generate_session_id := Load_SSL_set_generate_session_id;
+  SSL_has_matching_session_id := Load_SSL_has_matching_session_id;
+  d2i_SSL_SESSION := Load_d2i_SSL_SESSION;
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  SSL_get_peer_certificate := nil;
+  SSL_get_peer_certificate := Load_SSL_get_peer_certificate;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-  SSL_CTX_get_verify_mode := nil;
-  SSL_CTX_get_verify_depth := nil;
-  SSL_CTX_get_verify_callback := nil;
-  SSL_CTX_set_verify := nil;
-  SSL_CTX_set_verify_depth := nil;
-  SSL_CTX_set_cert_verify_callback := nil;
-  SSL_CTX_set_cert_cb := nil;
-  SSL_CTX_use_RSAPrivateKey := nil;
-  SSL_CTX_use_RSAPrivateKey_ASN1 := nil;
-  SSL_CTX_use_PrivateKey := nil;
-  SSL_CTX_use_PrivateKey_ASN1 := nil;
-  SSL_CTX_use_certificate := nil;
-  SSL_CTX_use_certificate_ASN1 := nil;
-  SSL_CTX_set_default_passwd_cb := nil;
-  SSL_CTX_set_default_passwd_cb_userdata := nil;
-  SSL_CTX_get_default_passwd_cb := nil;
-  SSL_CTX_get_default_passwd_cb_userdata := nil;
-  SSL_set_default_passwd_cb := nil;
-  SSL_set_default_passwd_cb_userdata := nil;
-  SSL_get_default_passwd_cb := nil;
-  SSL_get_default_passwd_cb_userdata := nil;
-  SSL_CTX_check_private_key := nil;
-  SSL_check_private_key := nil;
-  SSL_CTX_set_session_id_context := nil;
-  SSL_new := nil;
-  SSL_up_ref := nil;
-  SSL_is_dtls := nil;
-  SSL_set_session_id_context := nil;
-  SSL_CTX_set_purpose := nil;
-  SSL_set_purpose := nil;
-  SSL_CTX_set_trust := nil;
-  SSL_set_trust := nil;
-  SSL_set1_host := nil;
-  SSL_add1_host := nil;
-  SSL_get0_peername := nil;
-  SSL_set_hostflags := nil;
-  SSL_CTX_dane_enable := nil;
-  SSL_CTX_dane_mtype_set := nil;
-  SSL_dane_enable := nil;
-  SSL_dane_tlsa_add := nil;
-  SSL_get0_dane_authority := nil;
-  SSL_get0_dane_tlsa := nil;
-  SSL_get0_dane := nil;
-  SSL_CTX_dane_set_flags := nil;
-  SSL_CTX_dane_clear_flags := nil;
-  SSL_dane_set_flags := nil;
-  SSL_dane_clear_flags := nil;
-  SSL_CTX_set1_param := nil;
-  SSL_set1_param := nil;
-  SSL_CTX_get0_param := nil;
-  SSL_get0_param := nil;
-  SSL_CTX_set_srp_username := nil;
-  SSL_CTX_set_srp_password := nil;
-  SSL_CTX_set_srp_strength := nil;
-  SSL_CTX_set_srp_client_pwd_callback := nil;
-  SSL_CTX_set_srp_verify_param_callback := nil;
-  SSL_CTX_set_srp_username_callback := nil;
-  SSL_CTX_set_srp_cb_arg := nil;
-  SSL_set_srp_server_param := nil;
-  SSL_set_srp_server_param_pw := nil;
-  SSL_CTX_set_client_hello_cb := nil;
-  SSL_client_hello_isv2 := nil;
-  SSL_client_hello_get0_legacy_version := nil;
-  SSL_client_hello_get0_random := nil;
-  SSL_client_hello_get0_session_id := nil;
-  SSL_client_hello_get0_ciphers := nil;
-  SSL_client_hello_get0_compression_methods := nil;
-  SSL_client_hello_get1_extensions_present := nil;
-  SSL_client_hello_get0_ext := nil;
-  SSL_certs_clear := nil;
-  SSL_free := nil;
-  SSL_waiting_for_async := nil;
-  SSL_get_all_async_fds := nil;
-  SSL_get_changed_async_fds := nil;
-  SSL_accept := nil;
-  SSL_stateless := nil;
-  SSL_connect := nil;
-  SSL_read := nil;
-  SSL_read_ex := nil;
-  SSL_read_early_data := nil;
-  SSL_peek := nil;
-  SSL_peek_ex := nil;
-  SSL_write := nil;
-  SSL_write_ex := nil;
-  SSL_write_early_data := nil;
-  SSL_callback_ctrl := nil;
-  SSL_ctrl := nil;
-  SSL_CTX_ctrl := nil;
-  SSL_CTX_callback_ctrl := nil;
-  SSL_get_early_data_status := nil;
-  SSL_get_error := nil;
-  SSL_get_version := nil;
-  SSL_CTX_set_ssl_version := nil;
-  TLS_method := nil;
-  TLS_server_method := nil;
-  TLS_client_method := nil;
-  SSL_do_handshake := nil;
-  SSL_key_update := nil;
-  SSL_get_key_update_type := nil;
-  SSL_renegotiate := nil;
-  SSL_renegotiate_abbreviated := nil;
-  SSL_new_session_ticket := nil;
-  SSL_shutdown := nil;
-  SSL_CTX_set_post_handshake_auth := nil;
-  SSL_set_post_handshake_auth := nil;
-  SSL_renegotiate_pending := nil;
-  SSL_verify_client_post_handshake := nil;
-  SSL_CTX_get_ssl_method := nil;
-  SSL_get_ssl_method := nil;
-  SSL_set_ssl_method := nil;
-  SSL_alert_type_string_long := nil;
-  SSL_alert_type_string := nil;
-  SSL_alert_desc_string_long := nil;
-  SSL_alert_desc_string := nil;
-  SSL_CTX_set_client_CA_list := nil;
-  SSL_add_client_CA := nil;
-  SSL_CTX_add_client_CA := nil;
-  SSL_set_connect_state := nil;
-  SSL_set_accept_state := nil;
+  SSL_CTX_get_verify_mode := Load_SSL_CTX_get_verify_mode;
+  SSL_CTX_get_verify_depth := Load_SSL_CTX_get_verify_depth;
+  SSL_CTX_get_verify_callback := Load_SSL_CTX_get_verify_callback;
+  SSL_CTX_set_verify := Load_SSL_CTX_set_verify;
+  SSL_CTX_set_verify_depth := Load_SSL_CTX_set_verify_depth;
+  SSL_CTX_set_cert_verify_callback := Load_SSL_CTX_set_cert_verify_callback;
+  SSL_CTX_set_cert_cb := Load_SSL_CTX_set_cert_cb;
+  SSL_CTX_use_RSAPrivateKey := Load_SSL_CTX_use_RSAPrivateKey;
+  SSL_CTX_use_RSAPrivateKey_ASN1 := Load_SSL_CTX_use_RSAPrivateKey_ASN1;
+  SSL_CTX_use_PrivateKey := Load_SSL_CTX_use_PrivateKey;
+  SSL_CTX_use_PrivateKey_ASN1 := Load_SSL_CTX_use_PrivateKey_ASN1;
+  SSL_CTX_use_certificate := Load_SSL_CTX_use_certificate;
+  SSL_CTX_use_certificate_ASN1 := Load_SSL_CTX_use_certificate_ASN1;
+  SSL_CTX_set_default_passwd_cb := Load_SSL_CTX_set_default_passwd_cb;
+  SSL_CTX_set_default_passwd_cb_userdata := Load_SSL_CTX_set_default_passwd_cb_userdata;
+  SSL_CTX_get_default_passwd_cb := Load_SSL_CTX_get_default_passwd_cb;
+  SSL_CTX_get_default_passwd_cb_userdata := Load_SSL_CTX_get_default_passwd_cb_userdata;
+  SSL_set_default_passwd_cb := Load_SSL_set_default_passwd_cb;
+  SSL_set_default_passwd_cb_userdata := Load_SSL_set_default_passwd_cb_userdata;
+  SSL_get_default_passwd_cb := Load_SSL_get_default_passwd_cb;
+  SSL_get_default_passwd_cb_userdata := Load_SSL_get_default_passwd_cb_userdata;
+  SSL_CTX_check_private_key := Load_SSL_CTX_check_private_key;
+  SSL_check_private_key := Load_SSL_check_private_key;
+  SSL_CTX_set_session_id_context := Load_SSL_CTX_set_session_id_context;
+  SSL_new := Load_SSL_new;
+  SSL_up_ref := Load_SSL_up_ref;
+  SSL_is_dtls := Load_SSL_is_dtls;
+  SSL_set_session_id_context := Load_SSL_set_session_id_context;
+  SSL_CTX_set_purpose := Load_SSL_CTX_set_purpose;
+  SSL_set_purpose := Load_SSL_set_purpose;
+  SSL_CTX_set_trust := Load_SSL_CTX_set_trust;
+  SSL_set_trust := Load_SSL_set_trust;
+  SSL_set1_host := Load_SSL_set1_host;
+  SSL_add1_host := Load_SSL_add1_host;
+  SSL_get0_peername := Load_SSL_get0_peername;
+  SSL_set_hostflags := Load_SSL_set_hostflags;
+  SSL_CTX_dane_enable := Load_SSL_CTX_dane_enable;
+  SSL_CTX_dane_mtype_set := Load_SSL_CTX_dane_mtype_set;
+  SSL_dane_enable := Load_SSL_dane_enable;
+  SSL_dane_tlsa_add := Load_SSL_dane_tlsa_add;
+  SSL_get0_dane_authority := Load_SSL_get0_dane_authority;
+  SSL_get0_dane_tlsa := Load_SSL_get0_dane_tlsa;
+  SSL_get0_dane := Load_SSL_get0_dane;
+  SSL_CTX_dane_set_flags := Load_SSL_CTX_dane_set_flags;
+  SSL_CTX_dane_clear_flags := Load_SSL_CTX_dane_clear_flags;
+  SSL_dane_set_flags := Load_SSL_dane_set_flags;
+  SSL_dane_clear_flags := Load_SSL_dane_clear_flags;
+  SSL_CTX_set1_param := Load_SSL_CTX_set1_param;
+  SSL_set1_param := Load_SSL_set1_param;
+  SSL_CTX_get0_param := Load_SSL_CTX_get0_param;
+  SSL_get0_param := Load_SSL_get0_param;
+  SSL_CTX_set_srp_username := Load_SSL_CTX_set_srp_username;
+  SSL_CTX_set_srp_password := Load_SSL_CTX_set_srp_password;
+  SSL_CTX_set_srp_strength := Load_SSL_CTX_set_srp_strength;
+  SSL_CTX_set_srp_client_pwd_callback := Load_SSL_CTX_set_srp_client_pwd_callback;
+  SSL_CTX_set_srp_verify_param_callback := Load_SSL_CTX_set_srp_verify_param_callback;
+  SSL_CTX_set_srp_username_callback := Load_SSL_CTX_set_srp_username_callback;
+  SSL_CTX_set_srp_cb_arg := Load_SSL_CTX_set_srp_cb_arg;
+  SSL_set_srp_server_param := Load_SSL_set_srp_server_param;
+  SSL_set_srp_server_param_pw := Load_SSL_set_srp_server_param_pw;
+  SSL_CTX_set_client_hello_cb := Load_SSL_CTX_set_client_hello_cb;
+  SSL_client_hello_isv2 := Load_SSL_client_hello_isv2;
+  SSL_client_hello_get0_legacy_version := Load_SSL_client_hello_get0_legacy_version;
+  SSL_client_hello_get0_random := Load_SSL_client_hello_get0_random;
+  SSL_client_hello_get0_session_id := Load_SSL_client_hello_get0_session_id;
+  SSL_client_hello_get0_ciphers := Load_SSL_client_hello_get0_ciphers;
+  SSL_client_hello_get0_compression_methods := Load_SSL_client_hello_get0_compression_methods;
+  SSL_client_hello_get1_extensions_present := Load_SSL_client_hello_get1_extensions_present;
+  SSL_client_hello_get0_ext := Load_SSL_client_hello_get0_ext;
+  SSL_certs_clear := Load_SSL_certs_clear;
+  SSL_free := Load_SSL_free;
+  SSL_waiting_for_async := Load_SSL_waiting_for_async;
+  SSL_get_all_async_fds := Load_SSL_get_all_async_fds;
+  SSL_get_changed_async_fds := Load_SSL_get_changed_async_fds;
+  SSL_accept := Load_SSL_accept;
+  SSL_stateless := Load_SSL_stateless;
+  SSL_connect := Load_SSL_connect;
+  SSL_read := Load_SSL_read;
+  SSL_read_ex := Load_SSL_read_ex;
+  SSL_read_early_data := Load_SSL_read_early_data;
+  SSL_peek := Load_SSL_peek;
+  SSL_peek_ex := Load_SSL_peek_ex;
+  SSL_write := Load_SSL_write;
+  SSL_write_ex := Load_SSL_write_ex;
+  SSL_write_early_data := Load_SSL_write_early_data;
+  SSL_callback_ctrl := Load_SSL_callback_ctrl;
+  SSL_ctrl := Load_SSL_ctrl;
+  SSL_CTX_ctrl := Load_SSL_CTX_ctrl;
+  SSL_CTX_callback_ctrl := Load_SSL_CTX_callback_ctrl;
+  SSL_get_early_data_status := Load_SSL_get_early_data_status;
+  SSL_get_error := Load_SSL_get_error;
+  SSL_get_version := Load_SSL_get_version;
+  SSL_CTX_set_ssl_version := Load_SSL_CTX_set_ssl_version;
+  TLS_method := Load_TLS_method;
+  TLS_server_method := Load_TLS_server_method;
+  TLS_client_method := Load_TLS_client_method;
+  SSL_do_handshake := Load_SSL_do_handshake;
+  SSL_key_update := Load_SSL_key_update;
+  SSL_get_key_update_type := Load_SSL_get_key_update_type;
+  SSL_renegotiate := Load_SSL_renegotiate;
+  SSL_renegotiate_abbreviated := Load_SSL_renegotiate_abbreviated;
+  SSL_new_session_ticket := Load_SSL_new_session_ticket;
+  SSL_shutdown := Load_SSL_shutdown;
+  SSL_CTX_set_post_handshake_auth := Load_SSL_CTX_set_post_handshake_auth;
+  SSL_set_post_handshake_auth := Load_SSL_set_post_handshake_auth;
+  SSL_renegotiate_pending := Load_SSL_renegotiate_pending;
+  SSL_verify_client_post_handshake := Load_SSL_verify_client_post_handshake;
+  SSL_CTX_get_ssl_method := Load_SSL_CTX_get_ssl_method;
+  SSL_get_ssl_method := Load_SSL_get_ssl_method;
+  SSL_set_ssl_method := Load_SSL_set_ssl_method;
+  SSL_alert_type_string_long := Load_SSL_alert_type_string_long;
+  SSL_alert_type_string := Load_SSL_alert_type_string;
+  SSL_alert_desc_string_long := Load_SSL_alert_desc_string_long;
+  SSL_alert_desc_string := Load_SSL_alert_desc_string;
+  SSL_CTX_set_client_CA_list := Load_SSL_CTX_set_client_CA_list;
+  SSL_add_client_CA := Load_SSL_add_client_CA;
+  SSL_CTX_add_client_CA := Load_SSL_CTX_add_client_CA;
+  SSL_set_connect_state := Load_SSL_set_connect_state;
+  SSL_set_accept_state := Load_SSL_set_accept_state;
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  SSL_library_init := nil;
+  SSL_library_init := Load_SSL_library_init;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-  SSL_CIPHER_description := nil;
-  SSL_dup := nil;
-  SSL_get_certificate := nil;
-  SSL_get_privatekey := nil;
-  SSL_CTX_get0_certificate := nil;
-  SSL_CTX_get0_privatekey := nil;
-  SSL_CTX_set_quiet_shutdown := nil;
-  SSL_CTX_get_quiet_shutdown := nil;
-  SSL_set_quiet_shutdown := nil;
-  SSL_get_quiet_shutdown := nil;
-  SSL_set_shutdown := nil;
-  SSL_get_shutdown := nil;
-  SSL_version := nil;
-  SSL_client_version := nil;
-  SSL_CTX_set_default_verify_paths := nil;
-  SSL_CTX_set_default_verify_dir := nil;
-  SSL_CTX_set_default_verify_file := nil;
-  SSL_CTX_load_verify_locations := nil;
-  SSL_get_session := nil;
-  SSL_get1_session := nil;
-  SSL_get_SSL_CTX := nil;
-  SSL_set_SSL_CTX := nil;
-  SSL_set_info_callback := nil;
-  SSL_get_info_callback := nil;
-  SSL_get_state := nil;
-  SSL_set_verify_result := nil;
-  SSL_get_verify_result := nil;
-  SSL_get_client_random := nil;
-  SSL_get_server_random := nil;
-  SSL_SESSION_get_master_key := nil;
-  SSL_SESSION_set1_master_key := nil;
-  SSL_SESSION_get_max_fragment_length := nil;
-  SSL_set_ex_data := nil;
-  SSL_get_ex_data := nil;
-  SSL_SESSION_set_ex_data := nil;
-  SSL_SESSION_get_ex_data := nil;
-  SSL_CTX_set_ex_data := nil;
-  SSL_CTX_get_ex_data := nil;
-  SSL_get_ex_data_X509_STORE_CTX_idx := nil;
-  SSL_CTX_set_default_read_buffer_len := nil;
-  SSL_set_default_read_buffer_len := nil;
-  SSL_CTX_set_tmp_dh_callback := nil;
-  SSL_set_tmp_dh_callback := nil;
-  SSL_CIPHER_find := nil;
-  SSL_CIPHER_get_cipher_nid := nil;
-  SSL_CIPHER_get_digest_nid := nil;
-  SSL_set_session_ticket_ext := nil;
-  SSL_set_session_ticket_ext_cb := nil;
-  SSL_CTX_set_not_resumable_session_callback := nil;
-  SSL_set_not_resumable_session_callback := nil;
-  SSL_CTX_set_record_padding_callback := nil;
-  SSL_CTX_set_record_padding_callback_arg := nil;
-  SSL_CTX_get_record_padding_callback_arg := nil;
-  SSL_CTX_set_block_padding := nil;
-  SSL_set_record_padding_callback := nil;
-  SSL_set_record_padding_callback_arg := nil;
-  SSL_get_record_padding_callback_arg := nil;
-  SSL_set_block_padding := nil;
-  SSL_set_num_tickets := nil;
-  SSL_get_num_tickets := nil;
-  SSL_CTX_set_num_tickets := nil;
-  SSL_CTX_get_num_tickets := nil;
-  SSL_session_reused := nil;
-  SSL_is_server := nil;
-  SSL_CONF_CTX_new := nil;
-  SSL_CONF_CTX_finish := nil;
-  SSL_CONF_CTX_free := nil;
-  SSL_CONF_CTX_set_flags := nil;
-  SSL_CONF_CTX_clear_flags := nil;
-  SSL_CONF_CTX_set1_prefix := nil;
-  SSL_CONF_cmd := nil;
-  SSL_CONF_cmd_argv := nil;
-  SSL_CONF_cmd_value_type := nil;
-  SSL_CONF_CTX_set_ssl := nil;
-  SSL_CONF_CTX_set_ssl_ctx := nil;
-  SSL_add_ssl_module := nil;
-  SSL_config := nil;
-  SSL_CTX_config := nil;
-  DTLSv1_listen := nil;
-  SSL_enable_ct := nil;
-  SSL_CTX_enable_ct := nil;
-  SSL_ct_is_enabled := nil;
-  SSL_CTX_ct_is_enabled := nil;
-  SSL_CTX_set_default_ctlog_list_file := nil;
-  SSL_CTX_set_ctlog_list_file := nil;
-  SSL_CTX_set0_ctlog_store := nil;
-  SSL_set_security_level := nil;
-  SSL_set_security_callback := nil;
-  SSL_get_security_callback := nil;
-  SSL_set0_security_ex_data := nil;
-  SSL_get0_security_ex_data := nil;
-  SSL_CTX_set_security_level := nil;
-  SSL_CTX_get_security_level := nil;
-  SSL_CTX_get0_security_ex_data := nil;
-  SSL_CTX_set0_security_ex_data := nil;
-  OPENSSL_init_ssl := nil;
-  SSL_free_buffers := nil;
-  SSL_alloc_buffers := nil;
-  SSL_CTX_set_session_ticket_cb := nil;
-  SSL_SESSION_set1_ticket_appdata := nil;
-  SSL_SESSION_get0_ticket_appdata := nil;
-  DTLS_set_timer_cb := nil;
-  SSL_CTX_set_allow_early_data_cb := nil;
-  SSL_set_allow_early_data_cb := nil;
+  SSL_CIPHER_description := Load_SSL_CIPHER_description;
+  SSL_dup := Load_SSL_dup;
+  SSL_get_certificate := Load_SSL_get_certificate;
+  SSL_get_privatekey := Load_SSL_get_privatekey;
+  SSL_CTX_get0_certificate := Load_SSL_CTX_get0_certificate;
+  SSL_CTX_get0_privatekey := Load_SSL_CTX_get0_privatekey;
+  SSL_CTX_set_quiet_shutdown := Load_SSL_CTX_set_quiet_shutdown;
+  SSL_CTX_get_quiet_shutdown := Load_SSL_CTX_get_quiet_shutdown;
+  SSL_set_quiet_shutdown := Load_SSL_set_quiet_shutdown;
+  SSL_get_quiet_shutdown := Load_SSL_get_quiet_shutdown;
+  SSL_set_shutdown := Load_SSL_set_shutdown;
+  SSL_get_shutdown := Load_SSL_get_shutdown;
+  SSL_version := Load_SSL_version;
+  SSL_client_version := Load_SSL_client_version;
+  SSL_CTX_set_default_verify_paths := Load_SSL_CTX_set_default_verify_paths;
+  SSL_CTX_set_default_verify_dir := Load_SSL_CTX_set_default_verify_dir;
+  SSL_CTX_set_default_verify_file := Load_SSL_CTX_set_default_verify_file;
+  SSL_CTX_load_verify_locations := Load_SSL_CTX_load_verify_locations;
+  SSL_get_session := Load_SSL_get_session;
+  SSL_get1_session := Load_SSL_get1_session;
+  SSL_get_SSL_CTX := Load_SSL_get_SSL_CTX;
+  SSL_set_SSL_CTX := Load_SSL_set_SSL_CTX;
+  SSL_set_info_callback := Load_SSL_set_info_callback;
+  SSL_get_info_callback := Load_SSL_get_info_callback;
+  SSL_get_state := Load_SSL_get_state;
+  SSL_set_verify_result := Load_SSL_set_verify_result;
+  SSL_get_verify_result := Load_SSL_get_verify_result;
+  SSL_get_client_random := Load_SSL_get_client_random;
+  SSL_get_server_random := Load_SSL_get_server_random;
+  SSL_SESSION_get_master_key := Load_SSL_SESSION_get_master_key;
+  SSL_SESSION_set1_master_key := Load_SSL_SESSION_set1_master_key;
+  SSL_SESSION_get_max_fragment_length := Load_SSL_SESSION_get_max_fragment_length;
+  SSL_set_ex_data := Load_SSL_set_ex_data;
+  SSL_get_ex_data := Load_SSL_get_ex_data;
+  SSL_SESSION_set_ex_data := Load_SSL_SESSION_set_ex_data;
+  SSL_SESSION_get_ex_data := Load_SSL_SESSION_get_ex_data;
+  SSL_CTX_set_ex_data := Load_SSL_CTX_set_ex_data;
+  SSL_CTX_get_ex_data := Load_SSL_CTX_get_ex_data;
+  SSL_get_ex_data_X509_STORE_CTX_idx := Load_SSL_get_ex_data_X509_STORE_CTX_idx;
+  SSL_CTX_set_default_read_buffer_len := Load_SSL_CTX_set_default_read_buffer_len;
+  SSL_set_default_read_buffer_len := Load_SSL_set_default_read_buffer_len;
+  SSL_CTX_set_tmp_dh_callback := Load_SSL_CTX_set_tmp_dh_callback;
+  SSL_set_tmp_dh_callback := Load_SSL_set_tmp_dh_callback;
+  SSL_CIPHER_find := Load_SSL_CIPHER_find;
+  SSL_CIPHER_get_cipher_nid := Load_SSL_CIPHER_get_cipher_nid;
+  SSL_CIPHER_get_digest_nid := Load_SSL_CIPHER_get_digest_nid;
+  SSL_set_session_ticket_ext := Load_SSL_set_session_ticket_ext;
+  SSL_set_session_ticket_ext_cb := Load_SSL_set_session_ticket_ext_cb;
+  SSL_CTX_set_not_resumable_session_callback := Load_SSL_CTX_set_not_resumable_session_callback;
+  SSL_set_not_resumable_session_callback := Load_SSL_set_not_resumable_session_callback;
+  SSL_CTX_set_record_padding_callback := Load_SSL_CTX_set_record_padding_callback;
+  SSL_CTX_set_record_padding_callback_arg := Load_SSL_CTX_set_record_padding_callback_arg;
+  SSL_CTX_get_record_padding_callback_arg := Load_SSL_CTX_get_record_padding_callback_arg;
+  SSL_CTX_set_block_padding := Load_SSL_CTX_set_block_padding;
+  SSL_set_record_padding_callback := Load_SSL_set_record_padding_callback;
+  SSL_set_record_padding_callback_arg := Load_SSL_set_record_padding_callback_arg;
+  SSL_get_record_padding_callback_arg := Load_SSL_get_record_padding_callback_arg;
+  SSL_set_block_padding := Load_SSL_set_block_padding;
+  SSL_set_num_tickets := Load_SSL_set_num_tickets;
+  SSL_get_num_tickets := Load_SSL_get_num_tickets;
+  SSL_CTX_set_num_tickets := Load_SSL_CTX_set_num_tickets;
+  SSL_CTX_get_num_tickets := Load_SSL_CTX_get_num_tickets;
+  SSL_session_reused := Load_SSL_session_reused;
+  SSL_is_server := Load_SSL_is_server;
+  SSL_CONF_CTX_new := Load_SSL_CONF_CTX_new;
+  SSL_CONF_CTX_finish := Load_SSL_CONF_CTX_finish;
+  SSL_CONF_CTX_free := Load_SSL_CONF_CTX_free;
+  SSL_CONF_CTX_set_flags := Load_SSL_CONF_CTX_set_flags;
+  SSL_CONF_CTX_clear_flags := Load_SSL_CONF_CTX_clear_flags;
+  SSL_CONF_CTX_set1_prefix := Load_SSL_CONF_CTX_set1_prefix;
+  SSL_CONF_cmd := Load_SSL_CONF_cmd;
+  SSL_CONF_cmd_argv := Load_SSL_CONF_cmd_argv;
+  SSL_CONF_cmd_value_type := Load_SSL_CONF_cmd_value_type;
+  SSL_CONF_CTX_set_ssl := Load_SSL_CONF_CTX_set_ssl;
+  SSL_CONF_CTX_set_ssl_ctx := Load_SSL_CONF_CTX_set_ssl_ctx;
+  SSL_add_ssl_module := Load_SSL_add_ssl_module;
+  SSL_config := Load_SSL_config;
+  SSL_CTX_config := Load_SSL_CTX_config;
+  DTLSv1_listen := Load_DTLSv1_listen;
+  SSL_enable_ct := Load_SSL_enable_ct;
+  SSL_CTX_enable_ct := Load_SSL_CTX_enable_ct;
+  SSL_ct_is_enabled := Load_SSL_ct_is_enabled;
+  SSL_CTX_ct_is_enabled := Load_SSL_CTX_ct_is_enabled;
+  SSL_CTX_set_default_ctlog_list_file := Load_SSL_CTX_set_default_ctlog_list_file;
+  SSL_CTX_set_ctlog_list_file := Load_SSL_CTX_set_ctlog_list_file;
+  SSL_CTX_set0_ctlog_store := Load_SSL_CTX_set0_ctlog_store;
+  SSL_set_security_level := Load_SSL_set_security_level;
+  SSL_set_security_callback := Load_SSL_set_security_callback;
+  SSL_get_security_callback := Load_SSL_get_security_callback;
+  SSL_set0_security_ex_data := Load_SSL_set0_security_ex_data;
+  SSL_get0_security_ex_data := Load_SSL_get0_security_ex_data;
+  SSL_CTX_set_security_level := Load_SSL_CTX_set_security_level;
+  SSL_CTX_get_security_level := Load_SSL_CTX_get_security_level;
+  SSL_CTX_get0_security_ex_data := Load_SSL_CTX_get0_security_ex_data;
+  SSL_CTX_set0_security_ex_data := Load_SSL_CTX_set0_security_ex_data;
+  OPENSSL_init_ssl := Load_OPENSSL_init_ssl;
+  SSL_free_buffers := Load_SSL_free_buffers;
+  SSL_alloc_buffers := Load_SSL_alloc_buffers;
+  SSL_CTX_set_session_ticket_cb := Load_SSL_CTX_set_session_ticket_cb;
+  SSL_SESSION_set1_ticket_appdata := Load_SSL_SESSION_set1_ticket_appdata;
+  SSL_SESSION_get0_ticket_appdata := Load_SSL_SESSION_get0_ticket_appdata;
+  DTLS_set_timer_cb := Load_DTLS_set_timer_cb;
+  SSL_CTX_set_allow_early_data_cb := Load_SSL_CTX_set_allow_early_data_cb;
+  SSL_set_allow_early_data_cb := Load_SSL_set_allow_early_data_cb;
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
   SSLv2_method := nil;
   SSLv2_server_method := nil;
@@ -11416,8 +9573,8 @@ begin
   TLSv1_2_server_method := nil;
   TLSv1_2_client_method := nil;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-  SSL_get0_peer_certificate := nil;
-  SSL_get1_peer_certificate := nil;
+  SSL_get0_peer_certificate := Load_SSL_get0_peer_certificate;
+  SSL_get1_peer_certificate := Load_SSL_get1_peer_certificate;
 end;
 {$ENDIF}
 

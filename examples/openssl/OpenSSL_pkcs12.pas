@@ -234,76 +234,149 @@ function d2i_PKCS12_bio(bp: PBIO; p12: PPPKCS12): PPKCS12; cdecl; external CLibC
 function PKCS12_newpass(p12: PPKCS12; const oldpass: PAnsiChar; const newpass: PAnsiChar): TOpenSSL_C_INT; cdecl; external CLibCrypto;
 
 {$ELSE}
+
+{Declare external function initialisers - should not be called directly}
+
+function Load_PKCS12_mac_present(const p12: PPKCS12): TOpenSSL_C_INT; cdecl;
+procedure Load_PKCS12_get0_mac(const pmac: PPASN1_OCTET_STRING; const pmacalg: PPX509_ALGOR; const psalt: PPASN1_OCTET_STRING; const piter: PPASN1_INTEGER; const p12: PPKCS12); cdecl;
+function Load_PKCS12_SAFEBAG_get0_attr(const bag: PPKCS12_SAFEBAG; attr_nid: TOpenSSL_C_INT): PASN1_TYPE; cdecl;
+function Load_PKCS12_SAFEBAG_get0_type(const bag: PPKCS12_SAFEBAG): PASN1_OBJECT; cdecl;
+function Load_PKCS12_SAFEBAG_get_nid(const bag: PPKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl;
+function Load_PKCS12_SAFEBAG_get_bag_nid(const bag: PPKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl;
+function Load_PKCS12_SAFEBAG_get1_cert(const bag: PPKCS12_SAFEBAG): PX509; cdecl;
+function Load_PKCS12_SAFEBAG_get1_crl(const bag: PPKCS12_SAFEBAG): PX509_CRL; cdecl;
+function Load_PKCS12_SAFEBAG_get0_p8inf(const bag: PPKCS12_SAFEBAG): PPKCS8_PRIV_KEY_INFO; cdecl;
+function Load_PKCS12_SAFEBAG_get0_pkcs8(const bag: PPKCS12_SAFEBAG): PX509_SIG; cdecl;
+function Load_PKCS12_SAFEBAG_create_cert(x509: PX509): PPKCS12_SAFEBAG; cdecl;
+function Load_PKCS12_SAFEBAG_create_crl(crl: PX509_CRL): PPKCS12_SAFEBAG; cdecl;
+function Load_PKCS12_SAFEBAG_create0_p8inf(p8: PPKCS8_PRIV_KEY_INFO): PPKCS12_SAFEBAG; cdecl;
+function Load_PKCS12_SAFEBAG_create0_pkcs8(p8: PX509_SIG): PPKCS12_SAFEBAG; cdecl;
+function Load_PKCS12_SAFEBAG_create_pkcs8_encrypt(pbe_nid: TOpenSSL_C_INT; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; p8inf: PPKCS8_PRIV_KEY_INFO): PPKCS12_SAFEBAG; cdecl;
+function Load_PKCS12_item_pack_safebag(obj: Pointer; const it: PASN1_ITEM; nid1: TOpenSSL_C_INT; nid2: TOpenSSL_C_INT): PPKCS12_SAFEBAG; cdecl;
+function Load_PKCS8_decrypt(const p8: PX509_SIG; const pass: PAnsiChar; passlen: TOpenSSL_C_INT): PPKCS8_PRIV_KEY_INFO; cdecl;
+function Load_PKCS12_decrypt_skey(const bag: PPKCS12_SAFEBAG; const pass: PAnsiChar; passlen: TOpenSSL_C_INT): PPKCS8_PRIV_KEY_INFO; cdecl;
+function Load_PKCS8_encrypt(pbe_nid: TOpenSSL_C_INT; const cipher: PEVP_CIPHER; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; p8: PPKCS8_PRIV_KEY_INFO): PX509_SIG; cdecl;
+function Load_PKCS8_set0_pbe(const pass: PAnsiChar; passlen: TOpenSSL_C_INT; p8inf: PPKCS8_PRIV_KEY_INFO; pbe: PX509_ALGOR): PX509_SIG; cdecl;
+function Load_PKCS12_add_localkeyid(bag: PPKCS12_SAFEBAG; name: PByte; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_PKCS12_add_friendlyname_asc(bag: PPKCS12_SAFEBAG; const name: PAnsiChar; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_PKCS12_add_friendlyname_utf8(bag: PPKCS12_SAFEBAG; const name: PAnsiChar; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_PKCS12_add_CSPName_asc(bag: PPKCS12_SAFEBAG; const name: PAnsiChar; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_PKCS12_add_friendlyname_uni(bag: PPKCS12_SAFEBAG; const name: PByte; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_PKCS8_add_keyusage(p8: PPKCS8_PRIV_KEY_INFO; usage: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_PKCS12_get_friendlyname(bag: PPKCS12_SAFEBAG): PAnsiChar; cdecl;
+function Load_PKCS12_pbe_crypt(const algor: PX509_ALGOR; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; const in_: PByte; inlen: TOpenSSL_C_INT; data: PPByte; datalen: POpenSSL_C_INT; en_de: TOpenSSL_C_INT): PByte; cdecl;
+function Load_PKCS12_item_decrypt_d2i(const algor: PX509_ALGOR; const it: PASN1_ITEM; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; const oct: PASN1_OCTET_STRING; zbuf: TOpenSSL_C_INT): Pointer; cdecl;
+function Load_PKCS12_item_i2d_encrypt(algor: PX509_ALGOR; const it: PASN1_ITEM; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; obj: Pointer; zbuf: TOpenSSL_C_INT): PASN1_OCTET_STRING; cdecl;
+function Load_PKCS12_init(mode: TOpenSSL_C_INT): PPKCS12; cdecl;
+function Load_PKCS12_key_gen_asc(const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; id: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; n: TOpenSSL_C_INT; out_: PByte; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl;
+function Load_PKCS12_key_gen_uni(pass: PByte; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; id: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; n: TOpenSSL_C_INT; out_: PByte; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl;
+function Load_PKCS12_key_gen_utf8(const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; id: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; n: TOpenSSL_C_INT; out_: PByte; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl;
+function Load_PKCS12_PBE_keyivgen(ctx: PEVP_CIPHER_CTX; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; param: PASN1_TYPE; const cipher: PEVP_CIPHER; const md_type: PEVP_MD; en_de: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_PKCS12_gen_mac(p12: PPKCS12; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; mac: PByte; maclen: POpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
+function Load_PKCS12_verify_mac(p12: PPKCS12; const pass: PAnsiChar; passlen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_PKCS12_set_mac(p12: PPKCS12; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl;
+function Load_PKCS12_setup_mac(p12: PPKCS12; iter: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl;
+function Load_OPENSSL_asc2uni(const asc: PAnsiChar; asclen: TOpenSSL_C_INT; uni: PPByte; unilen: POpenSSL_C_INT): PByte; cdecl;
+function Load_OPENSSL_uni2asc(const uni: PByte; unilen: TOpenSSL_C_INT): PAnsiChar; cdecl;
+function Load_OPENSSL_utf82uni(const asc: PAnsiChar; asclen: TOpenSSL_C_INT; uni: PPByte; unilen: POpenSSL_C_INT): PByte; cdecl;
+function Load_OPENSSL_uni2utf8(const uni: PByte; unilen: TOpenSSL_C_INT): PAnsiChar; cdecl;
+function Load_PKCS12_new: PPKCS12; cdecl;
+procedure Load_PKCS12_free(a: PPKCS12); cdecl;
+function Load_d2i_PKCS12(a: PPPKCS12; const in_: PPByte; len: TOpenSSL_C_LONG): PPKCS12; cdecl;
+function Load_i2d_PKCS12(a: PPKCS12; out_: PPByte): TOpenSSL_C_INT; cdecl;
+function Load_PKCS12_it: PASN1_ITEM; cdecl;
+function Load_PKCS12_MAC_DATA_new: PPKCS12_MAC_DATA; cdecl;
+procedure Load_PKCS12_MAC_DATA_free(a: PPKCS12_MAC_DATA); cdecl;
+function Load_d2i_PKCS12_MAC_DATA(a: PPPKCS12_MAC_DATA; const in_: PPByte; len: TOpenSSL_C_LONG): PPKCS12_MAC_DATA; cdecl;
+function Load_i2d_PKCS12_MAC_DATA(a: PPKCS12_MAC_DATA; out_: PPByte): TOpenSSL_C_INT; cdecl;
+function Load_PKCS12_MAC_DATA_it: PASN1_ITEM; cdecl;
+function Load_PKCS12_SAFEBAG_new: PPKCS12_SAFEBAG; cdecl;
+procedure Load_PKCS12_SAFEBAG_free(a: PPKCS12_SAFEBAG); cdecl;
+function Load_d2i_PKCS12_SAFEBAG(a: PPPKCS12_SAFEBAG; const in_: PPByte; len: TOpenSSL_C_LONG): PPKCS12_SAFEBAG; cdecl;
+function Load_i2d_PKCS12_SAFEBAG(a: PPKCS12_SAFEBAG; out_: PPByte): TOpenSSL_C_INT; cdecl;
+function Load_PKCS12_SAFEBAG_it: PASN1_ITEM; cdecl;
+function Load_PKCS12_BAGS_new: PPKCS12_BAGS; cdecl;
+procedure Load_PKCS12_BAGS_free(a: PPKCS12_BAGS); cdecl;
+function Load_d2i_PKCS12_BAGS(a: PPPKCS12_BAGS; const in_: PPByte; len: TOpenSSL_C_LONG): PPKCS12_BAGS; cdecl;
+function Load_i2d_PKCS12_BAGS(a: PPKCS12_BAGS; out_: PPByte): TOpenSSL_C_INT; cdecl;
+function Load_PKCS12_BAGS_it: PASN1_ITEM; cdecl;
+procedure Load_PKCS12_PBE_add(v: Pointer); cdecl;
+function Load_PKCS12_parse(p12: PPKCS12; const pass: PAnsiChar; out pkey: PEVP_PKEY; out cert: PX509; ca: PPStack_Of_X509): TOpenSSL_C_INT; cdecl;
+function Load_PKCS12_create(const pass: PAnsiChar; const name: PAnsiChar; pkey: PEVP_PKEY; cert: PX509; ca: PStack_Of_X509; nid_key: TOpenSSL_C_INT; nid_cert: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; mac_iter: TOpenSSL_C_INT; keytype: TOpenSSL_C_INT): PPKCS12; cdecl;
+function Load_i2d_PKCS12_bio(bp: PBIO; p12: PPKCS12): TOpenSSL_C_INT; cdecl;
+function Load_d2i_PKCS12_bio(bp: PBIO; p12: PPPKCS12): PPKCS12; cdecl;
+function Load_PKCS12_newpass(p12: PPKCS12; const oldpass: PAnsiChar; const newpass: PAnsiChar): TOpenSSL_C_INT; cdecl;
+
 var
-  PKCS12_mac_present: function (const p12: PPKCS12): TOpenSSL_C_INT; cdecl = nil;
-  PKCS12_get0_mac: procedure (const pmac: PPASN1_OCTET_STRING; const pmacalg: PPX509_ALGOR; const psalt: PPASN1_OCTET_STRING; const piter: PPASN1_INTEGER; const p12: PPKCS12); cdecl = nil;
-  PKCS12_SAFEBAG_get0_attr: function (const bag: PPKCS12_SAFEBAG; attr_nid: TOpenSSL_C_INT): PASN1_TYPE; cdecl = nil;
-  PKCS12_SAFEBAG_get0_type: function (const bag: PPKCS12_SAFEBAG): PASN1_OBJECT; cdecl = nil;
-  PKCS12_SAFEBAG_get_nid: function (const bag: PPKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl = nil;
-  PKCS12_SAFEBAG_get_bag_nid: function (const bag: PPKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl = nil;
-  PKCS12_SAFEBAG_get1_cert: function (const bag: PPKCS12_SAFEBAG): PX509; cdecl = nil;
-  PKCS12_SAFEBAG_get1_crl: function (const bag: PPKCS12_SAFEBAG): PX509_CRL; cdecl = nil;
-  PKCS12_SAFEBAG_get0_p8inf: function (const bag: PPKCS12_SAFEBAG): PPKCS8_PRIV_KEY_INFO; cdecl = nil;
-  PKCS12_SAFEBAG_get0_pkcs8: function (const bag: PPKCS12_SAFEBAG): PX509_SIG; cdecl = nil;
-  PKCS12_SAFEBAG_create_cert: function (x509: PX509): PPKCS12_SAFEBAG; cdecl = nil;
-  PKCS12_SAFEBAG_create_crl: function (crl: PX509_CRL): PPKCS12_SAFEBAG; cdecl = nil;
-  PKCS12_SAFEBAG_create0_p8inf: function (p8: PPKCS8_PRIV_KEY_INFO): PPKCS12_SAFEBAG; cdecl = nil;
-  PKCS12_SAFEBAG_create0_pkcs8: function (p8: PX509_SIG): PPKCS12_SAFEBAG; cdecl = nil;
-  PKCS12_SAFEBAG_create_pkcs8_encrypt: function (pbe_nid: TOpenSSL_C_INT; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; p8inf: PPKCS8_PRIV_KEY_INFO): PPKCS12_SAFEBAG; cdecl = nil;
-  PKCS12_item_pack_safebag: function (obj: Pointer; const it: PASN1_ITEM; nid1: TOpenSSL_C_INT; nid2: TOpenSSL_C_INT): PPKCS12_SAFEBAG; cdecl = nil;
-  PKCS8_decrypt: function (const p8: PX509_SIG; const pass: PAnsiChar; passlen: TOpenSSL_C_INT): PPKCS8_PRIV_KEY_INFO; cdecl = nil;
-  PKCS12_decrypt_skey: function (const bag: PPKCS12_SAFEBAG; const pass: PAnsiChar; passlen: TOpenSSL_C_INT): PPKCS8_PRIV_KEY_INFO; cdecl = nil;
-  PKCS8_encrypt: function (pbe_nid: TOpenSSL_C_INT; const cipher: PEVP_CIPHER; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; p8: PPKCS8_PRIV_KEY_INFO): PX509_SIG; cdecl = nil;
-  PKCS8_set0_pbe: function (const pass: PAnsiChar; passlen: TOpenSSL_C_INT; p8inf: PPKCS8_PRIV_KEY_INFO; pbe: PX509_ALGOR): PX509_SIG; cdecl = nil;
-  PKCS12_add_localkeyid: function (bag: PPKCS12_SAFEBAG; name: PByte; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  PKCS12_add_friendlyname_asc: function (bag: PPKCS12_SAFEBAG; const name: PAnsiChar; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  PKCS12_add_friendlyname_utf8: function (bag: PPKCS12_SAFEBAG; const name: PAnsiChar; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  PKCS12_add_CSPName_asc: function (bag: PPKCS12_SAFEBAG; const name: PAnsiChar; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  PKCS12_add_friendlyname_uni: function (bag: PPKCS12_SAFEBAG; const name: PByte; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  PKCS8_add_keyusage: function (p8: PPKCS8_PRIV_KEY_INFO; usage: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  PKCS12_get_friendlyname: function (bag: PPKCS12_SAFEBAG): PAnsiChar; cdecl = nil;
-  PKCS12_pbe_crypt: function (const algor: PX509_ALGOR; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; const in_: PByte; inlen: TOpenSSL_C_INT; data: PPByte; datalen: POpenSSL_C_INT; en_de: TOpenSSL_C_INT): PByte; cdecl = nil;
-  PKCS12_item_decrypt_d2i: function (const algor: PX509_ALGOR; const it: PASN1_ITEM; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; const oct: PASN1_OCTET_STRING; zbuf: TOpenSSL_C_INT): Pointer; cdecl = nil;
-  PKCS12_item_i2d_encrypt: function (algor: PX509_ALGOR; const it: PASN1_ITEM; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; obj: Pointer; zbuf: TOpenSSL_C_INT): PASN1_OCTET_STRING; cdecl = nil;
-  PKCS12_init: function (mode: TOpenSSL_C_INT): PPKCS12; cdecl = nil;
-  PKCS12_key_gen_asc: function (const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; id: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; n: TOpenSSL_C_INT; out_: PByte; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl = nil;
-  PKCS12_key_gen_uni: function (pass: PByte; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; id: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; n: TOpenSSL_C_INT; out_: PByte; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl = nil;
-  PKCS12_key_gen_utf8: function (const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; id: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; n: TOpenSSL_C_INT; out_: PByte; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl = nil;
-  PKCS12_PBE_keyivgen: function (ctx: PEVP_CIPHER_CTX; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; param: PASN1_TYPE; const cipher: PEVP_CIPHER; const md_type: PEVP_MD; en_de: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  PKCS12_gen_mac: function (p12: PPKCS12; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; mac: PByte; maclen: POpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = nil;
-  PKCS12_verify_mac: function (p12: PPKCS12; const pass: PAnsiChar; passlen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  PKCS12_set_mac: function (p12: PPKCS12; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl = nil;
-  PKCS12_setup_mac: function (p12: PPKCS12; iter: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl = nil;
-  OPENSSL_asc2uni: function (const asc: PAnsiChar; asclen: TOpenSSL_C_INT; uni: PPByte; unilen: POpenSSL_C_INT): PByte; cdecl = nil;
-  OPENSSL_uni2asc: function (const uni: PByte; unilen: TOpenSSL_C_INT): PAnsiChar; cdecl = nil;
-  OPENSSL_utf82uni: function (const asc: PAnsiChar; asclen: TOpenSSL_C_INT; uni: PPByte; unilen: POpenSSL_C_INT): PByte; cdecl = nil;
-  OPENSSL_uni2utf8: function (const uni: PByte; unilen: TOpenSSL_C_INT): PAnsiChar; cdecl = nil;
-  PKCS12_new: function : PPKCS12; cdecl = nil;
-  PKCS12_free: procedure (a: PPKCS12); cdecl = nil;
-  d2i_PKCS12: function (a: PPPKCS12; const in_: PPByte; len: TOpenSSL_C_LONG): PPKCS12; cdecl = nil;
-  i2d_PKCS12: function (a: PPKCS12; out_: PPByte): TOpenSSL_C_INT; cdecl = nil;
-  PKCS12_it: function : PASN1_ITEM; cdecl = nil;
-  PKCS12_MAC_DATA_new: function : PPKCS12_MAC_DATA; cdecl = nil;
-  PKCS12_MAC_DATA_free: procedure (a: PPKCS12_MAC_DATA); cdecl = nil;
-  d2i_PKCS12_MAC_DATA: function (a: PPPKCS12_MAC_DATA; const in_: PPByte; len: TOpenSSL_C_LONG): PPKCS12_MAC_DATA; cdecl = nil;
-  i2d_PKCS12_MAC_DATA: function (a: PPKCS12_MAC_DATA; out_: PPByte): TOpenSSL_C_INT; cdecl = nil;
-  PKCS12_MAC_DATA_it: function : PASN1_ITEM; cdecl = nil;
-  PKCS12_SAFEBAG_new: function : PPKCS12_SAFEBAG; cdecl = nil;
-  PKCS12_SAFEBAG_free: procedure (a: PPKCS12_SAFEBAG); cdecl = nil;
-  d2i_PKCS12_SAFEBAG: function (a: PPPKCS12_SAFEBAG; const in_: PPByte; len: TOpenSSL_C_LONG): PPKCS12_SAFEBAG; cdecl = nil;
-  i2d_PKCS12_SAFEBAG: function (a: PPKCS12_SAFEBAG; out_: PPByte): TOpenSSL_C_INT; cdecl = nil;
-  PKCS12_SAFEBAG_it: function : PASN1_ITEM; cdecl = nil;
-  PKCS12_BAGS_new: function : PPKCS12_BAGS; cdecl = nil;
-  PKCS12_BAGS_free: procedure (a: PPKCS12_BAGS); cdecl = nil;
-  d2i_PKCS12_BAGS: function (a: PPPKCS12_BAGS; const in_: PPByte; len: TOpenSSL_C_LONG): PPKCS12_BAGS; cdecl = nil;
-  i2d_PKCS12_BAGS: function (a: PPKCS12_BAGS; out_: PPByte): TOpenSSL_C_INT; cdecl = nil;
-  PKCS12_BAGS_it: function : PASN1_ITEM; cdecl = nil;
-  PKCS12_PBE_add: procedure (v: Pointer); cdecl = nil;
-  PKCS12_parse: function (p12: PPKCS12; const pass: PAnsiChar; out pkey: PEVP_PKEY; out cert: PX509; ca: PPStack_Of_X509): TOpenSSL_C_INT; cdecl = nil;
-  PKCS12_create: function (const pass: PAnsiChar; const name: PAnsiChar; pkey: PEVP_PKEY; cert: PX509; ca: PStack_Of_X509; nid_key: TOpenSSL_C_INT; nid_cert: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; mac_iter: TOpenSSL_C_INT; keytype: TOpenSSL_C_INT): PPKCS12; cdecl = nil;
-  i2d_PKCS12_bio: function (bp: PBIO; p12: PPKCS12): TOpenSSL_C_INT; cdecl = nil;
-  d2i_PKCS12_bio: function (bp: PBIO; p12: PPPKCS12): PPKCS12; cdecl = nil;
-  PKCS12_newpass: function (p12: PPKCS12; const oldpass: PAnsiChar; const newpass: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
+  PKCS12_mac_present: function (const p12: PPKCS12): TOpenSSL_C_INT; cdecl = Load_PKCS12_mac_present;
+  PKCS12_get0_mac: procedure (const pmac: PPASN1_OCTET_STRING; const pmacalg: PPX509_ALGOR; const psalt: PPASN1_OCTET_STRING; const piter: PPASN1_INTEGER; const p12: PPKCS12); cdecl = Load_PKCS12_get0_mac;
+  PKCS12_SAFEBAG_get0_attr: function (const bag: PPKCS12_SAFEBAG; attr_nid: TOpenSSL_C_INT): PASN1_TYPE; cdecl = Load_PKCS12_SAFEBAG_get0_attr;
+  PKCS12_SAFEBAG_get0_type: function (const bag: PPKCS12_SAFEBAG): PASN1_OBJECT; cdecl = Load_PKCS12_SAFEBAG_get0_type;
+  PKCS12_SAFEBAG_get_nid: function (const bag: PPKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl = Load_PKCS12_SAFEBAG_get_nid;
+  PKCS12_SAFEBAG_get_bag_nid: function (const bag: PPKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl = Load_PKCS12_SAFEBAG_get_bag_nid;
+  PKCS12_SAFEBAG_get1_cert: function (const bag: PPKCS12_SAFEBAG): PX509; cdecl = Load_PKCS12_SAFEBAG_get1_cert;
+  PKCS12_SAFEBAG_get1_crl: function (const bag: PPKCS12_SAFEBAG): PX509_CRL; cdecl = Load_PKCS12_SAFEBAG_get1_crl;
+  PKCS12_SAFEBAG_get0_p8inf: function (const bag: PPKCS12_SAFEBAG): PPKCS8_PRIV_KEY_INFO; cdecl = Load_PKCS12_SAFEBAG_get0_p8inf;
+  PKCS12_SAFEBAG_get0_pkcs8: function (const bag: PPKCS12_SAFEBAG): PX509_SIG; cdecl = Load_PKCS12_SAFEBAG_get0_pkcs8;
+  PKCS12_SAFEBAG_create_cert: function (x509: PX509): PPKCS12_SAFEBAG; cdecl = Load_PKCS12_SAFEBAG_create_cert;
+  PKCS12_SAFEBAG_create_crl: function (crl: PX509_CRL): PPKCS12_SAFEBAG; cdecl = Load_PKCS12_SAFEBAG_create_crl;
+  PKCS12_SAFEBAG_create0_p8inf: function (p8: PPKCS8_PRIV_KEY_INFO): PPKCS12_SAFEBAG; cdecl = Load_PKCS12_SAFEBAG_create0_p8inf;
+  PKCS12_SAFEBAG_create0_pkcs8: function (p8: PX509_SIG): PPKCS12_SAFEBAG; cdecl = Load_PKCS12_SAFEBAG_create0_pkcs8;
+  PKCS12_SAFEBAG_create_pkcs8_encrypt: function (pbe_nid: TOpenSSL_C_INT; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; p8inf: PPKCS8_PRIV_KEY_INFO): PPKCS12_SAFEBAG; cdecl = Load_PKCS12_SAFEBAG_create_pkcs8_encrypt;
+  PKCS12_item_pack_safebag: function (obj: Pointer; const it: PASN1_ITEM; nid1: TOpenSSL_C_INT; nid2: TOpenSSL_C_INT): PPKCS12_SAFEBAG; cdecl = Load_PKCS12_item_pack_safebag;
+  PKCS8_decrypt: function (const p8: PX509_SIG; const pass: PAnsiChar; passlen: TOpenSSL_C_INT): PPKCS8_PRIV_KEY_INFO; cdecl = Load_PKCS8_decrypt;
+  PKCS12_decrypt_skey: function (const bag: PPKCS12_SAFEBAG; const pass: PAnsiChar; passlen: TOpenSSL_C_INT): PPKCS8_PRIV_KEY_INFO; cdecl = Load_PKCS12_decrypt_skey;
+  PKCS8_encrypt: function (pbe_nid: TOpenSSL_C_INT; const cipher: PEVP_CIPHER; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; p8: PPKCS8_PRIV_KEY_INFO): PX509_SIG; cdecl = Load_PKCS8_encrypt;
+  PKCS8_set0_pbe: function (const pass: PAnsiChar; passlen: TOpenSSL_C_INT; p8inf: PPKCS8_PRIV_KEY_INFO; pbe: PX509_ALGOR): PX509_SIG; cdecl = Load_PKCS8_set0_pbe;
+  PKCS12_add_localkeyid: function (bag: PPKCS12_SAFEBAG; name: PByte; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_PKCS12_add_localkeyid;
+  PKCS12_add_friendlyname_asc: function (bag: PPKCS12_SAFEBAG; const name: PAnsiChar; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_PKCS12_add_friendlyname_asc;
+  PKCS12_add_friendlyname_utf8: function (bag: PPKCS12_SAFEBAG; const name: PAnsiChar; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_PKCS12_add_friendlyname_utf8;
+  PKCS12_add_CSPName_asc: function (bag: PPKCS12_SAFEBAG; const name: PAnsiChar; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_PKCS12_add_CSPName_asc;
+  PKCS12_add_friendlyname_uni: function (bag: PPKCS12_SAFEBAG; const name: PByte; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_PKCS12_add_friendlyname_uni;
+  PKCS8_add_keyusage: function (p8: PPKCS8_PRIV_KEY_INFO; usage: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_PKCS8_add_keyusage;
+  PKCS12_get_friendlyname: function (bag: PPKCS12_SAFEBAG): PAnsiChar; cdecl = Load_PKCS12_get_friendlyname;
+  PKCS12_pbe_crypt: function (const algor: PX509_ALGOR; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; const in_: PByte; inlen: TOpenSSL_C_INT; data: PPByte; datalen: POpenSSL_C_INT; en_de: TOpenSSL_C_INT): PByte; cdecl = Load_PKCS12_pbe_crypt;
+  PKCS12_item_decrypt_d2i: function (const algor: PX509_ALGOR; const it: PASN1_ITEM; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; const oct: PASN1_OCTET_STRING; zbuf: TOpenSSL_C_INT): Pointer; cdecl = Load_PKCS12_item_decrypt_d2i;
+  PKCS12_item_i2d_encrypt: function (algor: PX509_ALGOR; const it: PASN1_ITEM; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; obj: Pointer; zbuf: TOpenSSL_C_INT): PASN1_OCTET_STRING; cdecl = Load_PKCS12_item_i2d_encrypt;
+  PKCS12_init: function (mode: TOpenSSL_C_INT): PPKCS12; cdecl = Load_PKCS12_init;
+  PKCS12_key_gen_asc: function (const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; id: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; n: TOpenSSL_C_INT; out_: PByte; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl = Load_PKCS12_key_gen_asc;
+  PKCS12_key_gen_uni: function (pass: PByte; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; id: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; n: TOpenSSL_C_INT; out_: PByte; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl = Load_PKCS12_key_gen_uni;
+  PKCS12_key_gen_utf8: function (const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; id: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; n: TOpenSSL_C_INT; out_: PByte; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl = Load_PKCS12_key_gen_utf8;
+  PKCS12_PBE_keyivgen: function (ctx: PEVP_CIPHER_CTX; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; param: PASN1_TYPE; const cipher: PEVP_CIPHER; const md_type: PEVP_MD; en_de: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_PKCS12_PBE_keyivgen;
+  PKCS12_gen_mac: function (p12: PPKCS12; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; mac: PByte; maclen: POpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = Load_PKCS12_gen_mac;
+  PKCS12_verify_mac: function (p12: PPKCS12; const pass: PAnsiChar; passlen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_PKCS12_verify_mac;
+  PKCS12_set_mac: function (p12: PPKCS12; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl = Load_PKCS12_set_mac;
+  PKCS12_setup_mac: function (p12: PPKCS12; iter: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl = Load_PKCS12_setup_mac;
+  OPENSSL_asc2uni: function (const asc: PAnsiChar; asclen: TOpenSSL_C_INT; uni: PPByte; unilen: POpenSSL_C_INT): PByte; cdecl = Load_OPENSSL_asc2uni;
+  OPENSSL_uni2asc: function (const uni: PByte; unilen: TOpenSSL_C_INT): PAnsiChar; cdecl = Load_OPENSSL_uni2asc;
+  OPENSSL_utf82uni: function (const asc: PAnsiChar; asclen: TOpenSSL_C_INT; uni: PPByte; unilen: POpenSSL_C_INT): PByte; cdecl = Load_OPENSSL_utf82uni;
+  OPENSSL_uni2utf8: function (const uni: PByte; unilen: TOpenSSL_C_INT): PAnsiChar; cdecl = Load_OPENSSL_uni2utf8;
+  PKCS12_new: function : PPKCS12; cdecl = Load_PKCS12_new;
+  PKCS12_free: procedure (a: PPKCS12); cdecl = Load_PKCS12_free;
+  d2i_PKCS12: function (a: PPPKCS12; const in_: PPByte; len: TOpenSSL_C_LONG): PPKCS12; cdecl = Load_d2i_PKCS12;
+  i2d_PKCS12: function (a: PPKCS12; out_: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_PKCS12;
+  PKCS12_it: function : PASN1_ITEM; cdecl = Load_PKCS12_it;
+  PKCS12_MAC_DATA_new: function : PPKCS12_MAC_DATA; cdecl = Load_PKCS12_MAC_DATA_new;
+  PKCS12_MAC_DATA_free: procedure (a: PPKCS12_MAC_DATA); cdecl = Load_PKCS12_MAC_DATA_free;
+  d2i_PKCS12_MAC_DATA: function (a: PPPKCS12_MAC_DATA; const in_: PPByte; len: TOpenSSL_C_LONG): PPKCS12_MAC_DATA; cdecl = Load_d2i_PKCS12_MAC_DATA;
+  i2d_PKCS12_MAC_DATA: function (a: PPKCS12_MAC_DATA; out_: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_PKCS12_MAC_DATA;
+  PKCS12_MAC_DATA_it: function : PASN1_ITEM; cdecl = Load_PKCS12_MAC_DATA_it;
+  PKCS12_SAFEBAG_new: function : PPKCS12_SAFEBAG; cdecl = Load_PKCS12_SAFEBAG_new;
+  PKCS12_SAFEBAG_free: procedure (a: PPKCS12_SAFEBAG); cdecl = Load_PKCS12_SAFEBAG_free;
+  d2i_PKCS12_SAFEBAG: function (a: PPPKCS12_SAFEBAG; const in_: PPByte; len: TOpenSSL_C_LONG): PPKCS12_SAFEBAG; cdecl = Load_d2i_PKCS12_SAFEBAG;
+  i2d_PKCS12_SAFEBAG: function (a: PPKCS12_SAFEBAG; out_: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_PKCS12_SAFEBAG;
+  PKCS12_SAFEBAG_it: function : PASN1_ITEM; cdecl = Load_PKCS12_SAFEBAG_it;
+  PKCS12_BAGS_new: function : PPKCS12_BAGS; cdecl = Load_PKCS12_BAGS_new;
+  PKCS12_BAGS_free: procedure (a: PPKCS12_BAGS); cdecl = Load_PKCS12_BAGS_free;
+  d2i_PKCS12_BAGS: function (a: PPPKCS12_BAGS; const in_: PPByte; len: TOpenSSL_C_LONG): PPKCS12_BAGS; cdecl = Load_d2i_PKCS12_BAGS;
+  i2d_PKCS12_BAGS: function (a: PPKCS12_BAGS; out_: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_PKCS12_BAGS;
+  PKCS12_BAGS_it: function : PASN1_ITEM; cdecl = Load_PKCS12_BAGS_it;
+  PKCS12_PBE_add: procedure (v: Pointer); cdecl = Load_PKCS12_PBE_add;
+  PKCS12_parse: function (p12: PPKCS12; const pass: PAnsiChar; out pkey: PEVP_PKEY; out cert: PX509; ca: PPStack_Of_X509): TOpenSSL_C_INT; cdecl = Load_PKCS12_parse;
+  PKCS12_create: function (const pass: PAnsiChar; const name: PAnsiChar; pkey: PEVP_PKEY; cert: PX509; ca: PStack_Of_X509; nid_key: TOpenSSL_C_INT; nid_cert: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; mac_iter: TOpenSSL_C_INT; keytype: TOpenSSL_C_INT): PPKCS12; cdecl = Load_PKCS12_create;
+  i2d_PKCS12_bio: function (bp: PBIO; p12: PPKCS12): TOpenSSL_C_INT; cdecl = Load_i2d_PKCS12_bio;
+  d2i_PKCS12_bio: function (bp: PBIO; p12: PPPKCS12): PPKCS12; cdecl = Load_d2i_PKCS12_bio;
+  PKCS12_newpass: function (p12: PPKCS12; const oldpass: PAnsiChar; const newpass: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_PKCS12_newpass;
 {$ENDIF}
 const
   PKCS12_mac_present_introduced = ((((((byte(1) shl 8) or byte(1)) shl 8) or byte(0)) shl 8) or byte(0)) shl 4; {introduced 1.1.0}
@@ -343,920 +416,636 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$WARN  NO_RETVAL OFF}
-function ERROR_PKCS12_mac_present(const p12: PPKCS12): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_mac_present');
-end;
-
-procedure ERROR_PKCS12_get0_mac(const pmac: PPASN1_OCTET_STRING; const pmacalg: PPX509_ALGOR; const psalt: PPASN1_OCTET_STRING; const piter: PPASN1_INTEGER; const p12: PPKCS12); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_get0_mac');
-end;
-
-function ERROR_PKCS12_SAFEBAG_get0_attr(const bag: PPKCS12_SAFEBAG; attr_nid: TOpenSSL_C_INT): PASN1_TYPE; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_get0_attr');
-end;
-
-function ERROR_PKCS12_SAFEBAG_get0_type(const bag: PPKCS12_SAFEBAG): PASN1_OBJECT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_get0_type');
-end;
-
-function ERROR_PKCS12_SAFEBAG_get_nid(const bag: PPKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_get_nid');
-end;
-
-function ERROR_PKCS12_SAFEBAG_get_bag_nid(const bag: PPKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_get_bag_nid');
-end;
-
-function ERROR_PKCS12_SAFEBAG_get1_cert(const bag: PPKCS12_SAFEBAG): PX509; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_get1_cert');
-end;
-
-function ERROR_PKCS12_SAFEBAG_get1_crl(const bag: PPKCS12_SAFEBAG): PX509_CRL; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_get1_crl');
-end;
-
-function ERROR_PKCS12_SAFEBAG_get0_p8inf(const bag: PPKCS12_SAFEBAG): PPKCS8_PRIV_KEY_INFO; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_get0_p8inf');
-end;
-
-function ERROR_PKCS12_SAFEBAG_get0_pkcs8(const bag: PPKCS12_SAFEBAG): PX509_SIG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_get0_pkcs8');
-end;
-
-function ERROR_PKCS12_SAFEBAG_create_cert(x509: PX509): PPKCS12_SAFEBAG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_create_cert');
-end;
-
-function ERROR_PKCS12_SAFEBAG_create_crl(crl: PX509_CRL): PPKCS12_SAFEBAG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_create_crl');
-end;
-
-function ERROR_PKCS12_SAFEBAG_create0_p8inf(p8: PPKCS8_PRIV_KEY_INFO): PPKCS12_SAFEBAG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_create0_p8inf');
-end;
-
-function ERROR_PKCS12_SAFEBAG_create0_pkcs8(p8: PX509_SIG): PPKCS12_SAFEBAG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_create0_pkcs8');
-end;
-
-function ERROR_PKCS12_SAFEBAG_create_pkcs8_encrypt(pbe_nid: TOpenSSL_C_INT; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; p8inf: PPKCS8_PRIV_KEY_INFO): PPKCS12_SAFEBAG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_create_pkcs8_encrypt');
-end;
-
-function ERROR_PKCS12_item_pack_safebag(obj: Pointer; const it: PASN1_ITEM; nid1: TOpenSSL_C_INT; nid2: TOpenSSL_C_INT): PPKCS12_SAFEBAG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_item_pack_safebag');
-end;
-
-function ERROR_PKCS8_decrypt(const p8: PX509_SIG; const pass: PAnsiChar; passlen: TOpenSSL_C_INT): PPKCS8_PRIV_KEY_INFO; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS8_decrypt');
-end;
-
-function ERROR_PKCS12_decrypt_skey(const bag: PPKCS12_SAFEBAG; const pass: PAnsiChar; passlen: TOpenSSL_C_INT): PPKCS8_PRIV_KEY_INFO; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_decrypt_skey');
-end;
-
-function ERROR_PKCS8_encrypt(pbe_nid: TOpenSSL_C_INT; const cipher: PEVP_CIPHER; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; p8: PPKCS8_PRIV_KEY_INFO): PX509_SIG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS8_encrypt');
-end;
-
-function ERROR_PKCS8_set0_pbe(const pass: PAnsiChar; passlen: TOpenSSL_C_INT; p8inf: PPKCS8_PRIV_KEY_INFO; pbe: PX509_ALGOR): PX509_SIG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS8_set0_pbe');
-end;
-
-function ERROR_PKCS12_add_localkeyid(bag: PPKCS12_SAFEBAG; name: PByte; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_add_localkeyid');
-end;
-
-function ERROR_PKCS12_add_friendlyname_asc(bag: PPKCS12_SAFEBAG; const name: PAnsiChar; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_add_friendlyname_asc');
-end;
-
-function ERROR_PKCS12_add_friendlyname_utf8(bag: PPKCS12_SAFEBAG; const name: PAnsiChar; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_add_friendlyname_utf8');
-end;
-
-function ERROR_PKCS12_add_CSPName_asc(bag: PPKCS12_SAFEBAG; const name: PAnsiChar; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_add_CSPName_asc');
-end;
-
-function ERROR_PKCS12_add_friendlyname_uni(bag: PPKCS12_SAFEBAG; const name: PByte; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_add_friendlyname_uni');
-end;
-
-function ERROR_PKCS8_add_keyusage(p8: PPKCS8_PRIV_KEY_INFO; usage: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS8_add_keyusage');
-end;
-
-function ERROR_PKCS12_get_friendlyname(bag: PPKCS12_SAFEBAG): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_get_friendlyname');
-end;
-
-function ERROR_PKCS12_pbe_crypt(const algor: PX509_ALGOR; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; const in_: PByte; inlen: TOpenSSL_C_INT; data: PPByte; datalen: POpenSSL_C_INT; en_de: TOpenSSL_C_INT): PByte; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_pbe_crypt');
-end;
-
-function ERROR_PKCS12_item_decrypt_d2i(const algor: PX509_ALGOR; const it: PASN1_ITEM; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; const oct: PASN1_OCTET_STRING; zbuf: TOpenSSL_C_INT): Pointer; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_item_decrypt_d2i');
-end;
-
-function ERROR_PKCS12_item_i2d_encrypt(algor: PX509_ALGOR; const it: PASN1_ITEM; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; obj: Pointer; zbuf: TOpenSSL_C_INT): PASN1_OCTET_STRING; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_item_i2d_encrypt');
-end;
-
-function ERROR_PKCS12_init(mode: TOpenSSL_C_INT): PPKCS12; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_init');
-end;
-
-function ERROR_PKCS12_key_gen_asc(const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; id: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; n: TOpenSSL_C_INT; out_: PByte; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_key_gen_asc');
-end;
-
-function ERROR_PKCS12_key_gen_uni(pass: PByte; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; id: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; n: TOpenSSL_C_INT; out_: PByte; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_key_gen_uni');
-end;
-
-function ERROR_PKCS12_key_gen_utf8(const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; id: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; n: TOpenSSL_C_INT; out_: PByte; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_key_gen_utf8');
-end;
-
-function ERROR_PKCS12_PBE_keyivgen(ctx: PEVP_CIPHER_CTX; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; param: PASN1_TYPE; const cipher: PEVP_CIPHER; const md_type: PEVP_MD; en_de: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_PBE_keyivgen');
-end;
-
-function ERROR_PKCS12_gen_mac(p12: PPKCS12; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; mac: PByte; maclen: POpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_gen_mac');
-end;
-
-function ERROR_PKCS12_verify_mac(p12: PPKCS12; const pass: PAnsiChar; passlen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_verify_mac');
-end;
-
-function ERROR_PKCS12_set_mac(p12: PPKCS12; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_set_mac');
-end;
-
-function ERROR_PKCS12_setup_mac(p12: PPKCS12; iter: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_setup_mac');
-end;
-
-function ERROR_OPENSSL_asc2uni(const asc: PAnsiChar; asclen: TOpenSSL_C_INT; uni: PPByte; unilen: POpenSSL_C_INT): PByte; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_asc2uni');
-end;
-
-function ERROR_OPENSSL_uni2asc(const uni: PByte; unilen: TOpenSSL_C_INT): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_uni2asc');
-end;
-
-function ERROR_OPENSSL_utf82uni(const asc: PAnsiChar; asclen: TOpenSSL_C_INT; uni: PPByte; unilen: POpenSSL_C_INT): PByte; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_utf82uni');
-end;
-
-function ERROR_OPENSSL_uni2utf8(const uni: PByte; unilen: TOpenSSL_C_INT): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_uni2utf8');
-end;
-
-function ERROR_PKCS12_new: PPKCS12; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_new');
-end;
-
-procedure ERROR_PKCS12_free(a: PPKCS12); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_free');
-end;
-
-function ERROR_d2i_PKCS12(a: PPPKCS12; const in_: PPByte; len: TOpenSSL_C_LONG): PPKCS12; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_PKCS12');
-end;
-
-function ERROR_i2d_PKCS12(a: PPKCS12; out_: PPByte): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_PKCS12');
-end;
-
-function ERROR_PKCS12_it: PASN1_ITEM; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_it');
-end;
-
-function ERROR_PKCS12_MAC_DATA_new: PPKCS12_MAC_DATA; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_MAC_DATA_new');
-end;
-
-procedure ERROR_PKCS12_MAC_DATA_free(a: PPKCS12_MAC_DATA); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_MAC_DATA_free');
-end;
-
-function ERROR_d2i_PKCS12_MAC_DATA(a: PPPKCS12_MAC_DATA; const in_: PPByte; len: TOpenSSL_C_LONG): PPKCS12_MAC_DATA; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_PKCS12_MAC_DATA');
-end;
-
-function ERROR_i2d_PKCS12_MAC_DATA(a: PPKCS12_MAC_DATA; out_: PPByte): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_PKCS12_MAC_DATA');
-end;
-
-function ERROR_PKCS12_MAC_DATA_it: PASN1_ITEM; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_MAC_DATA_it');
-end;
-
-function ERROR_PKCS12_SAFEBAG_new: PPKCS12_SAFEBAG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_new');
-end;
-
-procedure ERROR_PKCS12_SAFEBAG_free(a: PPKCS12_SAFEBAG); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_free');
-end;
-
-function ERROR_d2i_PKCS12_SAFEBAG(a: PPPKCS12_SAFEBAG; const in_: PPByte; len: TOpenSSL_C_LONG): PPKCS12_SAFEBAG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_PKCS12_SAFEBAG');
-end;
-
-function ERROR_i2d_PKCS12_SAFEBAG(a: PPKCS12_SAFEBAG; out_: PPByte): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_PKCS12_SAFEBAG');
-end;
-
-function ERROR_PKCS12_SAFEBAG_it: PASN1_ITEM; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_it');
-end;
-
-function ERROR_PKCS12_BAGS_new: PPKCS12_BAGS; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_BAGS_new');
-end;
-
-procedure ERROR_PKCS12_BAGS_free(a: PPKCS12_BAGS); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_BAGS_free');
-end;
-
-function ERROR_d2i_PKCS12_BAGS(a: PPPKCS12_BAGS; const in_: PPByte; len: TOpenSSL_C_LONG): PPKCS12_BAGS; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_PKCS12_BAGS');
-end;
-
-function ERROR_i2d_PKCS12_BAGS(a: PPKCS12_BAGS; out_: PPByte): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_PKCS12_BAGS');
-end;
-
-function ERROR_PKCS12_BAGS_it: PASN1_ITEM; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_BAGS_it');
-end;
-
-procedure ERROR_PKCS12_PBE_add(v: Pointer); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_PBE_add');
-end;
-
-function ERROR_PKCS12_parse(p12: PPKCS12; const pass: PAnsiChar; out pkey: PEVP_PKEY; out cert: PX509; ca: PPStack_Of_X509): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_parse');
-end;
-
-function ERROR_PKCS12_create(const pass: PAnsiChar; const name: PAnsiChar; pkey: PEVP_PKEY; cert: PX509; ca: PStack_Of_X509; nid_key: TOpenSSL_C_INT; nid_cert: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; mac_iter: TOpenSSL_C_INT; keytype: TOpenSSL_C_INT): PPKCS12; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_create');
-end;
-
-function ERROR_i2d_PKCS12_bio(bp: PBIO; p12: PPKCS12): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_PKCS12_bio');
-end;
-
-function ERROR_d2i_PKCS12_bio(bp: PBIO; p12: PPPKCS12): PPKCS12; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_PKCS12_bio');
-end;
-
-function ERROR_PKCS12_newpass(p12: PPKCS12; const oldpass: PAnsiChar; const newpass: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_newpass');
-end;
-
-{$WARN  NO_RETVAL ON}
-procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
-var FuncLoadError: boolean;
+function Load_PKCS12_mac_present(const p12: PPKCS12): TOpenSSL_C_INT; cdecl;
 begin
   PKCS12_mac_present := LoadLibCryptoFunction('PKCS12_mac_present');
-  FuncLoadError := not assigned(PKCS12_mac_present);
-  if FuncLoadError then
-  begin
-    PKCS12_mac_present :=  @ERROR_PKCS12_mac_present;
-  end;
-
-  PKCS12_get0_mac := LoadLibCryptoFunction('PKCS12_get0_mac');
-  FuncLoadError := not assigned(PKCS12_get0_mac);
-  if FuncLoadError then
-  begin
-    PKCS12_get0_mac :=  @ERROR_PKCS12_get0_mac;
-  end;
-
-  PKCS12_SAFEBAG_get0_attr := LoadLibCryptoFunction('PKCS12_SAFEBAG_get0_attr');
-  FuncLoadError := not assigned(PKCS12_SAFEBAG_get0_attr);
-  if FuncLoadError then
-  begin
-    PKCS12_SAFEBAG_get0_attr :=  @ERROR_PKCS12_SAFEBAG_get0_attr;
-  end;
-
-  PKCS12_SAFEBAG_get0_type := LoadLibCryptoFunction('PKCS12_SAFEBAG_get0_type');
-  FuncLoadError := not assigned(PKCS12_SAFEBAG_get0_type);
-  if FuncLoadError then
-  begin
-    PKCS12_SAFEBAG_get0_type :=  @ERROR_PKCS12_SAFEBAG_get0_type;
-  end;
-
-  PKCS12_SAFEBAG_get_nid := LoadLibCryptoFunction('PKCS12_SAFEBAG_get_nid');
-  FuncLoadError := not assigned(PKCS12_SAFEBAG_get_nid);
-  if FuncLoadError then
-  begin
-    PKCS12_SAFEBAG_get_nid :=  @ERROR_PKCS12_SAFEBAG_get_nid;
-  end;
-
-  PKCS12_SAFEBAG_get_bag_nid := LoadLibCryptoFunction('PKCS12_SAFEBAG_get_bag_nid');
-  FuncLoadError := not assigned(PKCS12_SAFEBAG_get_bag_nid);
-  if FuncLoadError then
-  begin
-    PKCS12_SAFEBAG_get_bag_nid :=  @ERROR_PKCS12_SAFEBAG_get_bag_nid;
-  end;
-
-  PKCS12_SAFEBAG_get1_cert := LoadLibCryptoFunction('PKCS12_SAFEBAG_get1_cert');
-  FuncLoadError := not assigned(PKCS12_SAFEBAG_get1_cert);
-  if FuncLoadError then
-  begin
-    PKCS12_SAFEBAG_get1_cert :=  @ERROR_PKCS12_SAFEBAG_get1_cert;
-  end;
-
-  PKCS12_SAFEBAG_get1_crl := LoadLibCryptoFunction('PKCS12_SAFEBAG_get1_crl');
-  FuncLoadError := not assigned(PKCS12_SAFEBAG_get1_crl);
-  if FuncLoadError then
-  begin
-    PKCS12_SAFEBAG_get1_crl :=  @ERROR_PKCS12_SAFEBAG_get1_crl;
-  end;
-
-  PKCS12_SAFEBAG_get0_p8inf := LoadLibCryptoFunction('PKCS12_SAFEBAG_get0_p8inf');
-  FuncLoadError := not assigned(PKCS12_SAFEBAG_get0_p8inf);
-  if FuncLoadError then
-  begin
-    PKCS12_SAFEBAG_get0_p8inf :=  @ERROR_PKCS12_SAFEBAG_get0_p8inf;
-  end;
-
-  PKCS12_SAFEBAG_get0_pkcs8 := LoadLibCryptoFunction('PKCS12_SAFEBAG_get0_pkcs8');
-  FuncLoadError := not assigned(PKCS12_SAFEBAG_get0_pkcs8);
-  if FuncLoadError then
-  begin
-    PKCS12_SAFEBAG_get0_pkcs8 :=  @ERROR_PKCS12_SAFEBAG_get0_pkcs8;
-  end;
-
-  PKCS12_SAFEBAG_create_cert := LoadLibCryptoFunction('PKCS12_SAFEBAG_create_cert');
-  FuncLoadError := not assigned(PKCS12_SAFEBAG_create_cert);
-  if FuncLoadError then
-  begin
-    PKCS12_SAFEBAG_create_cert :=  @ERROR_PKCS12_SAFEBAG_create_cert;
-  end;
-
-  PKCS12_SAFEBAG_create_crl := LoadLibCryptoFunction('PKCS12_SAFEBAG_create_crl');
-  FuncLoadError := not assigned(PKCS12_SAFEBAG_create_crl);
-  if FuncLoadError then
-  begin
-    PKCS12_SAFEBAG_create_crl :=  @ERROR_PKCS12_SAFEBAG_create_crl;
-  end;
-
-  PKCS12_SAFEBAG_create0_p8inf := LoadLibCryptoFunction('PKCS12_SAFEBAG_create0_p8inf');
-  FuncLoadError := not assigned(PKCS12_SAFEBAG_create0_p8inf);
-  if FuncLoadError then
-  begin
-    PKCS12_SAFEBAG_create0_p8inf :=  @ERROR_PKCS12_SAFEBAG_create0_p8inf;
-  end;
-
-  PKCS12_SAFEBAG_create0_pkcs8 := LoadLibCryptoFunction('PKCS12_SAFEBAG_create0_pkcs8');
-  FuncLoadError := not assigned(PKCS12_SAFEBAG_create0_pkcs8);
-  if FuncLoadError then
-  begin
-    PKCS12_SAFEBAG_create0_pkcs8 :=  @ERROR_PKCS12_SAFEBAG_create0_pkcs8;
-  end;
-
-  PKCS12_SAFEBAG_create_pkcs8_encrypt := LoadLibCryptoFunction('PKCS12_SAFEBAG_create_pkcs8_encrypt');
-  FuncLoadError := not assigned(PKCS12_SAFEBAG_create_pkcs8_encrypt);
-  if FuncLoadError then
-  begin
-    PKCS12_SAFEBAG_create_pkcs8_encrypt :=  @ERROR_PKCS12_SAFEBAG_create_pkcs8_encrypt;
-  end;
-
-  PKCS12_item_pack_safebag := LoadLibCryptoFunction('PKCS12_item_pack_safebag');
-  FuncLoadError := not assigned(PKCS12_item_pack_safebag);
-  if FuncLoadError then
-  begin
-    PKCS12_item_pack_safebag :=  @ERROR_PKCS12_item_pack_safebag;
-  end;
-
-  PKCS8_decrypt := LoadLibCryptoFunction('PKCS8_decrypt');
-  FuncLoadError := not assigned(PKCS8_decrypt);
-  if FuncLoadError then
-  begin
-    PKCS8_decrypt :=  @ERROR_PKCS8_decrypt;
-  end;
-
-  PKCS12_decrypt_skey := LoadLibCryptoFunction('PKCS12_decrypt_skey');
-  FuncLoadError := not assigned(PKCS12_decrypt_skey);
-  if FuncLoadError then
-  begin
-    PKCS12_decrypt_skey :=  @ERROR_PKCS12_decrypt_skey;
-  end;
-
-  PKCS8_encrypt := LoadLibCryptoFunction('PKCS8_encrypt');
-  FuncLoadError := not assigned(PKCS8_encrypt);
-  if FuncLoadError then
-  begin
-    PKCS8_encrypt :=  @ERROR_PKCS8_encrypt;
-  end;
-
-  PKCS8_set0_pbe := LoadLibCryptoFunction('PKCS8_set0_pbe');
-  FuncLoadError := not assigned(PKCS8_set0_pbe);
-  if FuncLoadError then
-  begin
-    PKCS8_set0_pbe :=  @ERROR_PKCS8_set0_pbe;
-  end;
-
-  PKCS12_add_localkeyid := LoadLibCryptoFunction('PKCS12_add_localkeyid');
-  FuncLoadError := not assigned(PKCS12_add_localkeyid);
-  if FuncLoadError then
-  begin
-    PKCS12_add_localkeyid :=  @ERROR_PKCS12_add_localkeyid;
-  end;
-
-  PKCS12_add_friendlyname_asc := LoadLibCryptoFunction('PKCS12_add_friendlyname_asc');
-  FuncLoadError := not assigned(PKCS12_add_friendlyname_asc);
-  if FuncLoadError then
-  begin
-    PKCS12_add_friendlyname_asc :=  @ERROR_PKCS12_add_friendlyname_asc;
-  end;
-
-  PKCS12_add_friendlyname_utf8 := LoadLibCryptoFunction('PKCS12_add_friendlyname_utf8');
-  FuncLoadError := not assigned(PKCS12_add_friendlyname_utf8);
-  if FuncLoadError then
-  begin
-    PKCS12_add_friendlyname_utf8 :=  @ERROR_PKCS12_add_friendlyname_utf8;
-  end;
-
-  PKCS12_add_CSPName_asc := LoadLibCryptoFunction('PKCS12_add_CSPName_asc');
-  FuncLoadError := not assigned(PKCS12_add_CSPName_asc);
-  if FuncLoadError then
-  begin
-    PKCS12_add_CSPName_asc :=  @ERROR_PKCS12_add_CSPName_asc;
-  end;
-
-  PKCS12_add_friendlyname_uni := LoadLibCryptoFunction('PKCS12_add_friendlyname_uni');
-  FuncLoadError := not assigned(PKCS12_add_friendlyname_uni);
-  if FuncLoadError then
-  begin
-    PKCS12_add_friendlyname_uni :=  @ERROR_PKCS12_add_friendlyname_uni;
-  end;
-
-  PKCS8_add_keyusage := LoadLibCryptoFunction('PKCS8_add_keyusage');
-  FuncLoadError := not assigned(PKCS8_add_keyusage);
-  if FuncLoadError then
-  begin
-    PKCS8_add_keyusage :=  @ERROR_PKCS8_add_keyusage;
-  end;
-
-  PKCS12_get_friendlyname := LoadLibCryptoFunction('PKCS12_get_friendlyname');
-  FuncLoadError := not assigned(PKCS12_get_friendlyname);
-  if FuncLoadError then
-  begin
-    PKCS12_get_friendlyname :=  @ERROR_PKCS12_get_friendlyname;
-  end;
-
-  PKCS12_pbe_crypt := LoadLibCryptoFunction('PKCS12_pbe_crypt');
-  FuncLoadError := not assigned(PKCS12_pbe_crypt);
-  if FuncLoadError then
-  begin
-    PKCS12_pbe_crypt :=  @ERROR_PKCS12_pbe_crypt;
-  end;
-
-  PKCS12_item_decrypt_d2i := LoadLibCryptoFunction('PKCS12_item_decrypt_d2i');
-  FuncLoadError := not assigned(PKCS12_item_decrypt_d2i);
-  if FuncLoadError then
-  begin
-    PKCS12_item_decrypt_d2i :=  @ERROR_PKCS12_item_decrypt_d2i;
-  end;
-
-  PKCS12_item_i2d_encrypt := LoadLibCryptoFunction('PKCS12_item_i2d_encrypt');
-  FuncLoadError := not assigned(PKCS12_item_i2d_encrypt);
-  if FuncLoadError then
-  begin
-    PKCS12_item_i2d_encrypt :=  @ERROR_PKCS12_item_i2d_encrypt;
-  end;
-
-  PKCS12_init := LoadLibCryptoFunction('PKCS12_init');
-  FuncLoadError := not assigned(PKCS12_init);
-  if FuncLoadError then
-  begin
-    PKCS12_init :=  @ERROR_PKCS12_init;
-  end;
-
-  PKCS12_key_gen_asc := LoadLibCryptoFunction('PKCS12_key_gen_asc');
-  FuncLoadError := not assigned(PKCS12_key_gen_asc);
-  if FuncLoadError then
-  begin
-    PKCS12_key_gen_asc :=  @ERROR_PKCS12_key_gen_asc;
-  end;
-
-  PKCS12_key_gen_uni := LoadLibCryptoFunction('PKCS12_key_gen_uni');
-  FuncLoadError := not assigned(PKCS12_key_gen_uni);
-  if FuncLoadError then
-  begin
-    PKCS12_key_gen_uni :=  @ERROR_PKCS12_key_gen_uni;
-  end;
-
-  PKCS12_key_gen_utf8 := LoadLibCryptoFunction('PKCS12_key_gen_utf8');
-  FuncLoadError := not assigned(PKCS12_key_gen_utf8);
-  if FuncLoadError then
-  begin
-    PKCS12_key_gen_utf8 :=  @ERROR_PKCS12_key_gen_utf8;
-  end;
-
-  PKCS12_PBE_keyivgen := LoadLibCryptoFunction('PKCS12_PBE_keyivgen');
-  FuncLoadError := not assigned(PKCS12_PBE_keyivgen);
-  if FuncLoadError then
-  begin
-    PKCS12_PBE_keyivgen :=  @ERROR_PKCS12_PBE_keyivgen;
-  end;
-
-  PKCS12_gen_mac := LoadLibCryptoFunction('PKCS12_gen_mac');
-  FuncLoadError := not assigned(PKCS12_gen_mac);
-  if FuncLoadError then
-  begin
-    PKCS12_gen_mac :=  @ERROR_PKCS12_gen_mac;
-  end;
-
-  PKCS12_verify_mac := LoadLibCryptoFunction('PKCS12_verify_mac');
-  FuncLoadError := not assigned(PKCS12_verify_mac);
-  if FuncLoadError then
-  begin
-    PKCS12_verify_mac :=  @ERROR_PKCS12_verify_mac;
-  end;
-
-  PKCS12_set_mac := LoadLibCryptoFunction('PKCS12_set_mac');
-  FuncLoadError := not assigned(PKCS12_set_mac);
-  if FuncLoadError then
-  begin
-    PKCS12_set_mac :=  @ERROR_PKCS12_set_mac;
-  end;
-
-  PKCS12_setup_mac := LoadLibCryptoFunction('PKCS12_setup_mac');
-  FuncLoadError := not assigned(PKCS12_setup_mac);
-  if FuncLoadError then
-  begin
-    PKCS12_setup_mac :=  @ERROR_PKCS12_setup_mac;
-  end;
-
-  OPENSSL_asc2uni := LoadLibCryptoFunction('OPENSSL_asc2uni');
-  FuncLoadError := not assigned(OPENSSL_asc2uni);
-  if FuncLoadError then
-  begin
-    OPENSSL_asc2uni :=  @ERROR_OPENSSL_asc2uni;
-  end;
-
-  OPENSSL_uni2asc := LoadLibCryptoFunction('OPENSSL_uni2asc');
-  FuncLoadError := not assigned(OPENSSL_uni2asc);
-  if FuncLoadError then
-  begin
-    OPENSSL_uni2asc :=  @ERROR_OPENSSL_uni2asc;
-  end;
-
-  OPENSSL_utf82uni := LoadLibCryptoFunction('OPENSSL_utf82uni');
-  FuncLoadError := not assigned(OPENSSL_utf82uni);
-  if FuncLoadError then
-  begin
-    OPENSSL_utf82uni :=  @ERROR_OPENSSL_utf82uni;
-  end;
-
-  OPENSSL_uni2utf8 := LoadLibCryptoFunction('OPENSSL_uni2utf8');
-  FuncLoadError := not assigned(OPENSSL_uni2utf8);
-  if FuncLoadError then
-  begin
-    OPENSSL_uni2utf8 :=  @ERROR_OPENSSL_uni2utf8;
-  end;
-
-  PKCS12_new := LoadLibCryptoFunction('PKCS12_new');
-  FuncLoadError := not assigned(PKCS12_new);
-  if FuncLoadError then
-  begin
-    PKCS12_new :=  @ERROR_PKCS12_new;
-  end;
-
-  PKCS12_free := LoadLibCryptoFunction('PKCS12_free');
-  FuncLoadError := not assigned(PKCS12_free);
-  if FuncLoadError then
-  begin
-    PKCS12_free :=  @ERROR_PKCS12_free;
-  end;
-
-  d2i_PKCS12 := LoadLibCryptoFunction('d2i_PKCS12');
-  FuncLoadError := not assigned(d2i_PKCS12);
-  if FuncLoadError then
-  begin
-    d2i_PKCS12 :=  @ERROR_d2i_PKCS12;
-  end;
-
-  i2d_PKCS12 := LoadLibCryptoFunction('i2d_PKCS12');
-  FuncLoadError := not assigned(i2d_PKCS12);
-  if FuncLoadError then
-  begin
-    i2d_PKCS12 :=  @ERROR_i2d_PKCS12;
-  end;
-
-  PKCS12_it := LoadLibCryptoFunction('PKCS12_it');
-  FuncLoadError := not assigned(PKCS12_it);
-  if FuncLoadError then
-  begin
-    PKCS12_it :=  @ERROR_PKCS12_it;
-  end;
-
-  PKCS12_MAC_DATA_new := LoadLibCryptoFunction('PKCS12_MAC_DATA_new');
-  FuncLoadError := not assigned(PKCS12_MAC_DATA_new);
-  if FuncLoadError then
-  begin
-    PKCS12_MAC_DATA_new :=  @ERROR_PKCS12_MAC_DATA_new;
-  end;
-
-  PKCS12_MAC_DATA_free := LoadLibCryptoFunction('PKCS12_MAC_DATA_free');
-  FuncLoadError := not assigned(PKCS12_MAC_DATA_free);
-  if FuncLoadError then
-  begin
-    PKCS12_MAC_DATA_free :=  @ERROR_PKCS12_MAC_DATA_free;
-  end;
-
-  d2i_PKCS12_MAC_DATA := LoadLibCryptoFunction('d2i_PKCS12_MAC_DATA');
-  FuncLoadError := not assigned(d2i_PKCS12_MAC_DATA);
-  if FuncLoadError then
-  begin
-    d2i_PKCS12_MAC_DATA :=  @ERROR_d2i_PKCS12_MAC_DATA;
-  end;
-
-  i2d_PKCS12_MAC_DATA := LoadLibCryptoFunction('i2d_PKCS12_MAC_DATA');
-  FuncLoadError := not assigned(i2d_PKCS12_MAC_DATA);
-  if FuncLoadError then
-  begin
-    i2d_PKCS12_MAC_DATA :=  @ERROR_i2d_PKCS12_MAC_DATA;
-  end;
-
-  PKCS12_MAC_DATA_it := LoadLibCryptoFunction('PKCS12_MAC_DATA_it');
-  FuncLoadError := not assigned(PKCS12_MAC_DATA_it);
-  if FuncLoadError then
-  begin
-    PKCS12_MAC_DATA_it :=  @ERROR_PKCS12_MAC_DATA_it;
-  end;
-
-  PKCS12_SAFEBAG_new := LoadLibCryptoFunction('PKCS12_SAFEBAG_new');
-  FuncLoadError := not assigned(PKCS12_SAFEBAG_new);
-  if FuncLoadError then
-  begin
-    PKCS12_SAFEBAG_new :=  @ERROR_PKCS12_SAFEBAG_new;
-  end;
-
-  PKCS12_SAFEBAG_free := LoadLibCryptoFunction('PKCS12_SAFEBAG_free');
-  FuncLoadError := not assigned(PKCS12_SAFEBAG_free);
-  if FuncLoadError then
-  begin
-    PKCS12_SAFEBAG_free :=  @ERROR_PKCS12_SAFEBAG_free;
-  end;
-
-  d2i_PKCS12_SAFEBAG := LoadLibCryptoFunction('d2i_PKCS12_SAFEBAG');
-  FuncLoadError := not assigned(d2i_PKCS12_SAFEBAG);
-  if FuncLoadError then
-  begin
-    d2i_PKCS12_SAFEBAG :=  @ERROR_d2i_PKCS12_SAFEBAG;
-  end;
-
-  i2d_PKCS12_SAFEBAG := LoadLibCryptoFunction('i2d_PKCS12_SAFEBAG');
-  FuncLoadError := not assigned(i2d_PKCS12_SAFEBAG);
-  if FuncLoadError then
-  begin
-    i2d_PKCS12_SAFEBAG :=  @ERROR_i2d_PKCS12_SAFEBAG;
-  end;
-
-  PKCS12_SAFEBAG_it := LoadLibCryptoFunction('PKCS12_SAFEBAG_it');
-  FuncLoadError := not assigned(PKCS12_SAFEBAG_it);
-  if FuncLoadError then
-  begin
-    PKCS12_SAFEBAG_it :=  @ERROR_PKCS12_SAFEBAG_it;
-  end;
-
-  PKCS12_BAGS_new := LoadLibCryptoFunction('PKCS12_BAGS_new');
-  FuncLoadError := not assigned(PKCS12_BAGS_new);
-  if FuncLoadError then
-  begin
-    PKCS12_BAGS_new :=  @ERROR_PKCS12_BAGS_new;
-  end;
-
-  PKCS12_BAGS_free := LoadLibCryptoFunction('PKCS12_BAGS_free');
-  FuncLoadError := not assigned(PKCS12_BAGS_free);
-  if FuncLoadError then
-  begin
-    PKCS12_BAGS_free :=  @ERROR_PKCS12_BAGS_free;
-  end;
-
-  d2i_PKCS12_BAGS := LoadLibCryptoFunction('d2i_PKCS12_BAGS');
-  FuncLoadError := not assigned(d2i_PKCS12_BAGS);
-  if FuncLoadError then
-  begin
-    d2i_PKCS12_BAGS :=  @ERROR_d2i_PKCS12_BAGS;
-  end;
-
-  i2d_PKCS12_BAGS := LoadLibCryptoFunction('i2d_PKCS12_BAGS');
-  FuncLoadError := not assigned(i2d_PKCS12_BAGS);
-  if FuncLoadError then
-  begin
-    i2d_PKCS12_BAGS :=  @ERROR_i2d_PKCS12_BAGS;
-  end;
-
-  PKCS12_BAGS_it := LoadLibCryptoFunction('PKCS12_BAGS_it');
-  FuncLoadError := not assigned(PKCS12_BAGS_it);
-  if FuncLoadError then
-  begin
-    PKCS12_BAGS_it :=  @ERROR_PKCS12_BAGS_it;
-  end;
-
-  PKCS12_PBE_add := LoadLibCryptoFunction('PKCS12_PBE_add');
-  FuncLoadError := not assigned(PKCS12_PBE_add);
-  if FuncLoadError then
-  begin
-    PKCS12_PBE_add :=  @ERROR_PKCS12_PBE_add;
-  end;
-
-  PKCS12_parse := LoadLibCryptoFunction('PKCS12_parse');
-  FuncLoadError := not assigned(PKCS12_parse);
-  if FuncLoadError then
-  begin
-    PKCS12_parse :=  @ERROR_PKCS12_parse;
-  end;
-
-  PKCS12_create := LoadLibCryptoFunction('PKCS12_create');
-  FuncLoadError := not assigned(PKCS12_create);
-  if FuncLoadError then
-  begin
-    PKCS12_create :=  @ERROR_PKCS12_create;
-  end;
-
-  i2d_PKCS12_bio := LoadLibCryptoFunction('i2d_PKCS12_bio');
-  FuncLoadError := not assigned(i2d_PKCS12_bio);
-  if FuncLoadError then
-  begin
-    i2d_PKCS12_bio :=  @ERROR_i2d_PKCS12_bio;
-  end;
-
-  d2i_PKCS12_bio := LoadLibCryptoFunction('d2i_PKCS12_bio');
-  FuncLoadError := not assigned(d2i_PKCS12_bio);
-  if FuncLoadError then
-  begin
-    d2i_PKCS12_bio :=  @ERROR_d2i_PKCS12_bio;
-  end;
-
-  PKCS12_newpass := LoadLibCryptoFunction('PKCS12_newpass');
-  FuncLoadError := not assigned(PKCS12_newpass);
-  if FuncLoadError then
-  begin
-    PKCS12_newpass :=  @ERROR_PKCS12_newpass;
-  end;
-
+  if not assigned(PKCS12_mac_present) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_mac_present');
+  Result := PKCS12_mac_present(p12);
 end;
+
+procedure Load_PKCS12_get0_mac(const pmac: PPASN1_OCTET_STRING; const pmacalg: PPX509_ALGOR; const psalt: PPASN1_OCTET_STRING; const piter: PPASN1_INTEGER; const p12: PPKCS12); cdecl;
+begin
+  PKCS12_get0_mac := LoadLibCryptoFunction('PKCS12_get0_mac');
+  if not assigned(PKCS12_get0_mac) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_get0_mac');
+  PKCS12_get0_mac(pmac,pmacalg,psalt,piter,p12);
+end;
+
+function Load_PKCS12_SAFEBAG_get0_attr(const bag: PPKCS12_SAFEBAG; attr_nid: TOpenSSL_C_INT): PASN1_TYPE; cdecl;
+begin
+  PKCS12_SAFEBAG_get0_attr := LoadLibCryptoFunction('PKCS12_SAFEBAG_get0_attr');
+  if not assigned(PKCS12_SAFEBAG_get0_attr) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_get0_attr');
+  Result := PKCS12_SAFEBAG_get0_attr(bag,attr_nid);
+end;
+
+function Load_PKCS12_SAFEBAG_get0_type(const bag: PPKCS12_SAFEBAG): PASN1_OBJECT; cdecl;
+begin
+  PKCS12_SAFEBAG_get0_type := LoadLibCryptoFunction('PKCS12_SAFEBAG_get0_type');
+  if not assigned(PKCS12_SAFEBAG_get0_type) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_get0_type');
+  Result := PKCS12_SAFEBAG_get0_type(bag);
+end;
+
+function Load_PKCS12_SAFEBAG_get_nid(const bag: PPKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl;
+begin
+  PKCS12_SAFEBAG_get_nid := LoadLibCryptoFunction('PKCS12_SAFEBAG_get_nid');
+  if not assigned(PKCS12_SAFEBAG_get_nid) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_get_nid');
+  Result := PKCS12_SAFEBAG_get_nid(bag);
+end;
+
+function Load_PKCS12_SAFEBAG_get_bag_nid(const bag: PPKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl;
+begin
+  PKCS12_SAFEBAG_get_bag_nid := LoadLibCryptoFunction('PKCS12_SAFEBAG_get_bag_nid');
+  if not assigned(PKCS12_SAFEBAG_get_bag_nid) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_get_bag_nid');
+  Result := PKCS12_SAFEBAG_get_bag_nid(bag);
+end;
+
+function Load_PKCS12_SAFEBAG_get1_cert(const bag: PPKCS12_SAFEBAG): PX509; cdecl;
+begin
+  PKCS12_SAFEBAG_get1_cert := LoadLibCryptoFunction('PKCS12_SAFEBAG_get1_cert');
+  if not assigned(PKCS12_SAFEBAG_get1_cert) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_get1_cert');
+  Result := PKCS12_SAFEBAG_get1_cert(bag);
+end;
+
+function Load_PKCS12_SAFEBAG_get1_crl(const bag: PPKCS12_SAFEBAG): PX509_CRL; cdecl;
+begin
+  PKCS12_SAFEBAG_get1_crl := LoadLibCryptoFunction('PKCS12_SAFEBAG_get1_crl');
+  if not assigned(PKCS12_SAFEBAG_get1_crl) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_get1_crl');
+  Result := PKCS12_SAFEBAG_get1_crl(bag);
+end;
+
+function Load_PKCS12_SAFEBAG_get0_p8inf(const bag: PPKCS12_SAFEBAG): PPKCS8_PRIV_KEY_INFO; cdecl;
+begin
+  PKCS12_SAFEBAG_get0_p8inf := LoadLibCryptoFunction('PKCS12_SAFEBAG_get0_p8inf');
+  if not assigned(PKCS12_SAFEBAG_get0_p8inf) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_get0_p8inf');
+  Result := PKCS12_SAFEBAG_get0_p8inf(bag);
+end;
+
+function Load_PKCS12_SAFEBAG_get0_pkcs8(const bag: PPKCS12_SAFEBAG): PX509_SIG; cdecl;
+begin
+  PKCS12_SAFEBAG_get0_pkcs8 := LoadLibCryptoFunction('PKCS12_SAFEBAG_get0_pkcs8');
+  if not assigned(PKCS12_SAFEBAG_get0_pkcs8) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_get0_pkcs8');
+  Result := PKCS12_SAFEBAG_get0_pkcs8(bag);
+end;
+
+function Load_PKCS12_SAFEBAG_create_cert(x509: PX509): PPKCS12_SAFEBAG; cdecl;
+begin
+  PKCS12_SAFEBAG_create_cert := LoadLibCryptoFunction('PKCS12_SAFEBAG_create_cert');
+  if not assigned(PKCS12_SAFEBAG_create_cert) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_create_cert');
+  Result := PKCS12_SAFEBAG_create_cert(x509);
+end;
+
+function Load_PKCS12_SAFEBAG_create_crl(crl: PX509_CRL): PPKCS12_SAFEBAG; cdecl;
+begin
+  PKCS12_SAFEBAG_create_crl := LoadLibCryptoFunction('PKCS12_SAFEBAG_create_crl');
+  if not assigned(PKCS12_SAFEBAG_create_crl) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_create_crl');
+  Result := PKCS12_SAFEBAG_create_crl(crl);
+end;
+
+function Load_PKCS12_SAFEBAG_create0_p8inf(p8: PPKCS8_PRIV_KEY_INFO): PPKCS12_SAFEBAG; cdecl;
+begin
+  PKCS12_SAFEBAG_create0_p8inf := LoadLibCryptoFunction('PKCS12_SAFEBAG_create0_p8inf');
+  if not assigned(PKCS12_SAFEBAG_create0_p8inf) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_create0_p8inf');
+  Result := PKCS12_SAFEBAG_create0_p8inf(p8);
+end;
+
+function Load_PKCS12_SAFEBAG_create0_pkcs8(p8: PX509_SIG): PPKCS12_SAFEBAG; cdecl;
+begin
+  PKCS12_SAFEBAG_create0_pkcs8 := LoadLibCryptoFunction('PKCS12_SAFEBAG_create0_pkcs8');
+  if not assigned(PKCS12_SAFEBAG_create0_pkcs8) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_create0_pkcs8');
+  Result := PKCS12_SAFEBAG_create0_pkcs8(p8);
+end;
+
+function Load_PKCS12_SAFEBAG_create_pkcs8_encrypt(pbe_nid: TOpenSSL_C_INT; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; p8inf: PPKCS8_PRIV_KEY_INFO): PPKCS12_SAFEBAG; cdecl;
+begin
+  PKCS12_SAFEBAG_create_pkcs8_encrypt := LoadLibCryptoFunction('PKCS12_SAFEBAG_create_pkcs8_encrypt');
+  if not assigned(PKCS12_SAFEBAG_create_pkcs8_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_create_pkcs8_encrypt');
+  Result := PKCS12_SAFEBAG_create_pkcs8_encrypt(pbe_nid,pass,passlen,salt,saltlen,iter,p8inf);
+end;
+
+function Load_PKCS12_item_pack_safebag(obj: Pointer; const it: PASN1_ITEM; nid1: TOpenSSL_C_INT; nid2: TOpenSSL_C_INT): PPKCS12_SAFEBAG; cdecl;
+begin
+  PKCS12_item_pack_safebag := LoadLibCryptoFunction('PKCS12_item_pack_safebag');
+  if not assigned(PKCS12_item_pack_safebag) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_item_pack_safebag');
+  Result := PKCS12_item_pack_safebag(obj,it,nid1,nid2);
+end;
+
+function Load_PKCS8_decrypt(const p8: PX509_SIG; const pass: PAnsiChar; passlen: TOpenSSL_C_INT): PPKCS8_PRIV_KEY_INFO; cdecl;
+begin
+  PKCS8_decrypt := LoadLibCryptoFunction('PKCS8_decrypt');
+  if not assigned(PKCS8_decrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS8_decrypt');
+  Result := PKCS8_decrypt(p8,pass,passlen);
+end;
+
+function Load_PKCS12_decrypt_skey(const bag: PPKCS12_SAFEBAG; const pass: PAnsiChar; passlen: TOpenSSL_C_INT): PPKCS8_PRIV_KEY_INFO; cdecl;
+begin
+  PKCS12_decrypt_skey := LoadLibCryptoFunction('PKCS12_decrypt_skey');
+  if not assigned(PKCS12_decrypt_skey) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_decrypt_skey');
+  Result := PKCS12_decrypt_skey(bag,pass,passlen);
+end;
+
+function Load_PKCS8_encrypt(pbe_nid: TOpenSSL_C_INT; const cipher: PEVP_CIPHER; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; p8: PPKCS8_PRIV_KEY_INFO): PX509_SIG; cdecl;
+begin
+  PKCS8_encrypt := LoadLibCryptoFunction('PKCS8_encrypt');
+  if not assigned(PKCS8_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS8_encrypt');
+  Result := PKCS8_encrypt(pbe_nid,cipher,pass,passlen,salt,saltlen,iter,p8);
+end;
+
+function Load_PKCS8_set0_pbe(const pass: PAnsiChar; passlen: TOpenSSL_C_INT; p8inf: PPKCS8_PRIV_KEY_INFO; pbe: PX509_ALGOR): PX509_SIG; cdecl;
+begin
+  PKCS8_set0_pbe := LoadLibCryptoFunction('PKCS8_set0_pbe');
+  if not assigned(PKCS8_set0_pbe) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS8_set0_pbe');
+  Result := PKCS8_set0_pbe(pass,passlen,p8inf,pbe);
+end;
+
+function Load_PKCS12_add_localkeyid(bag: PPKCS12_SAFEBAG; name: PByte; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  PKCS12_add_localkeyid := LoadLibCryptoFunction('PKCS12_add_localkeyid');
+  if not assigned(PKCS12_add_localkeyid) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_add_localkeyid');
+  Result := PKCS12_add_localkeyid(bag,name,namelen);
+end;
+
+function Load_PKCS12_add_friendlyname_asc(bag: PPKCS12_SAFEBAG; const name: PAnsiChar; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  PKCS12_add_friendlyname_asc := LoadLibCryptoFunction('PKCS12_add_friendlyname_asc');
+  if not assigned(PKCS12_add_friendlyname_asc) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_add_friendlyname_asc');
+  Result := PKCS12_add_friendlyname_asc(bag,name,namelen);
+end;
+
+function Load_PKCS12_add_friendlyname_utf8(bag: PPKCS12_SAFEBAG; const name: PAnsiChar; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  PKCS12_add_friendlyname_utf8 := LoadLibCryptoFunction('PKCS12_add_friendlyname_utf8');
+  if not assigned(PKCS12_add_friendlyname_utf8) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_add_friendlyname_utf8');
+  Result := PKCS12_add_friendlyname_utf8(bag,name,namelen);
+end;
+
+function Load_PKCS12_add_CSPName_asc(bag: PPKCS12_SAFEBAG; const name: PAnsiChar; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  PKCS12_add_CSPName_asc := LoadLibCryptoFunction('PKCS12_add_CSPName_asc');
+  if not assigned(PKCS12_add_CSPName_asc) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_add_CSPName_asc');
+  Result := PKCS12_add_CSPName_asc(bag,name,namelen);
+end;
+
+function Load_PKCS12_add_friendlyname_uni(bag: PPKCS12_SAFEBAG; const name: PByte; namelen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  PKCS12_add_friendlyname_uni := LoadLibCryptoFunction('PKCS12_add_friendlyname_uni');
+  if not assigned(PKCS12_add_friendlyname_uni) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_add_friendlyname_uni');
+  Result := PKCS12_add_friendlyname_uni(bag,name,namelen);
+end;
+
+function Load_PKCS8_add_keyusage(p8: PPKCS8_PRIV_KEY_INFO; usage: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  PKCS8_add_keyusage := LoadLibCryptoFunction('PKCS8_add_keyusage');
+  if not assigned(PKCS8_add_keyusage) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS8_add_keyusage');
+  Result := PKCS8_add_keyusage(p8,usage);
+end;
+
+function Load_PKCS12_get_friendlyname(bag: PPKCS12_SAFEBAG): PAnsiChar; cdecl;
+begin
+  PKCS12_get_friendlyname := LoadLibCryptoFunction('PKCS12_get_friendlyname');
+  if not assigned(PKCS12_get_friendlyname) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_get_friendlyname');
+  Result := PKCS12_get_friendlyname(bag);
+end;
+
+function Load_PKCS12_pbe_crypt(const algor: PX509_ALGOR; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; const in_: PByte; inlen: TOpenSSL_C_INT; data: PPByte; datalen: POpenSSL_C_INT; en_de: TOpenSSL_C_INT): PByte; cdecl;
+begin
+  PKCS12_pbe_crypt := LoadLibCryptoFunction('PKCS12_pbe_crypt');
+  if not assigned(PKCS12_pbe_crypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_pbe_crypt');
+  Result := PKCS12_pbe_crypt(algor,pass,passlen,in_,inlen,data,datalen,en_de);
+end;
+
+function Load_PKCS12_item_decrypt_d2i(const algor: PX509_ALGOR; const it: PASN1_ITEM; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; const oct: PASN1_OCTET_STRING; zbuf: TOpenSSL_C_INT): Pointer; cdecl;
+begin
+  PKCS12_item_decrypt_d2i := LoadLibCryptoFunction('PKCS12_item_decrypt_d2i');
+  if not assigned(PKCS12_item_decrypt_d2i) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_item_decrypt_d2i');
+  Result := PKCS12_item_decrypt_d2i(algor,it,pass,passlen,oct,zbuf);
+end;
+
+function Load_PKCS12_item_i2d_encrypt(algor: PX509_ALGOR; const it: PASN1_ITEM; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; obj: Pointer; zbuf: TOpenSSL_C_INT): PASN1_OCTET_STRING; cdecl;
+begin
+  PKCS12_item_i2d_encrypt := LoadLibCryptoFunction('PKCS12_item_i2d_encrypt');
+  if not assigned(PKCS12_item_i2d_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_item_i2d_encrypt');
+  Result := PKCS12_item_i2d_encrypt(algor,it,pass,passlen,obj,zbuf);
+end;
+
+function Load_PKCS12_init(mode: TOpenSSL_C_INT): PPKCS12; cdecl;
+begin
+  PKCS12_init := LoadLibCryptoFunction('PKCS12_init');
+  if not assigned(PKCS12_init) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_init');
+  Result := PKCS12_init(mode);
+end;
+
+function Load_PKCS12_key_gen_asc(const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; id: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; n: TOpenSSL_C_INT; out_: PByte; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl;
+begin
+  PKCS12_key_gen_asc := LoadLibCryptoFunction('PKCS12_key_gen_asc');
+  if not assigned(PKCS12_key_gen_asc) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_key_gen_asc');
+  Result := PKCS12_key_gen_asc(pass,passlen,salt,saltlen,id,iter,n,out_,md_type);
+end;
+
+function Load_PKCS12_key_gen_uni(pass: PByte; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; id: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; n: TOpenSSL_C_INT; out_: PByte; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl;
+begin
+  PKCS12_key_gen_uni := LoadLibCryptoFunction('PKCS12_key_gen_uni');
+  if not assigned(PKCS12_key_gen_uni) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_key_gen_uni');
+  Result := PKCS12_key_gen_uni(pass,passlen,salt,saltlen,id,iter,n,out_,md_type);
+end;
+
+function Load_PKCS12_key_gen_utf8(const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; id: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; n: TOpenSSL_C_INT; out_: PByte; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl;
+begin
+  PKCS12_key_gen_utf8 := LoadLibCryptoFunction('PKCS12_key_gen_utf8');
+  if not assigned(PKCS12_key_gen_utf8) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_key_gen_utf8');
+  Result := PKCS12_key_gen_utf8(pass,passlen,salt,saltlen,id,iter,n,out_,md_type);
+end;
+
+function Load_PKCS12_PBE_keyivgen(ctx: PEVP_CIPHER_CTX; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; param: PASN1_TYPE; const cipher: PEVP_CIPHER; const md_type: PEVP_MD; en_de: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  PKCS12_PBE_keyivgen := LoadLibCryptoFunction('PKCS12_PBE_keyivgen');
+  if not assigned(PKCS12_PBE_keyivgen) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_PBE_keyivgen');
+  Result := PKCS12_PBE_keyivgen(ctx,pass,passlen,param,cipher,md_type,en_de);
+end;
+
+function Load_PKCS12_gen_mac(p12: PPKCS12; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; mac: PByte; maclen: POpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
+begin
+  PKCS12_gen_mac := LoadLibCryptoFunction('PKCS12_gen_mac');
+  if not assigned(PKCS12_gen_mac) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_gen_mac');
+  Result := PKCS12_gen_mac(p12,pass,passlen,mac,maclen);
+end;
+
+function Load_PKCS12_verify_mac(p12: PPKCS12; const pass: PAnsiChar; passlen: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  PKCS12_verify_mac := LoadLibCryptoFunction('PKCS12_verify_mac');
+  if not assigned(PKCS12_verify_mac) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_verify_mac');
+  Result := PKCS12_verify_mac(p12,pass,passlen);
+end;
+
+function Load_PKCS12_set_mac(p12: PPKCS12; const pass: PAnsiChar; passlen: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl;
+begin
+  PKCS12_set_mac := LoadLibCryptoFunction('PKCS12_set_mac');
+  if not assigned(PKCS12_set_mac) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_set_mac');
+  Result := PKCS12_set_mac(p12,pass,passlen,salt,saltlen,iter,md_type);
+end;
+
+function Load_PKCS12_setup_mac(p12: PPKCS12; iter: TOpenSSL_C_INT; salt: PByte; saltlen: TOpenSSL_C_INT; const md_type: PEVP_MD): TOpenSSL_C_INT; cdecl;
+begin
+  PKCS12_setup_mac := LoadLibCryptoFunction('PKCS12_setup_mac');
+  if not assigned(PKCS12_setup_mac) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_setup_mac');
+  Result := PKCS12_setup_mac(p12,iter,salt,saltlen,md_type);
+end;
+
+function Load_OPENSSL_asc2uni(const asc: PAnsiChar; asclen: TOpenSSL_C_INT; uni: PPByte; unilen: POpenSSL_C_INT): PByte; cdecl;
+begin
+  OPENSSL_asc2uni := LoadLibCryptoFunction('OPENSSL_asc2uni');
+  if not assigned(OPENSSL_asc2uni) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_asc2uni');
+  Result := OPENSSL_asc2uni(asc,asclen,uni,unilen);
+end;
+
+function Load_OPENSSL_uni2asc(const uni: PByte; unilen: TOpenSSL_C_INT): PAnsiChar; cdecl;
+begin
+  OPENSSL_uni2asc := LoadLibCryptoFunction('OPENSSL_uni2asc');
+  if not assigned(OPENSSL_uni2asc) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_uni2asc');
+  Result := OPENSSL_uni2asc(uni,unilen);
+end;
+
+function Load_OPENSSL_utf82uni(const asc: PAnsiChar; asclen: TOpenSSL_C_INT; uni: PPByte; unilen: POpenSSL_C_INT): PByte; cdecl;
+begin
+  OPENSSL_utf82uni := LoadLibCryptoFunction('OPENSSL_utf82uni');
+  if not assigned(OPENSSL_utf82uni) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_utf82uni');
+  Result := OPENSSL_utf82uni(asc,asclen,uni,unilen);
+end;
+
+function Load_OPENSSL_uni2utf8(const uni: PByte; unilen: TOpenSSL_C_INT): PAnsiChar; cdecl;
+begin
+  OPENSSL_uni2utf8 := LoadLibCryptoFunction('OPENSSL_uni2utf8');
+  if not assigned(OPENSSL_uni2utf8) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_uni2utf8');
+  Result := OPENSSL_uni2utf8(uni,unilen);
+end;
+
+function Load_PKCS12_new: PPKCS12; cdecl;
+begin
+  PKCS12_new := LoadLibCryptoFunction('PKCS12_new');
+  if not assigned(PKCS12_new) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_new');
+  Result := PKCS12_new();
+end;
+
+procedure Load_PKCS12_free(a: PPKCS12); cdecl;
+begin
+  PKCS12_free := LoadLibCryptoFunction('PKCS12_free');
+  if not assigned(PKCS12_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_free');
+  PKCS12_free(a);
+end;
+
+function Load_d2i_PKCS12(a: PPPKCS12; const in_: PPByte; len: TOpenSSL_C_LONG): PPKCS12; cdecl;
+begin
+  d2i_PKCS12 := LoadLibCryptoFunction('d2i_PKCS12');
+  if not assigned(d2i_PKCS12) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_PKCS12');
+  Result := d2i_PKCS12(a,in_,len);
+end;
+
+function Load_i2d_PKCS12(a: PPKCS12; out_: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  i2d_PKCS12 := LoadLibCryptoFunction('i2d_PKCS12');
+  if not assigned(i2d_PKCS12) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_PKCS12');
+  Result := i2d_PKCS12(a,out_);
+end;
+
+function Load_PKCS12_it: PASN1_ITEM; cdecl;
+begin
+  PKCS12_it := LoadLibCryptoFunction('PKCS12_it');
+  if not assigned(PKCS12_it) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_it');
+  Result := PKCS12_it();
+end;
+
+function Load_PKCS12_MAC_DATA_new: PPKCS12_MAC_DATA; cdecl;
+begin
+  PKCS12_MAC_DATA_new := LoadLibCryptoFunction('PKCS12_MAC_DATA_new');
+  if not assigned(PKCS12_MAC_DATA_new) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_MAC_DATA_new');
+  Result := PKCS12_MAC_DATA_new();
+end;
+
+procedure Load_PKCS12_MAC_DATA_free(a: PPKCS12_MAC_DATA); cdecl;
+begin
+  PKCS12_MAC_DATA_free := LoadLibCryptoFunction('PKCS12_MAC_DATA_free');
+  if not assigned(PKCS12_MAC_DATA_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_MAC_DATA_free');
+  PKCS12_MAC_DATA_free(a);
+end;
+
+function Load_d2i_PKCS12_MAC_DATA(a: PPPKCS12_MAC_DATA; const in_: PPByte; len: TOpenSSL_C_LONG): PPKCS12_MAC_DATA; cdecl;
+begin
+  d2i_PKCS12_MAC_DATA := LoadLibCryptoFunction('d2i_PKCS12_MAC_DATA');
+  if not assigned(d2i_PKCS12_MAC_DATA) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_PKCS12_MAC_DATA');
+  Result := d2i_PKCS12_MAC_DATA(a,in_,len);
+end;
+
+function Load_i2d_PKCS12_MAC_DATA(a: PPKCS12_MAC_DATA; out_: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  i2d_PKCS12_MAC_DATA := LoadLibCryptoFunction('i2d_PKCS12_MAC_DATA');
+  if not assigned(i2d_PKCS12_MAC_DATA) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_PKCS12_MAC_DATA');
+  Result := i2d_PKCS12_MAC_DATA(a,out_);
+end;
+
+function Load_PKCS12_MAC_DATA_it: PASN1_ITEM; cdecl;
+begin
+  PKCS12_MAC_DATA_it := LoadLibCryptoFunction('PKCS12_MAC_DATA_it');
+  if not assigned(PKCS12_MAC_DATA_it) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_MAC_DATA_it');
+  Result := PKCS12_MAC_DATA_it();
+end;
+
+function Load_PKCS12_SAFEBAG_new: PPKCS12_SAFEBAG; cdecl;
+begin
+  PKCS12_SAFEBAG_new := LoadLibCryptoFunction('PKCS12_SAFEBAG_new');
+  if not assigned(PKCS12_SAFEBAG_new) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_new');
+  Result := PKCS12_SAFEBAG_new();
+end;
+
+procedure Load_PKCS12_SAFEBAG_free(a: PPKCS12_SAFEBAG); cdecl;
+begin
+  PKCS12_SAFEBAG_free := LoadLibCryptoFunction('PKCS12_SAFEBAG_free');
+  if not assigned(PKCS12_SAFEBAG_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_free');
+  PKCS12_SAFEBAG_free(a);
+end;
+
+function Load_d2i_PKCS12_SAFEBAG(a: PPPKCS12_SAFEBAG; const in_: PPByte; len: TOpenSSL_C_LONG): PPKCS12_SAFEBAG; cdecl;
+begin
+  d2i_PKCS12_SAFEBAG := LoadLibCryptoFunction('d2i_PKCS12_SAFEBAG');
+  if not assigned(d2i_PKCS12_SAFEBAG) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_PKCS12_SAFEBAG');
+  Result := d2i_PKCS12_SAFEBAG(a,in_,len);
+end;
+
+function Load_i2d_PKCS12_SAFEBAG(a: PPKCS12_SAFEBAG; out_: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  i2d_PKCS12_SAFEBAG := LoadLibCryptoFunction('i2d_PKCS12_SAFEBAG');
+  if not assigned(i2d_PKCS12_SAFEBAG) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_PKCS12_SAFEBAG');
+  Result := i2d_PKCS12_SAFEBAG(a,out_);
+end;
+
+function Load_PKCS12_SAFEBAG_it: PASN1_ITEM; cdecl;
+begin
+  PKCS12_SAFEBAG_it := LoadLibCryptoFunction('PKCS12_SAFEBAG_it');
+  if not assigned(PKCS12_SAFEBAG_it) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_SAFEBAG_it');
+  Result := PKCS12_SAFEBAG_it();
+end;
+
+function Load_PKCS12_BAGS_new: PPKCS12_BAGS; cdecl;
+begin
+  PKCS12_BAGS_new := LoadLibCryptoFunction('PKCS12_BAGS_new');
+  if not assigned(PKCS12_BAGS_new) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_BAGS_new');
+  Result := PKCS12_BAGS_new();
+end;
+
+procedure Load_PKCS12_BAGS_free(a: PPKCS12_BAGS); cdecl;
+begin
+  PKCS12_BAGS_free := LoadLibCryptoFunction('PKCS12_BAGS_free');
+  if not assigned(PKCS12_BAGS_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_BAGS_free');
+  PKCS12_BAGS_free(a);
+end;
+
+function Load_d2i_PKCS12_BAGS(a: PPPKCS12_BAGS; const in_: PPByte; len: TOpenSSL_C_LONG): PPKCS12_BAGS; cdecl;
+begin
+  d2i_PKCS12_BAGS := LoadLibCryptoFunction('d2i_PKCS12_BAGS');
+  if not assigned(d2i_PKCS12_BAGS) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_PKCS12_BAGS');
+  Result := d2i_PKCS12_BAGS(a,in_,len);
+end;
+
+function Load_i2d_PKCS12_BAGS(a: PPKCS12_BAGS; out_: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  i2d_PKCS12_BAGS := LoadLibCryptoFunction('i2d_PKCS12_BAGS');
+  if not assigned(i2d_PKCS12_BAGS) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_PKCS12_BAGS');
+  Result := i2d_PKCS12_BAGS(a,out_);
+end;
+
+function Load_PKCS12_BAGS_it: PASN1_ITEM; cdecl;
+begin
+  PKCS12_BAGS_it := LoadLibCryptoFunction('PKCS12_BAGS_it');
+  if not assigned(PKCS12_BAGS_it) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_BAGS_it');
+  Result := PKCS12_BAGS_it();
+end;
+
+procedure Load_PKCS12_PBE_add(v: Pointer); cdecl;
+begin
+  PKCS12_PBE_add := LoadLibCryptoFunction('PKCS12_PBE_add');
+  if not assigned(PKCS12_PBE_add) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_PBE_add');
+  PKCS12_PBE_add(v);
+end;
+
+function Load_PKCS12_parse(p12: PPKCS12; const pass: PAnsiChar; out pkey: PEVP_PKEY; out cert: PX509; ca: PPStack_Of_X509): TOpenSSL_C_INT; cdecl;
+begin
+  PKCS12_parse := LoadLibCryptoFunction('PKCS12_parse');
+  if not assigned(PKCS12_parse) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_parse');
+  Result := PKCS12_parse(p12,pass,pkey,cert,ca);
+end;
+
+function Load_PKCS12_create(const pass: PAnsiChar; const name: PAnsiChar; pkey: PEVP_PKEY; cert: PX509; ca: PStack_Of_X509; nid_key: TOpenSSL_C_INT; nid_cert: TOpenSSL_C_INT; iter: TOpenSSL_C_INT; mac_iter: TOpenSSL_C_INT; keytype: TOpenSSL_C_INT): PPKCS12; cdecl;
+begin
+  PKCS12_create := LoadLibCryptoFunction('PKCS12_create');
+  if not assigned(PKCS12_create) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_create');
+  Result := PKCS12_create(pass,name,pkey,cert,ca,nid_key,nid_cert,iter,mac_iter,keytype);
+end;
+
+function Load_i2d_PKCS12_bio(bp: PBIO; p12: PPKCS12): TOpenSSL_C_INT; cdecl;
+begin
+  i2d_PKCS12_bio := LoadLibCryptoFunction('i2d_PKCS12_bio');
+  if not assigned(i2d_PKCS12_bio) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_PKCS12_bio');
+  Result := i2d_PKCS12_bio(bp,p12);
+end;
+
+function Load_d2i_PKCS12_bio(bp: PBIO; p12: PPPKCS12): PPKCS12; cdecl;
+begin
+  d2i_PKCS12_bio := LoadLibCryptoFunction('d2i_PKCS12_bio');
+  if not assigned(d2i_PKCS12_bio) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_PKCS12_bio');
+  Result := d2i_PKCS12_bio(bp,p12);
+end;
+
+function Load_PKCS12_newpass(p12: PPKCS12; const oldpass: PAnsiChar; const newpass: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
+  PKCS12_newpass := LoadLibCryptoFunction('PKCS12_newpass');
+  if not assigned(PKCS12_newpass) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('PKCS12_newpass');
+  Result := PKCS12_newpass(p12,oldpass,newpass);
+end;
+
 
 procedure UnLoad;
 begin
-  PKCS12_mac_present := nil;
-  PKCS12_get0_mac := nil;
-  PKCS12_SAFEBAG_get0_attr := nil;
-  PKCS12_SAFEBAG_get0_type := nil;
-  PKCS12_SAFEBAG_get_nid := nil;
-  PKCS12_SAFEBAG_get_bag_nid := nil;
-  PKCS12_SAFEBAG_get1_cert := nil;
-  PKCS12_SAFEBAG_get1_crl := nil;
-  PKCS12_SAFEBAG_get0_p8inf := nil;
-  PKCS12_SAFEBAG_get0_pkcs8 := nil;
-  PKCS12_SAFEBAG_create_cert := nil;
-  PKCS12_SAFEBAG_create_crl := nil;
-  PKCS12_SAFEBAG_create0_p8inf := nil;
-  PKCS12_SAFEBAG_create0_pkcs8 := nil;
-  PKCS12_SAFEBAG_create_pkcs8_encrypt := nil;
-  PKCS12_item_pack_safebag := nil;
-  PKCS8_decrypt := nil;
-  PKCS12_decrypt_skey := nil;
-  PKCS8_encrypt := nil;
-  PKCS8_set0_pbe := nil;
-  PKCS12_add_localkeyid := nil;
-  PKCS12_add_friendlyname_asc := nil;
-  PKCS12_add_friendlyname_utf8 := nil;
-  PKCS12_add_CSPName_asc := nil;
-  PKCS12_add_friendlyname_uni := nil;
-  PKCS8_add_keyusage := nil;
-  PKCS12_get_friendlyname := nil;
-  PKCS12_pbe_crypt := nil;
-  PKCS12_item_decrypt_d2i := nil;
-  PKCS12_item_i2d_encrypt := nil;
-  PKCS12_init := nil;
-  PKCS12_key_gen_asc := nil;
-  PKCS12_key_gen_uni := nil;
-  PKCS12_key_gen_utf8 := nil;
-  PKCS12_PBE_keyivgen := nil;
-  PKCS12_gen_mac := nil;
-  PKCS12_verify_mac := nil;
-  PKCS12_set_mac := nil;
-  PKCS12_setup_mac := nil;
-  OPENSSL_asc2uni := nil;
-  OPENSSL_uni2asc := nil;
-  OPENSSL_utf82uni := nil;
-  OPENSSL_uni2utf8 := nil;
-  PKCS12_new := nil;
-  PKCS12_free := nil;
-  d2i_PKCS12 := nil;
-  i2d_PKCS12 := nil;
-  PKCS12_it := nil;
-  PKCS12_MAC_DATA_new := nil;
-  PKCS12_MAC_DATA_free := nil;
-  d2i_PKCS12_MAC_DATA := nil;
-  i2d_PKCS12_MAC_DATA := nil;
-  PKCS12_MAC_DATA_it := nil;
-  PKCS12_SAFEBAG_new := nil;
-  PKCS12_SAFEBAG_free := nil;
-  d2i_PKCS12_SAFEBAG := nil;
-  i2d_PKCS12_SAFEBAG := nil;
-  PKCS12_SAFEBAG_it := nil;
-  PKCS12_BAGS_new := nil;
-  PKCS12_BAGS_free := nil;
-  d2i_PKCS12_BAGS := nil;
-  i2d_PKCS12_BAGS := nil;
-  PKCS12_BAGS_it := nil;
-  PKCS12_PBE_add := nil;
-  PKCS12_parse := nil;
-  PKCS12_create := nil;
-  i2d_PKCS12_bio := nil;
-  d2i_PKCS12_bio := nil;
-  PKCS12_newpass := nil;
+  PKCS12_mac_present := Load_PKCS12_mac_present;
+  PKCS12_get0_mac := Load_PKCS12_get0_mac;
+  PKCS12_SAFEBAG_get0_attr := Load_PKCS12_SAFEBAG_get0_attr;
+  PKCS12_SAFEBAG_get0_type := Load_PKCS12_SAFEBAG_get0_type;
+  PKCS12_SAFEBAG_get_nid := Load_PKCS12_SAFEBAG_get_nid;
+  PKCS12_SAFEBAG_get_bag_nid := Load_PKCS12_SAFEBAG_get_bag_nid;
+  PKCS12_SAFEBAG_get1_cert := Load_PKCS12_SAFEBAG_get1_cert;
+  PKCS12_SAFEBAG_get1_crl := Load_PKCS12_SAFEBAG_get1_crl;
+  PKCS12_SAFEBAG_get0_p8inf := Load_PKCS12_SAFEBAG_get0_p8inf;
+  PKCS12_SAFEBAG_get0_pkcs8 := Load_PKCS12_SAFEBAG_get0_pkcs8;
+  PKCS12_SAFEBAG_create_cert := Load_PKCS12_SAFEBAG_create_cert;
+  PKCS12_SAFEBAG_create_crl := Load_PKCS12_SAFEBAG_create_crl;
+  PKCS12_SAFEBAG_create0_p8inf := Load_PKCS12_SAFEBAG_create0_p8inf;
+  PKCS12_SAFEBAG_create0_pkcs8 := Load_PKCS12_SAFEBAG_create0_pkcs8;
+  PKCS12_SAFEBAG_create_pkcs8_encrypt := Load_PKCS12_SAFEBAG_create_pkcs8_encrypt;
+  PKCS12_item_pack_safebag := Load_PKCS12_item_pack_safebag;
+  PKCS8_decrypt := Load_PKCS8_decrypt;
+  PKCS12_decrypt_skey := Load_PKCS12_decrypt_skey;
+  PKCS8_encrypt := Load_PKCS8_encrypt;
+  PKCS8_set0_pbe := Load_PKCS8_set0_pbe;
+  PKCS12_add_localkeyid := Load_PKCS12_add_localkeyid;
+  PKCS12_add_friendlyname_asc := Load_PKCS12_add_friendlyname_asc;
+  PKCS12_add_friendlyname_utf8 := Load_PKCS12_add_friendlyname_utf8;
+  PKCS12_add_CSPName_asc := Load_PKCS12_add_CSPName_asc;
+  PKCS12_add_friendlyname_uni := Load_PKCS12_add_friendlyname_uni;
+  PKCS8_add_keyusage := Load_PKCS8_add_keyusage;
+  PKCS12_get_friendlyname := Load_PKCS12_get_friendlyname;
+  PKCS12_pbe_crypt := Load_PKCS12_pbe_crypt;
+  PKCS12_item_decrypt_d2i := Load_PKCS12_item_decrypt_d2i;
+  PKCS12_item_i2d_encrypt := Load_PKCS12_item_i2d_encrypt;
+  PKCS12_init := Load_PKCS12_init;
+  PKCS12_key_gen_asc := Load_PKCS12_key_gen_asc;
+  PKCS12_key_gen_uni := Load_PKCS12_key_gen_uni;
+  PKCS12_key_gen_utf8 := Load_PKCS12_key_gen_utf8;
+  PKCS12_PBE_keyivgen := Load_PKCS12_PBE_keyivgen;
+  PKCS12_gen_mac := Load_PKCS12_gen_mac;
+  PKCS12_verify_mac := Load_PKCS12_verify_mac;
+  PKCS12_set_mac := Load_PKCS12_set_mac;
+  PKCS12_setup_mac := Load_PKCS12_setup_mac;
+  OPENSSL_asc2uni := Load_OPENSSL_asc2uni;
+  OPENSSL_uni2asc := Load_OPENSSL_uni2asc;
+  OPENSSL_utf82uni := Load_OPENSSL_utf82uni;
+  OPENSSL_uni2utf8 := Load_OPENSSL_uni2utf8;
+  PKCS12_new := Load_PKCS12_new;
+  PKCS12_free := Load_PKCS12_free;
+  d2i_PKCS12 := Load_d2i_PKCS12;
+  i2d_PKCS12 := Load_i2d_PKCS12;
+  PKCS12_it := Load_PKCS12_it;
+  PKCS12_MAC_DATA_new := Load_PKCS12_MAC_DATA_new;
+  PKCS12_MAC_DATA_free := Load_PKCS12_MAC_DATA_free;
+  d2i_PKCS12_MAC_DATA := Load_d2i_PKCS12_MAC_DATA;
+  i2d_PKCS12_MAC_DATA := Load_i2d_PKCS12_MAC_DATA;
+  PKCS12_MAC_DATA_it := Load_PKCS12_MAC_DATA_it;
+  PKCS12_SAFEBAG_new := Load_PKCS12_SAFEBAG_new;
+  PKCS12_SAFEBAG_free := Load_PKCS12_SAFEBAG_free;
+  d2i_PKCS12_SAFEBAG := Load_d2i_PKCS12_SAFEBAG;
+  i2d_PKCS12_SAFEBAG := Load_i2d_PKCS12_SAFEBAG;
+  PKCS12_SAFEBAG_it := Load_PKCS12_SAFEBAG_it;
+  PKCS12_BAGS_new := Load_PKCS12_BAGS_new;
+  PKCS12_BAGS_free := Load_PKCS12_BAGS_free;
+  d2i_PKCS12_BAGS := Load_d2i_PKCS12_BAGS;
+  i2d_PKCS12_BAGS := Load_i2d_PKCS12_BAGS;
+  PKCS12_BAGS_it := Load_PKCS12_BAGS_it;
+  PKCS12_PBE_add := Load_PKCS12_PBE_add;
+  PKCS12_parse := Load_PKCS12_parse;
+  PKCS12_create := Load_PKCS12_create;
+  i2d_PKCS12_bio := Load_i2d_PKCS12_bio;
+  d2i_PKCS12_bio := Load_d2i_PKCS12_bio;
+  PKCS12_newpass := Load_PKCS12_newpass;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
-Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

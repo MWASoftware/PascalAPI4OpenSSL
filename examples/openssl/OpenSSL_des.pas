@@ -163,50 +163,94 @@ procedure DES_ede2_ofb64_encrypt(in_:Pbyte; out_:Pbyte; length:longint; ks1:PDES
 procedure DES_fixup_key_parity(key: PDES_cblock); {removed 1.0.0}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ELSE}
+
+{Declare external function initialisers - should not be called directly}
+
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+procedure Load_DES_ecb2_encrypt(input:Pconst_DES_cblock; output:PDES_cblock; ks1:PDES_key_schedule; ks2:PDES_key_schedule; enc:longint); cdecl;
+procedure Load_DES_ede2_cbc_encrypt(input:Pbyte; output:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl;
+procedure Load_DES_ede2_cfb64_encrypt(in_:Pbyte; out_:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ivec:PDES_cblock; num:Plongint; enc:longint); cdecl;
+procedure Load_DES_ede2_ofb64_encrypt(in_:Pbyte; out_:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ivec:PDES_cblock; num:Plongint); cdecl;
+{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_DES_options: PAnsiChar; cdecl;
+procedure Load_DES_ecb3_encrypt(input:Pconst_DES_cblock; output:PDES_cblock; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; enc:longint); cdecl;
+function Load_DES_cbc_cksum(input:Pbyte; output:PDES_cblock; length:longint; schedule:PDES_key_schedule; ivec:Pconst_DES_cblock): DES_LONG; cdecl;
+procedure Load_DES_cbc_encrypt(input:Pbyte; output:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl;
+procedure Load_DES_ncbc_encrypt(input:Pbyte; output:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl;
+procedure Load_DES_xcbc_encrypt(input:Pbyte; output:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; inw:Pconst_DES_cblock; outw:Pconst_DES_cblock; enc:longint); cdecl;
+procedure Load_DES_cfb_encrypt(in_:Pbyte; out_:Pbyte; numbits:longint; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl;
+procedure Load_DES_ecb_encrypt(input:Pconst_DES_cblock; output:PDES_cblock; ks:PDES_key_schedule; enc:longint); cdecl;
+procedure Load_DES_encrypt1(data:PDES_LONG; ks:PDES_key_schedule; enc:longint); cdecl;
+procedure Load_DES_encrypt2(data:PDES_LONG; ks:PDES_key_schedule; enc:longint); cdecl;
+procedure Load_DES_encrypt3(data:PDES_LONG; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule); cdecl;
+procedure Load_DES_decrypt3(data:PDES_LONG; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule); cdecl;
+procedure Load_DES_ede3_cbc_encrypt(input:Pbyte; output:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl;
+procedure Load_DES_ede3_cfb64_encrypt(in_:Pbyte; out_:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; ivec:PDES_cblock; num:Plongint; enc:longint); cdecl;
+procedure Load_DES_ede3_cfb_encrypt(in_:Pbyte; out_:Pbyte; numbits:longint; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl;
+procedure Load_DES_ede3_ofb64_encrypt(in_:Pbyte; out_:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; ivec:PDES_cblock; num:Plongint); cdecl;
+function Load_DES_fcrypt(buf:PAnsiChar; salt:PAnsiChar; ret:PAnsiChar): PAnsiChar; cdecl;
+function Load_DES_crypt(buf:PAnsiChar; salt:PAnsiChar): PAnsiChar; cdecl;
+procedure Load_DES_ofb_encrypt(in_:Pbyte; out_:Pbyte; numbits:longint; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock); cdecl;
+procedure Load_DES_pcbc_encrypt(input:Pbyte; output:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl;
+function Load_DES_quad_cksum(input:Pbyte; output:PDES_cblock; length:longint; out_count:longint; seed:PDES_cblock): DES_LONG; cdecl;
+function Load_DES_random_key(ret:PDES_cblock): longint; cdecl;
+function Load_DES_check_key_parity(key:Pconst_DES_cblock): longint; cdecl;
+function Load_DES_is_weak_key(key:Pconst_DES_cblock): longint; cdecl;
+function Load_DES_key_sched(key:Pconst_DES_cblock; schedule:PDES_key_schedule): longint; cdecl;
+function Load_DES_set_key_checked(key:Pconst_DES_cblock; schedule:PDES_key_schedule): longint; cdecl;
+procedure Load_DES_set_key_unchecked(key:Pconst_DES_cblock; schedule:PDES_key_schedule); cdecl;
+procedure Load_DES_string_to_key(str:PAnsiChar; key:PDES_cblock); cdecl;
+procedure Load_DES_string_to_2keys(str:PAnsiChar; key1:PDES_cblock; key2:PDES_cblock); cdecl;
+procedure Load_DES_cfb64_encrypt(in_:Pbyte; out_:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; num:Plongint; enc:longint); cdecl;
+procedure Load_DES_ofb64_encrypt(in_:Pbyte; out_:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; num:Plongint); cdecl;
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+procedure Load_DES_fixup_key_parity(key: PDES_cblock); cdecl;
+{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+
 var
-  DES_options: function : PAnsiChar; cdecl = nil;
-  DES_ecb3_encrypt: procedure (input:Pconst_DES_cblock; output:PDES_cblock; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; enc:longint); cdecl = nil;
-  DES_cbc_cksum: function (input:Pbyte; output:PDES_cblock; length:longint; schedule:PDES_key_schedule; ivec:Pconst_DES_cblock): DES_LONG; cdecl = nil;
-  DES_cbc_encrypt: procedure (input:Pbyte; output:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl = nil;
-  DES_ncbc_encrypt: procedure (input:Pbyte; output:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl = nil;
-  DES_xcbc_encrypt: procedure (input:Pbyte; output:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; inw:Pconst_DES_cblock; outw:Pconst_DES_cblock; enc:longint); cdecl = nil;
-  DES_cfb_encrypt: procedure (in_:Pbyte; out_:Pbyte; numbits:longint; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl = nil;
-  DES_ecb_encrypt: procedure (input:Pconst_DES_cblock; output:PDES_cblock; ks:PDES_key_schedule; enc:longint); cdecl = nil;
-  DES_encrypt1: procedure (data:PDES_LONG; ks:PDES_key_schedule; enc:longint); cdecl = nil;
-  DES_encrypt2: procedure (data:PDES_LONG; ks:PDES_key_schedule; enc:longint); cdecl = nil;
-  DES_encrypt3: procedure (data:PDES_LONG; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule); cdecl = nil;
-  DES_decrypt3: procedure (data:PDES_LONG; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule); cdecl = nil;
-  DES_ede3_cbc_encrypt: procedure (input:Pbyte; output:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl = nil;
-  DES_ede3_cfb64_encrypt: procedure (in_:Pbyte; out_:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; ivec:PDES_cblock; num:Plongint; enc:longint); cdecl = nil;
-  DES_ede3_cfb_encrypt: procedure (in_:Pbyte; out_:Pbyte; numbits:longint; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl = nil;
-  DES_ede3_ofb64_encrypt: procedure (in_:Pbyte; out_:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; ivec:PDES_cblock; num:Plongint); cdecl = nil;
-  DES_fcrypt: function (buf:PAnsiChar; salt:PAnsiChar; ret:PAnsiChar): PAnsiChar; cdecl = nil;
-  DES_crypt: function (buf:PAnsiChar; salt:PAnsiChar): PAnsiChar; cdecl = nil;
-  DES_ofb_encrypt: procedure (in_:Pbyte; out_:Pbyte; numbits:longint; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock); cdecl = nil;
-  DES_pcbc_encrypt: procedure (input:Pbyte; output:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl = nil;
-  DES_quad_cksum: function (input:Pbyte; output:PDES_cblock; length:longint; out_count:longint; seed:PDES_cblock): DES_LONG; cdecl = nil;
-  DES_random_key: function (ret:PDES_cblock): longint; cdecl = nil;
+  DES_options: function : PAnsiChar; cdecl = Load_DES_options;
+  DES_ecb3_encrypt: procedure (input:Pconst_DES_cblock; output:PDES_cblock; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; enc:longint); cdecl = Load_DES_ecb3_encrypt;
+  DES_cbc_cksum: function (input:Pbyte; output:PDES_cblock; length:longint; schedule:PDES_key_schedule; ivec:Pconst_DES_cblock): DES_LONG; cdecl = Load_DES_cbc_cksum;
+  DES_cbc_encrypt: procedure (input:Pbyte; output:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl = Load_DES_cbc_encrypt;
+  DES_ncbc_encrypt: procedure (input:Pbyte; output:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl = Load_DES_ncbc_encrypt;
+  DES_xcbc_encrypt: procedure (input:Pbyte; output:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; inw:Pconst_DES_cblock; outw:Pconst_DES_cblock; enc:longint); cdecl = Load_DES_xcbc_encrypt;
+  DES_cfb_encrypt: procedure (in_:Pbyte; out_:Pbyte; numbits:longint; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl = Load_DES_cfb_encrypt;
+  DES_ecb_encrypt: procedure (input:Pconst_DES_cblock; output:PDES_cblock; ks:PDES_key_schedule; enc:longint); cdecl = Load_DES_ecb_encrypt;
+  DES_encrypt1: procedure (data:PDES_LONG; ks:PDES_key_schedule; enc:longint); cdecl = Load_DES_encrypt1;
+  DES_encrypt2: procedure (data:PDES_LONG; ks:PDES_key_schedule; enc:longint); cdecl = Load_DES_encrypt2;
+  DES_encrypt3: procedure (data:PDES_LONG; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule); cdecl = Load_DES_encrypt3;
+  DES_decrypt3: procedure (data:PDES_LONG; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule); cdecl = Load_DES_decrypt3;
+  DES_ede3_cbc_encrypt: procedure (input:Pbyte; output:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl = Load_DES_ede3_cbc_encrypt;
+  DES_ede3_cfb64_encrypt: procedure (in_:Pbyte; out_:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; ivec:PDES_cblock; num:Plongint; enc:longint); cdecl = Load_DES_ede3_cfb64_encrypt;
+  DES_ede3_cfb_encrypt: procedure (in_:Pbyte; out_:Pbyte; numbits:longint; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl = Load_DES_ede3_cfb_encrypt;
+  DES_ede3_ofb64_encrypt: procedure (in_:Pbyte; out_:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; ivec:PDES_cblock; num:Plongint); cdecl = Load_DES_ede3_ofb64_encrypt;
+  DES_fcrypt: function (buf:PAnsiChar; salt:PAnsiChar; ret:PAnsiChar): PAnsiChar; cdecl = Load_DES_fcrypt;
+  DES_crypt: function (buf:PAnsiChar; salt:PAnsiChar): PAnsiChar; cdecl = Load_DES_crypt;
+  DES_ofb_encrypt: procedure (in_:Pbyte; out_:Pbyte; numbits:longint; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock); cdecl = Load_DES_ofb_encrypt;
+  DES_pcbc_encrypt: procedure (input:Pbyte; output:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl = Load_DES_pcbc_encrypt;
+  DES_quad_cksum: function (input:Pbyte; output:PDES_cblock; length:longint; out_count:longint; seed:PDES_cblock): DES_LONG; cdecl = Load_DES_quad_cksum;
+  DES_random_key: function (ret:PDES_cblock): longint; cdecl = Load_DES_random_key;
   DES_set_odd_parity: procedure (key:PDES_cblock); cdecl = nil;
-  DES_check_key_parity: function (key:Pconst_DES_cblock): longint; cdecl = nil;
-  DES_is_weak_key: function (key:Pconst_DES_cblock): longint; cdecl = nil;
+  DES_check_key_parity: function (key:Pconst_DES_cblock): longint; cdecl = Load_DES_check_key_parity;
+  DES_is_weak_key: function (key:Pconst_DES_cblock): longint; cdecl = Load_DES_is_weak_key;
   DES_set_key: function (key:Pconst_DES_cblock; var schedule: DES_key_schedule): longint; cdecl = nil;
-  DES_key_sched: function (key:Pconst_DES_cblock; schedule:PDES_key_schedule): longint; cdecl = nil;
-  DES_set_key_checked: function (key:Pconst_DES_cblock; schedule:PDES_key_schedule): longint; cdecl = nil;
-  DES_set_key_unchecked: procedure (key:Pconst_DES_cblock; schedule:PDES_key_schedule); cdecl = nil;
-  DES_string_to_key: procedure (str:PAnsiChar; key:PDES_cblock); cdecl = nil;
-  DES_string_to_2keys: procedure (str:PAnsiChar; key1:PDES_cblock; key2:PDES_cblock); cdecl = nil;
-  DES_cfb64_encrypt: procedure (in_:Pbyte; out_:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; num:Plongint; enc:longint); cdecl = nil;
-  DES_ofb64_encrypt: procedure (in_:Pbyte; out_:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; num:Plongint); cdecl = nil;
+  DES_key_sched: function (key:Pconst_DES_cblock; schedule:PDES_key_schedule): longint; cdecl = Load_DES_key_sched;
+  DES_set_key_checked: function (key:Pconst_DES_cblock; schedule:PDES_key_schedule): longint; cdecl = Load_DES_set_key_checked;
+  DES_set_key_unchecked: procedure (key:Pconst_DES_cblock; schedule:PDES_key_schedule); cdecl = Load_DES_set_key_unchecked;
+  DES_string_to_key: procedure (str:PAnsiChar; key:PDES_cblock); cdecl = Load_DES_string_to_key;
+  DES_string_to_2keys: procedure (str:PAnsiChar; key1:PDES_cblock; key2:PDES_cblock); cdecl = Load_DES_string_to_2keys;
+  DES_cfb64_encrypt: procedure (in_:Pbyte; out_:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; num:Plongint; enc:longint); cdecl = Load_DES_cfb64_encrypt;
+  DES_ofb64_encrypt: procedure (in_:Pbyte; out_:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; num:Plongint); cdecl = Load_DES_ofb64_encrypt;
 
 {Removed functions for which legacy support available - use is deprecated}
 
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 var
-  DES_ecb2_encrypt: procedure (input:Pconst_DES_cblock; output:PDES_cblock; ks1:PDES_key_schedule; ks2:PDES_key_schedule; enc:longint); cdecl = nil; {removed 1.0.0}
-  DES_ede2_cbc_encrypt: procedure (input:Pbyte; output:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl = nil; {removed 1.0.0}
-  DES_ede2_cfb64_encrypt: procedure (in_:Pbyte; out_:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ivec:PDES_cblock; num:Plongint; enc:longint); cdecl = nil; {removed 1.0.0}
-  DES_ede2_ofb64_encrypt: procedure (in_:Pbyte; out_:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ivec:PDES_cblock; num:Plongint); cdecl = nil; {removed 1.0.0}
-  DES_fixup_key_parity: procedure (key: PDES_cblock); cdecl = nil; {removed 1.0.0}
+  DES_ecb2_encrypt: procedure (input:Pconst_DES_cblock; output:PDES_cblock; ks1:PDES_key_schedule; ks2:PDES_key_schedule; enc:longint); cdecl = Load_DES_ecb2_encrypt; {removed 1.0.0}
+  DES_ede2_cbc_encrypt: procedure (input:Pbyte; output:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl = Load_DES_ede2_cbc_encrypt; {removed 1.0.0}
+  DES_ede2_cfb64_encrypt: procedure (in_:Pbyte; out_:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ivec:PDES_cblock; num:Plongint; enc:longint); cdecl = Load_DES_ede2_cfb64_encrypt; {removed 1.0.0}
+  DES_ede2_ofb64_encrypt: procedure (in_:Pbyte; out_:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ivec:PDES_cblock; num:Plongint); cdecl = Load_DES_ede2_ofb64_encrypt; {removed 1.0.0}
+  DES_fixup_key_parity: procedure (key: PDES_cblock); cdecl = Load_DES_fixup_key_parity; {removed 1.0.0}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF}
 const
@@ -321,421 +365,306 @@ procedure COMPAT_DES_fixup_key_parity(key:PDES_cblock); cdecl;
 
 
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$WARN  NO_RETVAL OFF}
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-procedure ERROR_DES_ecb2_encrypt(input:Pconst_DES_cblock; output:PDES_cblock; ks1:PDES_key_schedule; ks2:PDES_key_schedule; enc:longint); cdecl; {removed 1.0.0}
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+procedure Load_DES_ecb2_encrypt(input:Pconst_DES_cblock; output:PDES_cblock; ks1:PDES_key_schedule; ks2:PDES_key_schedule; enc:longint); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ecb2_encrypt');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-procedure ERROR_DES_ede2_cbc_encrypt(input:Pbyte; output:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ede2_cbc_encrypt');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-procedure ERROR_DES_ede2_cfb64_encrypt(in_:Pbyte; out_:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ivec:PDES_cblock; num:Plongint; enc:longint); cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ede2_cfb64_encrypt');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-procedure ERROR_DES_ede2_ofb64_encrypt(in_:Pbyte; out_:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ivec:PDES_cblock; num:Plongint); cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ede2_ofb64_encrypt');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-function ERROR_DES_options: PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_options');
+  DES_ecb2_encrypt := LoadLibCryptoFunction('DES_ecb2_encrypt');
+  if not assigned(DES_ecb2_encrypt) then
+    DES_ecb2_encrypt := @COMPAT_DES_ecb2_encrypt;
+  DES_ecb2_encrypt(input,output,ks1,ks2,enc);
 end;
 
-procedure ERROR_DES_ecb3_encrypt(input:Pconst_DES_cblock; output:PDES_cblock; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; enc:longint); cdecl;
+procedure Load_DES_ede2_cbc_encrypt(input:Pbyte; output:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ecb3_encrypt');
+  DES_ede2_cbc_encrypt := LoadLibCryptoFunction('DES_ede2_cbc_encrypt');
+  if not assigned(DES_ede2_cbc_encrypt) then
+    DES_ede2_cbc_encrypt := @COMPAT_DES_ede2_cbc_encrypt;
+  DES_ede2_cbc_encrypt(input,output,length,ks1,ks2,ivec,enc);
 end;
 
-function ERROR_DES_cbc_cksum(input:Pbyte; output:PDES_cblock; length:longint; schedule:PDES_key_schedule; ivec:Pconst_DES_cblock): DES_LONG; cdecl;
+procedure Load_DES_ede2_cfb64_encrypt(in_:Pbyte; out_:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ivec:PDES_cblock; num:Plongint; enc:longint); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_cbc_cksum');
+  DES_ede2_cfb64_encrypt := LoadLibCryptoFunction('DES_ede2_cfb64_encrypt');
+  if not assigned(DES_ede2_cfb64_encrypt) then
+    DES_ede2_cfb64_encrypt := @COMPAT_DES_ede2_cfb64_encrypt;
+  DES_ede2_cfb64_encrypt(in_,out_,length,ks1,ks2,ivec,num,enc);
 end;
 
-procedure ERROR_DES_cbc_encrypt(input:Pbyte; output:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl;
+procedure Load_DES_ede2_ofb64_encrypt(in_:Pbyte; out_:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ivec:PDES_cblock; num:Plongint); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_cbc_encrypt');
+  DES_ede2_ofb64_encrypt := LoadLibCryptoFunction('DES_ede2_ofb64_encrypt');
+  if not assigned(DES_ede2_ofb64_encrypt) then
+    DES_ede2_ofb64_encrypt := @COMPAT_DES_ede2_ofb64_encrypt;
+  DES_ede2_ofb64_encrypt(in_,out_,length,ks1,ks2,ivec,num);
 end;
 
-procedure ERROR_DES_ncbc_encrypt(input:Pbyte; output:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl;
+{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_DES_options: PAnsiChar; cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ncbc_encrypt');
+  DES_options := LoadLibCryptoFunction('DES_options');
+  if not assigned(DES_options) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_options');
+  Result := DES_options();
 end;
 
-procedure ERROR_DES_xcbc_encrypt(input:Pbyte; output:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; inw:Pconst_DES_cblock; outw:Pconst_DES_cblock; enc:longint); cdecl;
+procedure Load_DES_ecb3_encrypt(input:Pconst_DES_cblock; output:PDES_cblock; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; enc:longint); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_xcbc_encrypt');
+  DES_ecb3_encrypt := LoadLibCryptoFunction('DES_ecb3_encrypt');
+  if not assigned(DES_ecb3_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ecb3_encrypt');
+  DES_ecb3_encrypt(input,output,ks1,ks2,ks3,enc);
 end;
 
-procedure ERROR_DES_cfb_encrypt(in_:Pbyte; out_:Pbyte; numbits:longint; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl;
+function Load_DES_cbc_cksum(input:Pbyte; output:PDES_cblock; length:longint; schedule:PDES_key_schedule; ivec:Pconst_DES_cblock): DES_LONG; cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_cfb_encrypt');
+  DES_cbc_cksum := LoadLibCryptoFunction('DES_cbc_cksum');
+  if not assigned(DES_cbc_cksum) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_cbc_cksum');
+  Result := DES_cbc_cksum(input,output,length,schedule,ivec);
 end;
 
-procedure ERROR_DES_ecb_encrypt(input:Pconst_DES_cblock; output:PDES_cblock; ks:PDES_key_schedule; enc:longint); cdecl;
+procedure Load_DES_cbc_encrypt(input:Pbyte; output:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ecb_encrypt');
+  DES_cbc_encrypt := LoadLibCryptoFunction('DES_cbc_encrypt');
+  if not assigned(DES_cbc_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_cbc_encrypt');
+  DES_cbc_encrypt(input,output,length,schedule,ivec,enc);
 end;
 
-procedure ERROR_DES_encrypt1(data:PDES_LONG; ks:PDES_key_schedule; enc:longint); cdecl;
+procedure Load_DES_ncbc_encrypt(input:Pbyte; output:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_encrypt1');
+  DES_ncbc_encrypt := LoadLibCryptoFunction('DES_ncbc_encrypt');
+  if not assigned(DES_ncbc_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ncbc_encrypt');
+  DES_ncbc_encrypt(input,output,length,schedule,ivec,enc);
 end;
 
-procedure ERROR_DES_encrypt2(data:PDES_LONG; ks:PDES_key_schedule; enc:longint); cdecl;
+procedure Load_DES_xcbc_encrypt(input:Pbyte; output:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; inw:Pconst_DES_cblock; outw:Pconst_DES_cblock; enc:longint); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_encrypt2');
+  DES_xcbc_encrypt := LoadLibCryptoFunction('DES_xcbc_encrypt');
+  if not assigned(DES_xcbc_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_xcbc_encrypt');
+  DES_xcbc_encrypt(input,output,length,schedule,ivec,inw,outw,enc);
 end;
 
-procedure ERROR_DES_encrypt3(data:PDES_LONG; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule); cdecl;
+procedure Load_DES_cfb_encrypt(in_:Pbyte; out_:Pbyte; numbits:longint; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_encrypt3');
+  DES_cfb_encrypt := LoadLibCryptoFunction('DES_cfb_encrypt');
+  if not assigned(DES_cfb_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_cfb_encrypt');
+  DES_cfb_encrypt(in_,out_,numbits,length,schedule,ivec,enc);
 end;
 
-procedure ERROR_DES_decrypt3(data:PDES_LONG; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule); cdecl;
+procedure Load_DES_ecb_encrypt(input:Pconst_DES_cblock; output:PDES_cblock; ks:PDES_key_schedule; enc:longint); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_decrypt3');
+  DES_ecb_encrypt := LoadLibCryptoFunction('DES_ecb_encrypt');
+  if not assigned(DES_ecb_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ecb_encrypt');
+  DES_ecb_encrypt(input,output,ks,enc);
 end;
 
-procedure ERROR_DES_ede3_cbc_encrypt(input:Pbyte; output:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl;
+procedure Load_DES_encrypt1(data:PDES_LONG; ks:PDES_key_schedule; enc:longint); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ede3_cbc_encrypt');
+  DES_encrypt1 := LoadLibCryptoFunction('DES_encrypt1');
+  if not assigned(DES_encrypt1) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_encrypt1');
+  DES_encrypt1(data,ks,enc);
 end;
 
-procedure ERROR_DES_ede3_cfb64_encrypt(in_:Pbyte; out_:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; ivec:PDES_cblock; num:Plongint; enc:longint); cdecl;
+procedure Load_DES_encrypt2(data:PDES_LONG; ks:PDES_key_schedule; enc:longint); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ede3_cfb64_encrypt');
+  DES_encrypt2 := LoadLibCryptoFunction('DES_encrypt2');
+  if not assigned(DES_encrypt2) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_encrypt2');
+  DES_encrypt2(data,ks,enc);
 end;
 
-procedure ERROR_DES_ede3_cfb_encrypt(in_:Pbyte; out_:Pbyte; numbits:longint; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl;
+procedure Load_DES_encrypt3(data:PDES_LONG; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ede3_cfb_encrypt');
+  DES_encrypt3 := LoadLibCryptoFunction('DES_encrypt3');
+  if not assigned(DES_encrypt3) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_encrypt3');
+  DES_encrypt3(data,ks1,ks2,ks3);
 end;
 
-procedure ERROR_DES_ede3_ofb64_encrypt(in_:Pbyte; out_:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; ivec:PDES_cblock; num:Plongint); cdecl;
+procedure Load_DES_decrypt3(data:PDES_LONG; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ede3_ofb64_encrypt');
+  DES_decrypt3 := LoadLibCryptoFunction('DES_decrypt3');
+  if not assigned(DES_decrypt3) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_decrypt3');
+  DES_decrypt3(data,ks1,ks2,ks3);
 end;
 
-function ERROR_DES_fcrypt(buf:PAnsiChar; salt:PAnsiChar; ret:PAnsiChar): PAnsiChar; cdecl;
+procedure Load_DES_ede3_cbc_encrypt(input:Pbyte; output:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_fcrypt');
+  DES_ede3_cbc_encrypt := LoadLibCryptoFunction('DES_ede3_cbc_encrypt');
+  if not assigned(DES_ede3_cbc_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ede3_cbc_encrypt');
+  DES_ede3_cbc_encrypt(input,output,length,ks1,ks2,ks3,ivec,enc);
 end;
 
-function ERROR_DES_crypt(buf:PAnsiChar; salt:PAnsiChar): PAnsiChar; cdecl;
+procedure Load_DES_ede3_cfb64_encrypt(in_:Pbyte; out_:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; ivec:PDES_cblock; num:Plongint; enc:longint); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_crypt');
+  DES_ede3_cfb64_encrypt := LoadLibCryptoFunction('DES_ede3_cfb64_encrypt');
+  if not assigned(DES_ede3_cfb64_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ede3_cfb64_encrypt');
+  DES_ede3_cfb64_encrypt(in_,out_,length,ks1,ks2,ks3,ivec,num,enc);
 end;
 
-procedure ERROR_DES_ofb_encrypt(in_:Pbyte; out_:Pbyte; numbits:longint; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock); cdecl;
+procedure Load_DES_ede3_cfb_encrypt(in_:Pbyte; out_:Pbyte; numbits:longint; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ofb_encrypt');
+  DES_ede3_cfb_encrypt := LoadLibCryptoFunction('DES_ede3_cfb_encrypt');
+  if not assigned(DES_ede3_cfb_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ede3_cfb_encrypt');
+  DES_ede3_cfb_encrypt(in_,out_,numbits,length,ks1,ks2,ks3,ivec,enc);
 end;
 
-procedure ERROR_DES_pcbc_encrypt(input:Pbyte; output:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl;
+procedure Load_DES_ede3_ofb64_encrypt(in_:Pbyte; out_:Pbyte; length:longint; ks1:PDES_key_schedule; ks2:PDES_key_schedule; ks3:PDES_key_schedule; ivec:PDES_cblock; num:Plongint); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_pcbc_encrypt');
+  DES_ede3_ofb64_encrypt := LoadLibCryptoFunction('DES_ede3_ofb64_encrypt');
+  if not assigned(DES_ede3_ofb64_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ede3_ofb64_encrypt');
+  DES_ede3_ofb64_encrypt(in_,out_,length,ks1,ks2,ks3,ivec,num);
 end;
 
-function ERROR_DES_quad_cksum(input:Pbyte; output:PDES_cblock; length:longint; out_count:longint; seed:PDES_cblock): DES_LONG; cdecl;
+function Load_DES_fcrypt(buf:PAnsiChar; salt:PAnsiChar; ret:PAnsiChar): PAnsiChar; cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_quad_cksum');
+  DES_fcrypt := LoadLibCryptoFunction('DES_fcrypt');
+  if not assigned(DES_fcrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_fcrypt');
+  Result := DES_fcrypt(buf,salt,ret);
 end;
 
-function ERROR_DES_random_key(ret:PDES_cblock): longint; cdecl;
+function Load_DES_crypt(buf:PAnsiChar; salt:PAnsiChar): PAnsiChar; cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_random_key');
+  DES_crypt := LoadLibCryptoFunction('DES_crypt');
+  if not assigned(DES_crypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_crypt');
+  Result := DES_crypt(buf,salt);
 end;
 
-function ERROR_DES_check_key_parity(key:Pconst_DES_cblock): longint; cdecl;
+procedure Load_DES_ofb_encrypt(in_:Pbyte; out_:Pbyte; numbits:longint; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_check_key_parity');
+  DES_ofb_encrypt := LoadLibCryptoFunction('DES_ofb_encrypt');
+  if not assigned(DES_ofb_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ofb_encrypt');
+  DES_ofb_encrypt(in_,out_,numbits,length,schedule,ivec);
 end;
 
-function ERROR_DES_is_weak_key(key:Pconst_DES_cblock): longint; cdecl;
+procedure Load_DES_pcbc_encrypt(input:Pbyte; output:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; enc:longint); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_is_weak_key');
+  DES_pcbc_encrypt := LoadLibCryptoFunction('DES_pcbc_encrypt');
+  if not assigned(DES_pcbc_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_pcbc_encrypt');
+  DES_pcbc_encrypt(input,output,length,schedule,ivec,enc);
 end;
 
-function ERROR_DES_key_sched(key:Pconst_DES_cblock; schedule:PDES_key_schedule): longint; cdecl;
+function Load_DES_quad_cksum(input:Pbyte; output:PDES_cblock; length:longint; out_count:longint; seed:PDES_cblock): DES_LONG; cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_key_sched');
+  DES_quad_cksum := LoadLibCryptoFunction('DES_quad_cksum');
+  if not assigned(DES_quad_cksum) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_quad_cksum');
+  Result := DES_quad_cksum(input,output,length,out_count,seed);
 end;
 
-function ERROR_DES_set_key_checked(key:Pconst_DES_cblock; schedule:PDES_key_schedule): longint; cdecl;
+function Load_DES_random_key(ret:PDES_cblock): longint; cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_set_key_checked');
+  DES_random_key := LoadLibCryptoFunction('DES_random_key');
+  if not assigned(DES_random_key) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_random_key');
+  Result := DES_random_key(ret);
 end;
 
-procedure ERROR_DES_set_key_unchecked(key:Pconst_DES_cblock; schedule:PDES_key_schedule); cdecl;
+function Load_DES_check_key_parity(key:Pconst_DES_cblock): longint; cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_set_key_unchecked');
+  DES_check_key_parity := LoadLibCryptoFunction('DES_check_key_parity');
+  if not assigned(DES_check_key_parity) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_check_key_parity');
+  Result := DES_check_key_parity(key);
 end;
 
-procedure ERROR_DES_string_to_key(str:PAnsiChar; key:PDES_cblock); cdecl;
+function Load_DES_is_weak_key(key:Pconst_DES_cblock): longint; cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_string_to_key');
+  DES_is_weak_key := LoadLibCryptoFunction('DES_is_weak_key');
+  if not assigned(DES_is_weak_key) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_is_weak_key');
+  Result := DES_is_weak_key(key);
 end;
 
-procedure ERROR_DES_string_to_2keys(str:PAnsiChar; key1:PDES_cblock; key2:PDES_cblock); cdecl;
+function Load_DES_key_sched(key:Pconst_DES_cblock; schedule:PDES_key_schedule): longint; cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_string_to_2keys');
+  DES_key_sched := LoadLibCryptoFunction('DES_key_sched');
+  if not assigned(DES_key_sched) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_key_sched');
+  Result := DES_key_sched(key,schedule);
 end;
 
-procedure ERROR_DES_cfb64_encrypt(in_:Pbyte; out_:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; num:Plongint; enc:longint); cdecl;
+function Load_DES_set_key_checked(key:Pconst_DES_cblock; schedule:PDES_key_schedule): longint; cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_cfb64_encrypt');
+  DES_set_key_checked := LoadLibCryptoFunction('DES_set_key_checked');
+  if not assigned(DES_set_key_checked) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_set_key_checked');
+  Result := DES_set_key_checked(key,schedule);
 end;
 
-procedure ERROR_DES_ofb64_encrypt(in_:Pbyte; out_:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; num:Plongint); cdecl;
+procedure Load_DES_set_key_unchecked(key:Pconst_DES_cblock; schedule:PDES_key_schedule); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ofb64_encrypt');
+  DES_set_key_unchecked := LoadLibCryptoFunction('DES_set_key_unchecked');
+  if not assigned(DES_set_key_unchecked) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_set_key_unchecked');
+  DES_set_key_unchecked(key,schedule);
 end;
 
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-procedure ERROR_DES_fixup_key_parity(key: PDES_cblock); cdecl; {removed 1.0.0}
+procedure Load_DES_string_to_key(str:PAnsiChar; key:PDES_cblock); cdecl;
 begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('DES_fixup_key_parity');
+  DES_string_to_key := LoadLibCryptoFunction('DES_string_to_key');
+  if not assigned(DES_string_to_key) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_string_to_key');
+  DES_string_to_key(str,key);
 end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 
-{$WARN  NO_RETVAL ON}
+procedure Load_DES_string_to_2keys(str:PAnsiChar; key1:PDES_cblock; key2:PDES_cblock); cdecl;
+begin
+  DES_string_to_2keys := LoadLibCryptoFunction('DES_string_to_2keys');
+  if not assigned(DES_string_to_2keys) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_string_to_2keys');
+  DES_string_to_2keys(str,key1,key2);
+end;
+
+procedure Load_DES_cfb64_encrypt(in_:Pbyte; out_:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; num:Plongint; enc:longint); cdecl;
+begin
+  DES_cfb64_encrypt := LoadLibCryptoFunction('DES_cfb64_encrypt');
+  if not assigned(DES_cfb64_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_cfb64_encrypt');
+  DES_cfb64_encrypt(in_,out_,length,schedule,ivec,num,enc);
+end;
+
+procedure Load_DES_ofb64_encrypt(in_:Pbyte; out_:Pbyte; length:longint; schedule:PDES_key_schedule; ivec:PDES_cblock; num:Plongint); cdecl;
+begin
+  DES_ofb64_encrypt := LoadLibCryptoFunction('DES_ofb64_encrypt');
+  if not assigned(DES_ofb64_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('DES_ofb64_encrypt');
+  DES_ofb64_encrypt(in_,out_,length,schedule,ivec,num);
+end;
+
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+procedure Load_DES_fixup_key_parity(key: PDES_cblock); cdecl;
+begin
+  DES_fixup_key_parity := LoadLibCryptoFunction('DES_fixup_key_parity');
+  if not assigned(DES_fixup_key_parity) then
+    DES_fixup_key_parity := @COMPAT_DES_fixup_key_parity;
+  DES_fixup_key_parity(key);
+end;
+
+{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
 procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
 var FuncLoadError: boolean;
 begin
-{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  DES_ecb2_encrypt := LoadLibCryptoFunction('DES_ecb2_encrypt');
-  FuncLoadError := not assigned(DES_ecb2_encrypt);
-  if FuncLoadError then
-  begin
-    DES_ecb2_encrypt := @COMPAT_DES_ecb2_encrypt;
-    if DES_ecb2_encrypt_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('DES_ecb2_encrypt');
-  end;
-
-  DES_ede2_cbc_encrypt := LoadLibCryptoFunction('DES_ede2_cbc_encrypt');
-  FuncLoadError := not assigned(DES_ede2_cbc_encrypt);
-  if FuncLoadError then
-  begin
-    DES_ede2_cbc_encrypt := @COMPAT_DES_ede2_cbc_encrypt;
-    if DES_ede2_cbc_encrypt_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('DES_ede2_cbc_encrypt');
-  end;
-
-  DES_ede2_cfb64_encrypt := LoadLibCryptoFunction('DES_ede2_cfb64_encrypt');
-  FuncLoadError := not assigned(DES_ede2_cfb64_encrypt);
-  if FuncLoadError then
-  begin
-    DES_ede2_cfb64_encrypt := @COMPAT_DES_ede2_cfb64_encrypt;
-    if DES_ede2_cfb64_encrypt_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('DES_ede2_cfb64_encrypt');
-  end;
-
-  DES_ede2_ofb64_encrypt := LoadLibCryptoFunction('DES_ede2_ofb64_encrypt');
-  FuncLoadError := not assigned(DES_ede2_ofb64_encrypt);
-  if FuncLoadError then
-  begin
-    DES_ede2_ofb64_encrypt := @COMPAT_DES_ede2_ofb64_encrypt;
-    if DES_ede2_ofb64_encrypt_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('DES_ede2_ofb64_encrypt');
-  end;
-
-{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-  DES_options := LoadLibCryptoFunction('DES_options');
-  FuncLoadError := not assigned(DES_options);
-  if FuncLoadError then
-  begin
-    DES_options :=  @ERROR_DES_options;
-  end;
-
-  DES_ecb3_encrypt := LoadLibCryptoFunction('DES_ecb3_encrypt');
-  FuncLoadError := not assigned(DES_ecb3_encrypt);
-  if FuncLoadError then
-  begin
-    DES_ecb3_encrypt :=  @ERROR_DES_ecb3_encrypt;
-  end;
-
-  DES_cbc_cksum := LoadLibCryptoFunction('DES_cbc_cksum');
-  FuncLoadError := not assigned(DES_cbc_cksum);
-  if FuncLoadError then
-  begin
-    DES_cbc_cksum :=  @ERROR_DES_cbc_cksum;
-  end;
-
-  DES_cbc_encrypt := LoadLibCryptoFunction('DES_cbc_encrypt');
-  FuncLoadError := not assigned(DES_cbc_encrypt);
-  if FuncLoadError then
-  begin
-    DES_cbc_encrypt :=  @ERROR_DES_cbc_encrypt;
-  end;
-
-  DES_ncbc_encrypt := LoadLibCryptoFunction('DES_ncbc_encrypt');
-  FuncLoadError := not assigned(DES_ncbc_encrypt);
-  if FuncLoadError then
-  begin
-    DES_ncbc_encrypt :=  @ERROR_DES_ncbc_encrypt;
-  end;
-
-  DES_xcbc_encrypt := LoadLibCryptoFunction('DES_xcbc_encrypt');
-  FuncLoadError := not assigned(DES_xcbc_encrypt);
-  if FuncLoadError then
-  begin
-    DES_xcbc_encrypt :=  @ERROR_DES_xcbc_encrypt;
-  end;
-
-  DES_cfb_encrypt := LoadLibCryptoFunction('DES_cfb_encrypt');
-  FuncLoadError := not assigned(DES_cfb_encrypt);
-  if FuncLoadError then
-  begin
-    DES_cfb_encrypt :=  @ERROR_DES_cfb_encrypt;
-  end;
-
-  DES_ecb_encrypt := LoadLibCryptoFunction('DES_ecb_encrypt');
-  FuncLoadError := not assigned(DES_ecb_encrypt);
-  if FuncLoadError then
-  begin
-    DES_ecb_encrypt :=  @ERROR_DES_ecb_encrypt;
-  end;
-
-  DES_encrypt1 := LoadLibCryptoFunction('DES_encrypt1');
-  FuncLoadError := not assigned(DES_encrypt1);
-  if FuncLoadError then
-  begin
-    DES_encrypt1 :=  @ERROR_DES_encrypt1;
-  end;
-
-  DES_encrypt2 := LoadLibCryptoFunction('DES_encrypt2');
-  FuncLoadError := not assigned(DES_encrypt2);
-  if FuncLoadError then
-  begin
-    DES_encrypt2 :=  @ERROR_DES_encrypt2;
-  end;
-
-  DES_encrypt3 := LoadLibCryptoFunction('DES_encrypt3');
-  FuncLoadError := not assigned(DES_encrypt3);
-  if FuncLoadError then
-  begin
-    DES_encrypt3 :=  @ERROR_DES_encrypt3;
-  end;
-
-  DES_decrypt3 := LoadLibCryptoFunction('DES_decrypt3');
-  FuncLoadError := not assigned(DES_decrypt3);
-  if FuncLoadError then
-  begin
-    DES_decrypt3 :=  @ERROR_DES_decrypt3;
-  end;
-
-  DES_ede3_cbc_encrypt := LoadLibCryptoFunction('DES_ede3_cbc_encrypt');
-  FuncLoadError := not assigned(DES_ede3_cbc_encrypt);
-  if FuncLoadError then
-  begin
-    DES_ede3_cbc_encrypt :=  @ERROR_DES_ede3_cbc_encrypt;
-  end;
-
-  DES_ede3_cfb64_encrypt := LoadLibCryptoFunction('DES_ede3_cfb64_encrypt');
-  FuncLoadError := not assigned(DES_ede3_cfb64_encrypt);
-  if FuncLoadError then
-  begin
-    DES_ede3_cfb64_encrypt :=  @ERROR_DES_ede3_cfb64_encrypt;
-  end;
-
-  DES_ede3_cfb_encrypt := LoadLibCryptoFunction('DES_ede3_cfb_encrypt');
-  FuncLoadError := not assigned(DES_ede3_cfb_encrypt);
-  if FuncLoadError then
-  begin
-    DES_ede3_cfb_encrypt :=  @ERROR_DES_ede3_cfb_encrypt;
-  end;
-
-  DES_ede3_ofb64_encrypt := LoadLibCryptoFunction('DES_ede3_ofb64_encrypt');
-  FuncLoadError := not assigned(DES_ede3_ofb64_encrypt);
-  if FuncLoadError then
-  begin
-    DES_ede3_ofb64_encrypt :=  @ERROR_DES_ede3_ofb64_encrypt;
-  end;
-
-  DES_fcrypt := LoadLibCryptoFunction('DES_fcrypt');
-  FuncLoadError := not assigned(DES_fcrypt);
-  if FuncLoadError then
-  begin
-    DES_fcrypt :=  @ERROR_DES_fcrypt;
-  end;
-
-  DES_crypt := LoadLibCryptoFunction('DES_crypt');
-  FuncLoadError := not assigned(DES_crypt);
-  if FuncLoadError then
-  begin
-    DES_crypt :=  @ERROR_DES_crypt;
-  end;
-
-  DES_ofb_encrypt := LoadLibCryptoFunction('DES_ofb_encrypt');
-  FuncLoadError := not assigned(DES_ofb_encrypt);
-  if FuncLoadError then
-  begin
-    DES_ofb_encrypt :=  @ERROR_DES_ofb_encrypt;
-  end;
-
-  DES_pcbc_encrypt := LoadLibCryptoFunction('DES_pcbc_encrypt');
-  FuncLoadError := not assigned(DES_pcbc_encrypt);
-  if FuncLoadError then
-  begin
-    DES_pcbc_encrypt :=  @ERROR_DES_pcbc_encrypt;
-  end;
-
-  DES_quad_cksum := LoadLibCryptoFunction('DES_quad_cksum');
-  FuncLoadError := not assigned(DES_quad_cksum);
-  if FuncLoadError then
-  begin
-    DES_quad_cksum :=  @ERROR_DES_quad_cksum;
-  end;
-
-  DES_random_key := LoadLibCryptoFunction('DES_random_key');
-  FuncLoadError := not assigned(DES_random_key);
-  if FuncLoadError then
-  begin
-    DES_random_key :=  @ERROR_DES_random_key;
-  end;
-
   DES_set_odd_parity := LoadLibCryptoFunction('DES_set_odd_parity');
   FuncLoadError := not assigned(DES_set_odd_parity);
   if FuncLoadError then
   begin
     {Don't report allow nil failure}
-  end;
-
-  DES_check_key_parity := LoadLibCryptoFunction('DES_check_key_parity');
-  FuncLoadError := not assigned(DES_check_key_parity);
-  if FuncLoadError then
-  begin
-    DES_check_key_parity :=  @ERROR_DES_check_key_parity;
-  end;
-
-  DES_is_weak_key := LoadLibCryptoFunction('DES_is_weak_key');
-  FuncLoadError := not assigned(DES_is_weak_key);
-  if FuncLoadError then
-  begin
-    DES_is_weak_key :=  @ERROR_DES_is_weak_key;
   end;
 
   DES_set_key := LoadLibCryptoFunction('DES_set_key');
@@ -745,113 +674,51 @@ begin
     {Don't report allow nil failure}
   end;
 
-  DES_key_sched := LoadLibCryptoFunction('DES_key_sched');
-  FuncLoadError := not assigned(DES_key_sched);
-  if FuncLoadError then
-  begin
-    DES_key_sched :=  @ERROR_DES_key_sched;
-  end;
-
-  DES_set_key_checked := LoadLibCryptoFunction('DES_set_key_checked');
-  FuncLoadError := not assigned(DES_set_key_checked);
-  if FuncLoadError then
-  begin
-    DES_set_key_checked :=  @ERROR_DES_set_key_checked;
-  end;
-
-  DES_set_key_unchecked := LoadLibCryptoFunction('DES_set_key_unchecked');
-  FuncLoadError := not assigned(DES_set_key_unchecked);
-  if FuncLoadError then
-  begin
-    DES_set_key_unchecked :=  @ERROR_DES_set_key_unchecked;
-  end;
-
-  DES_string_to_key := LoadLibCryptoFunction('DES_string_to_key');
-  FuncLoadError := not assigned(DES_string_to_key);
-  if FuncLoadError then
-  begin
-    DES_string_to_key :=  @ERROR_DES_string_to_key;
-  end;
-
-  DES_string_to_2keys := LoadLibCryptoFunction('DES_string_to_2keys');
-  FuncLoadError := not assigned(DES_string_to_2keys);
-  if FuncLoadError then
-  begin
-    DES_string_to_2keys :=  @ERROR_DES_string_to_2keys;
-  end;
-
-  DES_cfb64_encrypt := LoadLibCryptoFunction('DES_cfb64_encrypt');
-  FuncLoadError := not assigned(DES_cfb64_encrypt);
-  if FuncLoadError then
-  begin
-    DES_cfb64_encrypt :=  @ERROR_DES_cfb64_encrypt;
-  end;
-
-  DES_ofb64_encrypt := LoadLibCryptoFunction('DES_ofb64_encrypt');
-  FuncLoadError := not assigned(DES_ofb64_encrypt);
-  if FuncLoadError then
-  begin
-    DES_ofb64_encrypt :=  @ERROR_DES_ofb64_encrypt;
-  end;
-
-{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  DES_fixup_key_parity := LoadLibCryptoFunction('DES_fixup_key_parity');
-  FuncLoadError := not assigned(DES_fixup_key_parity);
-  if FuncLoadError then
-  begin
-    DES_fixup_key_parity := @COMPAT_DES_fixup_key_parity;
-    if DES_fixup_key_parity_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('DES_fixup_key_parity');
-  end;
-
-{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
 end;
 
 procedure UnLoad;
 begin
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  DES_ecb2_encrypt := nil;
-  DES_ede2_cbc_encrypt := nil;
-  DES_ede2_cfb64_encrypt := nil;
-  DES_ede2_ofb64_encrypt := nil;
+  DES_ecb2_encrypt := Load_DES_ecb2_encrypt;
+  DES_ede2_cbc_encrypt := Load_DES_ede2_cbc_encrypt;
+  DES_ede2_cfb64_encrypt := Load_DES_ede2_cfb64_encrypt;
+  DES_ede2_ofb64_encrypt := Load_DES_ede2_ofb64_encrypt;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-  DES_options := nil;
-  DES_ecb3_encrypt := nil;
-  DES_cbc_cksum := nil;
-  DES_cbc_encrypt := nil;
-  DES_ncbc_encrypt := nil;
-  DES_xcbc_encrypt := nil;
-  DES_cfb_encrypt := nil;
-  DES_ecb_encrypt := nil;
-  DES_encrypt1 := nil;
-  DES_encrypt2 := nil;
-  DES_encrypt3 := nil;
-  DES_decrypt3 := nil;
-  DES_ede3_cbc_encrypt := nil;
-  DES_ede3_cfb64_encrypt := nil;
-  DES_ede3_cfb_encrypt := nil;
-  DES_ede3_ofb64_encrypt := nil;
-  DES_fcrypt := nil;
-  DES_crypt := nil;
-  DES_ofb_encrypt := nil;
-  DES_pcbc_encrypt := nil;
-  DES_quad_cksum := nil;
-  DES_random_key := nil;
+  DES_options := Load_DES_options;
+  DES_ecb3_encrypt := Load_DES_ecb3_encrypt;
+  DES_cbc_cksum := Load_DES_cbc_cksum;
+  DES_cbc_encrypt := Load_DES_cbc_encrypt;
+  DES_ncbc_encrypt := Load_DES_ncbc_encrypt;
+  DES_xcbc_encrypt := Load_DES_xcbc_encrypt;
+  DES_cfb_encrypt := Load_DES_cfb_encrypt;
+  DES_ecb_encrypt := Load_DES_ecb_encrypt;
+  DES_encrypt1 := Load_DES_encrypt1;
+  DES_encrypt2 := Load_DES_encrypt2;
+  DES_encrypt3 := Load_DES_encrypt3;
+  DES_decrypt3 := Load_DES_decrypt3;
+  DES_ede3_cbc_encrypt := Load_DES_ede3_cbc_encrypt;
+  DES_ede3_cfb64_encrypt := Load_DES_ede3_cfb64_encrypt;
+  DES_ede3_cfb_encrypt := Load_DES_ede3_cfb_encrypt;
+  DES_ede3_ofb64_encrypt := Load_DES_ede3_ofb64_encrypt;
+  DES_fcrypt := Load_DES_fcrypt;
+  DES_crypt := Load_DES_crypt;
+  DES_ofb_encrypt := Load_DES_ofb_encrypt;
+  DES_pcbc_encrypt := Load_DES_pcbc_encrypt;
+  DES_quad_cksum := Load_DES_quad_cksum;
+  DES_random_key := Load_DES_random_key;
   DES_set_odd_parity := nil;
-  DES_check_key_parity := nil;
-  DES_is_weak_key := nil;
+  DES_check_key_parity := Load_DES_check_key_parity;
+  DES_is_weak_key := Load_DES_is_weak_key;
   DES_set_key := nil;
-  DES_key_sched := nil;
-  DES_set_key_checked := nil;
-  DES_set_key_unchecked := nil;
-  DES_string_to_key := nil;
-  DES_string_to_2keys := nil;
-  DES_cfb64_encrypt := nil;
-  DES_ofb64_encrypt := nil;
+  DES_key_sched := Load_DES_key_sched;
+  DES_set_key_checked := Load_DES_set_key_checked;
+  DES_set_key_unchecked := Load_DES_set_key_unchecked;
+  DES_string_to_key := Load_DES_string_to_key;
+  DES_string_to_2keys := Load_DES_string_to_2keys;
+  DES_cfb64_encrypt := Load_DES_cfb64_encrypt;
+  DES_ofb64_encrypt := Load_DES_ofb64_encrypt;
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  DES_fixup_key_parity := nil;
+  DES_fixup_key_parity := Load_DES_fixup_key_parity;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
 end;
 {$ENDIF}

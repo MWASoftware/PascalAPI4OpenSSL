@@ -304,62 +304,158 @@ function FIPS_mode: TOpenSSL_C_INT; {removed 3.0.0}
 function FIPS_mode_set(r: TOpenSSL_C_INT): TOpenSSL_C_INT; {removed 3.0.0}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ELSE}
+
+{Declare external function initialisers - should not be called directly}
+
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_OPENSSL_malloc(num: TOpenSSL_C_SIZET): Pointer; cdecl;
+function Load_OPENSSL_zalloc(num: TOpenSSL_C_SIZET): Pointer; cdecl;
+function Load_OPENSSL_realloc(addr: Pointer; num: TOpenSSL_C_SIZET): Pointer; cdecl;
+function Load_OPENSSL_clear_realloc(addr: Pointer; old_num: TOpenSSL_C_SIZET; num: TOpenSSL_C_SIZET): Pointer; cdecl;
+procedure Load_OPENSSL_clear_free(addr: Pointer; num: TOpenSSL_C_SIZET); cdecl;
+procedure Load_OPENSSL_free(addr: Pointer); cdecl;
+function Load_OPENSSL_memdup(const str: Pointer; s: TOpenSSL_C_SIZET): Pointer; cdecl;
+function Load_OPENSSL_strdup(const str: PAnsiChar): PAnsiChar; cdecl;
+function Load_OPENSSL_strndup(const str: PAnsiChar; n: TOpenSSL_C_SIZET): PAnsiChar; cdecl;
+function Load_OPENSSL_secure_malloc(num: TOpenSSL_C_SIZET): Pointer; cdecl;
+function Load_OPENSSL_secure_zalloc(num: TOpenSSL_C_SIZET): Pointer; cdecl;
+procedure Load_OPENSSL_secure_free(addr: Pointer); cdecl;
+procedure Load_OPENSSL_secure_clear_free(addr: Pointer; num: TOpenSSL_C_SIZET); cdecl;
+function Load_OPENSSL_secure_actual_size(ptr: Pointer): TOpenSSL_C_SIZET; cdecl;
+{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_CRYPTO_THREAD_lock_new: PCRYPTO_RWLOCK; cdecl;
+function Load_CRYPTO_THREAD_read_lock(lock: PCRYPTO_RWLOCK): TOpenSSL_C_INT; cdecl;
+function Load_CRYPTO_THREAD_write_lock(lock: PCRYPTO_RWLOCK): TOpenSSL_C_INT; cdecl;
+function Load_CRYPTO_THREAD_unlock(lock: PCRYPTO_RWLOCK): TOpenSSL_C_INT; cdecl;
+procedure Load_CRYPTO_THREAD_lock_free(lock: PCRYPTO_RWLOCK); cdecl;
+function Load_CRYPTO_atomic_add(val: POpenSSL_C_INT; amount: TOpenSSL_C_INT; ret: POpenSSL_C_INT; lock: PCRYPTO_RWLOCK): TOpenSSL_C_INT; cdecl;
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_CRYPTO_mem_ctrl(mode: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_OPENSSL_strlcpy(dst: PAnsiChar; const src: PAnsiChar; siz: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+function Load_OPENSSL_strlcat(dst: PAnsiChar; const src: PAnsiChar; siz: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+function Load_OPENSSL_strnlen(const str: PAnsiChar; maxlen: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+function Load_OPENSSL_buf2hexstr(const buffer: PByte; len: TOpenSSL_C_LONG): PAnsiChar; cdecl;
+function Load_OPENSSL_hexstr2buf(const str: PAnsiChar; len: POpenSSL_C_LONG): PByte; cdecl;
+function Load_OPENSSL_hexchar2int(c: Byte): TOpenSSL_C_INT; cdecl;
+function Load_OpenSSL_version_num: TOpenSSL_C_ULONG; cdecl;
+function Load_OpenSSL_version(type_: TOpenSSL_C_INT): PAnsiChar; cdecl;
+function Load_OPENSSL_issetugid: TOpenSSL_C_INT; cdecl;
+function Load_CRYPTO_new_ex_data(class_index: TOpenSSL_C_INT; obj: Pointer; ad: PCRYPTO_EX_DATA): TOpenSSL_C_INT; cdecl;
+function Load_CRYPTO_dup_ex_data(class_index: TOpenSSL_C_INT; to_: PCRYPTO_EX_DATA; const from: PCRYPTO_EX_DATA): TOpenSSL_C_INT; cdecl;
+procedure Load_CRYPTO_free_ex_data(class_index: TOpenSSL_C_INT; obj: Pointer; ad: PCRYPTO_EX_DATA); cdecl;
+function Load_CRYPTO_set_ex_data(ad: PCRYPTO_EX_DATA; idx: TOpenSSL_C_INT; val: Pointer): TOpenSSL_C_INT; cdecl;
+function Load_CRYPTO_get_ex_data(const ad: PCRYPTO_EX_DATA; idx: TOpenSSL_C_INT): Pointer; cdecl;
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_CRYPTO_num_locks: TOpenSSL_C_INT; cdecl;
+procedure Load_CRYPTO_set_locking_callback(func: TIdSslLockingCallback); cdecl;
+procedure Load_CRYPTO_THREADID_set_numeric(id : PCRYPTO_THREADID; val: TOpenSSL_C_ULONG); cdecl;
+procedure Load_CRYPTO_THREADID_set_callback(threadid_func: Tthreadid_func); cdecl;
+procedure Load_CRYPTO_set_id_callback(func: TIdSslIdCallback); cdecl;
+{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_CRYPTO_set_mem_functions(m: CRYPTO_set_mem_functions_m; r: CRYPTO_set_mem_functions_r; f: CRYPTO_set_mem_functions_f): TOpenSSL_C_INT; cdecl;
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_CRYPTO_set_mem_debug(flag: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_CRYPTO_malloc(num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl;
+function Load_CRYPTO_zalloc(num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl;
+function Load_CRYPTO_memdup(const str: Pointer; siz: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl;
+function Load_CRYPTO_strdup(const str: PAnsiChar; const file_: PAnsiChar; line: TOpenSSL_C_INT): PAnsiChar; cdecl;
+function Load_CRYPTO_strndup(const str: PAnsiChar; s: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): PAnsiChar; cdecl;
+procedure Load_CRYPTO_free(ptr: Pointer; const file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl;
+procedure Load_CRYPTO_clear_free(ptr: Pointer; num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl;
+function Load_CRYPTO_realloc(addr: Pointer; num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl;
+function Load_CRYPTO_clear_realloc(addr: Pointer; old_num: TOpenSSL_C_SIZET; num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl;
+function Load_CRYPTO_secure_malloc_init(sz: TOpenSSL_C_SIZET; minsize: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_CRYPTO_secure_malloc_done: TOpenSSL_C_INT; cdecl;
+function Load_CRYPTO_secure_malloc(num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl;
+function Load_CRYPTO_secure_zalloc(num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl;
+procedure Load_CRYPTO_secure_free(ptr: Pointer; const file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl;
+procedure Load_CRYPTO_secure_clear_free(ptr: Pointer; num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl;
+function Load_CRYPTO_secure_allocated(const ptr: Pointer): TOpenSSL_C_INT; cdecl;
+function Load_CRYPTO_secure_malloc_initialized: TOpenSSL_C_INT; cdecl;
+function Load_CRYPTO_secure_actual_size(ptr: Pointer): TOpenSSL_C_SIZET; cdecl;
+function Load_CRYPTO_secure_used: TOpenSSL_C_SIZET; cdecl;
+procedure Load_OPENSSL_cleanse(ptr: Pointer; len: TOpenSSL_C_SIZET); cdecl;
+function Load_OPENSSL_isservice: TOpenSSL_C_INT; cdecl;
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_FIPS_mode: TOpenSSL_C_INT; cdecl;
+function Load_FIPS_mode_set(r: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+procedure Load_OPENSSL_init; cdecl;
+function Load_CRYPTO_memcmp(const in_a: Pointer; const in_b: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+procedure Load_OPENSSL_cleanup; cdecl;
+function Load_OPENSSL_init_crypto(opts: TOpenSSL_C_UINT64; const settings: POPENSSL_INIT_SETTINGS): TOpenSSL_C_INT; cdecl;
+procedure Load_OPENSSL_thread_stop; cdecl;
+function Load_OPENSSL_INIT_new: POPENSSL_INIT_SETTINGS; cdecl;
+procedure Load_OPENSSL_INIT_free(settings: POPENSSL_INIT_SETTINGS); cdecl;
+function Load_CRYPTO_THREAD_run_once(once: PCRYPTO_ONCE; init: CRYPTO_THREAD_run_once_init): TOpenSSL_C_INT; cdecl;
+function Load_CRYPTO_THREAD_get_local(key: PCRYPTO_THREAD_LOCAL): Pointer; cdecl;
+function Load_CRYPTO_THREAD_set_local(key: PCRYPTO_THREAD_LOCAL; val: Pointer): TOpenSSL_C_INT; cdecl;
+function Load_CRYPTO_THREAD_cleanup_local(key: PCRYPTO_THREAD_LOCAL): TOpenSSL_C_INT; cdecl;
+function Load_CRYPTO_THREAD_get_current_id: CRYPTO_THREAD_ID; cdecl;
+function Load_CRYPTO_THREAD_compare_id(a: CRYPTO_THREAD_ID; b: CRYPTO_THREAD_ID): TOpenSSL_C_INT; cdecl;
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_SSLeay_version(type_ : TOpenSSL_C_INT): PAnsiChar; cdecl;
+function Load_SSLeay: TOpenSSL_C_ULONG; cdecl;
+{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+
 var
-  CRYPTO_THREAD_lock_new: function : PCRYPTO_RWLOCK; cdecl = nil;
-  CRYPTO_THREAD_read_lock: function (lock: PCRYPTO_RWLOCK): TOpenSSL_C_INT; cdecl = nil;
-  CRYPTO_THREAD_write_lock: function (lock: PCRYPTO_RWLOCK): TOpenSSL_C_INT; cdecl = nil;
-  CRYPTO_THREAD_unlock: function (lock: PCRYPTO_RWLOCK): TOpenSSL_C_INT; cdecl = nil;
-  CRYPTO_THREAD_lock_free: procedure (lock: PCRYPTO_RWLOCK); cdecl = nil;
-  CRYPTO_atomic_add: function (val: POpenSSL_C_INT; amount: TOpenSSL_C_INT; ret: POpenSSL_C_INT; lock: PCRYPTO_RWLOCK): TOpenSSL_C_INT; cdecl = nil;
-  OPENSSL_strlcpy: function (dst: PAnsiChar; const src: PAnsiChar; siz: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = nil;
-  OPENSSL_strlcat: function (dst: PAnsiChar; const src: PAnsiChar; siz: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = nil;
-  OPENSSL_strnlen: function (const str: PAnsiChar; maxlen: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = nil;
-  OPENSSL_buf2hexstr: function (const buffer: PByte; len: TOpenSSL_C_LONG): PAnsiChar; cdecl = nil;
-  OPENSSL_hexstr2buf: function (const str: PAnsiChar; len: POpenSSL_C_LONG): PByte; cdecl = nil;
-  OPENSSL_hexchar2int: function (c: Byte): TOpenSSL_C_INT; cdecl = nil;
-  OpenSSL_version_num: function : TOpenSSL_C_ULONG; cdecl = nil;
-  OpenSSL_version: function (type_: TOpenSSL_C_INT): PAnsiChar; cdecl = nil;
-  OPENSSL_issetugid: function : TOpenSSL_C_INT; cdecl = nil;
-  CRYPTO_new_ex_data: function (class_index: TOpenSSL_C_INT; obj: Pointer; ad: PCRYPTO_EX_DATA): TOpenSSL_C_INT; cdecl = nil;
-  CRYPTO_dup_ex_data: function (class_index: TOpenSSL_C_INT; to_: PCRYPTO_EX_DATA; const from: PCRYPTO_EX_DATA): TOpenSSL_C_INT; cdecl = nil;
-  CRYPTO_free_ex_data: procedure (class_index: TOpenSSL_C_INT; obj: Pointer; ad: PCRYPTO_EX_DATA); cdecl = nil;
-  CRYPTO_set_ex_data: function (ad: PCRYPTO_EX_DATA; idx: TOpenSSL_C_INT; val: Pointer): TOpenSSL_C_INT; cdecl = nil;
-  CRYPTO_get_ex_data: function (const ad: PCRYPTO_EX_DATA; idx: TOpenSSL_C_INT): Pointer; cdecl = nil;
-  CRYPTO_set_mem_functions: function (m: CRYPTO_set_mem_functions_m; r: CRYPTO_set_mem_functions_r; f: CRYPTO_set_mem_functions_f): TOpenSSL_C_INT; cdecl = nil;
-  CRYPTO_malloc: function (num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl = nil;
-  CRYPTO_zalloc: function (num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl = nil;
-  CRYPTO_memdup: function (const str: Pointer; siz: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl = nil;
-  CRYPTO_strdup: function (const str: PAnsiChar; const file_: PAnsiChar; line: TOpenSSL_C_INT): PAnsiChar; cdecl = nil;
-  CRYPTO_strndup: function (const str: PAnsiChar; s: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): PAnsiChar; cdecl = nil;
-  CRYPTO_free: procedure (ptr: Pointer; const file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl = nil;
-  CRYPTO_clear_free: procedure (ptr: Pointer; num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl = nil;
-  CRYPTO_realloc: function (addr: Pointer; num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl = nil;
-  CRYPTO_clear_realloc: function (addr: Pointer; old_num: TOpenSSL_C_SIZET; num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl = nil;
-  CRYPTO_secure_malloc_init: function (sz: TOpenSSL_C_SIZET; minsize: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  CRYPTO_secure_malloc_done: function : TOpenSSL_C_INT; cdecl = nil;
-  CRYPTO_secure_malloc: function (num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl = nil;
-  CRYPTO_secure_zalloc: function (num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl = nil;
-  CRYPTO_secure_free: procedure (ptr: Pointer; const file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl = nil;
-  CRYPTO_secure_clear_free: procedure (ptr: Pointer; num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl = nil;
-  CRYPTO_secure_allocated: function (const ptr: Pointer): TOpenSSL_C_INT; cdecl = nil;
-  CRYPTO_secure_malloc_initialized: function : TOpenSSL_C_INT; cdecl = nil;
-  CRYPTO_secure_actual_size: function (ptr: Pointer): TOpenSSL_C_SIZET; cdecl = nil;
-  CRYPTO_secure_used: function : TOpenSSL_C_SIZET; cdecl = nil;
-  OPENSSL_cleanse: procedure (ptr: Pointer; len: TOpenSSL_C_SIZET); cdecl = nil;
-  OPENSSL_isservice: function : TOpenSSL_C_INT; cdecl = nil;
-  OPENSSL_init: procedure ; cdecl = nil;
-  CRYPTO_memcmp: function (const in_a: Pointer; const in_b: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  OPENSSL_cleanup: procedure ; cdecl = nil;
-  OPENSSL_init_crypto: function (opts: TOpenSSL_C_UINT64; const settings: POPENSSL_INIT_SETTINGS): TOpenSSL_C_INT; cdecl = nil;
-  OPENSSL_thread_stop: procedure ; cdecl = nil;
-  OPENSSL_INIT_new: function : POPENSSL_INIT_SETTINGS; cdecl = nil;
-  OPENSSL_INIT_free: procedure (settings: POPENSSL_INIT_SETTINGS); cdecl = nil;
-  CRYPTO_THREAD_run_once: function (once: PCRYPTO_ONCE; init: CRYPTO_THREAD_run_once_init): TOpenSSL_C_INT; cdecl = nil;
-  CRYPTO_THREAD_get_local: function (key: PCRYPTO_THREAD_LOCAL): Pointer; cdecl = nil;
-  CRYPTO_THREAD_set_local: function (key: PCRYPTO_THREAD_LOCAL; val: Pointer): TOpenSSL_C_INT; cdecl = nil;
-  CRYPTO_THREAD_cleanup_local: function (key: PCRYPTO_THREAD_LOCAL): TOpenSSL_C_INT; cdecl = nil;
-  CRYPTO_THREAD_get_current_id: function : CRYPTO_THREAD_ID; cdecl = nil;
-  CRYPTO_THREAD_compare_id: function (a: CRYPTO_THREAD_ID; b: CRYPTO_THREAD_ID): TOpenSSL_C_INT; cdecl = nil;
+  CRYPTO_THREAD_lock_new: function : PCRYPTO_RWLOCK; cdecl = Load_CRYPTO_THREAD_lock_new;
+  CRYPTO_THREAD_read_lock: function (lock: PCRYPTO_RWLOCK): TOpenSSL_C_INT; cdecl = Load_CRYPTO_THREAD_read_lock;
+  CRYPTO_THREAD_write_lock: function (lock: PCRYPTO_RWLOCK): TOpenSSL_C_INT; cdecl = Load_CRYPTO_THREAD_write_lock;
+  CRYPTO_THREAD_unlock: function (lock: PCRYPTO_RWLOCK): TOpenSSL_C_INT; cdecl = Load_CRYPTO_THREAD_unlock;
+  CRYPTO_THREAD_lock_free: procedure (lock: PCRYPTO_RWLOCK); cdecl = Load_CRYPTO_THREAD_lock_free;
+  CRYPTO_atomic_add: function (val: POpenSSL_C_INT; amount: TOpenSSL_C_INT; ret: POpenSSL_C_INT; lock: PCRYPTO_RWLOCK): TOpenSSL_C_INT; cdecl = Load_CRYPTO_atomic_add;
+  OPENSSL_strlcpy: function (dst: PAnsiChar; const src: PAnsiChar; siz: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = Load_OPENSSL_strlcpy;
+  OPENSSL_strlcat: function (dst: PAnsiChar; const src: PAnsiChar; siz: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = Load_OPENSSL_strlcat;
+  OPENSSL_strnlen: function (const str: PAnsiChar; maxlen: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = Load_OPENSSL_strnlen;
+  OPENSSL_buf2hexstr: function (const buffer: PByte; len: TOpenSSL_C_LONG): PAnsiChar; cdecl = Load_OPENSSL_buf2hexstr;
+  OPENSSL_hexstr2buf: function (const str: PAnsiChar; len: POpenSSL_C_LONG): PByte; cdecl = Load_OPENSSL_hexstr2buf;
+  OPENSSL_hexchar2int: function (c: Byte): TOpenSSL_C_INT; cdecl = Load_OPENSSL_hexchar2int;
+  OpenSSL_version_num: function : TOpenSSL_C_ULONG; cdecl = Load_OpenSSL_version_num;
+  OpenSSL_version: function (type_: TOpenSSL_C_INT): PAnsiChar; cdecl = Load_OpenSSL_version;
+  OPENSSL_issetugid: function : TOpenSSL_C_INT; cdecl = Load_OPENSSL_issetugid;
+  CRYPTO_new_ex_data: function (class_index: TOpenSSL_C_INT; obj: Pointer; ad: PCRYPTO_EX_DATA): TOpenSSL_C_INT; cdecl = Load_CRYPTO_new_ex_data;
+  CRYPTO_dup_ex_data: function (class_index: TOpenSSL_C_INT; to_: PCRYPTO_EX_DATA; const from: PCRYPTO_EX_DATA): TOpenSSL_C_INT; cdecl = Load_CRYPTO_dup_ex_data;
+  CRYPTO_free_ex_data: procedure (class_index: TOpenSSL_C_INT; obj: Pointer; ad: PCRYPTO_EX_DATA); cdecl = Load_CRYPTO_free_ex_data;
+  CRYPTO_set_ex_data: function (ad: PCRYPTO_EX_DATA; idx: TOpenSSL_C_INT; val: Pointer): TOpenSSL_C_INT; cdecl = Load_CRYPTO_set_ex_data;
+  CRYPTO_get_ex_data: function (const ad: PCRYPTO_EX_DATA; idx: TOpenSSL_C_INT): Pointer; cdecl = Load_CRYPTO_get_ex_data;
+  CRYPTO_set_mem_functions: function (m: CRYPTO_set_mem_functions_m; r: CRYPTO_set_mem_functions_r; f: CRYPTO_set_mem_functions_f): TOpenSSL_C_INT; cdecl = Load_CRYPTO_set_mem_functions;
+  CRYPTO_malloc: function (num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl = Load_CRYPTO_malloc;
+  CRYPTO_zalloc: function (num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl = Load_CRYPTO_zalloc;
+  CRYPTO_memdup: function (const str: Pointer; siz: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl = Load_CRYPTO_memdup;
+  CRYPTO_strdup: function (const str: PAnsiChar; const file_: PAnsiChar; line: TOpenSSL_C_INT): PAnsiChar; cdecl = Load_CRYPTO_strdup;
+  CRYPTO_strndup: function (const str: PAnsiChar; s: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): PAnsiChar; cdecl = Load_CRYPTO_strndup;
+  CRYPTO_free: procedure (ptr: Pointer; const file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl = Load_CRYPTO_free;
+  CRYPTO_clear_free: procedure (ptr: Pointer; num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl = Load_CRYPTO_clear_free;
+  CRYPTO_realloc: function (addr: Pointer; num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl = Load_CRYPTO_realloc;
+  CRYPTO_clear_realloc: function (addr: Pointer; old_num: TOpenSSL_C_SIZET; num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl = Load_CRYPTO_clear_realloc;
+  CRYPTO_secure_malloc_init: function (sz: TOpenSSL_C_SIZET; minsize: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_CRYPTO_secure_malloc_init;
+  CRYPTO_secure_malloc_done: function : TOpenSSL_C_INT; cdecl = Load_CRYPTO_secure_malloc_done;
+  CRYPTO_secure_malloc: function (num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl = Load_CRYPTO_secure_malloc;
+  CRYPTO_secure_zalloc: function (num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl = Load_CRYPTO_secure_zalloc;
+  CRYPTO_secure_free: procedure (ptr: Pointer; const file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl = Load_CRYPTO_secure_free;
+  CRYPTO_secure_clear_free: procedure (ptr: Pointer; num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl = Load_CRYPTO_secure_clear_free;
+  CRYPTO_secure_allocated: function (const ptr: Pointer): TOpenSSL_C_INT; cdecl = Load_CRYPTO_secure_allocated;
+  CRYPTO_secure_malloc_initialized: function : TOpenSSL_C_INT; cdecl = Load_CRYPTO_secure_malloc_initialized;
+  CRYPTO_secure_actual_size: function (ptr: Pointer): TOpenSSL_C_SIZET; cdecl = Load_CRYPTO_secure_actual_size;
+  CRYPTO_secure_used: function : TOpenSSL_C_SIZET; cdecl = Load_CRYPTO_secure_used;
+  OPENSSL_cleanse: procedure (ptr: Pointer; len: TOpenSSL_C_SIZET); cdecl = Load_OPENSSL_cleanse;
+  OPENSSL_isservice: function : TOpenSSL_C_INT; cdecl = Load_OPENSSL_isservice;
+  OPENSSL_init: procedure ; cdecl = Load_OPENSSL_init;
+  CRYPTO_memcmp: function (const in_a: Pointer; const in_b: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_CRYPTO_memcmp;
+  OPENSSL_cleanup: procedure ; cdecl = Load_OPENSSL_cleanup;
+  OPENSSL_init_crypto: function (opts: TOpenSSL_C_UINT64; const settings: POPENSSL_INIT_SETTINGS): TOpenSSL_C_INT; cdecl = Load_OPENSSL_init_crypto;
+  OPENSSL_thread_stop: procedure ; cdecl = Load_OPENSSL_thread_stop;
+  OPENSSL_INIT_new: function : POPENSSL_INIT_SETTINGS; cdecl = Load_OPENSSL_INIT_new;
+  OPENSSL_INIT_free: procedure (settings: POPENSSL_INIT_SETTINGS); cdecl = Load_OPENSSL_INIT_free;
+  CRYPTO_THREAD_run_once: function (once: PCRYPTO_ONCE; init: CRYPTO_THREAD_run_once_init): TOpenSSL_C_INT; cdecl = Load_CRYPTO_THREAD_run_once;
+  CRYPTO_THREAD_get_local: function (key: PCRYPTO_THREAD_LOCAL): Pointer; cdecl = Load_CRYPTO_THREAD_get_local;
+  CRYPTO_THREAD_set_local: function (key: PCRYPTO_THREAD_LOCAL; val: Pointer): TOpenSSL_C_INT; cdecl = Load_CRYPTO_THREAD_set_local;
+  CRYPTO_THREAD_cleanup_local: function (key: PCRYPTO_THREAD_LOCAL): TOpenSSL_C_INT; cdecl = Load_CRYPTO_THREAD_cleanup_local;
+  CRYPTO_THREAD_get_current_id: function : CRYPTO_THREAD_ID; cdecl = Load_CRYPTO_THREAD_get_current_id;
+  CRYPTO_THREAD_compare_id: function (a: CRYPTO_THREAD_ID; b: CRYPTO_THREAD_ID): TOpenSSL_C_INT; cdecl = Load_CRYPTO_THREAD_compare_id;
 
 
 
@@ -368,22 +464,22 @@ var
 
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 var
-  OPENSSL_malloc: function (num: TOpenSSL_C_SIZET): Pointer; cdecl = nil; {removed 1.0.0}
-  OPENSSL_zalloc: function (num: TOpenSSL_C_SIZET): Pointer; cdecl = nil; {removed 1.0.0}
-  OPENSSL_realloc: function (addr: Pointer; num: TOpenSSL_C_SIZET): Pointer; cdecl = nil; {removed 1.0.0}
-  OPENSSL_clear_realloc: function (addr: Pointer; old_num: TOpenSSL_C_SIZET; num: TOpenSSL_C_SIZET): Pointer; cdecl = nil; {removed 1.0.0}
-  OPENSSL_clear_free: procedure (addr: Pointer; num: TOpenSSL_C_SIZET); cdecl = nil; {removed 1.0.0}
-  OPENSSL_free: procedure (addr: Pointer); cdecl = nil; {removed 1.0.0}
-  OPENSSL_memdup: function (const str: Pointer; s: TOpenSSL_C_SIZET): Pointer; cdecl = nil; {removed 1.0.0}
-  OPENSSL_strdup: function (const str: PAnsiChar): PAnsiChar; cdecl = nil; {removed 1.0.0}
-  OPENSSL_strndup: function (const str: PAnsiChar; n: TOpenSSL_C_SIZET): PAnsiChar; cdecl = nil; {removed 1.0.0}
-  OPENSSL_secure_malloc: function (num: TOpenSSL_C_SIZET): Pointer; cdecl = nil; {removed 1.0.0}
-  OPENSSL_secure_zalloc: function (num: TOpenSSL_C_SIZET): Pointer; cdecl = nil; {removed 1.0.0}
-  OPENSSL_secure_free: procedure (addr: Pointer); cdecl = nil; {removed 1.0.0}
-  OPENSSL_secure_clear_free: procedure (addr: Pointer; num: TOpenSSL_C_SIZET); cdecl = nil; {removed 1.0.0}
-  OPENSSL_secure_actual_size: function (ptr: Pointer): TOpenSSL_C_SIZET; cdecl = nil; {removed 1.0.0}
-  FIPS_mode: function : TOpenSSL_C_INT; cdecl = nil; {removed 3.0.0}
-  FIPS_mode_set: function (r: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil; {removed 3.0.0}
+  OPENSSL_malloc: function (num: TOpenSSL_C_SIZET): Pointer; cdecl = Load_OPENSSL_malloc; {removed 1.0.0}
+  OPENSSL_zalloc: function (num: TOpenSSL_C_SIZET): Pointer; cdecl = Load_OPENSSL_zalloc; {removed 1.0.0}
+  OPENSSL_realloc: function (addr: Pointer; num: TOpenSSL_C_SIZET): Pointer; cdecl = Load_OPENSSL_realloc; {removed 1.0.0}
+  OPENSSL_clear_realloc: function (addr: Pointer; old_num: TOpenSSL_C_SIZET; num: TOpenSSL_C_SIZET): Pointer; cdecl = Load_OPENSSL_clear_realloc; {removed 1.0.0}
+  OPENSSL_clear_free: procedure (addr: Pointer; num: TOpenSSL_C_SIZET); cdecl = Load_OPENSSL_clear_free; {removed 1.0.0}
+  OPENSSL_free: procedure (addr: Pointer); cdecl = Load_OPENSSL_free; {removed 1.0.0}
+  OPENSSL_memdup: function (const str: Pointer; s: TOpenSSL_C_SIZET): Pointer; cdecl = Load_OPENSSL_memdup; {removed 1.0.0}
+  OPENSSL_strdup: function (const str: PAnsiChar): PAnsiChar; cdecl = Load_OPENSSL_strdup; {removed 1.0.0}
+  OPENSSL_strndup: function (const str: PAnsiChar; n: TOpenSSL_C_SIZET): PAnsiChar; cdecl = Load_OPENSSL_strndup; {removed 1.0.0}
+  OPENSSL_secure_malloc: function (num: TOpenSSL_C_SIZET): Pointer; cdecl = Load_OPENSSL_secure_malloc; {removed 1.0.0}
+  OPENSSL_secure_zalloc: function (num: TOpenSSL_C_SIZET): Pointer; cdecl = Load_OPENSSL_secure_zalloc; {removed 1.0.0}
+  OPENSSL_secure_free: procedure (addr: Pointer); cdecl = Load_OPENSSL_secure_free; {removed 1.0.0}
+  OPENSSL_secure_clear_free: procedure (addr: Pointer; num: TOpenSSL_C_SIZET); cdecl = Load_OPENSSL_secure_clear_free; {removed 1.0.0}
+  OPENSSL_secure_actual_size: function (ptr: Pointer): TOpenSSL_C_SIZET; cdecl = Load_OPENSSL_secure_actual_size; {removed 1.0.0}
+  FIPS_mode: function : TOpenSSL_C_INT; cdecl = Load_FIPS_mode; {removed 3.0.0}
+  FIPS_mode_set: function (r: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_FIPS_mode_set; {removed 3.0.0}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF}
 const
@@ -459,10 +555,10 @@ implementation
 
 uses SyncObjs,  Sysutils
    {$IFNDEF FPC}
-     {$IFDEF WINDOWS}
-       ,Windows
-     {$ELSE}
+     {$IFDEF POSIX}
        ,Posix.Pthread
+     {$ELSE}
+       ,Windows
      {$ENDIF}
    {$ENDIF},
 Classes,
@@ -480,15 +576,15 @@ Classes,
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$J+}
 var
-  CRYPTO_mem_ctrl: function (mode: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil; {removed 3.0.0}
-  CRYPTO_num_locks: function : TOpenSSL_C_INT; cdecl = nil; {removed 1.1.0}
-  CRYPTO_set_locking_callback: procedure (func: TIdSslLockingCallback); cdecl = nil; {removed 1.1.0}
-  CRYPTO_THREADID_set_numeric: procedure (id : PCRYPTO_THREADID; val: TOpenSSL_C_ULONG); cdecl = nil; {removed 1.1.0}
-  CRYPTO_THREADID_set_callback: procedure (threadid_func: Tthreadid_func); cdecl = nil; {removed 1.1.0}
-  CRYPTO_set_id_callback: procedure (func: TIdSslIdCallback); cdecl = nil; {removed 1.1.0}
-  CRYPTO_set_mem_debug: function (flag: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil; {removed 3.0.0}
-  SSLeay_version: function (type_ : TOpenSSL_C_INT): PAnsiChar; cdecl = nil; {removed 1.1.0}
-  SSLeay: function : TOpenSSL_C_ULONG; cdecl = nil; {removed 1.1.0}
+  CRYPTO_mem_ctrl: function (mode: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_CRYPTO_mem_ctrl; {removed 3.0.0}
+  CRYPTO_num_locks: function : TOpenSSL_C_INT; cdecl = Load_CRYPTO_num_locks; {removed 1.1.0}
+  CRYPTO_set_locking_callback: procedure (func: TIdSslLockingCallback); cdecl = Load_CRYPTO_set_locking_callback; {removed 1.1.0}
+  CRYPTO_THREADID_set_numeric: procedure (id : PCRYPTO_THREADID; val: TOpenSSL_C_ULONG); cdecl = Load_CRYPTO_THREADID_set_numeric; {removed 1.1.0}
+  CRYPTO_THREADID_set_callback: procedure (threadid_func: Tthreadid_func); cdecl = Load_CRYPTO_THREADID_set_callback; {removed 1.1.0}
+  CRYPTO_set_id_callback: procedure (func: TIdSslIdCallback); cdecl = Load_CRYPTO_set_id_callback; {removed 1.1.0}
+  CRYPTO_set_mem_debug: function (flag: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_CRYPTO_set_mem_debug; {removed 3.0.0}
+  SSLeay_version: function (type_ : TOpenSSL_C_INT): PAnsiChar; cdecl = Load_SSLeay_version; {removed 1.1.0}
+  SSLeay: function : TOpenSSL_C_ULONG; cdecl = Load_SSLeay; {removed 1.1.0}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF}
 var fips_provider: POSSL_PROVIDER;
@@ -1009,1233 +1105,775 @@ end;
 
 
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$WARN  NO_RETVAL OFF}
-{$J+}
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_OPENSSL_malloc(num: TOpenSSL_C_SIZET): Pointer; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_malloc');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_OPENSSL_zalloc(num: TOpenSSL_C_SIZET): Pointer; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_zalloc');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_OPENSSL_realloc(addr: Pointer; num: TOpenSSL_C_SIZET): Pointer; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_realloc');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_OPENSSL_clear_realloc(addr: Pointer; old_num: TOpenSSL_C_SIZET; num: TOpenSSL_C_SIZET): Pointer; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_clear_realloc');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-procedure ERROR_OPENSSL_clear_free(addr: Pointer; num: TOpenSSL_C_SIZET); cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_clear_free');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-procedure ERROR_OPENSSL_free(addr: Pointer); cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_free');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_OPENSSL_memdup(const str: Pointer; s: TOpenSSL_C_SIZET): Pointer; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_memdup');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_OPENSSL_strdup(const str: PAnsiChar): PAnsiChar; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_strdup');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_OPENSSL_strndup(const str: PAnsiChar; n: TOpenSSL_C_SIZET): PAnsiChar; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_strndup');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_OPENSSL_secure_malloc(num: TOpenSSL_C_SIZET): Pointer; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_secure_malloc');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_OPENSSL_secure_zalloc(num: TOpenSSL_C_SIZET): Pointer; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_secure_zalloc');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-procedure ERROR_OPENSSL_secure_free(addr: Pointer); cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_secure_free');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-procedure ERROR_OPENSSL_secure_clear_free(addr: Pointer; num: TOpenSSL_C_SIZET); cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_secure_clear_free');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_OPENSSL_secure_actual_size(ptr: Pointer): TOpenSSL_C_SIZET; cdecl; {removed 1.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_secure_actual_size');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-function ERROR_CRYPTO_THREAD_lock_new: PCRYPTO_RWLOCK; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_lock_new');
-end;
-
-function ERROR_CRYPTO_THREAD_read_lock(lock: PCRYPTO_RWLOCK): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_read_lock');
-end;
-
-function ERROR_CRYPTO_THREAD_write_lock(lock: PCRYPTO_RWLOCK): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_write_lock');
-end;
-
-function ERROR_CRYPTO_THREAD_unlock(lock: PCRYPTO_RWLOCK): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_unlock');
-end;
-
-procedure ERROR_CRYPTO_THREAD_lock_free(lock: PCRYPTO_RWLOCK); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_lock_free');
-end;
-
-function ERROR_CRYPTO_atomic_add(val: POpenSSL_C_INT; amount: TOpenSSL_C_INT; ret: POpenSSL_C_INT; lock: PCRYPTO_RWLOCK): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_atomic_add');
-end;
-
-function ERROR_CRYPTO_mem_ctrl(mode: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; {removed 3.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_mem_ctrl');
-end;
-
-function ERROR_OPENSSL_strlcpy(dst: PAnsiChar; const src: PAnsiChar; siz: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_strlcpy');
-end;
-
-function ERROR_OPENSSL_strlcat(dst: PAnsiChar; const src: PAnsiChar; siz: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_strlcat');
-end;
-
-function ERROR_OPENSSL_strnlen(const str: PAnsiChar; maxlen: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_strnlen');
-end;
-
-function ERROR_OPENSSL_buf2hexstr(const buffer: PByte; len: TOpenSSL_C_LONG): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_buf2hexstr');
-end;
-
-function ERROR_OPENSSL_hexstr2buf(const str: PAnsiChar; len: POpenSSL_C_LONG): PByte; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_hexstr2buf');
-end;
-
-function ERROR_OPENSSL_hexchar2int(c: Byte): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_hexchar2int');
-end;
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_OpenSSL_version_num: TOpenSSL_C_ULONG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OpenSSL_version_num');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_OpenSSL_version(type_: TOpenSSL_C_INT): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OpenSSL_version');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-function ERROR_OPENSSL_issetugid: TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_issetugid');
-end;
-
-function ERROR_CRYPTO_new_ex_data(class_index: TOpenSSL_C_INT; obj: Pointer; ad: PCRYPTO_EX_DATA): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_new_ex_data');
-end;
-
-function ERROR_CRYPTO_dup_ex_data(class_index: TOpenSSL_C_INT; to_: PCRYPTO_EX_DATA; const from: PCRYPTO_EX_DATA): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_dup_ex_data');
-end;
-
-procedure ERROR_CRYPTO_free_ex_data(class_index: TOpenSSL_C_INT; obj: Pointer; ad: PCRYPTO_EX_DATA); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_free_ex_data');
-end;
-
-function ERROR_CRYPTO_set_ex_data(ad: PCRYPTO_EX_DATA; idx: TOpenSSL_C_INT; val: Pointer): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_set_ex_data');
-end;
-
-function ERROR_CRYPTO_get_ex_data(const ad: PCRYPTO_EX_DATA; idx: TOpenSSL_C_INT): Pointer; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_get_ex_data');
-end;
-
-function ERROR_CRYPTO_num_locks: TOpenSSL_C_INT; cdecl; {removed 1.1.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_num_locks');
-end;
-
-procedure ERROR_CRYPTO_set_locking_callback(func: TIdSslLockingCallback); cdecl; {removed 1.1.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_set_locking_callback');
-end;
-
-procedure ERROR_CRYPTO_THREADID_set_numeric(id : PCRYPTO_THREADID; val: TOpenSSL_C_ULONG); cdecl; {removed 1.1.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREADID_set_numeric');
-end;
-
-procedure ERROR_CRYPTO_THREADID_set_callback(threadid_func: Tthreadid_func); cdecl; {removed 1.1.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREADID_set_callback');
-end;
-
-procedure ERROR_CRYPTO_set_id_callback(func: TIdSslIdCallback); cdecl; {removed 1.1.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_set_id_callback');
-end;
-
-function ERROR_CRYPTO_set_mem_functions(m: CRYPTO_set_mem_functions_m; r: CRYPTO_set_mem_functions_r; f: CRYPTO_set_mem_functions_f): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_set_mem_functions');
-end;
-
-function ERROR_CRYPTO_set_mem_debug(flag: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; {removed 3.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_set_mem_debug');
-end;
-
-function ERROR_CRYPTO_malloc(num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_malloc');
-end;
-
-function ERROR_CRYPTO_zalloc(num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_zalloc');
-end;
-
-function ERROR_CRYPTO_memdup(const str: Pointer; siz: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_memdup');
-end;
-
-function ERROR_CRYPTO_strdup(const str: PAnsiChar; const file_: PAnsiChar; line: TOpenSSL_C_INT): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_strdup');
-end;
-
-function ERROR_CRYPTO_strndup(const str: PAnsiChar; s: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_strndup');
-end;
-
-procedure ERROR_CRYPTO_free(ptr: Pointer; const file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_free');
-end;
-
-procedure ERROR_CRYPTO_clear_free(ptr: Pointer; num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_clear_free');
-end;
-
-function ERROR_CRYPTO_realloc(addr: Pointer; num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_realloc');
-end;
-
-function ERROR_CRYPTO_clear_realloc(addr: Pointer; old_num: TOpenSSL_C_SIZET; num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_clear_realloc');
-end;
-
-function ERROR_CRYPTO_secure_malloc_init(sz: TOpenSSL_C_SIZET; minsize: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_secure_malloc_init');
-end;
-
-function ERROR_CRYPTO_secure_malloc_done: TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_secure_malloc_done');
-end;
-
-function ERROR_CRYPTO_secure_malloc(num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_secure_malloc');
-end;
-
-function ERROR_CRYPTO_secure_zalloc(num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_secure_zalloc');
-end;
-
-procedure ERROR_CRYPTO_secure_free(ptr: Pointer; const file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_secure_free');
-end;
-
-procedure ERROR_CRYPTO_secure_clear_free(ptr: Pointer; num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_secure_clear_free');
-end;
-
-function ERROR_CRYPTO_secure_allocated(const ptr: Pointer): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_secure_allocated');
-end;
-
-function ERROR_CRYPTO_secure_malloc_initialized: TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_secure_malloc_initialized');
-end;
-
-function ERROR_CRYPTO_secure_actual_size(ptr: Pointer): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_secure_actual_size');
-end;
-
-function ERROR_CRYPTO_secure_used: TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_secure_used');
-end;
-
-procedure ERROR_OPENSSL_cleanse(ptr: Pointer; len: TOpenSSL_C_SIZET); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_cleanse');
-end;
-
-function ERROR_OPENSSL_isservice: TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_isservice');
-end;
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_FIPS_mode: TOpenSSL_C_INT; cdecl; {removed 3.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('FIPS_mode');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_FIPS_mode_set(r: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; {removed 3.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('FIPS_mode_set');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-procedure ERROR_OPENSSL_init; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_init');
-end;
-
-function ERROR_CRYPTO_memcmp(const in_a: Pointer; const in_b: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_memcmp');
-end;
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-procedure ERROR_OPENSSL_cleanup; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_cleanup');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$IFDEF OPENSSL_NO_LEGACY_SUPPORT}
-function ERROR_OPENSSL_init_crypto(opts: TOpenSSL_C_UINT64; const settings: POPENSSL_INIT_SETTINGS): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_init_crypto');
-end;
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-procedure ERROR_OPENSSL_thread_stop; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_thread_stop');
-end;
-
-function ERROR_OPENSSL_INIT_new: POPENSSL_INIT_SETTINGS; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_INIT_new');
-end;
-
-procedure ERROR_OPENSSL_INIT_free(settings: POPENSSL_INIT_SETTINGS); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_INIT_free');
-end;
-
-function ERROR_CRYPTO_THREAD_run_once(once: PCRYPTO_ONCE; init: CRYPTO_THREAD_run_once_init): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_run_once');
-end;
-
-function ERROR_CRYPTO_THREAD_get_local(key: PCRYPTO_THREAD_LOCAL): Pointer; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_get_local');
-end;
-
-function ERROR_CRYPTO_THREAD_set_local(key: PCRYPTO_THREAD_LOCAL; val: Pointer): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_set_local');
-end;
-
-function ERROR_CRYPTO_THREAD_cleanup_local(key: PCRYPTO_THREAD_LOCAL): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_cleanup_local');
-end;
-
-function ERROR_CRYPTO_THREAD_get_current_id: CRYPTO_THREAD_ID; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_get_current_id');
-end;
-
-function ERROR_CRYPTO_THREAD_compare_id(a: CRYPTO_THREAD_ID; b: CRYPTO_THREAD_ID): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_compare_id');
-end;
-
-function ERROR_SSLeay_version(type_ : TOpenSSL_C_INT): PAnsiChar; cdecl; {removed 1.1.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSLeay_version');
-end;
-
-function ERROR_SSLeay: TOpenSSL_C_ULONG; cdecl; {removed 1.1.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('SSLeay');
-end;
-
-{$WARN  NO_RETVAL ON}
-procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
-var FuncLoadError: boolean;
-begin
-{$J+}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_OPENSSL_malloc(num: TOpenSSL_C_SIZET): Pointer; cdecl;
+begin
   OPENSSL_malloc := LoadLibCryptoFunction('OPENSSL_malloc');
-  FuncLoadError := not assigned(OPENSSL_malloc);
-  if FuncLoadError then
-  begin
+  if not assigned(OPENSSL_malloc) then
     OPENSSL_malloc := @COMPAT_OPENSSL_malloc;
-    if OPENSSL_malloc_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('OPENSSL_malloc');
-  end;
-{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+  Result := OPENSSL_malloc(num);
+end;
 
-{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_OPENSSL_zalloc(num: TOpenSSL_C_SIZET): Pointer; cdecl;
+begin
   OPENSSL_zalloc := LoadLibCryptoFunction('OPENSSL_zalloc');
-  FuncLoadError := not assigned(OPENSSL_zalloc);
-  if FuncLoadError then
-  begin
+  if not assigned(OPENSSL_zalloc) then
     OPENSSL_zalloc := @COMPAT_OPENSSL_zalloc;
-    if OPENSSL_zalloc_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('OPENSSL_zalloc');
-  end;
+  Result := OPENSSL_zalloc(num);
+end;
 
+function Load_OPENSSL_realloc(addr: Pointer; num: TOpenSSL_C_SIZET): Pointer; cdecl;
+begin
   OPENSSL_realloc := LoadLibCryptoFunction('OPENSSL_realloc');
-  FuncLoadError := not assigned(OPENSSL_realloc);
-  if FuncLoadError then
-  begin
+  if not assigned(OPENSSL_realloc) then
     OPENSSL_realloc := @COMPAT_OPENSSL_realloc;
-    if OPENSSL_realloc_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('OPENSSL_realloc');
-  end;
+  Result := OPENSSL_realloc(addr,num);
+end;
 
+function Load_OPENSSL_clear_realloc(addr: Pointer; old_num: TOpenSSL_C_SIZET; num: TOpenSSL_C_SIZET): Pointer; cdecl;
+begin
   OPENSSL_clear_realloc := LoadLibCryptoFunction('OPENSSL_clear_realloc');
-  FuncLoadError := not assigned(OPENSSL_clear_realloc);
-  if FuncLoadError then
-  begin
+  if not assigned(OPENSSL_clear_realloc) then
     OPENSSL_clear_realloc := @COMPAT_OPENSSL_clear_realloc;
-    if OPENSSL_clear_realloc_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('OPENSSL_clear_realloc');
-  end;
+  Result := OPENSSL_clear_realloc(addr,old_num,num);
+end;
 
+procedure Load_OPENSSL_clear_free(addr: Pointer; num: TOpenSSL_C_SIZET); cdecl;
+begin
   OPENSSL_clear_free := LoadLibCryptoFunction('OPENSSL_clear_free');
-  FuncLoadError := not assigned(OPENSSL_clear_free);
-  if FuncLoadError then
-  begin
+  if not assigned(OPENSSL_clear_free) then
     OPENSSL_clear_free := @COMPAT_OPENSSL_clear_free;
-    if OPENSSL_clear_free_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('OPENSSL_clear_free');
-  end;
+  OPENSSL_clear_free(addr,num);
+end;
 
+procedure Load_OPENSSL_free(addr: Pointer); cdecl;
+begin
   OPENSSL_free := LoadLibCryptoFunction('OPENSSL_free');
-  FuncLoadError := not assigned(OPENSSL_free);
-  if FuncLoadError then
-  begin
+  if not assigned(OPENSSL_free) then
     OPENSSL_free := @COMPAT_OPENSSL_free;
-    if OPENSSL_free_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('OPENSSL_free');
-  end;
+  OPENSSL_free(addr);
+end;
 
+function Load_OPENSSL_memdup(const str: Pointer; s: TOpenSSL_C_SIZET): Pointer; cdecl;
+begin
   OPENSSL_memdup := LoadLibCryptoFunction('OPENSSL_memdup');
-  FuncLoadError := not assigned(OPENSSL_memdup);
-  if FuncLoadError then
-  begin
+  if not assigned(OPENSSL_memdup) then
     OPENSSL_memdup := @COMPAT_OPENSSL_memdup;
-    if OPENSSL_memdup_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('OPENSSL_memdup');
-  end;
+  Result := OPENSSL_memdup(str,s);
+end;
 
+function Load_OPENSSL_strdup(const str: PAnsiChar): PAnsiChar; cdecl;
+begin
   OPENSSL_strdup := LoadLibCryptoFunction('OPENSSL_strdup');
-  FuncLoadError := not assigned(OPENSSL_strdup);
-  if FuncLoadError then
-  begin
+  if not assigned(OPENSSL_strdup) then
     OPENSSL_strdup := @COMPAT_OPENSSL_strdup;
-    if OPENSSL_strdup_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('OPENSSL_strdup');
-  end;
+  Result := OPENSSL_strdup(str);
+end;
 
+function Load_OPENSSL_strndup(const str: PAnsiChar; n: TOpenSSL_C_SIZET): PAnsiChar; cdecl;
+begin
   OPENSSL_strndup := LoadLibCryptoFunction('OPENSSL_strndup');
-  FuncLoadError := not assigned(OPENSSL_strndup);
-  if FuncLoadError then
-  begin
+  if not assigned(OPENSSL_strndup) then
     OPENSSL_strndup := @COMPAT_OPENSSL_strndup;
-    if OPENSSL_strndup_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('OPENSSL_strndup');
-  end;
+  Result := OPENSSL_strndup(str,n);
+end;
 
+function Load_OPENSSL_secure_malloc(num: TOpenSSL_C_SIZET): Pointer; cdecl;
+begin
   OPENSSL_secure_malloc := LoadLibCryptoFunction('OPENSSL_secure_malloc');
-  FuncLoadError := not assigned(OPENSSL_secure_malloc);
-  if FuncLoadError then
-  begin
+  if not assigned(OPENSSL_secure_malloc) then
     OPENSSL_secure_malloc := @COMPAT_OPENSSL_secure_malloc;
-    if OPENSSL_secure_malloc_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('OPENSSL_secure_malloc');
-  end;
+  Result := OPENSSL_secure_malloc(num);
+end;
 
+function Load_OPENSSL_secure_zalloc(num: TOpenSSL_C_SIZET): Pointer; cdecl;
+begin
   OPENSSL_secure_zalloc := LoadLibCryptoFunction('OPENSSL_secure_zalloc');
-  FuncLoadError := not assigned(OPENSSL_secure_zalloc);
-  if FuncLoadError then
-  begin
+  if not assigned(OPENSSL_secure_zalloc) then
     OPENSSL_secure_zalloc := @COMPAT_OPENSSL_secure_zalloc;
-    if OPENSSL_secure_zalloc_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('OPENSSL_secure_zalloc');
-  end;
+  Result := OPENSSL_secure_zalloc(num);
+end;
 
+procedure Load_OPENSSL_secure_free(addr: Pointer); cdecl;
+begin
   OPENSSL_secure_free := LoadLibCryptoFunction('OPENSSL_secure_free');
-  FuncLoadError := not assigned(OPENSSL_secure_free);
-  if FuncLoadError then
-  begin
+  if not assigned(OPENSSL_secure_free) then
     OPENSSL_secure_free := @COMPAT_OPENSSL_secure_free;
-    if OPENSSL_secure_free_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('OPENSSL_secure_free');
-  end;
+  OPENSSL_secure_free(addr);
+end;
 
+procedure Load_OPENSSL_secure_clear_free(addr: Pointer; num: TOpenSSL_C_SIZET); cdecl;
+begin
   OPENSSL_secure_clear_free := LoadLibCryptoFunction('OPENSSL_secure_clear_free');
-  FuncLoadError := not assigned(OPENSSL_secure_clear_free);
-  if FuncLoadError then
-  begin
+  if not assigned(OPENSSL_secure_clear_free) then
     OPENSSL_secure_clear_free := @COMPAT_OPENSSL_secure_clear_free;
-    if OPENSSL_secure_clear_free_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('OPENSSL_secure_clear_free');
-  end;
+  OPENSSL_secure_clear_free(addr,num);
+end;
 
+function Load_OPENSSL_secure_actual_size(ptr: Pointer): TOpenSSL_C_SIZET; cdecl;
+begin
   OPENSSL_secure_actual_size := LoadLibCryptoFunction('OPENSSL_secure_actual_size');
-  FuncLoadError := not assigned(OPENSSL_secure_actual_size);
-  if FuncLoadError then
-  begin
+  if not assigned(OPENSSL_secure_actual_size) then
     OPENSSL_secure_actual_size := @COMPAT_OPENSSL_secure_actual_size;
-    if OPENSSL_secure_actual_size_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('OPENSSL_secure_actual_size');
-  end;
+  Result := OPENSSL_secure_actual_size(ptr);
+end;
 
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_CRYPTO_THREAD_lock_new: PCRYPTO_RWLOCK; cdecl;
+begin
   CRYPTO_THREAD_lock_new := LoadLibCryptoFunction('CRYPTO_THREAD_lock_new');
-  FuncLoadError := not assigned(CRYPTO_THREAD_lock_new);
-  if FuncLoadError then
-  begin
-    CRYPTO_THREAD_lock_new :=  @ERROR_CRYPTO_THREAD_lock_new;
-  end;
+  if not assigned(CRYPTO_THREAD_lock_new) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_lock_new');
+  Result := CRYPTO_THREAD_lock_new();
+end;
 
+function Load_CRYPTO_THREAD_read_lock(lock: PCRYPTO_RWLOCK): TOpenSSL_C_INT; cdecl;
+begin
   CRYPTO_THREAD_read_lock := LoadLibCryptoFunction('CRYPTO_THREAD_read_lock');
-  FuncLoadError := not assigned(CRYPTO_THREAD_read_lock);
-  if FuncLoadError then
-  begin
-    CRYPTO_THREAD_read_lock :=  @ERROR_CRYPTO_THREAD_read_lock;
-  end;
+  if not assigned(CRYPTO_THREAD_read_lock) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_read_lock');
+  Result := CRYPTO_THREAD_read_lock(lock);
+end;
 
+function Load_CRYPTO_THREAD_write_lock(lock: PCRYPTO_RWLOCK): TOpenSSL_C_INT; cdecl;
+begin
   CRYPTO_THREAD_write_lock := LoadLibCryptoFunction('CRYPTO_THREAD_write_lock');
-  FuncLoadError := not assigned(CRYPTO_THREAD_write_lock);
-  if FuncLoadError then
-  begin
-    CRYPTO_THREAD_write_lock :=  @ERROR_CRYPTO_THREAD_write_lock;
-  end;
+  if not assigned(CRYPTO_THREAD_write_lock) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_write_lock');
+  Result := CRYPTO_THREAD_write_lock(lock);
+end;
 
+function Load_CRYPTO_THREAD_unlock(lock: PCRYPTO_RWLOCK): TOpenSSL_C_INT; cdecl;
+begin
   CRYPTO_THREAD_unlock := LoadLibCryptoFunction('CRYPTO_THREAD_unlock');
-  FuncLoadError := not assigned(CRYPTO_THREAD_unlock);
-  if FuncLoadError then
-  begin
-    CRYPTO_THREAD_unlock :=  @ERROR_CRYPTO_THREAD_unlock;
-  end;
+  if not assigned(CRYPTO_THREAD_unlock) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_unlock');
+  Result := CRYPTO_THREAD_unlock(lock);
+end;
 
+procedure Load_CRYPTO_THREAD_lock_free(lock: PCRYPTO_RWLOCK); cdecl;
+begin
   CRYPTO_THREAD_lock_free := LoadLibCryptoFunction('CRYPTO_THREAD_lock_free');
-  FuncLoadError := not assigned(CRYPTO_THREAD_lock_free);
-  if FuncLoadError then
-  begin
-    CRYPTO_THREAD_lock_free :=  @ERROR_CRYPTO_THREAD_lock_free;
-  end;
+  if not assigned(CRYPTO_THREAD_lock_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_lock_free');
+  CRYPTO_THREAD_lock_free(lock);
+end;
 
+function Load_CRYPTO_atomic_add(val: POpenSSL_C_INT; amount: TOpenSSL_C_INT; ret: POpenSSL_C_INT; lock: PCRYPTO_RWLOCK): TOpenSSL_C_INT; cdecl;
+begin
   CRYPTO_atomic_add := LoadLibCryptoFunction('CRYPTO_atomic_add');
-  FuncLoadError := not assigned(CRYPTO_atomic_add);
-  if FuncLoadError then
-  begin
-    CRYPTO_atomic_add :=  @ERROR_CRYPTO_atomic_add;
-  end;
+  if not assigned(CRYPTO_atomic_add) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_atomic_add');
+  Result := CRYPTO_atomic_add(val,amount,ret,lock);
+end;
 
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_CRYPTO_mem_ctrl(mode: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   CRYPTO_mem_ctrl := LoadLibCryptoFunction('CRYPTO_mem_ctrl');
-  FuncLoadError := not assigned(CRYPTO_mem_ctrl);
-  if FuncLoadError then
-  begin
-    if CRYPTO_mem_ctrl_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('CRYPTO_mem_ctrl');
-  end;
+  if not assigned(CRYPTO_mem_ctrl) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_mem_ctrl');
+  Result := CRYPTO_mem_ctrl(mode);
+end;
 
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_OPENSSL_strlcpy(dst: PAnsiChar; const src: PAnsiChar; siz: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+begin
   OPENSSL_strlcpy := LoadLibCryptoFunction('OPENSSL_strlcpy');
-  FuncLoadError := not assigned(OPENSSL_strlcpy);
-  if FuncLoadError then
-  begin
-    OPENSSL_strlcpy :=  @ERROR_OPENSSL_strlcpy;
-  end;
+  if not assigned(OPENSSL_strlcpy) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_strlcpy');
+  Result := OPENSSL_strlcpy(dst,src,siz);
+end;
 
+function Load_OPENSSL_strlcat(dst: PAnsiChar; const src: PAnsiChar; siz: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+begin
   OPENSSL_strlcat := LoadLibCryptoFunction('OPENSSL_strlcat');
-  FuncLoadError := not assigned(OPENSSL_strlcat);
-  if FuncLoadError then
-  begin
-    OPENSSL_strlcat :=  @ERROR_OPENSSL_strlcat;
-  end;
+  if not assigned(OPENSSL_strlcat) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_strlcat');
+  Result := OPENSSL_strlcat(dst,src,siz);
+end;
 
+function Load_OPENSSL_strnlen(const str: PAnsiChar; maxlen: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+begin
   OPENSSL_strnlen := LoadLibCryptoFunction('OPENSSL_strnlen');
-  FuncLoadError := not assigned(OPENSSL_strnlen);
-  if FuncLoadError then
-  begin
-    OPENSSL_strnlen :=  @ERROR_OPENSSL_strnlen;
-  end;
+  if not assigned(OPENSSL_strnlen) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_strnlen');
+  Result := OPENSSL_strnlen(str,maxlen);
+end;
 
+function Load_OPENSSL_buf2hexstr(const buffer: PByte; len: TOpenSSL_C_LONG): PAnsiChar; cdecl;
+begin
   OPENSSL_buf2hexstr := LoadLibCryptoFunction('OPENSSL_buf2hexstr');
-  FuncLoadError := not assigned(OPENSSL_buf2hexstr);
-  if FuncLoadError then
-  begin
-    OPENSSL_buf2hexstr :=  @ERROR_OPENSSL_buf2hexstr;
-  end;
+  if not assigned(OPENSSL_buf2hexstr) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_buf2hexstr');
+  Result := OPENSSL_buf2hexstr(buffer,len);
+end;
 
+function Load_OPENSSL_hexstr2buf(const str: PAnsiChar; len: POpenSSL_C_LONG): PByte; cdecl;
+begin
   OPENSSL_hexstr2buf := LoadLibCryptoFunction('OPENSSL_hexstr2buf');
-  FuncLoadError := not assigned(OPENSSL_hexstr2buf);
-  if FuncLoadError then
-  begin
-    OPENSSL_hexstr2buf :=  @ERROR_OPENSSL_hexstr2buf;
-  end;
+  if not assigned(OPENSSL_hexstr2buf) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_hexstr2buf');
+  Result := OPENSSL_hexstr2buf(str,len);
+end;
 
+function Load_OPENSSL_hexchar2int(c: Byte): TOpenSSL_C_INT; cdecl;
+begin
   OPENSSL_hexchar2int := LoadLibCryptoFunction('OPENSSL_hexchar2int');
-  FuncLoadError := not assigned(OPENSSL_hexchar2int);
-  if FuncLoadError then
-  begin
-    OPENSSL_hexchar2int :=  @ERROR_OPENSSL_hexchar2int;
-  end;
+  if not assigned(OPENSSL_hexchar2int) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_hexchar2int');
+  Result := OPENSSL_hexchar2int(c);
+end;
 
+function Load_OpenSSL_version_num: TOpenSSL_C_ULONG; cdecl;
+begin
   OpenSSL_version_num := LoadLibCryptoFunction('OpenSSL_version_num');
-  FuncLoadError := not assigned(OpenSSL_version_num);
-  if FuncLoadError then
-  begin
+  if not assigned(OpenSSL_version_num) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     OpenSSL_version_num := @COMPAT_OpenSSL_version_num;
 {$ELSE}
-    OpenSSL_version_num :=  @ERROR_OpenSSL_version_num;
-{$ENDIF}
-  end;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OpenSSL_version_num');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  Result := OpenSSL_version_num();
+end;
 
+function Load_OpenSSL_version(type_: TOpenSSL_C_INT): PAnsiChar; cdecl;
+begin
   OpenSSL_version := LoadLibCryptoFunction('OpenSSL_version');
-  FuncLoadError := not assigned(OpenSSL_version);
-  if FuncLoadError then
-  begin
+  if not assigned(OpenSSL_version) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     OpenSSL_version := @COMPAT_OpenSSL_version;
 {$ELSE}
-    OpenSSL_version :=  @ERROR_OpenSSL_version;
-{$ENDIF}
-  end;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OpenSSL_version');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  Result := OpenSSL_version(type_);
+end;
 
+function Load_OPENSSL_issetugid: TOpenSSL_C_INT; cdecl;
+begin
   OPENSSL_issetugid := LoadLibCryptoFunction('OPENSSL_issetugid');
-  FuncLoadError := not assigned(OPENSSL_issetugid);
-  if FuncLoadError then
-  begin
-    OPENSSL_issetugid :=  @ERROR_OPENSSL_issetugid;
-  end;
+  if not assigned(OPENSSL_issetugid) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_issetugid');
+  Result := OPENSSL_issetugid();
+end;
 
+function Load_CRYPTO_new_ex_data(class_index: TOpenSSL_C_INT; obj: Pointer; ad: PCRYPTO_EX_DATA): TOpenSSL_C_INT; cdecl;
+begin
   CRYPTO_new_ex_data := LoadLibCryptoFunction('CRYPTO_new_ex_data');
-  FuncLoadError := not assigned(CRYPTO_new_ex_data);
-  if FuncLoadError then
-  begin
-    CRYPTO_new_ex_data :=  @ERROR_CRYPTO_new_ex_data;
-  end;
+  if not assigned(CRYPTO_new_ex_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_new_ex_data');
+  Result := CRYPTO_new_ex_data(class_index,obj,ad);
+end;
 
+function Load_CRYPTO_dup_ex_data(class_index: TOpenSSL_C_INT; to_: PCRYPTO_EX_DATA; const from: PCRYPTO_EX_DATA): TOpenSSL_C_INT; cdecl;
+begin
   CRYPTO_dup_ex_data := LoadLibCryptoFunction('CRYPTO_dup_ex_data');
-  FuncLoadError := not assigned(CRYPTO_dup_ex_data);
-  if FuncLoadError then
-  begin
-    CRYPTO_dup_ex_data :=  @ERROR_CRYPTO_dup_ex_data;
-  end;
+  if not assigned(CRYPTO_dup_ex_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_dup_ex_data');
+  Result := CRYPTO_dup_ex_data(class_index,to_,from);
+end;
 
+procedure Load_CRYPTO_free_ex_data(class_index: TOpenSSL_C_INT; obj: Pointer; ad: PCRYPTO_EX_DATA); cdecl;
+begin
   CRYPTO_free_ex_data := LoadLibCryptoFunction('CRYPTO_free_ex_data');
-  FuncLoadError := not assigned(CRYPTO_free_ex_data);
-  if FuncLoadError then
-  begin
-    CRYPTO_free_ex_data :=  @ERROR_CRYPTO_free_ex_data;
-  end;
+  if not assigned(CRYPTO_free_ex_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_free_ex_data');
+  CRYPTO_free_ex_data(class_index,obj,ad);
+end;
 
+function Load_CRYPTO_set_ex_data(ad: PCRYPTO_EX_DATA; idx: TOpenSSL_C_INT; val: Pointer): TOpenSSL_C_INT; cdecl;
+begin
   CRYPTO_set_ex_data := LoadLibCryptoFunction('CRYPTO_set_ex_data');
-  FuncLoadError := not assigned(CRYPTO_set_ex_data);
-  if FuncLoadError then
-  begin
-    CRYPTO_set_ex_data :=  @ERROR_CRYPTO_set_ex_data;
-  end;
+  if not assigned(CRYPTO_set_ex_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_set_ex_data');
+  Result := CRYPTO_set_ex_data(ad,idx,val);
+end;
 
+function Load_CRYPTO_get_ex_data(const ad: PCRYPTO_EX_DATA; idx: TOpenSSL_C_INT): Pointer; cdecl;
+begin
   CRYPTO_get_ex_data := LoadLibCryptoFunction('CRYPTO_get_ex_data');
-  FuncLoadError := not assigned(CRYPTO_get_ex_data);
-  if FuncLoadError then
-  begin
-    CRYPTO_get_ex_data :=  @ERROR_CRYPTO_get_ex_data;
-  end;
+  if not assigned(CRYPTO_get_ex_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_get_ex_data');
+  Result := CRYPTO_get_ex_data(ad,idx);
+end;
 
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_CRYPTO_num_locks: TOpenSSL_C_INT; cdecl;
+begin
   CRYPTO_num_locks := LoadLibCryptoFunction('CRYPTO_num_locks');
-  FuncLoadError := not assigned(CRYPTO_num_locks);
-  if FuncLoadError then
-  begin
-    if CRYPTO_num_locks_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('CRYPTO_num_locks');
-  end;
+  if not assigned(CRYPTO_num_locks) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_num_locks');
+  Result := CRYPTO_num_locks();
+end;
 
+procedure Load_CRYPTO_set_locking_callback(func: TIdSslLockingCallback); cdecl;
+begin
   CRYPTO_set_locking_callback := LoadLibCryptoFunction('CRYPTO_set_locking_callback');
-  FuncLoadError := not assigned(CRYPTO_set_locking_callback);
-  if FuncLoadError then
-  begin
-    if CRYPTO_set_locking_callback_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('CRYPTO_set_locking_callback');
-  end;
+  if not assigned(CRYPTO_set_locking_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_set_locking_callback');
+  CRYPTO_set_locking_callback(func);
+end;
 
+procedure Load_CRYPTO_THREADID_set_numeric(id : PCRYPTO_THREADID; val: TOpenSSL_C_ULONG); cdecl;
+begin
   CRYPTO_THREADID_set_numeric := LoadLibCryptoFunction('CRYPTO_THREADID_set_numeric');
-  FuncLoadError := not assigned(CRYPTO_THREADID_set_numeric);
-  if FuncLoadError then
-  begin
-    if CRYPTO_THREADID_set_numeric_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('CRYPTO_THREADID_set_numeric');
-  end;
+  if not assigned(CRYPTO_THREADID_set_numeric) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREADID_set_numeric');
+  CRYPTO_THREADID_set_numeric(id,val);
+end;
 
+procedure Load_CRYPTO_THREADID_set_callback(threadid_func: Tthreadid_func); cdecl;
+begin
   CRYPTO_THREADID_set_callback := LoadLibCryptoFunction('CRYPTO_THREADID_set_callback');
-  FuncLoadError := not assigned(CRYPTO_THREADID_set_callback);
-  if FuncLoadError then
-  begin
-    if CRYPTO_THREADID_set_callback_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('CRYPTO_THREADID_set_callback');
-  end;
+  if not assigned(CRYPTO_THREADID_set_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREADID_set_callback');
+  CRYPTO_THREADID_set_callback(threadid_func);
+end;
 
+procedure Load_CRYPTO_set_id_callback(func: TIdSslIdCallback); cdecl;
+begin
   CRYPTO_set_id_callback := LoadLibCryptoFunction('CRYPTO_set_id_callback');
-  FuncLoadError := not assigned(CRYPTO_set_id_callback);
-  if FuncLoadError then
-  begin
-    if CRYPTO_set_id_callback_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('CRYPTO_set_id_callback');
-  end;
+  if not assigned(CRYPTO_set_id_callback) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_set_id_callback');
+  CRYPTO_set_id_callback(func);
+end;
 
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_CRYPTO_set_mem_functions(m: CRYPTO_set_mem_functions_m; r: CRYPTO_set_mem_functions_r; f: CRYPTO_set_mem_functions_f): TOpenSSL_C_INT; cdecl;
+begin
   CRYPTO_set_mem_functions := LoadLibCryptoFunction('CRYPTO_set_mem_functions');
-  FuncLoadError := not assigned(CRYPTO_set_mem_functions);
-  if FuncLoadError then
-  begin
-    CRYPTO_set_mem_functions :=  @ERROR_CRYPTO_set_mem_functions;
-  end;
+  if not assigned(CRYPTO_set_mem_functions) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_set_mem_functions');
+  Result := CRYPTO_set_mem_functions(m,r,f);
+end;
 
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_CRYPTO_set_mem_debug(flag: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   CRYPTO_set_mem_debug := LoadLibCryptoFunction('CRYPTO_set_mem_debug');
-  FuncLoadError := not assigned(CRYPTO_set_mem_debug);
-  if FuncLoadError then
-  begin
-    if CRYPTO_set_mem_debug_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('CRYPTO_set_mem_debug');
-  end;
+  if not assigned(CRYPTO_set_mem_debug) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_set_mem_debug');
+  Result := CRYPTO_set_mem_debug(flag);
+end;
 
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_CRYPTO_malloc(num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl;
+begin
   CRYPTO_malloc := LoadLibCryptoFunction('CRYPTO_malloc');
-  FuncLoadError := not assigned(CRYPTO_malloc);
-  if FuncLoadError then
-  begin
-    CRYPTO_malloc :=  @ERROR_CRYPTO_malloc;
-  end;
+  if not assigned(CRYPTO_malloc) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_malloc');
+  Result := CRYPTO_malloc(num,file_,line);
+end;
 
+function Load_CRYPTO_zalloc(num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl;
+begin
   CRYPTO_zalloc := LoadLibCryptoFunction('CRYPTO_zalloc');
-  FuncLoadError := not assigned(CRYPTO_zalloc);
-  if FuncLoadError then
-  begin
-    CRYPTO_zalloc :=  @ERROR_CRYPTO_zalloc;
-  end;
+  if not assigned(CRYPTO_zalloc) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_zalloc');
+  Result := CRYPTO_zalloc(num,file_,line);
+end;
 
+function Load_CRYPTO_memdup(const str: Pointer; siz: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl;
+begin
   CRYPTO_memdup := LoadLibCryptoFunction('CRYPTO_memdup');
-  FuncLoadError := not assigned(CRYPTO_memdup);
-  if FuncLoadError then
-  begin
-    CRYPTO_memdup :=  @ERROR_CRYPTO_memdup;
-  end;
+  if not assigned(CRYPTO_memdup) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_memdup');
+  Result := CRYPTO_memdup(str,siz,file_,line);
+end;
 
+function Load_CRYPTO_strdup(const str: PAnsiChar; const file_: PAnsiChar; line: TOpenSSL_C_INT): PAnsiChar; cdecl;
+begin
   CRYPTO_strdup := LoadLibCryptoFunction('CRYPTO_strdup');
-  FuncLoadError := not assigned(CRYPTO_strdup);
-  if FuncLoadError then
-  begin
-    CRYPTO_strdup :=  @ERROR_CRYPTO_strdup;
-  end;
+  if not assigned(CRYPTO_strdup) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_strdup');
+  Result := CRYPTO_strdup(str,file_,line);
+end;
 
+function Load_CRYPTO_strndup(const str: PAnsiChar; s: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): PAnsiChar; cdecl;
+begin
   CRYPTO_strndup := LoadLibCryptoFunction('CRYPTO_strndup');
-  FuncLoadError := not assigned(CRYPTO_strndup);
-  if FuncLoadError then
-  begin
-    CRYPTO_strndup :=  @ERROR_CRYPTO_strndup;
-  end;
+  if not assigned(CRYPTO_strndup) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_strndup');
+  Result := CRYPTO_strndup(str,s,file_,line);
+end;
 
+procedure Load_CRYPTO_free(ptr: Pointer; const file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl;
+begin
   CRYPTO_free := LoadLibCryptoFunction('CRYPTO_free');
-  FuncLoadError := not assigned(CRYPTO_free);
-  if FuncLoadError then
-  begin
-    CRYPTO_free :=  @ERROR_CRYPTO_free;
-  end;
+  if not assigned(CRYPTO_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_free');
+  CRYPTO_free(ptr,file_,line);
+end;
 
+procedure Load_CRYPTO_clear_free(ptr: Pointer; num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl;
+begin
   CRYPTO_clear_free := LoadLibCryptoFunction('CRYPTO_clear_free');
-  FuncLoadError := not assigned(CRYPTO_clear_free);
-  if FuncLoadError then
-  begin
-    CRYPTO_clear_free :=  @ERROR_CRYPTO_clear_free;
-  end;
+  if not assigned(CRYPTO_clear_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_clear_free');
+  CRYPTO_clear_free(ptr,num,file_,line);
+end;
 
+function Load_CRYPTO_realloc(addr: Pointer; num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl;
+begin
   CRYPTO_realloc := LoadLibCryptoFunction('CRYPTO_realloc');
-  FuncLoadError := not assigned(CRYPTO_realloc);
-  if FuncLoadError then
-  begin
-    CRYPTO_realloc :=  @ERROR_CRYPTO_realloc;
-  end;
+  if not assigned(CRYPTO_realloc) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_realloc');
+  Result := CRYPTO_realloc(addr,num,file_,line);
+end;
 
+function Load_CRYPTO_clear_realloc(addr: Pointer; old_num: TOpenSSL_C_SIZET; num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl;
+begin
   CRYPTO_clear_realloc := LoadLibCryptoFunction('CRYPTO_clear_realloc');
-  FuncLoadError := not assigned(CRYPTO_clear_realloc);
-  if FuncLoadError then
-  begin
-    CRYPTO_clear_realloc :=  @ERROR_CRYPTO_clear_realloc;
-  end;
+  if not assigned(CRYPTO_clear_realloc) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_clear_realloc');
+  Result := CRYPTO_clear_realloc(addr,old_num,num,file_,line);
+end;
 
+function Load_CRYPTO_secure_malloc_init(sz: TOpenSSL_C_SIZET; minsize: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   CRYPTO_secure_malloc_init := LoadLibCryptoFunction('CRYPTO_secure_malloc_init');
-  FuncLoadError := not assigned(CRYPTO_secure_malloc_init);
-  if FuncLoadError then
-  begin
-    CRYPTO_secure_malloc_init :=  @ERROR_CRYPTO_secure_malloc_init;
-  end;
+  if not assigned(CRYPTO_secure_malloc_init) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_secure_malloc_init');
+  Result := CRYPTO_secure_malloc_init(sz,minsize);
+end;
 
+function Load_CRYPTO_secure_malloc_done: TOpenSSL_C_INT; cdecl;
+begin
   CRYPTO_secure_malloc_done := LoadLibCryptoFunction('CRYPTO_secure_malloc_done');
-  FuncLoadError := not assigned(CRYPTO_secure_malloc_done);
-  if FuncLoadError then
-  begin
-    CRYPTO_secure_malloc_done :=  @ERROR_CRYPTO_secure_malloc_done;
-  end;
+  if not assigned(CRYPTO_secure_malloc_done) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_secure_malloc_done');
+  Result := CRYPTO_secure_malloc_done();
+end;
 
+function Load_CRYPTO_secure_malloc(num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl;
+begin
   CRYPTO_secure_malloc := LoadLibCryptoFunction('CRYPTO_secure_malloc');
-  FuncLoadError := not assigned(CRYPTO_secure_malloc);
-  if FuncLoadError then
-  begin
-    CRYPTO_secure_malloc :=  @ERROR_CRYPTO_secure_malloc;
-  end;
+  if not assigned(CRYPTO_secure_malloc) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_secure_malloc');
+  Result := CRYPTO_secure_malloc(num,file_,line);
+end;
 
+function Load_CRYPTO_secure_zalloc(num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT): Pointer; cdecl;
+begin
   CRYPTO_secure_zalloc := LoadLibCryptoFunction('CRYPTO_secure_zalloc');
-  FuncLoadError := not assigned(CRYPTO_secure_zalloc);
-  if FuncLoadError then
-  begin
-    CRYPTO_secure_zalloc :=  @ERROR_CRYPTO_secure_zalloc;
-  end;
+  if not assigned(CRYPTO_secure_zalloc) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_secure_zalloc');
+  Result := CRYPTO_secure_zalloc(num,file_,line);
+end;
 
+procedure Load_CRYPTO_secure_free(ptr: Pointer; const file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl;
+begin
   CRYPTO_secure_free := LoadLibCryptoFunction('CRYPTO_secure_free');
-  FuncLoadError := not assigned(CRYPTO_secure_free);
-  if FuncLoadError then
-  begin
-    CRYPTO_secure_free :=  @ERROR_CRYPTO_secure_free;
-  end;
+  if not assigned(CRYPTO_secure_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_secure_free');
+  CRYPTO_secure_free(ptr,file_,line);
+end;
 
+procedure Load_CRYPTO_secure_clear_free(ptr: Pointer; num: TOpenSSL_C_SIZET; const file_: PAnsiChar; line: TOpenSSL_C_INT); cdecl;
+begin
   CRYPTO_secure_clear_free := LoadLibCryptoFunction('CRYPTO_secure_clear_free');
-  FuncLoadError := not assigned(CRYPTO_secure_clear_free);
-  if FuncLoadError then
-  begin
-    CRYPTO_secure_clear_free :=  @ERROR_CRYPTO_secure_clear_free;
-  end;
+  if not assigned(CRYPTO_secure_clear_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_secure_clear_free');
+  CRYPTO_secure_clear_free(ptr,num,file_,line);
+end;
 
+function Load_CRYPTO_secure_allocated(const ptr: Pointer): TOpenSSL_C_INT; cdecl;
+begin
   CRYPTO_secure_allocated := LoadLibCryptoFunction('CRYPTO_secure_allocated');
-  FuncLoadError := not assigned(CRYPTO_secure_allocated);
-  if FuncLoadError then
-  begin
-    CRYPTO_secure_allocated :=  @ERROR_CRYPTO_secure_allocated;
-  end;
+  if not assigned(CRYPTO_secure_allocated) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_secure_allocated');
+  Result := CRYPTO_secure_allocated(ptr);
+end;
 
+function Load_CRYPTO_secure_malloc_initialized: TOpenSSL_C_INT; cdecl;
+begin
   CRYPTO_secure_malloc_initialized := LoadLibCryptoFunction('CRYPTO_secure_malloc_initialized');
-  FuncLoadError := not assigned(CRYPTO_secure_malloc_initialized);
-  if FuncLoadError then
-  begin
-    CRYPTO_secure_malloc_initialized :=  @ERROR_CRYPTO_secure_malloc_initialized;
-  end;
+  if not assigned(CRYPTO_secure_malloc_initialized) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_secure_malloc_initialized');
+  Result := CRYPTO_secure_malloc_initialized();
+end;
 
+function Load_CRYPTO_secure_actual_size(ptr: Pointer): TOpenSSL_C_SIZET; cdecl;
+begin
   CRYPTO_secure_actual_size := LoadLibCryptoFunction('CRYPTO_secure_actual_size');
-  FuncLoadError := not assigned(CRYPTO_secure_actual_size);
-  if FuncLoadError then
-  begin
-    CRYPTO_secure_actual_size :=  @ERROR_CRYPTO_secure_actual_size;
-  end;
+  if not assigned(CRYPTO_secure_actual_size) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_secure_actual_size');
+  Result := CRYPTO_secure_actual_size(ptr);
+end;
 
+function Load_CRYPTO_secure_used: TOpenSSL_C_SIZET; cdecl;
+begin
   CRYPTO_secure_used := LoadLibCryptoFunction('CRYPTO_secure_used');
-  FuncLoadError := not assigned(CRYPTO_secure_used);
-  if FuncLoadError then
-  begin
-    CRYPTO_secure_used :=  @ERROR_CRYPTO_secure_used;
-  end;
+  if not assigned(CRYPTO_secure_used) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_secure_used');
+  Result := CRYPTO_secure_used();
+end;
 
+procedure Load_OPENSSL_cleanse(ptr: Pointer; len: TOpenSSL_C_SIZET); cdecl;
+begin
   OPENSSL_cleanse := LoadLibCryptoFunction('OPENSSL_cleanse');
-  FuncLoadError := not assigned(OPENSSL_cleanse);
-  if FuncLoadError then
-  begin
-    OPENSSL_cleanse :=  @ERROR_OPENSSL_cleanse;
-  end;
+  if not assigned(OPENSSL_cleanse) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_cleanse');
+  OPENSSL_cleanse(ptr,len);
+end;
 
+function Load_OPENSSL_isservice: TOpenSSL_C_INT; cdecl;
+begin
   OPENSSL_isservice := LoadLibCryptoFunction('OPENSSL_isservice');
-  FuncLoadError := not assigned(OPENSSL_isservice);
-  if FuncLoadError then
-  begin
-    OPENSSL_isservice :=  @ERROR_OPENSSL_isservice;
-  end;
+  if not assigned(OPENSSL_isservice) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_isservice');
+  Result := OPENSSL_isservice();
+end;
 
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_FIPS_mode: TOpenSSL_C_INT; cdecl;
+begin
   FIPS_mode := LoadLibCryptoFunction('FIPS_mode');
-  FuncLoadError := not assigned(FIPS_mode);
-  if FuncLoadError then
-  begin
+  if not assigned(FIPS_mode) then
     FIPS_mode := @COMPAT_FIPS_mode;
-    if FIPS_mode_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('FIPS_mode');
-  end;
+  Result := FIPS_mode();
+end;
 
+function Load_FIPS_mode_set(r: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
   FIPS_mode_set := LoadLibCryptoFunction('FIPS_mode_set');
-  FuncLoadError := not assigned(FIPS_mode_set);
-  if FuncLoadError then
-  begin
+  if not assigned(FIPS_mode_set) then
     FIPS_mode_set := @COMPAT_FIPS_mode_set;
-    if FIPS_mode_set_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('FIPS_mode_set');
-  end;
+  Result := FIPS_mode_set(r);
+end;
 
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+procedure Load_OPENSSL_init; cdecl;
+begin
   OPENSSL_init := LoadLibCryptoFunction('OPENSSL_init');
-  FuncLoadError := not assigned(OPENSSL_init);
-  if FuncLoadError then
-  begin
-    OPENSSL_init :=  @ERROR_OPENSSL_init;
-  end;
+  if not assigned(OPENSSL_init) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_init');
+  OPENSSL_init();
+end;
 
+function Load_CRYPTO_memcmp(const in_a: Pointer; const in_b: Pointer; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
   CRYPTO_memcmp := LoadLibCryptoFunction('CRYPTO_memcmp');
-  FuncLoadError := not assigned(CRYPTO_memcmp);
-  if FuncLoadError then
-  begin
-    CRYPTO_memcmp :=  @ERROR_CRYPTO_memcmp;
-  end;
+  if not assigned(CRYPTO_memcmp) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_memcmp');
+  Result := CRYPTO_memcmp(in_a,in_b,len);
+end;
 
+procedure Load_OPENSSL_cleanup; cdecl;
+begin
   OPENSSL_cleanup := LoadLibCryptoFunction('OPENSSL_cleanup');
-  FuncLoadError := not assigned(OPENSSL_cleanup);
-  if FuncLoadError then
-  begin
+  if not assigned(OPENSSL_cleanup) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     OPENSSL_cleanup := @COMPAT_OPENSSL_cleanup;
 {$ELSE}
-    OPENSSL_cleanup :=  @ERROR_OPENSSL_cleanup;
-{$ENDIF}
-  end;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_cleanup');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  OPENSSL_cleanup();
+end;
 
+function Load_OPENSSL_init_crypto(opts: TOpenSSL_C_UINT64; const settings: POPENSSL_INIT_SETTINGS): TOpenSSL_C_INT; cdecl;
+begin
   OPENSSL_init_crypto := LoadLibCryptoFunction('OPENSSL_init_crypto');
-  FuncLoadError := not assigned(OPENSSL_init_crypto);
-  if FuncLoadError then
-  begin
+  if not assigned(OPENSSL_init_crypto) then
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
     OPENSSL_init_crypto := @COMPAT_OPENSSL_init_crypto;
 {$ELSE}
-    OPENSSL_init_crypto :=  @ERROR_OPENSSL_init_crypto;
-{$ENDIF}
-  end;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_init_crypto');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+  Result := OPENSSL_init_crypto(opts,settings);
+end;
 
+procedure Load_OPENSSL_thread_stop; cdecl;
+begin
   OPENSSL_thread_stop := LoadLibCryptoFunction('OPENSSL_thread_stop');
-  FuncLoadError := not assigned(OPENSSL_thread_stop);
-  if FuncLoadError then
-  begin
-    OPENSSL_thread_stop :=  @ERROR_OPENSSL_thread_stop;
-  end;
+  if not assigned(OPENSSL_thread_stop) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_thread_stop');
+  OPENSSL_thread_stop();
+end;
 
+function Load_OPENSSL_INIT_new: POPENSSL_INIT_SETTINGS; cdecl;
+begin
   OPENSSL_INIT_new := LoadLibCryptoFunction('OPENSSL_INIT_new');
-  FuncLoadError := not assigned(OPENSSL_INIT_new);
-  if FuncLoadError then
-  begin
-    OPENSSL_INIT_new :=  @ERROR_OPENSSL_INIT_new;
-  end;
+  if not assigned(OPENSSL_INIT_new) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_INIT_new');
+  Result := OPENSSL_INIT_new();
+end;
 
+procedure Load_OPENSSL_INIT_free(settings: POPENSSL_INIT_SETTINGS); cdecl;
+begin
   OPENSSL_INIT_free := LoadLibCryptoFunction('OPENSSL_INIT_free');
-  FuncLoadError := not assigned(OPENSSL_INIT_free);
-  if FuncLoadError then
-  begin
-    OPENSSL_INIT_free :=  @ERROR_OPENSSL_INIT_free;
-  end;
+  if not assigned(OPENSSL_INIT_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_INIT_free');
+  OPENSSL_INIT_free(settings);
+end;
 
+function Load_CRYPTO_THREAD_run_once(once: PCRYPTO_ONCE; init: CRYPTO_THREAD_run_once_init): TOpenSSL_C_INT; cdecl;
+begin
   CRYPTO_THREAD_run_once := LoadLibCryptoFunction('CRYPTO_THREAD_run_once');
-  FuncLoadError := not assigned(CRYPTO_THREAD_run_once);
-  if FuncLoadError then
-  begin
-    CRYPTO_THREAD_run_once :=  @ERROR_CRYPTO_THREAD_run_once;
-  end;
+  if not assigned(CRYPTO_THREAD_run_once) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_run_once');
+  Result := CRYPTO_THREAD_run_once(once,init);
+end;
 
+function Load_CRYPTO_THREAD_get_local(key: PCRYPTO_THREAD_LOCAL): Pointer; cdecl;
+begin
   CRYPTO_THREAD_get_local := LoadLibCryptoFunction('CRYPTO_THREAD_get_local');
-  FuncLoadError := not assigned(CRYPTO_THREAD_get_local);
-  if FuncLoadError then
-  begin
-    CRYPTO_THREAD_get_local :=  @ERROR_CRYPTO_THREAD_get_local;
-  end;
+  if not assigned(CRYPTO_THREAD_get_local) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_get_local');
+  Result := CRYPTO_THREAD_get_local(key);
+end;
 
+function Load_CRYPTO_THREAD_set_local(key: PCRYPTO_THREAD_LOCAL; val: Pointer): TOpenSSL_C_INT; cdecl;
+begin
   CRYPTO_THREAD_set_local := LoadLibCryptoFunction('CRYPTO_THREAD_set_local');
-  FuncLoadError := not assigned(CRYPTO_THREAD_set_local);
-  if FuncLoadError then
-  begin
-    CRYPTO_THREAD_set_local :=  @ERROR_CRYPTO_THREAD_set_local;
-  end;
+  if not assigned(CRYPTO_THREAD_set_local) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_set_local');
+  Result := CRYPTO_THREAD_set_local(key,val);
+end;
 
+function Load_CRYPTO_THREAD_cleanup_local(key: PCRYPTO_THREAD_LOCAL): TOpenSSL_C_INT; cdecl;
+begin
   CRYPTO_THREAD_cleanup_local := LoadLibCryptoFunction('CRYPTO_THREAD_cleanup_local');
-  FuncLoadError := not assigned(CRYPTO_THREAD_cleanup_local);
-  if FuncLoadError then
-  begin
-    CRYPTO_THREAD_cleanup_local :=  @ERROR_CRYPTO_THREAD_cleanup_local;
-  end;
+  if not assigned(CRYPTO_THREAD_cleanup_local) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_cleanup_local');
+  Result := CRYPTO_THREAD_cleanup_local(key);
+end;
 
+function Load_CRYPTO_THREAD_get_current_id: CRYPTO_THREAD_ID; cdecl;
+begin
   CRYPTO_THREAD_get_current_id := LoadLibCryptoFunction('CRYPTO_THREAD_get_current_id');
-  FuncLoadError := not assigned(CRYPTO_THREAD_get_current_id);
-  if FuncLoadError then
-  begin
-    CRYPTO_THREAD_get_current_id :=  @ERROR_CRYPTO_THREAD_get_current_id;
-  end;
+  if not assigned(CRYPTO_THREAD_get_current_id) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_get_current_id');
+  Result := CRYPTO_THREAD_get_current_id();
+end;
 
+function Load_CRYPTO_THREAD_compare_id(a: CRYPTO_THREAD_ID; b: CRYPTO_THREAD_ID): TOpenSSL_C_INT; cdecl;
+begin
   CRYPTO_THREAD_compare_id := LoadLibCryptoFunction('CRYPTO_THREAD_compare_id');
-  FuncLoadError := not assigned(CRYPTO_THREAD_compare_id);
-  if FuncLoadError then
-  begin
-    CRYPTO_THREAD_compare_id :=  @ERROR_CRYPTO_THREAD_compare_id;
-  end;
+  if not assigned(CRYPTO_THREAD_compare_id) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('CRYPTO_THREAD_compare_id');
+  Result := CRYPTO_THREAD_compare_id(a,b);
+end;
 
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_SSLeay_version(type_ : TOpenSSL_C_INT): PAnsiChar; cdecl;
+begin
   SSLeay_version := LoadLibCryptoFunction('SSLeay_version');
-  FuncLoadError := not assigned(SSLeay_version);
-  if FuncLoadError then
-  begin
-    if SSLeay_version_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSLeay_version');
-  end;
+  if not assigned(SSLeay_version) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSLeay_version');
+  Result := SSLeay_version(type_);
+end;
 
+function Load_SSLeay: TOpenSSL_C_ULONG; cdecl;
+begin
   SSLeay := LoadLibCryptoFunction('SSLeay');
-  FuncLoadError := not assigned(SSLeay);
-  if FuncLoadError then
-  begin
-    if SSLeay_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('SSLeay');
-  end;
+  if not assigned(SSLeay) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSLeay');
+  Result := SSLeay();
+end;
 
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-end;
+
+{$WARN  NO_RETVAL OFF}
+{$J+}
+{$WARN  NO_RETVAL ON}
 
 procedure UnLoad;
 begin
 {$J+}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  OPENSSL_malloc := nil;
+  OPENSSL_malloc := Load_OPENSSL_malloc;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  OPENSSL_zalloc := nil;
-  OPENSSL_realloc := nil;
-  OPENSSL_clear_realloc := nil;
-  OPENSSL_clear_free := nil;
-  OPENSSL_free := nil;
-  OPENSSL_memdup := nil;
-  OPENSSL_strdup := nil;
-  OPENSSL_strndup := nil;
-  OPENSSL_secure_malloc := nil;
-  OPENSSL_secure_zalloc := nil;
-  OPENSSL_secure_free := nil;
-  OPENSSL_secure_clear_free := nil;
-  OPENSSL_secure_actual_size := nil;
+  OPENSSL_zalloc := Load_OPENSSL_zalloc;
+  OPENSSL_realloc := Load_OPENSSL_realloc;
+  OPENSSL_clear_realloc := Load_OPENSSL_clear_realloc;
+  OPENSSL_clear_free := Load_OPENSSL_clear_free;
+  OPENSSL_free := Load_OPENSSL_free;
+  OPENSSL_memdup := Load_OPENSSL_memdup;
+  OPENSSL_strdup := Load_OPENSSL_strdup;
+  OPENSSL_strndup := Load_OPENSSL_strndup;
+  OPENSSL_secure_malloc := Load_OPENSSL_secure_malloc;
+  OPENSSL_secure_zalloc := Load_OPENSSL_secure_zalloc;
+  OPENSSL_secure_free := Load_OPENSSL_secure_free;
+  OPENSSL_secure_clear_free := Load_OPENSSL_secure_clear_free;
+  OPENSSL_secure_actual_size := Load_OPENSSL_secure_actual_size;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-  CRYPTO_THREAD_lock_new := nil;
-  CRYPTO_THREAD_read_lock := nil;
-  CRYPTO_THREAD_write_lock := nil;
-  CRYPTO_THREAD_unlock := nil;
-  CRYPTO_THREAD_lock_free := nil;
-  CRYPTO_atomic_add := nil;
+  CRYPTO_THREAD_lock_new := Load_CRYPTO_THREAD_lock_new;
+  CRYPTO_THREAD_read_lock := Load_CRYPTO_THREAD_read_lock;
+  CRYPTO_THREAD_write_lock := Load_CRYPTO_THREAD_write_lock;
+  CRYPTO_THREAD_unlock := Load_CRYPTO_THREAD_unlock;
+  CRYPTO_THREAD_lock_free := Load_CRYPTO_THREAD_lock_free;
+  CRYPTO_atomic_add := Load_CRYPTO_atomic_add;
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  CRYPTO_mem_ctrl := nil;
+  CRYPTO_mem_ctrl := Load_CRYPTO_mem_ctrl;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-  OPENSSL_strlcpy := nil;
-  OPENSSL_strlcat := nil;
-  OPENSSL_strnlen := nil;
-  OPENSSL_buf2hexstr := nil;
-  OPENSSL_hexstr2buf := nil;
-  OPENSSL_hexchar2int := nil;
-  OpenSSL_version_num := nil;
-  OpenSSL_version := nil;
-  OPENSSL_issetugid := nil;
-  CRYPTO_new_ex_data := nil;
-  CRYPTO_dup_ex_data := nil;
-  CRYPTO_free_ex_data := nil;
-  CRYPTO_set_ex_data := nil;
-  CRYPTO_get_ex_data := nil;
+  OPENSSL_strlcpy := Load_OPENSSL_strlcpy;
+  OPENSSL_strlcat := Load_OPENSSL_strlcat;
+  OPENSSL_strnlen := Load_OPENSSL_strnlen;
+  OPENSSL_buf2hexstr := Load_OPENSSL_buf2hexstr;
+  OPENSSL_hexstr2buf := Load_OPENSSL_hexstr2buf;
+  OPENSSL_hexchar2int := Load_OPENSSL_hexchar2int;
+  OpenSSL_version_num := Load_OpenSSL_version_num;
+  OpenSSL_version := Load_OpenSSL_version;
+  OPENSSL_issetugid := Load_OPENSSL_issetugid;
+  CRYPTO_new_ex_data := Load_CRYPTO_new_ex_data;
+  CRYPTO_dup_ex_data := Load_CRYPTO_dup_ex_data;
+  CRYPTO_free_ex_data := Load_CRYPTO_free_ex_data;
+  CRYPTO_set_ex_data := Load_CRYPTO_set_ex_data;
+  CRYPTO_get_ex_data := Load_CRYPTO_get_ex_data;
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  CRYPTO_num_locks := nil;
-  CRYPTO_set_locking_callback := nil;
-  CRYPTO_THREADID_set_numeric := nil;
-  CRYPTO_THREADID_set_callback := nil;
-  CRYPTO_set_id_callback := nil;
+  CRYPTO_num_locks := Load_CRYPTO_num_locks;
+  CRYPTO_set_locking_callback := Load_CRYPTO_set_locking_callback;
+  CRYPTO_THREADID_set_numeric := Load_CRYPTO_THREADID_set_numeric;
+  CRYPTO_THREADID_set_callback := Load_CRYPTO_THREADID_set_callback;
+  CRYPTO_set_id_callback := Load_CRYPTO_set_id_callback;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-  CRYPTO_set_mem_functions := nil;
+  CRYPTO_set_mem_functions := Load_CRYPTO_set_mem_functions;
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  CRYPTO_set_mem_debug := nil;
+  CRYPTO_set_mem_debug := Load_CRYPTO_set_mem_debug;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-  CRYPTO_malloc := nil;
-  CRYPTO_zalloc := nil;
-  CRYPTO_memdup := nil;
-  CRYPTO_strdup := nil;
-  CRYPTO_strndup := nil;
-  CRYPTO_free := nil;
-  CRYPTO_clear_free := nil;
-  CRYPTO_realloc := nil;
-  CRYPTO_clear_realloc := nil;
-  CRYPTO_secure_malloc_init := nil;
-  CRYPTO_secure_malloc_done := nil;
-  CRYPTO_secure_malloc := nil;
-  CRYPTO_secure_zalloc := nil;
-  CRYPTO_secure_free := nil;
-  CRYPTO_secure_clear_free := nil;
-  CRYPTO_secure_allocated := nil;
-  CRYPTO_secure_malloc_initialized := nil;
-  CRYPTO_secure_actual_size := nil;
-  CRYPTO_secure_used := nil;
-  OPENSSL_cleanse := nil;
-  OPENSSL_isservice := nil;
+  CRYPTO_malloc := Load_CRYPTO_malloc;
+  CRYPTO_zalloc := Load_CRYPTO_zalloc;
+  CRYPTO_memdup := Load_CRYPTO_memdup;
+  CRYPTO_strdup := Load_CRYPTO_strdup;
+  CRYPTO_strndup := Load_CRYPTO_strndup;
+  CRYPTO_free := Load_CRYPTO_free;
+  CRYPTO_clear_free := Load_CRYPTO_clear_free;
+  CRYPTO_realloc := Load_CRYPTO_realloc;
+  CRYPTO_clear_realloc := Load_CRYPTO_clear_realloc;
+  CRYPTO_secure_malloc_init := Load_CRYPTO_secure_malloc_init;
+  CRYPTO_secure_malloc_done := Load_CRYPTO_secure_malloc_done;
+  CRYPTO_secure_malloc := Load_CRYPTO_secure_malloc;
+  CRYPTO_secure_zalloc := Load_CRYPTO_secure_zalloc;
+  CRYPTO_secure_free := Load_CRYPTO_secure_free;
+  CRYPTO_secure_clear_free := Load_CRYPTO_secure_clear_free;
+  CRYPTO_secure_allocated := Load_CRYPTO_secure_allocated;
+  CRYPTO_secure_malloc_initialized := Load_CRYPTO_secure_malloc_initialized;
+  CRYPTO_secure_actual_size := Load_CRYPTO_secure_actual_size;
+  CRYPTO_secure_used := Load_CRYPTO_secure_used;
+  OPENSSL_cleanse := Load_OPENSSL_cleanse;
+  OPENSSL_isservice := Load_OPENSSL_isservice;
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  FIPS_mode := nil;
-  FIPS_mode_set := nil;
+  FIPS_mode := Load_FIPS_mode;
+  FIPS_mode_set := Load_FIPS_mode_set;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-  OPENSSL_init := nil;
-  CRYPTO_memcmp := nil;
-  OPENSSL_cleanup := nil;
-  OPENSSL_init_crypto := nil;
-  OPENSSL_thread_stop := nil;
-  OPENSSL_INIT_new := nil;
-  OPENSSL_INIT_free := nil;
-  CRYPTO_THREAD_run_once := nil;
-  CRYPTO_THREAD_get_local := nil;
-  CRYPTO_THREAD_set_local := nil;
-  CRYPTO_THREAD_cleanup_local := nil;
-  CRYPTO_THREAD_get_current_id := nil;
-  CRYPTO_THREAD_compare_id := nil;
+  OPENSSL_init := Load_OPENSSL_init;
+  CRYPTO_memcmp := Load_CRYPTO_memcmp;
+  OPENSSL_cleanup := Load_OPENSSL_cleanup;
+  OPENSSL_init_crypto := Load_OPENSSL_init_crypto;
+  OPENSSL_thread_stop := Load_OPENSSL_thread_stop;
+  OPENSSL_INIT_new := Load_OPENSSL_INIT_new;
+  OPENSSL_INIT_free := Load_OPENSSL_INIT_free;
+  CRYPTO_THREAD_run_once := Load_CRYPTO_THREAD_run_once;
+  CRYPTO_THREAD_get_local := Load_CRYPTO_THREAD_get_local;
+  CRYPTO_THREAD_set_local := Load_CRYPTO_THREAD_set_local;
+  CRYPTO_THREAD_cleanup_local := Load_CRYPTO_THREAD_cleanup_local;
+  CRYPTO_THREAD_get_current_id := Load_CRYPTO_THREAD_get_current_id;
+  CRYPTO_THREAD_compare_id := Load_CRYPTO_THREAD_compare_id;
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  SSLeay_version := nil;
-  SSLeay := nil;
+  SSLeay_version := Load_SSLeay_version;
+  SSLeay := Load_SSLeay;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
 end;
 {$ENDIF}
@@ -2249,7 +1887,6 @@ initialization
 
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
-Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 

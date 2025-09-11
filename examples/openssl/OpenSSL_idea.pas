@@ -78,15 +78,27 @@ procedure IDEA_ofb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_L
 procedure IDEA_encrypt(in_: POpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE); cdecl; external CLibCrypto;
 
 {$ELSE}
+
+{Declare external function initialisers - should not be called directly}
+
+function Load_IDEA_options: PAnsiChar; cdecl;
+procedure Load_IDEA_ecb_encrypt(const in_: PByte; out_: PByte; ks: PIDEA_KEY_SCHEDULE); cdecl;
+procedure Load_IDEA_set_encrypt_key(const key: PByte; ks: PIDEA_KEY_SCHEDULE); cdecl;
+procedure Load_IDEA_set_decrypt_key(ek: PIDEA_KEY_SCHEDULE; dk: PIDEA_KEY_SCHEDULE); cdecl;
+procedure Load_IDEA_cbc_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE; iv: PByte; enc: TOpenSSL_C_INT); cdecl;
+procedure Load_IDEA_cfb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE; iv: PByte; num: POpenSSL_C_INT; enc: TOpenSSL_C_INT); cdecl;
+procedure Load_IDEA_ofb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE; iv: PByte; num: POpenSSL_C_INT); cdecl;
+procedure Load_IDEA_encrypt(in_: POpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE); cdecl;
+
 var
-  IDEA_options: function : PAnsiChar; cdecl = nil;
-  IDEA_ecb_encrypt: procedure (const in_: PByte; out_: PByte; ks: PIDEA_KEY_SCHEDULE); cdecl = nil;
-  IDEA_set_encrypt_key: procedure (const key: PByte; ks: PIDEA_KEY_SCHEDULE); cdecl = nil;
-  IDEA_set_decrypt_key: procedure (ek: PIDEA_KEY_SCHEDULE; dk: PIDEA_KEY_SCHEDULE); cdecl = nil;
-  IDEA_cbc_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE; iv: PByte; enc: TOpenSSL_C_INT); cdecl = nil;
-  IDEA_cfb64_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE; iv: PByte; num: POpenSSL_C_INT; enc: TOpenSSL_C_INT); cdecl = nil;
-  IDEA_ofb64_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE; iv: PByte; num: POpenSSL_C_INT); cdecl = nil;
-  IDEA_encrypt: procedure (in_: POpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE); cdecl = nil;
+  IDEA_options: function : PAnsiChar; cdecl = Load_IDEA_options;
+  IDEA_ecb_encrypt: procedure (const in_: PByte; out_: PByte; ks: PIDEA_KEY_SCHEDULE); cdecl = Load_IDEA_ecb_encrypt;
+  IDEA_set_encrypt_key: procedure (const key: PByte; ks: PIDEA_KEY_SCHEDULE); cdecl = Load_IDEA_set_encrypt_key;
+  IDEA_set_decrypt_key: procedure (ek: PIDEA_KEY_SCHEDULE; dk: PIDEA_KEY_SCHEDULE); cdecl = Load_IDEA_set_decrypt_key;
+  IDEA_cbc_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE; iv: PByte; enc: TOpenSSL_C_INT); cdecl = Load_IDEA_cbc_encrypt;
+  IDEA_cfb64_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE; iv: PByte; num: POpenSSL_C_INT; enc: TOpenSSL_C_INT); cdecl = Load_IDEA_cfb64_encrypt;
+  IDEA_ofb64_encrypt: procedure (const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE; iv: PByte; num: POpenSSL_C_INT); cdecl = Load_IDEA_ofb64_encrypt;
+  IDEA_encrypt: procedure (in_: POpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE); cdecl = Load_IDEA_encrypt;
 {$ENDIF}
 
 implementation
@@ -104,127 +116,87 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$WARN  NO_RETVAL OFF}
-function ERROR_IDEA_options: PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('IDEA_options');
-end;
-
-procedure ERROR_IDEA_ecb_encrypt(const in_: PByte; out_: PByte; ks: PIDEA_KEY_SCHEDULE); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('IDEA_ecb_encrypt');
-end;
-
-procedure ERROR_IDEA_set_encrypt_key(const key: PByte; ks: PIDEA_KEY_SCHEDULE); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('IDEA_set_encrypt_key');
-end;
-
-procedure ERROR_IDEA_set_decrypt_key(ek: PIDEA_KEY_SCHEDULE; dk: PIDEA_KEY_SCHEDULE); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('IDEA_set_decrypt_key');
-end;
-
-procedure ERROR_IDEA_cbc_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE; iv: PByte; enc: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('IDEA_cbc_encrypt');
-end;
-
-procedure ERROR_IDEA_cfb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE; iv: PByte; num: POpenSSL_C_INT; enc: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('IDEA_cfb64_encrypt');
-end;
-
-procedure ERROR_IDEA_ofb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE; iv: PByte; num: POpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('IDEA_ofb64_encrypt');
-end;
-
-procedure ERROR_IDEA_encrypt(in_: POpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('IDEA_encrypt');
-end;
-
-{$WARN  NO_RETVAL ON}
-procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
-var FuncLoadError: boolean;
+function Load_IDEA_options: PAnsiChar; cdecl;
 begin
   IDEA_options := LoadLibCryptoFunction('IDEA_options');
-  FuncLoadError := not assigned(IDEA_options);
-  if FuncLoadError then
-  begin
-    IDEA_options :=  @ERROR_IDEA_options;
-  end;
-
-  IDEA_ecb_encrypt := LoadLibCryptoFunction('IDEA_ecb_encrypt');
-  FuncLoadError := not assigned(IDEA_ecb_encrypt);
-  if FuncLoadError then
-  begin
-    IDEA_ecb_encrypt :=  @ERROR_IDEA_ecb_encrypt;
-  end;
-
-  IDEA_set_encrypt_key := LoadLibCryptoFunction('IDEA_set_encrypt_key');
-  FuncLoadError := not assigned(IDEA_set_encrypt_key);
-  if FuncLoadError then
-  begin
-    IDEA_set_encrypt_key :=  @ERROR_IDEA_set_encrypt_key;
-  end;
-
-  IDEA_set_decrypt_key := LoadLibCryptoFunction('IDEA_set_decrypt_key');
-  FuncLoadError := not assigned(IDEA_set_decrypt_key);
-  if FuncLoadError then
-  begin
-    IDEA_set_decrypt_key :=  @ERROR_IDEA_set_decrypt_key;
-  end;
-
-  IDEA_cbc_encrypt := LoadLibCryptoFunction('IDEA_cbc_encrypt');
-  FuncLoadError := not assigned(IDEA_cbc_encrypt);
-  if FuncLoadError then
-  begin
-    IDEA_cbc_encrypt :=  @ERROR_IDEA_cbc_encrypt;
-  end;
-
-  IDEA_cfb64_encrypt := LoadLibCryptoFunction('IDEA_cfb64_encrypt');
-  FuncLoadError := not assigned(IDEA_cfb64_encrypt);
-  if FuncLoadError then
-  begin
-    IDEA_cfb64_encrypt :=  @ERROR_IDEA_cfb64_encrypt;
-  end;
-
-  IDEA_ofb64_encrypt := LoadLibCryptoFunction('IDEA_ofb64_encrypt');
-  FuncLoadError := not assigned(IDEA_ofb64_encrypt);
-  if FuncLoadError then
-  begin
-    IDEA_ofb64_encrypt :=  @ERROR_IDEA_ofb64_encrypt;
-  end;
-
-  IDEA_encrypt := LoadLibCryptoFunction('IDEA_encrypt');
-  FuncLoadError := not assigned(IDEA_encrypt);
-  if FuncLoadError then
-  begin
-    IDEA_encrypt :=  @ERROR_IDEA_encrypt;
-  end;
-
+  if not assigned(IDEA_options) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('IDEA_options');
+  Result := IDEA_options();
 end;
+
+procedure Load_IDEA_ecb_encrypt(const in_: PByte; out_: PByte; ks: PIDEA_KEY_SCHEDULE); cdecl;
+begin
+  IDEA_ecb_encrypt := LoadLibCryptoFunction('IDEA_ecb_encrypt');
+  if not assigned(IDEA_ecb_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('IDEA_ecb_encrypt');
+  IDEA_ecb_encrypt(in_,out_,ks);
+end;
+
+procedure Load_IDEA_set_encrypt_key(const key: PByte; ks: PIDEA_KEY_SCHEDULE); cdecl;
+begin
+  IDEA_set_encrypt_key := LoadLibCryptoFunction('IDEA_set_encrypt_key');
+  if not assigned(IDEA_set_encrypt_key) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('IDEA_set_encrypt_key');
+  IDEA_set_encrypt_key(key,ks);
+end;
+
+procedure Load_IDEA_set_decrypt_key(ek: PIDEA_KEY_SCHEDULE; dk: PIDEA_KEY_SCHEDULE); cdecl;
+begin
+  IDEA_set_decrypt_key := LoadLibCryptoFunction('IDEA_set_decrypt_key');
+  if not assigned(IDEA_set_decrypt_key) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('IDEA_set_decrypt_key');
+  IDEA_set_decrypt_key(ek,dk);
+end;
+
+procedure Load_IDEA_cbc_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE; iv: PByte; enc: TOpenSSL_C_INT); cdecl;
+begin
+  IDEA_cbc_encrypt := LoadLibCryptoFunction('IDEA_cbc_encrypt');
+  if not assigned(IDEA_cbc_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('IDEA_cbc_encrypt');
+  IDEA_cbc_encrypt(in_,out_,length,ks,iv,enc);
+end;
+
+procedure Load_IDEA_cfb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE; iv: PByte; num: POpenSSL_C_INT; enc: TOpenSSL_C_INT); cdecl;
+begin
+  IDEA_cfb64_encrypt := LoadLibCryptoFunction('IDEA_cfb64_encrypt');
+  if not assigned(IDEA_cfb64_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('IDEA_cfb64_encrypt');
+  IDEA_cfb64_encrypt(in_,out_,length,ks,iv,num,enc);
+end;
+
+procedure Load_IDEA_ofb64_encrypt(const in_: PByte; out_: PByte; length: TOpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE; iv: PByte; num: POpenSSL_C_INT); cdecl;
+begin
+  IDEA_ofb64_encrypt := LoadLibCryptoFunction('IDEA_ofb64_encrypt');
+  if not assigned(IDEA_ofb64_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('IDEA_ofb64_encrypt');
+  IDEA_ofb64_encrypt(in_,out_,length,ks,iv,num);
+end;
+
+procedure Load_IDEA_encrypt(in_: POpenSSL_C_LONG; ks: PIDEA_KEY_SCHEDULE); cdecl;
+begin
+  IDEA_encrypt := LoadLibCryptoFunction('IDEA_encrypt');
+  if not assigned(IDEA_encrypt) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('IDEA_encrypt');
+  IDEA_encrypt(in_,ks);
+end;
+
 
 procedure UnLoad;
 begin
-  IDEA_options := nil;
-  IDEA_ecb_encrypt := nil;
-  IDEA_set_encrypt_key := nil;
-  IDEA_set_decrypt_key := nil;
-  IDEA_cbc_encrypt := nil;
-  IDEA_cfb64_encrypt := nil;
-  IDEA_ofb64_encrypt := nil;
-  IDEA_encrypt := nil;
+  IDEA_options := Load_IDEA_options;
+  IDEA_ecb_encrypt := Load_IDEA_ecb_encrypt;
+  IDEA_set_encrypt_key := Load_IDEA_set_encrypt_key;
+  IDEA_set_decrypt_key := Load_IDEA_set_decrypt_key;
+  IDEA_cbc_encrypt := Load_IDEA_cbc_encrypt;
+  IDEA_cfb64_encrypt := Load_IDEA_cfb64_encrypt;
+  IDEA_ofb64_encrypt := Load_IDEA_ofb64_encrypt;
+  IDEA_encrypt := Load_IDEA_encrypt;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
-Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization

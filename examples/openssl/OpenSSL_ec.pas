@@ -488,179 +488,360 @@ procedure EC_KEY_METHOD_get_sign(const meth: PEC_KEY_METHOD; psign: PEC_KEY_METH
 procedure EC_KEY_METHOD_get_verify(const meth: PEC_KEY_METHOD; pverify: PEC_KEY_METHOD_verify_verify; pverify_sig: PEC_KEY_METHOD_verify_verify_sig); cdecl; external CLibCrypto;
 
 {$ELSE}
+
+{Declare external function initialisers - should not be called directly}
+
+function Load_EC_GFp_simple_method: PEC_METHOD; cdecl;
+function Load_EC_GFp_mont_method: PEC_METHOD; cdecl;
+function Load_EC_GFp_nist_method: PEC_METHOD; cdecl;
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_EC_GFp_nistp224_method: PEC_METHOD; cdecl;
+function Load_EC_GFp_nistp256_method: PEC_METHOD; cdecl;
+function Load_EC_GFp_nistp521_method: PEC_METHOD; cdecl;
+{$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_EC_GF2m_simple_method: PEC_METHOD; cdecl;
+function Load_EC_GROUP_new(const meth: PEC_METHOD): PEC_GROUP; cdecl;
+procedure Load_EC_GROUP_free(group: PEC_GROUP); cdecl;
+procedure Load_EC_GROUP_clear_free(group: PEC_GROUP); cdecl;
+function Load_EC_GROUP_copy(dst: PEC_GROUP; const src: PEC_GROUP): TOpenSSL_C_INT; cdecl;
+function Load_EC_GROUP_dup(const src: PEC_GROUP): PEC_GROUP; cdecl;
+function Load_EC_GROUP_method_of(const group: PEC_GROUP): PEC_GROUP; cdecl;
+function Load_EC_METHOD_get_field_type(const meth: PEC_METHOD): TOpenSSL_C_INT; cdecl;
+function Load_EC_GROUP_set_generator(group: PEC_GROUP; const generator: PEC_POINT; const order: PBIGNUM; const cofactor: PBIGNUM): TOpenSSL_C_INT; cdecl;
+function Load_EC_GROUP_get0_generator(const group: PEC_GROUP): PEC_POINT; cdecl;
+function Load_EC_GROUP_get_mont_data(const group: PEC_GROUP): PBN_MONT_CTX; cdecl;
+function Load_EC_GROUP_get_order(const group: PEC_GROUP; order: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_GROUP_get0_order(const group: PEC_GROUP): PBIGNUM; cdecl;
+function Load_EC_GROUP_order_bits(const group: PEC_GROUP): TOpenSSL_C_INT; cdecl;
+function Load_EC_GROUP_get_cofactor(const group: PEC_GROUP; cofactor: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_GROUP_get0_cofactor(const group: PEC_GROUP): PBIGNUM; cdecl;
+procedure Load_EC_GROUP_set_curve_name(group: PEC_GROUP; nid: TOpenSSL_C_INT); cdecl;
+function Load_EC_GROUP_get_curve_name(const group: PEC_GROUP): TOpenSSL_C_INT; cdecl;
+procedure Load_EC_GROUP_set_asn1_flag(group: PEC_GROUP; flag: TOpenSSL_C_INT); cdecl;
+function Load_EC_GROUP_get_asn1_flag(const group: PEC_GROUP): TOpenSSL_C_INT; cdecl;
+procedure Load_EC_GROUP_set_point_conversion_form(group: PEC_GROUP; form: point_conversion_form_t); cdecl;
+function Load_EC_GROUP_get_point_conversion_form(const group: PEC_GROUP): point_conversion_form_t; cdecl;
+function Load_EC_GROUP_get0_seed(const x: PEC_GROUP): PByte; cdecl;
+function Load_EC_GROUP_get_seed_len(const x: PEC_GROUP): TOpenSSL_C_SIZET; cdecl;
+function Load_EC_GROUP_set_seed(x: PEC_GROUP; const p: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+function Load_EC_GROUP_set_curve(group: PEC_GROUP; const p: PBIGNUM; const a: PBIGNUM; const b: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_GROUP_get_curve(const group: PEC_GROUP; p: PBIGNUM; a: PBIGNUM; b: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_GROUP_set_curve_GFp(group: PEC_GROUP; const p: PBIGNUM; const a: PBIGNUM; const b: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_GROUP_get_curve_GFp(const group: PEC_GROUP; p: PBIGNUM; a: PBIGNUM; b: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_GROUP_set_curve_GF2m(group: PEC_GROUP; const p: PBIGNUM; const a: PBIGNUM; const b:PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_GROUP_get_curve_GF2m(const group: PEC_GROUP; p: PBIGNUM; a: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_GROUP_get_degree(const group: PEC_GROUP): TOpenSSL_C_INT; cdecl;
+function Load_EC_GROUP_check(const group: PEC_GROUP; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_GROUP_check_discriminant(const group: PEC_GROUP; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_GROUP_cmp(const a: PEC_GROUP; const b: PEC_GROUP; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_GROUP_new_curve_GFp(const p: PBIGNUM; const a: PBIGNUM; const b: PBIGNUM; ctx: PBN_CTX): PEC_GROUP; cdecl;
+function Load_EC_GROUP_new_curve_GF2m(const p: PBIGNUM; const a: PBIGNUM; const b: PBIGNUM; ctx: PBN_CTX): PEC_GROUP; cdecl;
+function Load_EC_GROUP_new_by_curve_name(nid: TOpenSSL_C_INT): PEC_GROUP; cdecl;
+function Load_EC_GROUP_new_from_ecparameters(const params: PECPARAMETERS): PEC_GROUP; cdecl;
+function Load_EC_GROUP_get_ecparameters(const group: PEC_GROUP; params: PECPARAMETERS): PECPARAMETERS; cdecl;
+function Load_EC_GROUP_new_from_ecpkparameters(const params: PECPKPARAMETERS): PEC_GROUP; cdecl;
+function Load_EC_GROUP_get_ecpkparameters(const group: PEC_GROUP; params: PECPKPARAMETERS): PECPKPARAMETERS; cdecl;
+function Load_EC_get_builtin_curves(r: PEC_builtin_curve; nitems: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+function Load_EC_curve_nid2nist(nid: TOpenSSL_C_INT): PAnsiChar; cdecl;
+function Load_EC_curve_nist2nid(const name: PAnsiChar): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_new(const group: PEC_GROUP): PEC_POINT; cdecl;
+procedure Load_EC_POINT_free(point: PEC_POINT); cdecl;
+procedure Load_EC_POINT_clear_free(point: PEC_POINT); cdecl;
+function Load_EC_POINT_copy(dst: PEC_POINT; const src: PEC_POINT): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_dup(const src: PEC_POINT; const group: PEC_GROUP): PEC_POINT; cdecl;
+function Load_EC_POINT_method_of(const point: PEC_POINT): PEC_METHOD; cdecl;
+function Load_EC_POINT_set_to_infinity(const group: PEC_GROUP; point: PEC_POINT): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_set_Jprojective_coordinates_GFp(const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; const y: PBIGNUM; const z: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_get_Jprojective_coordinates_GFp(const group: PEC_METHOD; const p: PEC_POINT; x: PBIGNUM; y: PBIGNUM; z: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_set_affine_coordinates(const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; const y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_get_affine_coordinates(const group: PEC_GROUP; const p: PEC_POINT; x: PBIGNUM; y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_set_affine_coordinates_GFp(const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; const y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_get_affine_coordinates_GFp(const group: PEC_GROUP; const p: PEC_POINT; x: PBIGNUM; y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_set_compressed_coordinates(const group: PEC_GROUP; p: PEC_POINT; x: PBIGNUM; y_bit: TOpenSSL_C_INT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_set_compressed_coordinates_GFp(const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; y_bit: TOpenSSL_C_INT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_set_affine_coordinates_GF2m(const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; const y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_get_affine_coordinates_GF2m(const group: PEC_GROUP; p: PEC_POINT; x: PBIGNUM; y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_set_compressed_coordinates_GF2m(const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; y_bit: TOpenSSL_C_INT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_point2oct(const group: PEC_GROUP; const p: PEC_POINT; form: point_conversion_form_t; buf: PByte; len: TOpenSSL_C_SIZET; ctx: PBN_CTX): TOpenSSL_C_SIZET; cdecl;
+function Load_EC_POINT_oct2point(const group: PEC_GROUP; p: PEC_POINT; const buf: PByte; len: TOpenSSL_C_SIZET; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_point2buf(const group: PEC_GROUP; const point: PEC_POINT; form: point_conversion_form_t; pbuf: PPByte; ctx: PBN_CTX): TOpenSSL_C_SIZET; cdecl;
+function Load_EC_POINT_point2bn(const group: PEC_GROUP; const p: PEC_POINT; form: point_conversion_form_t; bn: PBIGNUM; ctx: PBN_CTX): PBIGNUM; cdecl;
+function Load_EC_POINT_bn2point(const group: PEC_GROUP; const bn: PBIGNUM; p: PEC_POINT; ctx: PBN_CTX): PEC_POINT; cdecl;
+function Load_EC_POINT_point2hex(const group: PEC_GROUP; const p: PEC_POINT; form: point_conversion_form_t; ctx: PBN_CTX): PAnsiChar; cdecl;
+function Load_EC_POINT_hex2point(const group: PEC_GROUP; const buf: PAnsiChar; p: PEC_POINT; ctx: PBN_CTX): PEC_POINT; cdecl;
+function Load_EC_POINT_add(const group: PEC_GROUP; r: PEC_POINT; const a: PEC_POINT; const b: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_dbl(const group: PEC_GROUP; r: PEC_POINT; const a: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_invert(const group: PEC_GROUP; a: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_is_at_infinity(const group: PEC_GROUP; const p: PEC_POINT): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_is_on_curve(const group: PEC_GROUP; const point: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_cmp(const group: PEC_GROUP; const a: PEC_POINT; const b: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_make_affine(const group: PEC_GROUP; point: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINTs_make_affine(const group: PEC_METHOD; num: TOpenSSL_C_SIZET; points: PPEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINTs_mul(const group: PEC_GROUP; r: PEC_POINT; const n: PBIGNUM; num: TOpenSSL_C_SIZET; const p: PPEC_POINT; const m: PPBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_POINT_mul(const group: PEC_GROUP; r: PEC_POINT; const n: PBIGNUM; const q: PEC_POINT; const m: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_GROUP_precompute_mult(group: PEC_GROUP; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_GROUP_have_precompute_mult(const group: PEC_GROUP): TOpenSSL_C_INT; cdecl;
+function Load_ECPKPARAMETERS_it: PASN1_ITEM; cdecl;
+function Load_ECPKPARAMETERS_new: PECPKPARAMETERS; cdecl;
+procedure Load_ECPKPARAMETERS_free(a: PECPKPARAMETERS); cdecl;
+function Load_ECPARAMETERS_it: PASN1_ITEM; cdecl;
+function Load_ECPARAMETERS_new: PECPARAMETERS; cdecl;
+procedure Load_ECPARAMETERS_free(a: PECPARAMETERS); cdecl;
+function Load_EC_GROUP_get_basis_type(const group: PEC_GROUP): TOpenSSL_C_INT; cdecl;
+function Load_EC_GROUP_get_trinomial_basis(const group: PEC_GROUP; k: POpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
+function Load_EC_GROUP_get_pentanomial_basis(const group: PEC_GROUP; k1: POpenSSL_C_UINT; k2: POpenSSL_C_UINT; k3: POpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
+function Load_d2i_ECPKParameters(group: PPEC_GROUP; const in_: PPByte; len: TOpenSSL_C_LONG): PEC_GROUP; cdecl;
+function Load_i2d_ECPKParameters(const group: PEC_GROUP; out_: PPByte): TOpenSSL_C_INT; cdecl;
+function Load_ECPKParameters_print(bp: PBIO; const x: PEC_GROUP; off: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_EC_KEY_new: PEC_KEY; cdecl;
+function Load_EC_KEY_get_flags(const key: PEC_KEY): TOpenSSL_C_INT; cdecl;
+procedure Load_EC_KEY_set_flags(key: PEC_KEY; flags: TOpenSSL_C_INT); cdecl;
+procedure Load_EC_KEY_clear_flags(key: PEC_KEY; flags: TOpenSSL_C_INT); cdecl;
+function Load_EC_KEY_new_by_curve_name(nid: TOpenSSL_C_INT): PEC_KEY; cdecl;
+procedure Load_EC_KEY_free(key: PEC_KEY); cdecl;
+function Load_EC_KEY_copy(dst: PEC_KEY; const src: PEC_KEY): PEC_KEY; cdecl;
+function Load_EC_KEY_dup(const src: PEC_KEY): PEC_KEY; cdecl;
+function Load_EC_KEY_up_ref(key: PEC_KEY): TOpenSSL_C_INT; cdecl;
+function Load_EC_KEY_get0_engine(const eckey: PEC_KEY): PENGINE; cdecl;
+function Load_EC_KEY_get0_group(const key: PEC_KEY): PEC_GROUP; cdecl;
+function Load_EC_KEY_set_group(key: PEC_KEY; const group: PEC_GROUP): TOpenSSL_C_INT; cdecl;
+function Load_EC_KEY_get0_private_key(const key: PEC_KEY): PBIGNUM; cdecl;
+function Load_EC_KEY_set_private_key(const key: PEC_KEY; const prv: PBIGNUM): TOpenSSL_C_INT; cdecl;
+function Load_EC_KEY_get0_public_key(const key: PEC_KEY): PEC_POINT; cdecl;
+function Load_EC_KEY_set_public_key(key: PEC_KEY; const pub: PEC_POINT): TOpenSSL_C_INT; cdecl;
+function Load_EC_KEY_get_enc_flags(const key: PEC_KEY): TOpenSSL_C_UINT; cdecl;
+procedure Load_EC_KEY_set_enc_flags(eckey: PEC_KEY; flags: TOpenSSL_C_UINT); cdecl;
+function Load_EC_KEY_get_conv_form(const key: PEC_KEY): point_conversion_form_t; cdecl;
+procedure Load_EC_KEY_set_conv_form(eckey: PEC_KEY; cform: point_conversion_form_t); cdecl;
+function Load_EC_KEY_set_ex_data(key: PEC_KEY; idx: TOpenSSL_C_INT; arg: Pointer): TOpenSSL_C_INT; cdecl;
+function Load_EC_KEY_get_ex_data(const key: PEC_KEY; idx: TOpenSSL_C_INT): Pointer; cdecl;
+procedure Load_EC_KEY_set_asn1_flag(eckey: PEC_KEY; asn1_flag: TOpenSSL_C_INT); cdecl;
+function Load_EC_KEY_precompute_mult(key: PEC_KEY; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_KEY_generate_key(key: PEC_KEY): TOpenSSL_C_INT; cdecl;
+function Load_EC_KEY_check_key(const key: PEC_KEY): TOpenSSL_C_INT; cdecl;
+function Load_EC_KEY_can_sign(const eckey: PEC_KEY): TOpenSSL_C_INT; cdecl;
+function Load_EC_KEY_set_public_key_affine_coordinates(key: PEC_KEY; x: PBIGNUM; y: PBIGNUM): TOpenSSL_C_INT; cdecl;
+function Load_EC_KEY_key2buf(const key: PEC_KEY; form: point_conversion_form_t; pbuf: PPByte; ctx: PBN_CTX): TOpenSSL_C_SIZET; cdecl;
+function Load_EC_KEY_oct2key(key: PEC_KEY; const buf: PByte; len: TOpenSSL_C_SIZET; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+function Load_EC_KEY_oct2priv(key: PEC_KEY; const buf: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+function Load_EC_KEY_priv2oct(const key: PEC_KEY; buf: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+function Load_EC_KEY_priv2buf(const eckey: PEC_KEY; buf: PPByte): TOpenSSL_C_SIZET; cdecl;
+function Load_d2i_ECPrivateKey(key: PPEC_KEY; const in_: PPByte; len: TOpenSSL_C_LONG): PEC_KEY; cdecl;
+function Load_i2d_ECPrivateKey(key: PEC_KEY; out_: PPByte): TOpenSSL_C_INT; cdecl;
+function Load_o2i_ECPublicKey(key: PPEC_KEY; const in_: PPByte; len: TOpenSSL_C_LONG): PEC_KEY; cdecl;
+function Load_i2o_ECPublicKey(const key: PEC_KEY; out_: PPByte): TOpenSSL_C_INT; cdecl;
+function Load_ECParameters_print(bp: PBIO; const key: PEC_KEY): TOpenSSL_C_INT; cdecl;
+function Load_EC_KEY_print(bp: PBIO; const key: PEC_KEY; off: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_EC_KEY_OpenSSL: PEC_KEY_METHOD; cdecl;
+function Load_EC_KEY_get_default_method: PEC_KEY_METHOD; cdecl;
+procedure Load_EC_KEY_set_default_method(const meth: PEC_KEY_METHOD); cdecl;
+function Load_EC_KEY_get_method(const key: PEC_KEY): PEC_KEY_METHOD; cdecl;
+function Load_EC_KEY_set_method(key: PEC_KEY; const meth: PEC_KEY_METHOD): TOpenSSL_C_INT; cdecl;
+function Load_EC_KEY_new_method(engine: PENGINE): PEC_KEY; cdecl;
+function Load_ECDH_KDF_X9_62(out_: PByte; outlen: TOpenSSL_C_SIZET; const Z: PByte; Zlen: TOpenSSL_C_SIZET; const sinfo: PByte; sinfolen: TOpenSSL_C_SIZET; const md: PEVP_MD): TOpenSSL_C_INT; cdecl;
+function Load_ECDH_compute_key(out_: Pointer; oulen: TOpenSSL_C_SIZET; const pub_key: PEC_POINT; const ecdh: PEC_KEY; kdf: ECDH_compute_key_KDF): TOpenSSL_C_INT; cdecl;
+function Load_ECDSA_SIG_new: PECDSA_SIG; cdecl;
+procedure Load_ECDSA_SIG_free(sig: PECDSA_SIG); cdecl;
+function Load_i2d_ECDSA_SIG(const sig: PECDSA_SIG; pp: PPByte): TOpenSSL_C_INT; cdecl;
+function Load_d2i_ECDSA_SIG(sig: PPECDSA_SIG; const pp: PPByte; len: TOpenSSL_C_LONG): PECDSA_SIG; cdecl;
+procedure Load_ECDSA_SIG_get0(const sig: PECDSA_SIG; const pr: PPBIGNUM; const ps: PPBIGNUM); cdecl;
+function Load_ECDSA_SIG_get0_r(const sig: PECDSA_SIG): PBIGNUM; cdecl;
+function Load_ECDSA_SIG_get0_s(const sig: PECDSA_SIG): PBIGNUM; cdecl;
+function Load_ECDSA_SIG_set0(sig: PECDSA_SIG; r: PBIGNUM; s: PBIGNUM): TOpenSSL_C_INT; cdecl;
+function Load_ECDSA_do_sign(const dgst: PByte; dgst_len: TOpenSSL_C_INT; eckey: PEC_KEY): PECDSA_SIG; cdecl;
+function Load_ECDSA_do_sign_ex(const dgst: PByte; dgst_len: TOpenSSL_C_INT; const kinv: PBIGNUM; const rp: PBIGNUM; eckey: PEC_KEY): PECDSA_SIG; cdecl;
+function Load_ECDSA_do_verify(const dgst: PByte; dgst_len: TOpenSSL_C_INT; const sig: PECDSA_SIG; eckey: PEC_KEY): TOpenSSL_C_INT; cdecl;
+function Load_ECDSA_sign_setup(eckey: PEC_KEY; ctx: PBN_CTX; kiv: PPBIGNUM; rp: PPBIGNUM): TOpenSSL_C_INT; cdecl;
+function Load_ECDSA_sign(type_: TOpenSSL_C_INT; const dgst: PByte; dgstlen: TOpenSSL_C_INT; sig: PByte; siglen: POpenSSL_C_UINT; eckey: PEC_KEY): TOpenSSL_C_INT; cdecl;
+function Load_ECDSA_sign_ex(type_: TOpenSSL_C_INT; const dgst: PByte; dgstlen: TOpenSSL_C_INT; sig: PByte; siglen: POpenSSL_C_UINT; const kinv: PBIGNUM; const rp: PBIGNUM; eckey: PEC_KEY): TOpenSSL_C_INT; cdecl;
+function Load_ECDSA_verify(type_: TOpenSSL_C_INT; const dgst: PByte; dgstlen: TOpenSSL_C_INT; const sig: PByte; siglen: TOpenSSL_C_INT; eckey: PEC_KEY): TOpenSSL_C_INT; cdecl;
+function Load_ECDSA_size(const eckey: PEC_KEY): TOpenSSL_C_INT; cdecl;
+function Load_EC_KEY_METHOD_new(const meth: PEC_KEY_METHOD): PEC_KEY_METHOD; cdecl;
+procedure Load_EC_KEY_METHOD_free(meth: PEC_KEY_METHOD); cdecl;
+procedure Load_EC_KEY_METHOD_set_init(meth: PEC_KEY_METHOD; init: EC_KEY_METHOD_init_init; finish: EC_KEY_METHOD_init_finish; copy: EC_KEY_METHOD_init_copy; set_group: EC_KEY_METHOD_init_set_group; set_private: EC_KEY_METHOD_init_set_private; set_public: EC_KEY_METHOD_init_set_public); cdecl;
+procedure Load_EC_KEY_METHOD_set_keygen(meth: PEC_KEY_METHOD; keygen: EC_KEY_METHOD_keygen_keygen); cdecl;
+procedure Load_EC_KEY_METHOD_set_compute_key(meth: PEC_KEY_METHOD; ckey: EC_KEY_METHOD_compute_key_ckey); cdecl;
+procedure Load_EC_KEY_METHOD_set_sign(meth: PEC_KEY_METHOD; sign: EC_KEY_METHOD_sign_sign; sign_setup: EC_KEY_METHOD_sign_sign_setup; sign_sig: EC_KEY_METHOD_sign_sign_sig); cdecl;
+procedure Load_EC_KEY_METHOD_set_verify(meth: PEC_KEY_METHOD; verify: EC_KEY_METHOD_verify_verify; verify_sig: EC_KEY_METHOD_verify_verify_sig); cdecl;
+procedure Load_EC_KEY_METHOD_get_init(const meth: PEC_KEY_METHOD; pinit: PEC_KEY_METHOD_init_init; pfinish: PEC_KEY_METHOD_init_finish; pcopy: PEC_KEY_METHOD_init_copy; pset_group: PEC_KEY_METHOD_init_set_group; pset_private: PEC_KEY_METHOD_init_set_private; pset_public: PEC_KEY_METHOD_init_set_public); cdecl;
+procedure Load_EC_KEY_METHOD_get_keygen(const meth: PEC_KEY_METHOD; pkeygen: PEC_KEY_METHOD_keygen_keygen); cdecl;
+procedure Load_EC_KEY_METHOD_get_compute_key(const meth: PEC_KEY_METHOD; pck: PEC_KEY_METHOD_compute_key_ckey); cdecl;
+procedure Load_EC_KEY_METHOD_get_sign(const meth: PEC_KEY_METHOD; psign: PEC_KEY_METHOD_sign_sign; psign_setup: PEC_KEY_METHOD_sign_sign_setup; psign_sig: PEC_KEY_METHOD_sign_sign_sig); cdecl;
+procedure Load_EC_KEY_METHOD_get_verify(const meth: PEC_KEY_METHOD; pverify: PEC_KEY_METHOD_verify_verify; pverify_sig: PEC_KEY_METHOD_verify_verify_sig); cdecl;
+
 var
-  EC_GFp_simple_method: function : PEC_METHOD; cdecl = nil;
-  EC_GFp_mont_method: function : PEC_METHOD; cdecl = nil;
-  EC_GFp_nist_method: function : PEC_METHOD; cdecl = nil;
-  EC_GF2m_simple_method: function : PEC_METHOD; cdecl = nil;
-  EC_GROUP_new: function (const meth: PEC_METHOD): PEC_GROUP; cdecl = nil;
-  EC_GROUP_free: procedure (group: PEC_GROUP); cdecl = nil;
-  EC_GROUP_clear_free: procedure (group: PEC_GROUP); cdecl = nil;
-  EC_GROUP_copy: function (dst: PEC_GROUP; const src: PEC_GROUP): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_dup: function (const src: PEC_GROUP): PEC_GROUP; cdecl = nil;
-  EC_GROUP_method_of: function (const group: PEC_GROUP): PEC_GROUP; cdecl = nil;
-  EC_METHOD_get_field_type: function (const meth: PEC_METHOD): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_set_generator: function (group: PEC_GROUP; const generator: PEC_POINT; const order: PBIGNUM; const cofactor: PBIGNUM): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_get0_generator: function (const group: PEC_GROUP): PEC_POINT; cdecl = nil;
-  EC_GROUP_get_mont_data: function (const group: PEC_GROUP): PBN_MONT_CTX; cdecl = nil;
-  EC_GROUP_get_order: function (const group: PEC_GROUP; order: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_get0_order: function (const group: PEC_GROUP): PBIGNUM; cdecl = nil;
-  EC_GROUP_order_bits: function (const group: PEC_GROUP): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_get_cofactor: function (const group: PEC_GROUP; cofactor: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_get0_cofactor: function (const group: PEC_GROUP): PBIGNUM; cdecl = nil;
-  EC_GROUP_set_curve_name: procedure (group: PEC_GROUP; nid: TOpenSSL_C_INT); cdecl = nil;
-  EC_GROUP_get_curve_name: function (const group: PEC_GROUP): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_set_asn1_flag: procedure (group: PEC_GROUP; flag: TOpenSSL_C_INT); cdecl = nil;
-  EC_GROUP_get_asn1_flag: function (const group: PEC_GROUP): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_set_point_conversion_form: procedure (group: PEC_GROUP; form: point_conversion_form_t); cdecl = nil;
-  EC_GROUP_get_point_conversion_form: function (const group: PEC_GROUP): point_conversion_form_t; cdecl = nil;
-  EC_GROUP_get0_seed: function (const x: PEC_GROUP): PByte; cdecl = nil;
-  EC_GROUP_get_seed_len: function (const x: PEC_GROUP): TOpenSSL_C_SIZET; cdecl = nil;
-  EC_GROUP_set_seed: function (x: PEC_GROUP; const p: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = nil;
-  EC_GROUP_set_curve: function (group: PEC_GROUP; const p: PBIGNUM; const a: PBIGNUM; const b: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_get_curve: function (const group: PEC_GROUP; p: PBIGNUM; a: PBIGNUM; b: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_set_curve_GFp: function (group: PEC_GROUP; const p: PBIGNUM; const a: PBIGNUM; const b: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_get_curve_GFp: function (const group: PEC_GROUP; p: PBIGNUM; a: PBIGNUM; b: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_set_curve_GF2m: function (group: PEC_GROUP; const p: PBIGNUM; const a: PBIGNUM; const b:PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_get_curve_GF2m: function (const group: PEC_GROUP; p: PBIGNUM; a: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_get_degree: function (const group: PEC_GROUP): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_check: function (const group: PEC_GROUP; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_check_discriminant: function (const group: PEC_GROUP; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_cmp: function (const a: PEC_GROUP; const b: PEC_GROUP; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_new_curve_GFp: function (const p: PBIGNUM; const a: PBIGNUM; const b: PBIGNUM; ctx: PBN_CTX): PEC_GROUP; cdecl = nil;
-  EC_GROUP_new_curve_GF2m: function (const p: PBIGNUM; const a: PBIGNUM; const b: PBIGNUM; ctx: PBN_CTX): PEC_GROUP; cdecl = nil;
-  EC_GROUP_new_by_curve_name: function (nid: TOpenSSL_C_INT): PEC_GROUP; cdecl = nil;
-  EC_GROUP_new_from_ecparameters: function (const params: PECPARAMETERS): PEC_GROUP; cdecl = nil;
-  EC_GROUP_get_ecparameters: function (const group: PEC_GROUP; params: PECPARAMETERS): PECPARAMETERS; cdecl = nil;
-  EC_GROUP_new_from_ecpkparameters: function (const params: PECPKPARAMETERS): PEC_GROUP; cdecl = nil;
-  EC_GROUP_get_ecpkparameters: function (const group: PEC_GROUP; params: PECPKPARAMETERS): PECPKPARAMETERS; cdecl = nil;
-  EC_get_builtin_curves: function (r: PEC_builtin_curve; nitems: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = nil;
-  EC_curve_nid2nist: function (nid: TOpenSSL_C_INT): PAnsiChar; cdecl = nil;
-  EC_curve_nist2nid: function (const name: PAnsiChar): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_new: function (const group: PEC_GROUP): PEC_POINT; cdecl = nil;
-  EC_POINT_free: procedure (point: PEC_POINT); cdecl = nil;
-  EC_POINT_clear_free: procedure (point: PEC_POINT); cdecl = nil;
-  EC_POINT_copy: function (dst: PEC_POINT; const src: PEC_POINT): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_dup: function (const src: PEC_POINT; const group: PEC_GROUP): PEC_POINT; cdecl = nil;
-  EC_POINT_method_of: function (const point: PEC_POINT): PEC_METHOD; cdecl = nil;
-  EC_POINT_set_to_infinity: function (const group: PEC_GROUP; point: PEC_POINT): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_set_Jprojective_coordinates_GFp: function (const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; const y: PBIGNUM; const z: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_get_Jprojective_coordinates_GFp: function (const group: PEC_METHOD; const p: PEC_POINT; x: PBIGNUM; y: PBIGNUM; z: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_set_affine_coordinates: function (const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; const y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_get_affine_coordinates: function (const group: PEC_GROUP; const p: PEC_POINT; x: PBIGNUM; y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_set_affine_coordinates_GFp: function (const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; const y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_get_affine_coordinates_GFp: function (const group: PEC_GROUP; const p: PEC_POINT; x: PBIGNUM; y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_set_compressed_coordinates: function (const group: PEC_GROUP; p: PEC_POINT; x: PBIGNUM; y_bit: TOpenSSL_C_INT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_set_compressed_coordinates_GFp: function (const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; y_bit: TOpenSSL_C_INT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_set_affine_coordinates_GF2m: function (const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; const y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_get_affine_coordinates_GF2m: function (const group: PEC_GROUP; p: PEC_POINT; x: PBIGNUM; y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_set_compressed_coordinates_GF2m: function (const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; y_bit: TOpenSSL_C_INT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_point2oct: function (const group: PEC_GROUP; const p: PEC_POINT; form: point_conversion_form_t; buf: PByte; len: TOpenSSL_C_SIZET; ctx: PBN_CTX): TOpenSSL_C_SIZET; cdecl = nil;
-  EC_POINT_oct2point: function (const group: PEC_GROUP; p: PEC_POINT; const buf: PByte; len: TOpenSSL_C_SIZET; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_point2buf: function (const group: PEC_GROUP; const point: PEC_POINT; form: point_conversion_form_t; pbuf: PPByte; ctx: PBN_CTX): TOpenSSL_C_SIZET; cdecl = nil;
-  EC_POINT_point2bn: function (const group: PEC_GROUP; const p: PEC_POINT; form: point_conversion_form_t; bn: PBIGNUM; ctx: PBN_CTX): PBIGNUM; cdecl = nil;
-  EC_POINT_bn2point: function (const group: PEC_GROUP; const bn: PBIGNUM; p: PEC_POINT; ctx: PBN_CTX): PEC_POINT; cdecl = nil;
-  EC_POINT_point2hex: function (const group: PEC_GROUP; const p: PEC_POINT; form: point_conversion_form_t; ctx: PBN_CTX): PAnsiChar; cdecl = nil;
-  EC_POINT_hex2point: function (const group: PEC_GROUP; const buf: PAnsiChar; p: PEC_POINT; ctx: PBN_CTX): PEC_POINT; cdecl = nil;
-  EC_POINT_add: function (const group: PEC_GROUP; r: PEC_POINT; const a: PEC_POINT; const b: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_dbl: function (const group: PEC_GROUP; r: PEC_POINT; const a: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_invert: function (const group: PEC_GROUP; a: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_is_at_infinity: function (const group: PEC_GROUP; const p: PEC_POINT): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_is_on_curve: function (const group: PEC_GROUP; const point: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_cmp: function (const group: PEC_GROUP; const a: PEC_POINT; const b: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_make_affine: function (const group: PEC_GROUP; point: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINTs_make_affine: function (const group: PEC_METHOD; num: TOpenSSL_C_SIZET; points: PPEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINTs_mul: function (const group: PEC_GROUP; r: PEC_POINT; const n: PBIGNUM; num: TOpenSSL_C_SIZET; const p: PPEC_POINT; const m: PPBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_POINT_mul: function (const group: PEC_GROUP; r: PEC_POINT; const n: PBIGNUM; const q: PEC_POINT; const m: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_precompute_mult: function (group: PEC_GROUP; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_have_precompute_mult: function (const group: PEC_GROUP): TOpenSSL_C_INT; cdecl = nil;
-  ECPKPARAMETERS_it: function : PASN1_ITEM; cdecl = nil;
-  ECPKPARAMETERS_new: function : PECPKPARAMETERS; cdecl = nil;
-  ECPKPARAMETERS_free: procedure (a: PECPKPARAMETERS); cdecl = nil;
-  ECPARAMETERS_it: function : PASN1_ITEM; cdecl = nil;
-  ECPARAMETERS_new: function : PECPARAMETERS; cdecl = nil;
-  ECPARAMETERS_free: procedure (a: PECPARAMETERS); cdecl = nil;
-  EC_GROUP_get_basis_type: function (const group: PEC_GROUP): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_get_trinomial_basis: function (const group: PEC_GROUP; k: POpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = nil;
-  EC_GROUP_get_pentanomial_basis: function (const group: PEC_GROUP; k1: POpenSSL_C_UINT; k2: POpenSSL_C_UINT; k3: POpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = nil;
-  d2i_ECPKParameters: function (group: PPEC_GROUP; const in_: PPByte; len: TOpenSSL_C_LONG): PEC_GROUP; cdecl = nil;
-  i2d_ECPKParameters: function (const group: PEC_GROUP; out_: PPByte): TOpenSSL_C_INT; cdecl = nil;
-  ECPKParameters_print: function (bp: PBIO; const x: PEC_GROUP; off: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  EC_KEY_new: function : PEC_KEY; cdecl = nil;
-  EC_KEY_get_flags: function (const key: PEC_KEY): TOpenSSL_C_INT; cdecl = nil;
-  EC_KEY_set_flags: procedure (key: PEC_KEY; flags: TOpenSSL_C_INT); cdecl = nil;
-  EC_KEY_clear_flags: procedure (key: PEC_KEY; flags: TOpenSSL_C_INT); cdecl = nil;
-  EC_KEY_new_by_curve_name: function (nid: TOpenSSL_C_INT): PEC_KEY; cdecl = nil;
-  EC_KEY_free: procedure (key: PEC_KEY); cdecl = nil;
-  EC_KEY_copy: function (dst: PEC_KEY; const src: PEC_KEY): PEC_KEY; cdecl = nil;
-  EC_KEY_dup: function (const src: PEC_KEY): PEC_KEY; cdecl = nil;
-  EC_KEY_up_ref: function (key: PEC_KEY): TOpenSSL_C_INT; cdecl = nil;
-  EC_KEY_get0_engine: function (const eckey: PEC_KEY): PENGINE; cdecl = nil;
-  EC_KEY_get0_group: function (const key: PEC_KEY): PEC_GROUP; cdecl = nil;
-  EC_KEY_set_group: function (key: PEC_KEY; const group: PEC_GROUP): TOpenSSL_C_INT; cdecl = nil;
-  EC_KEY_get0_private_key: function (const key: PEC_KEY): PBIGNUM; cdecl = nil;
-  EC_KEY_set_private_key: function (const key: PEC_KEY; const prv: PBIGNUM): TOpenSSL_C_INT; cdecl = nil;
-  EC_KEY_get0_public_key: function (const key: PEC_KEY): PEC_POINT; cdecl = nil;
-  EC_KEY_set_public_key: function (key: PEC_KEY; const pub: PEC_POINT): TOpenSSL_C_INT; cdecl = nil;
-  EC_KEY_get_enc_flags: function (const key: PEC_KEY): TOpenSSL_C_UINT; cdecl = nil;
-  EC_KEY_set_enc_flags: procedure (eckey: PEC_KEY; flags: TOpenSSL_C_UINT); cdecl = nil;
-  EC_KEY_get_conv_form: function (const key: PEC_KEY): point_conversion_form_t; cdecl = nil;
-  EC_KEY_set_conv_form: procedure (eckey: PEC_KEY; cform: point_conversion_form_t); cdecl = nil;
-  EC_KEY_set_ex_data: function (key: PEC_KEY; idx: TOpenSSL_C_INT; arg: Pointer): TOpenSSL_C_INT; cdecl = nil;
-  EC_KEY_get_ex_data: function (const key: PEC_KEY; idx: TOpenSSL_C_INT): Pointer; cdecl = nil;
-  EC_KEY_set_asn1_flag: procedure (eckey: PEC_KEY; asn1_flag: TOpenSSL_C_INT); cdecl = nil;
-  EC_KEY_precompute_mult: function (key: PEC_KEY; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_KEY_generate_key: function (key: PEC_KEY): TOpenSSL_C_INT; cdecl = nil;
-  EC_KEY_check_key: function (const key: PEC_KEY): TOpenSSL_C_INT; cdecl = nil;
-  EC_KEY_can_sign: function (const eckey: PEC_KEY): TOpenSSL_C_INT; cdecl = nil;
-  EC_KEY_set_public_key_affine_coordinates: function (key: PEC_KEY; x: PBIGNUM; y: PBIGNUM): TOpenSSL_C_INT; cdecl = nil;
-  EC_KEY_key2buf: function (const key: PEC_KEY; form: point_conversion_form_t; pbuf: PPByte; ctx: PBN_CTX): TOpenSSL_C_SIZET; cdecl = nil;
-  EC_KEY_oct2key: function (key: PEC_KEY; const buf: PByte; len: TOpenSSL_C_SIZET; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = nil;
-  EC_KEY_oct2priv: function (key: PEC_KEY; const buf: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = nil;
-  EC_KEY_priv2oct: function (const key: PEC_KEY; buf: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = nil;
-  EC_KEY_priv2buf: function (const eckey: PEC_KEY; buf: PPByte): TOpenSSL_C_SIZET; cdecl = nil;
-  d2i_ECPrivateKey: function (key: PPEC_KEY; const in_: PPByte; len: TOpenSSL_C_LONG): PEC_KEY; cdecl = nil;
-  i2d_ECPrivateKey: function (key: PEC_KEY; out_: PPByte): TOpenSSL_C_INT; cdecl = nil;
-  o2i_ECPublicKey: function (key: PPEC_KEY; const in_: PPByte; len: TOpenSSL_C_LONG): PEC_KEY; cdecl = nil;
-  i2o_ECPublicKey: function (const key: PEC_KEY; out_: PPByte): TOpenSSL_C_INT; cdecl = nil;
-  ECParameters_print: function (bp: PBIO; const key: PEC_KEY): TOpenSSL_C_INT; cdecl = nil;
-  EC_KEY_print: function (bp: PBIO; const key: PEC_KEY; off: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = nil;
-  EC_KEY_OpenSSL: function : PEC_KEY_METHOD; cdecl = nil;
-  EC_KEY_get_default_method: function : PEC_KEY_METHOD; cdecl = nil;
-  EC_KEY_set_default_method: procedure (const meth: PEC_KEY_METHOD); cdecl = nil;
-  EC_KEY_get_method: function (const key: PEC_KEY): PEC_KEY_METHOD; cdecl = nil;
-  EC_KEY_set_method: function (key: PEC_KEY; const meth: PEC_KEY_METHOD): TOpenSSL_C_INT; cdecl = nil;
-  EC_KEY_new_method: function (engine: PENGINE): PEC_KEY; cdecl = nil;
-  ECDH_KDF_X9_62: function (out_: PByte; outlen: TOpenSSL_C_SIZET; const Z: PByte; Zlen: TOpenSSL_C_SIZET; const sinfo: PByte; sinfolen: TOpenSSL_C_SIZET; const md: PEVP_MD): TOpenSSL_C_INT; cdecl = nil;
-  ECDH_compute_key: function (out_: Pointer; oulen: TOpenSSL_C_SIZET; const pub_key: PEC_POINT; const ecdh: PEC_KEY; kdf: ECDH_compute_key_KDF): TOpenSSL_C_INT; cdecl = nil;
-  ECDSA_SIG_new: function : PECDSA_SIG; cdecl = nil;
-  ECDSA_SIG_free: procedure (sig: PECDSA_SIG); cdecl = nil;
-  i2d_ECDSA_SIG: function (const sig: PECDSA_SIG; pp: PPByte): TOpenSSL_C_INT; cdecl = nil;
-  d2i_ECDSA_SIG: function (sig: PPECDSA_SIG; const pp: PPByte; len: TOpenSSL_C_LONG): PECDSA_SIG; cdecl = nil;
-  ECDSA_SIG_get0: procedure (const sig: PECDSA_SIG; const pr: PPBIGNUM; const ps: PPBIGNUM); cdecl = nil;
-  ECDSA_SIG_get0_r: function (const sig: PECDSA_SIG): PBIGNUM; cdecl = nil;
-  ECDSA_SIG_get0_s: function (const sig: PECDSA_SIG): PBIGNUM; cdecl = nil;
-  ECDSA_SIG_set0: function (sig: PECDSA_SIG; r: PBIGNUM; s: PBIGNUM): TOpenSSL_C_INT; cdecl = nil;
-  ECDSA_do_sign: function (const dgst: PByte; dgst_len: TOpenSSL_C_INT; eckey: PEC_KEY): PECDSA_SIG; cdecl = nil;
-  ECDSA_do_sign_ex: function (const dgst: PByte; dgst_len: TOpenSSL_C_INT; const kinv: PBIGNUM; const rp: PBIGNUM; eckey: PEC_KEY): PECDSA_SIG; cdecl = nil;
-  ECDSA_do_verify: function (const dgst: PByte; dgst_len: TOpenSSL_C_INT; const sig: PECDSA_SIG; eckey: PEC_KEY): TOpenSSL_C_INT; cdecl = nil;
-  ECDSA_sign_setup: function (eckey: PEC_KEY; ctx: PBN_CTX; kiv: PPBIGNUM; rp: PPBIGNUM): TOpenSSL_C_INT; cdecl = nil;
-  ECDSA_sign: function (type_: TOpenSSL_C_INT; const dgst: PByte; dgstlen: TOpenSSL_C_INT; sig: PByte; siglen: POpenSSL_C_UINT; eckey: PEC_KEY): TOpenSSL_C_INT; cdecl = nil;
-  ECDSA_sign_ex: function (type_: TOpenSSL_C_INT; const dgst: PByte; dgstlen: TOpenSSL_C_INT; sig: PByte; siglen: POpenSSL_C_UINT; const kinv: PBIGNUM; const rp: PBIGNUM; eckey: PEC_KEY): TOpenSSL_C_INT; cdecl = nil;
-  ECDSA_verify: function (type_: TOpenSSL_C_INT; const dgst: PByte; dgstlen: TOpenSSL_C_INT; const sig: PByte; siglen: TOpenSSL_C_INT; eckey: PEC_KEY): TOpenSSL_C_INT; cdecl = nil;
-  ECDSA_size: function (const eckey: PEC_KEY): TOpenSSL_C_INT; cdecl = nil;
-  EC_KEY_METHOD_new: function (const meth: PEC_KEY_METHOD): PEC_KEY_METHOD; cdecl = nil;
-  EC_KEY_METHOD_free: procedure (meth: PEC_KEY_METHOD); cdecl = nil;
-  EC_KEY_METHOD_set_init: procedure (meth: PEC_KEY_METHOD; init: EC_KEY_METHOD_init_init; finish: EC_KEY_METHOD_init_finish; copy: EC_KEY_METHOD_init_copy; set_group: EC_KEY_METHOD_init_set_group; set_private: EC_KEY_METHOD_init_set_private; set_public: EC_KEY_METHOD_init_set_public); cdecl = nil;
-  EC_KEY_METHOD_set_keygen: procedure (meth: PEC_KEY_METHOD; keygen: EC_KEY_METHOD_keygen_keygen); cdecl = nil;
-  EC_KEY_METHOD_set_compute_key: procedure (meth: PEC_KEY_METHOD; ckey: EC_KEY_METHOD_compute_key_ckey); cdecl = nil;
-  EC_KEY_METHOD_set_sign: procedure (meth: PEC_KEY_METHOD; sign: EC_KEY_METHOD_sign_sign; sign_setup: EC_KEY_METHOD_sign_sign_setup; sign_sig: EC_KEY_METHOD_sign_sign_sig); cdecl = nil;
-  EC_KEY_METHOD_set_verify: procedure (meth: PEC_KEY_METHOD; verify: EC_KEY_METHOD_verify_verify; verify_sig: EC_KEY_METHOD_verify_verify_sig); cdecl = nil;
-  EC_KEY_METHOD_get_init: procedure (const meth: PEC_KEY_METHOD; pinit: PEC_KEY_METHOD_init_init; pfinish: PEC_KEY_METHOD_init_finish; pcopy: PEC_KEY_METHOD_init_copy; pset_group: PEC_KEY_METHOD_init_set_group; pset_private: PEC_KEY_METHOD_init_set_private; pset_public: PEC_KEY_METHOD_init_set_public); cdecl = nil;
-  EC_KEY_METHOD_get_keygen: procedure (const meth: PEC_KEY_METHOD; pkeygen: PEC_KEY_METHOD_keygen_keygen); cdecl = nil;
-  EC_KEY_METHOD_get_compute_key: procedure (const meth: PEC_KEY_METHOD; pck: PEC_KEY_METHOD_compute_key_ckey); cdecl = nil;
-  EC_KEY_METHOD_get_sign: procedure (const meth: PEC_KEY_METHOD; psign: PEC_KEY_METHOD_sign_sign; psign_setup: PEC_KEY_METHOD_sign_sign_setup; psign_sig: PEC_KEY_METHOD_sign_sign_sig); cdecl = nil;
-  EC_KEY_METHOD_get_verify: procedure (const meth: PEC_KEY_METHOD; pverify: PEC_KEY_METHOD_verify_verify; pverify_sig: PEC_KEY_METHOD_verify_verify_sig); cdecl = nil;
+  EC_GFp_simple_method: function : PEC_METHOD; cdecl = Load_EC_GFp_simple_method;
+  EC_GFp_mont_method: function : PEC_METHOD; cdecl = Load_EC_GFp_mont_method;
+  EC_GFp_nist_method: function : PEC_METHOD; cdecl = Load_EC_GFp_nist_method;
+  EC_GF2m_simple_method: function : PEC_METHOD; cdecl = Load_EC_GF2m_simple_method;
+  EC_GROUP_new: function (const meth: PEC_METHOD): PEC_GROUP; cdecl = Load_EC_GROUP_new;
+  EC_GROUP_free: procedure (group: PEC_GROUP); cdecl = Load_EC_GROUP_free;
+  EC_GROUP_clear_free: procedure (group: PEC_GROUP); cdecl = Load_EC_GROUP_clear_free;
+  EC_GROUP_copy: function (dst: PEC_GROUP; const src: PEC_GROUP): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_copy;
+  EC_GROUP_dup: function (const src: PEC_GROUP): PEC_GROUP; cdecl = Load_EC_GROUP_dup;
+  EC_GROUP_method_of: function (const group: PEC_GROUP): PEC_GROUP; cdecl = Load_EC_GROUP_method_of;
+  EC_METHOD_get_field_type: function (const meth: PEC_METHOD): TOpenSSL_C_INT; cdecl = Load_EC_METHOD_get_field_type;
+  EC_GROUP_set_generator: function (group: PEC_GROUP; const generator: PEC_POINT; const order: PBIGNUM; const cofactor: PBIGNUM): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_set_generator;
+  EC_GROUP_get0_generator: function (const group: PEC_GROUP): PEC_POINT; cdecl = Load_EC_GROUP_get0_generator;
+  EC_GROUP_get_mont_data: function (const group: PEC_GROUP): PBN_MONT_CTX; cdecl = Load_EC_GROUP_get_mont_data;
+  EC_GROUP_get_order: function (const group: PEC_GROUP; order: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_get_order;
+  EC_GROUP_get0_order: function (const group: PEC_GROUP): PBIGNUM; cdecl = Load_EC_GROUP_get0_order;
+  EC_GROUP_order_bits: function (const group: PEC_GROUP): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_order_bits;
+  EC_GROUP_get_cofactor: function (const group: PEC_GROUP; cofactor: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_get_cofactor;
+  EC_GROUP_get0_cofactor: function (const group: PEC_GROUP): PBIGNUM; cdecl = Load_EC_GROUP_get0_cofactor;
+  EC_GROUP_set_curve_name: procedure (group: PEC_GROUP; nid: TOpenSSL_C_INT); cdecl = Load_EC_GROUP_set_curve_name;
+  EC_GROUP_get_curve_name: function (const group: PEC_GROUP): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_get_curve_name;
+  EC_GROUP_set_asn1_flag: procedure (group: PEC_GROUP; flag: TOpenSSL_C_INT); cdecl = Load_EC_GROUP_set_asn1_flag;
+  EC_GROUP_get_asn1_flag: function (const group: PEC_GROUP): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_get_asn1_flag;
+  EC_GROUP_set_point_conversion_form: procedure (group: PEC_GROUP; form: point_conversion_form_t); cdecl = Load_EC_GROUP_set_point_conversion_form;
+  EC_GROUP_get_point_conversion_form: function (const group: PEC_GROUP): point_conversion_form_t; cdecl = Load_EC_GROUP_get_point_conversion_form;
+  EC_GROUP_get0_seed: function (const x: PEC_GROUP): PByte; cdecl = Load_EC_GROUP_get0_seed;
+  EC_GROUP_get_seed_len: function (const x: PEC_GROUP): TOpenSSL_C_SIZET; cdecl = Load_EC_GROUP_get_seed_len;
+  EC_GROUP_set_seed: function (x: PEC_GROUP; const p: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = Load_EC_GROUP_set_seed;
+  EC_GROUP_set_curve: function (group: PEC_GROUP; const p: PBIGNUM; const a: PBIGNUM; const b: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_set_curve;
+  EC_GROUP_get_curve: function (const group: PEC_GROUP; p: PBIGNUM; a: PBIGNUM; b: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_get_curve;
+  EC_GROUP_set_curve_GFp: function (group: PEC_GROUP; const p: PBIGNUM; const a: PBIGNUM; const b: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_set_curve_GFp;
+  EC_GROUP_get_curve_GFp: function (const group: PEC_GROUP; p: PBIGNUM; a: PBIGNUM; b: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_get_curve_GFp;
+  EC_GROUP_set_curve_GF2m: function (group: PEC_GROUP; const p: PBIGNUM; const a: PBIGNUM; const b:PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_set_curve_GF2m;
+  EC_GROUP_get_curve_GF2m: function (const group: PEC_GROUP; p: PBIGNUM; a: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_get_curve_GF2m;
+  EC_GROUP_get_degree: function (const group: PEC_GROUP): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_get_degree;
+  EC_GROUP_check: function (const group: PEC_GROUP; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_check;
+  EC_GROUP_check_discriminant: function (const group: PEC_GROUP; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_check_discriminant;
+  EC_GROUP_cmp: function (const a: PEC_GROUP; const b: PEC_GROUP; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_cmp;
+  EC_GROUP_new_curve_GFp: function (const p: PBIGNUM; const a: PBIGNUM; const b: PBIGNUM; ctx: PBN_CTX): PEC_GROUP; cdecl = Load_EC_GROUP_new_curve_GFp;
+  EC_GROUP_new_curve_GF2m: function (const p: PBIGNUM; const a: PBIGNUM; const b: PBIGNUM; ctx: PBN_CTX): PEC_GROUP; cdecl = Load_EC_GROUP_new_curve_GF2m;
+  EC_GROUP_new_by_curve_name: function (nid: TOpenSSL_C_INT): PEC_GROUP; cdecl = Load_EC_GROUP_new_by_curve_name;
+  EC_GROUP_new_from_ecparameters: function (const params: PECPARAMETERS): PEC_GROUP; cdecl = Load_EC_GROUP_new_from_ecparameters;
+  EC_GROUP_get_ecparameters: function (const group: PEC_GROUP; params: PECPARAMETERS): PECPARAMETERS; cdecl = Load_EC_GROUP_get_ecparameters;
+  EC_GROUP_new_from_ecpkparameters: function (const params: PECPKPARAMETERS): PEC_GROUP; cdecl = Load_EC_GROUP_new_from_ecpkparameters;
+  EC_GROUP_get_ecpkparameters: function (const group: PEC_GROUP; params: PECPKPARAMETERS): PECPKPARAMETERS; cdecl = Load_EC_GROUP_get_ecpkparameters;
+  EC_get_builtin_curves: function (r: PEC_builtin_curve; nitems: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = Load_EC_get_builtin_curves;
+  EC_curve_nid2nist: function (nid: TOpenSSL_C_INT): PAnsiChar; cdecl = Load_EC_curve_nid2nist;
+  EC_curve_nist2nid: function (const name: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_EC_curve_nist2nid;
+  EC_POINT_new: function (const group: PEC_GROUP): PEC_POINT; cdecl = Load_EC_POINT_new;
+  EC_POINT_free: procedure (point: PEC_POINT); cdecl = Load_EC_POINT_free;
+  EC_POINT_clear_free: procedure (point: PEC_POINT); cdecl = Load_EC_POINT_clear_free;
+  EC_POINT_copy: function (dst: PEC_POINT; const src: PEC_POINT): TOpenSSL_C_INT; cdecl = Load_EC_POINT_copy;
+  EC_POINT_dup: function (const src: PEC_POINT; const group: PEC_GROUP): PEC_POINT; cdecl = Load_EC_POINT_dup;
+  EC_POINT_method_of: function (const point: PEC_POINT): PEC_METHOD; cdecl = Load_EC_POINT_method_of;
+  EC_POINT_set_to_infinity: function (const group: PEC_GROUP; point: PEC_POINT): TOpenSSL_C_INT; cdecl = Load_EC_POINT_set_to_infinity;
+  EC_POINT_set_Jprojective_coordinates_GFp: function (const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; const y: PBIGNUM; const z: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_POINT_set_Jprojective_coordinates_GFp;
+  EC_POINT_get_Jprojective_coordinates_GFp: function (const group: PEC_METHOD; const p: PEC_POINT; x: PBIGNUM; y: PBIGNUM; z: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_POINT_get_Jprojective_coordinates_GFp;
+  EC_POINT_set_affine_coordinates: function (const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; const y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_POINT_set_affine_coordinates;
+  EC_POINT_get_affine_coordinates: function (const group: PEC_GROUP; const p: PEC_POINT; x: PBIGNUM; y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_POINT_get_affine_coordinates;
+  EC_POINT_set_affine_coordinates_GFp: function (const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; const y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_POINT_set_affine_coordinates_GFp;
+  EC_POINT_get_affine_coordinates_GFp: function (const group: PEC_GROUP; const p: PEC_POINT; x: PBIGNUM; y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_POINT_get_affine_coordinates_GFp;
+  EC_POINT_set_compressed_coordinates: function (const group: PEC_GROUP; p: PEC_POINT; x: PBIGNUM; y_bit: TOpenSSL_C_INT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_POINT_set_compressed_coordinates;
+  EC_POINT_set_compressed_coordinates_GFp: function (const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; y_bit: TOpenSSL_C_INT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_POINT_set_compressed_coordinates_GFp;
+  EC_POINT_set_affine_coordinates_GF2m: function (const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; const y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_POINT_set_affine_coordinates_GF2m;
+  EC_POINT_get_affine_coordinates_GF2m: function (const group: PEC_GROUP; p: PEC_POINT; x: PBIGNUM; y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_POINT_get_affine_coordinates_GF2m;
+  EC_POINT_set_compressed_coordinates_GF2m: function (const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; y_bit: TOpenSSL_C_INT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_POINT_set_compressed_coordinates_GF2m;
+  EC_POINT_point2oct: function (const group: PEC_GROUP; const p: PEC_POINT; form: point_conversion_form_t; buf: PByte; len: TOpenSSL_C_SIZET; ctx: PBN_CTX): TOpenSSL_C_SIZET; cdecl = Load_EC_POINT_point2oct;
+  EC_POINT_oct2point: function (const group: PEC_GROUP; p: PEC_POINT; const buf: PByte; len: TOpenSSL_C_SIZET; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_POINT_oct2point;
+  EC_POINT_point2buf: function (const group: PEC_GROUP; const point: PEC_POINT; form: point_conversion_form_t; pbuf: PPByte; ctx: PBN_CTX): TOpenSSL_C_SIZET; cdecl = Load_EC_POINT_point2buf;
+  EC_POINT_point2bn: function (const group: PEC_GROUP; const p: PEC_POINT; form: point_conversion_form_t; bn: PBIGNUM; ctx: PBN_CTX): PBIGNUM; cdecl = Load_EC_POINT_point2bn;
+  EC_POINT_bn2point: function (const group: PEC_GROUP; const bn: PBIGNUM; p: PEC_POINT; ctx: PBN_CTX): PEC_POINT; cdecl = Load_EC_POINT_bn2point;
+  EC_POINT_point2hex: function (const group: PEC_GROUP; const p: PEC_POINT; form: point_conversion_form_t; ctx: PBN_CTX): PAnsiChar; cdecl = Load_EC_POINT_point2hex;
+  EC_POINT_hex2point: function (const group: PEC_GROUP; const buf: PAnsiChar; p: PEC_POINT; ctx: PBN_CTX): PEC_POINT; cdecl = Load_EC_POINT_hex2point;
+  EC_POINT_add: function (const group: PEC_GROUP; r: PEC_POINT; const a: PEC_POINT; const b: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_POINT_add;
+  EC_POINT_dbl: function (const group: PEC_GROUP; r: PEC_POINT; const a: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_POINT_dbl;
+  EC_POINT_invert: function (const group: PEC_GROUP; a: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_POINT_invert;
+  EC_POINT_is_at_infinity: function (const group: PEC_GROUP; const p: PEC_POINT): TOpenSSL_C_INT; cdecl = Load_EC_POINT_is_at_infinity;
+  EC_POINT_is_on_curve: function (const group: PEC_GROUP; const point: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_POINT_is_on_curve;
+  EC_POINT_cmp: function (const group: PEC_GROUP; const a: PEC_POINT; const b: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_POINT_cmp;
+  EC_POINT_make_affine: function (const group: PEC_GROUP; point: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_POINT_make_affine;
+  EC_POINTs_make_affine: function (const group: PEC_METHOD; num: TOpenSSL_C_SIZET; points: PPEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_POINTs_make_affine;
+  EC_POINTs_mul: function (const group: PEC_GROUP; r: PEC_POINT; const n: PBIGNUM; num: TOpenSSL_C_SIZET; const p: PPEC_POINT; const m: PPBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_POINTs_mul;
+  EC_POINT_mul: function (const group: PEC_GROUP; r: PEC_POINT; const n: PBIGNUM; const q: PEC_POINT; const m: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_POINT_mul;
+  EC_GROUP_precompute_mult: function (group: PEC_GROUP; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_precompute_mult;
+  EC_GROUP_have_precompute_mult: function (const group: PEC_GROUP): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_have_precompute_mult;
+  ECPKPARAMETERS_it: function : PASN1_ITEM; cdecl = Load_ECPKPARAMETERS_it;
+  ECPKPARAMETERS_new: function : PECPKPARAMETERS; cdecl = Load_ECPKPARAMETERS_new;
+  ECPKPARAMETERS_free: procedure (a: PECPKPARAMETERS); cdecl = Load_ECPKPARAMETERS_free;
+  ECPARAMETERS_it: function : PASN1_ITEM; cdecl = Load_ECPARAMETERS_it;
+  ECPARAMETERS_new: function : PECPARAMETERS; cdecl = Load_ECPARAMETERS_new;
+  ECPARAMETERS_free: procedure (a: PECPARAMETERS); cdecl = Load_ECPARAMETERS_free;
+  EC_GROUP_get_basis_type: function (const group: PEC_GROUP): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_get_basis_type;
+  EC_GROUP_get_trinomial_basis: function (const group: PEC_GROUP; k: POpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_get_trinomial_basis;
+  EC_GROUP_get_pentanomial_basis: function (const group: PEC_GROUP; k1: POpenSSL_C_UINT; k2: POpenSSL_C_UINT; k3: POpenSSL_C_UINT): TOpenSSL_C_INT; cdecl = Load_EC_GROUP_get_pentanomial_basis;
+  d2i_ECPKParameters: function (group: PPEC_GROUP; const in_: PPByte; len: TOpenSSL_C_LONG): PEC_GROUP; cdecl = Load_d2i_ECPKParameters;
+  i2d_ECPKParameters: function (const group: PEC_GROUP; out_: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_ECPKParameters;
+  ECPKParameters_print: function (bp: PBIO; const x: PEC_GROUP; off: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_ECPKParameters_print;
+  EC_KEY_new: function : PEC_KEY; cdecl = Load_EC_KEY_new;
+  EC_KEY_get_flags: function (const key: PEC_KEY): TOpenSSL_C_INT; cdecl = Load_EC_KEY_get_flags;
+  EC_KEY_set_flags: procedure (key: PEC_KEY; flags: TOpenSSL_C_INT); cdecl = Load_EC_KEY_set_flags;
+  EC_KEY_clear_flags: procedure (key: PEC_KEY; flags: TOpenSSL_C_INT); cdecl = Load_EC_KEY_clear_flags;
+  EC_KEY_new_by_curve_name: function (nid: TOpenSSL_C_INT): PEC_KEY; cdecl = Load_EC_KEY_new_by_curve_name;
+  EC_KEY_free: procedure (key: PEC_KEY); cdecl = Load_EC_KEY_free;
+  EC_KEY_copy: function (dst: PEC_KEY; const src: PEC_KEY): PEC_KEY; cdecl = Load_EC_KEY_copy;
+  EC_KEY_dup: function (const src: PEC_KEY): PEC_KEY; cdecl = Load_EC_KEY_dup;
+  EC_KEY_up_ref: function (key: PEC_KEY): TOpenSSL_C_INT; cdecl = Load_EC_KEY_up_ref;
+  EC_KEY_get0_engine: function (const eckey: PEC_KEY): PENGINE; cdecl = Load_EC_KEY_get0_engine;
+  EC_KEY_get0_group: function (const key: PEC_KEY): PEC_GROUP; cdecl = Load_EC_KEY_get0_group;
+  EC_KEY_set_group: function (key: PEC_KEY; const group: PEC_GROUP): TOpenSSL_C_INT; cdecl = Load_EC_KEY_set_group;
+  EC_KEY_get0_private_key: function (const key: PEC_KEY): PBIGNUM; cdecl = Load_EC_KEY_get0_private_key;
+  EC_KEY_set_private_key: function (const key: PEC_KEY; const prv: PBIGNUM): TOpenSSL_C_INT; cdecl = Load_EC_KEY_set_private_key;
+  EC_KEY_get0_public_key: function (const key: PEC_KEY): PEC_POINT; cdecl = Load_EC_KEY_get0_public_key;
+  EC_KEY_set_public_key: function (key: PEC_KEY; const pub: PEC_POINT): TOpenSSL_C_INT; cdecl = Load_EC_KEY_set_public_key;
+  EC_KEY_get_enc_flags: function (const key: PEC_KEY): TOpenSSL_C_UINT; cdecl = Load_EC_KEY_get_enc_flags;
+  EC_KEY_set_enc_flags: procedure (eckey: PEC_KEY; flags: TOpenSSL_C_UINT); cdecl = Load_EC_KEY_set_enc_flags;
+  EC_KEY_get_conv_form: function (const key: PEC_KEY): point_conversion_form_t; cdecl = Load_EC_KEY_get_conv_form;
+  EC_KEY_set_conv_form: procedure (eckey: PEC_KEY; cform: point_conversion_form_t); cdecl = Load_EC_KEY_set_conv_form;
+  EC_KEY_set_ex_data: function (key: PEC_KEY; idx: TOpenSSL_C_INT; arg: Pointer): TOpenSSL_C_INT; cdecl = Load_EC_KEY_set_ex_data;
+  EC_KEY_get_ex_data: function (const key: PEC_KEY; idx: TOpenSSL_C_INT): Pointer; cdecl = Load_EC_KEY_get_ex_data;
+  EC_KEY_set_asn1_flag: procedure (eckey: PEC_KEY; asn1_flag: TOpenSSL_C_INT); cdecl = Load_EC_KEY_set_asn1_flag;
+  EC_KEY_precompute_mult: function (key: PEC_KEY; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_KEY_precompute_mult;
+  EC_KEY_generate_key: function (key: PEC_KEY): TOpenSSL_C_INT; cdecl = Load_EC_KEY_generate_key;
+  EC_KEY_check_key: function (const key: PEC_KEY): TOpenSSL_C_INT; cdecl = Load_EC_KEY_check_key;
+  EC_KEY_can_sign: function (const eckey: PEC_KEY): TOpenSSL_C_INT; cdecl = Load_EC_KEY_can_sign;
+  EC_KEY_set_public_key_affine_coordinates: function (key: PEC_KEY; x: PBIGNUM; y: PBIGNUM): TOpenSSL_C_INT; cdecl = Load_EC_KEY_set_public_key_affine_coordinates;
+  EC_KEY_key2buf: function (const key: PEC_KEY; form: point_conversion_form_t; pbuf: PPByte; ctx: PBN_CTX): TOpenSSL_C_SIZET; cdecl = Load_EC_KEY_key2buf;
+  EC_KEY_oct2key: function (key: PEC_KEY; const buf: PByte; len: TOpenSSL_C_SIZET; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl = Load_EC_KEY_oct2key;
+  EC_KEY_oct2priv: function (key: PEC_KEY; const buf: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_EC_KEY_oct2priv;
+  EC_KEY_priv2oct: function (const key: PEC_KEY; buf: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl = Load_EC_KEY_priv2oct;
+  EC_KEY_priv2buf: function (const eckey: PEC_KEY; buf: PPByte): TOpenSSL_C_SIZET; cdecl = Load_EC_KEY_priv2buf;
+  d2i_ECPrivateKey: function (key: PPEC_KEY; const in_: PPByte; len: TOpenSSL_C_LONG): PEC_KEY; cdecl = Load_d2i_ECPrivateKey;
+  i2d_ECPrivateKey: function (key: PEC_KEY; out_: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_ECPrivateKey;
+  o2i_ECPublicKey: function (key: PPEC_KEY; const in_: PPByte; len: TOpenSSL_C_LONG): PEC_KEY; cdecl = Load_o2i_ECPublicKey;
+  i2o_ECPublicKey: function (const key: PEC_KEY; out_: PPByte): TOpenSSL_C_INT; cdecl = Load_i2o_ECPublicKey;
+  ECParameters_print: function (bp: PBIO; const key: PEC_KEY): TOpenSSL_C_INT; cdecl = Load_ECParameters_print;
+  EC_KEY_print: function (bp: PBIO; const key: PEC_KEY; off: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_EC_KEY_print;
+  EC_KEY_OpenSSL: function : PEC_KEY_METHOD; cdecl = Load_EC_KEY_OpenSSL;
+  EC_KEY_get_default_method: function : PEC_KEY_METHOD; cdecl = Load_EC_KEY_get_default_method;
+  EC_KEY_set_default_method: procedure (const meth: PEC_KEY_METHOD); cdecl = Load_EC_KEY_set_default_method;
+  EC_KEY_get_method: function (const key: PEC_KEY): PEC_KEY_METHOD; cdecl = Load_EC_KEY_get_method;
+  EC_KEY_set_method: function (key: PEC_KEY; const meth: PEC_KEY_METHOD): TOpenSSL_C_INT; cdecl = Load_EC_KEY_set_method;
+  EC_KEY_new_method: function (engine: PENGINE): PEC_KEY; cdecl = Load_EC_KEY_new_method;
+  ECDH_KDF_X9_62: function (out_: PByte; outlen: TOpenSSL_C_SIZET; const Z: PByte; Zlen: TOpenSSL_C_SIZET; const sinfo: PByte; sinfolen: TOpenSSL_C_SIZET; const md: PEVP_MD): TOpenSSL_C_INT; cdecl = Load_ECDH_KDF_X9_62;
+  ECDH_compute_key: function (out_: Pointer; oulen: TOpenSSL_C_SIZET; const pub_key: PEC_POINT; const ecdh: PEC_KEY; kdf: ECDH_compute_key_KDF): TOpenSSL_C_INT; cdecl = Load_ECDH_compute_key;
+  ECDSA_SIG_new: function : PECDSA_SIG; cdecl = Load_ECDSA_SIG_new;
+  ECDSA_SIG_free: procedure (sig: PECDSA_SIG); cdecl = Load_ECDSA_SIG_free;
+  i2d_ECDSA_SIG: function (const sig: PECDSA_SIG; pp: PPByte): TOpenSSL_C_INT; cdecl = Load_i2d_ECDSA_SIG;
+  d2i_ECDSA_SIG: function (sig: PPECDSA_SIG; const pp: PPByte; len: TOpenSSL_C_LONG): PECDSA_SIG; cdecl = Load_d2i_ECDSA_SIG;
+  ECDSA_SIG_get0: procedure (const sig: PECDSA_SIG; const pr: PPBIGNUM; const ps: PPBIGNUM); cdecl = Load_ECDSA_SIG_get0;
+  ECDSA_SIG_get0_r: function (const sig: PECDSA_SIG): PBIGNUM; cdecl = Load_ECDSA_SIG_get0_r;
+  ECDSA_SIG_get0_s: function (const sig: PECDSA_SIG): PBIGNUM; cdecl = Load_ECDSA_SIG_get0_s;
+  ECDSA_SIG_set0: function (sig: PECDSA_SIG; r: PBIGNUM; s: PBIGNUM): TOpenSSL_C_INT; cdecl = Load_ECDSA_SIG_set0;
+  ECDSA_do_sign: function (const dgst: PByte; dgst_len: TOpenSSL_C_INT; eckey: PEC_KEY): PECDSA_SIG; cdecl = Load_ECDSA_do_sign;
+  ECDSA_do_sign_ex: function (const dgst: PByte; dgst_len: TOpenSSL_C_INT; const kinv: PBIGNUM; const rp: PBIGNUM; eckey: PEC_KEY): PECDSA_SIG; cdecl = Load_ECDSA_do_sign_ex;
+  ECDSA_do_verify: function (const dgst: PByte; dgst_len: TOpenSSL_C_INT; const sig: PECDSA_SIG; eckey: PEC_KEY): TOpenSSL_C_INT; cdecl = Load_ECDSA_do_verify;
+  ECDSA_sign_setup: function (eckey: PEC_KEY; ctx: PBN_CTX; kiv: PPBIGNUM; rp: PPBIGNUM): TOpenSSL_C_INT; cdecl = Load_ECDSA_sign_setup;
+  ECDSA_sign: function (type_: TOpenSSL_C_INT; const dgst: PByte; dgstlen: TOpenSSL_C_INT; sig: PByte; siglen: POpenSSL_C_UINT; eckey: PEC_KEY): TOpenSSL_C_INT; cdecl = Load_ECDSA_sign;
+  ECDSA_sign_ex: function (type_: TOpenSSL_C_INT; const dgst: PByte; dgstlen: TOpenSSL_C_INT; sig: PByte; siglen: POpenSSL_C_UINT; const kinv: PBIGNUM; const rp: PBIGNUM; eckey: PEC_KEY): TOpenSSL_C_INT; cdecl = Load_ECDSA_sign_ex;
+  ECDSA_verify: function (type_: TOpenSSL_C_INT; const dgst: PByte; dgstlen: TOpenSSL_C_INT; const sig: PByte; siglen: TOpenSSL_C_INT; eckey: PEC_KEY): TOpenSSL_C_INT; cdecl = Load_ECDSA_verify;
+  ECDSA_size: function (const eckey: PEC_KEY): TOpenSSL_C_INT; cdecl = Load_ECDSA_size;
+  EC_KEY_METHOD_new: function (const meth: PEC_KEY_METHOD): PEC_KEY_METHOD; cdecl = Load_EC_KEY_METHOD_new;
+  EC_KEY_METHOD_free: procedure (meth: PEC_KEY_METHOD); cdecl = Load_EC_KEY_METHOD_free;
+  EC_KEY_METHOD_set_init: procedure (meth: PEC_KEY_METHOD; init: EC_KEY_METHOD_init_init; finish: EC_KEY_METHOD_init_finish; copy: EC_KEY_METHOD_init_copy; set_group: EC_KEY_METHOD_init_set_group; set_private: EC_KEY_METHOD_init_set_private; set_public: EC_KEY_METHOD_init_set_public); cdecl = Load_EC_KEY_METHOD_set_init;
+  EC_KEY_METHOD_set_keygen: procedure (meth: PEC_KEY_METHOD; keygen: EC_KEY_METHOD_keygen_keygen); cdecl = Load_EC_KEY_METHOD_set_keygen;
+  EC_KEY_METHOD_set_compute_key: procedure (meth: PEC_KEY_METHOD; ckey: EC_KEY_METHOD_compute_key_ckey); cdecl = Load_EC_KEY_METHOD_set_compute_key;
+  EC_KEY_METHOD_set_sign: procedure (meth: PEC_KEY_METHOD; sign: EC_KEY_METHOD_sign_sign; sign_setup: EC_KEY_METHOD_sign_sign_setup; sign_sig: EC_KEY_METHOD_sign_sign_sig); cdecl = Load_EC_KEY_METHOD_set_sign;
+  EC_KEY_METHOD_set_verify: procedure (meth: PEC_KEY_METHOD; verify: EC_KEY_METHOD_verify_verify; verify_sig: EC_KEY_METHOD_verify_verify_sig); cdecl = Load_EC_KEY_METHOD_set_verify;
+  EC_KEY_METHOD_get_init: procedure (const meth: PEC_KEY_METHOD; pinit: PEC_KEY_METHOD_init_init; pfinish: PEC_KEY_METHOD_init_finish; pcopy: PEC_KEY_METHOD_init_copy; pset_group: PEC_KEY_METHOD_init_set_group; pset_private: PEC_KEY_METHOD_init_set_private; pset_public: PEC_KEY_METHOD_init_set_public); cdecl = Load_EC_KEY_METHOD_get_init;
+  EC_KEY_METHOD_get_keygen: procedure (const meth: PEC_KEY_METHOD; pkeygen: PEC_KEY_METHOD_keygen_keygen); cdecl = Load_EC_KEY_METHOD_get_keygen;
+  EC_KEY_METHOD_get_compute_key: procedure (const meth: PEC_KEY_METHOD; pck: PEC_KEY_METHOD_compute_key_ckey); cdecl = Load_EC_KEY_METHOD_get_compute_key;
+  EC_KEY_METHOD_get_sign: procedure (const meth: PEC_KEY_METHOD; psign: PEC_KEY_METHOD_sign_sign; psign_setup: PEC_KEY_METHOD_sign_sign_setup; psign_sig: PEC_KEY_METHOD_sign_sign_sig); cdecl = Load_EC_KEY_METHOD_get_sign;
+  EC_KEY_METHOD_get_verify: procedure (const meth: PEC_KEY_METHOD; pverify: PEC_KEY_METHOD_verify_verify; pverify_sig: PEC_KEY_METHOD_verify_verify_sig); cdecl = Load_EC_KEY_METHOD_get_verify;
 {$ENDIF}
 const
   EC_GFp_nistp224_method_introduced = ((((((byte(1) shl 8) or byte(1)) shl 8) or byte(0)) shl 8) or byte(0)) shl 4; {introduced 1.1.0}
@@ -726,2319 +907,1602 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 var
-  EC_GFp_nistp224_method: function : PEC_METHOD; cdecl = nil; {removed 3.0.0}
-  EC_GFp_nistp256_method: function : PEC_METHOD; cdecl = nil; {removed 3.0.0}
-  EC_GFp_nistp521_method: function : PEC_METHOD; cdecl = nil; {removed 3.0.0}
+  EC_GFp_nistp224_method: function : PEC_METHOD; cdecl = Load_EC_GFp_nistp224_method; {removed 3.0.0}
+  EC_GFp_nistp256_method: function : PEC_METHOD; cdecl = Load_EC_GFp_nistp256_method; {removed 3.0.0}
+  EC_GFp_nistp521_method: function : PEC_METHOD; cdecl = Load_EC_GFp_nistp521_method; {removed 3.0.0}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF}
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-
-{$WARN  NO_RETVAL OFF}
-function ERROR_EC_GFp_simple_method: PEC_METHOD; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GFp_simple_method');
-end;
-
-function ERROR_EC_GFp_mont_method: PEC_METHOD; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GFp_mont_method');
-end;
-
-function ERROR_EC_GFp_nist_method: PEC_METHOD; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GFp_nist_method');
-end;
-
-function ERROR_EC_GFp_nistp224_method: PEC_METHOD; cdecl; {removed 3.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GFp_nistp224_method');
-end;
-
-function ERROR_EC_GFp_nistp256_method: PEC_METHOD; cdecl; {removed 3.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GFp_nistp256_method');
-end;
-
-function ERROR_EC_GFp_nistp521_method: PEC_METHOD; cdecl; {removed 3.0.0}
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GFp_nistp521_method');
-end;
-
-function ERROR_EC_GF2m_simple_method: PEC_METHOD; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GF2m_simple_method');
-end;
-
-function ERROR_EC_GROUP_new(const meth: PEC_METHOD): PEC_GROUP; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_new');
-end;
-
-procedure ERROR_EC_GROUP_free(group: PEC_GROUP); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_free');
-end;
-
-procedure ERROR_EC_GROUP_clear_free(group: PEC_GROUP); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_clear_free');
-end;
-
-function ERROR_EC_GROUP_copy(dst: PEC_GROUP; const src: PEC_GROUP): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_copy');
-end;
-
-function ERROR_EC_GROUP_dup(const src: PEC_GROUP): PEC_GROUP; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_dup');
-end;
-
-function ERROR_EC_GROUP_method_of(const group: PEC_GROUP): PEC_GROUP; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_method_of');
-end;
-
-function ERROR_EC_METHOD_get_field_type(const meth: PEC_METHOD): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_METHOD_get_field_type');
-end;
-
-function ERROR_EC_GROUP_set_generator(group: PEC_GROUP; const generator: PEC_POINT; const order: PBIGNUM; const cofactor: PBIGNUM): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_set_generator');
-end;
-
-function ERROR_EC_GROUP_get0_generator(const group: PEC_GROUP): PEC_POINT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get0_generator');
-end;
-
-function ERROR_EC_GROUP_get_mont_data(const group: PEC_GROUP): PBN_MONT_CTX; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_mont_data');
-end;
-
-function ERROR_EC_GROUP_get_order(const group: PEC_GROUP; order: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_order');
-end;
-
-function ERROR_EC_GROUP_get0_order(const group: PEC_GROUP): PBIGNUM; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get0_order');
-end;
-
-function ERROR_EC_GROUP_order_bits(const group: PEC_GROUP): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_order_bits');
-end;
-
-function ERROR_EC_GROUP_get_cofactor(const group: PEC_GROUP; cofactor: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_cofactor');
-end;
-
-function ERROR_EC_GROUP_get0_cofactor(const group: PEC_GROUP): PBIGNUM; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get0_cofactor');
-end;
-
-procedure ERROR_EC_GROUP_set_curve_name(group: PEC_GROUP; nid: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_set_curve_name');
-end;
-
-function ERROR_EC_GROUP_get_curve_name(const group: PEC_GROUP): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_curve_name');
-end;
-
-procedure ERROR_EC_GROUP_set_asn1_flag(group: PEC_GROUP; flag: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_set_asn1_flag');
-end;
-
-function ERROR_EC_GROUP_get_asn1_flag(const group: PEC_GROUP): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_asn1_flag');
-end;
-
-procedure ERROR_EC_GROUP_set_point_conversion_form(group: PEC_GROUP; form: point_conversion_form_t); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_set_point_conversion_form');
-end;
-
-function ERROR_EC_GROUP_get_point_conversion_form(const group: PEC_GROUP): point_conversion_form_t; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_point_conversion_form');
-end;
-
-function ERROR_EC_GROUP_get0_seed(const x: PEC_GROUP): PByte; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get0_seed');
-end;
-
-function ERROR_EC_GROUP_get_seed_len(const x: PEC_GROUP): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_seed_len');
-end;
-
-function ERROR_EC_GROUP_set_seed(x: PEC_GROUP; const p: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_set_seed');
-end;
-
-function ERROR_EC_GROUP_set_curve(group: PEC_GROUP; const p: PBIGNUM; const a: PBIGNUM; const b: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_set_curve');
-end;
-
-function ERROR_EC_GROUP_get_curve(const group: PEC_GROUP; p: PBIGNUM; a: PBIGNUM; b: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_curve');
-end;
-
-function ERROR_EC_GROUP_set_curve_GFp(group: PEC_GROUP; const p: PBIGNUM; const a: PBIGNUM; const b: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_set_curve_GFp');
-end;
-
-function ERROR_EC_GROUP_get_curve_GFp(const group: PEC_GROUP; p: PBIGNUM; a: PBIGNUM; b: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_curve_GFp');
-end;
-
-function ERROR_EC_GROUP_set_curve_GF2m(group: PEC_GROUP; const p: PBIGNUM; const a: PBIGNUM; const b:PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_set_curve_GF2m');
-end;
-
-function ERROR_EC_GROUP_get_curve_GF2m(const group: PEC_GROUP; p: PBIGNUM; a: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_curve_GF2m');
-end;
-
-function ERROR_EC_GROUP_get_degree(const group: PEC_GROUP): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_degree');
-end;
-
-function ERROR_EC_GROUP_check(const group: PEC_GROUP; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_check');
-end;
-
-function ERROR_EC_GROUP_check_discriminant(const group: PEC_GROUP; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_check_discriminant');
-end;
-
-function ERROR_EC_GROUP_cmp(const a: PEC_GROUP; const b: PEC_GROUP; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_cmp');
-end;
-
-function ERROR_EC_GROUP_new_curve_GFp(const p: PBIGNUM; const a: PBIGNUM; const b: PBIGNUM; ctx: PBN_CTX): PEC_GROUP; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_new_curve_GFp');
-end;
-
-function ERROR_EC_GROUP_new_curve_GF2m(const p: PBIGNUM; const a: PBIGNUM; const b: PBIGNUM; ctx: PBN_CTX): PEC_GROUP; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_new_curve_GF2m');
-end;
-
-function ERROR_EC_GROUP_new_by_curve_name(nid: TOpenSSL_C_INT): PEC_GROUP; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_new_by_curve_name');
-end;
-
-function ERROR_EC_GROUP_new_from_ecparameters(const params: PECPARAMETERS): PEC_GROUP; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_new_from_ecparameters');
-end;
-
-function ERROR_EC_GROUP_get_ecparameters(const group: PEC_GROUP; params: PECPARAMETERS): PECPARAMETERS; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_ecparameters');
-end;
-
-function ERROR_EC_GROUP_new_from_ecpkparameters(const params: PECPKPARAMETERS): PEC_GROUP; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_new_from_ecpkparameters');
-end;
-
-function ERROR_EC_GROUP_get_ecpkparameters(const group: PEC_GROUP; params: PECPKPARAMETERS): PECPKPARAMETERS; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_ecpkparameters');
-end;
-
-function ERROR_EC_get_builtin_curves(r: PEC_builtin_curve; nitems: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_get_builtin_curves');
-end;
-
-function ERROR_EC_curve_nid2nist(nid: TOpenSSL_C_INT): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_curve_nid2nist');
-end;
-
-function ERROR_EC_curve_nist2nid(const name: PAnsiChar): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_curve_nist2nid');
-end;
-
-function ERROR_EC_POINT_new(const group: PEC_GROUP): PEC_POINT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_new');
-end;
-
-procedure ERROR_EC_POINT_free(point: PEC_POINT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_free');
-end;
-
-procedure ERROR_EC_POINT_clear_free(point: PEC_POINT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_clear_free');
-end;
-
-function ERROR_EC_POINT_copy(dst: PEC_POINT; const src: PEC_POINT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_copy');
-end;
-
-function ERROR_EC_POINT_dup(const src: PEC_POINT; const group: PEC_GROUP): PEC_POINT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_dup');
-end;
-
-function ERROR_EC_POINT_method_of(const point: PEC_POINT): PEC_METHOD; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_method_of');
-end;
-
-function ERROR_EC_POINT_set_to_infinity(const group: PEC_GROUP; point: PEC_POINT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_set_to_infinity');
-end;
-
-function ERROR_EC_POINT_set_Jprojective_coordinates_GFp(const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; const y: PBIGNUM; const z: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_set_Jprojective_coordinates_GFp');
-end;
-
-function ERROR_EC_POINT_get_Jprojective_coordinates_GFp(const group: PEC_METHOD; const p: PEC_POINT; x: PBIGNUM; y: PBIGNUM; z: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_get_Jprojective_coordinates_GFp');
-end;
-
-function ERROR_EC_POINT_set_affine_coordinates(const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; const y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_set_affine_coordinates');
-end;
-
-function ERROR_EC_POINT_get_affine_coordinates(const group: PEC_GROUP; const p: PEC_POINT; x: PBIGNUM; y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_get_affine_coordinates');
-end;
-
-function ERROR_EC_POINT_set_affine_coordinates_GFp(const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; const y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_set_affine_coordinates_GFp');
-end;
-
-function ERROR_EC_POINT_get_affine_coordinates_GFp(const group: PEC_GROUP; const p: PEC_POINT; x: PBIGNUM; y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_get_affine_coordinates_GFp');
-end;
-
-function ERROR_EC_POINT_set_compressed_coordinates(const group: PEC_GROUP; p: PEC_POINT; x: PBIGNUM; y_bit: TOpenSSL_C_INT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_set_compressed_coordinates');
-end;
-
-function ERROR_EC_POINT_set_compressed_coordinates_GFp(const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; y_bit: TOpenSSL_C_INT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_set_compressed_coordinates_GFp');
-end;
-
-function ERROR_EC_POINT_set_affine_coordinates_GF2m(const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; const y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_set_affine_coordinates_GF2m');
-end;
-
-function ERROR_EC_POINT_get_affine_coordinates_GF2m(const group: PEC_GROUP; p: PEC_POINT; x: PBIGNUM; y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_get_affine_coordinates_GF2m');
-end;
-
-function ERROR_EC_POINT_set_compressed_coordinates_GF2m(const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; y_bit: TOpenSSL_C_INT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_set_compressed_coordinates_GF2m');
-end;
-
-function ERROR_EC_POINT_point2oct(const group: PEC_GROUP; const p: PEC_POINT; form: point_conversion_form_t; buf: PByte; len: TOpenSSL_C_SIZET; ctx: PBN_CTX): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_point2oct');
-end;
-
-function ERROR_EC_POINT_oct2point(const group: PEC_GROUP; p: PEC_POINT; const buf: PByte; len: TOpenSSL_C_SIZET; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_oct2point');
-end;
-
-function ERROR_EC_POINT_point2buf(const group: PEC_GROUP; const point: PEC_POINT; form: point_conversion_form_t; pbuf: PPByte; ctx: PBN_CTX): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_point2buf');
-end;
-
-function ERROR_EC_POINT_point2bn(const group: PEC_GROUP; const p: PEC_POINT; form: point_conversion_form_t; bn: PBIGNUM; ctx: PBN_CTX): PBIGNUM; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_point2bn');
-end;
-
-function ERROR_EC_POINT_bn2point(const group: PEC_GROUP; const bn: PBIGNUM; p: PEC_POINT; ctx: PBN_CTX): PEC_POINT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_bn2point');
-end;
-
-function ERROR_EC_POINT_point2hex(const group: PEC_GROUP; const p: PEC_POINT; form: point_conversion_form_t; ctx: PBN_CTX): PAnsiChar; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_point2hex');
-end;
-
-function ERROR_EC_POINT_hex2point(const group: PEC_GROUP; const buf: PAnsiChar; p: PEC_POINT; ctx: PBN_CTX): PEC_POINT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_hex2point');
-end;
-
-function ERROR_EC_POINT_add(const group: PEC_GROUP; r: PEC_POINT; const a: PEC_POINT; const b: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_add');
-end;
-
-function ERROR_EC_POINT_dbl(const group: PEC_GROUP; r: PEC_POINT; const a: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_dbl');
-end;
-
-function ERROR_EC_POINT_invert(const group: PEC_GROUP; a: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_invert');
-end;
-
-function ERROR_EC_POINT_is_at_infinity(const group: PEC_GROUP; const p: PEC_POINT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_is_at_infinity');
-end;
-
-function ERROR_EC_POINT_is_on_curve(const group: PEC_GROUP; const point: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_is_on_curve');
-end;
-
-function ERROR_EC_POINT_cmp(const group: PEC_GROUP; const a: PEC_POINT; const b: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_cmp');
-end;
-
-function ERROR_EC_POINT_make_affine(const group: PEC_GROUP; point: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_make_affine');
-end;
-
-function ERROR_EC_POINTs_make_affine(const group: PEC_METHOD; num: TOpenSSL_C_SIZET; points: PPEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINTs_make_affine');
-end;
-
-function ERROR_EC_POINTs_mul(const group: PEC_GROUP; r: PEC_POINT; const n: PBIGNUM; num: TOpenSSL_C_SIZET; const p: PPEC_POINT; const m: PPBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINTs_mul');
-end;
-
-function ERROR_EC_POINT_mul(const group: PEC_GROUP; r: PEC_POINT; const n: PBIGNUM; const q: PEC_POINT; const m: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_mul');
-end;
-
-function ERROR_EC_GROUP_precompute_mult(group: PEC_GROUP; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_precompute_mult');
-end;
-
-function ERROR_EC_GROUP_have_precompute_mult(const group: PEC_GROUP): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_have_precompute_mult');
-end;
-
-function ERROR_ECPKPARAMETERS_it: PASN1_ITEM; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECPKPARAMETERS_it');
-end;
-
-function ERROR_ECPKPARAMETERS_new: PECPKPARAMETERS; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECPKPARAMETERS_new');
-end;
-
-procedure ERROR_ECPKPARAMETERS_free(a: PECPKPARAMETERS); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECPKPARAMETERS_free');
-end;
-
-function ERROR_ECPARAMETERS_it: PASN1_ITEM; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECPARAMETERS_it');
-end;
-
-function ERROR_ECPARAMETERS_new: PECPARAMETERS; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECPARAMETERS_new');
-end;
-
-procedure ERROR_ECPARAMETERS_free(a: PECPARAMETERS); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECPARAMETERS_free');
-end;
-
-function ERROR_EC_GROUP_get_basis_type(const group: PEC_GROUP): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_basis_type');
-end;
-
-function ERROR_EC_GROUP_get_trinomial_basis(const group: PEC_GROUP; k: POpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_trinomial_basis');
-end;
-
-function ERROR_EC_GROUP_get_pentanomial_basis(const group: PEC_GROUP; k1: POpenSSL_C_UINT; k2: POpenSSL_C_UINT; k3: POpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_pentanomial_basis');
-end;
-
-function ERROR_d2i_ECPKParameters(group: PPEC_GROUP; const in_: PPByte; len: TOpenSSL_C_LONG): PEC_GROUP; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_ECPKParameters');
-end;
-
-function ERROR_i2d_ECPKParameters(const group: PEC_GROUP; out_: PPByte): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_ECPKParameters');
-end;
-
-function ERROR_ECPKParameters_print(bp: PBIO; const x: PEC_GROUP; off: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECPKParameters_print');
-end;
-
-function ERROR_EC_KEY_new: PEC_KEY; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_new');
-end;
-
-function ERROR_EC_KEY_get_flags(const key: PEC_KEY): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_get_flags');
-end;
-
-procedure ERROR_EC_KEY_set_flags(key: PEC_KEY; flags: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_flags');
-end;
-
-procedure ERROR_EC_KEY_clear_flags(key: PEC_KEY; flags: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_clear_flags');
-end;
-
-function ERROR_EC_KEY_new_by_curve_name(nid: TOpenSSL_C_INT): PEC_KEY; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_new_by_curve_name');
-end;
-
-procedure ERROR_EC_KEY_free(key: PEC_KEY); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_free');
-end;
-
-function ERROR_EC_KEY_copy(dst: PEC_KEY; const src: PEC_KEY): PEC_KEY; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_copy');
-end;
-
-function ERROR_EC_KEY_dup(const src: PEC_KEY): PEC_KEY; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_dup');
-end;
-
-function ERROR_EC_KEY_up_ref(key: PEC_KEY): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_up_ref');
-end;
-
-function ERROR_EC_KEY_get0_engine(const eckey: PEC_KEY): PENGINE; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_get0_engine');
-end;
-
-function ERROR_EC_KEY_get0_group(const key: PEC_KEY): PEC_GROUP; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_get0_group');
-end;
-
-function ERROR_EC_KEY_set_group(key: PEC_KEY; const group: PEC_GROUP): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_group');
-end;
-
-function ERROR_EC_KEY_get0_private_key(const key: PEC_KEY): PBIGNUM; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_get0_private_key');
-end;
-
-function ERROR_EC_KEY_set_private_key(const key: PEC_KEY; const prv: PBIGNUM): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_private_key');
-end;
-
-function ERROR_EC_KEY_get0_public_key(const key: PEC_KEY): PEC_POINT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_get0_public_key');
-end;
-
-function ERROR_EC_KEY_set_public_key(key: PEC_KEY; const pub: PEC_POINT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_public_key');
-end;
-
-function ERROR_EC_KEY_get_enc_flags(const key: PEC_KEY): TOpenSSL_C_UINT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_get_enc_flags');
-end;
-
-procedure ERROR_EC_KEY_set_enc_flags(eckey: PEC_KEY; flags: TOpenSSL_C_UINT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_enc_flags');
-end;
-
-function ERROR_EC_KEY_get_conv_form(const key: PEC_KEY): point_conversion_form_t; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_get_conv_form');
-end;
-
-procedure ERROR_EC_KEY_set_conv_form(eckey: PEC_KEY; cform: point_conversion_form_t); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_conv_form');
-end;
-
-function ERROR_EC_KEY_set_ex_data(key: PEC_KEY; idx: TOpenSSL_C_INT; arg: Pointer): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_ex_data');
-end;
-
-function ERROR_EC_KEY_get_ex_data(const key: PEC_KEY; idx: TOpenSSL_C_INT): Pointer; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_get_ex_data');
-end;
-
-procedure ERROR_EC_KEY_set_asn1_flag(eckey: PEC_KEY; asn1_flag: TOpenSSL_C_INT); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_asn1_flag');
-end;
-
-function ERROR_EC_KEY_precompute_mult(key: PEC_KEY; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_precompute_mult');
-end;
-
-function ERROR_EC_KEY_generate_key(key: PEC_KEY): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_generate_key');
-end;
-
-function ERROR_EC_KEY_check_key(const key: PEC_KEY): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_check_key');
-end;
-
-function ERROR_EC_KEY_can_sign(const eckey: PEC_KEY): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_can_sign');
-end;
-
-function ERROR_EC_KEY_set_public_key_affine_coordinates(key: PEC_KEY; x: PBIGNUM; y: PBIGNUM): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_public_key_affine_coordinates');
-end;
-
-function ERROR_EC_KEY_key2buf(const key: PEC_KEY; form: point_conversion_form_t; pbuf: PPByte; ctx: PBN_CTX): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_key2buf');
-end;
-
-function ERROR_EC_KEY_oct2key(key: PEC_KEY; const buf: PByte; len: TOpenSSL_C_SIZET; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_oct2key');
-end;
-
-function ERROR_EC_KEY_oct2priv(key: PEC_KEY; const buf: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_oct2priv');
-end;
-
-function ERROR_EC_KEY_priv2oct(const key: PEC_KEY; buf: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_priv2oct');
-end;
-
-function ERROR_EC_KEY_priv2buf(const eckey: PEC_KEY; buf: PPByte): TOpenSSL_C_SIZET; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_priv2buf');
-end;
-
-function ERROR_d2i_ECPrivateKey(key: PPEC_KEY; const in_: PPByte; len: TOpenSSL_C_LONG): PEC_KEY; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_ECPrivateKey');
-end;
-
-function ERROR_i2d_ECPrivateKey(key: PEC_KEY; out_: PPByte): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_ECPrivateKey');
-end;
-
-function ERROR_o2i_ECPublicKey(key: PPEC_KEY; const in_: PPByte; len: TOpenSSL_C_LONG): PEC_KEY; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('o2i_ECPublicKey');
-end;
-
-function ERROR_i2o_ECPublicKey(const key: PEC_KEY; out_: PPByte): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('i2o_ECPublicKey');
-end;
-
-function ERROR_ECParameters_print(bp: PBIO; const key: PEC_KEY): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECParameters_print');
-end;
-
-function ERROR_EC_KEY_print(bp: PBIO; const key: PEC_KEY; off: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_print');
-end;
-
-function ERROR_EC_KEY_OpenSSL: PEC_KEY_METHOD; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_OpenSSL');
-end;
-
-function ERROR_EC_KEY_get_default_method: PEC_KEY_METHOD; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_get_default_method');
-end;
-
-procedure ERROR_EC_KEY_set_default_method(const meth: PEC_KEY_METHOD); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_default_method');
-end;
-
-function ERROR_EC_KEY_get_method(const key: PEC_KEY): PEC_KEY_METHOD; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_get_method');
-end;
-
-function ERROR_EC_KEY_set_method(key: PEC_KEY; const meth: PEC_KEY_METHOD): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_method');
-end;
-
-function ERROR_EC_KEY_new_method(engine: PENGINE): PEC_KEY; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_new_method');
-end;
-
-function ERROR_ECDH_KDF_X9_62(out_: PByte; outlen: TOpenSSL_C_SIZET; const Z: PByte; Zlen: TOpenSSL_C_SIZET; const sinfo: PByte; sinfolen: TOpenSSL_C_SIZET; const md: PEVP_MD): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECDH_KDF_X9_62');
-end;
-
-function ERROR_ECDH_compute_key(out_: Pointer; oulen: TOpenSSL_C_SIZET; const pub_key: PEC_POINT; const ecdh: PEC_KEY; kdf: ECDH_compute_key_KDF): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECDH_compute_key');
-end;
-
-function ERROR_ECDSA_SIG_new: PECDSA_SIG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_SIG_new');
-end;
-
-procedure ERROR_ECDSA_SIG_free(sig: PECDSA_SIG); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_SIG_free');
-end;
-
-function ERROR_i2d_ECDSA_SIG(const sig: PECDSA_SIG; pp: PPByte): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_ECDSA_SIG');
-end;
-
-function ERROR_d2i_ECDSA_SIG(sig: PPECDSA_SIG; const pp: PPByte; len: TOpenSSL_C_LONG): PECDSA_SIG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_ECDSA_SIG');
-end;
-
-procedure ERROR_ECDSA_SIG_get0(const sig: PECDSA_SIG; const pr: PPBIGNUM; const ps: PPBIGNUM); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_SIG_get0');
-end;
-
-function ERROR_ECDSA_SIG_get0_r(const sig: PECDSA_SIG): PBIGNUM; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_SIG_get0_r');
-end;
-
-function ERROR_ECDSA_SIG_get0_s(const sig: PECDSA_SIG): PBIGNUM; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_SIG_get0_s');
-end;
-
-function ERROR_ECDSA_SIG_set0(sig: PECDSA_SIG; r: PBIGNUM; s: PBIGNUM): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_SIG_set0');
-end;
-
-function ERROR_ECDSA_do_sign(const dgst: PByte; dgst_len: TOpenSSL_C_INT; eckey: PEC_KEY): PECDSA_SIG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_do_sign');
-end;
-
-function ERROR_ECDSA_do_sign_ex(const dgst: PByte; dgst_len: TOpenSSL_C_INT; const kinv: PBIGNUM; const rp: PBIGNUM; eckey: PEC_KEY): PECDSA_SIG; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_do_sign_ex');
-end;
-
-function ERROR_ECDSA_do_verify(const dgst: PByte; dgst_len: TOpenSSL_C_INT; const sig: PECDSA_SIG; eckey: PEC_KEY): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_do_verify');
-end;
-
-function ERROR_ECDSA_sign_setup(eckey: PEC_KEY; ctx: PBN_CTX; kiv: PPBIGNUM; rp: PPBIGNUM): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_sign_setup');
-end;
-
-function ERROR_ECDSA_sign(type_: TOpenSSL_C_INT; const dgst: PByte; dgstlen: TOpenSSL_C_INT; sig: PByte; siglen: POpenSSL_C_UINT; eckey: PEC_KEY): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_sign');
-end;
-
-function ERROR_ECDSA_sign_ex(type_: TOpenSSL_C_INT; const dgst: PByte; dgstlen: TOpenSSL_C_INT; sig: PByte; siglen: POpenSSL_C_UINT; const kinv: PBIGNUM; const rp: PBIGNUM; eckey: PEC_KEY): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_sign_ex');
-end;
-
-function ERROR_ECDSA_verify(type_: TOpenSSL_C_INT; const dgst: PByte; dgstlen: TOpenSSL_C_INT; const sig: PByte; siglen: TOpenSSL_C_INT; eckey: PEC_KEY): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_verify');
-end;
-
-function ERROR_ECDSA_size(const eckey: PEC_KEY): TOpenSSL_C_INT; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_size');
-end;
-
-function ERROR_EC_KEY_METHOD_new(const meth: PEC_KEY_METHOD): PEC_KEY_METHOD; cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_new');
-end;
-
-procedure ERROR_EC_KEY_METHOD_free(meth: PEC_KEY_METHOD); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_free');
-end;
-
-procedure ERROR_EC_KEY_METHOD_set_init(meth: PEC_KEY_METHOD; init: EC_KEY_METHOD_init_init; finish: EC_KEY_METHOD_init_finish; copy: EC_KEY_METHOD_init_copy; set_group: EC_KEY_METHOD_init_set_group; set_private: EC_KEY_METHOD_init_set_private; set_public: EC_KEY_METHOD_init_set_public); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_set_init');
-end;
-
-procedure ERROR_EC_KEY_METHOD_set_keygen(meth: PEC_KEY_METHOD; keygen: EC_KEY_METHOD_keygen_keygen); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_set_keygen');
-end;
-
-procedure ERROR_EC_KEY_METHOD_set_compute_key(meth: PEC_KEY_METHOD; ckey: EC_KEY_METHOD_compute_key_ckey); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_set_compute_key');
-end;
-
-procedure ERROR_EC_KEY_METHOD_set_sign(meth: PEC_KEY_METHOD; sign: EC_KEY_METHOD_sign_sign; sign_setup: EC_KEY_METHOD_sign_sign_setup; sign_sig: EC_KEY_METHOD_sign_sign_sig); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_set_sign');
-end;
-
-procedure ERROR_EC_KEY_METHOD_set_verify(meth: PEC_KEY_METHOD; verify: EC_KEY_METHOD_verify_verify; verify_sig: EC_KEY_METHOD_verify_verify_sig); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_set_verify');
-end;
-
-procedure ERROR_EC_KEY_METHOD_get_init(const meth: PEC_KEY_METHOD; pinit: PEC_KEY_METHOD_init_init; pfinish: PEC_KEY_METHOD_init_finish; pcopy: PEC_KEY_METHOD_init_copy; pset_group: PEC_KEY_METHOD_init_set_group; pset_private: PEC_KEY_METHOD_init_set_private; pset_public: PEC_KEY_METHOD_init_set_public); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_get_init');
-end;
-
-procedure ERROR_EC_KEY_METHOD_get_keygen(const meth: PEC_KEY_METHOD; pkeygen: PEC_KEY_METHOD_keygen_keygen); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_get_keygen');
-end;
-
-procedure ERROR_EC_KEY_METHOD_get_compute_key(const meth: PEC_KEY_METHOD; pck: PEC_KEY_METHOD_compute_key_ckey); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_get_compute_key');
-end;
-
-procedure ERROR_EC_KEY_METHOD_get_sign(const meth: PEC_KEY_METHOD; psign: PEC_KEY_METHOD_sign_sign; psign_setup: PEC_KEY_METHOD_sign_sign_setup; psign_sig: PEC_KEY_METHOD_sign_sign_sig); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_get_sign');
-end;
-
-procedure ERROR_EC_KEY_METHOD_get_verify(const meth: PEC_KEY_METHOD; pverify: PEC_KEY_METHOD_verify_verify; pverify_sig: PEC_KEY_METHOD_verify_verify_sig); cdecl;
-begin
-  EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_get_verify');
-end;
-
-{$WARN  NO_RETVAL ON}
-procedure Load(LibVersion: TOpenSSL_C_UINT; const AFailed: TStringList);
-var FuncLoadError: boolean;
+function Load_EC_GFp_simple_method: PEC_METHOD; cdecl;
 begin
   EC_GFp_simple_method := LoadLibCryptoFunction('EC_GFp_simple_method');
-  FuncLoadError := not assigned(EC_GFp_simple_method);
-  if FuncLoadError then
-  begin
-    EC_GFp_simple_method :=  @ERROR_EC_GFp_simple_method;
-  end;
+  if not assigned(EC_GFp_simple_method) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GFp_simple_method');
+  Result := EC_GFp_simple_method();
+end;
 
+function Load_EC_GFp_mont_method: PEC_METHOD; cdecl;
+begin
   EC_GFp_mont_method := LoadLibCryptoFunction('EC_GFp_mont_method');
-  FuncLoadError := not assigned(EC_GFp_mont_method);
-  if FuncLoadError then
-  begin
-    EC_GFp_mont_method :=  @ERROR_EC_GFp_mont_method;
-  end;
+  if not assigned(EC_GFp_mont_method) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GFp_mont_method');
+  Result := EC_GFp_mont_method();
+end;
 
+function Load_EC_GFp_nist_method: PEC_METHOD; cdecl;
+begin
   EC_GFp_nist_method := LoadLibCryptoFunction('EC_GFp_nist_method');
-  FuncLoadError := not assigned(EC_GFp_nist_method);
-  if FuncLoadError then
-  begin
-    EC_GFp_nist_method :=  @ERROR_EC_GFp_nist_method;
-  end;
+  if not assigned(EC_GFp_nist_method) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GFp_nist_method');
+  Result := EC_GFp_nist_method();
+end;
 
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+function Load_EC_GFp_nistp224_method: PEC_METHOD; cdecl;
+begin
   EC_GFp_nistp224_method := LoadLibCryptoFunction('EC_GFp_nistp224_method');
-  FuncLoadError := not assigned(EC_GFp_nistp224_method);
-  if FuncLoadError then
-  begin
-    if EC_GFp_nistp224_method_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('EC_GFp_nistp224_method');
-  end;
+  if not assigned(EC_GFp_nistp224_method) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GFp_nistp224_method');
+  Result := EC_GFp_nistp224_method();
+end;
 
+function Load_EC_GFp_nistp256_method: PEC_METHOD; cdecl;
+begin
   EC_GFp_nistp256_method := LoadLibCryptoFunction('EC_GFp_nistp256_method');
-  FuncLoadError := not assigned(EC_GFp_nistp256_method);
-  if FuncLoadError then
-  begin
-    if EC_GFp_nistp256_method_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('EC_GFp_nistp256_method');
-  end;
+  if not assigned(EC_GFp_nistp256_method) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GFp_nistp256_method');
+  Result := EC_GFp_nistp256_method();
+end;
 
+function Load_EC_GFp_nistp521_method: PEC_METHOD; cdecl;
+begin
   EC_GFp_nistp521_method := LoadLibCryptoFunction('EC_GFp_nistp521_method');
-  FuncLoadError := not assigned(EC_GFp_nistp521_method);
-  if FuncLoadError then
-  begin
-    if EC_GFp_nistp521_method_removed <= LibVersion then
-      FuncLoadError := false;
-    if FuncLoadError then
-      AFailed.Add('EC_GFp_nistp521_method');
-  end;
+  if not assigned(EC_GFp_nistp521_method) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GFp_nistp521_method');
+  Result := EC_GFp_nistp521_method();
+end;
 
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
+function Load_EC_GF2m_simple_method: PEC_METHOD; cdecl;
+begin
   EC_GF2m_simple_method := LoadLibCryptoFunction('EC_GF2m_simple_method');
-  FuncLoadError := not assigned(EC_GF2m_simple_method);
-  if FuncLoadError then
-  begin
-    EC_GF2m_simple_method :=  @ERROR_EC_GF2m_simple_method;
-  end;
-
-  EC_GROUP_new := LoadLibCryptoFunction('EC_GROUP_new');
-  FuncLoadError := not assigned(EC_GROUP_new);
-  if FuncLoadError then
-  begin
-    EC_GROUP_new :=  @ERROR_EC_GROUP_new;
-  end;
-
-  EC_GROUP_free := LoadLibCryptoFunction('EC_GROUP_free');
-  FuncLoadError := not assigned(EC_GROUP_free);
-  if FuncLoadError then
-  begin
-    EC_GROUP_free :=  @ERROR_EC_GROUP_free;
-  end;
-
-  EC_GROUP_clear_free := LoadLibCryptoFunction('EC_GROUP_clear_free');
-  FuncLoadError := not assigned(EC_GROUP_clear_free);
-  if FuncLoadError then
-  begin
-    EC_GROUP_clear_free :=  @ERROR_EC_GROUP_clear_free;
-  end;
-
-  EC_GROUP_copy := LoadLibCryptoFunction('EC_GROUP_copy');
-  FuncLoadError := not assigned(EC_GROUP_copy);
-  if FuncLoadError then
-  begin
-    EC_GROUP_copy :=  @ERROR_EC_GROUP_copy;
-  end;
-
-  EC_GROUP_dup := LoadLibCryptoFunction('EC_GROUP_dup');
-  FuncLoadError := not assigned(EC_GROUP_dup);
-  if FuncLoadError then
-  begin
-    EC_GROUP_dup :=  @ERROR_EC_GROUP_dup;
-  end;
-
-  EC_GROUP_method_of := LoadLibCryptoFunction('EC_GROUP_method_of');
-  FuncLoadError := not assigned(EC_GROUP_method_of);
-  if FuncLoadError then
-  begin
-    EC_GROUP_method_of :=  @ERROR_EC_GROUP_method_of;
-  end;
-
-  EC_METHOD_get_field_type := LoadLibCryptoFunction('EC_METHOD_get_field_type');
-  FuncLoadError := not assigned(EC_METHOD_get_field_type);
-  if FuncLoadError then
-  begin
-    EC_METHOD_get_field_type :=  @ERROR_EC_METHOD_get_field_type;
-  end;
-
-  EC_GROUP_set_generator := LoadLibCryptoFunction('EC_GROUP_set_generator');
-  FuncLoadError := not assigned(EC_GROUP_set_generator);
-  if FuncLoadError then
-  begin
-    EC_GROUP_set_generator :=  @ERROR_EC_GROUP_set_generator;
-  end;
-
-  EC_GROUP_get0_generator := LoadLibCryptoFunction('EC_GROUP_get0_generator');
-  FuncLoadError := not assigned(EC_GROUP_get0_generator);
-  if FuncLoadError then
-  begin
-    EC_GROUP_get0_generator :=  @ERROR_EC_GROUP_get0_generator;
-  end;
-
-  EC_GROUP_get_mont_data := LoadLibCryptoFunction('EC_GROUP_get_mont_data');
-  FuncLoadError := not assigned(EC_GROUP_get_mont_data);
-  if FuncLoadError then
-  begin
-    EC_GROUP_get_mont_data :=  @ERROR_EC_GROUP_get_mont_data;
-  end;
-
-  EC_GROUP_get_order := LoadLibCryptoFunction('EC_GROUP_get_order');
-  FuncLoadError := not assigned(EC_GROUP_get_order);
-  if FuncLoadError then
-  begin
-    EC_GROUP_get_order :=  @ERROR_EC_GROUP_get_order;
-  end;
-
-  EC_GROUP_get0_order := LoadLibCryptoFunction('EC_GROUP_get0_order');
-  FuncLoadError := not assigned(EC_GROUP_get0_order);
-  if FuncLoadError then
-  begin
-    EC_GROUP_get0_order :=  @ERROR_EC_GROUP_get0_order;
-  end;
-
-  EC_GROUP_order_bits := LoadLibCryptoFunction('EC_GROUP_order_bits');
-  FuncLoadError := not assigned(EC_GROUP_order_bits);
-  if FuncLoadError then
-  begin
-    EC_GROUP_order_bits :=  @ERROR_EC_GROUP_order_bits;
-  end;
-
-  EC_GROUP_get_cofactor := LoadLibCryptoFunction('EC_GROUP_get_cofactor');
-  FuncLoadError := not assigned(EC_GROUP_get_cofactor);
-  if FuncLoadError then
-  begin
-    EC_GROUP_get_cofactor :=  @ERROR_EC_GROUP_get_cofactor;
-  end;
-
-  EC_GROUP_get0_cofactor := LoadLibCryptoFunction('EC_GROUP_get0_cofactor');
-  FuncLoadError := not assigned(EC_GROUP_get0_cofactor);
-  if FuncLoadError then
-  begin
-    EC_GROUP_get0_cofactor :=  @ERROR_EC_GROUP_get0_cofactor;
-  end;
-
-  EC_GROUP_set_curve_name := LoadLibCryptoFunction('EC_GROUP_set_curve_name');
-  FuncLoadError := not assigned(EC_GROUP_set_curve_name);
-  if FuncLoadError then
-  begin
-    EC_GROUP_set_curve_name :=  @ERROR_EC_GROUP_set_curve_name;
-  end;
-
-  EC_GROUP_get_curve_name := LoadLibCryptoFunction('EC_GROUP_get_curve_name');
-  FuncLoadError := not assigned(EC_GROUP_get_curve_name);
-  if FuncLoadError then
-  begin
-    EC_GROUP_get_curve_name :=  @ERROR_EC_GROUP_get_curve_name;
-  end;
-
-  EC_GROUP_set_asn1_flag := LoadLibCryptoFunction('EC_GROUP_set_asn1_flag');
-  FuncLoadError := not assigned(EC_GROUP_set_asn1_flag);
-  if FuncLoadError then
-  begin
-    EC_GROUP_set_asn1_flag :=  @ERROR_EC_GROUP_set_asn1_flag;
-  end;
-
-  EC_GROUP_get_asn1_flag := LoadLibCryptoFunction('EC_GROUP_get_asn1_flag');
-  FuncLoadError := not assigned(EC_GROUP_get_asn1_flag);
-  if FuncLoadError then
-  begin
-    EC_GROUP_get_asn1_flag :=  @ERROR_EC_GROUP_get_asn1_flag;
-  end;
-
-  EC_GROUP_set_point_conversion_form := LoadLibCryptoFunction('EC_GROUP_set_point_conversion_form');
-  FuncLoadError := not assigned(EC_GROUP_set_point_conversion_form);
-  if FuncLoadError then
-  begin
-    EC_GROUP_set_point_conversion_form :=  @ERROR_EC_GROUP_set_point_conversion_form;
-  end;
-
-  EC_GROUP_get_point_conversion_form := LoadLibCryptoFunction('EC_GROUP_get_point_conversion_form');
-  FuncLoadError := not assigned(EC_GROUP_get_point_conversion_form);
-  if FuncLoadError then
-  begin
-    EC_GROUP_get_point_conversion_form :=  @ERROR_EC_GROUP_get_point_conversion_form;
-  end;
-
-  EC_GROUP_get0_seed := LoadLibCryptoFunction('EC_GROUP_get0_seed');
-  FuncLoadError := not assigned(EC_GROUP_get0_seed);
-  if FuncLoadError then
-  begin
-    EC_GROUP_get0_seed :=  @ERROR_EC_GROUP_get0_seed;
-  end;
-
-  EC_GROUP_get_seed_len := LoadLibCryptoFunction('EC_GROUP_get_seed_len');
-  FuncLoadError := not assigned(EC_GROUP_get_seed_len);
-  if FuncLoadError then
-  begin
-    EC_GROUP_get_seed_len :=  @ERROR_EC_GROUP_get_seed_len;
-  end;
-
-  EC_GROUP_set_seed := LoadLibCryptoFunction('EC_GROUP_set_seed');
-  FuncLoadError := not assigned(EC_GROUP_set_seed);
-  if FuncLoadError then
-  begin
-    EC_GROUP_set_seed :=  @ERROR_EC_GROUP_set_seed;
-  end;
-
-  EC_GROUP_set_curve := LoadLibCryptoFunction('EC_GROUP_set_curve');
-  FuncLoadError := not assigned(EC_GROUP_set_curve);
-  if FuncLoadError then
-  begin
-    EC_GROUP_set_curve :=  @ERROR_EC_GROUP_set_curve;
-  end;
-
-  EC_GROUP_get_curve := LoadLibCryptoFunction('EC_GROUP_get_curve');
-  FuncLoadError := not assigned(EC_GROUP_get_curve);
-  if FuncLoadError then
-  begin
-    EC_GROUP_get_curve :=  @ERROR_EC_GROUP_get_curve;
-  end;
-
-  EC_GROUP_set_curve_GFp := LoadLibCryptoFunction('EC_GROUP_set_curve_GFp');
-  FuncLoadError := not assigned(EC_GROUP_set_curve_GFp);
-  if FuncLoadError then
-  begin
-    EC_GROUP_set_curve_GFp :=  @ERROR_EC_GROUP_set_curve_GFp;
-  end;
-
-  EC_GROUP_get_curve_GFp := LoadLibCryptoFunction('EC_GROUP_get_curve_GFp');
-  FuncLoadError := not assigned(EC_GROUP_get_curve_GFp);
-  if FuncLoadError then
-  begin
-    EC_GROUP_get_curve_GFp :=  @ERROR_EC_GROUP_get_curve_GFp;
-  end;
-
-  EC_GROUP_set_curve_GF2m := LoadLibCryptoFunction('EC_GROUP_set_curve_GF2m');
-  FuncLoadError := not assigned(EC_GROUP_set_curve_GF2m);
-  if FuncLoadError then
-  begin
-    EC_GROUP_set_curve_GF2m :=  @ERROR_EC_GROUP_set_curve_GF2m;
-  end;
-
-  EC_GROUP_get_curve_GF2m := LoadLibCryptoFunction('EC_GROUP_get_curve_GF2m');
-  FuncLoadError := not assigned(EC_GROUP_get_curve_GF2m);
-  if FuncLoadError then
-  begin
-    EC_GROUP_get_curve_GF2m :=  @ERROR_EC_GROUP_get_curve_GF2m;
-  end;
-
-  EC_GROUP_get_degree := LoadLibCryptoFunction('EC_GROUP_get_degree');
-  FuncLoadError := not assigned(EC_GROUP_get_degree);
-  if FuncLoadError then
-  begin
-    EC_GROUP_get_degree :=  @ERROR_EC_GROUP_get_degree;
-  end;
-
-  EC_GROUP_check := LoadLibCryptoFunction('EC_GROUP_check');
-  FuncLoadError := not assigned(EC_GROUP_check);
-  if FuncLoadError then
-  begin
-    EC_GROUP_check :=  @ERROR_EC_GROUP_check;
-  end;
-
-  EC_GROUP_check_discriminant := LoadLibCryptoFunction('EC_GROUP_check_discriminant');
-  FuncLoadError := not assigned(EC_GROUP_check_discriminant);
-  if FuncLoadError then
-  begin
-    EC_GROUP_check_discriminant :=  @ERROR_EC_GROUP_check_discriminant;
-  end;
-
-  EC_GROUP_cmp := LoadLibCryptoFunction('EC_GROUP_cmp');
-  FuncLoadError := not assigned(EC_GROUP_cmp);
-  if FuncLoadError then
-  begin
-    EC_GROUP_cmp :=  @ERROR_EC_GROUP_cmp;
-  end;
-
-  EC_GROUP_new_curve_GFp := LoadLibCryptoFunction('EC_GROUP_new_curve_GFp');
-  FuncLoadError := not assigned(EC_GROUP_new_curve_GFp);
-  if FuncLoadError then
-  begin
-    EC_GROUP_new_curve_GFp :=  @ERROR_EC_GROUP_new_curve_GFp;
-  end;
-
-  EC_GROUP_new_curve_GF2m := LoadLibCryptoFunction('EC_GROUP_new_curve_GF2m');
-  FuncLoadError := not assigned(EC_GROUP_new_curve_GF2m);
-  if FuncLoadError then
-  begin
-    EC_GROUP_new_curve_GF2m :=  @ERROR_EC_GROUP_new_curve_GF2m;
-  end;
-
-  EC_GROUP_new_by_curve_name := LoadLibCryptoFunction('EC_GROUP_new_by_curve_name');
-  FuncLoadError := not assigned(EC_GROUP_new_by_curve_name);
-  if FuncLoadError then
-  begin
-    EC_GROUP_new_by_curve_name :=  @ERROR_EC_GROUP_new_by_curve_name;
-  end;
-
-  EC_GROUP_new_from_ecparameters := LoadLibCryptoFunction('EC_GROUP_new_from_ecparameters');
-  FuncLoadError := not assigned(EC_GROUP_new_from_ecparameters);
-  if FuncLoadError then
-  begin
-    EC_GROUP_new_from_ecparameters :=  @ERROR_EC_GROUP_new_from_ecparameters;
-  end;
-
-  EC_GROUP_get_ecparameters := LoadLibCryptoFunction('EC_GROUP_get_ecparameters');
-  FuncLoadError := not assigned(EC_GROUP_get_ecparameters);
-  if FuncLoadError then
-  begin
-    EC_GROUP_get_ecparameters :=  @ERROR_EC_GROUP_get_ecparameters;
-  end;
-
-  EC_GROUP_new_from_ecpkparameters := LoadLibCryptoFunction('EC_GROUP_new_from_ecpkparameters');
-  FuncLoadError := not assigned(EC_GROUP_new_from_ecpkparameters);
-  if FuncLoadError then
-  begin
-    EC_GROUP_new_from_ecpkparameters :=  @ERROR_EC_GROUP_new_from_ecpkparameters;
-  end;
-
-  EC_GROUP_get_ecpkparameters := LoadLibCryptoFunction('EC_GROUP_get_ecpkparameters');
-  FuncLoadError := not assigned(EC_GROUP_get_ecpkparameters);
-  if FuncLoadError then
-  begin
-    EC_GROUP_get_ecpkparameters :=  @ERROR_EC_GROUP_get_ecpkparameters;
-  end;
-
-  EC_get_builtin_curves := LoadLibCryptoFunction('EC_get_builtin_curves');
-  FuncLoadError := not assigned(EC_get_builtin_curves);
-  if FuncLoadError then
-  begin
-    EC_get_builtin_curves :=  @ERROR_EC_get_builtin_curves;
-  end;
-
-  EC_curve_nid2nist := LoadLibCryptoFunction('EC_curve_nid2nist');
-  FuncLoadError := not assigned(EC_curve_nid2nist);
-  if FuncLoadError then
-  begin
-    EC_curve_nid2nist :=  @ERROR_EC_curve_nid2nist;
-  end;
-
-  EC_curve_nist2nid := LoadLibCryptoFunction('EC_curve_nist2nid');
-  FuncLoadError := not assigned(EC_curve_nist2nid);
-  if FuncLoadError then
-  begin
-    EC_curve_nist2nid :=  @ERROR_EC_curve_nist2nid;
-  end;
-
-  EC_POINT_new := LoadLibCryptoFunction('EC_POINT_new');
-  FuncLoadError := not assigned(EC_POINT_new);
-  if FuncLoadError then
-  begin
-    EC_POINT_new :=  @ERROR_EC_POINT_new;
-  end;
-
-  EC_POINT_free := LoadLibCryptoFunction('EC_POINT_free');
-  FuncLoadError := not assigned(EC_POINT_free);
-  if FuncLoadError then
-  begin
-    EC_POINT_free :=  @ERROR_EC_POINT_free;
-  end;
-
-  EC_POINT_clear_free := LoadLibCryptoFunction('EC_POINT_clear_free');
-  FuncLoadError := not assigned(EC_POINT_clear_free);
-  if FuncLoadError then
-  begin
-    EC_POINT_clear_free :=  @ERROR_EC_POINT_clear_free;
-  end;
-
-  EC_POINT_copy := LoadLibCryptoFunction('EC_POINT_copy');
-  FuncLoadError := not assigned(EC_POINT_copy);
-  if FuncLoadError then
-  begin
-    EC_POINT_copy :=  @ERROR_EC_POINT_copy;
-  end;
-
-  EC_POINT_dup := LoadLibCryptoFunction('EC_POINT_dup');
-  FuncLoadError := not assigned(EC_POINT_dup);
-  if FuncLoadError then
-  begin
-    EC_POINT_dup :=  @ERROR_EC_POINT_dup;
-  end;
-
-  EC_POINT_method_of := LoadLibCryptoFunction('EC_POINT_method_of');
-  FuncLoadError := not assigned(EC_POINT_method_of);
-  if FuncLoadError then
-  begin
-    EC_POINT_method_of :=  @ERROR_EC_POINT_method_of;
-  end;
-
-  EC_POINT_set_to_infinity := LoadLibCryptoFunction('EC_POINT_set_to_infinity');
-  FuncLoadError := not assigned(EC_POINT_set_to_infinity);
-  if FuncLoadError then
-  begin
-    EC_POINT_set_to_infinity :=  @ERROR_EC_POINT_set_to_infinity;
-  end;
-
-  EC_POINT_set_Jprojective_coordinates_GFp := LoadLibCryptoFunction('EC_POINT_set_Jprojective_coordinates_GFp');
-  FuncLoadError := not assigned(EC_POINT_set_Jprojective_coordinates_GFp);
-  if FuncLoadError then
-  begin
-    EC_POINT_set_Jprojective_coordinates_GFp :=  @ERROR_EC_POINT_set_Jprojective_coordinates_GFp;
-  end;
-
-  EC_POINT_get_Jprojective_coordinates_GFp := LoadLibCryptoFunction('EC_POINT_get_Jprojective_coordinates_GFp');
-  FuncLoadError := not assigned(EC_POINT_get_Jprojective_coordinates_GFp);
-  if FuncLoadError then
-  begin
-    EC_POINT_get_Jprojective_coordinates_GFp :=  @ERROR_EC_POINT_get_Jprojective_coordinates_GFp;
-  end;
-
-  EC_POINT_set_affine_coordinates := LoadLibCryptoFunction('EC_POINT_set_affine_coordinates');
-  FuncLoadError := not assigned(EC_POINT_set_affine_coordinates);
-  if FuncLoadError then
-  begin
-    EC_POINT_set_affine_coordinates :=  @ERROR_EC_POINT_set_affine_coordinates;
-  end;
-
-  EC_POINT_get_affine_coordinates := LoadLibCryptoFunction('EC_POINT_get_affine_coordinates');
-  FuncLoadError := not assigned(EC_POINT_get_affine_coordinates);
-  if FuncLoadError then
-  begin
-    EC_POINT_get_affine_coordinates :=  @ERROR_EC_POINT_get_affine_coordinates;
-  end;
-
-  EC_POINT_set_affine_coordinates_GFp := LoadLibCryptoFunction('EC_POINT_set_affine_coordinates_GFp');
-  FuncLoadError := not assigned(EC_POINT_set_affine_coordinates_GFp);
-  if FuncLoadError then
-  begin
-    EC_POINT_set_affine_coordinates_GFp :=  @ERROR_EC_POINT_set_affine_coordinates_GFp;
-  end;
-
-  EC_POINT_get_affine_coordinates_GFp := LoadLibCryptoFunction('EC_POINT_get_affine_coordinates_GFp');
-  FuncLoadError := not assigned(EC_POINT_get_affine_coordinates_GFp);
-  if FuncLoadError then
-  begin
-    EC_POINT_get_affine_coordinates_GFp :=  @ERROR_EC_POINT_get_affine_coordinates_GFp;
-  end;
-
-  EC_POINT_set_compressed_coordinates := LoadLibCryptoFunction('EC_POINT_set_compressed_coordinates');
-  FuncLoadError := not assigned(EC_POINT_set_compressed_coordinates);
-  if FuncLoadError then
-  begin
-    EC_POINT_set_compressed_coordinates :=  @ERROR_EC_POINT_set_compressed_coordinates;
-  end;
-
-  EC_POINT_set_compressed_coordinates_GFp := LoadLibCryptoFunction('EC_POINT_set_compressed_coordinates_GFp');
-  FuncLoadError := not assigned(EC_POINT_set_compressed_coordinates_GFp);
-  if FuncLoadError then
-  begin
-    EC_POINT_set_compressed_coordinates_GFp :=  @ERROR_EC_POINT_set_compressed_coordinates_GFp;
-  end;
-
-  EC_POINT_set_affine_coordinates_GF2m := LoadLibCryptoFunction('EC_POINT_set_affine_coordinates_GF2m');
-  FuncLoadError := not assigned(EC_POINT_set_affine_coordinates_GF2m);
-  if FuncLoadError then
-  begin
-    EC_POINT_set_affine_coordinates_GF2m :=  @ERROR_EC_POINT_set_affine_coordinates_GF2m;
-  end;
-
-  EC_POINT_get_affine_coordinates_GF2m := LoadLibCryptoFunction('EC_POINT_get_affine_coordinates_GF2m');
-  FuncLoadError := not assigned(EC_POINT_get_affine_coordinates_GF2m);
-  if FuncLoadError then
-  begin
-    EC_POINT_get_affine_coordinates_GF2m :=  @ERROR_EC_POINT_get_affine_coordinates_GF2m;
-  end;
-
-  EC_POINT_set_compressed_coordinates_GF2m := LoadLibCryptoFunction('EC_POINT_set_compressed_coordinates_GF2m');
-  FuncLoadError := not assigned(EC_POINT_set_compressed_coordinates_GF2m);
-  if FuncLoadError then
-  begin
-    EC_POINT_set_compressed_coordinates_GF2m :=  @ERROR_EC_POINT_set_compressed_coordinates_GF2m;
-  end;
-
-  EC_POINT_point2oct := LoadLibCryptoFunction('EC_POINT_point2oct');
-  FuncLoadError := not assigned(EC_POINT_point2oct);
-  if FuncLoadError then
-  begin
-    EC_POINT_point2oct :=  @ERROR_EC_POINT_point2oct;
-  end;
-
-  EC_POINT_oct2point := LoadLibCryptoFunction('EC_POINT_oct2point');
-  FuncLoadError := not assigned(EC_POINT_oct2point);
-  if FuncLoadError then
-  begin
-    EC_POINT_oct2point :=  @ERROR_EC_POINT_oct2point;
-  end;
-
-  EC_POINT_point2buf := LoadLibCryptoFunction('EC_POINT_point2buf');
-  FuncLoadError := not assigned(EC_POINT_point2buf);
-  if FuncLoadError then
-  begin
-    EC_POINT_point2buf :=  @ERROR_EC_POINT_point2buf;
-  end;
-
-  EC_POINT_point2bn := LoadLibCryptoFunction('EC_POINT_point2bn');
-  FuncLoadError := not assigned(EC_POINT_point2bn);
-  if FuncLoadError then
-  begin
-    EC_POINT_point2bn :=  @ERROR_EC_POINT_point2bn;
-  end;
-
-  EC_POINT_bn2point := LoadLibCryptoFunction('EC_POINT_bn2point');
-  FuncLoadError := not assigned(EC_POINT_bn2point);
-  if FuncLoadError then
-  begin
-    EC_POINT_bn2point :=  @ERROR_EC_POINT_bn2point;
-  end;
-
-  EC_POINT_point2hex := LoadLibCryptoFunction('EC_POINT_point2hex');
-  FuncLoadError := not assigned(EC_POINT_point2hex);
-  if FuncLoadError then
-  begin
-    EC_POINT_point2hex :=  @ERROR_EC_POINT_point2hex;
-  end;
-
-  EC_POINT_hex2point := LoadLibCryptoFunction('EC_POINT_hex2point');
-  FuncLoadError := not assigned(EC_POINT_hex2point);
-  if FuncLoadError then
-  begin
-    EC_POINT_hex2point :=  @ERROR_EC_POINT_hex2point;
-  end;
-
-  EC_POINT_add := LoadLibCryptoFunction('EC_POINT_add');
-  FuncLoadError := not assigned(EC_POINT_add);
-  if FuncLoadError then
-  begin
-    EC_POINT_add :=  @ERROR_EC_POINT_add;
-  end;
-
-  EC_POINT_dbl := LoadLibCryptoFunction('EC_POINT_dbl');
-  FuncLoadError := not assigned(EC_POINT_dbl);
-  if FuncLoadError then
-  begin
-    EC_POINT_dbl :=  @ERROR_EC_POINT_dbl;
-  end;
-
-  EC_POINT_invert := LoadLibCryptoFunction('EC_POINT_invert');
-  FuncLoadError := not assigned(EC_POINT_invert);
-  if FuncLoadError then
-  begin
-    EC_POINT_invert :=  @ERROR_EC_POINT_invert;
-  end;
-
-  EC_POINT_is_at_infinity := LoadLibCryptoFunction('EC_POINT_is_at_infinity');
-  FuncLoadError := not assigned(EC_POINT_is_at_infinity);
-  if FuncLoadError then
-  begin
-    EC_POINT_is_at_infinity :=  @ERROR_EC_POINT_is_at_infinity;
-  end;
-
-  EC_POINT_is_on_curve := LoadLibCryptoFunction('EC_POINT_is_on_curve');
-  FuncLoadError := not assigned(EC_POINT_is_on_curve);
-  if FuncLoadError then
-  begin
-    EC_POINT_is_on_curve :=  @ERROR_EC_POINT_is_on_curve;
-  end;
-
-  EC_POINT_cmp := LoadLibCryptoFunction('EC_POINT_cmp');
-  FuncLoadError := not assigned(EC_POINT_cmp);
-  if FuncLoadError then
-  begin
-    EC_POINT_cmp :=  @ERROR_EC_POINT_cmp;
-  end;
-
-  EC_POINT_make_affine := LoadLibCryptoFunction('EC_POINT_make_affine');
-  FuncLoadError := not assigned(EC_POINT_make_affine);
-  if FuncLoadError then
-  begin
-    EC_POINT_make_affine :=  @ERROR_EC_POINT_make_affine;
-  end;
-
-  EC_POINTs_make_affine := LoadLibCryptoFunction('EC_POINTs_make_affine');
-  FuncLoadError := not assigned(EC_POINTs_make_affine);
-  if FuncLoadError then
-  begin
-    EC_POINTs_make_affine :=  @ERROR_EC_POINTs_make_affine;
-  end;
-
-  EC_POINTs_mul := LoadLibCryptoFunction('EC_POINTs_mul');
-  FuncLoadError := not assigned(EC_POINTs_mul);
-  if FuncLoadError then
-  begin
-    EC_POINTs_mul :=  @ERROR_EC_POINTs_mul;
-  end;
-
-  EC_POINT_mul := LoadLibCryptoFunction('EC_POINT_mul');
-  FuncLoadError := not assigned(EC_POINT_mul);
-  if FuncLoadError then
-  begin
-    EC_POINT_mul :=  @ERROR_EC_POINT_mul;
-  end;
-
-  EC_GROUP_precompute_mult := LoadLibCryptoFunction('EC_GROUP_precompute_mult');
-  FuncLoadError := not assigned(EC_GROUP_precompute_mult);
-  if FuncLoadError then
-  begin
-    EC_GROUP_precompute_mult :=  @ERROR_EC_GROUP_precompute_mult;
-  end;
-
-  EC_GROUP_have_precompute_mult := LoadLibCryptoFunction('EC_GROUP_have_precompute_mult');
-  FuncLoadError := not assigned(EC_GROUP_have_precompute_mult);
-  if FuncLoadError then
-  begin
-    EC_GROUP_have_precompute_mult :=  @ERROR_EC_GROUP_have_precompute_mult;
-  end;
-
-  ECPKPARAMETERS_it := LoadLibCryptoFunction('ECPKPARAMETERS_it');
-  FuncLoadError := not assigned(ECPKPARAMETERS_it);
-  if FuncLoadError then
-  begin
-    ECPKPARAMETERS_it :=  @ERROR_ECPKPARAMETERS_it;
-  end;
-
-  ECPKPARAMETERS_new := LoadLibCryptoFunction('ECPKPARAMETERS_new');
-  FuncLoadError := not assigned(ECPKPARAMETERS_new);
-  if FuncLoadError then
-  begin
-    ECPKPARAMETERS_new :=  @ERROR_ECPKPARAMETERS_new;
-  end;
-
-  ECPKPARAMETERS_free := LoadLibCryptoFunction('ECPKPARAMETERS_free');
-  FuncLoadError := not assigned(ECPKPARAMETERS_free);
-  if FuncLoadError then
-  begin
-    ECPKPARAMETERS_free :=  @ERROR_ECPKPARAMETERS_free;
-  end;
-
-  ECPARAMETERS_it := LoadLibCryptoFunction('ECPARAMETERS_it');
-  FuncLoadError := not assigned(ECPARAMETERS_it);
-  if FuncLoadError then
-  begin
-    ECPARAMETERS_it :=  @ERROR_ECPARAMETERS_it;
-  end;
-
-  ECPARAMETERS_new := LoadLibCryptoFunction('ECPARAMETERS_new');
-  FuncLoadError := not assigned(ECPARAMETERS_new);
-  if FuncLoadError then
-  begin
-    ECPARAMETERS_new :=  @ERROR_ECPARAMETERS_new;
-  end;
-
-  ECPARAMETERS_free := LoadLibCryptoFunction('ECPARAMETERS_free');
-  FuncLoadError := not assigned(ECPARAMETERS_free);
-  if FuncLoadError then
-  begin
-    ECPARAMETERS_free :=  @ERROR_ECPARAMETERS_free;
-  end;
-
-  EC_GROUP_get_basis_type := LoadLibCryptoFunction('EC_GROUP_get_basis_type');
-  FuncLoadError := not assigned(EC_GROUP_get_basis_type);
-  if FuncLoadError then
-  begin
-    EC_GROUP_get_basis_type :=  @ERROR_EC_GROUP_get_basis_type;
-  end;
-
-  EC_GROUP_get_trinomial_basis := LoadLibCryptoFunction('EC_GROUP_get_trinomial_basis');
-  FuncLoadError := not assigned(EC_GROUP_get_trinomial_basis);
-  if FuncLoadError then
-  begin
-    EC_GROUP_get_trinomial_basis :=  @ERROR_EC_GROUP_get_trinomial_basis;
-  end;
-
-  EC_GROUP_get_pentanomial_basis := LoadLibCryptoFunction('EC_GROUP_get_pentanomial_basis');
-  FuncLoadError := not assigned(EC_GROUP_get_pentanomial_basis);
-  if FuncLoadError then
-  begin
-    EC_GROUP_get_pentanomial_basis :=  @ERROR_EC_GROUP_get_pentanomial_basis;
-  end;
-
-  d2i_ECPKParameters := LoadLibCryptoFunction('d2i_ECPKParameters');
-  FuncLoadError := not assigned(d2i_ECPKParameters);
-  if FuncLoadError then
-  begin
-    d2i_ECPKParameters :=  @ERROR_d2i_ECPKParameters;
-  end;
-
-  i2d_ECPKParameters := LoadLibCryptoFunction('i2d_ECPKParameters');
-  FuncLoadError := not assigned(i2d_ECPKParameters);
-  if FuncLoadError then
-  begin
-    i2d_ECPKParameters :=  @ERROR_i2d_ECPKParameters;
-  end;
-
-  ECPKParameters_print := LoadLibCryptoFunction('ECPKParameters_print');
-  FuncLoadError := not assigned(ECPKParameters_print);
-  if FuncLoadError then
-  begin
-    ECPKParameters_print :=  @ERROR_ECPKParameters_print;
-  end;
-
-  EC_KEY_new := LoadLibCryptoFunction('EC_KEY_new');
-  FuncLoadError := not assigned(EC_KEY_new);
-  if FuncLoadError then
-  begin
-    EC_KEY_new :=  @ERROR_EC_KEY_new;
-  end;
-
-  EC_KEY_get_flags := LoadLibCryptoFunction('EC_KEY_get_flags');
-  FuncLoadError := not assigned(EC_KEY_get_flags);
-  if FuncLoadError then
-  begin
-    EC_KEY_get_flags :=  @ERROR_EC_KEY_get_flags;
-  end;
-
-  EC_KEY_set_flags := LoadLibCryptoFunction('EC_KEY_set_flags');
-  FuncLoadError := not assigned(EC_KEY_set_flags);
-  if FuncLoadError then
-  begin
-    EC_KEY_set_flags :=  @ERROR_EC_KEY_set_flags;
-  end;
-
-  EC_KEY_clear_flags := LoadLibCryptoFunction('EC_KEY_clear_flags');
-  FuncLoadError := not assigned(EC_KEY_clear_flags);
-  if FuncLoadError then
-  begin
-    EC_KEY_clear_flags :=  @ERROR_EC_KEY_clear_flags;
-  end;
-
-  EC_KEY_new_by_curve_name := LoadLibCryptoFunction('EC_KEY_new_by_curve_name');
-  FuncLoadError := not assigned(EC_KEY_new_by_curve_name);
-  if FuncLoadError then
-  begin
-    EC_KEY_new_by_curve_name :=  @ERROR_EC_KEY_new_by_curve_name;
-  end;
-
-  EC_KEY_free := LoadLibCryptoFunction('EC_KEY_free');
-  FuncLoadError := not assigned(EC_KEY_free);
-  if FuncLoadError then
-  begin
-    EC_KEY_free :=  @ERROR_EC_KEY_free;
-  end;
-
-  EC_KEY_copy := LoadLibCryptoFunction('EC_KEY_copy');
-  FuncLoadError := not assigned(EC_KEY_copy);
-  if FuncLoadError then
-  begin
-    EC_KEY_copy :=  @ERROR_EC_KEY_copy;
-  end;
-
-  EC_KEY_dup := LoadLibCryptoFunction('EC_KEY_dup');
-  FuncLoadError := not assigned(EC_KEY_dup);
-  if FuncLoadError then
-  begin
-    EC_KEY_dup :=  @ERROR_EC_KEY_dup;
-  end;
-
-  EC_KEY_up_ref := LoadLibCryptoFunction('EC_KEY_up_ref');
-  FuncLoadError := not assigned(EC_KEY_up_ref);
-  if FuncLoadError then
-  begin
-    EC_KEY_up_ref :=  @ERROR_EC_KEY_up_ref;
-  end;
-
-  EC_KEY_get0_engine := LoadLibCryptoFunction('EC_KEY_get0_engine');
-  FuncLoadError := not assigned(EC_KEY_get0_engine);
-  if FuncLoadError then
-  begin
-    EC_KEY_get0_engine :=  @ERROR_EC_KEY_get0_engine;
-  end;
-
-  EC_KEY_get0_group := LoadLibCryptoFunction('EC_KEY_get0_group');
-  FuncLoadError := not assigned(EC_KEY_get0_group);
-  if FuncLoadError then
-  begin
-    EC_KEY_get0_group :=  @ERROR_EC_KEY_get0_group;
-  end;
-
-  EC_KEY_set_group := LoadLibCryptoFunction('EC_KEY_set_group');
-  FuncLoadError := not assigned(EC_KEY_set_group);
-  if FuncLoadError then
-  begin
-    EC_KEY_set_group :=  @ERROR_EC_KEY_set_group;
-  end;
-
-  EC_KEY_get0_private_key := LoadLibCryptoFunction('EC_KEY_get0_private_key');
-  FuncLoadError := not assigned(EC_KEY_get0_private_key);
-  if FuncLoadError then
-  begin
-    EC_KEY_get0_private_key :=  @ERROR_EC_KEY_get0_private_key;
-  end;
-
-  EC_KEY_set_private_key := LoadLibCryptoFunction('EC_KEY_set_private_key');
-  FuncLoadError := not assigned(EC_KEY_set_private_key);
-  if FuncLoadError then
-  begin
-    EC_KEY_set_private_key :=  @ERROR_EC_KEY_set_private_key;
-  end;
-
-  EC_KEY_get0_public_key := LoadLibCryptoFunction('EC_KEY_get0_public_key');
-  FuncLoadError := not assigned(EC_KEY_get0_public_key);
-  if FuncLoadError then
-  begin
-    EC_KEY_get0_public_key :=  @ERROR_EC_KEY_get0_public_key;
-  end;
-
-  EC_KEY_set_public_key := LoadLibCryptoFunction('EC_KEY_set_public_key');
-  FuncLoadError := not assigned(EC_KEY_set_public_key);
-  if FuncLoadError then
-  begin
-    EC_KEY_set_public_key :=  @ERROR_EC_KEY_set_public_key;
-  end;
-
-  EC_KEY_get_enc_flags := LoadLibCryptoFunction('EC_KEY_get_enc_flags');
-  FuncLoadError := not assigned(EC_KEY_get_enc_flags);
-  if FuncLoadError then
-  begin
-    EC_KEY_get_enc_flags :=  @ERROR_EC_KEY_get_enc_flags;
-  end;
-
-  EC_KEY_set_enc_flags := LoadLibCryptoFunction('EC_KEY_set_enc_flags');
-  FuncLoadError := not assigned(EC_KEY_set_enc_flags);
-  if FuncLoadError then
-  begin
-    EC_KEY_set_enc_flags :=  @ERROR_EC_KEY_set_enc_flags;
-  end;
-
-  EC_KEY_get_conv_form := LoadLibCryptoFunction('EC_KEY_get_conv_form');
-  FuncLoadError := not assigned(EC_KEY_get_conv_form);
-  if FuncLoadError then
-  begin
-    EC_KEY_get_conv_form :=  @ERROR_EC_KEY_get_conv_form;
-  end;
-
-  EC_KEY_set_conv_form := LoadLibCryptoFunction('EC_KEY_set_conv_form');
-  FuncLoadError := not assigned(EC_KEY_set_conv_form);
-  if FuncLoadError then
-  begin
-    EC_KEY_set_conv_form :=  @ERROR_EC_KEY_set_conv_form;
-  end;
-
-  EC_KEY_set_ex_data := LoadLibCryptoFunction('EC_KEY_set_ex_data');
-  FuncLoadError := not assigned(EC_KEY_set_ex_data);
-  if FuncLoadError then
-  begin
-    EC_KEY_set_ex_data :=  @ERROR_EC_KEY_set_ex_data;
-  end;
-
-  EC_KEY_get_ex_data := LoadLibCryptoFunction('EC_KEY_get_ex_data');
-  FuncLoadError := not assigned(EC_KEY_get_ex_data);
-  if FuncLoadError then
-  begin
-    EC_KEY_get_ex_data :=  @ERROR_EC_KEY_get_ex_data;
-  end;
-
-  EC_KEY_set_asn1_flag := LoadLibCryptoFunction('EC_KEY_set_asn1_flag');
-  FuncLoadError := not assigned(EC_KEY_set_asn1_flag);
-  if FuncLoadError then
-  begin
-    EC_KEY_set_asn1_flag :=  @ERROR_EC_KEY_set_asn1_flag;
-  end;
-
-  EC_KEY_precompute_mult := LoadLibCryptoFunction('EC_KEY_precompute_mult');
-  FuncLoadError := not assigned(EC_KEY_precompute_mult);
-  if FuncLoadError then
-  begin
-    EC_KEY_precompute_mult :=  @ERROR_EC_KEY_precompute_mult;
-  end;
-
-  EC_KEY_generate_key := LoadLibCryptoFunction('EC_KEY_generate_key');
-  FuncLoadError := not assigned(EC_KEY_generate_key);
-  if FuncLoadError then
-  begin
-    EC_KEY_generate_key :=  @ERROR_EC_KEY_generate_key;
-  end;
-
-  EC_KEY_check_key := LoadLibCryptoFunction('EC_KEY_check_key');
-  FuncLoadError := not assigned(EC_KEY_check_key);
-  if FuncLoadError then
-  begin
-    EC_KEY_check_key :=  @ERROR_EC_KEY_check_key;
-  end;
-
-  EC_KEY_can_sign := LoadLibCryptoFunction('EC_KEY_can_sign');
-  FuncLoadError := not assigned(EC_KEY_can_sign);
-  if FuncLoadError then
-  begin
-    EC_KEY_can_sign :=  @ERROR_EC_KEY_can_sign;
-  end;
-
-  EC_KEY_set_public_key_affine_coordinates := LoadLibCryptoFunction('EC_KEY_set_public_key_affine_coordinates');
-  FuncLoadError := not assigned(EC_KEY_set_public_key_affine_coordinates);
-  if FuncLoadError then
-  begin
-    EC_KEY_set_public_key_affine_coordinates :=  @ERROR_EC_KEY_set_public_key_affine_coordinates;
-  end;
-
-  EC_KEY_key2buf := LoadLibCryptoFunction('EC_KEY_key2buf');
-  FuncLoadError := not assigned(EC_KEY_key2buf);
-  if FuncLoadError then
-  begin
-    EC_KEY_key2buf :=  @ERROR_EC_KEY_key2buf;
-  end;
-
-  EC_KEY_oct2key := LoadLibCryptoFunction('EC_KEY_oct2key');
-  FuncLoadError := not assigned(EC_KEY_oct2key);
-  if FuncLoadError then
-  begin
-    EC_KEY_oct2key :=  @ERROR_EC_KEY_oct2key;
-  end;
-
-  EC_KEY_oct2priv := LoadLibCryptoFunction('EC_KEY_oct2priv');
-  FuncLoadError := not assigned(EC_KEY_oct2priv);
-  if FuncLoadError then
-  begin
-    EC_KEY_oct2priv :=  @ERROR_EC_KEY_oct2priv;
-  end;
-
-  EC_KEY_priv2oct := LoadLibCryptoFunction('EC_KEY_priv2oct');
-  FuncLoadError := not assigned(EC_KEY_priv2oct);
-  if FuncLoadError then
-  begin
-    EC_KEY_priv2oct :=  @ERROR_EC_KEY_priv2oct;
-  end;
-
-  EC_KEY_priv2buf := LoadLibCryptoFunction('EC_KEY_priv2buf');
-  FuncLoadError := not assigned(EC_KEY_priv2buf);
-  if FuncLoadError then
-  begin
-    EC_KEY_priv2buf :=  @ERROR_EC_KEY_priv2buf;
-  end;
-
-  d2i_ECPrivateKey := LoadLibCryptoFunction('d2i_ECPrivateKey');
-  FuncLoadError := not assigned(d2i_ECPrivateKey);
-  if FuncLoadError then
-  begin
-    d2i_ECPrivateKey :=  @ERROR_d2i_ECPrivateKey;
-  end;
-
-  i2d_ECPrivateKey := LoadLibCryptoFunction('i2d_ECPrivateKey');
-  FuncLoadError := not assigned(i2d_ECPrivateKey);
-  if FuncLoadError then
-  begin
-    i2d_ECPrivateKey :=  @ERROR_i2d_ECPrivateKey;
-  end;
-
-  o2i_ECPublicKey := LoadLibCryptoFunction('o2i_ECPublicKey');
-  FuncLoadError := not assigned(o2i_ECPublicKey);
-  if FuncLoadError then
-  begin
-    o2i_ECPublicKey :=  @ERROR_o2i_ECPublicKey;
-  end;
-
-  i2o_ECPublicKey := LoadLibCryptoFunction('i2o_ECPublicKey');
-  FuncLoadError := not assigned(i2o_ECPublicKey);
-  if FuncLoadError then
-  begin
-    i2o_ECPublicKey :=  @ERROR_i2o_ECPublicKey;
-  end;
-
-  ECParameters_print := LoadLibCryptoFunction('ECParameters_print');
-  FuncLoadError := not assigned(ECParameters_print);
-  if FuncLoadError then
-  begin
-    ECParameters_print :=  @ERROR_ECParameters_print;
-  end;
-
-  EC_KEY_print := LoadLibCryptoFunction('EC_KEY_print');
-  FuncLoadError := not assigned(EC_KEY_print);
-  if FuncLoadError then
-  begin
-    EC_KEY_print :=  @ERROR_EC_KEY_print;
-  end;
-
-  EC_KEY_OpenSSL := LoadLibCryptoFunction('EC_KEY_OpenSSL');
-  FuncLoadError := not assigned(EC_KEY_OpenSSL);
-  if FuncLoadError then
-  begin
-    EC_KEY_OpenSSL :=  @ERROR_EC_KEY_OpenSSL;
-  end;
-
-  EC_KEY_get_default_method := LoadLibCryptoFunction('EC_KEY_get_default_method');
-  FuncLoadError := not assigned(EC_KEY_get_default_method);
-  if FuncLoadError then
-  begin
-    EC_KEY_get_default_method :=  @ERROR_EC_KEY_get_default_method;
-  end;
-
-  EC_KEY_set_default_method := LoadLibCryptoFunction('EC_KEY_set_default_method');
-  FuncLoadError := not assigned(EC_KEY_set_default_method);
-  if FuncLoadError then
-  begin
-    EC_KEY_set_default_method :=  @ERROR_EC_KEY_set_default_method;
-  end;
-
-  EC_KEY_get_method := LoadLibCryptoFunction('EC_KEY_get_method');
-  FuncLoadError := not assigned(EC_KEY_get_method);
-  if FuncLoadError then
-  begin
-    EC_KEY_get_method :=  @ERROR_EC_KEY_get_method;
-  end;
-
-  EC_KEY_set_method := LoadLibCryptoFunction('EC_KEY_set_method');
-  FuncLoadError := not assigned(EC_KEY_set_method);
-  if FuncLoadError then
-  begin
-    EC_KEY_set_method :=  @ERROR_EC_KEY_set_method;
-  end;
-
-  EC_KEY_new_method := LoadLibCryptoFunction('EC_KEY_new_method');
-  FuncLoadError := not assigned(EC_KEY_new_method);
-  if FuncLoadError then
-  begin
-    EC_KEY_new_method :=  @ERROR_EC_KEY_new_method;
-  end;
-
-  ECDH_KDF_X9_62 := LoadLibCryptoFunction('ECDH_KDF_X9_62');
-  FuncLoadError := not assigned(ECDH_KDF_X9_62);
-  if FuncLoadError then
-  begin
-    ECDH_KDF_X9_62 :=  @ERROR_ECDH_KDF_X9_62;
-  end;
-
-  ECDH_compute_key := LoadLibCryptoFunction('ECDH_compute_key');
-  FuncLoadError := not assigned(ECDH_compute_key);
-  if FuncLoadError then
-  begin
-    ECDH_compute_key :=  @ERROR_ECDH_compute_key;
-  end;
-
-  ECDSA_SIG_new := LoadLibCryptoFunction('ECDSA_SIG_new');
-  FuncLoadError := not assigned(ECDSA_SIG_new);
-  if FuncLoadError then
-  begin
-    ECDSA_SIG_new :=  @ERROR_ECDSA_SIG_new;
-  end;
-
-  ECDSA_SIG_free := LoadLibCryptoFunction('ECDSA_SIG_free');
-  FuncLoadError := not assigned(ECDSA_SIG_free);
-  if FuncLoadError then
-  begin
-    ECDSA_SIG_free :=  @ERROR_ECDSA_SIG_free;
-  end;
-
-  i2d_ECDSA_SIG := LoadLibCryptoFunction('i2d_ECDSA_SIG');
-  FuncLoadError := not assigned(i2d_ECDSA_SIG);
-  if FuncLoadError then
-  begin
-    i2d_ECDSA_SIG :=  @ERROR_i2d_ECDSA_SIG;
-  end;
-
-  d2i_ECDSA_SIG := LoadLibCryptoFunction('d2i_ECDSA_SIG');
-  FuncLoadError := not assigned(d2i_ECDSA_SIG);
-  if FuncLoadError then
-  begin
-    d2i_ECDSA_SIG :=  @ERROR_d2i_ECDSA_SIG;
-  end;
-
-  ECDSA_SIG_get0 := LoadLibCryptoFunction('ECDSA_SIG_get0');
-  FuncLoadError := not assigned(ECDSA_SIG_get0);
-  if FuncLoadError then
-  begin
-    ECDSA_SIG_get0 :=  @ERROR_ECDSA_SIG_get0;
-  end;
-
-  ECDSA_SIG_get0_r := LoadLibCryptoFunction('ECDSA_SIG_get0_r');
-  FuncLoadError := not assigned(ECDSA_SIG_get0_r);
-  if FuncLoadError then
-  begin
-    ECDSA_SIG_get0_r :=  @ERROR_ECDSA_SIG_get0_r;
-  end;
-
-  ECDSA_SIG_get0_s := LoadLibCryptoFunction('ECDSA_SIG_get0_s');
-  FuncLoadError := not assigned(ECDSA_SIG_get0_s);
-  if FuncLoadError then
-  begin
-    ECDSA_SIG_get0_s :=  @ERROR_ECDSA_SIG_get0_s;
-  end;
-
-  ECDSA_SIG_set0 := LoadLibCryptoFunction('ECDSA_SIG_set0');
-  FuncLoadError := not assigned(ECDSA_SIG_set0);
-  if FuncLoadError then
-  begin
-    ECDSA_SIG_set0 :=  @ERROR_ECDSA_SIG_set0;
-  end;
-
-  ECDSA_do_sign := LoadLibCryptoFunction('ECDSA_do_sign');
-  FuncLoadError := not assigned(ECDSA_do_sign);
-  if FuncLoadError then
-  begin
-    ECDSA_do_sign :=  @ERROR_ECDSA_do_sign;
-  end;
-
-  ECDSA_do_sign_ex := LoadLibCryptoFunction('ECDSA_do_sign_ex');
-  FuncLoadError := not assigned(ECDSA_do_sign_ex);
-  if FuncLoadError then
-  begin
-    ECDSA_do_sign_ex :=  @ERROR_ECDSA_do_sign_ex;
-  end;
-
-  ECDSA_do_verify := LoadLibCryptoFunction('ECDSA_do_verify');
-  FuncLoadError := not assigned(ECDSA_do_verify);
-  if FuncLoadError then
-  begin
-    ECDSA_do_verify :=  @ERROR_ECDSA_do_verify;
-  end;
-
-  ECDSA_sign_setup := LoadLibCryptoFunction('ECDSA_sign_setup');
-  FuncLoadError := not assigned(ECDSA_sign_setup);
-  if FuncLoadError then
-  begin
-    ECDSA_sign_setup :=  @ERROR_ECDSA_sign_setup;
-  end;
-
-  ECDSA_sign := LoadLibCryptoFunction('ECDSA_sign');
-  FuncLoadError := not assigned(ECDSA_sign);
-  if FuncLoadError then
-  begin
-    ECDSA_sign :=  @ERROR_ECDSA_sign;
-  end;
-
-  ECDSA_sign_ex := LoadLibCryptoFunction('ECDSA_sign_ex');
-  FuncLoadError := not assigned(ECDSA_sign_ex);
-  if FuncLoadError then
-  begin
-    ECDSA_sign_ex :=  @ERROR_ECDSA_sign_ex;
-  end;
-
-  ECDSA_verify := LoadLibCryptoFunction('ECDSA_verify');
-  FuncLoadError := not assigned(ECDSA_verify);
-  if FuncLoadError then
-  begin
-    ECDSA_verify :=  @ERROR_ECDSA_verify;
-  end;
-
-  ECDSA_size := LoadLibCryptoFunction('ECDSA_size');
-  FuncLoadError := not assigned(ECDSA_size);
-  if FuncLoadError then
-  begin
-    ECDSA_size :=  @ERROR_ECDSA_size;
-  end;
-
-  EC_KEY_METHOD_new := LoadLibCryptoFunction('EC_KEY_METHOD_new');
-  FuncLoadError := not assigned(EC_KEY_METHOD_new);
-  if FuncLoadError then
-  begin
-    EC_KEY_METHOD_new :=  @ERROR_EC_KEY_METHOD_new;
-  end;
-
-  EC_KEY_METHOD_free := LoadLibCryptoFunction('EC_KEY_METHOD_free');
-  FuncLoadError := not assigned(EC_KEY_METHOD_free);
-  if FuncLoadError then
-  begin
-    EC_KEY_METHOD_free :=  @ERROR_EC_KEY_METHOD_free;
-  end;
-
-  EC_KEY_METHOD_set_init := LoadLibCryptoFunction('EC_KEY_METHOD_set_init');
-  FuncLoadError := not assigned(EC_KEY_METHOD_set_init);
-  if FuncLoadError then
-  begin
-    EC_KEY_METHOD_set_init :=  @ERROR_EC_KEY_METHOD_set_init;
-  end;
-
-  EC_KEY_METHOD_set_keygen := LoadLibCryptoFunction('EC_KEY_METHOD_set_keygen');
-  FuncLoadError := not assigned(EC_KEY_METHOD_set_keygen);
-  if FuncLoadError then
-  begin
-    EC_KEY_METHOD_set_keygen :=  @ERROR_EC_KEY_METHOD_set_keygen;
-  end;
-
-  EC_KEY_METHOD_set_compute_key := LoadLibCryptoFunction('EC_KEY_METHOD_set_compute_key');
-  FuncLoadError := not assigned(EC_KEY_METHOD_set_compute_key);
-  if FuncLoadError then
-  begin
-    EC_KEY_METHOD_set_compute_key :=  @ERROR_EC_KEY_METHOD_set_compute_key;
-  end;
-
-  EC_KEY_METHOD_set_sign := LoadLibCryptoFunction('EC_KEY_METHOD_set_sign');
-  FuncLoadError := not assigned(EC_KEY_METHOD_set_sign);
-  if FuncLoadError then
-  begin
-    EC_KEY_METHOD_set_sign :=  @ERROR_EC_KEY_METHOD_set_sign;
-  end;
-
-  EC_KEY_METHOD_set_verify := LoadLibCryptoFunction('EC_KEY_METHOD_set_verify');
-  FuncLoadError := not assigned(EC_KEY_METHOD_set_verify);
-  if FuncLoadError then
-  begin
-    EC_KEY_METHOD_set_verify :=  @ERROR_EC_KEY_METHOD_set_verify;
-  end;
-
-  EC_KEY_METHOD_get_init := LoadLibCryptoFunction('EC_KEY_METHOD_get_init');
-  FuncLoadError := not assigned(EC_KEY_METHOD_get_init);
-  if FuncLoadError then
-  begin
-    EC_KEY_METHOD_get_init :=  @ERROR_EC_KEY_METHOD_get_init;
-  end;
-
-  EC_KEY_METHOD_get_keygen := LoadLibCryptoFunction('EC_KEY_METHOD_get_keygen');
-  FuncLoadError := not assigned(EC_KEY_METHOD_get_keygen);
-  if FuncLoadError then
-  begin
-    EC_KEY_METHOD_get_keygen :=  @ERROR_EC_KEY_METHOD_get_keygen;
-  end;
-
-  EC_KEY_METHOD_get_compute_key := LoadLibCryptoFunction('EC_KEY_METHOD_get_compute_key');
-  FuncLoadError := not assigned(EC_KEY_METHOD_get_compute_key);
-  if FuncLoadError then
-  begin
-    EC_KEY_METHOD_get_compute_key :=  @ERROR_EC_KEY_METHOD_get_compute_key;
-  end;
-
-  EC_KEY_METHOD_get_sign := LoadLibCryptoFunction('EC_KEY_METHOD_get_sign');
-  FuncLoadError := not assigned(EC_KEY_METHOD_get_sign);
-  if FuncLoadError then
-  begin
-    EC_KEY_METHOD_get_sign :=  @ERROR_EC_KEY_METHOD_get_sign;
-  end;
-
-  EC_KEY_METHOD_get_verify := LoadLibCryptoFunction('EC_KEY_METHOD_get_verify');
-  FuncLoadError := not assigned(EC_KEY_METHOD_get_verify);
-  if FuncLoadError then
-  begin
-    EC_KEY_METHOD_get_verify :=  @ERROR_EC_KEY_METHOD_get_verify;
-  end;
-
+  if not assigned(EC_GF2m_simple_method) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GF2m_simple_method');
+  Result := EC_GF2m_simple_method();
 end;
+
+function Load_EC_GROUP_new(const meth: PEC_METHOD): PEC_GROUP; cdecl;
+begin
+  EC_GROUP_new := LoadLibCryptoFunction('EC_GROUP_new');
+  if not assigned(EC_GROUP_new) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_new');
+  Result := EC_GROUP_new(meth);
+end;
+
+procedure Load_EC_GROUP_free(group: PEC_GROUP); cdecl;
+begin
+  EC_GROUP_free := LoadLibCryptoFunction('EC_GROUP_free');
+  if not assigned(EC_GROUP_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_free');
+  EC_GROUP_free(group);
+end;
+
+procedure Load_EC_GROUP_clear_free(group: PEC_GROUP); cdecl;
+begin
+  EC_GROUP_clear_free := LoadLibCryptoFunction('EC_GROUP_clear_free');
+  if not assigned(EC_GROUP_clear_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_clear_free');
+  EC_GROUP_clear_free(group);
+end;
+
+function Load_EC_GROUP_copy(dst: PEC_GROUP; const src: PEC_GROUP): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_copy := LoadLibCryptoFunction('EC_GROUP_copy');
+  if not assigned(EC_GROUP_copy) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_copy');
+  Result := EC_GROUP_copy(dst,src);
+end;
+
+function Load_EC_GROUP_dup(const src: PEC_GROUP): PEC_GROUP; cdecl;
+begin
+  EC_GROUP_dup := LoadLibCryptoFunction('EC_GROUP_dup');
+  if not assigned(EC_GROUP_dup) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_dup');
+  Result := EC_GROUP_dup(src);
+end;
+
+function Load_EC_GROUP_method_of(const group: PEC_GROUP): PEC_GROUP; cdecl;
+begin
+  EC_GROUP_method_of := LoadLibCryptoFunction('EC_GROUP_method_of');
+  if not assigned(EC_GROUP_method_of) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_method_of');
+  Result := EC_GROUP_method_of(group);
+end;
+
+function Load_EC_METHOD_get_field_type(const meth: PEC_METHOD): TOpenSSL_C_INT; cdecl;
+begin
+  EC_METHOD_get_field_type := LoadLibCryptoFunction('EC_METHOD_get_field_type');
+  if not assigned(EC_METHOD_get_field_type) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_METHOD_get_field_type');
+  Result := EC_METHOD_get_field_type(meth);
+end;
+
+function Load_EC_GROUP_set_generator(group: PEC_GROUP; const generator: PEC_POINT; const order: PBIGNUM; const cofactor: PBIGNUM): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_set_generator := LoadLibCryptoFunction('EC_GROUP_set_generator');
+  if not assigned(EC_GROUP_set_generator) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_set_generator');
+  Result := EC_GROUP_set_generator(group,generator,order,cofactor);
+end;
+
+function Load_EC_GROUP_get0_generator(const group: PEC_GROUP): PEC_POINT; cdecl;
+begin
+  EC_GROUP_get0_generator := LoadLibCryptoFunction('EC_GROUP_get0_generator');
+  if not assigned(EC_GROUP_get0_generator) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get0_generator');
+  Result := EC_GROUP_get0_generator(group);
+end;
+
+function Load_EC_GROUP_get_mont_data(const group: PEC_GROUP): PBN_MONT_CTX; cdecl;
+begin
+  EC_GROUP_get_mont_data := LoadLibCryptoFunction('EC_GROUP_get_mont_data');
+  if not assigned(EC_GROUP_get_mont_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_mont_data');
+  Result := EC_GROUP_get_mont_data(group);
+end;
+
+function Load_EC_GROUP_get_order(const group: PEC_GROUP; order: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_get_order := LoadLibCryptoFunction('EC_GROUP_get_order');
+  if not assigned(EC_GROUP_get_order) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_order');
+  Result := EC_GROUP_get_order(group,order,ctx);
+end;
+
+function Load_EC_GROUP_get0_order(const group: PEC_GROUP): PBIGNUM; cdecl;
+begin
+  EC_GROUP_get0_order := LoadLibCryptoFunction('EC_GROUP_get0_order');
+  if not assigned(EC_GROUP_get0_order) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get0_order');
+  Result := EC_GROUP_get0_order(group);
+end;
+
+function Load_EC_GROUP_order_bits(const group: PEC_GROUP): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_order_bits := LoadLibCryptoFunction('EC_GROUP_order_bits');
+  if not assigned(EC_GROUP_order_bits) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_order_bits');
+  Result := EC_GROUP_order_bits(group);
+end;
+
+function Load_EC_GROUP_get_cofactor(const group: PEC_GROUP; cofactor: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_get_cofactor := LoadLibCryptoFunction('EC_GROUP_get_cofactor');
+  if not assigned(EC_GROUP_get_cofactor) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_cofactor');
+  Result := EC_GROUP_get_cofactor(group,cofactor,ctx);
+end;
+
+function Load_EC_GROUP_get0_cofactor(const group: PEC_GROUP): PBIGNUM; cdecl;
+begin
+  EC_GROUP_get0_cofactor := LoadLibCryptoFunction('EC_GROUP_get0_cofactor');
+  if not assigned(EC_GROUP_get0_cofactor) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get0_cofactor');
+  Result := EC_GROUP_get0_cofactor(group);
+end;
+
+procedure Load_EC_GROUP_set_curve_name(group: PEC_GROUP; nid: TOpenSSL_C_INT); cdecl;
+begin
+  EC_GROUP_set_curve_name := LoadLibCryptoFunction('EC_GROUP_set_curve_name');
+  if not assigned(EC_GROUP_set_curve_name) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_set_curve_name');
+  EC_GROUP_set_curve_name(group,nid);
+end;
+
+function Load_EC_GROUP_get_curve_name(const group: PEC_GROUP): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_get_curve_name := LoadLibCryptoFunction('EC_GROUP_get_curve_name');
+  if not assigned(EC_GROUP_get_curve_name) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_curve_name');
+  Result := EC_GROUP_get_curve_name(group);
+end;
+
+procedure Load_EC_GROUP_set_asn1_flag(group: PEC_GROUP; flag: TOpenSSL_C_INT); cdecl;
+begin
+  EC_GROUP_set_asn1_flag := LoadLibCryptoFunction('EC_GROUP_set_asn1_flag');
+  if not assigned(EC_GROUP_set_asn1_flag) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_set_asn1_flag');
+  EC_GROUP_set_asn1_flag(group,flag);
+end;
+
+function Load_EC_GROUP_get_asn1_flag(const group: PEC_GROUP): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_get_asn1_flag := LoadLibCryptoFunction('EC_GROUP_get_asn1_flag');
+  if not assigned(EC_GROUP_get_asn1_flag) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_asn1_flag');
+  Result := EC_GROUP_get_asn1_flag(group);
+end;
+
+procedure Load_EC_GROUP_set_point_conversion_form(group: PEC_GROUP; form: point_conversion_form_t); cdecl;
+begin
+  EC_GROUP_set_point_conversion_form := LoadLibCryptoFunction('EC_GROUP_set_point_conversion_form');
+  if not assigned(EC_GROUP_set_point_conversion_form) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_set_point_conversion_form');
+  EC_GROUP_set_point_conversion_form(group,form);
+end;
+
+function Load_EC_GROUP_get_point_conversion_form(const group: PEC_GROUP): point_conversion_form_t; cdecl;
+begin
+  EC_GROUP_get_point_conversion_form := LoadLibCryptoFunction('EC_GROUP_get_point_conversion_form');
+  if not assigned(EC_GROUP_get_point_conversion_form) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_point_conversion_form');
+  Result := EC_GROUP_get_point_conversion_form(group);
+end;
+
+function Load_EC_GROUP_get0_seed(const x: PEC_GROUP): PByte; cdecl;
+begin
+  EC_GROUP_get0_seed := LoadLibCryptoFunction('EC_GROUP_get0_seed');
+  if not assigned(EC_GROUP_get0_seed) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get0_seed');
+  Result := EC_GROUP_get0_seed(x);
+end;
+
+function Load_EC_GROUP_get_seed_len(const x: PEC_GROUP): TOpenSSL_C_SIZET; cdecl;
+begin
+  EC_GROUP_get_seed_len := LoadLibCryptoFunction('EC_GROUP_get_seed_len');
+  if not assigned(EC_GROUP_get_seed_len) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_seed_len');
+  Result := EC_GROUP_get_seed_len(x);
+end;
+
+function Load_EC_GROUP_set_seed(x: PEC_GROUP; const p: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+begin
+  EC_GROUP_set_seed := LoadLibCryptoFunction('EC_GROUP_set_seed');
+  if not assigned(EC_GROUP_set_seed) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_set_seed');
+  Result := EC_GROUP_set_seed(x,p,len);
+end;
+
+function Load_EC_GROUP_set_curve(group: PEC_GROUP; const p: PBIGNUM; const a: PBIGNUM; const b: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_set_curve := LoadLibCryptoFunction('EC_GROUP_set_curve');
+  if not assigned(EC_GROUP_set_curve) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_set_curve');
+  Result := EC_GROUP_set_curve(group,p,a,b,ctx);
+end;
+
+function Load_EC_GROUP_get_curve(const group: PEC_GROUP; p: PBIGNUM; a: PBIGNUM; b: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_get_curve := LoadLibCryptoFunction('EC_GROUP_get_curve');
+  if not assigned(EC_GROUP_get_curve) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_curve');
+  Result := EC_GROUP_get_curve(group,p,a,b,ctx);
+end;
+
+function Load_EC_GROUP_set_curve_GFp(group: PEC_GROUP; const p: PBIGNUM; const a: PBIGNUM; const b: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_set_curve_GFp := LoadLibCryptoFunction('EC_GROUP_set_curve_GFp');
+  if not assigned(EC_GROUP_set_curve_GFp) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_set_curve_GFp');
+  Result := EC_GROUP_set_curve_GFp(group,p,a,b,ctx);
+end;
+
+function Load_EC_GROUP_get_curve_GFp(const group: PEC_GROUP; p: PBIGNUM; a: PBIGNUM; b: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_get_curve_GFp := LoadLibCryptoFunction('EC_GROUP_get_curve_GFp');
+  if not assigned(EC_GROUP_get_curve_GFp) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_curve_GFp');
+  Result := EC_GROUP_get_curve_GFp(group,p,a,b,ctx);
+end;
+
+function Load_EC_GROUP_set_curve_GF2m(group: PEC_GROUP; const p: PBIGNUM; const a: PBIGNUM; const b:PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_set_curve_GF2m := LoadLibCryptoFunction('EC_GROUP_set_curve_GF2m');
+  if not assigned(EC_GROUP_set_curve_GF2m) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_set_curve_GF2m');
+  Result := EC_GROUP_set_curve_GF2m(group,p,a,b,ctx);
+end;
+
+function Load_EC_GROUP_get_curve_GF2m(const group: PEC_GROUP; p: PBIGNUM; a: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_get_curve_GF2m := LoadLibCryptoFunction('EC_GROUP_get_curve_GF2m');
+  if not assigned(EC_GROUP_get_curve_GF2m) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_curve_GF2m');
+  Result := EC_GROUP_get_curve_GF2m(group,p,a,ctx);
+end;
+
+function Load_EC_GROUP_get_degree(const group: PEC_GROUP): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_get_degree := LoadLibCryptoFunction('EC_GROUP_get_degree');
+  if not assigned(EC_GROUP_get_degree) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_degree');
+  Result := EC_GROUP_get_degree(group);
+end;
+
+function Load_EC_GROUP_check(const group: PEC_GROUP; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_check := LoadLibCryptoFunction('EC_GROUP_check');
+  if not assigned(EC_GROUP_check) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_check');
+  Result := EC_GROUP_check(group,ctx);
+end;
+
+function Load_EC_GROUP_check_discriminant(const group: PEC_GROUP; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_check_discriminant := LoadLibCryptoFunction('EC_GROUP_check_discriminant');
+  if not assigned(EC_GROUP_check_discriminant) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_check_discriminant');
+  Result := EC_GROUP_check_discriminant(group,ctx);
+end;
+
+function Load_EC_GROUP_cmp(const a: PEC_GROUP; const b: PEC_GROUP; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_cmp := LoadLibCryptoFunction('EC_GROUP_cmp');
+  if not assigned(EC_GROUP_cmp) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_cmp');
+  Result := EC_GROUP_cmp(a,b,ctx);
+end;
+
+function Load_EC_GROUP_new_curve_GFp(const p: PBIGNUM; const a: PBIGNUM; const b: PBIGNUM; ctx: PBN_CTX): PEC_GROUP; cdecl;
+begin
+  EC_GROUP_new_curve_GFp := LoadLibCryptoFunction('EC_GROUP_new_curve_GFp');
+  if not assigned(EC_GROUP_new_curve_GFp) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_new_curve_GFp');
+  Result := EC_GROUP_new_curve_GFp(p,a,b,ctx);
+end;
+
+function Load_EC_GROUP_new_curve_GF2m(const p: PBIGNUM; const a: PBIGNUM; const b: PBIGNUM; ctx: PBN_CTX): PEC_GROUP; cdecl;
+begin
+  EC_GROUP_new_curve_GF2m := LoadLibCryptoFunction('EC_GROUP_new_curve_GF2m');
+  if not assigned(EC_GROUP_new_curve_GF2m) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_new_curve_GF2m');
+  Result := EC_GROUP_new_curve_GF2m(p,a,b,ctx);
+end;
+
+function Load_EC_GROUP_new_by_curve_name(nid: TOpenSSL_C_INT): PEC_GROUP; cdecl;
+begin
+  EC_GROUP_new_by_curve_name := LoadLibCryptoFunction('EC_GROUP_new_by_curve_name');
+  if not assigned(EC_GROUP_new_by_curve_name) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_new_by_curve_name');
+  Result := EC_GROUP_new_by_curve_name(nid);
+end;
+
+function Load_EC_GROUP_new_from_ecparameters(const params: PECPARAMETERS): PEC_GROUP; cdecl;
+begin
+  EC_GROUP_new_from_ecparameters := LoadLibCryptoFunction('EC_GROUP_new_from_ecparameters');
+  if not assigned(EC_GROUP_new_from_ecparameters) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_new_from_ecparameters');
+  Result := EC_GROUP_new_from_ecparameters(params);
+end;
+
+function Load_EC_GROUP_get_ecparameters(const group: PEC_GROUP; params: PECPARAMETERS): PECPARAMETERS; cdecl;
+begin
+  EC_GROUP_get_ecparameters := LoadLibCryptoFunction('EC_GROUP_get_ecparameters');
+  if not assigned(EC_GROUP_get_ecparameters) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_ecparameters');
+  Result := EC_GROUP_get_ecparameters(group,params);
+end;
+
+function Load_EC_GROUP_new_from_ecpkparameters(const params: PECPKPARAMETERS): PEC_GROUP; cdecl;
+begin
+  EC_GROUP_new_from_ecpkparameters := LoadLibCryptoFunction('EC_GROUP_new_from_ecpkparameters');
+  if not assigned(EC_GROUP_new_from_ecpkparameters) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_new_from_ecpkparameters');
+  Result := EC_GROUP_new_from_ecpkparameters(params);
+end;
+
+function Load_EC_GROUP_get_ecpkparameters(const group: PEC_GROUP; params: PECPKPARAMETERS): PECPKPARAMETERS; cdecl;
+begin
+  EC_GROUP_get_ecpkparameters := LoadLibCryptoFunction('EC_GROUP_get_ecpkparameters');
+  if not assigned(EC_GROUP_get_ecpkparameters) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_ecpkparameters');
+  Result := EC_GROUP_get_ecpkparameters(group,params);
+end;
+
+function Load_EC_get_builtin_curves(r: PEC_builtin_curve; nitems: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+begin
+  EC_get_builtin_curves := LoadLibCryptoFunction('EC_get_builtin_curves');
+  if not assigned(EC_get_builtin_curves) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_get_builtin_curves');
+  Result := EC_get_builtin_curves(r,nitems);
+end;
+
+function Load_EC_curve_nid2nist(nid: TOpenSSL_C_INT): PAnsiChar; cdecl;
+begin
+  EC_curve_nid2nist := LoadLibCryptoFunction('EC_curve_nid2nist');
+  if not assigned(EC_curve_nid2nist) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_curve_nid2nist');
+  Result := EC_curve_nid2nist(nid);
+end;
+
+function Load_EC_curve_nist2nid(const name: PAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
+  EC_curve_nist2nid := LoadLibCryptoFunction('EC_curve_nist2nid');
+  if not assigned(EC_curve_nist2nid) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_curve_nist2nid');
+  Result := EC_curve_nist2nid(name);
+end;
+
+function Load_EC_POINT_new(const group: PEC_GROUP): PEC_POINT; cdecl;
+begin
+  EC_POINT_new := LoadLibCryptoFunction('EC_POINT_new');
+  if not assigned(EC_POINT_new) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_new');
+  Result := EC_POINT_new(group);
+end;
+
+procedure Load_EC_POINT_free(point: PEC_POINT); cdecl;
+begin
+  EC_POINT_free := LoadLibCryptoFunction('EC_POINT_free');
+  if not assigned(EC_POINT_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_free');
+  EC_POINT_free(point);
+end;
+
+procedure Load_EC_POINT_clear_free(point: PEC_POINT); cdecl;
+begin
+  EC_POINT_clear_free := LoadLibCryptoFunction('EC_POINT_clear_free');
+  if not assigned(EC_POINT_clear_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_clear_free');
+  EC_POINT_clear_free(point);
+end;
+
+function Load_EC_POINT_copy(dst: PEC_POINT; const src: PEC_POINT): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_copy := LoadLibCryptoFunction('EC_POINT_copy');
+  if not assigned(EC_POINT_copy) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_copy');
+  Result := EC_POINT_copy(dst,src);
+end;
+
+function Load_EC_POINT_dup(const src: PEC_POINT; const group: PEC_GROUP): PEC_POINT; cdecl;
+begin
+  EC_POINT_dup := LoadLibCryptoFunction('EC_POINT_dup');
+  if not assigned(EC_POINT_dup) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_dup');
+  Result := EC_POINT_dup(src,group);
+end;
+
+function Load_EC_POINT_method_of(const point: PEC_POINT): PEC_METHOD; cdecl;
+begin
+  EC_POINT_method_of := LoadLibCryptoFunction('EC_POINT_method_of');
+  if not assigned(EC_POINT_method_of) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_method_of');
+  Result := EC_POINT_method_of(point);
+end;
+
+function Load_EC_POINT_set_to_infinity(const group: PEC_GROUP; point: PEC_POINT): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_set_to_infinity := LoadLibCryptoFunction('EC_POINT_set_to_infinity');
+  if not assigned(EC_POINT_set_to_infinity) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_set_to_infinity');
+  Result := EC_POINT_set_to_infinity(group,point);
+end;
+
+function Load_EC_POINT_set_Jprojective_coordinates_GFp(const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; const y: PBIGNUM; const z: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_set_Jprojective_coordinates_GFp := LoadLibCryptoFunction('EC_POINT_set_Jprojective_coordinates_GFp');
+  if not assigned(EC_POINT_set_Jprojective_coordinates_GFp) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_set_Jprojective_coordinates_GFp');
+  Result := EC_POINT_set_Jprojective_coordinates_GFp(group,p,x,y,z,ctx);
+end;
+
+function Load_EC_POINT_get_Jprojective_coordinates_GFp(const group: PEC_METHOD; const p: PEC_POINT; x: PBIGNUM; y: PBIGNUM; z: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_get_Jprojective_coordinates_GFp := LoadLibCryptoFunction('EC_POINT_get_Jprojective_coordinates_GFp');
+  if not assigned(EC_POINT_get_Jprojective_coordinates_GFp) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_get_Jprojective_coordinates_GFp');
+  Result := EC_POINT_get_Jprojective_coordinates_GFp(group,p,x,y,z,ctx);
+end;
+
+function Load_EC_POINT_set_affine_coordinates(const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; const y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_set_affine_coordinates := LoadLibCryptoFunction('EC_POINT_set_affine_coordinates');
+  if not assigned(EC_POINT_set_affine_coordinates) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_set_affine_coordinates');
+  Result := EC_POINT_set_affine_coordinates(group,p,x,y,ctx);
+end;
+
+function Load_EC_POINT_get_affine_coordinates(const group: PEC_GROUP; const p: PEC_POINT; x: PBIGNUM; y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_get_affine_coordinates := LoadLibCryptoFunction('EC_POINT_get_affine_coordinates');
+  if not assigned(EC_POINT_get_affine_coordinates) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_get_affine_coordinates');
+  Result := EC_POINT_get_affine_coordinates(group,p,x,y,ctx);
+end;
+
+function Load_EC_POINT_set_affine_coordinates_GFp(const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; const y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_set_affine_coordinates_GFp := LoadLibCryptoFunction('EC_POINT_set_affine_coordinates_GFp');
+  if not assigned(EC_POINT_set_affine_coordinates_GFp) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_set_affine_coordinates_GFp');
+  Result := EC_POINT_set_affine_coordinates_GFp(group,p,x,y,ctx);
+end;
+
+function Load_EC_POINT_get_affine_coordinates_GFp(const group: PEC_GROUP; const p: PEC_POINT; x: PBIGNUM; y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_get_affine_coordinates_GFp := LoadLibCryptoFunction('EC_POINT_get_affine_coordinates_GFp');
+  if not assigned(EC_POINT_get_affine_coordinates_GFp) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_get_affine_coordinates_GFp');
+  Result := EC_POINT_get_affine_coordinates_GFp(group,p,x,y,ctx);
+end;
+
+function Load_EC_POINT_set_compressed_coordinates(const group: PEC_GROUP; p: PEC_POINT; x: PBIGNUM; y_bit: TOpenSSL_C_INT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_set_compressed_coordinates := LoadLibCryptoFunction('EC_POINT_set_compressed_coordinates');
+  if not assigned(EC_POINT_set_compressed_coordinates) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_set_compressed_coordinates');
+  Result := EC_POINT_set_compressed_coordinates(group,p,x,y_bit,ctx);
+end;
+
+function Load_EC_POINT_set_compressed_coordinates_GFp(const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; y_bit: TOpenSSL_C_INT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_set_compressed_coordinates_GFp := LoadLibCryptoFunction('EC_POINT_set_compressed_coordinates_GFp');
+  if not assigned(EC_POINT_set_compressed_coordinates_GFp) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_set_compressed_coordinates_GFp');
+  Result := EC_POINT_set_compressed_coordinates_GFp(group,p,x,y_bit,ctx);
+end;
+
+function Load_EC_POINT_set_affine_coordinates_GF2m(const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; const y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_set_affine_coordinates_GF2m := LoadLibCryptoFunction('EC_POINT_set_affine_coordinates_GF2m');
+  if not assigned(EC_POINT_set_affine_coordinates_GF2m) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_set_affine_coordinates_GF2m');
+  Result := EC_POINT_set_affine_coordinates_GF2m(group,p,x,y,ctx);
+end;
+
+function Load_EC_POINT_get_affine_coordinates_GF2m(const group: PEC_GROUP; p: PEC_POINT; x: PBIGNUM; y: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_get_affine_coordinates_GF2m := LoadLibCryptoFunction('EC_POINT_get_affine_coordinates_GF2m');
+  if not assigned(EC_POINT_get_affine_coordinates_GF2m) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_get_affine_coordinates_GF2m');
+  Result := EC_POINT_get_affine_coordinates_GF2m(group,p,x,y,ctx);
+end;
+
+function Load_EC_POINT_set_compressed_coordinates_GF2m(const group: PEC_GROUP; p: PEC_POINT; const x: PBIGNUM; y_bit: TOpenSSL_C_INT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_set_compressed_coordinates_GF2m := LoadLibCryptoFunction('EC_POINT_set_compressed_coordinates_GF2m');
+  if not assigned(EC_POINT_set_compressed_coordinates_GF2m) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_set_compressed_coordinates_GF2m');
+  Result := EC_POINT_set_compressed_coordinates_GF2m(group,p,x,y_bit,ctx);
+end;
+
+function Load_EC_POINT_point2oct(const group: PEC_GROUP; const p: PEC_POINT; form: point_conversion_form_t; buf: PByte; len: TOpenSSL_C_SIZET; ctx: PBN_CTX): TOpenSSL_C_SIZET; cdecl;
+begin
+  EC_POINT_point2oct := LoadLibCryptoFunction('EC_POINT_point2oct');
+  if not assigned(EC_POINT_point2oct) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_point2oct');
+  Result := EC_POINT_point2oct(group,p,form,buf,len,ctx);
+end;
+
+function Load_EC_POINT_oct2point(const group: PEC_GROUP; p: PEC_POINT; const buf: PByte; len: TOpenSSL_C_SIZET; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_oct2point := LoadLibCryptoFunction('EC_POINT_oct2point');
+  if not assigned(EC_POINT_oct2point) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_oct2point');
+  Result := EC_POINT_oct2point(group,p,buf,len,ctx);
+end;
+
+function Load_EC_POINT_point2buf(const group: PEC_GROUP; const point: PEC_POINT; form: point_conversion_form_t; pbuf: PPByte; ctx: PBN_CTX): TOpenSSL_C_SIZET; cdecl;
+begin
+  EC_POINT_point2buf := LoadLibCryptoFunction('EC_POINT_point2buf');
+  if not assigned(EC_POINT_point2buf) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_point2buf');
+  Result := EC_POINT_point2buf(group,point,form,pbuf,ctx);
+end;
+
+function Load_EC_POINT_point2bn(const group: PEC_GROUP; const p: PEC_POINT; form: point_conversion_form_t; bn: PBIGNUM; ctx: PBN_CTX): PBIGNUM; cdecl;
+begin
+  EC_POINT_point2bn := LoadLibCryptoFunction('EC_POINT_point2bn');
+  if not assigned(EC_POINT_point2bn) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_point2bn');
+  Result := EC_POINT_point2bn(group,p,form,bn,ctx);
+end;
+
+function Load_EC_POINT_bn2point(const group: PEC_GROUP; const bn: PBIGNUM; p: PEC_POINT; ctx: PBN_CTX): PEC_POINT; cdecl;
+begin
+  EC_POINT_bn2point := LoadLibCryptoFunction('EC_POINT_bn2point');
+  if not assigned(EC_POINT_bn2point) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_bn2point');
+  Result := EC_POINT_bn2point(group,bn,p,ctx);
+end;
+
+function Load_EC_POINT_point2hex(const group: PEC_GROUP; const p: PEC_POINT; form: point_conversion_form_t; ctx: PBN_CTX): PAnsiChar; cdecl;
+begin
+  EC_POINT_point2hex := LoadLibCryptoFunction('EC_POINT_point2hex');
+  if not assigned(EC_POINT_point2hex) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_point2hex');
+  Result := EC_POINT_point2hex(group,p,form,ctx);
+end;
+
+function Load_EC_POINT_hex2point(const group: PEC_GROUP; const buf: PAnsiChar; p: PEC_POINT; ctx: PBN_CTX): PEC_POINT; cdecl;
+begin
+  EC_POINT_hex2point := LoadLibCryptoFunction('EC_POINT_hex2point');
+  if not assigned(EC_POINT_hex2point) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_hex2point');
+  Result := EC_POINT_hex2point(group,buf,p,ctx);
+end;
+
+function Load_EC_POINT_add(const group: PEC_GROUP; r: PEC_POINT; const a: PEC_POINT; const b: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_add := LoadLibCryptoFunction('EC_POINT_add');
+  if not assigned(EC_POINT_add) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_add');
+  Result := EC_POINT_add(group,r,a,b,ctx);
+end;
+
+function Load_EC_POINT_dbl(const group: PEC_GROUP; r: PEC_POINT; const a: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_dbl := LoadLibCryptoFunction('EC_POINT_dbl');
+  if not assigned(EC_POINT_dbl) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_dbl');
+  Result := EC_POINT_dbl(group,r,a,ctx);
+end;
+
+function Load_EC_POINT_invert(const group: PEC_GROUP; a: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_invert := LoadLibCryptoFunction('EC_POINT_invert');
+  if not assigned(EC_POINT_invert) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_invert');
+  Result := EC_POINT_invert(group,a,ctx);
+end;
+
+function Load_EC_POINT_is_at_infinity(const group: PEC_GROUP; const p: PEC_POINT): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_is_at_infinity := LoadLibCryptoFunction('EC_POINT_is_at_infinity');
+  if not assigned(EC_POINT_is_at_infinity) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_is_at_infinity');
+  Result := EC_POINT_is_at_infinity(group,p);
+end;
+
+function Load_EC_POINT_is_on_curve(const group: PEC_GROUP; const point: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_is_on_curve := LoadLibCryptoFunction('EC_POINT_is_on_curve');
+  if not assigned(EC_POINT_is_on_curve) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_is_on_curve');
+  Result := EC_POINT_is_on_curve(group,point,ctx);
+end;
+
+function Load_EC_POINT_cmp(const group: PEC_GROUP; const a: PEC_POINT; const b: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_cmp := LoadLibCryptoFunction('EC_POINT_cmp');
+  if not assigned(EC_POINT_cmp) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_cmp');
+  Result := EC_POINT_cmp(group,a,b,ctx);
+end;
+
+function Load_EC_POINT_make_affine(const group: PEC_GROUP; point: PEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_make_affine := LoadLibCryptoFunction('EC_POINT_make_affine');
+  if not assigned(EC_POINT_make_affine) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_make_affine');
+  Result := EC_POINT_make_affine(group,point,ctx);
+end;
+
+function Load_EC_POINTs_make_affine(const group: PEC_METHOD; num: TOpenSSL_C_SIZET; points: PPEC_POINT; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINTs_make_affine := LoadLibCryptoFunction('EC_POINTs_make_affine');
+  if not assigned(EC_POINTs_make_affine) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINTs_make_affine');
+  Result := EC_POINTs_make_affine(group,num,points,ctx);
+end;
+
+function Load_EC_POINTs_mul(const group: PEC_GROUP; r: PEC_POINT; const n: PBIGNUM; num: TOpenSSL_C_SIZET; const p: PPEC_POINT; const m: PPBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINTs_mul := LoadLibCryptoFunction('EC_POINTs_mul');
+  if not assigned(EC_POINTs_mul) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINTs_mul');
+  Result := EC_POINTs_mul(group,r,n,num,p,m,ctx);
+end;
+
+function Load_EC_POINT_mul(const group: PEC_GROUP; r: PEC_POINT; const n: PBIGNUM; const q: PEC_POINT; const m: PBIGNUM; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_POINT_mul := LoadLibCryptoFunction('EC_POINT_mul');
+  if not assigned(EC_POINT_mul) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_POINT_mul');
+  Result := EC_POINT_mul(group,r,n,q,m,ctx);
+end;
+
+function Load_EC_GROUP_precompute_mult(group: PEC_GROUP; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_precompute_mult := LoadLibCryptoFunction('EC_GROUP_precompute_mult');
+  if not assigned(EC_GROUP_precompute_mult) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_precompute_mult');
+  Result := EC_GROUP_precompute_mult(group,ctx);
+end;
+
+function Load_EC_GROUP_have_precompute_mult(const group: PEC_GROUP): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_have_precompute_mult := LoadLibCryptoFunction('EC_GROUP_have_precompute_mult');
+  if not assigned(EC_GROUP_have_precompute_mult) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_have_precompute_mult');
+  Result := EC_GROUP_have_precompute_mult(group);
+end;
+
+function Load_ECPKPARAMETERS_it: PASN1_ITEM; cdecl;
+begin
+  ECPKPARAMETERS_it := LoadLibCryptoFunction('ECPKPARAMETERS_it');
+  if not assigned(ECPKPARAMETERS_it) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECPKPARAMETERS_it');
+  Result := ECPKPARAMETERS_it();
+end;
+
+function Load_ECPKPARAMETERS_new: PECPKPARAMETERS; cdecl;
+begin
+  ECPKPARAMETERS_new := LoadLibCryptoFunction('ECPKPARAMETERS_new');
+  if not assigned(ECPKPARAMETERS_new) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECPKPARAMETERS_new');
+  Result := ECPKPARAMETERS_new();
+end;
+
+procedure Load_ECPKPARAMETERS_free(a: PECPKPARAMETERS); cdecl;
+begin
+  ECPKPARAMETERS_free := LoadLibCryptoFunction('ECPKPARAMETERS_free');
+  if not assigned(ECPKPARAMETERS_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECPKPARAMETERS_free');
+  ECPKPARAMETERS_free(a);
+end;
+
+function Load_ECPARAMETERS_it: PASN1_ITEM; cdecl;
+begin
+  ECPARAMETERS_it := LoadLibCryptoFunction('ECPARAMETERS_it');
+  if not assigned(ECPARAMETERS_it) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECPARAMETERS_it');
+  Result := ECPARAMETERS_it();
+end;
+
+function Load_ECPARAMETERS_new: PECPARAMETERS; cdecl;
+begin
+  ECPARAMETERS_new := LoadLibCryptoFunction('ECPARAMETERS_new');
+  if not assigned(ECPARAMETERS_new) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECPARAMETERS_new');
+  Result := ECPARAMETERS_new();
+end;
+
+procedure Load_ECPARAMETERS_free(a: PECPARAMETERS); cdecl;
+begin
+  ECPARAMETERS_free := LoadLibCryptoFunction('ECPARAMETERS_free');
+  if not assigned(ECPARAMETERS_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECPARAMETERS_free');
+  ECPARAMETERS_free(a);
+end;
+
+function Load_EC_GROUP_get_basis_type(const group: PEC_GROUP): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_get_basis_type := LoadLibCryptoFunction('EC_GROUP_get_basis_type');
+  if not assigned(EC_GROUP_get_basis_type) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_basis_type');
+  Result := EC_GROUP_get_basis_type(group);
+end;
+
+function Load_EC_GROUP_get_trinomial_basis(const group: PEC_GROUP; k: POpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_get_trinomial_basis := LoadLibCryptoFunction('EC_GROUP_get_trinomial_basis');
+  if not assigned(EC_GROUP_get_trinomial_basis) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_trinomial_basis');
+  Result := EC_GROUP_get_trinomial_basis(group,k);
+end;
+
+function Load_EC_GROUP_get_pentanomial_basis(const group: PEC_GROUP; k1: POpenSSL_C_UINT; k2: POpenSSL_C_UINT; k3: POpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
+begin
+  EC_GROUP_get_pentanomial_basis := LoadLibCryptoFunction('EC_GROUP_get_pentanomial_basis');
+  if not assigned(EC_GROUP_get_pentanomial_basis) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_GROUP_get_pentanomial_basis');
+  Result := EC_GROUP_get_pentanomial_basis(group,k1,k2,k3);
+end;
+
+function Load_d2i_ECPKParameters(group: PPEC_GROUP; const in_: PPByte; len: TOpenSSL_C_LONG): PEC_GROUP; cdecl;
+begin
+  d2i_ECPKParameters := LoadLibCryptoFunction('d2i_ECPKParameters');
+  if not assigned(d2i_ECPKParameters) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_ECPKParameters');
+  Result := d2i_ECPKParameters(group,in_,len);
+end;
+
+function Load_i2d_ECPKParameters(const group: PEC_GROUP; out_: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  i2d_ECPKParameters := LoadLibCryptoFunction('i2d_ECPKParameters');
+  if not assigned(i2d_ECPKParameters) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_ECPKParameters');
+  Result := i2d_ECPKParameters(group,out_);
+end;
+
+function Load_ECPKParameters_print(bp: PBIO; const x: PEC_GROUP; off: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  ECPKParameters_print := LoadLibCryptoFunction('ECPKParameters_print');
+  if not assigned(ECPKParameters_print) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECPKParameters_print');
+  Result := ECPKParameters_print(bp,x,off);
+end;
+
+function Load_EC_KEY_new: PEC_KEY; cdecl;
+begin
+  EC_KEY_new := LoadLibCryptoFunction('EC_KEY_new');
+  if not assigned(EC_KEY_new) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_new');
+  Result := EC_KEY_new();
+end;
+
+function Load_EC_KEY_get_flags(const key: PEC_KEY): TOpenSSL_C_INT; cdecl;
+begin
+  EC_KEY_get_flags := LoadLibCryptoFunction('EC_KEY_get_flags');
+  if not assigned(EC_KEY_get_flags) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_get_flags');
+  Result := EC_KEY_get_flags(key);
+end;
+
+procedure Load_EC_KEY_set_flags(key: PEC_KEY; flags: TOpenSSL_C_INT); cdecl;
+begin
+  EC_KEY_set_flags := LoadLibCryptoFunction('EC_KEY_set_flags');
+  if not assigned(EC_KEY_set_flags) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_flags');
+  EC_KEY_set_flags(key,flags);
+end;
+
+procedure Load_EC_KEY_clear_flags(key: PEC_KEY; flags: TOpenSSL_C_INT); cdecl;
+begin
+  EC_KEY_clear_flags := LoadLibCryptoFunction('EC_KEY_clear_flags');
+  if not assigned(EC_KEY_clear_flags) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_clear_flags');
+  EC_KEY_clear_flags(key,flags);
+end;
+
+function Load_EC_KEY_new_by_curve_name(nid: TOpenSSL_C_INT): PEC_KEY; cdecl;
+begin
+  EC_KEY_new_by_curve_name := LoadLibCryptoFunction('EC_KEY_new_by_curve_name');
+  if not assigned(EC_KEY_new_by_curve_name) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_new_by_curve_name');
+  Result := EC_KEY_new_by_curve_name(nid);
+end;
+
+procedure Load_EC_KEY_free(key: PEC_KEY); cdecl;
+begin
+  EC_KEY_free := LoadLibCryptoFunction('EC_KEY_free');
+  if not assigned(EC_KEY_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_free');
+  EC_KEY_free(key);
+end;
+
+function Load_EC_KEY_copy(dst: PEC_KEY; const src: PEC_KEY): PEC_KEY; cdecl;
+begin
+  EC_KEY_copy := LoadLibCryptoFunction('EC_KEY_copy');
+  if not assigned(EC_KEY_copy) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_copy');
+  Result := EC_KEY_copy(dst,src);
+end;
+
+function Load_EC_KEY_dup(const src: PEC_KEY): PEC_KEY; cdecl;
+begin
+  EC_KEY_dup := LoadLibCryptoFunction('EC_KEY_dup');
+  if not assigned(EC_KEY_dup) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_dup');
+  Result := EC_KEY_dup(src);
+end;
+
+function Load_EC_KEY_up_ref(key: PEC_KEY): TOpenSSL_C_INT; cdecl;
+begin
+  EC_KEY_up_ref := LoadLibCryptoFunction('EC_KEY_up_ref');
+  if not assigned(EC_KEY_up_ref) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_up_ref');
+  Result := EC_KEY_up_ref(key);
+end;
+
+function Load_EC_KEY_get0_engine(const eckey: PEC_KEY): PENGINE; cdecl;
+begin
+  EC_KEY_get0_engine := LoadLibCryptoFunction('EC_KEY_get0_engine');
+  if not assigned(EC_KEY_get0_engine) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_get0_engine');
+  Result := EC_KEY_get0_engine(eckey);
+end;
+
+function Load_EC_KEY_get0_group(const key: PEC_KEY): PEC_GROUP; cdecl;
+begin
+  EC_KEY_get0_group := LoadLibCryptoFunction('EC_KEY_get0_group');
+  if not assigned(EC_KEY_get0_group) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_get0_group');
+  Result := EC_KEY_get0_group(key);
+end;
+
+function Load_EC_KEY_set_group(key: PEC_KEY; const group: PEC_GROUP): TOpenSSL_C_INT; cdecl;
+begin
+  EC_KEY_set_group := LoadLibCryptoFunction('EC_KEY_set_group');
+  if not assigned(EC_KEY_set_group) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_group');
+  Result := EC_KEY_set_group(key,group);
+end;
+
+function Load_EC_KEY_get0_private_key(const key: PEC_KEY): PBIGNUM; cdecl;
+begin
+  EC_KEY_get0_private_key := LoadLibCryptoFunction('EC_KEY_get0_private_key');
+  if not assigned(EC_KEY_get0_private_key) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_get0_private_key');
+  Result := EC_KEY_get0_private_key(key);
+end;
+
+function Load_EC_KEY_set_private_key(const key: PEC_KEY; const prv: PBIGNUM): TOpenSSL_C_INT; cdecl;
+begin
+  EC_KEY_set_private_key := LoadLibCryptoFunction('EC_KEY_set_private_key');
+  if not assigned(EC_KEY_set_private_key) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_private_key');
+  Result := EC_KEY_set_private_key(key,prv);
+end;
+
+function Load_EC_KEY_get0_public_key(const key: PEC_KEY): PEC_POINT; cdecl;
+begin
+  EC_KEY_get0_public_key := LoadLibCryptoFunction('EC_KEY_get0_public_key');
+  if not assigned(EC_KEY_get0_public_key) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_get0_public_key');
+  Result := EC_KEY_get0_public_key(key);
+end;
+
+function Load_EC_KEY_set_public_key(key: PEC_KEY; const pub: PEC_POINT): TOpenSSL_C_INT; cdecl;
+begin
+  EC_KEY_set_public_key := LoadLibCryptoFunction('EC_KEY_set_public_key');
+  if not assigned(EC_KEY_set_public_key) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_public_key');
+  Result := EC_KEY_set_public_key(key,pub);
+end;
+
+function Load_EC_KEY_get_enc_flags(const key: PEC_KEY): TOpenSSL_C_UINT; cdecl;
+begin
+  EC_KEY_get_enc_flags := LoadLibCryptoFunction('EC_KEY_get_enc_flags');
+  if not assigned(EC_KEY_get_enc_flags) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_get_enc_flags');
+  Result := EC_KEY_get_enc_flags(key);
+end;
+
+procedure Load_EC_KEY_set_enc_flags(eckey: PEC_KEY; flags: TOpenSSL_C_UINT); cdecl;
+begin
+  EC_KEY_set_enc_flags := LoadLibCryptoFunction('EC_KEY_set_enc_flags');
+  if not assigned(EC_KEY_set_enc_flags) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_enc_flags');
+  EC_KEY_set_enc_flags(eckey,flags);
+end;
+
+function Load_EC_KEY_get_conv_form(const key: PEC_KEY): point_conversion_form_t; cdecl;
+begin
+  EC_KEY_get_conv_form := LoadLibCryptoFunction('EC_KEY_get_conv_form');
+  if not assigned(EC_KEY_get_conv_form) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_get_conv_form');
+  Result := EC_KEY_get_conv_form(key);
+end;
+
+procedure Load_EC_KEY_set_conv_form(eckey: PEC_KEY; cform: point_conversion_form_t); cdecl;
+begin
+  EC_KEY_set_conv_form := LoadLibCryptoFunction('EC_KEY_set_conv_form');
+  if not assigned(EC_KEY_set_conv_form) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_conv_form');
+  EC_KEY_set_conv_form(eckey,cform);
+end;
+
+function Load_EC_KEY_set_ex_data(key: PEC_KEY; idx: TOpenSSL_C_INT; arg: Pointer): TOpenSSL_C_INT; cdecl;
+begin
+  EC_KEY_set_ex_data := LoadLibCryptoFunction('EC_KEY_set_ex_data');
+  if not assigned(EC_KEY_set_ex_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_ex_data');
+  Result := EC_KEY_set_ex_data(key,idx,arg);
+end;
+
+function Load_EC_KEY_get_ex_data(const key: PEC_KEY; idx: TOpenSSL_C_INT): Pointer; cdecl;
+begin
+  EC_KEY_get_ex_data := LoadLibCryptoFunction('EC_KEY_get_ex_data');
+  if not assigned(EC_KEY_get_ex_data) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_get_ex_data');
+  Result := EC_KEY_get_ex_data(key,idx);
+end;
+
+procedure Load_EC_KEY_set_asn1_flag(eckey: PEC_KEY; asn1_flag: TOpenSSL_C_INT); cdecl;
+begin
+  EC_KEY_set_asn1_flag := LoadLibCryptoFunction('EC_KEY_set_asn1_flag');
+  if not assigned(EC_KEY_set_asn1_flag) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_asn1_flag');
+  EC_KEY_set_asn1_flag(eckey,asn1_flag);
+end;
+
+function Load_EC_KEY_precompute_mult(key: PEC_KEY; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_KEY_precompute_mult := LoadLibCryptoFunction('EC_KEY_precompute_mult');
+  if not assigned(EC_KEY_precompute_mult) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_precompute_mult');
+  Result := EC_KEY_precompute_mult(key,ctx);
+end;
+
+function Load_EC_KEY_generate_key(key: PEC_KEY): TOpenSSL_C_INT; cdecl;
+begin
+  EC_KEY_generate_key := LoadLibCryptoFunction('EC_KEY_generate_key');
+  if not assigned(EC_KEY_generate_key) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_generate_key');
+  Result := EC_KEY_generate_key(key);
+end;
+
+function Load_EC_KEY_check_key(const key: PEC_KEY): TOpenSSL_C_INT; cdecl;
+begin
+  EC_KEY_check_key := LoadLibCryptoFunction('EC_KEY_check_key');
+  if not assigned(EC_KEY_check_key) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_check_key');
+  Result := EC_KEY_check_key(key);
+end;
+
+function Load_EC_KEY_can_sign(const eckey: PEC_KEY): TOpenSSL_C_INT; cdecl;
+begin
+  EC_KEY_can_sign := LoadLibCryptoFunction('EC_KEY_can_sign');
+  if not assigned(EC_KEY_can_sign) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_can_sign');
+  Result := EC_KEY_can_sign(eckey);
+end;
+
+function Load_EC_KEY_set_public_key_affine_coordinates(key: PEC_KEY; x: PBIGNUM; y: PBIGNUM): TOpenSSL_C_INT; cdecl;
+begin
+  EC_KEY_set_public_key_affine_coordinates := LoadLibCryptoFunction('EC_KEY_set_public_key_affine_coordinates');
+  if not assigned(EC_KEY_set_public_key_affine_coordinates) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_public_key_affine_coordinates');
+  Result := EC_KEY_set_public_key_affine_coordinates(key,x,y);
+end;
+
+function Load_EC_KEY_key2buf(const key: PEC_KEY; form: point_conversion_form_t; pbuf: PPByte; ctx: PBN_CTX): TOpenSSL_C_SIZET; cdecl;
+begin
+  EC_KEY_key2buf := LoadLibCryptoFunction('EC_KEY_key2buf');
+  if not assigned(EC_KEY_key2buf) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_key2buf');
+  Result := EC_KEY_key2buf(key,form,pbuf,ctx);
+end;
+
+function Load_EC_KEY_oct2key(key: PEC_KEY; const buf: PByte; len: TOpenSSL_C_SIZET; ctx: PBN_CTX): TOpenSSL_C_INT; cdecl;
+begin
+  EC_KEY_oct2key := LoadLibCryptoFunction('EC_KEY_oct2key');
+  if not assigned(EC_KEY_oct2key) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_oct2key');
+  Result := EC_KEY_oct2key(key,buf,len,ctx);
+end;
+
+function Load_EC_KEY_oct2priv(key: PEC_KEY; const buf: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
+  EC_KEY_oct2priv := LoadLibCryptoFunction('EC_KEY_oct2priv');
+  if not assigned(EC_KEY_oct2priv) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_oct2priv');
+  Result := EC_KEY_oct2priv(key,buf,len);
+end;
+
+function Load_EC_KEY_priv2oct(const key: PEC_KEY; buf: PByte; len: TOpenSSL_C_SIZET): TOpenSSL_C_SIZET; cdecl;
+begin
+  EC_KEY_priv2oct := LoadLibCryptoFunction('EC_KEY_priv2oct');
+  if not assigned(EC_KEY_priv2oct) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_priv2oct');
+  Result := EC_KEY_priv2oct(key,buf,len);
+end;
+
+function Load_EC_KEY_priv2buf(const eckey: PEC_KEY; buf: PPByte): TOpenSSL_C_SIZET; cdecl;
+begin
+  EC_KEY_priv2buf := LoadLibCryptoFunction('EC_KEY_priv2buf');
+  if not assigned(EC_KEY_priv2buf) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_priv2buf');
+  Result := EC_KEY_priv2buf(eckey,buf);
+end;
+
+function Load_d2i_ECPrivateKey(key: PPEC_KEY; const in_: PPByte; len: TOpenSSL_C_LONG): PEC_KEY; cdecl;
+begin
+  d2i_ECPrivateKey := LoadLibCryptoFunction('d2i_ECPrivateKey');
+  if not assigned(d2i_ECPrivateKey) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_ECPrivateKey');
+  Result := d2i_ECPrivateKey(key,in_,len);
+end;
+
+function Load_i2d_ECPrivateKey(key: PEC_KEY; out_: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  i2d_ECPrivateKey := LoadLibCryptoFunction('i2d_ECPrivateKey');
+  if not assigned(i2d_ECPrivateKey) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_ECPrivateKey');
+  Result := i2d_ECPrivateKey(key,out_);
+end;
+
+function Load_o2i_ECPublicKey(key: PPEC_KEY; const in_: PPByte; len: TOpenSSL_C_LONG): PEC_KEY; cdecl;
+begin
+  o2i_ECPublicKey := LoadLibCryptoFunction('o2i_ECPublicKey');
+  if not assigned(o2i_ECPublicKey) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('o2i_ECPublicKey');
+  Result := o2i_ECPublicKey(key,in_,len);
+end;
+
+function Load_i2o_ECPublicKey(const key: PEC_KEY; out_: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  i2o_ECPublicKey := LoadLibCryptoFunction('i2o_ECPublicKey');
+  if not assigned(i2o_ECPublicKey) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('i2o_ECPublicKey');
+  Result := i2o_ECPublicKey(key,out_);
+end;
+
+function Load_ECParameters_print(bp: PBIO; const key: PEC_KEY): TOpenSSL_C_INT; cdecl;
+begin
+  ECParameters_print := LoadLibCryptoFunction('ECParameters_print');
+  if not assigned(ECParameters_print) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECParameters_print');
+  Result := ECParameters_print(bp,key);
+end;
+
+function Load_EC_KEY_print(bp: PBIO; const key: PEC_KEY; off: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  EC_KEY_print := LoadLibCryptoFunction('EC_KEY_print');
+  if not assigned(EC_KEY_print) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_print');
+  Result := EC_KEY_print(bp,key,off);
+end;
+
+function Load_EC_KEY_OpenSSL: PEC_KEY_METHOD; cdecl;
+begin
+  EC_KEY_OpenSSL := LoadLibCryptoFunction('EC_KEY_OpenSSL');
+  if not assigned(EC_KEY_OpenSSL) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_OpenSSL');
+  Result := EC_KEY_OpenSSL();
+end;
+
+function Load_EC_KEY_get_default_method: PEC_KEY_METHOD; cdecl;
+begin
+  EC_KEY_get_default_method := LoadLibCryptoFunction('EC_KEY_get_default_method');
+  if not assigned(EC_KEY_get_default_method) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_get_default_method');
+  Result := EC_KEY_get_default_method();
+end;
+
+procedure Load_EC_KEY_set_default_method(const meth: PEC_KEY_METHOD); cdecl;
+begin
+  EC_KEY_set_default_method := LoadLibCryptoFunction('EC_KEY_set_default_method');
+  if not assigned(EC_KEY_set_default_method) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_default_method');
+  EC_KEY_set_default_method(meth);
+end;
+
+function Load_EC_KEY_get_method(const key: PEC_KEY): PEC_KEY_METHOD; cdecl;
+begin
+  EC_KEY_get_method := LoadLibCryptoFunction('EC_KEY_get_method');
+  if not assigned(EC_KEY_get_method) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_get_method');
+  Result := EC_KEY_get_method(key);
+end;
+
+function Load_EC_KEY_set_method(key: PEC_KEY; const meth: PEC_KEY_METHOD): TOpenSSL_C_INT; cdecl;
+begin
+  EC_KEY_set_method := LoadLibCryptoFunction('EC_KEY_set_method');
+  if not assigned(EC_KEY_set_method) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_set_method');
+  Result := EC_KEY_set_method(key,meth);
+end;
+
+function Load_EC_KEY_new_method(engine: PENGINE): PEC_KEY; cdecl;
+begin
+  EC_KEY_new_method := LoadLibCryptoFunction('EC_KEY_new_method');
+  if not assigned(EC_KEY_new_method) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_new_method');
+  Result := EC_KEY_new_method(engine);
+end;
+
+function Load_ECDH_KDF_X9_62(out_: PByte; outlen: TOpenSSL_C_SIZET; const Z: PByte; Zlen: TOpenSSL_C_SIZET; const sinfo: PByte; sinfolen: TOpenSSL_C_SIZET; const md: PEVP_MD): TOpenSSL_C_INT; cdecl;
+begin
+  ECDH_KDF_X9_62 := LoadLibCryptoFunction('ECDH_KDF_X9_62');
+  if not assigned(ECDH_KDF_X9_62) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECDH_KDF_X9_62');
+  Result := ECDH_KDF_X9_62(out_,outlen,Z,Zlen,sinfo,sinfolen,md);
+end;
+
+function Load_ECDH_compute_key(out_: Pointer; oulen: TOpenSSL_C_SIZET; const pub_key: PEC_POINT; const ecdh: PEC_KEY; kdf: ECDH_compute_key_KDF): TOpenSSL_C_INT; cdecl;
+begin
+  ECDH_compute_key := LoadLibCryptoFunction('ECDH_compute_key');
+  if not assigned(ECDH_compute_key) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECDH_compute_key');
+  Result := ECDH_compute_key(out_,oulen,pub_key,ecdh,kdf);
+end;
+
+function Load_ECDSA_SIG_new: PECDSA_SIG; cdecl;
+begin
+  ECDSA_SIG_new := LoadLibCryptoFunction('ECDSA_SIG_new');
+  if not assigned(ECDSA_SIG_new) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_SIG_new');
+  Result := ECDSA_SIG_new();
+end;
+
+procedure Load_ECDSA_SIG_free(sig: PECDSA_SIG); cdecl;
+begin
+  ECDSA_SIG_free := LoadLibCryptoFunction('ECDSA_SIG_free');
+  if not assigned(ECDSA_SIG_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_SIG_free');
+  ECDSA_SIG_free(sig);
+end;
+
+function Load_i2d_ECDSA_SIG(const sig: PECDSA_SIG; pp: PPByte): TOpenSSL_C_INT; cdecl;
+begin
+  i2d_ECDSA_SIG := LoadLibCryptoFunction('i2d_ECDSA_SIG');
+  if not assigned(i2d_ECDSA_SIG) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('i2d_ECDSA_SIG');
+  Result := i2d_ECDSA_SIG(sig,pp);
+end;
+
+function Load_d2i_ECDSA_SIG(sig: PPECDSA_SIG; const pp: PPByte; len: TOpenSSL_C_LONG): PECDSA_SIG; cdecl;
+begin
+  d2i_ECDSA_SIG := LoadLibCryptoFunction('d2i_ECDSA_SIG');
+  if not assigned(d2i_ECDSA_SIG) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('d2i_ECDSA_SIG');
+  Result := d2i_ECDSA_SIG(sig,pp,len);
+end;
+
+procedure Load_ECDSA_SIG_get0(const sig: PECDSA_SIG; const pr: PPBIGNUM; const ps: PPBIGNUM); cdecl;
+begin
+  ECDSA_SIG_get0 := LoadLibCryptoFunction('ECDSA_SIG_get0');
+  if not assigned(ECDSA_SIG_get0) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_SIG_get0');
+  ECDSA_SIG_get0(sig,pr,ps);
+end;
+
+function Load_ECDSA_SIG_get0_r(const sig: PECDSA_SIG): PBIGNUM; cdecl;
+begin
+  ECDSA_SIG_get0_r := LoadLibCryptoFunction('ECDSA_SIG_get0_r');
+  if not assigned(ECDSA_SIG_get0_r) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_SIG_get0_r');
+  Result := ECDSA_SIG_get0_r(sig);
+end;
+
+function Load_ECDSA_SIG_get0_s(const sig: PECDSA_SIG): PBIGNUM; cdecl;
+begin
+  ECDSA_SIG_get0_s := LoadLibCryptoFunction('ECDSA_SIG_get0_s');
+  if not assigned(ECDSA_SIG_get0_s) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_SIG_get0_s');
+  Result := ECDSA_SIG_get0_s(sig);
+end;
+
+function Load_ECDSA_SIG_set0(sig: PECDSA_SIG; r: PBIGNUM; s: PBIGNUM): TOpenSSL_C_INT; cdecl;
+begin
+  ECDSA_SIG_set0 := LoadLibCryptoFunction('ECDSA_SIG_set0');
+  if not assigned(ECDSA_SIG_set0) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_SIG_set0');
+  Result := ECDSA_SIG_set0(sig,r,s);
+end;
+
+function Load_ECDSA_do_sign(const dgst: PByte; dgst_len: TOpenSSL_C_INT; eckey: PEC_KEY): PECDSA_SIG; cdecl;
+begin
+  ECDSA_do_sign := LoadLibCryptoFunction('ECDSA_do_sign');
+  if not assigned(ECDSA_do_sign) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_do_sign');
+  Result := ECDSA_do_sign(dgst,dgst_len,eckey);
+end;
+
+function Load_ECDSA_do_sign_ex(const dgst: PByte; dgst_len: TOpenSSL_C_INT; const kinv: PBIGNUM; const rp: PBIGNUM; eckey: PEC_KEY): PECDSA_SIG; cdecl;
+begin
+  ECDSA_do_sign_ex := LoadLibCryptoFunction('ECDSA_do_sign_ex');
+  if not assigned(ECDSA_do_sign_ex) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_do_sign_ex');
+  Result := ECDSA_do_sign_ex(dgst,dgst_len,kinv,rp,eckey);
+end;
+
+function Load_ECDSA_do_verify(const dgst: PByte; dgst_len: TOpenSSL_C_INT; const sig: PECDSA_SIG; eckey: PEC_KEY): TOpenSSL_C_INT; cdecl;
+begin
+  ECDSA_do_verify := LoadLibCryptoFunction('ECDSA_do_verify');
+  if not assigned(ECDSA_do_verify) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_do_verify');
+  Result := ECDSA_do_verify(dgst,dgst_len,sig,eckey);
+end;
+
+function Load_ECDSA_sign_setup(eckey: PEC_KEY; ctx: PBN_CTX; kiv: PPBIGNUM; rp: PPBIGNUM): TOpenSSL_C_INT; cdecl;
+begin
+  ECDSA_sign_setup := LoadLibCryptoFunction('ECDSA_sign_setup');
+  if not assigned(ECDSA_sign_setup) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_sign_setup');
+  Result := ECDSA_sign_setup(eckey,ctx,kiv,rp);
+end;
+
+function Load_ECDSA_sign(type_: TOpenSSL_C_INT; const dgst: PByte; dgstlen: TOpenSSL_C_INT; sig: PByte; siglen: POpenSSL_C_UINT; eckey: PEC_KEY): TOpenSSL_C_INT; cdecl;
+begin
+  ECDSA_sign := LoadLibCryptoFunction('ECDSA_sign');
+  if not assigned(ECDSA_sign) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_sign');
+  Result := ECDSA_sign(type_,dgst,dgstlen,sig,siglen,eckey);
+end;
+
+function Load_ECDSA_sign_ex(type_: TOpenSSL_C_INT; const dgst: PByte; dgstlen: TOpenSSL_C_INT; sig: PByte; siglen: POpenSSL_C_UINT; const kinv: PBIGNUM; const rp: PBIGNUM; eckey: PEC_KEY): TOpenSSL_C_INT; cdecl;
+begin
+  ECDSA_sign_ex := LoadLibCryptoFunction('ECDSA_sign_ex');
+  if not assigned(ECDSA_sign_ex) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_sign_ex');
+  Result := ECDSA_sign_ex(type_,dgst,dgstlen,sig,siglen,kinv,rp,eckey);
+end;
+
+function Load_ECDSA_verify(type_: TOpenSSL_C_INT; const dgst: PByte; dgstlen: TOpenSSL_C_INT; const sig: PByte; siglen: TOpenSSL_C_INT; eckey: PEC_KEY): TOpenSSL_C_INT; cdecl;
+begin
+  ECDSA_verify := LoadLibCryptoFunction('ECDSA_verify');
+  if not assigned(ECDSA_verify) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_verify');
+  Result := ECDSA_verify(type_,dgst,dgstlen,sig,siglen,eckey);
+end;
+
+function Load_ECDSA_size(const eckey: PEC_KEY): TOpenSSL_C_INT; cdecl;
+begin
+  ECDSA_size := LoadLibCryptoFunction('ECDSA_size');
+  if not assigned(ECDSA_size) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('ECDSA_size');
+  Result := ECDSA_size(eckey);
+end;
+
+function Load_EC_KEY_METHOD_new(const meth: PEC_KEY_METHOD): PEC_KEY_METHOD; cdecl;
+begin
+  EC_KEY_METHOD_new := LoadLibCryptoFunction('EC_KEY_METHOD_new');
+  if not assigned(EC_KEY_METHOD_new) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_new');
+  Result := EC_KEY_METHOD_new(meth);
+end;
+
+procedure Load_EC_KEY_METHOD_free(meth: PEC_KEY_METHOD); cdecl;
+begin
+  EC_KEY_METHOD_free := LoadLibCryptoFunction('EC_KEY_METHOD_free');
+  if not assigned(EC_KEY_METHOD_free) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_free');
+  EC_KEY_METHOD_free(meth);
+end;
+
+procedure Load_EC_KEY_METHOD_set_init(meth: PEC_KEY_METHOD; init: EC_KEY_METHOD_init_init; finish: EC_KEY_METHOD_init_finish; copy: EC_KEY_METHOD_init_copy; set_group: EC_KEY_METHOD_init_set_group; set_private: EC_KEY_METHOD_init_set_private; set_public: EC_KEY_METHOD_init_set_public); cdecl;
+begin
+  EC_KEY_METHOD_set_init := LoadLibCryptoFunction('EC_KEY_METHOD_set_init');
+  if not assigned(EC_KEY_METHOD_set_init) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_set_init');
+  EC_KEY_METHOD_set_init(meth,init,finish,copy,set_group,set_private,set_public);
+end;
+
+procedure Load_EC_KEY_METHOD_set_keygen(meth: PEC_KEY_METHOD; keygen: EC_KEY_METHOD_keygen_keygen); cdecl;
+begin
+  EC_KEY_METHOD_set_keygen := LoadLibCryptoFunction('EC_KEY_METHOD_set_keygen');
+  if not assigned(EC_KEY_METHOD_set_keygen) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_set_keygen');
+  EC_KEY_METHOD_set_keygen(meth,keygen);
+end;
+
+procedure Load_EC_KEY_METHOD_set_compute_key(meth: PEC_KEY_METHOD; ckey: EC_KEY_METHOD_compute_key_ckey); cdecl;
+begin
+  EC_KEY_METHOD_set_compute_key := LoadLibCryptoFunction('EC_KEY_METHOD_set_compute_key');
+  if not assigned(EC_KEY_METHOD_set_compute_key) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_set_compute_key');
+  EC_KEY_METHOD_set_compute_key(meth,ckey);
+end;
+
+procedure Load_EC_KEY_METHOD_set_sign(meth: PEC_KEY_METHOD; sign: EC_KEY_METHOD_sign_sign; sign_setup: EC_KEY_METHOD_sign_sign_setup; sign_sig: EC_KEY_METHOD_sign_sign_sig); cdecl;
+begin
+  EC_KEY_METHOD_set_sign := LoadLibCryptoFunction('EC_KEY_METHOD_set_sign');
+  if not assigned(EC_KEY_METHOD_set_sign) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_set_sign');
+  EC_KEY_METHOD_set_sign(meth,sign,sign_setup,sign_sig);
+end;
+
+procedure Load_EC_KEY_METHOD_set_verify(meth: PEC_KEY_METHOD; verify: EC_KEY_METHOD_verify_verify; verify_sig: EC_KEY_METHOD_verify_verify_sig); cdecl;
+begin
+  EC_KEY_METHOD_set_verify := LoadLibCryptoFunction('EC_KEY_METHOD_set_verify');
+  if not assigned(EC_KEY_METHOD_set_verify) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_set_verify');
+  EC_KEY_METHOD_set_verify(meth,verify,verify_sig);
+end;
+
+procedure Load_EC_KEY_METHOD_get_init(const meth: PEC_KEY_METHOD; pinit: PEC_KEY_METHOD_init_init; pfinish: PEC_KEY_METHOD_init_finish; pcopy: PEC_KEY_METHOD_init_copy; pset_group: PEC_KEY_METHOD_init_set_group; pset_private: PEC_KEY_METHOD_init_set_private; pset_public: PEC_KEY_METHOD_init_set_public); cdecl;
+begin
+  EC_KEY_METHOD_get_init := LoadLibCryptoFunction('EC_KEY_METHOD_get_init');
+  if not assigned(EC_KEY_METHOD_get_init) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_get_init');
+  EC_KEY_METHOD_get_init(meth,pinit,pfinish,pcopy,pset_group,pset_private,pset_public);
+end;
+
+procedure Load_EC_KEY_METHOD_get_keygen(const meth: PEC_KEY_METHOD; pkeygen: PEC_KEY_METHOD_keygen_keygen); cdecl;
+begin
+  EC_KEY_METHOD_get_keygen := LoadLibCryptoFunction('EC_KEY_METHOD_get_keygen');
+  if not assigned(EC_KEY_METHOD_get_keygen) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_get_keygen');
+  EC_KEY_METHOD_get_keygen(meth,pkeygen);
+end;
+
+procedure Load_EC_KEY_METHOD_get_compute_key(const meth: PEC_KEY_METHOD; pck: PEC_KEY_METHOD_compute_key_ckey); cdecl;
+begin
+  EC_KEY_METHOD_get_compute_key := LoadLibCryptoFunction('EC_KEY_METHOD_get_compute_key');
+  if not assigned(EC_KEY_METHOD_get_compute_key) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_get_compute_key');
+  EC_KEY_METHOD_get_compute_key(meth,pck);
+end;
+
+procedure Load_EC_KEY_METHOD_get_sign(const meth: PEC_KEY_METHOD; psign: PEC_KEY_METHOD_sign_sign; psign_setup: PEC_KEY_METHOD_sign_sign_setup; psign_sig: PEC_KEY_METHOD_sign_sign_sig); cdecl;
+begin
+  EC_KEY_METHOD_get_sign := LoadLibCryptoFunction('EC_KEY_METHOD_get_sign');
+  if not assigned(EC_KEY_METHOD_get_sign) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_get_sign');
+  EC_KEY_METHOD_get_sign(meth,psign,psign_setup,psign_sig);
+end;
+
+procedure Load_EC_KEY_METHOD_get_verify(const meth: PEC_KEY_METHOD; pverify: PEC_KEY_METHOD_verify_verify; pverify_sig: PEC_KEY_METHOD_verify_verify_sig); cdecl;
+begin
+  EC_KEY_METHOD_get_verify := LoadLibCryptoFunction('EC_KEY_METHOD_get_verify');
+  if not assigned(EC_KEY_METHOD_get_verify) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('EC_KEY_METHOD_get_verify');
+  EC_KEY_METHOD_get_verify(meth,pverify,pverify_sig);
+end;
+
 
 procedure UnLoad;
 begin
-  EC_GFp_simple_method := nil;
-  EC_GFp_mont_method := nil;
-  EC_GFp_nist_method := nil;
+  EC_GFp_simple_method := Load_EC_GFp_simple_method;
+  EC_GFp_mont_method := Load_EC_GFp_mont_method;
+  EC_GFp_nist_method := Load_EC_GFp_nist_method;
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-  EC_GFp_nistp224_method := nil;
-  EC_GFp_nistp256_method := nil;
-  EC_GFp_nistp521_method := nil;
+  EC_GFp_nistp224_method := Load_EC_GFp_nistp224_method;
+  EC_GFp_nistp256_method := Load_EC_GFp_nistp256_method;
+  EC_GFp_nistp521_method := Load_EC_GFp_nistp521_method;
 {$ENDIF} //of OPENSSL_NO_LEGACY_SUPPORT
-  EC_GF2m_simple_method := nil;
-  EC_GROUP_new := nil;
-  EC_GROUP_free := nil;
-  EC_GROUP_clear_free := nil;
-  EC_GROUP_copy := nil;
-  EC_GROUP_dup := nil;
-  EC_GROUP_method_of := nil;
-  EC_METHOD_get_field_type := nil;
-  EC_GROUP_set_generator := nil;
-  EC_GROUP_get0_generator := nil;
-  EC_GROUP_get_mont_data := nil;
-  EC_GROUP_get_order := nil;
-  EC_GROUP_get0_order := nil;
-  EC_GROUP_order_bits := nil;
-  EC_GROUP_get_cofactor := nil;
-  EC_GROUP_get0_cofactor := nil;
-  EC_GROUP_set_curve_name := nil;
-  EC_GROUP_get_curve_name := nil;
-  EC_GROUP_set_asn1_flag := nil;
-  EC_GROUP_get_asn1_flag := nil;
-  EC_GROUP_set_point_conversion_form := nil;
-  EC_GROUP_get_point_conversion_form := nil;
-  EC_GROUP_get0_seed := nil;
-  EC_GROUP_get_seed_len := nil;
-  EC_GROUP_set_seed := nil;
-  EC_GROUP_set_curve := nil;
-  EC_GROUP_get_curve := nil;
-  EC_GROUP_set_curve_GFp := nil;
-  EC_GROUP_get_curve_GFp := nil;
-  EC_GROUP_set_curve_GF2m := nil;
-  EC_GROUP_get_curve_GF2m := nil;
-  EC_GROUP_get_degree := nil;
-  EC_GROUP_check := nil;
-  EC_GROUP_check_discriminant := nil;
-  EC_GROUP_cmp := nil;
-  EC_GROUP_new_curve_GFp := nil;
-  EC_GROUP_new_curve_GF2m := nil;
-  EC_GROUP_new_by_curve_name := nil;
-  EC_GROUP_new_from_ecparameters := nil;
-  EC_GROUP_get_ecparameters := nil;
-  EC_GROUP_new_from_ecpkparameters := nil;
-  EC_GROUP_get_ecpkparameters := nil;
-  EC_get_builtin_curves := nil;
-  EC_curve_nid2nist := nil;
-  EC_curve_nist2nid := nil;
-  EC_POINT_new := nil;
-  EC_POINT_free := nil;
-  EC_POINT_clear_free := nil;
-  EC_POINT_copy := nil;
-  EC_POINT_dup := nil;
-  EC_POINT_method_of := nil;
-  EC_POINT_set_to_infinity := nil;
-  EC_POINT_set_Jprojective_coordinates_GFp := nil;
-  EC_POINT_get_Jprojective_coordinates_GFp := nil;
-  EC_POINT_set_affine_coordinates := nil;
-  EC_POINT_get_affine_coordinates := nil;
-  EC_POINT_set_affine_coordinates_GFp := nil;
-  EC_POINT_get_affine_coordinates_GFp := nil;
-  EC_POINT_set_compressed_coordinates := nil;
-  EC_POINT_set_compressed_coordinates_GFp := nil;
-  EC_POINT_set_affine_coordinates_GF2m := nil;
-  EC_POINT_get_affine_coordinates_GF2m := nil;
-  EC_POINT_set_compressed_coordinates_GF2m := nil;
-  EC_POINT_point2oct := nil;
-  EC_POINT_oct2point := nil;
-  EC_POINT_point2buf := nil;
-  EC_POINT_point2bn := nil;
-  EC_POINT_bn2point := nil;
-  EC_POINT_point2hex := nil;
-  EC_POINT_hex2point := nil;
-  EC_POINT_add := nil;
-  EC_POINT_dbl := nil;
-  EC_POINT_invert := nil;
-  EC_POINT_is_at_infinity := nil;
-  EC_POINT_is_on_curve := nil;
-  EC_POINT_cmp := nil;
-  EC_POINT_make_affine := nil;
-  EC_POINTs_make_affine := nil;
-  EC_POINTs_mul := nil;
-  EC_POINT_mul := nil;
-  EC_GROUP_precompute_mult := nil;
-  EC_GROUP_have_precompute_mult := nil;
-  ECPKPARAMETERS_it := nil;
-  ECPKPARAMETERS_new := nil;
-  ECPKPARAMETERS_free := nil;
-  ECPARAMETERS_it := nil;
-  ECPARAMETERS_new := nil;
-  ECPARAMETERS_free := nil;
-  EC_GROUP_get_basis_type := nil;
-  EC_GROUP_get_trinomial_basis := nil;
-  EC_GROUP_get_pentanomial_basis := nil;
-  d2i_ECPKParameters := nil;
-  i2d_ECPKParameters := nil;
-  ECPKParameters_print := nil;
-  EC_KEY_new := nil;
-  EC_KEY_get_flags := nil;
-  EC_KEY_set_flags := nil;
-  EC_KEY_clear_flags := nil;
-  EC_KEY_new_by_curve_name := nil;
-  EC_KEY_free := nil;
-  EC_KEY_copy := nil;
-  EC_KEY_dup := nil;
-  EC_KEY_up_ref := nil;
-  EC_KEY_get0_engine := nil;
-  EC_KEY_get0_group := nil;
-  EC_KEY_set_group := nil;
-  EC_KEY_get0_private_key := nil;
-  EC_KEY_set_private_key := nil;
-  EC_KEY_get0_public_key := nil;
-  EC_KEY_set_public_key := nil;
-  EC_KEY_get_enc_flags := nil;
-  EC_KEY_set_enc_flags := nil;
-  EC_KEY_get_conv_form := nil;
-  EC_KEY_set_conv_form := nil;
-  EC_KEY_set_ex_data := nil;
-  EC_KEY_get_ex_data := nil;
-  EC_KEY_set_asn1_flag := nil;
-  EC_KEY_precompute_mult := nil;
-  EC_KEY_generate_key := nil;
-  EC_KEY_check_key := nil;
-  EC_KEY_can_sign := nil;
-  EC_KEY_set_public_key_affine_coordinates := nil;
-  EC_KEY_key2buf := nil;
-  EC_KEY_oct2key := nil;
-  EC_KEY_oct2priv := nil;
-  EC_KEY_priv2oct := nil;
-  EC_KEY_priv2buf := nil;
-  d2i_ECPrivateKey := nil;
-  i2d_ECPrivateKey := nil;
-  o2i_ECPublicKey := nil;
-  i2o_ECPublicKey := nil;
-  ECParameters_print := nil;
-  EC_KEY_print := nil;
-  EC_KEY_OpenSSL := nil;
-  EC_KEY_get_default_method := nil;
-  EC_KEY_set_default_method := nil;
-  EC_KEY_get_method := nil;
-  EC_KEY_set_method := nil;
-  EC_KEY_new_method := nil;
-  ECDH_KDF_X9_62 := nil;
-  ECDH_compute_key := nil;
-  ECDSA_SIG_new := nil;
-  ECDSA_SIG_free := nil;
-  i2d_ECDSA_SIG := nil;
-  d2i_ECDSA_SIG := nil;
-  ECDSA_SIG_get0 := nil;
-  ECDSA_SIG_get0_r := nil;
-  ECDSA_SIG_get0_s := nil;
-  ECDSA_SIG_set0 := nil;
-  ECDSA_do_sign := nil;
-  ECDSA_do_sign_ex := nil;
-  ECDSA_do_verify := nil;
-  ECDSA_sign_setup := nil;
-  ECDSA_sign := nil;
-  ECDSA_sign_ex := nil;
-  ECDSA_verify := nil;
-  ECDSA_size := nil;
-  EC_KEY_METHOD_new := nil;
-  EC_KEY_METHOD_free := nil;
-  EC_KEY_METHOD_set_init := nil;
-  EC_KEY_METHOD_set_keygen := nil;
-  EC_KEY_METHOD_set_compute_key := nil;
-  EC_KEY_METHOD_set_sign := nil;
-  EC_KEY_METHOD_set_verify := nil;
-  EC_KEY_METHOD_get_init := nil;
-  EC_KEY_METHOD_get_keygen := nil;
-  EC_KEY_METHOD_get_compute_key := nil;
-  EC_KEY_METHOD_get_sign := nil;
-  EC_KEY_METHOD_get_verify := nil;
+  EC_GF2m_simple_method := Load_EC_GF2m_simple_method;
+  EC_GROUP_new := Load_EC_GROUP_new;
+  EC_GROUP_free := Load_EC_GROUP_free;
+  EC_GROUP_clear_free := Load_EC_GROUP_clear_free;
+  EC_GROUP_copy := Load_EC_GROUP_copy;
+  EC_GROUP_dup := Load_EC_GROUP_dup;
+  EC_GROUP_method_of := Load_EC_GROUP_method_of;
+  EC_METHOD_get_field_type := Load_EC_METHOD_get_field_type;
+  EC_GROUP_set_generator := Load_EC_GROUP_set_generator;
+  EC_GROUP_get0_generator := Load_EC_GROUP_get0_generator;
+  EC_GROUP_get_mont_data := Load_EC_GROUP_get_mont_data;
+  EC_GROUP_get_order := Load_EC_GROUP_get_order;
+  EC_GROUP_get0_order := Load_EC_GROUP_get0_order;
+  EC_GROUP_order_bits := Load_EC_GROUP_order_bits;
+  EC_GROUP_get_cofactor := Load_EC_GROUP_get_cofactor;
+  EC_GROUP_get0_cofactor := Load_EC_GROUP_get0_cofactor;
+  EC_GROUP_set_curve_name := Load_EC_GROUP_set_curve_name;
+  EC_GROUP_get_curve_name := Load_EC_GROUP_get_curve_name;
+  EC_GROUP_set_asn1_flag := Load_EC_GROUP_set_asn1_flag;
+  EC_GROUP_get_asn1_flag := Load_EC_GROUP_get_asn1_flag;
+  EC_GROUP_set_point_conversion_form := Load_EC_GROUP_set_point_conversion_form;
+  EC_GROUP_get_point_conversion_form := Load_EC_GROUP_get_point_conversion_form;
+  EC_GROUP_get0_seed := Load_EC_GROUP_get0_seed;
+  EC_GROUP_get_seed_len := Load_EC_GROUP_get_seed_len;
+  EC_GROUP_set_seed := Load_EC_GROUP_set_seed;
+  EC_GROUP_set_curve := Load_EC_GROUP_set_curve;
+  EC_GROUP_get_curve := Load_EC_GROUP_get_curve;
+  EC_GROUP_set_curve_GFp := Load_EC_GROUP_set_curve_GFp;
+  EC_GROUP_get_curve_GFp := Load_EC_GROUP_get_curve_GFp;
+  EC_GROUP_set_curve_GF2m := Load_EC_GROUP_set_curve_GF2m;
+  EC_GROUP_get_curve_GF2m := Load_EC_GROUP_get_curve_GF2m;
+  EC_GROUP_get_degree := Load_EC_GROUP_get_degree;
+  EC_GROUP_check := Load_EC_GROUP_check;
+  EC_GROUP_check_discriminant := Load_EC_GROUP_check_discriminant;
+  EC_GROUP_cmp := Load_EC_GROUP_cmp;
+  EC_GROUP_new_curve_GFp := Load_EC_GROUP_new_curve_GFp;
+  EC_GROUP_new_curve_GF2m := Load_EC_GROUP_new_curve_GF2m;
+  EC_GROUP_new_by_curve_name := Load_EC_GROUP_new_by_curve_name;
+  EC_GROUP_new_from_ecparameters := Load_EC_GROUP_new_from_ecparameters;
+  EC_GROUP_get_ecparameters := Load_EC_GROUP_get_ecparameters;
+  EC_GROUP_new_from_ecpkparameters := Load_EC_GROUP_new_from_ecpkparameters;
+  EC_GROUP_get_ecpkparameters := Load_EC_GROUP_get_ecpkparameters;
+  EC_get_builtin_curves := Load_EC_get_builtin_curves;
+  EC_curve_nid2nist := Load_EC_curve_nid2nist;
+  EC_curve_nist2nid := Load_EC_curve_nist2nid;
+  EC_POINT_new := Load_EC_POINT_new;
+  EC_POINT_free := Load_EC_POINT_free;
+  EC_POINT_clear_free := Load_EC_POINT_clear_free;
+  EC_POINT_copy := Load_EC_POINT_copy;
+  EC_POINT_dup := Load_EC_POINT_dup;
+  EC_POINT_method_of := Load_EC_POINT_method_of;
+  EC_POINT_set_to_infinity := Load_EC_POINT_set_to_infinity;
+  EC_POINT_set_Jprojective_coordinates_GFp := Load_EC_POINT_set_Jprojective_coordinates_GFp;
+  EC_POINT_get_Jprojective_coordinates_GFp := Load_EC_POINT_get_Jprojective_coordinates_GFp;
+  EC_POINT_set_affine_coordinates := Load_EC_POINT_set_affine_coordinates;
+  EC_POINT_get_affine_coordinates := Load_EC_POINT_get_affine_coordinates;
+  EC_POINT_set_affine_coordinates_GFp := Load_EC_POINT_set_affine_coordinates_GFp;
+  EC_POINT_get_affine_coordinates_GFp := Load_EC_POINT_get_affine_coordinates_GFp;
+  EC_POINT_set_compressed_coordinates := Load_EC_POINT_set_compressed_coordinates;
+  EC_POINT_set_compressed_coordinates_GFp := Load_EC_POINT_set_compressed_coordinates_GFp;
+  EC_POINT_set_affine_coordinates_GF2m := Load_EC_POINT_set_affine_coordinates_GF2m;
+  EC_POINT_get_affine_coordinates_GF2m := Load_EC_POINT_get_affine_coordinates_GF2m;
+  EC_POINT_set_compressed_coordinates_GF2m := Load_EC_POINT_set_compressed_coordinates_GF2m;
+  EC_POINT_point2oct := Load_EC_POINT_point2oct;
+  EC_POINT_oct2point := Load_EC_POINT_oct2point;
+  EC_POINT_point2buf := Load_EC_POINT_point2buf;
+  EC_POINT_point2bn := Load_EC_POINT_point2bn;
+  EC_POINT_bn2point := Load_EC_POINT_bn2point;
+  EC_POINT_point2hex := Load_EC_POINT_point2hex;
+  EC_POINT_hex2point := Load_EC_POINT_hex2point;
+  EC_POINT_add := Load_EC_POINT_add;
+  EC_POINT_dbl := Load_EC_POINT_dbl;
+  EC_POINT_invert := Load_EC_POINT_invert;
+  EC_POINT_is_at_infinity := Load_EC_POINT_is_at_infinity;
+  EC_POINT_is_on_curve := Load_EC_POINT_is_on_curve;
+  EC_POINT_cmp := Load_EC_POINT_cmp;
+  EC_POINT_make_affine := Load_EC_POINT_make_affine;
+  EC_POINTs_make_affine := Load_EC_POINTs_make_affine;
+  EC_POINTs_mul := Load_EC_POINTs_mul;
+  EC_POINT_mul := Load_EC_POINT_mul;
+  EC_GROUP_precompute_mult := Load_EC_GROUP_precompute_mult;
+  EC_GROUP_have_precompute_mult := Load_EC_GROUP_have_precompute_mult;
+  ECPKPARAMETERS_it := Load_ECPKPARAMETERS_it;
+  ECPKPARAMETERS_new := Load_ECPKPARAMETERS_new;
+  ECPKPARAMETERS_free := Load_ECPKPARAMETERS_free;
+  ECPARAMETERS_it := Load_ECPARAMETERS_it;
+  ECPARAMETERS_new := Load_ECPARAMETERS_new;
+  ECPARAMETERS_free := Load_ECPARAMETERS_free;
+  EC_GROUP_get_basis_type := Load_EC_GROUP_get_basis_type;
+  EC_GROUP_get_trinomial_basis := Load_EC_GROUP_get_trinomial_basis;
+  EC_GROUP_get_pentanomial_basis := Load_EC_GROUP_get_pentanomial_basis;
+  d2i_ECPKParameters := Load_d2i_ECPKParameters;
+  i2d_ECPKParameters := Load_i2d_ECPKParameters;
+  ECPKParameters_print := Load_ECPKParameters_print;
+  EC_KEY_new := Load_EC_KEY_new;
+  EC_KEY_get_flags := Load_EC_KEY_get_flags;
+  EC_KEY_set_flags := Load_EC_KEY_set_flags;
+  EC_KEY_clear_flags := Load_EC_KEY_clear_flags;
+  EC_KEY_new_by_curve_name := Load_EC_KEY_new_by_curve_name;
+  EC_KEY_free := Load_EC_KEY_free;
+  EC_KEY_copy := Load_EC_KEY_copy;
+  EC_KEY_dup := Load_EC_KEY_dup;
+  EC_KEY_up_ref := Load_EC_KEY_up_ref;
+  EC_KEY_get0_engine := Load_EC_KEY_get0_engine;
+  EC_KEY_get0_group := Load_EC_KEY_get0_group;
+  EC_KEY_set_group := Load_EC_KEY_set_group;
+  EC_KEY_get0_private_key := Load_EC_KEY_get0_private_key;
+  EC_KEY_set_private_key := Load_EC_KEY_set_private_key;
+  EC_KEY_get0_public_key := Load_EC_KEY_get0_public_key;
+  EC_KEY_set_public_key := Load_EC_KEY_set_public_key;
+  EC_KEY_get_enc_flags := Load_EC_KEY_get_enc_flags;
+  EC_KEY_set_enc_flags := Load_EC_KEY_set_enc_flags;
+  EC_KEY_get_conv_form := Load_EC_KEY_get_conv_form;
+  EC_KEY_set_conv_form := Load_EC_KEY_set_conv_form;
+  EC_KEY_set_ex_data := Load_EC_KEY_set_ex_data;
+  EC_KEY_get_ex_data := Load_EC_KEY_get_ex_data;
+  EC_KEY_set_asn1_flag := Load_EC_KEY_set_asn1_flag;
+  EC_KEY_precompute_mult := Load_EC_KEY_precompute_mult;
+  EC_KEY_generate_key := Load_EC_KEY_generate_key;
+  EC_KEY_check_key := Load_EC_KEY_check_key;
+  EC_KEY_can_sign := Load_EC_KEY_can_sign;
+  EC_KEY_set_public_key_affine_coordinates := Load_EC_KEY_set_public_key_affine_coordinates;
+  EC_KEY_key2buf := Load_EC_KEY_key2buf;
+  EC_KEY_oct2key := Load_EC_KEY_oct2key;
+  EC_KEY_oct2priv := Load_EC_KEY_oct2priv;
+  EC_KEY_priv2oct := Load_EC_KEY_priv2oct;
+  EC_KEY_priv2buf := Load_EC_KEY_priv2buf;
+  d2i_ECPrivateKey := Load_d2i_ECPrivateKey;
+  i2d_ECPrivateKey := Load_i2d_ECPrivateKey;
+  o2i_ECPublicKey := Load_o2i_ECPublicKey;
+  i2o_ECPublicKey := Load_i2o_ECPublicKey;
+  ECParameters_print := Load_ECParameters_print;
+  EC_KEY_print := Load_EC_KEY_print;
+  EC_KEY_OpenSSL := Load_EC_KEY_OpenSSL;
+  EC_KEY_get_default_method := Load_EC_KEY_get_default_method;
+  EC_KEY_set_default_method := Load_EC_KEY_set_default_method;
+  EC_KEY_get_method := Load_EC_KEY_get_method;
+  EC_KEY_set_method := Load_EC_KEY_set_method;
+  EC_KEY_new_method := Load_EC_KEY_new_method;
+  ECDH_KDF_X9_62 := Load_ECDH_KDF_X9_62;
+  ECDH_compute_key := Load_ECDH_compute_key;
+  ECDSA_SIG_new := Load_ECDSA_SIG_new;
+  ECDSA_SIG_free := Load_ECDSA_SIG_free;
+  i2d_ECDSA_SIG := Load_i2d_ECDSA_SIG;
+  d2i_ECDSA_SIG := Load_d2i_ECDSA_SIG;
+  ECDSA_SIG_get0 := Load_ECDSA_SIG_get0;
+  ECDSA_SIG_get0_r := Load_ECDSA_SIG_get0_r;
+  ECDSA_SIG_get0_s := Load_ECDSA_SIG_get0_s;
+  ECDSA_SIG_set0 := Load_ECDSA_SIG_set0;
+  ECDSA_do_sign := Load_ECDSA_do_sign;
+  ECDSA_do_sign_ex := Load_ECDSA_do_sign_ex;
+  ECDSA_do_verify := Load_ECDSA_do_verify;
+  ECDSA_sign_setup := Load_ECDSA_sign_setup;
+  ECDSA_sign := Load_ECDSA_sign;
+  ECDSA_sign_ex := Load_ECDSA_sign_ex;
+  ECDSA_verify := Load_ECDSA_verify;
+  ECDSA_size := Load_ECDSA_size;
+  EC_KEY_METHOD_new := Load_EC_KEY_METHOD_new;
+  EC_KEY_METHOD_free := Load_EC_KEY_METHOD_free;
+  EC_KEY_METHOD_set_init := Load_EC_KEY_METHOD_set_init;
+  EC_KEY_METHOD_set_keygen := Load_EC_KEY_METHOD_set_keygen;
+  EC_KEY_METHOD_set_compute_key := Load_EC_KEY_METHOD_set_compute_key;
+  EC_KEY_METHOD_set_sign := Load_EC_KEY_METHOD_set_sign;
+  EC_KEY_METHOD_set_verify := Load_EC_KEY_METHOD_set_verify;
+  EC_KEY_METHOD_get_init := Load_EC_KEY_METHOD_get_init;
+  EC_KEY_METHOD_get_keygen := Load_EC_KEY_METHOD_get_keygen;
+  EC_KEY_METHOD_get_compute_key := Load_EC_KEY_METHOD_get_compute_key;
+  EC_KEY_METHOD_get_sign := Load_EC_KEY_METHOD_get_sign;
+  EC_KEY_METHOD_get_verify := Load_EC_KEY_METHOD_get_verify;
 end;
 {$ENDIF}
 
 initialization
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
-Register_SSLLoader(@Load);
 Register_SSLUnloader(@Unload);
 {$ENDIF}
 finalization
