@@ -475,8 +475,8 @@ function TOpenSSLDynamicLibProvider.FindLibrary(LibName , LibVersions : string;
 var LibVersionsList: TStringList;
     i: integer;
 begin
-  Result := DoLoadLibrary(OpenSSLPath + LibName);
-  if (Result = NilHandle) and (LibVersions <> '') then
+  Result := NilHandle;
+  if LibVersions <> '' then
   begin
     LibVersionsList := TStringList.Create;
     try
@@ -493,6 +493,8 @@ begin
        LibVersionsList.Free;
     end;
   end;
+  if Result = NilHandle then
+     DoLoadLibrary(OpenSSLPath + LibName);
 end;
 
 constructor TOpenSSLDynamicLibProvider.Create;
