@@ -84,7 +84,7 @@ const
     {$IFDEF UNIX}
   DirListDelimiter = ':';
   LibSuffix = '.so';
-  DefaultLibVersions = '.3:.1.1:.1.0.2:.1.0.0:.0.9.9:.0.9.8:.0.9.7:.0.9.6';
+  DefaultLibVersions = ':.3:.1.1:.1.0.2:.1.0.0:.0.9.9:.0.9.8:.0.9.7:.0.9.6';
   {$ENDIF}
   {$IFDEF WINDOWS}
   DirListDelimiter = ';';
@@ -491,8 +491,6 @@ begin
        LibVersionsList.Free;
     end;
   end;
-  if Result = NilHandle then
-     DoLoadLibrary(OpenSSLPath + LibName);
 end;
 
 constructor TOpenSSLDynamicLibProvider.Create;
