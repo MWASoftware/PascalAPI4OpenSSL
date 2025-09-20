@@ -95,10 +95,10 @@ const
   LegacyLibssl = 'ssleay32';
 
     {$IFDEF CPU64}
-    DefaultLibVersions = '-3-x64;-1-x64;';
+    DefaultLibVersions = '-3-x64;-1-x64';
     {$ENDIF}
     {$IFDEF CPU32}
-    DefaultLibVersions = '-3;-1;';
+    DefaultLibVersions = '-3;-1';
     {$ENDIF}
   {$ENDIF}
 
@@ -280,6 +280,12 @@ type
     procedure SetOpenSSLPath(const Value: string);
     function GetSSLLibVersions: string;
     procedure SetSSLLibVersions(AValue: string);
+    function GetSSLBaseLibName: string;
+    procedure SetSSLBaseLibName(AValue: string);
+    function GetCryptoBaseLibName: string;
+    procedure SetCryptoBaseLibName(AValue: string);
+    function GetAllowLegacyLibsFallback: boolean;
+    procedure SetAllowLegacyLibsFallback(AValue: boolean);
     function GetLibCryptoHandle: TLibHandle;
     function GetLibSSLHandle: TLibHandle;
     function GetLibCryptoFilePath: string;
@@ -289,6 +295,9 @@ type
     procedure Unload;
     function IsLoaded: boolean;
     property SSLLibVersions: string read GetSSLLibVersions write SetSSLLibVersions;
+    property SSLBaseLibame: string read GetSSLBaseLibName write SetSSLBaseLibName;
+    property CryptoBaseLibName: string read GetCryptoBaseLibName write SetCryptoBaseLibName;
+    property AllowLegacyLibsFallback: boolean read GetAllowLegacyLibsFallback write SetAllowLegacyLibsFallback;
 end;
 
 function GetIOpenSSLDDL: IOpenSSLDLL;
@@ -351,6 +360,9 @@ type
     FFailed: TStringList;
     FSSLLibVersions: string;
     FFailedToLoad: boolean;
+    FSSLBaseLibName: string;
+    FCryptoBaseLibName: string;
+    FAllowLegacyLibsFallback: boolean;
     function FindLibrary(LibName, LibVersions: string; var FilePath: string): TLibHandle;
   public
     constructor Create;
@@ -365,6 +377,12 @@ type
     procedure SetOpenSSLPath(const Value: string);
     function GetSSLLibVersions: string;
     procedure SetSSLLibVersions(AValue: string);
+    function GetSSLBaseLibName: string;
+    procedure SetSSLBaseLibName(AValue: string);
+    function GetCryptoBaseLibName: string;
+    procedure SetCryptoBaseLibName(AValue: string);
+    function GetAllowLegacyLibsFallback: boolean;
+    procedure SetAllowLegacyLibsFallback(AValue: boolean);
     function GetLibCryptoHandle: TLibHandle;
     function GetLibSSLHandle: TLibHandle;
     function GetLibCryptoFilePath: string;
@@ -500,6 +518,9 @@ begin
   inherited Create;
   FFailed := TStringList.Create();
   FSSLLibVersions := DefaultLibVersions;
+  FSSLBaseLibName := CLibSSLBase;
+  FCryptoBaseLibName := CLibCryptoBase;
+  FAllowLegacyLibsFallback := false;
 end;
 
 destructor TOpenSSLDynamicLibProvider.Destroy;
@@ -561,7 +582,46 @@ end;
 
 procedure TOpenSSLDynamicLibProvider.SetSSLLibVersions(AValue : string);
 begin
- FSSLLibVersions := AValue;
+  if FSSLLibVersions <> AValue then
+    UnLoad;
+  FSSLLibVersions := AValue;
+end;
+
+function TOpenSSLDynamicLibProvider.GetSSLBaseLibName: string;
+begin
+  Result := FSSLBaseLibName;
+end;
+
+procedure TOpenSSLDynamicLibProvider.SetSSLBaseLibName(AValue: string);
+begin
+  if FSSLBaseLibName <> AValue then
+    UnLoad;
+  FSSLBaseLibName := AValue;
+end;
+
+function TOpenSSLDynamicLibProvider.GetCryptoBaseLibName: string;
+begin
+  Result := FCryptoBaseLibName;
+end;
+
+procedure TOpenSSLDynamicLibProvider.SetCryptoBaseLibName(AValue: string);
+begin
+  if FCryptoBaseLibName <> AValue then
+    UnLoad;
+  FCryptoBaseLibName := AValue;
+end;
+
+function TOpenSSLDynamicLibProvider.GetAllowLegacyLibsFallback: boolean;
+begin
+  Result := FAllowLegacyLibsFallback;
+end;
+
+procedure TOpenSSLDynamicLibProvider.SetAllowLegacyLibsFallback(AValue: boolean
+  );
+begin
+  if FAllowLegacyLibsFallback <> AValue then
+    Unload;
+  FAllowLegacyLibsFallback := AValue;
 end;
 
 function TOpenSSLDynamicLibProvider.GetLibCryptoHandle : TLibHandle;
@@ -608,11 +668,11 @@ begin
   try
     if not IsLoaded then
     begin
-      FLibCrypto := FindLibrary(CLibCryptoBase + LibSuffix,FSSLLibVersions,FLibCryptoFilePath);
-      FLibSSL := FindLibrary(CLibSSLBase + LibSuffix,FSSLLibVersions,FLibSSLFilePath);
+      FLibCrypto := FindLibrary(FCryptoBaseLibName + LibSuffix,FSSLLibVersions,FLibCryptoFilePath);
+      FLibSSL := FindLibrary(FSSLBaseLibName + LibSuffix,FSSLLibVersions,FLibSSLFilePath);
       Result := not (FLibCrypto = NilHandle) and not (FLibSSL = NilHandle);
       {$IFDEF WINDOWS}
-      if not Result then
+      if not Result and FAllowLegacyLibsFallback then
       begin
         {try the legacy dll names}
         FLibCrypto := FindLibrary(LegacyLibCrypto,'',FLibCryptoFilePath);
