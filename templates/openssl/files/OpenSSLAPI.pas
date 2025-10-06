@@ -489,24 +489,33 @@ function TOpenSSLDynamicLibProvider.FindLibrary(LibName , LibVersions : string;
   end;
 
 var LibVersionsList: TStringList;
-    i: integer;
+    OpenSSLPaths: TStringList;
+    i, j: integer;
 begin
   Result := NilHandle;
   if LibVersions <> '' then
   begin
     LibVersionsList := TStringList.Create;
+    OpenSSLPaths := TStringList.Create;
     try
-      LibVersionsList.Delimiter := DirListDelimiter;
-      LibVersionsList.StrictDelimiter := true;
-      LibVersionsList.DelimitedText := LibVersions; {Split list on delimiter}
-      for i := 0 to LibVersionsList.Count - 1 do
+      OpenSSLPaths.Delimiter := DirListDelimiter;
+      OpenSSLPaths.StrictDelimiter := true;
+      OpenSSLPaths.DelimitedText := OpenSSLPath;
+      for j := 0 to OpenSSLPaths.Count -1 do
       begin
-        Result := DoLoadLibrary(OpenSSLPath + LibName + LibVersionsList[i]);
-        if Result <> NilHandle then
-          break;
+        LibVersionsList.Delimiter := DirListDelimiter;
+        LibVersionsList.StrictDelimiter := true;
+        LibVersionsList.DelimitedText := LibVersions; {Split list on delimiter}
+        for i := 0 to LibVersionsList.Count - 1 do
+        begin
+          Result := DoLoadLibrary(OpenSSLPaths[j] + LibName + LibVersionsList[i]);
+          if Result <> NilHandle then
+            break;
+        end;
       end;
     finally
        LibVersionsList.Free;
+       OpenSSLPaths.Free;
     end;
   end;
 end;
