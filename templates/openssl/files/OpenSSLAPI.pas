@@ -117,6 +117,14 @@ const
   {$ENDIF}
 {$ifend}
 
+{$if not declared(DirectorySeparator)}
+  {$IFDEF POSIX}
+  const DirectorySeparator = '/';
+  {$ELSE}
+  DirectorySeparator = '\';
+  {$ENDIF}
+{$ifend}
+
 type
   {$IFDEF FPC}
   TOpenSSL_C_LONG  = cLong;
@@ -488,14 +496,41 @@ function TOpenSSLDynamicLibProvider.FindLibrary(LibName , LibVersions : string;
     {$ifend}
   end;
 
-var LibVersionsList: TStringList;
-    OpenSSLPaths: TStringList;
-    i, j: integer;
+  function SearchLocations(SSLPath: string): TLibHandle;
+  var LibVersionsList: TStringList;
+      i: integer;
+  begin
+    if SSLPath <> '' then
+      SSLPath := IncludeTrailingPathDelimiter(SSLPath);
+    if LibVersions <> '' then
+    begin
+      LibVersionsList := TStringList.Create;
+      try
+        LibVersionsList.Delimiter := DirListDelimiter;
+        LibVersionsList.StrictDelimiter := true;
+        LibVersionsList.DelimitedText := LibVersions; {Split list on delimiter}
+        for i := 0 to LibVersionsList.Count - 1 do
+        begin
+          Result := DoLoadLibrary(SSLPath + LibName + LibVersionsList[i]);
+          if Result <> NilHandle then
+            break;
+        end;
+      finally
+         LibVersionsList.Free;
+      end;
+    end
+    else
+      Result := DoLoadLibrary(SSLPath + LibName );
+  end;
+
+var OpenSSLPaths: TStringList;
+    j: integer;
 begin
   Result := NilHandle;
-  if LibVersions <> '' then
+  if OpenSSLPath = '' then
+    Result := SearchLocations('')
+  else
   begin
-    LibVersionsList := TStringList.Create;
     OpenSSLPaths := TStringList.Create;
     try
       OpenSSLPaths.Delimiter := DirListDelimiter;
@@ -503,18 +538,11 @@ begin
       OpenSSLPaths.DelimitedText := OpenSSLPath;
       for j := 0 to OpenSSLPaths.Count -1 do
       begin
-        LibVersionsList.Delimiter := DirListDelimiter;
-        LibVersionsList.StrictDelimiter := true;
-        LibVersionsList.DelimitedText := LibVersions; {Split list on delimiter}
-        for i := 0 to LibVersionsList.Count - 1 do
-        begin
-          Result := DoLoadLibrary(OpenSSLPaths[j] + LibName + LibVersionsList[i]);
-          if Result <> NilHandle then
-            break;
-        end;
+        Result := SearchLocations(OpenSSLPaths[j]);
+        if Result <> NilHandle then
+          break;
       end;
     finally
-       LibVersionsList.Free;
        OpenSSLPaths.Free;
     end;
   end;
@@ -576,10 +604,7 @@ end;
 
 procedure TOpenSSLDynamicLibProvider.SetOpenSSLPath(const Value : string);
 begin
-  if Value = '' then
-    FOpenSSLPath := ''
-  else
-    FOpenSSLPath := IncludeTrailingPathDelimiter(Value);
+  FOpenSSLPath := Value;
 end;
 
 function TOpenSSLDynamicLibProvider.GetSSLLibVersions : string;
