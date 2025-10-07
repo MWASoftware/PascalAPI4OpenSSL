@@ -39,6 +39,9 @@ const
   {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
   OpenSSL_Using_Dynamic_Library_Load = true;
   {$ENDIF}
+  {$IFDEF OPENSSL_USE_SHARED_LIBRARY}
+  OpenSSL_Using_Shared_Library = true;
+  {$ENDIF}
 
   {The default SSLLibraryPath is empty. You can override this by setting the
    OPENSSL_LIBRARY_PATH environment variable to the absolute path of the location
