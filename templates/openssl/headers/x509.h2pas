@@ -1054,11 +1054,9 @@ type
 
 implementation
 
-
-//# define X509_NAME_hash(x) X509_NAME_hash_ex(x, NULL, NULL, NULL)
-function X509_NAME_hash(x: PX509_NAME): TOpenSSL_C_ULONG;
+function X509_NAME_hash_ex(const x: PX509_NAME; libctx: POSSL_LIB_CTX; const propq: PAnsiChar; ok: POpenSSL_C_INT): TOpenSSL_C_ULONG;
 begin
-  Result := X509_NAME_hash_ex(x,nil,nil,nil);
+  Result := X509_NAME_hash(x);
 end;
 
 const

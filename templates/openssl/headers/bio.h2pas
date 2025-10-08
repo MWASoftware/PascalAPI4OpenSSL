@@ -789,12 +789,6 @@ begin
   Result := BIO_ctrl(b, BIO_C_DO_STATE_MACHINE, 0, nil);
 end;
 
-//# define BIO_get_mem_data(b,pp)  BIO_ctrl(b,BIO_CTRL_INFO,0,(char (pp))
-function BIO_get_mem_data(b: PBIO; pp: PAnsiChar) : TOpenSSL_C_INT;
-begin
-  Result := BIO_ctrl(b, BIO_CTRL_INFO, 0, pp);
-end;
-
 //# define BIO_set_mem_buf(b,bm,c) BIO_ctrl(b,BIO_C_SET_BUF_MEM,c,(char (bm))
 function BIO_set_mem_buf(b: PBIO; bm: PAnsiChar; c: TOpenSSL_C_INT): TOpenSSL_C_INT;
 begin

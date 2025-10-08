@@ -2130,10 +2130,9 @@ type
 
 implementation
 
-//#   define SSL_get_peer_certificate SSL_get1_peer_certificate
-function SSL_get_peer_certificate(const s: PSSL): PX509;
+function SSL_get1_peer_certificate(const s: PSSL): PX509;
 begin
-  Result := SSL_get1_peer_certificate(s);
+  Result := SSL_get_peer_certificate(s);
 end;
 
 
@@ -2189,12 +2188,6 @@ end;
 function SSL_total_renegotiations(ssl: PSSL): TOpenSSL_C_LONG;
 begin
   Result := SSL_ctrl(ssl, SSL_CTRL_GET_TOTAL_RENEGOTIATIONS, 0, nil);
-end;
-
-//# define SSL_CTX_set_tmp_dh(ctx,dh)                        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_TMP_DH,0,(char *)(dh))
-function SSL_CTX_set_tmp_dh(ctx: PSSL_CTX; dh: PDH): TOpenSSL_C_LONG;
-begin
-  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_TMP_DH, 0, dh);
 end;
 
 //# define SSL_CTX_set_tmp_ecdh(ctx,ecdh)                    SSL_CTX_ctrl(ctx,SSL_CTRL_SET_TMP_ECDH,0,(char *)(ecdh))
@@ -2670,12 +2663,12 @@ begin
 end;
 {/passthrough}
 
-function SSL_get_app_data(const ssl: PSSL): Pointer ;
+function SSL_get_ex_data(const ssl: PSSL; idx: TOpenSSL_C_INT): Pointer;
 begin
-  Result := SSL_get_ex_data(ssl,0);
+  Result := SSL_get_app_data(ssl);
 end;
 
-procedure SSL_load_error_strings; 
+procedure SSL_load_error_strings;
 begin
   OPENSSL_init_ssl(OPENSSL_INIT_LOAD_SSL_STRINGS or OPENSSL_INIT_LOAD_CRYPTO_STRINGS,nil); 
 end;
@@ -2688,11 +2681,6 @@ end;
 function SSLeay_add_ssl_algorithms: TOpenSSL_C_INT;
 begin
   Result := SSL_library_init;
-end;
-
-function SSL_set_app_data(ssl: PSSL; data: Pointer): TOpenSSL_C_INT;
-begin
-  Result := SSL_set_ex_data(ssl,0,data);
 end;
 
 type
