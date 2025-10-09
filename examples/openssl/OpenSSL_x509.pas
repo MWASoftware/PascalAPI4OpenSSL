@@ -1190,11 +1190,6 @@ function X509_TRUST_get0_name(const xp: PX509_TRUST): PAnsiChar; cdecl; external
 function X509_TRUST_get_trust(const xp: PX509_TRUST): TOpenSSL_C_INT; cdecl; external CLibCrypto;
 function X509_NAME_hash_ex(const x: PX509_NAME; libctx: POSSL_LIB_CTX; const propq: PAnsiChar; ok: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl; external CLibCrypto;
 
-{Removed functions for which legacy support available - use is deprecated}
-
-{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-function X509_NAME_hash(x: PX509_NAME): TOpenSSL_C_ULONG; {removed 3.0.0}
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ELSE}
 
 {Declare external function initialisers - should not be called directly}
@@ -1956,13 +1951,6 @@ var
   X509_TRUST_get0_name: function (const xp: PX509_TRUST): PAnsiChar; cdecl = Load_X509_TRUST_get0_name;
   X509_TRUST_get_trust: function (const xp: PX509_TRUST): TOpenSSL_C_INT; cdecl = Load_X509_TRUST_get_trust;
   X509_NAME_hash_ex: function (const x: PX509_NAME; libctx: POSSL_LIB_CTX; const propq: PAnsiChar; ok: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl = Load_X509_NAME_hash_ex;
-
-{Removed functions for which legacy support available - use is deprecated}
-
-{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-var
-  X509_NAME_hash: function (x: PX509_NAME): TOpenSSL_C_ULONG; cdecl = Load_X509_NAME_hash; {removed 3.0.0}
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF}
 const
   X509_http_nbio_removed = ((((((byte(3) shl 8) or byte(0)) shl 8) or byte(0)) shl 8) or byte(0)) shl 4; {removed 3.0.0}
@@ -2022,8 +2010,6 @@ const
 implementation
 
 
-//# define X509_NAME_hash(x) X509_NAME_hash_ex(x, NULL, NULL, NULL)
-
 uses Classes,
      OpenSSLExceptionHandlers,
      OpenSSLResourceStrings;
@@ -2033,6 +2019,7 @@ uses Classes,
 var
   X509_http_nbio: function (rctx: POCSP_REQ_CTX; pcert: PPX509): TOpenSSL_C_INT; cdecl = Load_X509_http_nbio; {removed 3.0.0}
   X509_CRL_http_nbio: function (rctx: POCSP_REQ_CTX; pcrl: PPX509_CRL): TOpenSSL_C_INT; cdecl = Load_X509_CRL_http_nbio; {removed 3.0.0}
+  X509_NAME_hash: function (x: PX509_NAME): TOpenSSL_C_ULONG; cdecl = Load_X509_NAME_hash; {removed 3.0.0}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF}
 const
@@ -2119,25 +2106,12 @@ X509 = record
   end;   
 
 
-{$IFDEF OPENSSL_STATIC_LINK_MODEL}
-
-{Legacy Support Functions}
-
+{$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-function X509_NAME_hash(x: PX509_NAME): TOpenSSL_C_ULONG;
+function COMPAT_X509_NAME_hash_ex(const x: PX509_NAME; libctx: POSSL_LIB_CTX; const propq: PAnsiChar; ok: POpenSSL_C_INT): TOpenSSL_C_ULONG; cdecl;
 
 begin
-  Result := X509_NAME_hash_ex(x,nil,nil,nil);
-end;
-
-
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-{$ELSE}
-{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-function COMPAT_X509_NAME_hash(x: PX509_NAME): TOpenSSL_C_ULONG; cdecl;
-
-begin
-  Result := X509_NAME_hash_ex(x,nil,nil,nil);
+  Result := X509_NAME_hash(x);
 end;
 
 
@@ -4334,7 +4308,7 @@ function Load_X509_NAME_hash(x: PX509_NAME): TOpenSSL_C_ULONG; cdecl;
 begin
   X509_NAME_hash := LoadLibCryptoFunction('X509_NAME_hash');
   if not assigned(X509_NAME_hash) then
-    X509_NAME_hash := @COMPAT_X509_NAME_hash;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('X509_NAME_hash');
   Result := X509_NAME_hash(x);
 end;
 
@@ -5207,7 +5181,11 @@ function Load_X509_NAME_hash_ex(const x: PX509_NAME; libctx: POSSL_LIB_CTX; cons
 begin
   X509_NAME_hash_ex := LoadLibCryptoFunction('X509_NAME_hash_ex');
   if not assigned(X509_NAME_hash_ex) then
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+    X509_NAME_hash_ex := @COMPAT_X509_NAME_hash_ex;
+{$ELSE}
     EOpenSSLAPIFunctionNotPresent.RaiseException('X509_NAME_hash_ex');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
   Result := X509_NAME_hash_ex(x,libctx,propq,ok);
 end;
 

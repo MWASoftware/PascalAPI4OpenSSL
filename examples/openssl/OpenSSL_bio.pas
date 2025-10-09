@@ -577,7 +577,6 @@ function BIO_should_retry(b: PBIO): TOpenSSL_C_INT; {removed 1.0.0}
 function BIO_do_connect(b: PBIO): TOpenSSL_C_LONG; {removed 1.0.0}
 function BIO_do_accept(b: PBIO): TOpenSSL_C_LONG; {removed 1.0.0}
 function BIO_do_handshake(b: PBIO): TOpenSSL_C_LONG; {removed 1.0.0}
-function BIO_get_mem_data(b: PBIO; pp: PAnsiChar): TOpenSSL_C_INT; {removed 1.0.0}
 function BIO_set_mem_buf(b: PBIO; bm: PAnsiChar; c: TOpenSSL_C_INT): TOpenSSL_C_INT; {removed 1.0.0}
 function BIO_get_mem_ptr(b: PBIO; pp: PAnsiChar): TOpenSSL_C_INT; {removed 1.0.0}
 function BIO_set_mem_eof_return(b: PBIO; v: TOpenSSL_C_INT): TOpenSSL_C_INT; {removed 1.0.0}
@@ -867,7 +866,6 @@ var
   BIO_do_connect: function (b: PBIO): TOpenSSL_C_LONG; cdecl = Load_BIO_do_connect; {removed 1.0.0}
   BIO_do_accept: function (b: PBIO): TOpenSSL_C_LONG; cdecl = Load_BIO_do_accept; {removed 1.0.0}
   BIO_do_handshake: function (b: PBIO): TOpenSSL_C_LONG; cdecl = Load_BIO_do_handshake; {removed 1.0.0}
-  BIO_get_mem_data: function (b: PBIO; pp: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_BIO_get_mem_data; {removed 1.0.0}
   BIO_set_mem_buf: function (b: PBIO; bm: PAnsiChar; c: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_BIO_set_mem_buf; {removed 1.0.0}
   BIO_get_mem_ptr: function (b: PBIO; pp: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_BIO_get_mem_ptr; {removed 1.0.0}
   BIO_set_mem_eof_return: function (b: PBIO; v: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_BIO_set_mem_eof_return; {removed 1.0.0}
@@ -946,6 +944,8 @@ uses Classes,
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+var
+  BIO_get_mem_data: function (b: PBIO; pp: PAnsiChar): TOpenSSL_C_INT; cdecl = Load_BIO_get_mem_data; {removed 1.0.0}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF}
 {$IFDEF OPENSSL_STATIC_LINK_MODEL}
@@ -1079,15 +1079,6 @@ function BIO_do_handshake(b: PBIO): TOpenSSL_C_LONG;
 
 begin
   Result := BIO_ctrl(b, BIO_C_DO_STATE_MACHINE, 0, nil);
-end;
-
-//# define BIO_get_mem_data(b,pp)  BIO_ctrl(b,BIO_CTRL_INFO,0,(char (pp))
-
-
-function BIO_get_mem_data(b: PBIO; pp: PAnsiChar): TOpenSSL_C_INT;
-
-begin
-  Result := BIO_ctrl(b, BIO_CTRL_INFO, 0, pp);
 end;
 
 //# define BIO_set_mem_buf(b,bm,c) BIO_ctrl(b,BIO_C_SET_BUF_MEM,c,(char (bm))
@@ -1252,15 +1243,6 @@ begin
   Result := BIO_ctrl(b, BIO_C_DO_STATE_MACHINE, 0, nil);
 end;
 
-//# define BIO_get_mem_data(b,pp)  BIO_ctrl(b,BIO_CTRL_INFO,0,(char (pp))
-
-
-function COMPAT_BIO_get_mem_data(b: PBIO; pp: PAnsiChar): TOpenSSL_C_INT; cdecl;
-
-begin
-  Result := BIO_ctrl(b, BIO_CTRL_INFO, 0, pp);
-end;
-
 //# define BIO_set_mem_buf(b,bm,c) BIO_ctrl(b,BIO_C_SET_BUF_MEM,c,(char (bm))
 
 
@@ -1410,7 +1392,7 @@ function Load_BIO_get_mem_data(b: PBIO; pp: PAnsiChar): TOpenSSL_C_INT; cdecl;
 begin
   BIO_get_mem_data := LoadLibCryptoFunction('BIO_get_mem_data');
   if not assigned(BIO_get_mem_data) then
-    BIO_get_mem_data := @COMPAT_BIO_get_mem_data;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('BIO_get_mem_data');
   Result := BIO_get_mem_data(b,pp);
 end;
 

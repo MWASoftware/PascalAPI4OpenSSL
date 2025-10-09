@@ -592,11 +592,6 @@ function X509_policy_node_get0_parent(const node: PX509_POLICY_NODE): PX509_POLI
 
 
 
-{Removed functions for which legacy support available - use is deprecated}
-
-{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-function X509_STORE_CTX_get_app_data(ctx: PX509_STORE_CTX): Pointer; {removed 1.0.0}
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ELSE}
 
 {Declare external function initialisers - should not be called directly}
@@ -925,13 +920,6 @@ var
 
 
 
-
-{Removed functions for which legacy support available - use is deprecated}
-
-{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-var
-  X509_STORE_CTX_get_app_data: function (ctx: PX509_STORE_CTX): Pointer; cdecl = Load_X509_STORE_CTX_get_app_data; {removed 1.0.0}
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF}
 const
   X509_STORE_CTX_get_app_data_removed = ((((((byte(1) shl 8) or byte(0)) shl 8) or byte(0)) shl 8) or byte(0)) shl 4; {removed 1.0.0}
@@ -1018,6 +1006,8 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 {$MINENUMSIZE 4}
+var
+  X509_STORE_CTX_get_app_data: function (ctx: PX509_STORE_CTX): Pointer; cdecl = Load_X509_STORE_CTX_get_app_data; {removed 1.0.0}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF}
 type
@@ -1068,25 +1058,12 @@ begin
   Result := X509_LOOKUP_ctrl(ctx,X509_L_FILE_LOAD,name,type_,nil);
 end;
 
-{$IFDEF OPENSSL_STATIC_LINK_MODEL}
-
-{Legacy Support Functions}
-
+{$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-function X509_STORE_CTX_get_app_data(ctx: PX509_STORE_CTX): Pointer;
+function COMPAT_X509_STORE_CTX_get_ex_data(ctx: PX509_STORE_CTX; idx: TOpenSSL_C_INT): Pointer; cdecl;
 
 begin
-  Result := X509_STORE_CTX_get_ex_data(ctx,SSL_get_ex_data_X509_STORE_CTX_idx);
-end;
-
-
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-{$ELSE}
-{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-function COMPAT_X509_STORE_CTX_get_app_data(ctx: PX509_STORE_CTX): Pointer; cdecl;
-
-begin
-  Result := X509_STORE_CTX_get_ex_data(ctx,SSL_get_ex_data_X509_STORE_CTX_idx);
+  X509_STORE_CTX_get_app_data(ctx);
 end;
 
 
@@ -1153,7 +1130,7 @@ function Load_X509_STORE_CTX_get_app_data(ctx: PX509_STORE_CTX): Pointer; cdecl;
 begin
   X509_STORE_CTX_get_app_data := LoadLibCryptoFunction('X509_STORE_CTX_get_app_data');
   if not assigned(X509_STORE_CTX_get_app_data) then
-    X509_STORE_CTX_get_app_data := @COMPAT_X509_STORE_CTX_get_app_data;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('X509_STORE_CTX_get_app_data');
   Result := X509_STORE_CTX_get_app_data(ctx);
 end;
 
@@ -1938,7 +1915,11 @@ function Load_X509_STORE_CTX_get_ex_data(ctx: PX509_STORE_CTX; idx: TOpenSSL_C_I
 begin
   X509_STORE_CTX_get_ex_data := LoadLibCryptoFunction('X509_STORE_CTX_get_ex_data');
   if not assigned(X509_STORE_CTX_get_ex_data) then
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+    X509_STORE_CTX_get_ex_data := @COMPAT_X509_STORE_CTX_get_ex_data;
+{$ELSE}
     EOpenSSLAPIFunctionNotPresent.RaiseException('X509_STORE_CTX_get_ex_data');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
   Result := X509_STORE_CTX_get_ex_data(ctx,idx);
 end;
 

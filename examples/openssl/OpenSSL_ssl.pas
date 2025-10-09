@@ -1914,7 +1914,6 @@ function SSL_CTX_set_session_cache_mode(ctx: PSSL_CTX; m: TOpenSSL_C_LONG): TOpe
 function SSL_CTX_get_session_cache_mode(ctx: PSSL_CTX): TOpenSSL_C_LONG; {removed 1.0.0}
 function SSL_clear_num_renegotiations(ssl: PSSL): TOpenSSL_C_LONG; {removed 1.0.0}
 function SSL_total_renegotiations(ssl: PSSL): TOpenSSL_C_LONG; {removed 1.0.0}
-function SSL_CTX_set_tmp_dh(ctx: PSSL_CTX; dh: PDH): TOpenSSL_C_LONG; {removed 1.0.0}
 function SSL_CTX_set_tmp_ecdh(ctx: PSSL_CTX; ecdh: PByte): TOpenSSL_C_LONG; {removed 1.0.0}
 function SSL_CTX_set_dh_auto(ctx: PSSL_CTX; onoff: TOpenSSL_C_LONG): TOpenSSL_C_LONG; {removed 1.0.0}
 function SSL_set_dh_auto(s: PSSL; onoff: TOpenSSL_C_LONG): TOpenSSL_C_LONG; {removed 1.0.0}
@@ -1973,11 +1972,8 @@ function SSL_get_peer_tmp_key(s: PSSL; pk: Pointer): TOpenSSL_C_LONG; {removed 1
 function SSL_get_tmp_key(s: PSSL; pk: Pointer): TOpenSSL_C_LONG; {removed 1.0.0}
 function SSL_get0_raw_cipherlist(s: PSSL; plst: Pointer): TOpenSSL_C_LONG; {removed 1.0.0}
 function SSL_get0_ec_point_formats(s: PSSL; plst: Pointer): TOpenSSL_C_LONG; {removed 1.0.0}
-function SSL_get_app_data(const ssl: PSSL): Pointer; {removed 1.0.0}
-function SSL_set_app_data(ssl: PSSL; data: Pointer): TOpenSSL_C_INT; {removed 1.0.0}
 function SSLeay_add_ssl_algorithms: TOpenSSL_C_INT; {removed 1.0.0}
 procedure SSL_load_error_strings; {removed 1.1.0}
-function SSL_get_peer_certificate(const s: PSSL): PX509; {removed 3.0.0}
 function SSL_library_init: TOpenSSL_C_INT; {removed 1.1.0}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ELSE}
@@ -2862,7 +2858,6 @@ var
   SSL_CTX_get_session_cache_mode: function (ctx: PSSL_CTX): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_get_session_cache_mode; {removed 1.0.0}
   SSL_clear_num_renegotiations: function (ssl: PSSL): TOpenSSL_C_LONG; cdecl = Load_SSL_clear_num_renegotiations; {removed 1.0.0}
   SSL_total_renegotiations: function (ssl: PSSL): TOpenSSL_C_LONG; cdecl = Load_SSL_total_renegotiations; {removed 1.0.0}
-  SSL_CTX_set_tmp_dh: function (ctx: PSSL_CTX; dh: PDH): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set_tmp_dh; {removed 1.0.0}
   SSL_CTX_set_tmp_ecdh: function (ctx: PSSL_CTX; ecdh: PByte): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set_tmp_ecdh; {removed 1.0.0}
   SSL_CTX_set_dh_auto: function (ctx: PSSL_CTX; onoff: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set_dh_auto; {removed 1.0.0}
   SSL_set_dh_auto: function (s: PSSL; onoff: TOpenSSL_C_LONG): TOpenSSL_C_LONG; cdecl = Load_SSL_set_dh_auto; {removed 1.0.0}
@@ -2921,11 +2916,8 @@ var
   SSL_get_tmp_key: function (s: PSSL; pk: Pointer): TOpenSSL_C_LONG; cdecl = Load_SSL_get_tmp_key; {removed 1.0.0}
   SSL_get0_raw_cipherlist: function (s: PSSL; plst: Pointer): TOpenSSL_C_LONG; cdecl = Load_SSL_get0_raw_cipherlist; {removed 1.0.0}
   SSL_get0_ec_point_formats: function (s: PSSL; plst: Pointer): TOpenSSL_C_LONG; cdecl = Load_SSL_get0_ec_point_formats; {removed 1.0.0}
-  SSL_get_app_data: function (const ssl: PSSL): Pointer; cdecl = Load_SSL_get_app_data; {removed 1.0.0}
-  SSL_set_app_data: function (ssl: PSSL; data: Pointer): TOpenSSL_C_INT; cdecl = Load_SSL_set_app_data; {removed 1.0.0}
   SSLeay_add_ssl_algorithms: function : TOpenSSL_C_INT; cdecl = Load_SSLeay_add_ssl_algorithms; {removed 1.0.0}
   SSL_load_error_strings: procedure ; cdecl = Load_SSL_load_error_strings; {removed 1.1.0}
-  SSL_get_peer_certificate: function (const s: PSSL): PX509; cdecl = Load_SSL_get_peer_certificate; {removed 3.0.0}
   SSL_library_init: function : TOpenSSL_C_INT; cdecl = Load_SSL_library_init; {removed 1.1.0}
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ENDIF}
@@ -3197,7 +3189,6 @@ const
 
 implementation
 
-//#   define SSL_get_peer_certificate SSL_get1_peer_certificate
 
 uses Classes,
      OpenSSLExceptionHandlers,
@@ -3206,6 +3197,10 @@ uses Classes,
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
 var
+  SSL_CTX_set_tmp_dh: function (ctx: PSSL_CTX; dh: PDH): TOpenSSL_C_LONG; cdecl = Load_SSL_CTX_set_tmp_dh; {removed 1.0.0}
+  SSL_get_app_data: function (const ssl: PSSL): Pointer; cdecl = Load_SSL_get_app_data; {removed 1.0.0}
+  SSL_set_app_data: function (ssl: PSSL; data: Pointer): TOpenSSL_C_INT; cdecl = Load_SSL_set_app_data; {removed 1.0.0}
+  SSL_get_peer_certificate: function (const s: PSSL): PX509; cdecl = Load_SSL_get_peer_certificate; {removed 3.0.0}
   SSLv2_method: function : PSSL_METHOD; cdecl = nil; {removed 1.1.0 allow_nil}
   SSLv2_server_method: function : PSSL_METHOD; cdecl = nil; {removed 1.1.0 allow_nil}
   SSLv2_client_method: function : PSSL_METHOD; cdecl = nil; {removed 1.1.0 allow_nil}
@@ -3665,16 +3660,6 @@ end;
 {Legacy Support Functions}
 
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-function SSL_get_peer_certificate(const s: PSSL): PX509;
-
-begin
-  Result := SSL_get1_peer_certificate(s);
-end;
-
-
-//# define SSL_CTX_set_mode(ctx,op)      SSL_CTX_ctrl((ctx),SSL_CTRL_MODE,(op),NULL)
-
-
 function SSL_CTX_set_mode(ctx: PSSL_CTX; op: TOpenSSL_C_LONG): TOpenSSL_C_LONG;
 
 begin
@@ -3742,15 +3727,6 @@ function SSL_total_renegotiations(ssl: PSSL): TOpenSSL_C_LONG;
 
 begin
   Result := SSL_ctrl(ssl, SSL_CTRL_GET_TOTAL_RENEGOTIATIONS, 0, nil);
-end;
-
-//# define SSL_CTX_set_tmp_dh(ctx,dh)                        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_TMP_DH,0,(char *)(dh))
-
-
-function SSL_CTX_set_tmp_dh(ctx: PSSL_CTX; dh: PDH): TOpenSSL_C_LONG;
-
-begin
-  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_TMP_DH, 0, dh);
 end;
 
 //# define SSL_CTX_set_tmp_ecdh(ctx,ecdh)                    SSL_CTX_ctrl(ctx,SSL_CTRL_SET_TMP_ECDH,0,(char *)(ecdh))
@@ -4276,16 +4252,8 @@ begin
 end;
 
 
-function SSL_get_app_data(const ssl: PSSL): Pointer;
-
-begin
-  Result := SSL_get_ex_data(ssl,0);
-end;
-
-
-
 procedure SSL_load_error_strings;
- 
+
 begin
   OPENSSL_init_ssl(OPENSSL_INIT_LOAD_SSL_STRINGS or OPENSSL_INIT_LOAD_CRYPTO_STRINGS,nil); 
 end;
@@ -4307,21 +4275,13 @@ begin
 end;
 
 
-
-function SSL_set_app_data(ssl: PSSL; data: Pointer): TOpenSSL_C_INT;
-
-begin
-  Result := SSL_set_ex_data(ssl,0,data);
-end;
-
-
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
 {$ELSE}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-function COMPAT_SSL_get_peer_certificate(const s: PSSL): PX509; cdecl;
+function COMPAT_SSL_get1_peer_certificate(const s: PSSL): PX509; cdecl;
 
 begin
-  Result := SSL_get1_peer_certificate(s);
+  Result := SSL_get_peer_certificate(s);
 end;
 
 
@@ -4404,15 +4364,6 @@ function COMPAT_SSL_total_renegotiations(ssl: PSSL): TOpenSSL_C_LONG; cdecl;
 
 begin
   Result := SSL_ctrl(ssl, SSL_CTRL_GET_TOTAL_RENEGOTIATIONS, 0, nil);
-end;
-
-//# define SSL_CTX_set_tmp_dh(ctx,dh)                        SSL_CTX_ctrl(ctx,SSL_CTRL_SET_TMP_DH,0,(char *)(dh))
-
-
-function COMPAT_SSL_CTX_set_tmp_dh(ctx: PSSL_CTX; dh: PDH): TOpenSSL_C_LONG; cdecl;
-
-begin
-  Result := SSL_CTX_ctrl(ctx, SSL_CTRL_SET_TMP_DH, 0, dh);
 end;
 
 //# define SSL_CTX_set_tmp_ecdh(ctx,ecdh)                    SSL_CTX_ctrl(ctx,SSL_CTRL_SET_TMP_ECDH,0,(char *)(ecdh))
@@ -4938,16 +4889,16 @@ begin
 end;
 
 
-function COMPAT_SSL_get_app_data(const ssl: PSSL): Pointer; cdecl;
+function COMPAT_SSL_get_ex_data(const ssl: PSSL; idx: TOpenSSL_C_INT): Pointer; cdecl;
 
 begin
-  Result := SSL_get_ex_data(ssl,0);
+  Result := SSL_get_app_data(ssl);
 end;
 
 
 
 procedure COMPAT_SSL_load_error_strings; cdecl;
- 
+
 begin
   OPENSSL_init_ssl(OPENSSL_INIT_LOAD_SSL_STRINGS or OPENSSL_INIT_LOAD_CRYPTO_STRINGS,nil); 
 end;
@@ -4966,14 +4917,6 @@ function COMPAT_SSLeay_add_ssl_algorithms: TOpenSSL_C_INT; cdecl;
 
 begin
   Result := SSL_library_init;
-end;
-
-
-
-function COMPAT_SSL_set_app_data(ssl: PSSL; data: Pointer): TOpenSSL_C_INT; cdecl;
-
-begin
-  Result := SSL_set_ex_data(ssl,0,data);
 end;
 
 
@@ -5265,7 +5208,7 @@ function Load_SSL_CTX_set_tmp_dh(ctx: PSSL_CTX; dh: PDH): TOpenSSL_C_LONG; cdecl
 begin
   SSL_CTX_set_tmp_dh := LoadLibSSLFunction('SSL_CTX_set_tmp_dh');
   if not assigned(SSL_CTX_set_tmp_dh) then
-    SSL_CTX_set_tmp_dh := @COMPAT_SSL_CTX_set_tmp_dh;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_tmp_dh');
   Result := SSL_CTX_set_tmp_dh(ctx,dh);
 end;
 
@@ -6063,7 +6006,7 @@ function Load_SSL_get_app_data(const ssl: PSSL): Pointer; cdecl;
 begin
   SSL_get_app_data := LoadLibSSLFunction('SSL_get_app_data');
   if not assigned(SSL_get_app_data) then
-    SSL_get_app_data := @COMPAT_SSL_get_app_data;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_app_data');
   Result := SSL_get_app_data(ssl);
 end;
 
@@ -6071,7 +6014,7 @@ function Load_SSL_set_app_data(ssl: PSSL; data: Pointer): TOpenSSL_C_INT; cdecl;
 begin
   SSL_set_app_data := LoadLibSSLFunction('SSL_set_app_data');
   if not assigned(SSL_set_app_data) then
-    SSL_set_app_data := @COMPAT_SSL_set_app_data;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_app_data');
   Result := SSL_set_app_data(ssl,data);
 end;
 
@@ -7097,7 +7040,7 @@ function Load_SSL_get_peer_certificate(const s: PSSL): PX509; cdecl;
 begin
   SSL_get_peer_certificate := LoadLibSSLFunction('SSL_get_peer_certificate');
   if not assigned(SSL_get_peer_certificate) then
-    SSL_get_peer_certificate := @COMPAT_SSL_get_peer_certificate;
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_peer_certificate');
   Result := SSL_get_peer_certificate(s);
 end;
 
@@ -8364,7 +8307,11 @@ function Load_SSL_get_ex_data(const ssl: PSSL; idx: TOpenSSL_C_INT): Pointer; cd
 begin
   SSL_get_ex_data := LoadLibSSLFunction('SSL_get_ex_data');
   if not assigned(SSL_get_ex_data) then
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+    SSL_get_ex_data := @COMPAT_SSL_get_ex_data;
+{$ELSE}
     EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_ex_data');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
   Result := SSL_get_ex_data(ssl,idx);
 end;
 
@@ -8944,7 +8891,11 @@ function Load_SSL_get1_peer_certificate(const s: PSSL): PX509; cdecl;
 begin
   SSL_get1_peer_certificate := LoadLibSSLFunction('SSL_get1_peer_certificate');
   if not assigned(SSL_get1_peer_certificate) then
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+    SSL_get1_peer_certificate := @COMPAT_SSL_get1_peer_certificate;
+{$ELSE}
     EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get1_peer_certificate');
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
   Result := SSL_get1_peer_certificate(s);
 end;
 

@@ -229,16 +229,20 @@ type
 
 {passthrough}
 function ERR_GET_LIB(l: TOpenSSL_C_INT): TOpenSSL_C_ULONG;
-procedure SSLError(func: TOpenSSL_C_INT; reason: TOpenSSL_C_INT);
 {/passthrough}
 
 implementation
+
+procedure SSLErr(func: TOpenSSL_C_INT; reason: TOpenSSL_C_INT);
+begin
+  ERR_put_error(ERR_LIB_SSL,func,reason,'',0);
+end; 
 
 procedure ERR_put_error(lib: TOpenSSL_C_INT; func: TOpenSSL_C_INT; reason: TOpenSSL_C_INT; file_: PAnsiChar; line: TOpenSSL_C_INT);
 { From 3.0 onwards, replaced by a macro
   define ERR_put_error(lib, func, reason, file, line)
     (ERR_new(),
-     ERR_set_debug((file), (line), ''),
+     ERR_set_debug((file), (line), OPENSSL_FUNC),
      ERR_set_error((lib), (reason), ''))}
 begin
   ERR_new;
@@ -261,20 +265,6 @@ function ERR_GET_LIB(l: TOpenSSL_C_INT): TOpenSSL_C_ULONG;
 begin
   Result := (l shr 24) and $ff;
 end;
-
-{SSLError is based on SSLErr which is no longer present in OpenSSL from 1.0.0 onwards}
-procedure SSLError(func: TOpenSSL_C_INT; reason: TOpenSSL_C_INT);
-begin
-  if GetIOpenSSL.GetOpenSSLVersion < ERR_put_error_removed then
-    ERR_put_error(ERR_LIB_SSL,func,reason,'',0)
-  else
-  begin
-    ERR_new;
-    ERR_set_debug('',0, '');
-    ERR_set_error(ERR_LIB_SSL,reason,'');
-  end;
-end;
-
 {/passthrough}
 
 end.
