@@ -3167,6 +3167,7 @@ end;
 function SSL_new_session_ticket(s: PSSL):TOpenSSL_C_INT;
 begin
 // no op
+  Result := 0;
 end;
 
 end.

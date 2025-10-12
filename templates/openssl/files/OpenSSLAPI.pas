@@ -432,12 +432,12 @@ end;
 
 function TOpenSSLStaticLibProvider.GetOpenSSLPath : string;
 begin
-  Result := OpenSSL_version(OPENSSL_DIR);
+  Result := string(OpenSSL_version(OPENSSL_DIR));
 end;
 
 function TOpenSSLStaticLibProvider.GetOpenSSLVersionStr : string;
 begin
-  Result := OpenSSL_Version(OPENSSL_VERSION_CONST);
+  Result := string(OpenSSL_Version(OPENSSL_VERSION_CONST));
 end;
 
 function TOpenSSLStaticLibProvider.GetOpenSSLVersion : TOpenSSL_C_ULONG;
@@ -528,6 +528,7 @@ function TOpenSSLDynamicLibProvider.FindLibrary(LibName , LibVersions : string;
   var LibVersionsList: TStringList;
       i: integer;
   begin
+    Result := NilHandle;
     if SSLPath <> '' then
       SSLPath := IncludeTrailingPathDelimiter(SSLPath);
     if LibVersions <> '' then
