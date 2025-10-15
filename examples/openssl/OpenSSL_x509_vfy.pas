@@ -998,18 +998,10 @@ const
 
 implementation
 
-
 uses Classes,
      OpenSSLExceptionHandlers,
      OpenSSLResourceStrings;
 
-{$IFNDEF OPENSSL_STATIC_LINK_MODEL}
-{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-{$MINENUMSIZE 4}
-var
-  X509_STORE_CTX_get_app_data: function (ctx: PX509_STORE_CTX): Pointer; cdecl = Load_X509_STORE_CTX_get_app_data; {removed 1.0.0}
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-{$ENDIF}
 type
  _PX509_LOOKUP_METHOD      = ^_X509_LOOKUP_METHOD;
  _X509_LOOKUP_METHOD = record
@@ -1041,6 +1033,13 @@ const
     );
 
 
+{$IFNDEF OPENSSL_STATIC_LINK_MODEL}
+{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
+{$MINENUMSIZE 4}
+var
+  X509_STORE_CTX_get_app_data: function (ctx: PX509_STORE_CTX): Pointer; cdecl = Load_X509_STORE_CTX_get_app_data; {removed 1.0.0}
+{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
+{$ENDIF}
 type
   _PX509_LOOKUP = ^_X509_LOOKUP;
   _X509_LOOKUP = record
@@ -1060,13 +1059,6 @@ end;
 
 {$IFNDEF OPENSSL_STATIC_LINK_MODEL}
 {$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-function COMPAT_X509_STORE_CTX_get_ex_data(ctx: PX509_STORE_CTX; idx: TOpenSSL_C_INT): Pointer; cdecl;
-
-begin
-  X509_STORE_CTX_get_app_data(ctx);
-end;
-
-
 function COMPAT_X509_LOOKUP_meth_new(const name: PAnsiChar): PX509_LOOKUP_METHOD; cdecl;
 
 begin
@@ -1108,7 +1100,6 @@ end;
 
 
 {$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
-{$MINENUMSIZE 4}
 function Load_X509_STORE_set_depth(store: PX509_STORE; depth: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   X509_STORE_set_depth := LoadLibCryptoFunction('X509_STORE_set_depth');
@@ -1915,11 +1906,7 @@ function Load_X509_STORE_CTX_get_ex_data(ctx: PX509_STORE_CTX; idx: TOpenSSL_C_I
 begin
   X509_STORE_CTX_get_ex_data := LoadLibCryptoFunction('X509_STORE_CTX_get_ex_data');
   if not assigned(X509_STORE_CTX_get_ex_data) then
-{$IFNDEF OPENSSL_NO_LEGACY_SUPPORT}
-    X509_STORE_CTX_get_ex_data := @COMPAT_X509_STORE_CTX_get_ex_data;
-{$ELSE}
     EOpenSSLAPIFunctionNotPresent.RaiseException('X509_STORE_CTX_get_ex_data');
-{$ENDIF} { End of OPENSSL_NO_LEGACY_SUPPORT}
   Result := X509_STORE_CTX_get_ex_data(ctx,idx);
 end;
 

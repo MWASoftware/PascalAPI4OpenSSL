@@ -73,7 +73,7 @@ var
 begin
   ERR_error_string_n(AErr, ErrMsg, sMaxErrMsg);
   ErrMsg[sMaxErrMsg] := #0;
-  Result := strpas(PAnsiChar(@ErrMsg));;
+  Result := string(PAnsiChar(@ErrMsg));
 end;
 
 { EAPIFunctionNotPresent }

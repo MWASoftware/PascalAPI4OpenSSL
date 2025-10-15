@@ -5133,6 +5133,7 @@ function COMPAT_SSL_new_session_ticket(s: PSSL): TOpenSSL_C_INT; cdecl;
 
 begin
 // no op
+  Result := 0;
 end;
 
 
