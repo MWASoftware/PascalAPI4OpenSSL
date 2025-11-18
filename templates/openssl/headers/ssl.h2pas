@@ -2099,9 +2099,9 @@ function SSL_get0_ec_point_formats(s: PSSL; plst: Pointer): TOpenSSL_C_LONG; {re
   function TLSv1_2_client_method: PSSL_METHOD; {removed 1.1.0 allow_nil}	// TLSv1.2
 
   //X509 *SSL_get0_peer_certificate(const SSL *s);
-  function SSL_get0_peer_certificate(const s: PSSL): PX509; {introduced 3.3.0}
+  function SSL_get0_peer_certificate(const s: PSSL): PX509; {introduced 3.0.0}
   // X509 *SSL_get1_peer_certificate(const SSL *s);
-  function SSL_get1_peer_certificate(const s: PSSL): PX509; {introduced 3.3.0}
+  function SSL_get1_peer_certificate(const s: PSSL): PX509; {introduced 3.0.0}
 
 {passthrough}
 type
