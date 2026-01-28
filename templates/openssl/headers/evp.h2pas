@@ -721,7 +721,7 @@ function EVP_PKEY_assign_POLY1305(pkey: PEVP_PKEY; polykey: Pointer): TOpenSSL_C
   function EVP_DecryptInit_ex(ctx: PEVP_CIPHER_CTX; const cipher: PEVP_CIPHER; impl: PENGINE; const key: PByte; const iv: PByte): TOpenSSL_C_INT;
   function EVP_DecryptUpdate(ctx: PEVP_CIPHER_CTX; out_: PByte; out1: POpenSSL_C_INT; const in_: PByte; in_1: TOpenSSL_C_INT): TOpenSSL_C_INT;
   function EVP_DecryptFinal(ctx: PEVP_CIPHER_CTX; outm: PByte; out1: POpenSSL_C_INT): TOpenSSL_C_INT;
-  function EVP_DecryptFinal_ex(ctx: PEVP_MD_CTX; outm: PByte; out1: POpenSSL_C_INT): TOpenSSL_C_INT;
+  function EVP_DecryptFinal_ex(ctx: PEVP_CIPHER_CTX; outm: PByte; out1: POpenSSL_C_INT): TOpenSSL_C_INT;
 
   function EVP_CipherInit(ctx: PEVP_CIPHER_CTX; const cipher: PEVP_CIPHER; const key: PByte; const iv: PByte; enc: TOpenSSL_C_INT): TOpenSSL_C_INT;
   function EVP_CipherInit_ex(ctx: PEVP_CIPHER_CTX; const cipher: PEVP_CIPHER; impl: PENGINE; const key: PByte; const iv: PByte; enc: TOpenSSL_C_INT): TOpenSSL_C_INT;
