@@ -1,0 +1,4 @@
+40a41,43
+> typedef stack_st_SRP SRP;
+> SKM_DEFINE_STACK_OF_INTERNAL(SRP,SRP,SRP);
+> 

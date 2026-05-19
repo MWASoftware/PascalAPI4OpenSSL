@@ -1,0 +1,24 @@
+--- /home/tony/SoftwareDev/external/openssl/openssl-4.0.0/include/openssl/tls1.h	2026-04-14 13:04:16.000000000 +0100
++++ tls1.tmp	2026-05-19 11:14:11.181172979 +0100
+@@ -1104,8 +1104,8 @@
+ #define TLS1_TXT_ECDH_RSA_WITH_AES_256_GCM_SHA384 "ECDH-RSA-AES256-GCM-SHA384"
+ 
+ /* TLS v1.2 PSK GCM ciphersuites from RFC5487 */
+-#define TLS1_TXT_PSK_WITH_AES_128_GCM_SHA256 "PSK-AES128-GCM-SHA256"
+-#define TLS1_TXT_PSK_WITH_AES_256_GCM_SHA384 "PSK-AES256-GCM-SHA384"
++//#define TLS1_TXT_PSK_WITH_AES_128_GCM_SHA256 "PSK-AES128-GCM-SHA256"
++//#define TLS1_TXT_PSK_WITH_AES_256_GCM_SHA384 "PSK-AES256-GCM-SHA384"
+ 
+ /* ECDHE PSK ciphersuites from RFC 5489 */
+ #define TLS1_TXT_ECDHE_PSK_WITH_RC4_128_SHA "ECDHE-PSK-RC4-SHA"
+@@ -1217,8 +1217,8 @@
+ #define TLS_MD_CLIENT_WRITE_KEY_CONST "\x63\x6c\x69\x65\x6e\x74\x20\x77\x72\x69\x74\x65\x20\x6b\x65\x79"
+ #define TLS_MD_CLIENT_WRITE_KEY_CONST_SIZE 16
+ /* ASCII: "server write key", in hex for EBCDIC compatibility */
+-#define TLS_MD_SERVER_WRITE_KEY_CONST "\x73\x65\x72\x76\x65\x72\x20\x77\x72\x69\x74\x65\x20\x6b\x65\x79"
+-#define TLS_MD_SERVER_WRITE_KEY_CONST_SIZE 16
++//#define TLS_MD_SERVER_WRITE_KEY_CONST "\x73\x65\x72\x76\x65\x72\x20\x77\x72\x69\x74\x65\x20\x6b\x65\x79"
++//#define TLS_MD_SERVER_WRITE_KEY_CONST_SIZE 16
+ /* ASCII: "IV block", in hex for EBCDIC compatibility */
+ #define TLS_MD_IV_BLOCK_CONST "\x49\x56\x20\x62\x6c\x6f\x63\x6b"
+ #define TLS_MD_IV_BLOCK_CONST_SIZE 8

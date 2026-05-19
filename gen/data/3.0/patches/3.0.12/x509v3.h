@@ -1,0 +1,13 @@
+91,95d90
+< # define X509V3_CTX_TEST 0x1
+< # ifndef OPENSSL_NO_DEPRECATED_3_0
+< #  define CTX_TEST X509V3_CTX_TEST
+< # endif
+< # define X509V3_CTX_REPLACE 0x2
+105a101,106
+> 
+> # define X509V3_CTX_TEST 0x1
+> # ifndef OPENSSL_NO_DEPRECATED_3_0
+> #  define CTX_TEST X509V3_CTX_TEST
+> # endif
+> # define X509V3_CTX_REPLACE 0x2

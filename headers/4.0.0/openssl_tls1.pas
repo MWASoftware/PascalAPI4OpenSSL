@@ -1,0 +1,1404 @@
+{
+    This file is part of the MWA Software Pascal API for OpenSSL .
+
+    The MWA Software Pascal API for OpenSSL is free software: you can redistribute it
+    and/or modify it under the terms of the Apache License Version 2.0 (the "License"), and as
+    a derived work of the OpenSSL Project (see below for the original licence text).
+
+    You may not use this file except in compliance with the License.  You can obtain a copy
+    in the file LICENSE.txt in the source distribution or at https://www.openssl.org/source/license.html.
+
+    The MWA Software Pascal API for OpenSSL is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the License for more details.
+}
+
+{$include openssl_defines.inc}
+
+unit openssl_tls1;
+
+{
+  Generated from OpenSSL 4.0.0 Header File tls1.h - Tue 19 May 14:33:30 BST 2026
+}
+
+{$IFNDEF FPC}
+{$IFDEF OPENSSL_USE_STATIC_LIBRARY}
+{$LINK openssl_tls1.obj}
+{$ENDIF}
+{$ENDIF}
+
+interface
+
+uses OpenSSLAPI,openssl_types,openssl_buffer,openssl_x509,openssl_prov_ssl;
+
+
+{* Copyright 1995-2026 The OpenSSL Project Authors. All Rights Reserved.
+* Copyright (c) 2002, Oracle and/or its affiliates. All rights reserved
+* Copyright 2005 Nokia. All rights reserved.
+*
+* Licensed under the Apache License 2.0 (the "License").  You may not use
+* this file except in compliance with the License.  You can obtain a copy
+* in the file LICENSE in the source distribution or at
+* https://www.openssl.org/source/license.html
+}
+{$ifndef  OPENSSL_TLS1_H}
+  {$define OPENSSL_TLS1_H}
+  {$include openssl_macros.inc}
+  {$ifndef  OPENSSL_NO_DEPRECATED_3_0}
+    {$define HEADER_TLS1_H}
+  {$endif}
+  { Default security level if not overridden at config time }
+  {$ifndef  OPENSSL_TLS_SECURITY_LEVEL}
+
+const
+  OPENSSL_TLS_SECURITY_LEVEL = 2;
+  {$endif}
+  { TLS*_VERSION constants are defined in prov_ssl.h }
+  {$ifndef  OPENSSL_NO_DEPRECATED_3_0}
+
+const
+  TLS_MAX_VERSION = TLS1_3_VERSION;
+  {$endif}
+
+const
+  { Special value for method supporting multiple versions }
+  TLS_ANY_VERSION = $10000;
+  TLS1_VERSION_MAJOR = $03;
+  TLS1_VERSION_MINOR = $01;
+  TLS1_1_VERSION_MAJOR = $03;
+  TLS1_1_VERSION_MINOR = $02;
+  TLS1_2_VERSION_MAJOR = $03;
+  TLS1_2_VERSION_MINOR = $03;
+  {# define  TLS1_get_version(s) ((SSL_version(s) >> 8) == TLS1_VERSION_MAJOR ? SSL_version(s) : 0)} {Macro Return Type unknown at line no 50}
+  {# define  TLS1_get_client_version(s) ((SSL_client_version(s) >> 8) == TLS1_VERSION_MAJOR ? SSL_client_version(s) : 0)} {Macro Return Type unknown at line no 53}
+  TLS1_AD_DECRYPTION_FAILED = 21;
+  TLS1_AD_RECORD_OVERFLOW = 22;
+  TLS1_AD_UNKNOWN_CA = 48;
+  TLS1_AD_ACCESS_DENIED = 49;
+  TLS1_AD_DECODE_ERROR = 50;
+  TLS1_AD_DECRYPT_ERROR = 51;
+  TLS1_AD_EXPORT_RESTRICTION = 60;
+  TLS1_AD_PROTOCOL_VERSION = 70;
+  TLS1_AD_INSUFFICIENT_SECURITY = 71;
+  TLS1_AD_INTERNAL_ERROR = 80;
+  TLS1_AD_INAPPROPRIATE_FALLBACK = 86;
+  TLS1_AD_USER_CANCELLED = 90;
+  TLS1_AD_NO_RENEGOTIATION = 100;
+  { TLSv1.3 alerts }
+  TLS13_AD_MISSING_EXTENSION = 109;
+  TLS13_AD_CERTIFICATE_REQUIRED = 116;
+  { codes 110-114 are from RFC3546 }
+  TLS1_AD_UNSUPPORTED_EXTENSION = 110;
+  TLS1_AD_CERTIFICATE_UNOBTAINABLE = 111;
+  TLS1_AD_UNRECOGNIZED_NAME = 112;
+  TLS1_AD_BAD_CERTIFICATE_STATUS_RESPONSE = 113;
+  TLS1_AD_BAD_CERTIFICATE_HASH_VALUE = 114;
+  TLS1_AD_UNKNOWN_PSK_IDENTITY = 115;
+  TLS1_AD_NO_APPLICATION_PROTOCOL = 120;
+  {$ifndef  OPENSSL_NO_ECH}
+
+const
+  TLS1_AD_ECH_REQUIRED = 121;
+  {$endif}
+
+const
+  { ExtensionType values from RFC3546 / RFC4366 / RFC6066 }
+  TLSEXT_TYPE_server_name = 0;
+  TLSEXT_TYPE_max_fragment_length = 1;
+  TLSEXT_TYPE_client_certificate_url = 2;
+  TLSEXT_TYPE_trusted_ca_keys = 3;
+  TLSEXT_TYPE_truncated_hmac = 4;
+  TLSEXT_TYPE_status_request = 5;
+  { ExtensionType values from RFC4681 }
+  TLSEXT_TYPE_user_mapping = 6;
+  { ExtensionType values from RFC5878 }
+  TLSEXT_TYPE_client_authz = 7;
+  TLSEXT_TYPE_server_authz = 8;
+  { ExtensionType values from RFC6091 }
+  TLSEXT_TYPE_cert_type = 9;
+  { ExtensionType values from RFC4492 }
+  
+  {* Prior to TLSv1.3 the supported_groups extension was known as
+  * elliptic_curves
+  }
+  TLSEXT_TYPE_supported_groups = 10;
+  TLSEXT_TYPE_elliptic_curves = TLSEXT_TYPE_supported_groups;
+  TLSEXT_TYPE_ec_point_formats = 11;
+  { ExtensionType value from RFC5054 }
+  TLSEXT_TYPE_srp = 12;
+  { ExtensionType values from RFC5246 }
+  TLSEXT_TYPE_signature_algorithms = 13;
+  { ExtensionType value from RFC5764 }
+  TLSEXT_TYPE_use_srtp = 14;
+  { ExtensionType value from RFC7301 }
+  TLSEXT_TYPE_application_layer_protocol_negotiation = 16;
+  
+  {* Extension type for Certificate Transparency
+  * https://tools.ietf.org/html/rfc6962#section-3.3.1
+  }
+  TLSEXT_TYPE_signed_certificate_timestamp = 18;
+  
+  {* Extension type for Raw Public Keys
+  * https://tools.ietf.org/html/rfc7250
+  * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml
+  }
+  TLSEXT_TYPE_client_cert_type = 19;
+  TLSEXT_TYPE_server_cert_type = 20;
+  
+  {* ExtensionType value for TLS padding extension.
+  * http://tools.ietf.org/html/draft-agl-tls-padding
+  }
+  TLSEXT_TYPE_padding = 21;
+  { ExtensionType value from RFC7366 }
+  TLSEXT_TYPE_encrypt_then_mac = 22;
+  { ExtensionType value from RFC7627 }
+  TLSEXT_TYPE_extended_master_secret = 23;
+  { ExtensionType value from RFC8879 }
+  TLSEXT_TYPE_compress_certificate = 27;
+  { ExtensionType value from RFC4507 }
+  TLSEXT_TYPE_session_ticket = 35;
+  { As defined for TLS1.3 }
+  TLSEXT_TYPE_psk = 41;
+  TLSEXT_TYPE_early_data = 42;
+  TLSEXT_TYPE_supported_versions = 43;
+  TLSEXT_TYPE_cookie = 44;
+  TLSEXT_TYPE_psk_kex_modes = 45;
+  TLSEXT_TYPE_certificate_authorities = 47;
+  TLSEXT_TYPE_post_handshake_auth = 49;
+  TLSEXT_TYPE_signature_algorithms_cert = 50;
+  TLSEXT_TYPE_key_share = 51;
+  TLSEXT_TYPE_quic_transport_parameters = 57;
+  { Temporary extension type }
+  TLSEXT_TYPE_renegotiate = $ff01;
+  {$ifndef  OPENSSL_NO_NEXTPROTONEG}
+
+const
+    { This is not an IANA defined extension number }
+  TLSEXT_TYPE_next_proto_neg = 13172;
+  {$endif}
+  {$ifndef  OPENSSL_NO_ECH}
+
+const
+  TLSEXT_TYPE_ech = $fe0d;
+  TLSEXT_TYPE_outer_extensions = $fd00;
+  {$endif}
+
+const
+  { NameType value from RFC3546 }
+  TLSEXT_NAMETYPE_host_name = 0;
+  { status request value from RFC3546 }
+  TLSEXT_STATUSTYPE_ocsp = 1;
+  { ECPointFormat values from RFC4492 }
+  TLSEXT_ECPOINTFORMAT_first = 0;
+  TLSEXT_ECPOINTFORMAT_uncompressed = 0;
+  TLSEXT_ECPOINTFORMAT_ansiX962_compressed_prime = 1;
+  TLSEXT_ECPOINTFORMAT_ansiX962_compressed_char2 = 2;
+  TLSEXT_ECPOINTFORMAT_last = 2;
+  { Signature and hash algorithms from RFC5246 }
+  TLSEXT_signature_anonymous = 0;
+  TLSEXT_signature_rsa = 1;
+  TLSEXT_signature_dsa = 2;
+  TLSEXT_signature_ecdsa = 3;
+  TLSEXT_signature_gostr34102001 = 237;
+  TLSEXT_signature_gostr34102012_256 = 238;
+  TLSEXT_signature_gostr34102012_512 = 239;
+  { Total number of different signature algorithms }
+  TLSEXT_signature_num = 7;
+  TLSEXT_hash_none = 0;
+  TLSEXT_hash_md5 = 1;
+  TLSEXT_hash_sha1 = 2;
+  TLSEXT_hash_sha224 = 3;
+  TLSEXT_hash_sha256 = 4;
+  TLSEXT_hash_sha384 = 5;
+  TLSEXT_hash_sha512 = 6;
+  TLSEXT_hash_gostr3411 = 237;
+  TLSEXT_hash_gostr34112012_256 = 238;
+  TLSEXT_hash_gostr34112012_512 = 239;
+  { Total number of different digest algorithms }
+  TLSEXT_hash_num = 10;
+  { Possible compression values from RFC8879 }
+  { Not defined in RFC8879, but used internally for no-compression }
+  TLSEXT_comp_cert_none = 0;
+  TLSEXT_comp_cert_zlib = 1;
+  TLSEXT_comp_cert_brotli = 2;
+  TLSEXT_comp_cert_zstd = 3;
+  { one more than the number of defined values - used as size of 0-terminated array }
+  TLSEXT_comp_cert_limit = 4;
+  { Flag set for unrecognised algorithms }
+  TLSEXT_nid_unknown = $1000000;
+  { ECC curves }
+  TLSEXT_curve_P_256 = 23;
+  TLSEXT_curve_P_384 = 24;
+  { OpenSSL value to disable maximum fragment length extension }
+  TLSEXT_max_fragment_length_DISABLED = 0;
+  { Allowed values for max fragment length extension }
+  TLSEXT_max_fragment_length_512 = 1;
+  TLSEXT_max_fragment_length_1024 = 2;
+  TLSEXT_max_fragment_length_2048 = 3;
+  TLSEXT_max_fragment_length_4096 = 4;
+  { OpenSSL value for unset maximum fragment length extension }
+  TLSEXT_max_fragment_length_UNSPECIFIED = 255;
+  
+  {* TLS Certificate Type (for RFC7250)
+  * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#tls-extensiontype-values-3
+  }
+  TLSEXT_cert_type_x509 = 0;
+  TLSEXT_cert_type_pgp = 1;
+  TLSEXT_cert_type_rpk = 2;
+  TLSEXT_cert_type_1609dot2 = 3;
+
+
+  {$ifdef OPENSSL_STATIC_LINK_MODEL}
+  function SSL_CTX_set_tlsext_max_fragment_length(ctx: PSSL_CTX; mode: byte): TOpenSSL_C_INT; cdecl; external CLibSSL name 'SSL_CTX_set_tlsext_max_fragment_length';
+  function SSL_set_tlsext_max_fragment_length(ssl: PSSL; mode: byte): TOpenSSL_C_INT; cdecl; external CLibSSL name 'SSL_set_tlsext_max_fragment_length';
+  {$else}
+  { The EXTERNALSYM directive is ignored by FPC, however, it is used by Delphi as follows:
+
+  The EXTERNALSYM directive prevents the specified Delphi symbol from appearing in header
+  files generated for C++. }
+  {$EXTERNALSYM SSL_CTX_set_tlsext_max_fragment_length}
+  {$EXTERNALSYM SSL_set_tlsext_max_fragment_length}
+  {Do not call Function LoadDeclarations. Internal use only}
+  function Load_SSL_CTX_set_tlsext_max_fragment_length(ctx: PSSL_CTX; mode: byte): TOpenSSL_C_INT; cdecl;
+  function Load_SSL_set_tlsext_max_fragment_length(ssl: PSSL; mode: byte): TOpenSSL_C_INT; cdecl;
+
+var
+  SSL_CTX_set_tlsext_max_fragment_length: function(ctx: PSSL_CTX; mode: byte): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_tlsext_max_fragment_length;
+  SSL_set_tlsext_max_fragment_length: function(ssl: PSSL; mode: byte): TOpenSSL_C_INT; cdecl = Load_SSL_set_tlsext_max_fragment_length;
+  {$endif} {OPENSSL_STATIC_LINK_MODEL}
+
+const
+  TLSEXT_MAXLEN_host_name = 255;
+
+
+  {$ifdef OPENSSL_STATIC_LINK_MODEL}
+  function SSL_get_servername(s: PSSL; type_: TOpenSSL_C_INT): PAnsiChar; cdecl; external CLibSSL name 'SSL_get_servername';
+  function SSL_get_servername_type(s: PSSL): TOpenSSL_C_INT; cdecl; external CLibSSL name 'SSL_get_servername_type';
+  
+  {* SSL_export_keying_material exports a value derived from the master secret,
+  * as specified in RFC 5705. It writes |olen| bytes to |out| given a label and
+  * optional context. (Since a zero length context is allowed, the |use_context|
+  * flag controls whether a context is included.) It returns 1 on success and
+  * 0 or -1 otherwise.
+  }
+  function SSL_export_keying_material(s: PSSL; out_: Pbyte; olen: TOpenSSL_C_SIZET; label_: PAnsiChar; llen: TOpenSSL_C_SIZET; context: Pbyte; contextlen: TOpenSSL_C_SIZET; use_context: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibSSL name 'SSL_export_keying_material';
+  
+  {* SSL_export_keying_material_early exports a value derived from the
+  * early exporter master secret, as specified in
+  * https://tools.ietf.org/html/draft-ietf-tls-tls13-23. It writes
+  * |olen| bytes to |out| given a label and optional context. It
+  * returns 1 on success and 0 otherwise.
+  }
+  function SSL_export_keying_material_early(s: PSSL; out_: Pbyte; olen: TOpenSSL_C_SIZET; label_: PAnsiChar; llen: TOpenSSL_C_SIZET; context: Pbyte; contextlen: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl; external CLibSSL name 'SSL_export_keying_material_early';
+  function SSL_get_peer_signature_type_nid(s: PSSL; pnid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibSSL name 'SSL_get_peer_signature_type_nid';
+  function SSL_get_signature_type_nid(s: PSSL; pnid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibSSL name 'SSL_get_signature_type_nid';
+  function SSL_get0_sigalg(s: PSSL; idx: TOpenSSL_C_INT; codepoint: POpenSSL_C_UINT; name: PPAnsiChar): TOpenSSL_C_INT; cdecl; external CLibSSL name 'SSL_get0_sigalg';
+  function SSL_get0_shared_sigalg(s: PSSL; idx: TOpenSSL_C_INT; codepoint: POpenSSL_C_UINT; name: PPAnsiChar): TOpenSSL_C_INT; cdecl; external CLibSSL name 'SSL_get0_shared_sigalg';
+  function SSL_get_sigalgs(s: PSSL; idx: TOpenSSL_C_INT; psign: POpenSSL_C_INT; phash: POpenSSL_C_INT; psignandhash: POpenSSL_C_INT; rsig: Pbyte; rhash: Pbyte): TOpenSSL_C_INT; cdecl; external CLibSSL name 'SSL_get_sigalgs';
+  function SSL_get1_builtin_sigalgs(libctx: POSSL_LIB_CTX): PAnsiChar; cdecl; external CLibSSL name 'SSL_get1_builtin_sigalgs';
+  function SSL_get_shared_sigalgs(s: PSSL; idx: TOpenSSL_C_INT; psign: POpenSSL_C_INT; phash: POpenSSL_C_INT; psignandhash: POpenSSL_C_INT; rsig: Pbyte; rhash: Pbyte): TOpenSSL_C_INT; cdecl; external CLibSSL name 'SSL_get_shared_sigalgs';
+  function SSL_check_chain(s: PSSL; x: PX509; pk: PEVP_PKEY; chain: Pstack_st_X509): TOpenSSL_C_INT; cdecl; external CLibSSL name 'SSL_check_chain';
+  {$else}
+  {$EXTERNALSYM SSL_get_servername}
+  {$EXTERNALSYM SSL_get_servername_type}
+  {$EXTERNALSYM SSL_export_keying_material}
+  {$EXTERNALSYM SSL_export_keying_material_early}
+  {$EXTERNALSYM SSL_get_peer_signature_type_nid}
+  {$EXTERNALSYM SSL_get_signature_type_nid}
+  {$EXTERNALSYM SSL_get0_sigalg}
+  {$EXTERNALSYM SSL_get0_shared_sigalg}
+  {$EXTERNALSYM SSL_get_sigalgs}
+  {$EXTERNALSYM SSL_get1_builtin_sigalgs}
+  {$EXTERNALSYM SSL_get_shared_sigalgs}
+  {$EXTERNALSYM SSL_check_chain}
+  {Do not call Function LoadDeclarations. Internal use only}
+  function Load_SSL_get_servername(s: PSSL; type_: TOpenSSL_C_INT): PAnsiChar; cdecl;
+  function Load_SSL_get_servername_type(s: PSSL): TOpenSSL_C_INT; cdecl;
+  function Load_SSL_export_keying_material(s: PSSL; out_: Pbyte; olen: TOpenSSL_C_SIZET; label_: PAnsiChar; llen: TOpenSSL_C_SIZET; context: Pbyte; contextlen: TOpenSSL_C_SIZET; use_context: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  function Load_SSL_export_keying_material_early(s: PSSL; out_: Pbyte; olen: TOpenSSL_C_SIZET; label_: PAnsiChar; llen: TOpenSSL_C_SIZET; context: Pbyte; contextlen: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+  function Load_SSL_get_peer_signature_type_nid(s: PSSL; pnid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  function Load_SSL_get_signature_type_nid(s: PSSL; pnid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  function Load_SSL_get0_sigalg(s: PSSL; idx: TOpenSSL_C_INT; codepoint: POpenSSL_C_UINT; name: PPAnsiChar): TOpenSSL_C_INT; cdecl;
+  function Load_SSL_get0_shared_sigalg(s: PSSL; idx: TOpenSSL_C_INT; codepoint: POpenSSL_C_UINT; name: PPAnsiChar): TOpenSSL_C_INT; cdecl;
+  function Load_SSL_get_sigalgs(s: PSSL; idx: TOpenSSL_C_INT; psign: POpenSSL_C_INT; phash: POpenSSL_C_INT; psignandhash: POpenSSL_C_INT; rsig: Pbyte; rhash: Pbyte): TOpenSSL_C_INT; cdecl;
+  function Load_SSL_get1_builtin_sigalgs(libctx: POSSL_LIB_CTX): PAnsiChar; cdecl;
+  function Load_SSL_get_shared_sigalgs(s: PSSL; idx: TOpenSSL_C_INT; psign: POpenSSL_C_INT; phash: POpenSSL_C_INT; psignandhash: POpenSSL_C_INT; rsig: Pbyte; rhash: Pbyte): TOpenSSL_C_INT; cdecl;
+  function Load_SSL_check_chain(s: PSSL; x: PX509; pk: PEVP_PKEY; chain: Pstack_st_X509): TOpenSSL_C_INT; cdecl;
+
+var
+  SSL_get_servername: function(s: PSSL; type_: TOpenSSL_C_INT): PAnsiChar; cdecl = Load_SSL_get_servername;
+  SSL_get_servername_type: function(s: PSSL): TOpenSSL_C_INT; cdecl = Load_SSL_get_servername_type;
+  
+  {* SSL_export_keying_material exports a value derived from the master secret,
+  * as specified in RFC 5705. It writes |olen| bytes to |out| given a label and
+  * optional context. (Since a zero length context is allowed, the |use_context|
+  * flag controls whether a context is included.) It returns 1 on success and
+  * 0 or -1 otherwise.
+  }
+  SSL_export_keying_material: function(s: PSSL; out_: Pbyte; olen: TOpenSSL_C_SIZET; label_: PAnsiChar; llen: TOpenSSL_C_SIZET; context: Pbyte; contextlen: TOpenSSL_C_SIZET; use_context: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_export_keying_material;
+  
+  {* SSL_export_keying_material_early exports a value derived from the
+  * early exporter master secret, as specified in
+  * https://tools.ietf.org/html/draft-ietf-tls-tls13-23. It writes
+  * |olen| bytes to |out| given a label and optional context. It
+  * returns 1 on success and 0 otherwise.
+  }
+  SSL_export_keying_material_early: function(s: PSSL; out_: Pbyte; olen: TOpenSSL_C_SIZET; label_: PAnsiChar; llen: TOpenSSL_C_SIZET; context: Pbyte; contextlen: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl = Load_SSL_export_keying_material_early;
+  SSL_get_peer_signature_type_nid: function(s: PSSL; pnid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_get_peer_signature_type_nid;
+  SSL_get_signature_type_nid: function(s: PSSL; pnid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_SSL_get_signature_type_nid;
+  SSL_get0_sigalg: function(s: PSSL; idx: TOpenSSL_C_INT; codepoint: POpenSSL_C_UINT; name: PPAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_get0_sigalg;
+  SSL_get0_shared_sigalg: function(s: PSSL; idx: TOpenSSL_C_INT; codepoint: POpenSSL_C_UINT; name: PPAnsiChar): TOpenSSL_C_INT; cdecl = Load_SSL_get0_shared_sigalg;
+  SSL_get_sigalgs: function(s: PSSL; idx: TOpenSSL_C_INT; psign: POpenSSL_C_INT; phash: POpenSSL_C_INT; psignandhash: POpenSSL_C_INT; rsig: Pbyte; rhash: Pbyte): TOpenSSL_C_INT; cdecl = Load_SSL_get_sigalgs;
+  SSL_get1_builtin_sigalgs: function(libctx: POSSL_LIB_CTX): PAnsiChar; cdecl = Load_SSL_get1_builtin_sigalgs;
+  SSL_get_shared_sigalgs: function(s: PSSL; idx: TOpenSSL_C_INT; psign: POpenSSL_C_INT; phash: POpenSSL_C_INT; psignandhash: POpenSSL_C_INT; rsig: Pbyte; rhash: Pbyte): TOpenSSL_C_INT; cdecl = Load_SSL_get_shared_sigalgs;
+  SSL_check_chain: function(s: PSSL; x: PX509; pk: PEVP_PKEY; chain: Pstack_st_X509): TOpenSSL_C_INT; cdecl = Load_SSL_check_chain;
+  {$endif} {OPENSSL_STATIC_LINK_MODEL}
+  {# define  SSL_set_tlsext_host_name(s,name) SSL_ctrl(s, SSL_CTRL_SET_TLSEXT_HOSTNAME, TLSEXT_NAMETYPE_host_name, (void *)name)} {Macro Return Type unknown at line no 304}
+  {# define  SSL_set_tlsext_debug_callback(ssl,cb) SSL_callback_ctrl(ssl, SSL_CTRL_SET_TLSEXT_DEBUG_CB, (void (*)(void))cb)}
+  {# define  SSL_set_tlsext_debug_arg(ssl,arg) SSL_ctrl(ssl, SSL_CTRL_SET_TLSEXT_DEBUG_ARG, 0, arg)} {Macro Return Type unknown at line no 312}
+  {# define  SSL_get_tlsext_status_type(ssl) SSL_ctrl(ssl, SSL_CTRL_GET_TLSEXT_STATUS_REQ_TYPE, 0, NULL)} {Macro Return Type unknown at line no 315}
+  {# define  SSL_set_tlsext_status_type(ssl,type) SSL_ctrl(ssl, SSL_CTRL_SET_TLSEXT_STATUS_REQ_TYPE, type, NULL)} {Macro Return Type unknown at line no 318}
+  {# define  SSL_get_tlsext_status_exts(ssl,arg) SSL_ctrl(ssl, SSL_CTRL_GET_TLSEXT_STATUS_REQ_EXTS, 0, arg)} {Macro Return Type unknown at line no 321}
+  {# define  SSL_set_tlsext_status_exts(ssl,arg) SSL_ctrl(ssl, SSL_CTRL_SET_TLSEXT_STATUS_REQ_EXTS, 0, arg)} {Macro Return Type unknown at line no 324}
+  {# define  SSL_get_tlsext_status_ids(ssl,arg) SSL_ctrl(ssl, SSL_CTRL_GET_TLSEXT_STATUS_REQ_IDS, 0, arg)} {Macro Return Type unknown at line no 327}
+  {# define  SSL_set_tlsext_status_ids(ssl,arg) SSL_ctrl(ssl, SSL_CTRL_SET_TLSEXT_STATUS_REQ_IDS, 0, arg)} {Macro Return Type unknown at line no 330}
+  {# define  SSL_get_tlsext_status_ocsp_resp(ssl,arg) SSL_ctrl(ssl, SSL_CTRL_GET_TLSEXT_STATUS_REQ_OCSP_RESP, 0, arg)} {Macro Return Type unknown at line no 333}
+  {# define  SSL_set_tlsext_status_ocsp_resp(ssl,arg,arglen) SSL_ctrl(ssl, SSL_CTRL_SET_TLSEXT_STATUS_REQ_OCSP_RESP, arglen, arg)} {Macro Return Type unknown at line no 336}
+  {# define  SSL_get0_tlsext_status_ocsp_resp_ex(ssl,arg) SSL_ctrl(ssl, SSL_CTRL_GET_TLSEXT_STATUS_REQ_OCSP_RESP_EX, 0, arg)} {Macro Return Type unknown at line no 339}
+  {# define  SSL_set0_tlsext_status_ocsp_resp_ex(ssl,arg) SSL_ctrl(ssl, SSL_CTRL_SET_TLSEXT_STATUS_REQ_OCSP_RESP_EX, 0, arg)} {Macro Return Type unknown at line no 342}
+  {# define  SSL_CTX_set_tlsext_servername_callback(ctx,cb) SSL_CTX_callback_ctrl(ctx, SSL_CTRL_SET_TLSEXT_SERVERNAME_CB, (void (*)(void))cb)}
+
+const
+  SSL_TLSEXT_ERR_OK = 0;
+  SSL_TLSEXT_ERR_ALERT_WARNING = 1;
+  SSL_TLSEXT_ERR_ALERT_FATAL = 2;
+  SSL_TLSEXT_ERR_NOACK = 3;
+  {# define  SSL_CTX_set_tlsext_servername_arg(ctx,arg) SSL_CTX_ctrl(ctx, SSL_CTRL_SET_TLSEXT_SERVERNAME_ARG, 0, arg)} {Macro Return Type unknown at line no 354}
+  {# define  SSL_CTX_get_tlsext_ticket_keys(ctx,keys,keylen) SSL_CTX_ctrl(ctx, SSL_CTRL_GET_TLSEXT_TICKET_KEYS, keylen, keys)} {Macro Return Type unknown at line no 357}
+  {# define  SSL_CTX_set_tlsext_ticket_keys(ctx,keys,keylen) SSL_CTX_ctrl(ctx, SSL_CTRL_SET_TLSEXT_TICKET_KEYS, keylen, keys)} {Macro Return Type unknown at line no 359}
+  {# define  SSL_CTX_get_tlsext_status_cb(ssl,cb) SSL_CTX_ctrl(ssl, SSL_CTRL_GET_TLSEXT_STATUS_REQ_CB, 0, (void *)cb)} {Macro Return Type unknown at line no 362}
+  {# define  SSL_CTX_set_tlsext_status_cb(ssl,cb) SSL_CTX_callback_ctrl(ssl, SSL_CTRL_SET_TLSEXT_STATUS_REQ_CB, (void (*)(void))cb)}
+  {# define  SSL_CTX_get_tlsext_status_arg(ssl,arg) SSL_CTX_ctrl(ssl, SSL_CTRL_GET_TLSEXT_STATUS_REQ_CB_ARG, 0, arg)} {Macro Return Type unknown at line no 368}
+  {# define  SSL_CTX_set_tlsext_status_arg(ssl,arg) SSL_CTX_ctrl(ssl, SSL_CTRL_SET_TLSEXT_STATUS_REQ_CB_ARG, 0, arg)} {Macro Return Type unknown at line no 370}
+  {# define  SSL_CTX_set_tlsext_status_type(ssl,type) SSL_CTX_ctrl(ssl, SSL_CTRL_SET_TLSEXT_STATUS_REQ_TYPE, type, NULL)} {Macro Return Type unknown at line no 373}
+  {# define  SSL_CTX_get_tlsext_status_type(ssl) SSL_CTX_ctrl(ssl, SSL_CTRL_GET_TLSEXT_STATUS_REQ_TYPE, 0, NULL)} {Macro Return Type unknown at line no 376}
+  {$ifndef  OPENSSL_NO_DEPRECATED_3_0}
+{# define  SSL_CTX_set_tlsext_ticket_key_cb(ssl,cb) SSL_CTX_callback_ctrl(ssl, SSL_CTRL_SET_TLSEXT_TICKET_KEY_CB, (void (*)(void))cb)}
+  {$endif}
+
+type
+  {Auto-generated forward references}
+  PFuncType000 = ^TFuncType000;
+  PPFuncType000 = ^PFuncType000;
+  {end of auto-generated forward references}
+
+  TFuncType000 = function(_param1: PSSL; _param2: Pbyte; _param3: Pbyte; _param4: PEVP_CIPHER_CTX; _param5: PEVP_MAC_CTX; _param6: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+
+
+  {$ifdef OPENSSL_STATIC_LINK_MODEL}
+  function SSL_CTX_set_tlsext_ticket_key_evp_cb(ctx: PSSL_CTX; fp: TFuncType000): TOpenSSL_C_INT; cdecl; external CLibSSL name 'SSL_CTX_set_tlsext_ticket_key_evp_cb';
+  { PSK ciphersuites from 4279 }
+  {$else}
+  {$EXTERNALSYM SSL_CTX_set_tlsext_ticket_key_evp_cb}
+  {Do not call Function LoadDeclarations. Internal use only}
+  function Load_SSL_CTX_set_tlsext_ticket_key_evp_cb(ctx: PSSL_CTX; fp: TFuncType000): TOpenSSL_C_INT; cdecl;
+
+var
+  SSL_CTX_set_tlsext_ticket_key_evp_cb: function(ctx: PSSL_CTX; fp: TFuncType000): TOpenSSL_C_INT; cdecl = Load_SSL_CTX_set_tlsext_ticket_key_evp_cb;
+  { PSK ciphersuites from 4279 }
+  {$endif} {OPENSSL_STATIC_LINK_MODEL}
+
+const
+  TLS1_CK_PSK_WITH_RC4_128_SHA = $0300008A;
+  TLS1_CK_PSK_WITH_3DES_EDE_CBC_SHA = $0300008B;
+  TLS1_CK_PSK_WITH_AES_128_CBC_SHA = $0300008C;
+  TLS1_CK_PSK_WITH_AES_256_CBC_SHA = $0300008D;
+  TLS1_CK_DHE_PSK_WITH_RC4_128_SHA = $0300008E;
+  TLS1_CK_DHE_PSK_WITH_3DES_EDE_CBC_SHA = $0300008F;
+  TLS1_CK_DHE_PSK_WITH_AES_128_CBC_SHA = $03000090;
+  TLS1_CK_DHE_PSK_WITH_AES_256_CBC_SHA = $03000091;
+  TLS1_CK_RSA_PSK_WITH_RC4_128_SHA = $03000092;
+  TLS1_CK_RSA_PSK_WITH_3DES_EDE_CBC_SHA = $03000093;
+  TLS1_CK_RSA_PSK_WITH_AES_128_CBC_SHA = $03000094;
+  TLS1_CK_RSA_PSK_WITH_AES_256_CBC_SHA = $03000095;
+  { PSK ciphersuites from 5487 }
+  TLS1_CK_PSK_WITH_AES_128_GCM_SHA256 = $030000A8;
+  TLS1_CK_PSK_WITH_AES_256_GCM_SHA384 = $030000A9;
+  TLS1_CK_DHE_PSK_WITH_AES_128_GCM_SHA256 = $030000AA;
+  TLS1_CK_DHE_PSK_WITH_AES_256_GCM_SHA384 = $030000AB;
+  TLS1_CK_RSA_PSK_WITH_AES_128_GCM_SHA256 = $030000AC;
+  TLS1_CK_RSA_PSK_WITH_AES_256_GCM_SHA384 = $030000AD;
+  TLS1_CK_PSK_WITH_AES_128_CBC_SHA256 = $030000AE;
+  TLS1_CK_PSK_WITH_AES_256_CBC_SHA384 = $030000AF;
+  TLS1_CK_PSK_WITH_NULL_SHA256 = $030000B0;
+  TLS1_CK_PSK_WITH_NULL_SHA384 = $030000B1;
+  TLS1_CK_DHE_PSK_WITH_AES_128_CBC_SHA256 = $030000B2;
+  TLS1_CK_DHE_PSK_WITH_AES_256_CBC_SHA384 = $030000B3;
+  TLS1_CK_DHE_PSK_WITH_NULL_SHA256 = $030000B4;
+  TLS1_CK_DHE_PSK_WITH_NULL_SHA384 = $030000B5;
+  TLS1_CK_RSA_PSK_WITH_AES_128_CBC_SHA256 = $030000B6;
+  TLS1_CK_RSA_PSK_WITH_AES_256_CBC_SHA384 = $030000B7;
+  TLS1_CK_RSA_PSK_WITH_NULL_SHA256 = $030000B8;
+  TLS1_CK_RSA_PSK_WITH_NULL_SHA384 = $030000B9;
+  { NULL PSK ciphersuites from RFC4785 }
+  TLS1_CK_PSK_WITH_NULL_SHA = $0300002C;
+  TLS1_CK_DHE_PSK_WITH_NULL_SHA = $0300002D;
+  TLS1_CK_RSA_PSK_WITH_NULL_SHA = $0300002E;
+  { AES ciphersuites from RFC3268 }
+  TLS1_CK_RSA_WITH_AES_128_SHA = $0300002F;
+  TLS1_CK_DH_DSS_WITH_AES_128_SHA = $03000030;
+  TLS1_CK_DH_RSA_WITH_AES_128_SHA = $03000031;
+  TLS1_CK_DHE_DSS_WITH_AES_128_SHA = $03000032;
+  TLS1_CK_DHE_RSA_WITH_AES_128_SHA = $03000033;
+  TLS1_CK_ADH_WITH_AES_128_SHA = $03000034;
+  TLS1_CK_RSA_WITH_AES_256_SHA = $03000035;
+  TLS1_CK_DH_DSS_WITH_AES_256_SHA = $03000036;
+  TLS1_CK_DH_RSA_WITH_AES_256_SHA = $03000037;
+  TLS1_CK_DHE_DSS_WITH_AES_256_SHA = $03000038;
+  TLS1_CK_DHE_RSA_WITH_AES_256_SHA = $03000039;
+  TLS1_CK_ADH_WITH_AES_256_SHA = $0300003A;
+  { TLS v1.2 ciphersuites }
+  TLS1_CK_RSA_WITH_NULL_SHA256 = $0300003B;
+  TLS1_CK_RSA_WITH_AES_128_SHA256 = $0300003C;
+  TLS1_CK_RSA_WITH_AES_256_SHA256 = $0300003D;
+  TLS1_CK_DH_DSS_WITH_AES_128_SHA256 = $0300003E;
+  TLS1_CK_DH_RSA_WITH_AES_128_SHA256 = $0300003F;
+  TLS1_CK_DHE_DSS_WITH_AES_128_SHA256 = $03000040;
+  { Camellia ciphersuites from RFC4132 }
+  TLS1_CK_RSA_WITH_CAMELLIA_128_CBC_SHA = $03000041;
+  TLS1_CK_DH_DSS_WITH_CAMELLIA_128_CBC_SHA = $03000042;
+  TLS1_CK_DH_RSA_WITH_CAMELLIA_128_CBC_SHA = $03000043;
+  TLS1_CK_DHE_DSS_WITH_CAMELLIA_128_CBC_SHA = $03000044;
+  TLS1_CK_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA = $03000045;
+  TLS1_CK_ADH_WITH_CAMELLIA_128_CBC_SHA = $03000046;
+  { TLS v1.2 ciphersuites }
+  TLS1_CK_DHE_RSA_WITH_AES_128_SHA256 = $03000067;
+  TLS1_CK_DH_DSS_WITH_AES_256_SHA256 = $03000068;
+  TLS1_CK_DH_RSA_WITH_AES_256_SHA256 = $03000069;
+  TLS1_CK_DHE_DSS_WITH_AES_256_SHA256 = $0300006A;
+  TLS1_CK_DHE_RSA_WITH_AES_256_SHA256 = $0300006B;
+  TLS1_CK_ADH_WITH_AES_128_SHA256 = $0300006C;
+  TLS1_CK_ADH_WITH_AES_256_SHA256 = $0300006D;
+  { Camellia ciphersuites from RFC4132 }
+  TLS1_CK_RSA_WITH_CAMELLIA_256_CBC_SHA = $03000084;
+  TLS1_CK_DH_DSS_WITH_CAMELLIA_256_CBC_SHA = $03000085;
+  TLS1_CK_DH_RSA_WITH_CAMELLIA_256_CBC_SHA = $03000086;
+  TLS1_CK_DHE_DSS_WITH_CAMELLIA_256_CBC_SHA = $03000087;
+  TLS1_CK_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA = $03000088;
+  TLS1_CK_ADH_WITH_CAMELLIA_256_CBC_SHA = $03000089;
+  { SEED ciphersuites from RFC4162 }
+  TLS1_CK_RSA_WITH_SEED_SHA = $03000096;
+  TLS1_CK_DH_DSS_WITH_SEED_SHA = $03000097;
+  TLS1_CK_DH_RSA_WITH_SEED_SHA = $03000098;
+  TLS1_CK_DHE_DSS_WITH_SEED_SHA = $03000099;
+  TLS1_CK_DHE_RSA_WITH_SEED_SHA = $0300009A;
+  TLS1_CK_ADH_WITH_SEED_SHA = $0300009B;
+  { TLS v1.2 GCM ciphersuites from RFC5288 }
+  TLS1_CK_RSA_WITH_AES_128_GCM_SHA256 = $0300009C;
+  TLS1_CK_RSA_WITH_AES_256_GCM_SHA384 = $0300009D;
+  TLS1_CK_DHE_RSA_WITH_AES_128_GCM_SHA256 = $0300009E;
+  TLS1_CK_DHE_RSA_WITH_AES_256_GCM_SHA384 = $0300009F;
+  TLS1_CK_DH_RSA_WITH_AES_128_GCM_SHA256 = $030000A0;
+  TLS1_CK_DH_RSA_WITH_AES_256_GCM_SHA384 = $030000A1;
+  TLS1_CK_DHE_DSS_WITH_AES_128_GCM_SHA256 = $030000A2;
+  TLS1_CK_DHE_DSS_WITH_AES_256_GCM_SHA384 = $030000A3;
+  TLS1_CK_DH_DSS_WITH_AES_128_GCM_SHA256 = $030000A4;
+  TLS1_CK_DH_DSS_WITH_AES_256_GCM_SHA384 = $030000A5;
+  TLS1_CK_ADH_WITH_AES_128_GCM_SHA256 = $030000A6;
+  TLS1_CK_ADH_WITH_AES_256_GCM_SHA384 = $030000A7;
+  { CCM ciphersuites from RFC6655 }
+  TLS1_CK_RSA_WITH_AES_128_CCM = $0300C09C;
+  TLS1_CK_RSA_WITH_AES_256_CCM = $0300C09D;
+  TLS1_CK_DHE_RSA_WITH_AES_128_CCM = $0300C09E;
+  TLS1_CK_DHE_RSA_WITH_AES_256_CCM = $0300C09F;
+  TLS1_CK_RSA_WITH_AES_128_CCM_8 = $0300C0A0;
+  TLS1_CK_RSA_WITH_AES_256_CCM_8 = $0300C0A1;
+  TLS1_CK_DHE_RSA_WITH_AES_128_CCM_8 = $0300C0A2;
+  TLS1_CK_DHE_RSA_WITH_AES_256_CCM_8 = $0300C0A3;
+  TLS1_CK_PSK_WITH_AES_128_CCM = $0300C0A4;
+  TLS1_CK_PSK_WITH_AES_256_CCM = $0300C0A5;
+  TLS1_CK_DHE_PSK_WITH_AES_128_CCM = $0300C0A6;
+  TLS1_CK_DHE_PSK_WITH_AES_256_CCM = $0300C0A7;
+  TLS1_CK_PSK_WITH_AES_128_CCM_8 = $0300C0A8;
+  TLS1_CK_PSK_WITH_AES_256_CCM_8 = $0300C0A9;
+  TLS1_CK_DHE_PSK_WITH_AES_128_CCM_8 = $0300C0AA;
+  TLS1_CK_DHE_PSK_WITH_AES_256_CCM_8 = $0300C0AB;
+  { CCM ciphersuites from RFC7251 }
+  TLS1_CK_ECDHE_ECDSA_WITH_AES_128_CCM = $0300C0AC;
+  TLS1_CK_ECDHE_ECDSA_WITH_AES_256_CCM = $0300C0AD;
+  TLS1_CK_ECDHE_ECDSA_WITH_AES_128_CCM_8 = $0300C0AE;
+  TLS1_CK_ECDHE_ECDSA_WITH_AES_256_CCM_8 = $0300C0AF;
+  { TLS 1.2 Camellia SHA-256 ciphersuites from RFC5932 }
+  TLS1_CK_RSA_WITH_CAMELLIA_128_CBC_SHA256 = $030000BA;
+  TLS1_CK_DH_DSS_WITH_CAMELLIA_128_CBC_SHA256 = $030000BB;
+  TLS1_CK_DH_RSA_WITH_CAMELLIA_128_CBC_SHA256 = $030000BC;
+  TLS1_CK_DHE_DSS_WITH_CAMELLIA_128_CBC_SHA256 = $030000BD;
+  TLS1_CK_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA256 = $030000BE;
+  TLS1_CK_ADH_WITH_CAMELLIA_128_CBC_SHA256 = $030000BF;
+  TLS1_CK_RSA_WITH_CAMELLIA_256_CBC_SHA256 = $030000C0;
+  TLS1_CK_DH_DSS_WITH_CAMELLIA_256_CBC_SHA256 = $030000C1;
+  TLS1_CK_DH_RSA_WITH_CAMELLIA_256_CBC_SHA256 = $030000C2;
+  TLS1_CK_DHE_DSS_WITH_CAMELLIA_256_CBC_SHA256 = $030000C3;
+  TLS1_CK_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA256 = $030000C4;
+  TLS1_CK_ADH_WITH_CAMELLIA_256_CBC_SHA256 = $030000C5;
+  { ECC ciphersuites from RFC4492 }
+  TLS1_CK_ECDH_ECDSA_WITH_NULL_SHA = $0300C001;
+  TLS1_CK_ECDH_ECDSA_WITH_RC4_128_SHA = $0300C002;
+  TLS1_CK_ECDH_ECDSA_WITH_DES_192_CBC3_SHA = $0300C003;
+  TLS1_CK_ECDH_ECDSA_WITH_AES_128_CBC_SHA = $0300C004;
+  TLS1_CK_ECDH_ECDSA_WITH_AES_256_CBC_SHA = $0300C005;
+  TLS1_CK_ECDHE_ECDSA_WITH_NULL_SHA = $0300C006;
+  TLS1_CK_ECDHE_ECDSA_WITH_RC4_128_SHA = $0300C007;
+  TLS1_CK_ECDHE_ECDSA_WITH_DES_192_CBC3_SHA = $0300C008;
+  TLS1_CK_ECDHE_ECDSA_WITH_AES_128_CBC_SHA = $0300C009;
+  TLS1_CK_ECDHE_ECDSA_WITH_AES_256_CBC_SHA = $0300C00A;
+  TLS1_CK_ECDH_RSA_WITH_NULL_SHA = $0300C00B;
+  TLS1_CK_ECDH_RSA_WITH_RC4_128_SHA = $0300C00C;
+  TLS1_CK_ECDH_RSA_WITH_DES_192_CBC3_SHA = $0300C00D;
+  TLS1_CK_ECDH_RSA_WITH_AES_128_CBC_SHA = $0300C00E;
+  TLS1_CK_ECDH_RSA_WITH_AES_256_CBC_SHA = $0300C00F;
+  TLS1_CK_ECDHE_RSA_WITH_NULL_SHA = $0300C010;
+  TLS1_CK_ECDHE_RSA_WITH_RC4_128_SHA = $0300C011;
+  TLS1_CK_ECDHE_RSA_WITH_DES_192_CBC3_SHA = $0300C012;
+  TLS1_CK_ECDHE_RSA_WITH_AES_128_CBC_SHA = $0300C013;
+  TLS1_CK_ECDHE_RSA_WITH_AES_256_CBC_SHA = $0300C014;
+  TLS1_CK_ECDH_anon_WITH_NULL_SHA = $0300C015;
+  TLS1_CK_ECDH_anon_WITH_RC4_128_SHA = $0300C016;
+  TLS1_CK_ECDH_anon_WITH_DES_192_CBC3_SHA = $0300C017;
+  TLS1_CK_ECDH_anon_WITH_AES_128_CBC_SHA = $0300C018;
+  TLS1_CK_ECDH_anon_WITH_AES_256_CBC_SHA = $0300C019;
+  { SRP ciphersuites from RFC 5054 }
+  TLS1_CK_SRP_SHA_WITH_3DES_EDE_CBC_SHA = $0300C01A;
+  TLS1_CK_SRP_SHA_RSA_WITH_3DES_EDE_CBC_SHA = $0300C01B;
+  TLS1_CK_SRP_SHA_DSS_WITH_3DES_EDE_CBC_SHA = $0300C01C;
+  TLS1_CK_SRP_SHA_WITH_AES_128_CBC_SHA = $0300C01D;
+  TLS1_CK_SRP_SHA_RSA_WITH_AES_128_CBC_SHA = $0300C01E;
+  TLS1_CK_SRP_SHA_DSS_WITH_AES_128_CBC_SHA = $0300C01F;
+  TLS1_CK_SRP_SHA_WITH_AES_256_CBC_SHA = $0300C020;
+  TLS1_CK_SRP_SHA_RSA_WITH_AES_256_CBC_SHA = $0300C021;
+  TLS1_CK_SRP_SHA_DSS_WITH_AES_256_CBC_SHA = $0300C022;
+  { ECDH HMAC based ciphersuites from RFC5289 }
+  TLS1_CK_ECDHE_ECDSA_WITH_AES_128_SHA256 = $0300C023;
+  TLS1_CK_ECDHE_ECDSA_WITH_AES_256_SHA384 = $0300C024;
+  TLS1_CK_ECDH_ECDSA_WITH_AES_128_SHA256 = $0300C025;
+  TLS1_CK_ECDH_ECDSA_WITH_AES_256_SHA384 = $0300C026;
+  TLS1_CK_ECDHE_RSA_WITH_AES_128_SHA256 = $0300C027;
+  TLS1_CK_ECDHE_RSA_WITH_AES_256_SHA384 = $0300C028;
+  TLS1_CK_ECDH_RSA_WITH_AES_128_SHA256 = $0300C029;
+  TLS1_CK_ECDH_RSA_WITH_AES_256_SHA384 = $0300C02A;
+  { ECDH GCM based ciphersuites from RFC5289 }
+  TLS1_CK_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 = $0300C02B;
+  TLS1_CK_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 = $0300C02C;
+  TLS1_CK_ECDH_ECDSA_WITH_AES_128_GCM_SHA256 = $0300C02D;
+  TLS1_CK_ECDH_ECDSA_WITH_AES_256_GCM_SHA384 = $0300C02E;
+  TLS1_CK_ECDHE_RSA_WITH_AES_128_GCM_SHA256 = $0300C02F;
+  TLS1_CK_ECDHE_RSA_WITH_AES_256_GCM_SHA384 = $0300C030;
+  TLS1_CK_ECDH_RSA_WITH_AES_128_GCM_SHA256 = $0300C031;
+  TLS1_CK_ECDH_RSA_WITH_AES_256_GCM_SHA384 = $0300C032;
+  { ECDHE PSK ciphersuites from RFC5489 }
+  TLS1_CK_ECDHE_PSK_WITH_RC4_128_SHA = $0300C033;
+  TLS1_CK_ECDHE_PSK_WITH_3DES_EDE_CBC_SHA = $0300C034;
+  TLS1_CK_ECDHE_PSK_WITH_AES_128_CBC_SHA = $0300C035;
+  TLS1_CK_ECDHE_PSK_WITH_AES_256_CBC_SHA = $0300C036;
+  TLS1_CK_ECDHE_PSK_WITH_AES_128_CBC_SHA256 = $0300C037;
+  TLS1_CK_ECDHE_PSK_WITH_AES_256_CBC_SHA384 = $0300C038;
+  { NULL PSK ciphersuites from RFC4785 }
+  TLS1_CK_ECDHE_PSK_WITH_NULL_SHA = $0300C039;
+  TLS1_CK_ECDHE_PSK_WITH_NULL_SHA256 = $0300C03A;
+  TLS1_CK_ECDHE_PSK_WITH_NULL_SHA384 = $0300C03B;
+  { Camellia-CBC ciphersuites from RFC6367 }
+  TLS1_CK_ECDHE_ECDSA_WITH_CAMELLIA_128_CBC_SHA256 = $0300C072;
+  TLS1_CK_ECDHE_ECDSA_WITH_CAMELLIA_256_CBC_SHA384 = $0300C073;
+  TLS1_CK_ECDH_ECDSA_WITH_CAMELLIA_128_CBC_SHA256 = $0300C074;
+  TLS1_CK_ECDH_ECDSA_WITH_CAMELLIA_256_CBC_SHA384 = $0300C075;
+  TLS1_CK_ECDHE_RSA_WITH_CAMELLIA_128_CBC_SHA256 = $0300C076;
+  TLS1_CK_ECDHE_RSA_WITH_CAMELLIA_256_CBC_SHA384 = $0300C077;
+  TLS1_CK_ECDH_RSA_WITH_CAMELLIA_128_CBC_SHA256 = $0300C078;
+  TLS1_CK_ECDH_RSA_WITH_CAMELLIA_256_CBC_SHA384 = $0300C079;
+  TLS1_CK_PSK_WITH_CAMELLIA_128_CBC_SHA256 = $0300C094;
+  TLS1_CK_PSK_WITH_CAMELLIA_256_CBC_SHA384 = $0300C095;
+  TLS1_CK_DHE_PSK_WITH_CAMELLIA_128_CBC_SHA256 = $0300C096;
+  TLS1_CK_DHE_PSK_WITH_CAMELLIA_256_CBC_SHA384 = $0300C097;
+  TLS1_CK_RSA_PSK_WITH_CAMELLIA_128_CBC_SHA256 = $0300C098;
+  TLS1_CK_RSA_PSK_WITH_CAMELLIA_256_CBC_SHA384 = $0300C099;
+  TLS1_CK_ECDHE_PSK_WITH_CAMELLIA_128_CBC_SHA256 = $0300C09A;
+  TLS1_CK_ECDHE_PSK_WITH_CAMELLIA_256_CBC_SHA384 = $0300C09B;
+  { draft-ietf-tls-chacha20-poly1305-03 }
+  TLS1_CK_ECDHE_RSA_WITH_CHACHA20_POLY1305 = $0300CCA8;
+  TLS1_CK_ECDHE_ECDSA_WITH_CHACHA20_POLY1305 = $0300CCA9;
+  TLS1_CK_DHE_RSA_WITH_CHACHA20_POLY1305 = $0300CCAA;
+  TLS1_CK_PSK_WITH_CHACHA20_POLY1305 = $0300CCAB;
+  TLS1_CK_ECDHE_PSK_WITH_CHACHA20_POLY1305 = $0300CCAC;
+  TLS1_CK_DHE_PSK_WITH_CHACHA20_POLY1305 = $0300CCAD;
+  TLS1_CK_RSA_PSK_WITH_CHACHA20_POLY1305 = $0300CCAE;
+  { TLS v1.3 ciphersuites }
+  TLS1_3_CK_AES_128_GCM_SHA256 = $03001301;
+  TLS1_3_CK_AES_256_GCM_SHA384 = $03001302;
+  TLS1_3_CK_CHACHA20_POLY1305_SHA256 = $03001303;
+  TLS1_3_CK_AES_128_CCM_SHA256 = $03001304;
+  TLS1_3_CK_AES_128_CCM_8_SHA256 = $03001305;
+  { Integrity-only ciphersuites from RFC 9150 }
+  TLS1_3_CK_SHA256_SHA256 = $0300C0B4;
+  TLS1_3_CK_SHA384_SHA384 = $0300C0B5;
+  { Aria ciphersuites from RFC6209 }
+  TLS1_CK_RSA_WITH_ARIA_128_GCM_SHA256 = $0300C050;
+  TLS1_CK_RSA_WITH_ARIA_256_GCM_SHA384 = $0300C051;
+  TLS1_CK_DHE_RSA_WITH_ARIA_128_GCM_SHA256 = $0300C052;
+  TLS1_CK_DHE_RSA_WITH_ARIA_256_GCM_SHA384 = $0300C053;
+  TLS1_CK_DH_RSA_WITH_ARIA_128_GCM_SHA256 = $0300C054;
+  TLS1_CK_DH_RSA_WITH_ARIA_256_GCM_SHA384 = $0300C055;
+  TLS1_CK_DHE_DSS_WITH_ARIA_128_GCM_SHA256 = $0300C056;
+  TLS1_CK_DHE_DSS_WITH_ARIA_256_GCM_SHA384 = $0300C057;
+  TLS1_CK_DH_DSS_WITH_ARIA_128_GCM_SHA256 = $0300C058;
+  TLS1_CK_DH_DSS_WITH_ARIA_256_GCM_SHA384 = $0300C059;
+  TLS1_CK_DH_anon_WITH_ARIA_128_GCM_SHA256 = $0300C05A;
+  TLS1_CK_DH_anon_WITH_ARIA_256_GCM_SHA384 = $0300C05B;
+  TLS1_CK_ECDHE_ECDSA_WITH_ARIA_128_GCM_SHA256 = $0300C05C;
+  TLS1_CK_ECDHE_ECDSA_WITH_ARIA_256_GCM_SHA384 = $0300C05D;
+  TLS1_CK_ECDH_ECDSA_WITH_ARIA_128_GCM_SHA256 = $0300C05E;
+  TLS1_CK_ECDH_ECDSA_WITH_ARIA_256_GCM_SHA384 = $0300C05F;
+  TLS1_CK_ECDHE_RSA_WITH_ARIA_128_GCM_SHA256 = $0300C060;
+  TLS1_CK_ECDHE_RSA_WITH_ARIA_256_GCM_SHA384 = $0300C061;
+  TLS1_CK_ECDH_RSA_WITH_ARIA_128_GCM_SHA256 = $0300C062;
+  TLS1_CK_ECDH_RSA_WITH_ARIA_256_GCM_SHA384 = $0300C063;
+  TLS1_CK_PSK_WITH_ARIA_128_GCM_SHA256 = $0300C06A;
+  TLS1_CK_PSK_WITH_ARIA_256_GCM_SHA384 = $0300C06B;
+  TLS1_CK_DHE_PSK_WITH_ARIA_128_GCM_SHA256 = $0300C06C;
+  TLS1_CK_DHE_PSK_WITH_ARIA_256_GCM_SHA384 = $0300C06D;
+  TLS1_CK_RSA_PSK_WITH_ARIA_128_GCM_SHA256 = $0300C06E;
+  TLS1_CK_RSA_PSK_WITH_ARIA_256_GCM_SHA384 = $0300C06F;
+  { SM ciphersuites from RFC8998 }
+  TLS1_3_CK_SM4_GCM_SM3 = $030000C6;
+  TLS1_3_CK_SM4_CCM_SM3 = $030000C7;
+  { a bundle of RFC standard cipher names, generated from ssl3_ciphers[] }
+  TLS1_RFC_RSA_WITH_AES_128_SHA = 'TLS_RSA_WITH_AES_128_CBC_SHA';
+  TLS1_RFC_DHE_DSS_WITH_AES_128_SHA = 'TLS_DHE_DSS_WITH_AES_128_CBC_SHA';
+  TLS1_RFC_DHE_RSA_WITH_AES_128_SHA = 'TLS_DHE_RSA_WITH_AES_128_CBC_SHA';
+  TLS1_RFC_ADH_WITH_AES_128_SHA = 'TLS_DH_anon_WITH_AES_128_CBC_SHA';
+  TLS1_RFC_RSA_WITH_AES_256_SHA = 'TLS_RSA_WITH_AES_256_CBC_SHA';
+  TLS1_RFC_DHE_DSS_WITH_AES_256_SHA = 'TLS_DHE_DSS_WITH_AES_256_CBC_SHA';
+  TLS1_RFC_DHE_RSA_WITH_AES_256_SHA = 'TLS_DHE_RSA_WITH_AES_256_CBC_SHA';
+  TLS1_RFC_ADH_WITH_AES_256_SHA = 'TLS_DH_anon_WITH_AES_256_CBC_SHA';
+  TLS1_RFC_RSA_WITH_NULL_SHA256 = 'TLS_RSA_WITH_NULL_SHA256';
+  TLS1_RFC_RSA_WITH_AES_128_SHA256 = 'TLS_RSA_WITH_AES_128_CBC_SHA256';
+  TLS1_RFC_RSA_WITH_AES_256_SHA256 = 'TLS_RSA_WITH_AES_256_CBC_SHA256';
+  TLS1_RFC_DHE_DSS_WITH_AES_128_SHA256 = 'TLS_DHE_DSS_WITH_AES_128_CBC_SHA256';
+  TLS1_RFC_DHE_RSA_WITH_AES_128_SHA256 = 'TLS_DHE_RSA_WITH_AES_128_CBC_SHA256';
+  TLS1_RFC_DHE_DSS_WITH_AES_256_SHA256 = 'TLS_DHE_DSS_WITH_AES_256_CBC_SHA256';
+  TLS1_RFC_DHE_RSA_WITH_AES_256_SHA256 = 'TLS_DHE_RSA_WITH_AES_256_CBC_SHA256';
+  TLS1_RFC_ADH_WITH_AES_128_SHA256 = 'TLS_DH_anon_WITH_AES_128_CBC_SHA256';
+  TLS1_RFC_ADH_WITH_AES_256_SHA256 = 'TLS_DH_anon_WITH_AES_256_CBC_SHA256';
+  TLS1_RFC_RSA_WITH_AES_128_GCM_SHA256 = 'TLS_RSA_WITH_AES_128_GCM_SHA256';
+  TLS1_RFC_RSA_WITH_AES_256_GCM_SHA384 = 'TLS_RSA_WITH_AES_256_GCM_SHA384';
+  TLS1_RFC_DHE_RSA_WITH_AES_128_GCM_SHA256 = 'TLS_DHE_RSA_WITH_AES_128_GCM_SHA256';
+  TLS1_RFC_DHE_RSA_WITH_AES_256_GCM_SHA384 = 'TLS_DHE_RSA_WITH_AES_256_GCM_SHA384';
+  TLS1_RFC_DHE_DSS_WITH_AES_128_GCM_SHA256 = 'TLS_DHE_DSS_WITH_AES_128_GCM_SHA256';
+  TLS1_RFC_DHE_DSS_WITH_AES_256_GCM_SHA384 = 'TLS_DHE_DSS_WITH_AES_256_GCM_SHA384';
+  TLS1_RFC_ADH_WITH_AES_128_GCM_SHA256 = 'TLS_DH_anon_WITH_AES_128_GCM_SHA256';
+  TLS1_RFC_ADH_WITH_AES_256_GCM_SHA384 = 'TLS_DH_anon_WITH_AES_256_GCM_SHA384';
+  TLS1_RFC_RSA_WITH_AES_128_CCM = 'TLS_RSA_WITH_AES_128_CCM';
+  TLS1_RFC_RSA_WITH_AES_256_CCM = 'TLS_RSA_WITH_AES_256_CCM';
+  TLS1_RFC_DHE_RSA_WITH_AES_128_CCM = 'TLS_DHE_RSA_WITH_AES_128_CCM';
+  TLS1_RFC_DHE_RSA_WITH_AES_256_CCM = 'TLS_DHE_RSA_WITH_AES_256_CCM';
+  TLS1_RFC_RSA_WITH_AES_128_CCM_8 = 'TLS_RSA_WITH_AES_128_CCM_8';
+  TLS1_RFC_RSA_WITH_AES_256_CCM_8 = 'TLS_RSA_WITH_AES_256_CCM_8';
+  TLS1_RFC_DHE_RSA_WITH_AES_128_CCM_8 = 'TLS_DHE_RSA_WITH_AES_128_CCM_8';
+  TLS1_RFC_DHE_RSA_WITH_AES_256_CCM_8 = 'TLS_DHE_RSA_WITH_AES_256_CCM_8';
+  TLS1_RFC_PSK_WITH_AES_128_CCM = 'TLS_PSK_WITH_AES_128_CCM';
+  TLS1_RFC_PSK_WITH_AES_256_CCM = 'TLS_PSK_WITH_AES_256_CCM';
+  TLS1_RFC_DHE_PSK_WITH_AES_128_CCM = 'TLS_DHE_PSK_WITH_AES_128_CCM';
+  TLS1_RFC_DHE_PSK_WITH_AES_256_CCM = 'TLS_DHE_PSK_WITH_AES_256_CCM';
+  TLS1_RFC_PSK_WITH_AES_128_CCM_8 = 'TLS_PSK_WITH_AES_128_CCM_8';
+  TLS1_RFC_PSK_WITH_AES_256_CCM_8 = 'TLS_PSK_WITH_AES_256_CCM_8';
+  TLS1_RFC_DHE_PSK_WITH_AES_128_CCM_8 = 'TLS_PSK_DHE_WITH_AES_128_CCM_8';
+  TLS1_RFC_DHE_PSK_WITH_AES_256_CCM_8 = 'TLS_PSK_DHE_WITH_AES_256_CCM_8';
+  TLS1_RFC_ECDHE_ECDSA_WITH_AES_128_CCM = 'TLS_ECDHE_ECDSA_WITH_AES_128_CCM';
+  TLS1_RFC_ECDHE_ECDSA_WITH_AES_256_CCM = 'TLS_ECDHE_ECDSA_WITH_AES_256_CCM';
+  TLS1_RFC_ECDHE_ECDSA_WITH_AES_128_CCM_8 = 'TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8';
+  TLS1_RFC_ECDHE_ECDSA_WITH_AES_256_CCM_8 = 'TLS_ECDHE_ECDSA_WITH_AES_256_CCM_8';
+  TLS1_3_RFC_AES_128_GCM_SHA256 = 'TLS_AES_128_GCM_SHA256';
+  TLS1_3_RFC_AES_256_GCM_SHA384 = 'TLS_AES_256_GCM_SHA384';
+  TLS1_3_RFC_CHACHA20_POLY1305_SHA256 = 'TLS_CHACHA20_POLY1305_SHA256';
+  TLS1_3_RFC_SHA256_SHA256 = 'TLS_SHA256_SHA256';
+  TLS1_3_RFC_SHA384_SHA384 = 'TLS_SHA384_SHA384';
+  TLS1_3_RFC_AES_128_CCM_SHA256 = 'TLS_AES_128_CCM_SHA256';
+  TLS1_3_RFC_AES_128_CCM_8_SHA256 = 'TLS_AES_128_CCM_8_SHA256';
+  TLS1_RFC_ECDHE_ECDSA_WITH_NULL_SHA = 'TLS_ECDHE_ECDSA_WITH_NULL_SHA';
+  TLS1_RFC_ECDHE_ECDSA_WITH_DES_192_CBC3_SHA = 'TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA';
+  TLS1_RFC_ECDHE_ECDSA_WITH_AES_128_CBC_SHA = 'TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA';
+  TLS1_RFC_ECDHE_ECDSA_WITH_AES_256_CBC_SHA = 'TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA';
+  TLS1_RFC_ECDHE_RSA_WITH_NULL_SHA = 'TLS_ECDHE_RSA_WITH_NULL_SHA';
+  TLS1_RFC_ECDHE_RSA_WITH_DES_192_CBC3_SHA = 'TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA';
+  TLS1_RFC_ECDHE_RSA_WITH_AES_128_CBC_SHA = 'TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA';
+  TLS1_RFC_ECDHE_RSA_WITH_AES_256_CBC_SHA = 'TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA';
+  TLS1_RFC_ECDH_anon_WITH_NULL_SHA = 'TLS_ECDH_anon_WITH_NULL_SHA';
+  TLS1_RFC_ECDH_anon_WITH_DES_192_CBC3_SHA = 'TLS_ECDH_anon_WITH_3DES_EDE_CBC_SHA';
+  TLS1_RFC_ECDH_anon_WITH_AES_128_CBC_SHA = 'TLS_ECDH_anon_WITH_AES_128_CBC_SHA';
+  TLS1_RFC_ECDH_anon_WITH_AES_256_CBC_SHA = 'TLS_ECDH_anon_WITH_AES_256_CBC_SHA';
+  TLS1_RFC_ECDHE_ECDSA_WITH_AES_128_SHA256 = 'TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256';
+  TLS1_RFC_ECDHE_ECDSA_WITH_AES_256_SHA384 = 'TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384';
+  TLS1_RFC_ECDHE_RSA_WITH_AES_128_SHA256 = 'TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256';
+  TLS1_RFC_ECDHE_RSA_WITH_AES_256_SHA384 = 'TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384';
+  TLS1_RFC_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 = 'TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256';
+  TLS1_RFC_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 = 'TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384';
+  TLS1_RFC_ECDHE_RSA_WITH_AES_128_GCM_SHA256 = 'TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256';
+  TLS1_RFC_ECDHE_RSA_WITH_AES_256_GCM_SHA384 = 'TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384';
+  TLS1_RFC_PSK_WITH_NULL_SHA = 'TLS_PSK_WITH_NULL_SHA';
+  TLS1_RFC_DHE_PSK_WITH_NULL_SHA = 'TLS_DHE_PSK_WITH_NULL_SHA';
+  TLS1_RFC_RSA_PSK_WITH_NULL_SHA = 'TLS_RSA_PSK_WITH_NULL_SHA';
+  TLS1_RFC_PSK_WITH_3DES_EDE_CBC_SHA = 'TLS_PSK_WITH_3DES_EDE_CBC_SHA';
+  TLS1_RFC_PSK_WITH_AES_128_CBC_SHA = 'TLS_PSK_WITH_AES_128_CBC_SHA';
+  TLS1_RFC_PSK_WITH_AES_256_CBC_SHA = 'TLS_PSK_WITH_AES_256_CBC_SHA';
+  TLS1_RFC_DHE_PSK_WITH_3DES_EDE_CBC_SHA = 'TLS_DHE_PSK_WITH_3DES_EDE_CBC_SHA';
+  TLS1_RFC_DHE_PSK_WITH_AES_128_CBC_SHA = 'TLS_DHE_PSK_WITH_AES_128_CBC_SHA';
+  TLS1_RFC_DHE_PSK_WITH_AES_256_CBC_SHA = 'TLS_DHE_PSK_WITH_AES_256_CBC_SHA';
+  TLS1_RFC_RSA_PSK_WITH_3DES_EDE_CBC_SHA = 'TLS_RSA_PSK_WITH_3DES_EDE_CBC_SHA';
+  TLS1_RFC_RSA_PSK_WITH_AES_128_CBC_SHA = 'TLS_RSA_PSK_WITH_AES_128_CBC_SHA';
+  TLS1_RFC_RSA_PSK_WITH_AES_256_CBC_SHA = 'TLS_RSA_PSK_WITH_AES_256_CBC_SHA';
+  TLS1_RFC_PSK_WITH_AES_128_GCM_SHA256 = 'TLS_PSK_WITH_AES_128_GCM_SHA256';
+  TLS1_RFC_PSK_WITH_AES_256_GCM_SHA384 = 'TLS_PSK_WITH_AES_256_GCM_SHA384';
+  TLS1_RFC_DHE_PSK_WITH_AES_128_GCM_SHA256 = 'TLS_DHE_PSK_WITH_AES_128_GCM_SHA256';
+  TLS1_RFC_DHE_PSK_WITH_AES_256_GCM_SHA384 = 'TLS_DHE_PSK_WITH_AES_256_GCM_SHA384';
+  TLS1_RFC_RSA_PSK_WITH_AES_128_GCM_SHA256 = 'TLS_RSA_PSK_WITH_AES_128_GCM_SHA256';
+  TLS1_RFC_RSA_PSK_WITH_AES_256_GCM_SHA384 = 'TLS_RSA_PSK_WITH_AES_256_GCM_SHA384';
+  TLS1_RFC_PSK_WITH_AES_128_CBC_SHA256 = 'TLS_PSK_WITH_AES_128_CBC_SHA256';
+  TLS1_RFC_PSK_WITH_AES_256_CBC_SHA384 = 'TLS_PSK_WITH_AES_256_CBC_SHA384';
+  TLS1_RFC_PSK_WITH_NULL_SHA256 = 'TLS_PSK_WITH_NULL_SHA256';
+  TLS1_RFC_PSK_WITH_NULL_SHA384 = 'TLS_PSK_WITH_NULL_SHA384';
+  TLS1_RFC_DHE_PSK_WITH_AES_128_CBC_SHA256 = 'TLS_DHE_PSK_WITH_AES_128_CBC_SHA256';
+  TLS1_RFC_DHE_PSK_WITH_AES_256_CBC_SHA384 = 'TLS_DHE_PSK_WITH_AES_256_CBC_SHA384';
+  TLS1_RFC_DHE_PSK_WITH_NULL_SHA256 = 'TLS_DHE_PSK_WITH_NULL_SHA256';
+  TLS1_RFC_DHE_PSK_WITH_NULL_SHA384 = 'TLS_DHE_PSK_WITH_NULL_SHA384';
+  TLS1_RFC_RSA_PSK_WITH_AES_128_CBC_SHA256 = 'TLS_RSA_PSK_WITH_AES_128_CBC_SHA256';
+  TLS1_RFC_RSA_PSK_WITH_AES_256_CBC_SHA384 = 'TLS_RSA_PSK_WITH_AES_256_CBC_SHA384';
+  TLS1_RFC_RSA_PSK_WITH_NULL_SHA256 = 'TLS_RSA_PSK_WITH_NULL_SHA256';
+  TLS1_RFC_RSA_PSK_WITH_NULL_SHA384 = 'TLS_RSA_PSK_WITH_NULL_SHA384';
+  TLS1_RFC_ECDHE_PSK_WITH_3DES_EDE_CBC_SHA = 'TLS_ECDHE_PSK_WITH_3DES_EDE_CBC_SHA';
+  TLS1_RFC_ECDHE_PSK_WITH_AES_128_CBC_SHA = 'TLS_ECDHE_PSK_WITH_AES_128_CBC_SHA';
+  TLS1_RFC_ECDHE_PSK_WITH_AES_256_CBC_SHA = 'TLS_ECDHE_PSK_WITH_AES_256_CBC_SHA';
+  TLS1_RFC_ECDHE_PSK_WITH_AES_128_CBC_SHA256 = 'TLS_ECDHE_PSK_WITH_AES_128_CBC_SHA256';
+  TLS1_RFC_ECDHE_PSK_WITH_AES_256_CBC_SHA384 = 'TLS_ECDHE_PSK_WITH_AES_256_CBC_SHA384';
+  TLS1_RFC_ECDHE_PSK_WITH_NULL_SHA = 'TLS_ECDHE_PSK_WITH_NULL_SHA';
+  TLS1_RFC_ECDHE_PSK_WITH_NULL_SHA256 = 'TLS_ECDHE_PSK_WITH_NULL_SHA256';
+  TLS1_RFC_ECDHE_PSK_WITH_NULL_SHA384 = 'TLS_ECDHE_PSK_WITH_NULL_SHA384';
+  TLS1_RFC_SRP_SHA_WITH_3DES_EDE_CBC_SHA = 'TLS_SRP_SHA_WITH_3DES_EDE_CBC_SHA';
+  TLS1_RFC_SRP_SHA_RSA_WITH_3DES_EDE_CBC_SHA = 'TLS_SRP_SHA_RSA_WITH_3DES_EDE_CBC_SHA';
+  TLS1_RFC_SRP_SHA_DSS_WITH_3DES_EDE_CBC_SHA = 'TLS_SRP_SHA_DSS_WITH_3DES_EDE_CBC_SHA';
+  TLS1_RFC_SRP_SHA_WITH_AES_128_CBC_SHA = 'TLS_SRP_SHA_WITH_AES_128_CBC_SHA';
+  TLS1_RFC_SRP_SHA_RSA_WITH_AES_128_CBC_SHA = 'TLS_SRP_SHA_RSA_WITH_AES_128_CBC_SHA';
+  TLS1_RFC_SRP_SHA_DSS_WITH_AES_128_CBC_SHA = 'TLS_SRP_SHA_DSS_WITH_AES_128_CBC_SHA';
+  TLS1_RFC_SRP_SHA_WITH_AES_256_CBC_SHA = 'TLS_SRP_SHA_WITH_AES_256_CBC_SHA';
+  TLS1_RFC_SRP_SHA_RSA_WITH_AES_256_CBC_SHA = 'TLS_SRP_SHA_RSA_WITH_AES_256_CBC_SHA';
+  TLS1_RFC_SRP_SHA_DSS_WITH_AES_256_CBC_SHA = 'TLS_SRP_SHA_DSS_WITH_AES_256_CBC_SHA';
+  TLS1_RFC_DHE_RSA_WITH_CHACHA20_POLY1305 = 'TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256';
+  TLS1_RFC_ECDHE_RSA_WITH_CHACHA20_POLY1305 = 'TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256';
+  TLS1_RFC_ECDHE_ECDSA_WITH_CHACHA20_POLY1305 = 'TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256';
+  TLS1_RFC_PSK_WITH_CHACHA20_POLY1305 = 'TLS_PSK_WITH_CHACHA20_POLY1305_SHA256';
+  TLS1_RFC_ECDHE_PSK_WITH_CHACHA20_POLY1305 = 'TLS_ECDHE_PSK_WITH_CHACHA20_POLY1305_SHA256';
+  TLS1_RFC_DHE_PSK_WITH_CHACHA20_POLY1305 = 'TLS_DHE_PSK_WITH_CHACHA20_POLY1305_SHA256';
+  TLS1_RFC_RSA_PSK_WITH_CHACHA20_POLY1305 = 'TLS_RSA_PSK_WITH_CHACHA20_POLY1305_SHA256';
+  TLS1_RFC_RSA_WITH_CAMELLIA_128_CBC_SHA256 = 'TLS_RSA_WITH_CAMELLIA_128_CBC_SHA256';
+  TLS1_RFC_DHE_DSS_WITH_CAMELLIA_128_CBC_SHA256 = 'TLS_DHE_DSS_WITH_CAMELLIA_128_CBC_SHA256';
+  TLS1_RFC_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA256 = 'TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA256';
+  TLS1_RFC_ADH_WITH_CAMELLIA_128_CBC_SHA256 = 'TLS_DH_anon_WITH_CAMELLIA_128_CBC_SHA256';
+  TLS1_RFC_RSA_WITH_CAMELLIA_256_CBC_SHA256 = 'TLS_RSA_WITH_CAMELLIA_256_CBC_SHA256';
+  TLS1_RFC_DHE_DSS_WITH_CAMELLIA_256_CBC_SHA256 = 'TLS_DHE_DSS_WITH_CAMELLIA_256_CBC_SHA256';
+  TLS1_RFC_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA256 = 'TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA256';
+  TLS1_RFC_ADH_WITH_CAMELLIA_256_CBC_SHA256 = 'TLS_DH_anon_WITH_CAMELLIA_256_CBC_SHA256';
+  TLS1_RFC_RSA_WITH_CAMELLIA_256_CBC_SHA = 'TLS_RSA_WITH_CAMELLIA_256_CBC_SHA';
+  TLS1_RFC_DHE_DSS_WITH_CAMELLIA_256_CBC_SHA = 'TLS_DHE_DSS_WITH_CAMELLIA_256_CBC_SHA';
+  TLS1_RFC_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA = 'TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA';
+  TLS1_RFC_ADH_WITH_CAMELLIA_256_CBC_SHA = 'TLS_DH_anon_WITH_CAMELLIA_256_CBC_SHA';
+  TLS1_RFC_RSA_WITH_CAMELLIA_128_CBC_SHA = 'TLS_RSA_WITH_CAMELLIA_128_CBC_SHA';
+  TLS1_RFC_DHE_DSS_WITH_CAMELLIA_128_CBC_SHA = 'TLS_DHE_DSS_WITH_CAMELLIA_128_CBC_SHA';
+  TLS1_RFC_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA = 'TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA';
+  TLS1_RFC_ADH_WITH_CAMELLIA_128_CBC_SHA = 'TLS_DH_anon_WITH_CAMELLIA_128_CBC_SHA';
+  TLS1_RFC_ECDHE_ECDSA_WITH_CAMELLIA_128_CBC_SHA256 = 'TLS_ECDHE_ECDSA_WITH_CAMELLIA_128_CBC_SHA256';
+  TLS1_RFC_ECDHE_ECDSA_WITH_CAMELLIA_256_CBC_SHA384 = 'TLS_ECDHE_ECDSA_WITH_CAMELLIA_256_CBC_SHA384';
+  TLS1_RFC_ECDHE_RSA_WITH_CAMELLIA_128_CBC_SHA256 = 'TLS_ECDHE_RSA_WITH_CAMELLIA_128_CBC_SHA256';
+  TLS1_RFC_ECDHE_RSA_WITH_CAMELLIA_256_CBC_SHA384 = 'TLS_ECDHE_RSA_WITH_CAMELLIA_256_CBC_SHA384';
+  TLS1_RFC_PSK_WITH_CAMELLIA_128_CBC_SHA256 = 'TLS_PSK_WITH_CAMELLIA_128_CBC_SHA256';
+  TLS1_RFC_PSK_WITH_CAMELLIA_256_CBC_SHA384 = 'TLS_PSK_WITH_CAMELLIA_256_CBC_SHA384';
+  TLS1_RFC_DHE_PSK_WITH_CAMELLIA_128_CBC_SHA256 = 'TLS_DHE_PSK_WITH_CAMELLIA_128_CBC_SHA256';
+  TLS1_RFC_DHE_PSK_WITH_CAMELLIA_256_CBC_SHA384 = 'TLS_DHE_PSK_WITH_CAMELLIA_256_CBC_SHA384';
+  TLS1_RFC_RSA_PSK_WITH_CAMELLIA_128_CBC_SHA256 = 'TLS_RSA_PSK_WITH_CAMELLIA_128_CBC_SHA256';
+  TLS1_RFC_RSA_PSK_WITH_CAMELLIA_256_CBC_SHA384 = 'TLS_RSA_PSK_WITH_CAMELLIA_256_CBC_SHA384';
+  TLS1_RFC_ECDHE_PSK_WITH_CAMELLIA_128_CBC_SHA256 = 'TLS_ECDHE_PSK_WITH_CAMELLIA_128_CBC_SHA256';
+  TLS1_RFC_ECDHE_PSK_WITH_CAMELLIA_256_CBC_SHA384 = 'TLS_ECDHE_PSK_WITH_CAMELLIA_256_CBC_SHA384';
+  TLS1_RFC_RSA_WITH_SEED_SHA = 'TLS_RSA_WITH_SEED_CBC_SHA';
+  TLS1_RFC_DHE_DSS_WITH_SEED_SHA = 'TLS_DHE_DSS_WITH_SEED_CBC_SHA';
+  TLS1_RFC_DHE_RSA_WITH_SEED_SHA = 'TLS_DHE_RSA_WITH_SEED_CBC_SHA';
+  TLS1_RFC_ADH_WITH_SEED_SHA = 'TLS_DH_anon_WITH_SEED_CBC_SHA';
+  TLS1_RFC_ECDHE_PSK_WITH_RC4_128_SHA = 'TLS_ECDHE_PSK_WITH_RC4_128_SHA';
+  TLS1_RFC_ECDH_anon_WITH_RC4_128_SHA = 'TLS_ECDH_anon_WITH_RC4_128_SHA';
+  TLS1_RFC_ECDHE_ECDSA_WITH_RC4_128_SHA = 'TLS_ECDHE_ECDSA_WITH_RC4_128_SHA';
+  TLS1_RFC_ECDHE_RSA_WITH_RC4_128_SHA = 'TLS_ECDHE_RSA_WITH_RC4_128_SHA';
+  TLS1_RFC_PSK_WITH_RC4_128_SHA = 'TLS_PSK_WITH_RC4_128_SHA';
+  TLS1_RFC_RSA_PSK_WITH_RC4_128_SHA = 'TLS_RSA_PSK_WITH_RC4_128_SHA';
+  TLS1_RFC_DHE_PSK_WITH_RC4_128_SHA = 'TLS_DHE_PSK_WITH_RC4_128_SHA';
+  TLS1_RFC_RSA_WITH_ARIA_128_GCM_SHA256 = 'TLS_RSA_WITH_ARIA_128_GCM_SHA256';
+  TLS1_RFC_RSA_WITH_ARIA_256_GCM_SHA384 = 'TLS_RSA_WITH_ARIA_256_GCM_SHA384';
+  TLS1_RFC_DHE_RSA_WITH_ARIA_128_GCM_SHA256 = 'TLS_DHE_RSA_WITH_ARIA_128_GCM_SHA256';
+  TLS1_RFC_DHE_RSA_WITH_ARIA_256_GCM_SHA384 = 'TLS_DHE_RSA_WITH_ARIA_256_GCM_SHA384';
+  TLS1_RFC_DH_RSA_WITH_ARIA_128_GCM_SHA256 = 'TLS_DH_RSA_WITH_ARIA_128_GCM_SHA256';
+  TLS1_RFC_DH_RSA_WITH_ARIA_256_GCM_SHA384 = 'TLS_DH_RSA_WITH_ARIA_256_GCM_SHA384';
+  TLS1_RFC_DHE_DSS_WITH_ARIA_128_GCM_SHA256 = 'TLS_DHE_DSS_WITH_ARIA_128_GCM_SHA256';
+  TLS1_RFC_DHE_DSS_WITH_ARIA_256_GCM_SHA384 = 'TLS_DHE_DSS_WITH_ARIA_256_GCM_SHA384';
+  TLS1_RFC_DH_DSS_WITH_ARIA_128_GCM_SHA256 = 'TLS_DH_DSS_WITH_ARIA_128_GCM_SHA256';
+  TLS1_RFC_DH_DSS_WITH_ARIA_256_GCM_SHA384 = 'TLS_DH_DSS_WITH_ARIA_256_GCM_SHA384';
+  TLS1_RFC_DH_anon_WITH_ARIA_128_GCM_SHA256 = 'TLS_DH_anon_WITH_ARIA_128_GCM_SHA256';
+  TLS1_RFC_DH_anon_WITH_ARIA_256_GCM_SHA384 = 'TLS_DH_anon_WITH_ARIA_256_GCM_SHA384';
+  TLS1_RFC_ECDHE_ECDSA_WITH_ARIA_128_GCM_SHA256 = 'TLS_ECDHE_ECDSA_WITH_ARIA_128_GCM_SHA256';
+  TLS1_RFC_ECDHE_ECDSA_WITH_ARIA_256_GCM_SHA384 = 'TLS_ECDHE_ECDSA_WITH_ARIA_256_GCM_SHA384';
+  TLS1_RFC_ECDH_ECDSA_WITH_ARIA_128_GCM_SHA256 = 'TLS_ECDH_ECDSA_WITH_ARIA_128_GCM_SHA256';
+  TLS1_RFC_ECDH_ECDSA_WITH_ARIA_256_GCM_SHA384 = 'TLS_ECDH_ECDSA_WITH_ARIA_256_GCM_SHA384';
+  TLS1_RFC_ECDHE_RSA_WITH_ARIA_128_GCM_SHA256 = 'TLS_ECDHE_RSA_WITH_ARIA_128_GCM_SHA256';
+  TLS1_RFC_ECDHE_RSA_WITH_ARIA_256_GCM_SHA384 = 'TLS_ECDHE_RSA_WITH_ARIA_256_GCM_SHA384';
+  TLS1_RFC_ECDH_RSA_WITH_ARIA_128_GCM_SHA256 = 'TLS_ECDH_RSA_WITH_ARIA_128_GCM_SHA256';
+  TLS1_RFC_ECDH_RSA_WITH_ARIA_256_GCM_SHA384 = 'TLS_ECDH_RSA_WITH_ARIA_256_GCM_SHA384';
+  TLS1_RFC_PSK_WITH_ARIA_128_GCM_SHA256 = 'TLS_PSK_WITH_ARIA_128_GCM_SHA256';
+  TLS1_RFC_PSK_WITH_ARIA_256_GCM_SHA384 = 'TLS_PSK_WITH_ARIA_256_GCM_SHA384';
+  TLS1_RFC_DHE_PSK_WITH_ARIA_128_GCM_SHA256 = 'TLS_DHE_PSK_WITH_ARIA_128_GCM_SHA256';
+  TLS1_RFC_DHE_PSK_WITH_ARIA_256_GCM_SHA384 = 'TLS_DHE_PSK_WITH_ARIA_256_GCM_SHA384';
+  TLS1_RFC_RSA_PSK_WITH_ARIA_128_GCM_SHA256 = 'TLS_RSA_PSK_WITH_ARIA_128_GCM_SHA256';
+  TLS1_RFC_RSA_PSK_WITH_ARIA_256_GCM_SHA384 = 'TLS_RSA_PSK_WITH_ARIA_256_GCM_SHA384';
+  TLS1_3_RFC_SM4_GCM_SM3 = 'TLS_SM4_GCM_SM3';
+  TLS1_3_RFC_SM4_CCM_SM3 = 'TLS_SM4_CCM_SM3';
+  
+  {* XXX Backward compatibility alert: Older versions of OpenSSL gave some DHE
+  * ciphers names with "EDH" instead of "DHE".  Going forward, we should be
+  * using DHE everywhere, though we may indefinitely maintain aliases for
+  * users or configurations that used "EDH"
+  }
+  TLS1_TXT_DHE_DSS_WITH_RC4_128_SHA = 'DHE-DSS-RC4-SHA';
+  TLS1_TXT_PSK_WITH_NULL_SHA = 'PSK-NULL-SHA';
+  TLS1_TXT_DHE_PSK_WITH_NULL_SHA = 'DHE-PSK-NULL-SHA';
+  TLS1_TXT_RSA_PSK_WITH_NULL_SHA = 'RSA-PSK-NULL-SHA';
+  { AES ciphersuites from RFC3268 }
+  TLS1_TXT_RSA_WITH_AES_128_SHA = 'AES128-SHA';
+  TLS1_TXT_DH_DSS_WITH_AES_128_SHA = 'DH-DSS-AES128-SHA';
+  TLS1_TXT_DH_RSA_WITH_AES_128_SHA = 'DH-RSA-AES128-SHA';
+  TLS1_TXT_DHE_DSS_WITH_AES_128_SHA = 'DHE-DSS-AES128-SHA';
+  TLS1_TXT_DHE_RSA_WITH_AES_128_SHA = 'DHE-RSA-AES128-SHA';
+  TLS1_TXT_ADH_WITH_AES_128_SHA = 'ADH-AES128-SHA';
+  TLS1_TXT_RSA_WITH_AES_256_SHA = 'AES256-SHA';
+  TLS1_TXT_DH_DSS_WITH_AES_256_SHA = 'DH-DSS-AES256-SHA';
+  TLS1_TXT_DH_RSA_WITH_AES_256_SHA = 'DH-RSA-AES256-SHA';
+  TLS1_TXT_DHE_DSS_WITH_AES_256_SHA = 'DHE-DSS-AES256-SHA';
+  TLS1_TXT_DHE_RSA_WITH_AES_256_SHA = 'DHE-RSA-AES256-SHA';
+  TLS1_TXT_ADH_WITH_AES_256_SHA = 'ADH-AES256-SHA';
+  { ECC ciphersuites from RFC4492 }
+  TLS1_TXT_ECDH_ECDSA_WITH_NULL_SHA = 'ECDH-ECDSA-NULL-SHA';
+  TLS1_TXT_ECDH_ECDSA_WITH_RC4_128_SHA = 'ECDH-ECDSA-RC4-SHA';
+  TLS1_TXT_ECDH_ECDSA_WITH_DES_192_CBC3_SHA = 'ECDH-ECDSA-DES-CBC3-SHA';
+  TLS1_TXT_ECDH_ECDSA_WITH_AES_128_CBC_SHA = 'ECDH-ECDSA-AES128-SHA';
+  TLS1_TXT_ECDH_ECDSA_WITH_AES_256_CBC_SHA = 'ECDH-ECDSA-AES256-SHA';
+  TLS1_TXT_ECDHE_ECDSA_WITH_NULL_SHA = 'ECDHE-ECDSA-NULL-SHA';
+  TLS1_TXT_ECDHE_ECDSA_WITH_RC4_128_SHA = 'ECDHE-ECDSA-RC4-SHA';
+  TLS1_TXT_ECDHE_ECDSA_WITH_DES_192_CBC3_SHA = 'ECDHE-ECDSA-DES-CBC3-SHA';
+  TLS1_TXT_ECDHE_ECDSA_WITH_AES_128_CBC_SHA = 'ECDHE-ECDSA-AES128-SHA';
+  TLS1_TXT_ECDHE_ECDSA_WITH_AES_256_CBC_SHA = 'ECDHE-ECDSA-AES256-SHA';
+  TLS1_TXT_ECDH_RSA_WITH_NULL_SHA = 'ECDH-RSA-NULL-SHA';
+  TLS1_TXT_ECDH_RSA_WITH_RC4_128_SHA = 'ECDH-RSA-RC4-SHA';
+  TLS1_TXT_ECDH_RSA_WITH_DES_192_CBC3_SHA = 'ECDH-RSA-DES-CBC3-SHA';
+  TLS1_TXT_ECDH_RSA_WITH_AES_128_CBC_SHA = 'ECDH-RSA-AES128-SHA';
+  TLS1_TXT_ECDH_RSA_WITH_AES_256_CBC_SHA = 'ECDH-RSA-AES256-SHA';
+  TLS1_TXT_ECDHE_RSA_WITH_NULL_SHA = 'ECDHE-RSA-NULL-SHA';
+  TLS1_TXT_ECDHE_RSA_WITH_RC4_128_SHA = 'ECDHE-RSA-RC4-SHA';
+  TLS1_TXT_ECDHE_RSA_WITH_DES_192_CBC3_SHA = 'ECDHE-RSA-DES-CBC3-SHA';
+  TLS1_TXT_ECDHE_RSA_WITH_AES_128_CBC_SHA = 'ECDHE-RSA-AES128-SHA';
+  TLS1_TXT_ECDHE_RSA_WITH_AES_256_CBC_SHA = 'ECDHE-RSA-AES256-SHA';
+  TLS1_TXT_ECDH_anon_WITH_NULL_SHA = 'AECDH-NULL-SHA';
+  TLS1_TXT_ECDH_anon_WITH_RC4_128_SHA = 'AECDH-RC4-SHA';
+  TLS1_TXT_ECDH_anon_WITH_DES_192_CBC3_SHA = 'AECDH-DES-CBC3-SHA';
+  TLS1_TXT_ECDH_anon_WITH_AES_128_CBC_SHA = 'AECDH-AES128-SHA';
+  TLS1_TXT_ECDH_anon_WITH_AES_256_CBC_SHA = 'AECDH-AES256-SHA';
+  { PSK ciphersuites from RFC 4279 }
+  TLS1_TXT_PSK_WITH_RC4_128_SHA = 'PSK-RC4-SHA';
+  TLS1_TXT_PSK_WITH_3DES_EDE_CBC_SHA = 'PSK-3DES-EDE-CBC-SHA';
+  TLS1_TXT_PSK_WITH_AES_128_CBC_SHA = 'PSK-AES128-CBC-SHA';
+  TLS1_TXT_PSK_WITH_AES_256_CBC_SHA = 'PSK-AES256-CBC-SHA';
+  TLS1_TXT_DHE_PSK_WITH_RC4_128_SHA = 'DHE-PSK-RC4-SHA';
+  TLS1_TXT_DHE_PSK_WITH_3DES_EDE_CBC_SHA = 'DHE-PSK-3DES-EDE-CBC-SHA';
+  TLS1_TXT_DHE_PSK_WITH_AES_128_CBC_SHA = 'DHE-PSK-AES128-CBC-SHA';
+  TLS1_TXT_DHE_PSK_WITH_AES_256_CBC_SHA = 'DHE-PSK-AES256-CBC-SHA';
+  TLS1_TXT_RSA_PSK_WITH_RC4_128_SHA = 'RSA-PSK-RC4-SHA';
+  TLS1_TXT_RSA_PSK_WITH_3DES_EDE_CBC_SHA = 'RSA-PSK-3DES-EDE-CBC-SHA';
+  TLS1_TXT_RSA_PSK_WITH_AES_128_CBC_SHA = 'RSA-PSK-AES128-CBC-SHA';
+  TLS1_TXT_RSA_PSK_WITH_AES_256_CBC_SHA = 'RSA-PSK-AES256-CBC-SHA';
+  { PSK ciphersuites from RFC 5487 }
+  TLS1_TXT_PSK_WITH_AES_128_GCM_SHA256 = 'PSK-AES128-GCM-SHA256';
+  TLS1_TXT_PSK_WITH_AES_256_GCM_SHA384 = 'PSK-AES256-GCM-SHA384';
+  TLS1_TXT_DHE_PSK_WITH_AES_128_GCM_SHA256 = 'DHE-PSK-AES128-GCM-SHA256';
+  TLS1_TXT_DHE_PSK_WITH_AES_256_GCM_SHA384 = 'DHE-PSK-AES256-GCM-SHA384';
+  TLS1_TXT_RSA_PSK_WITH_AES_128_GCM_SHA256 = 'RSA-PSK-AES128-GCM-SHA256';
+  TLS1_TXT_RSA_PSK_WITH_AES_256_GCM_SHA384 = 'RSA-PSK-AES256-GCM-SHA384';
+  TLS1_TXT_PSK_WITH_AES_128_CBC_SHA256 = 'PSK-AES128-CBC-SHA256';
+  TLS1_TXT_PSK_WITH_AES_256_CBC_SHA384 = 'PSK-AES256-CBC-SHA384';
+  TLS1_TXT_PSK_WITH_NULL_SHA256 = 'PSK-NULL-SHA256';
+  TLS1_TXT_PSK_WITH_NULL_SHA384 = 'PSK-NULL-SHA384';
+  TLS1_TXT_DHE_PSK_WITH_AES_128_CBC_SHA256 = 'DHE-PSK-AES128-CBC-SHA256';
+  TLS1_TXT_DHE_PSK_WITH_AES_256_CBC_SHA384 = 'DHE-PSK-AES256-CBC-SHA384';
+  TLS1_TXT_DHE_PSK_WITH_NULL_SHA256 = 'DHE-PSK-NULL-SHA256';
+  TLS1_TXT_DHE_PSK_WITH_NULL_SHA384 = 'DHE-PSK-NULL-SHA384';
+  TLS1_TXT_RSA_PSK_WITH_AES_128_CBC_SHA256 = 'RSA-PSK-AES128-CBC-SHA256';
+  TLS1_TXT_RSA_PSK_WITH_AES_256_CBC_SHA384 = 'RSA-PSK-AES256-CBC-SHA384';
+  TLS1_TXT_RSA_PSK_WITH_NULL_SHA256 = 'RSA-PSK-NULL-SHA256';
+  TLS1_TXT_RSA_PSK_WITH_NULL_SHA384 = 'RSA-PSK-NULL-SHA384';
+  { SRP ciphersuite from RFC 5054 }
+  TLS1_TXT_SRP_SHA_WITH_3DES_EDE_CBC_SHA = 'SRP-3DES-EDE-CBC-SHA';
+  TLS1_TXT_SRP_SHA_RSA_WITH_3DES_EDE_CBC_SHA = 'SRP-RSA-3DES-EDE-CBC-SHA';
+  TLS1_TXT_SRP_SHA_DSS_WITH_3DES_EDE_CBC_SHA = 'SRP-DSS-3DES-EDE-CBC-SHA';
+  TLS1_TXT_SRP_SHA_WITH_AES_128_CBC_SHA = 'SRP-AES-128-CBC-SHA';
+  TLS1_TXT_SRP_SHA_RSA_WITH_AES_128_CBC_SHA = 'SRP-RSA-AES-128-CBC-SHA';
+  TLS1_TXT_SRP_SHA_DSS_WITH_AES_128_CBC_SHA = 'SRP-DSS-AES-128-CBC-SHA';
+  TLS1_TXT_SRP_SHA_WITH_AES_256_CBC_SHA = 'SRP-AES-256-CBC-SHA';
+  TLS1_TXT_SRP_SHA_RSA_WITH_AES_256_CBC_SHA = 'SRP-RSA-AES-256-CBC-SHA';
+  TLS1_TXT_SRP_SHA_DSS_WITH_AES_256_CBC_SHA = 'SRP-DSS-AES-256-CBC-SHA';
+  { Camellia ciphersuites from RFC4132 }
+  TLS1_TXT_RSA_WITH_CAMELLIA_128_CBC_SHA = 'CAMELLIA128-SHA';
+  TLS1_TXT_DH_DSS_WITH_CAMELLIA_128_CBC_SHA = 'DH-DSS-CAMELLIA128-SHA';
+  TLS1_TXT_DH_RSA_WITH_CAMELLIA_128_CBC_SHA = 'DH-RSA-CAMELLIA128-SHA';
+  TLS1_TXT_DHE_DSS_WITH_CAMELLIA_128_CBC_SHA = 'DHE-DSS-CAMELLIA128-SHA';
+  TLS1_TXT_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA = 'DHE-RSA-CAMELLIA128-SHA';
+  TLS1_TXT_ADH_WITH_CAMELLIA_128_CBC_SHA = 'ADH-CAMELLIA128-SHA';
+  TLS1_TXT_RSA_WITH_CAMELLIA_256_CBC_SHA = 'CAMELLIA256-SHA';
+  TLS1_TXT_DH_DSS_WITH_CAMELLIA_256_CBC_SHA = 'DH-DSS-CAMELLIA256-SHA';
+  TLS1_TXT_DH_RSA_WITH_CAMELLIA_256_CBC_SHA = 'DH-RSA-CAMELLIA256-SHA';
+  TLS1_TXT_DHE_DSS_WITH_CAMELLIA_256_CBC_SHA = 'DHE-DSS-CAMELLIA256-SHA';
+  TLS1_TXT_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA = 'DHE-RSA-CAMELLIA256-SHA';
+  TLS1_TXT_ADH_WITH_CAMELLIA_256_CBC_SHA = 'ADH-CAMELLIA256-SHA';
+  { TLS 1.2 Camellia SHA-256 ciphersuites from RFC5932 }
+  TLS1_TXT_RSA_WITH_CAMELLIA_128_CBC_SHA256 = 'CAMELLIA128-SHA256';
+  TLS1_TXT_DH_DSS_WITH_CAMELLIA_128_CBC_SHA256 = 'DH-DSS-CAMELLIA128-SHA256';
+  TLS1_TXT_DH_RSA_WITH_CAMELLIA_128_CBC_SHA256 = 'DH-RSA-CAMELLIA128-SHA256';
+  TLS1_TXT_DHE_DSS_WITH_CAMELLIA_128_CBC_SHA256 = 'DHE-DSS-CAMELLIA128-SHA256';
+  TLS1_TXT_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA256 = 'DHE-RSA-CAMELLIA128-SHA256';
+  TLS1_TXT_ADH_WITH_CAMELLIA_128_CBC_SHA256 = 'ADH-CAMELLIA128-SHA256';
+  TLS1_TXT_RSA_WITH_CAMELLIA_256_CBC_SHA256 = 'CAMELLIA256-SHA256';
+  TLS1_TXT_DH_DSS_WITH_CAMELLIA_256_CBC_SHA256 = 'DH-DSS-CAMELLIA256-SHA256';
+  TLS1_TXT_DH_RSA_WITH_CAMELLIA_256_CBC_SHA256 = 'DH-RSA-CAMELLIA256-SHA256';
+  TLS1_TXT_DHE_DSS_WITH_CAMELLIA_256_CBC_SHA256 = 'DHE-DSS-CAMELLIA256-SHA256';
+  TLS1_TXT_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA256 = 'DHE-RSA-CAMELLIA256-SHA256';
+  TLS1_TXT_ADH_WITH_CAMELLIA_256_CBC_SHA256 = 'ADH-CAMELLIA256-SHA256';
+  TLS1_TXT_PSK_WITH_CAMELLIA_128_CBC_SHA256 = 'PSK-CAMELLIA128-SHA256';
+  TLS1_TXT_PSK_WITH_CAMELLIA_256_CBC_SHA384 = 'PSK-CAMELLIA256-SHA384';
+  TLS1_TXT_DHE_PSK_WITH_CAMELLIA_128_CBC_SHA256 = 'DHE-PSK-CAMELLIA128-SHA256';
+  TLS1_TXT_DHE_PSK_WITH_CAMELLIA_256_CBC_SHA384 = 'DHE-PSK-CAMELLIA256-SHA384';
+  TLS1_TXT_RSA_PSK_WITH_CAMELLIA_128_CBC_SHA256 = 'RSA-PSK-CAMELLIA128-SHA256';
+  TLS1_TXT_RSA_PSK_WITH_CAMELLIA_256_CBC_SHA384 = 'RSA-PSK-CAMELLIA256-SHA384';
+  TLS1_TXT_ECDHE_PSK_WITH_CAMELLIA_128_CBC_SHA256 = 'ECDHE-PSK-CAMELLIA128-SHA256';
+  TLS1_TXT_ECDHE_PSK_WITH_CAMELLIA_256_CBC_SHA384 = 'ECDHE-PSK-CAMELLIA256-SHA384';
+  { SEED ciphersuites from RFC4162 }
+  TLS1_TXT_RSA_WITH_SEED_SHA = 'SEED-SHA';
+  TLS1_TXT_DH_DSS_WITH_SEED_SHA = 'DH-DSS-SEED-SHA';
+  TLS1_TXT_DH_RSA_WITH_SEED_SHA = 'DH-RSA-SEED-SHA';
+  TLS1_TXT_DHE_DSS_WITH_SEED_SHA = 'DHE-DSS-SEED-SHA';
+  TLS1_TXT_DHE_RSA_WITH_SEED_SHA = 'DHE-RSA-SEED-SHA';
+  TLS1_TXT_ADH_WITH_SEED_SHA = 'ADH-SEED-SHA';
+  { TLS v1.2 ciphersuites }
+  TLS1_TXT_RSA_WITH_NULL_SHA256 = 'NULL-SHA256';
+  TLS1_TXT_RSA_WITH_AES_128_SHA256 = 'AES128-SHA256';
+  TLS1_TXT_RSA_WITH_AES_256_SHA256 = 'AES256-SHA256';
+  TLS1_TXT_DH_DSS_WITH_AES_128_SHA256 = 'DH-DSS-AES128-SHA256';
+  TLS1_TXT_DH_RSA_WITH_AES_128_SHA256 = 'DH-RSA-AES128-SHA256';
+  TLS1_TXT_DHE_DSS_WITH_AES_128_SHA256 = 'DHE-DSS-AES128-SHA256';
+  TLS1_TXT_DHE_RSA_WITH_AES_128_SHA256 = 'DHE-RSA-AES128-SHA256';
+  TLS1_TXT_DH_DSS_WITH_AES_256_SHA256 = 'DH-DSS-AES256-SHA256';
+  TLS1_TXT_DH_RSA_WITH_AES_256_SHA256 = 'DH-RSA-AES256-SHA256';
+  TLS1_TXT_DHE_DSS_WITH_AES_256_SHA256 = 'DHE-DSS-AES256-SHA256';
+  TLS1_TXT_DHE_RSA_WITH_AES_256_SHA256 = 'DHE-RSA-AES256-SHA256';
+  TLS1_TXT_ADH_WITH_AES_128_SHA256 = 'ADH-AES128-SHA256';
+  TLS1_TXT_ADH_WITH_AES_256_SHA256 = 'ADH-AES256-SHA256';
+  { TLS v1.2 GCM ciphersuites from RFC5288 }
+  TLS1_TXT_RSA_WITH_AES_128_GCM_SHA256 = 'AES128-GCM-SHA256';
+  TLS1_TXT_RSA_WITH_AES_256_GCM_SHA384 = 'AES256-GCM-SHA384';
+  TLS1_TXT_DHE_RSA_WITH_AES_128_GCM_SHA256 = 'DHE-RSA-AES128-GCM-SHA256';
+  TLS1_TXT_DHE_RSA_WITH_AES_256_GCM_SHA384 = 'DHE-RSA-AES256-GCM-SHA384';
+  TLS1_TXT_DH_RSA_WITH_AES_128_GCM_SHA256 = 'DH-RSA-AES128-GCM-SHA256';
+  TLS1_TXT_DH_RSA_WITH_AES_256_GCM_SHA384 = 'DH-RSA-AES256-GCM-SHA384';
+  TLS1_TXT_DHE_DSS_WITH_AES_128_GCM_SHA256 = 'DHE-DSS-AES128-GCM-SHA256';
+  TLS1_TXT_DHE_DSS_WITH_AES_256_GCM_SHA384 = 'DHE-DSS-AES256-GCM-SHA384';
+  TLS1_TXT_DH_DSS_WITH_AES_128_GCM_SHA256 = 'DH-DSS-AES128-GCM-SHA256';
+  TLS1_TXT_DH_DSS_WITH_AES_256_GCM_SHA384 = 'DH-DSS-AES256-GCM-SHA384';
+  TLS1_TXT_ADH_WITH_AES_128_GCM_SHA256 = 'ADH-AES128-GCM-SHA256';
+  TLS1_TXT_ADH_WITH_AES_256_GCM_SHA384 = 'ADH-AES256-GCM-SHA384';
+  { CCM ciphersuites from RFC6655 }
+  TLS1_TXT_RSA_WITH_AES_128_CCM = 'AES128-CCM';
+  TLS1_TXT_RSA_WITH_AES_256_CCM = 'AES256-CCM';
+  TLS1_TXT_DHE_RSA_WITH_AES_128_CCM = 'DHE-RSA-AES128-CCM';
+  TLS1_TXT_DHE_RSA_WITH_AES_256_CCM = 'DHE-RSA-AES256-CCM';
+  TLS1_TXT_RSA_WITH_AES_128_CCM_8 = 'AES128-CCM8';
+  TLS1_TXT_RSA_WITH_AES_256_CCM_8 = 'AES256-CCM8';
+  TLS1_TXT_DHE_RSA_WITH_AES_128_CCM_8 = 'DHE-RSA-AES128-CCM8';
+  TLS1_TXT_DHE_RSA_WITH_AES_256_CCM_8 = 'DHE-RSA-AES256-CCM8';
+  TLS1_TXT_PSK_WITH_AES_128_CCM = 'PSK-AES128-CCM';
+  TLS1_TXT_PSK_WITH_AES_256_CCM = 'PSK-AES256-CCM';
+  TLS1_TXT_DHE_PSK_WITH_AES_128_CCM = 'DHE-PSK-AES128-CCM';
+  TLS1_TXT_DHE_PSK_WITH_AES_256_CCM = 'DHE-PSK-AES256-CCM';
+  TLS1_TXT_PSK_WITH_AES_128_CCM_8 = 'PSK-AES128-CCM8';
+  TLS1_TXT_PSK_WITH_AES_256_CCM_8 = 'PSK-AES256-CCM8';
+  TLS1_TXT_DHE_PSK_WITH_AES_128_CCM_8 = 'DHE-PSK-AES128-CCM8';
+  TLS1_TXT_DHE_PSK_WITH_AES_256_CCM_8 = 'DHE-PSK-AES256-CCM8';
+  { CCM ciphersuites from RFC7251 }
+  TLS1_TXT_ECDHE_ECDSA_WITH_AES_128_CCM = 'ECDHE-ECDSA-AES128-CCM';
+  TLS1_TXT_ECDHE_ECDSA_WITH_AES_256_CCM = 'ECDHE-ECDSA-AES256-CCM';
+  TLS1_TXT_ECDHE_ECDSA_WITH_AES_128_CCM_8 = 'ECDHE-ECDSA-AES128-CCM8';
+  TLS1_TXT_ECDHE_ECDSA_WITH_AES_256_CCM_8 = 'ECDHE-ECDSA-AES256-CCM8';
+  { ECDH HMAC based ciphersuites from RFC5289 }
+  TLS1_TXT_ECDHE_ECDSA_WITH_AES_128_SHA256 = 'ECDHE-ECDSA-AES128-SHA256';
+  TLS1_TXT_ECDHE_ECDSA_WITH_AES_256_SHA384 = 'ECDHE-ECDSA-AES256-SHA384';
+  TLS1_TXT_ECDH_ECDSA_WITH_AES_128_SHA256 = 'ECDH-ECDSA-AES128-SHA256';
+  TLS1_TXT_ECDH_ECDSA_WITH_AES_256_SHA384 = 'ECDH-ECDSA-AES256-SHA384';
+  TLS1_TXT_ECDHE_RSA_WITH_AES_128_SHA256 = 'ECDHE-RSA-AES128-SHA256';
+  TLS1_TXT_ECDHE_RSA_WITH_AES_256_SHA384 = 'ECDHE-RSA-AES256-SHA384';
+  TLS1_TXT_ECDH_RSA_WITH_AES_128_SHA256 = 'ECDH-RSA-AES128-SHA256';
+  TLS1_TXT_ECDH_RSA_WITH_AES_256_SHA384 = 'ECDH-RSA-AES256-SHA384';
+  { ECDH GCM based ciphersuites from RFC5289 }
+  TLS1_TXT_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 = 'ECDHE-ECDSA-AES128-GCM-SHA256';
+  TLS1_TXT_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 = 'ECDHE-ECDSA-AES256-GCM-SHA384';
+  TLS1_TXT_ECDH_ECDSA_WITH_AES_128_GCM_SHA256 = 'ECDH-ECDSA-AES128-GCM-SHA256';
+  TLS1_TXT_ECDH_ECDSA_WITH_AES_256_GCM_SHA384 = 'ECDH-ECDSA-AES256-GCM-SHA384';
+  TLS1_TXT_ECDHE_RSA_WITH_AES_128_GCM_SHA256 = 'ECDHE-RSA-AES128-GCM-SHA256';
+  TLS1_TXT_ECDHE_RSA_WITH_AES_256_GCM_SHA384 = 'ECDHE-RSA-AES256-GCM-SHA384';
+  TLS1_TXT_ECDH_RSA_WITH_AES_128_GCM_SHA256 = 'ECDH-RSA-AES128-GCM-SHA256';
+  TLS1_TXT_ECDH_RSA_WITH_AES_256_GCM_SHA384 = 'ECDH-RSA-AES256-GCM-SHA384';
+  { TLS v1.2 PSK GCM ciphersuites from RFC5487 }
+  {#define TLS1_TXT_PSK_WITH_AES_128_GCM_SHA256 "PSK-AES128-GCM-SHA256"}
+  {#define TLS1_TXT_PSK_WITH_AES_256_GCM_SHA384 "PSK-AES256-GCM-SHA384"}
+  { ECDHE PSK ciphersuites from RFC 5489 }
+  TLS1_TXT_ECDHE_PSK_WITH_RC4_128_SHA = 'ECDHE-PSK-RC4-SHA';
+  TLS1_TXT_ECDHE_PSK_WITH_3DES_EDE_CBC_SHA = 'ECDHE-PSK-3DES-EDE-CBC-SHA';
+  TLS1_TXT_ECDHE_PSK_WITH_AES_128_CBC_SHA = 'ECDHE-PSK-AES128-CBC-SHA';
+  TLS1_TXT_ECDHE_PSK_WITH_AES_256_CBC_SHA = 'ECDHE-PSK-AES256-CBC-SHA';
+  TLS1_TXT_ECDHE_PSK_WITH_AES_128_CBC_SHA256 = 'ECDHE-PSK-AES128-CBC-SHA256';
+  TLS1_TXT_ECDHE_PSK_WITH_AES_256_CBC_SHA384 = 'ECDHE-PSK-AES256-CBC-SHA384';
+  TLS1_TXT_ECDHE_PSK_WITH_NULL_SHA = 'ECDHE-PSK-NULL-SHA';
+  TLS1_TXT_ECDHE_PSK_WITH_NULL_SHA256 = 'ECDHE-PSK-NULL-SHA256';
+  TLS1_TXT_ECDHE_PSK_WITH_NULL_SHA384 = 'ECDHE-PSK-NULL-SHA384';
+  { Camellia-CBC ciphersuites from RFC6367 }
+  TLS1_TXT_ECDHE_ECDSA_WITH_CAMELLIA_128_CBC_SHA256 = 'ECDHE-ECDSA-CAMELLIA128-SHA256';
+  TLS1_TXT_ECDHE_ECDSA_WITH_CAMELLIA_256_CBC_SHA384 = 'ECDHE-ECDSA-CAMELLIA256-SHA384';
+  TLS1_TXT_ECDH_ECDSA_WITH_CAMELLIA_128_CBC_SHA256 = 'ECDH-ECDSA-CAMELLIA128-SHA256';
+  TLS1_TXT_ECDH_ECDSA_WITH_CAMELLIA_256_CBC_SHA384 = 'ECDH-ECDSA-CAMELLIA256-SHA384';
+  TLS1_TXT_ECDHE_RSA_WITH_CAMELLIA_128_CBC_SHA256 = 'ECDHE-RSA-CAMELLIA128-SHA256';
+  TLS1_TXT_ECDHE_RSA_WITH_CAMELLIA_256_CBC_SHA384 = 'ECDHE-RSA-CAMELLIA256-SHA384';
+  TLS1_TXT_ECDH_RSA_WITH_CAMELLIA_128_CBC_SHA256 = 'ECDH-RSA-CAMELLIA128-SHA256';
+  TLS1_TXT_ECDH_RSA_WITH_CAMELLIA_256_CBC_SHA384 = 'ECDH-RSA-CAMELLIA256-SHA384';
+  { draft-ietf-tls-chacha20-poly1305-03 }
+  TLS1_TXT_ECDHE_RSA_WITH_CHACHA20_POLY1305 = 'ECDHE-RSA-CHACHA20-POLY1305';
+  TLS1_TXT_ECDHE_ECDSA_WITH_CHACHA20_POLY1305 = 'ECDHE-ECDSA-CHACHA20-POLY1305';
+  TLS1_TXT_DHE_RSA_WITH_CHACHA20_POLY1305 = 'DHE-RSA-CHACHA20-POLY1305';
+  TLS1_TXT_PSK_WITH_CHACHA20_POLY1305 = 'PSK-CHACHA20-POLY1305';
+  TLS1_TXT_ECDHE_PSK_WITH_CHACHA20_POLY1305 = 'ECDHE-PSK-CHACHA20-POLY1305';
+  TLS1_TXT_DHE_PSK_WITH_CHACHA20_POLY1305 = 'DHE-PSK-CHACHA20-POLY1305';
+  TLS1_TXT_RSA_PSK_WITH_CHACHA20_POLY1305 = 'RSA-PSK-CHACHA20-POLY1305';
+  { Aria ciphersuites from RFC6209 }
+  TLS1_TXT_RSA_WITH_ARIA_128_GCM_SHA256 = 'ARIA128-GCM-SHA256';
+  TLS1_TXT_RSA_WITH_ARIA_256_GCM_SHA384 = 'ARIA256-GCM-SHA384';
+  TLS1_TXT_DHE_RSA_WITH_ARIA_128_GCM_SHA256 = 'DHE-RSA-ARIA128-GCM-SHA256';
+  TLS1_TXT_DHE_RSA_WITH_ARIA_256_GCM_SHA384 = 'DHE-RSA-ARIA256-GCM-SHA384';
+  TLS1_TXT_DH_RSA_WITH_ARIA_128_GCM_SHA256 = 'DH-RSA-ARIA128-GCM-SHA256';
+  TLS1_TXT_DH_RSA_WITH_ARIA_256_GCM_SHA384 = 'DH-RSA-ARIA256-GCM-SHA384';
+  TLS1_TXT_DHE_DSS_WITH_ARIA_128_GCM_SHA256 = 'DHE-DSS-ARIA128-GCM-SHA256';
+  TLS1_TXT_DHE_DSS_WITH_ARIA_256_GCM_SHA384 = 'DHE-DSS-ARIA256-GCM-SHA384';
+  TLS1_TXT_DH_DSS_WITH_ARIA_128_GCM_SHA256 = 'DH-DSS-ARIA128-GCM-SHA256';
+  TLS1_TXT_DH_DSS_WITH_ARIA_256_GCM_SHA384 = 'DH-DSS-ARIA256-GCM-SHA384';
+  TLS1_TXT_DH_anon_WITH_ARIA_128_GCM_SHA256 = 'ADH-ARIA128-GCM-SHA256';
+  TLS1_TXT_DH_anon_WITH_ARIA_256_GCM_SHA384 = 'ADH-ARIA256-GCM-SHA384';
+  TLS1_TXT_ECDHE_ECDSA_WITH_ARIA_128_GCM_SHA256 = 'ECDHE-ECDSA-ARIA128-GCM-SHA256';
+  TLS1_TXT_ECDHE_ECDSA_WITH_ARIA_256_GCM_SHA384 = 'ECDHE-ECDSA-ARIA256-GCM-SHA384';
+  TLS1_TXT_ECDH_ECDSA_WITH_ARIA_128_GCM_SHA256 = 'ECDH-ECDSA-ARIA128-GCM-SHA256';
+  TLS1_TXT_ECDH_ECDSA_WITH_ARIA_256_GCM_SHA384 = 'ECDH-ECDSA-ARIA256-GCM-SHA384';
+  TLS1_TXT_ECDHE_RSA_WITH_ARIA_128_GCM_SHA256 = 'ECDHE-ARIA128-GCM-SHA256';
+  TLS1_TXT_ECDHE_RSA_WITH_ARIA_256_GCM_SHA384 = 'ECDHE-ARIA256-GCM-SHA384';
+  TLS1_TXT_ECDH_RSA_WITH_ARIA_128_GCM_SHA256 = 'ECDH-ARIA128-GCM-SHA256';
+  TLS1_TXT_ECDH_RSA_WITH_ARIA_256_GCM_SHA384 = 'ECDH-ARIA256-GCM-SHA384';
+  TLS1_TXT_PSK_WITH_ARIA_128_GCM_SHA256 = 'PSK-ARIA128-GCM-SHA256';
+  TLS1_TXT_PSK_WITH_ARIA_256_GCM_SHA384 = 'PSK-ARIA256-GCM-SHA384';
+  TLS1_TXT_DHE_PSK_WITH_ARIA_128_GCM_SHA256 = 'DHE-PSK-ARIA128-GCM-SHA256';
+  TLS1_TXT_DHE_PSK_WITH_ARIA_256_GCM_SHA384 = 'DHE-PSK-ARIA256-GCM-SHA384';
+  TLS1_TXT_RSA_PSK_WITH_ARIA_128_GCM_SHA256 = 'RSA-PSK-ARIA128-GCM-SHA256';
+  TLS1_TXT_RSA_PSK_WITH_ARIA_256_GCM_SHA384 = 'RSA-PSK-ARIA256-GCM-SHA384';
+  TLS_CT_RSA_SIGN = 1;
+  TLS_CT_DSS_SIGN = 2;
+  TLS_CT_RSA_FIXED_DH = 3;
+  TLS_CT_DSS_FIXED_DH = 4;
+  TLS_CT_ECDSA_SIGN = 64;
+  TLS_CT_RSA_FIXED_ECDH = 65;
+  TLS_CT_ECDSA_FIXED_ECDH = 66;
+  TLS_CT_GOST01_SIGN = 22;
+  TLS_CT_GOST12_IANA_SIGN = 67;
+  TLS_CT_GOST12_IANA_512_SIGN = 68;
+  TLS_CT_GOST12_LEGACY_SIGN = 238;
+  TLS_CT_GOST12_LEGACY_512_SIGN = 239;
+  {$ifndef  OPENSSL_NO_DEPRECATED_3_0}
+
+const
+  TLS_CT_GOST12_SIGN = TLS_CT_GOST12_LEGACY_SIGN;
+  TLS_CT_GOST12_512_SIGN = TLS_CT_GOST12_LEGACY_512_SIGN;
+  {$endif}
+
+const
+  
+  {* when correcting this number, correct also SSL3_CT_NUMBER in ssl3.h (see
+  * comment there)
+  }
+  TLS_CT_NUMBER = 12;
+  {$if  defined(SSL3_CT_NUMBER)}
+    {$if  TLS_CT_NUMBER <> SSL3_CT_NUMBER}
+      {$error  "SSL/TLS CT_NUMBER values do not match"}
+    {$endif}
+  {$endif}
+
+const
+  TLS1_FINISH_MAC_LENGTH = 12;
+  TLS_MD_MAX_CONST_SIZE = 22;
+  { ASCII: "client finished", in hex for EBCDIC compatibility }
+  TLS_MD_CLIENT_FINISH_CONST = 'x63x6cx69x65x6ex74x20x66x69x6ex69x73x68x65x64';
+  TLS_MD_CLIENT_FINISH_CONST_SIZE = 15;
+  { ASCII: "server finished", in hex for EBCDIC compatibility }
+  TLS_MD_SERVER_FINISH_CONST = 'x73x65x72x76x65x72x20x66x69x6ex69x73x68x65x64';
+  TLS_MD_SERVER_FINISH_CONST_SIZE = 15;
+  { ASCII: "server write key", in hex for EBCDIC compatibility }
+  TLS_MD_SERVER_WRITE_KEY_CONST = 'x73x65x72x76x65x72x20x77x72x69x74x65x20x6bx65x79';
+  TLS_MD_SERVER_WRITE_KEY_CONST_SIZE = 16;
+  { ASCII: "key expansion", in hex for EBCDIC compatibility }
+  TLS_MD_KEY_EXPANSION_CONST = 'x6bx65x79x20x65x78x70x61x6ex73x69x6fx6e';
+  TLS_MD_KEY_EXPANSION_CONST_SIZE = 13;
+  { ASCII: "client write key", in hex for EBCDIC compatibility }
+  TLS_MD_CLIENT_WRITE_KEY_CONST = 'x63x6cx69x65x6ex74x20x77x72x69x74x65x20x6bx65x79';
+  TLS_MD_CLIENT_WRITE_KEY_CONST_SIZE = 16;
+  { ASCII: "server write key", in hex for EBCDIC compatibility }
+  {#define TLS_MD_SERVER_WRITE_KEY_CONST "x73x65x72x76x65x72x20x77x72x69x74x65x20x6bx65x79"}
+  {#define TLS_MD_SERVER_WRITE_KEY_CONST_SIZE 16}
+  { ASCII: "IV block", in hex for EBCDIC compatibility }
+  TLS_MD_IV_BLOCK_CONST = 'x49x56x20x62x6cx6fx63x6b';
+  TLS_MD_IV_BLOCK_CONST_SIZE = 8;
+  { ASCII: "master secret", in hex for EBCDIC compatibility }
+  TLS_MD_MASTER_SECRET_CONST = 'x6dx61x73x74x65x72x20x73x65x63x72x65x74';
+  TLS_MD_MASTER_SECRET_CONST_SIZE = 13;
+  { ASCII: "extended master secret", in hex for EBCDIC compatibility }
+  TLS_MD_EXTENDED_MASTER_SECRET_CONST = 'x65x78x74x65x6ex64x65x64x20x6dx61x73x74x65x72x20x73x65x63x72x65x74';
+  TLS_MD_EXTENDED_MASTER_SECRET_CONST_SIZE = 22;
+
+type
+  {Auto-generated forward references}
+  Ptls_session_ticket_ext_st = ^Ttls_session_ticket_ext_st;
+  PPtls_session_ticket_ext_st = ^Ptls_session_ticket_ext_st;
+  {end of auto-generated forward references}
+
+  { TLS Session Ticket extension struct }
+  Ttls_session_ticket_ext_st = record 
+    length: TOpenSSL_C_UINT16;
+    data: pointer;
+  end;
+{$endif}
+
+implementation
+
+uses Sysutils, variants
+  {$ifdef OPENSSL_INTERNAL_NEED_THREADS}
+   {$IFNDEF FPC}
+     ,System.SyncObjs
+     {$IFDEF POSIX}
+       ,Posix.Pthread
+     {$ELSE}
+       ,Windows
+     {$ENDIF}
+   {$ELSE}
+     ,SyncObjs
+   {$ENDIF}
+  {$endif}
+  ,Classes, OpenSSLExceptionHandlers;
+
+  {$if not declared(__FILE__)}
+  const
+    {$ifdef FPC}
+    __FILE__ = {$include %FILE%};
+    {$else}
+    __FILE__ = '$(INPUTFILENAME)';
+    {$endif}
+  {$ifend}
+  {$if not declared(__LINE__)}
+  const
+    __LINE__ = 0;
+  {$ifend}
+  {$if not declared(OPENSSL_FILE)}
+  const
+    OPENSSL_FILE = __FILE__;
+  {$ifend}
+  {$if not declared(OPENSSL_LINE)}
+  const
+    OPENSSL_LINE  = 0;
+  {$ifend}
+
+{$ifndef OPENSSL_STATIC_LINK_MODEL}
+function Load_SSL_CTX_set_tlsext_max_fragment_length(ctx: PSSL_CTX; mode: byte): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_CTX_set_tlsext_max_fragment_length := LoadLibSSLFunction('SSL_CTX_set_tlsext_max_fragment_length');
+  if not assigned(SSL_CTX_set_tlsext_max_fragment_length) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_tlsext_max_fragment_length');
+  Result := SSL_CTX_set_tlsext_max_fragment_length(ctx, mode);
+end;
+
+function Load_SSL_set_tlsext_max_fragment_length(ssl: PSSL; mode: byte): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_set_tlsext_max_fragment_length := LoadLibSSLFunction('SSL_set_tlsext_max_fragment_length');
+  if not assigned(SSL_set_tlsext_max_fragment_length) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_set_tlsext_max_fragment_length');
+  Result := SSL_set_tlsext_max_fragment_length(ssl, mode);
+end;
+
+function Load_SSL_get_servername(s: PSSL; type_: TOpenSSL_C_INT): PAnsiChar; cdecl;
+begin
+  SSL_get_servername := LoadLibSSLFunction('SSL_get_servername');
+  if not assigned(SSL_get_servername) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_servername');
+  Result := SSL_get_servername(s, type_);
+end;
+
+function Load_SSL_get_servername_type(s: PSSL): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_get_servername_type := LoadLibSSLFunction('SSL_get_servername_type');
+  if not assigned(SSL_get_servername_type) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_servername_type');
+  Result := SSL_get_servername_type(s);
+end;
+
+function Load_SSL_export_keying_material(s: PSSL; out_: Pbyte; olen: TOpenSSL_C_SIZET; label_: PAnsiChar; llen: TOpenSSL_C_SIZET; context: Pbyte; contextlen: TOpenSSL_C_SIZET; use_context: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_export_keying_material := LoadLibSSLFunction('SSL_export_keying_material');
+  if not assigned(SSL_export_keying_material) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_export_keying_material');
+  Result := SSL_export_keying_material(s, out_, olen, label_, llen, context, contextlen, use_context);
+end;
+
+function Load_SSL_export_keying_material_early(s: PSSL; out_: Pbyte; olen: TOpenSSL_C_SIZET; label_: PAnsiChar; llen: TOpenSSL_C_SIZET; context: Pbyte; contextlen: TOpenSSL_C_SIZET): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_export_keying_material_early := LoadLibSSLFunction('SSL_export_keying_material_early');
+  if not assigned(SSL_export_keying_material_early) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_export_keying_material_early');
+  Result := SSL_export_keying_material_early(s, out_, olen, label_, llen, context, contextlen);
+end;
+
+function Load_SSL_get_peer_signature_type_nid(s: PSSL; pnid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_get_peer_signature_type_nid := LoadLibSSLFunction('SSL_get_peer_signature_type_nid');
+  if not assigned(SSL_get_peer_signature_type_nid) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_peer_signature_type_nid');
+  Result := SSL_get_peer_signature_type_nid(s, pnid);
+end;
+
+function Load_SSL_get_signature_type_nid(s: PSSL; pnid: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_get_signature_type_nid := LoadLibSSLFunction('SSL_get_signature_type_nid');
+  if not assigned(SSL_get_signature_type_nid) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_signature_type_nid');
+  Result := SSL_get_signature_type_nid(s, pnid);
+end;
+
+function Load_SSL_get0_sigalg(s: PSSL; idx: TOpenSSL_C_INT; codepoint: POpenSSL_C_UINT; name: PPAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_get0_sigalg := LoadLibSSLFunction('SSL_get0_sigalg');
+  if not assigned(SSL_get0_sigalg) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_sigalg');
+  Result := SSL_get0_sigalg(s, idx, codepoint, name);
+end;
+
+function Load_SSL_get0_shared_sigalg(s: PSSL; idx: TOpenSSL_C_INT; codepoint: POpenSSL_C_UINT; name: PPAnsiChar): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_get0_shared_sigalg := LoadLibSSLFunction('SSL_get0_shared_sigalg');
+  if not assigned(SSL_get0_shared_sigalg) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get0_shared_sigalg');
+  Result := SSL_get0_shared_sigalg(s, idx, codepoint, name);
+end;
+
+function Load_SSL_get_sigalgs(s: PSSL; idx: TOpenSSL_C_INT; psign: POpenSSL_C_INT; phash: POpenSSL_C_INT; psignandhash: POpenSSL_C_INT; rsig: Pbyte; rhash: Pbyte): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_get_sigalgs := LoadLibSSLFunction('SSL_get_sigalgs');
+  if not assigned(SSL_get_sigalgs) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_sigalgs');
+  Result := SSL_get_sigalgs(s, idx, psign, phash, psignandhash, rsig, rhash);
+end;
+
+function Load_SSL_get1_builtin_sigalgs(libctx: POSSL_LIB_CTX): PAnsiChar; cdecl;
+begin
+  SSL_get1_builtin_sigalgs := LoadLibSSLFunction('SSL_get1_builtin_sigalgs');
+  if not assigned(SSL_get1_builtin_sigalgs) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get1_builtin_sigalgs');
+  Result := SSL_get1_builtin_sigalgs(libctx);
+end;
+
+function Load_SSL_get_shared_sigalgs(s: PSSL; idx: TOpenSSL_C_INT; psign: POpenSSL_C_INT; phash: POpenSSL_C_INT; psignandhash: POpenSSL_C_INT; rsig: Pbyte; rhash: Pbyte): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_get_shared_sigalgs := LoadLibSSLFunction('SSL_get_shared_sigalgs');
+  if not assigned(SSL_get_shared_sigalgs) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_get_shared_sigalgs');
+  Result := SSL_get_shared_sigalgs(s, idx, psign, phash, psignandhash, rsig, rhash);
+end;
+
+function Load_SSL_check_chain(s: PSSL; x: PX509; pk: PEVP_PKEY; chain: Pstack_st_X509): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_check_chain := LoadLibSSLFunction('SSL_check_chain');
+  if not assigned(SSL_check_chain) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_check_chain');
+  Result := SSL_check_chain(s, x, pk, chain);
+end;
+
+function Load_SSL_CTX_set_tlsext_ticket_key_evp_cb(ctx: PSSL_CTX; fp: TFuncType000): TOpenSSL_C_INT; cdecl;
+begin
+  SSL_CTX_set_tlsext_ticket_key_evp_cb := LoadLibSSLFunction('SSL_CTX_set_tlsext_ticket_key_evp_cb');
+  if not assigned(SSL_CTX_set_tlsext_ticket_key_evp_cb) then
+    EOpenSSLAPIFunctionNotPresent.RaiseException('SSL_CTX_set_tlsext_ticket_key_evp_cb');
+  Result := SSL_CTX_set_tlsext_ticket_key_evp_cb(ctx, fp);
+end;
+
+procedure Load;
+begin
+  {$define EMPTY_LOAD_FUNCTION}
+end;
+
+procedure Unload;
+begin
+  SSL_CTX_set_tlsext_max_fragment_length := Load_SSL_CTX_set_tlsext_max_fragment_length;
+  SSL_set_tlsext_max_fragment_length := Load_SSL_set_tlsext_max_fragment_length;
+  SSL_get_servername := Load_SSL_get_servername;
+  SSL_get_servername_type := Load_SSL_get_servername_type;
+  SSL_export_keying_material := Load_SSL_export_keying_material;
+  SSL_export_keying_material_early := Load_SSL_export_keying_material_early;
+  SSL_get_peer_signature_type_nid := Load_SSL_get_peer_signature_type_nid;
+  SSL_get_signature_type_nid := Load_SSL_get_signature_type_nid;
+  SSL_get0_sigalg := Load_SSL_get0_sigalg;
+  SSL_get0_shared_sigalg := Load_SSL_get0_shared_sigalg;
+  SSL_get_sigalgs := Load_SSL_get_sigalgs;
+  SSL_get1_builtin_sigalgs := Load_SSL_get1_builtin_sigalgs;
+  SSL_get_shared_sigalgs := Load_SSL_get_shared_sigalgs;
+  SSL_check_chain := Load_SSL_check_chain;
+  SSL_CTX_set_tlsext_ticket_key_evp_cb := Load_SSL_CTX_set_tlsext_ticket_key_evp_cb;
+end;
+
+{$endif} {OPENSSL_STATIC_LINK_MODEL}
+
+initialization
+
+{$ifndef OPENSSL_STATIC_LINK_MODEL}
+{$ifndef EMPTY_LOAD_FUNCTION}
+Register_SSLloader(@Load);
+{$endif}
+Register_SSLUnloader(@Unload);
+{$endif}
+{$if declared(LegacySupport_Initialization)}
+LegacySupport_Initialization;
+{$ifend}
+
+finalization
+
+{$if declared(LegacySupport_Finalization)}
+LegacySupport_Finalization;
+{$ifend}
+
+end.
+
+
+

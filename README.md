@@ -1,6 +1,12 @@
-# OpenSSL Pascal API Code Generator
+# OpenSSL Pascal API 
 
-This program is a Code Generator for creating a Pascal Interface to the OpenSSL API. 
+This is version 2 of the repository and represents a complete update and re-organisation of the
+repository. The code generator has been removed from the repository and will soon be made
+available in a separate repository once it has been fully documented.
+
+This repository provides Pascal Interfaces to the OpenSSL API for the current versions of the
+OpenSSL library.
+
 OpenSSL is itself an open source code library providing an implementation that includes 
 the RFC 8446 Transport Layer Security (TLS) Protocol Version 1.3. (see https://www.openssl.org/).
 
@@ -8,19 +14,42 @@ The OpenSSL library is written in 'C' and the programmatic interface is defined 
 'C' header files. These have to be translated into Pascal units in order to declare the interface 
 to a Pascal code library.
 
-Utilities, such as Free Pascal's h2pas can help this process - but only to the extent of 
-creating a set of Pascal constant and type definitions and Function/Procedure 
-declarations - and even then there is usually the need for additional file edits 
-to cope with some of the more difficult translations, especially where 'C' macros are 
-concerned, and to convert the output function/procedure declarations into external declarations.
+The translation is machine driven and is as complete as possible. The main omissions are macros
+that cannot be readily translated. These are typically macros that check variable types. Given
+that Pascal is already strongly typed, these macros are redundant. Otherwise, some of the more
+complex macros are not yet processable by this version of the generator. Note the "stack" macros
+are fully translated.
 
-This code generator takes (template) header files created from OpenSSL '.h' files using a 
-utility such as h2pas, and generating a set of Pascal units that supports the 
-latest OpenSSL API that provides for:
+This API also provides:
 
     • Different link models
     • Backwards compatibility to earlier versions
     • Delphi and Free Pascal support.
 
-For more information on the Code Generator, how it works, how to compile and use it and to
-use the generated header files see the provided documentation in the /docs folder.
+The Header files are provided by OpenSSL version number and the aim is to proper headers for each
+currently supported version of OpenSSL starting with the Long Term Support release 3.0.20.
+
+This may be found in the headers/3.0.20 folder, and should be usable with OpenSSL 3.0.x and later. Later 
+OpenSSL 3.x headers should only extend the functionality.
+
+A variant of these headers may also be found in then headersWithLegacySupport/3.0.20 folder.
+
+This variant includes additional include files that enable support for OpenSSL 1.0.2 and 1.1.1 releases.
+(Dynamic LinK Model Only). This is not complete support but is limited the functionality needed by
+the IndySec package.
+
+See the docs folder for more information.
+
+
+# Licence
+The headers are derived from the OpenSSL source code and hence are distributed using the same 
+Apache License v2.0 as OpenSSL itself.
+
+Note. The API is large and while the core functionality has been tested using the IndySecOpenSSL 
+package,it is not feasible to extensively test all translated headers other than by a “Clean Compile”. 
+Users must obtain their own confidence in their use of these headers through their own testing. 
+The Pascal OpenSSL headers are distributed in the hope that they may be useful but with no warrantee whatsoever
+
+
+
+

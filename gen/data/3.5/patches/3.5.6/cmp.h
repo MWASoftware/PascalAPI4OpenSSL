@@ -1,0 +1,30 @@
+--- /home/tony/SoftwareDev/external/openssl/openssl-3.5.6/include/openssl/cmp.h	2026-05-08 16:06:47.154980262 +0100
++++ cmp.tmp	2026-05-19 11:11:57.471310771 +0100
+@@ -138,9 +138,9 @@
+ #define OSSL_CMP_PKIFAILUREINFO_MAX 26
+ #define OSSL_CMP_PKIFAILUREINFO_MAX_BIT_PATTERN \
+     ((1 << (OSSL_CMP_PKIFAILUREINFO_MAX + 1)) - 1)
+-#if OSSL_CMP_PKIFAILUREINFO_MAX_BIT_PATTERN > INT_MAX
+-#error CMP_PKIFAILUREINFO_MAX bit pattern does not fit in type int
+-#endif
++//#if OSSL_CMP_PKIFAILUREINFO_MAX_BIT_PATTERN > INT_MAX
++//#error CMP_PKIFAILUREINFO_MAX bit pattern does not fit in type int
++//#endif
+ typedef ASN1_BIT_STRING OSSL_CMP_PKIFAILUREINFO;
+ 
+ #define OSSL_CMP_CTX_FAILINFO_badAlg (1 << 0)
+@@ -316,14 +316,8 @@
+ /* clang-format on */
+ 
+ typedef OSSL_CRMF_ATTRIBUTETYPEANDVALUE OSSL_CMP_ATAV;
+-#define OSSL_CMP_ATAV_free OSSL_CRMF_ATTRIBUTETYPEANDVALUE_free
+ typedef STACK_OF(OSSL_CRMF_ATTRIBUTETYPEANDVALUE) OSSL_CMP_ATAVS;
+ DECLARE_ASN1_FUNCTIONS(OSSL_CMP_ATAVS)
+-#define stack_st_OSSL_CMP_ATAV stack_st_OSSL_CRMF_ATTRIBUTETYPEANDVALUE
+-#define sk_OSSL_CMP_ATAV_num sk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_num
+-#define sk_OSSL_CMP_ATAV_value sk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_value
+-#define sk_OSSL_CMP_ATAV_push sk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_push
+-#define sk_OSSL_CMP_ATAV_pop_free sk_OSSL_CRMF_ATTRIBUTETYPEANDVALUE_pop_free
+ 
+ typedef struct ossl_cmp_revrepcontent_st OSSL_CMP_REVREPCONTENT;
+ typedef struct ossl_cmp_pkisi_st OSSL_CMP_PKISI;
