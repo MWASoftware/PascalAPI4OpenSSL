@@ -113,7 +113,7 @@ const
   {$IFDEF UNIX}
   DirListDelimiter = ':';
   LibSuffix = '.so';
-  DefaultLibVersions = '.4::.3:.1.1:.1.0.2:.1.0.0:.0.9.9:.0.9.8:.0.9.7:.0.9.6';
+  DefaultLibVersions = '.4:.3:.1.1:.1.0.2:.1.0.0:.0.9.9:.0.9.8:.0.9.7:.0.9.6';
   {$ENDIF}
   {$IFDEF WINDOWS}
   DirListDelimiter = ';';
@@ -122,7 +122,7 @@ const
   LegacyLibssl = 'ssleay32';
 
     {$IFDEF CPU64}
-    DefaultLibVersions = '4-x64;-3-x64;-1-x64';
+    DefaultLibVersions = '-4-x64;-3-x64;-1-x64';
     {$ENDIF}
     {$IFDEF CPU32}
     DefaultLibVersions = '-4;-3;-1';
