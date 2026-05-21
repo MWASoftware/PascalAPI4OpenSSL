@@ -90,8 +90,13 @@ const
     {$IFDEF WINDOWS}
       {$IFDEF USE_OPENSSL_VERSION_4}
         {$IFDEF CPU64}
-          CLibCrypto = 'libcrypto-4-x64.dll';
-          CLibSSL = 'libssl-4-x64.dll';
+          {$IFDEF CPUARM64}
+            CLibCrypto = 'libcrypto-4-arm64.dll';
+            CLibSSL = 'libssl-4-arm64.dll';
+          {$ELSE}
+            CLibCrypto = 'libcrypto-4-x64.dll';
+            CLibSSL = 'libssl-4-x64.dll';
+          {$ENDIF}
         {$ENDIF}
         {$IFDEF CPU32}
           CLibCrypto = 'libcrypto-4.dll';
@@ -99,8 +104,13 @@ const
         {$ENDIF}
       {$ELSE}
         {$IFDEF CPU64}
-          CLibCrypto = 'libcrypto-3-x64.dll';
-          CLibSSL = 'libssl-3-x64.dll';
+          {$IFDEF CPUARM64}
+            CLibCrypto = 'libcrypto-3-arm64.dll';
+            CLibSSL = 'libssl-3-arm64.dll';
+          {$ELSE}
+            CLibCrypto = 'libcrypto-3-x64.dll';
+            CLibSSL = 'libssl-3-x64.dll';
+          {$ENDIF}
         {$ENDIF}
         {$IFDEF CPU32}
           CLibCrypto = 'libcrypto-3.dll';
@@ -122,7 +132,11 @@ const
   LegacyLibssl = 'ssleay32';
 
     {$IFDEF CPU64}
-    DefaultLibVersions = '-4-x64;-3-x64;-1-x64';
+      {$IFDEF CPUARM64}
+      DefaultLibVersions = '-4-arm64;-3-arm64;-1_1-arm64;-1-arm64;';
+      {$ELSE}
+      DefaultLibVersions = '-4-x64;-3-x64;-1-x64';
+      {$ENDIF}
     {$ENDIF}
     {$IFDEF CPU32}
     DefaultLibVersions = '-4;-3;-1';
