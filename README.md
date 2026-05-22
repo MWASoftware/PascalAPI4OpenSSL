@@ -1,8 +1,8 @@
 # OpenSSL Pascal API 
 
 This is version 2 of the repository and represents a complete update and re-organisation of the
-repository. The code generator has been removed from the repository and will soon be made
-available in a separate repository once it has been fully documented.
+repository. The code generator has been removed from the repository and is now
+available in a separate repository (https://github.com/MWASoftware/h2pasng).
 
 This repository provides Pascal Interfaces to the OpenSSL API for the current versions of the
 OpenSSL library.
