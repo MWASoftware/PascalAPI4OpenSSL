@@ -18,7 +18,7 @@
 unit openssl_pem2;
 
 {
-  Generated from OpenSSL 3.5.6 Header File pem2.h - Tue 19 May 14:28:03 BST 2026
+  Generated from OpenSSL 3.5.6 Header File pem2.h - Sat 12 Sep 15:02:06 BST 2026
 }
 
 {$IFNDEF FPC}

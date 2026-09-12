@@ -18,7 +18,7 @@
 unit openssl_comp;
 
 {
-  Generated from OpenSSL 3.6.2 Header File comp.h - Tue 19 May 14:29:38 BST 2026
+  Generated from OpenSSL 3.6.2 Header File comp.h - Sat 12 Sep 15:04:00 BST 2026
 }
 
 {$IFNDEF FPC}

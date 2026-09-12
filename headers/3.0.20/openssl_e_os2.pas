@@ -18,7 +18,7 @@
 unit openssl_e_os2;
 
 {
-  Generated from OpenSSL 3.0.20 Header File e_os2.h - Tue 19 May 14:15:59 BST 2026
+  Generated from OpenSSL 3.0.20 Header File e_os2.h - Sat 12 Sep 14:55:21 BST 2026
 }
 
 {$IFNDEF FPC}

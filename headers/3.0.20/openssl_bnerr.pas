@@ -18,7 +18,7 @@
 unit openssl_bnerr;
 
 {
-  Generated from OpenSSL 3.0.20 Header File bnerr.h - Tue 19 May 14:15:28 BST 2026
+  Generated from OpenSSL 3.0.20 Header File bnerr.h - Sat 12 Sep 14:54:43 BST 2026
 }
 
 {$IFNDEF FPC}

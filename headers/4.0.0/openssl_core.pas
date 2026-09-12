@@ -18,7 +18,7 @@
 unit openssl_core;
 
 {
-  Generated from OpenSSL 4.0.0 Header File core.h - Tue 19 May 14:32:15 BST 2026
+  Generated from OpenSSL 4.0.0 Header File core.h - Sat 12 Sep 15:06:58 BST 2026
 }
 
 {$IFNDEF FPC}

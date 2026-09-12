@@ -18,7 +18,7 @@
 unit openssl_http;
 
 {
-  Generated from OpenSSL 3.0.20 Header File http.h - Tue 19 May 14:16:08 BST 2026
+  Generated from OpenSSL 3.0.20 Header File http.h - Sat 12 Sep 14:55:30 BST 2026
 }
 
 {$IFNDEF FPC}

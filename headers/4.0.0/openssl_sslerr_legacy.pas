@@ -18,7 +18,7 @@
 unit openssl_sslerr_legacy;
 
 {
-  Generated from OpenSSL 4.0.0 Header File sslerr_legacy.h - Tue 19 May 14:33:20 BST 2026
+  Generated from OpenSSL 4.0.0 Header File sslerr_legacy.h - Sat 12 Sep 15:08:15 BST 2026
 }
 
 {$IFNDEF FPC}

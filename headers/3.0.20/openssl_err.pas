@@ -18,7 +18,7 @@
 unit openssl_err;
 
 {
-  Generated from OpenSSL 3.0.20 Header File err.h - Tue 19 May 14:16:00 BST 2026
+  Generated from OpenSSL 3.0.20 Header File err.h - Sat 12 Sep 14:55:21 BST 2026
 }
 
 {$IFNDEF FPC}

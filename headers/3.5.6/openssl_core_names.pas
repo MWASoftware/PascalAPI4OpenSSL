@@ -18,7 +18,7 @@
 unit openssl_core_names;
 
 {
-  Generated from OpenSSL 3.5.6 Header File core_names.h - Tue 19 May 14:27:23 BST 2026
+  Generated from OpenSSL 3.5.6 Header File core_names.h - Sat 12 Sep 15:01:18 BST 2026
 }
 
 {$IFNDEF FPC}

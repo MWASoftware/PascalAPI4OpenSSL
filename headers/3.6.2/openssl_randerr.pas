@@ -18,7 +18,7 @@
 unit openssl_randerr;
 
 {
-  Generated from OpenSSL 3.6.2 Header File randerr.h - Tue 19 May 14:30:34 BST 2026
+  Generated from OpenSSL 3.6.2 Header File randerr.h - Sat 12 Sep 15:05:06 BST 2026
 }
 
 {$IFNDEF FPC}

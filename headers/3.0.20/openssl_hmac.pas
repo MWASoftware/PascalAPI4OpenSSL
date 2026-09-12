@@ -18,7 +18,7 @@
 unit openssl_hmac;
 
 {
-  Generated from OpenSSL 3.0.20 Header File hmac.h - Tue 19 May 14:16:06 BST 2026
+  Generated from OpenSSL 3.0.20 Header File hmac.h - Sat 12 Sep 14:55:29 BST 2026
 }
 
 {$IFNDEF FPC}

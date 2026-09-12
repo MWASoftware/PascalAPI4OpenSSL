@@ -18,7 +18,7 @@
 unit openssl_posix_time;
 
 {
-  Generated from OpenSSL 4.0.0 Header File posix_time.h - Tue 19 May 14:33:05 BST 2026
+  Generated from OpenSSL 4.0.0 Header File posix_time.h - Sat 12 Sep 15:07:57 BST 2026
 }
 
 {$IFNDEF FPC}

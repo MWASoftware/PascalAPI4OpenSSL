@@ -18,7 +18,7 @@
 unit openssl_bioerr;
 
 {
-  Generated from OpenSSL 3.6.2 Header File bioerr.h - Tue 19 May 14:29:24 BST 2026
+  Generated from OpenSSL 3.6.2 Header File bioerr.h - Sat 12 Sep 15:03:43 BST 2026
 }
 
 {$IFNDEF FPC}

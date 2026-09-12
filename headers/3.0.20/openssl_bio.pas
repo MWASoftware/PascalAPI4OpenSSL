@@ -18,7 +18,7 @@
 unit openssl_bio;
 
 {
-  Generated from OpenSSL 3.0.20 Header File bio.h - Tue 19 May 14:15:27 BST 2026
+  Generated from OpenSSL 3.0.20 Header File bio.h - Sat 12 Sep 14:54:43 BST 2026
 }
 
 {$IFNDEF FPC}
@@ -428,26 +428,26 @@ type
   function ossl_check_BIO_freefunc_type(fr: Tsk_BIO_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
   {$ifdef OPENSSL_STATIC_LINK_MODEL}
   function sk_BIO_num(_para: Pstack_st_BIO): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_BIO_value(_para: Pstack_st_BIO; _para2: TOpenSSL_C_INT): Pstack_st_BIO; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_BIO_value(_para: Pstack_st_BIO; _para2: TOpenSSL_C_INT): PBIO; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_BIO_new(cmp: Tsk_BIO_compfunc): Pstack_st_BIO; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_BIO_new_null: Pstack_st_BIO; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_BIO_new_reserve(cmp: Tsk_BIO_compfunc; n: TOpenSSL_C_INT): Pstack_st_BIO; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
   function sk_BIO_reserve(_para: Pstack_st_BIO; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_BIO_free(_para: Pstack_st_BIO): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_BIO_zero(_para: Pstack_st_BIO): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_BIO_delete(st: Pstack_st_BIO; loc: TOpenSSL_C_INT): Pstack_st_BIO; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_BIO_delete_ptr(st: Pstack_st_BIO; ptr: Pstack_st_BIO): Pstack_st_BIO; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  procedure sk_BIO_free(_para: Pstack_st_BIO); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_BIO_zero(_para: Pstack_st_BIO); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_BIO_delete(st: Pstack_st_BIO; loc: TOpenSSL_C_INT): PBIO; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_BIO_delete_ptr(st: Pstack_st_BIO; ptr: Pstack_st_BIO): PBIO; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
   function sk_BIO_push(st: Pstack_st_BIO; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
   function sk_BIO_unshift(st: Pstack_st_BIO; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_BIO_pop(_para: Pstack_st_BIO): Pstack_st_BIO; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_BIO_shift(_para: Pstack_st_BIO): Pstack_st_BIO; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  function sk_BIO_pop(_para: Pstack_st_BIO): PBIO; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_BIO_shift(_para: Pstack_st_BIO): PBIO; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
   procedure sk_BIO_pop_free(st: Pstack_st_BIO; func: Tsk_BIO_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
   function sk_BIO_insert(st: Pstack_st_BIO; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
   function sk_BIO_set(st: Pstack_st_BIO; i: TOpenSSL_C_INT; data: pointer): Pstack_st_BIO; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
   function sk_BIO_find(st: Pstack_st_BIO; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
   function sk_BIO_find_ex(st: Pstack_st_BIO; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
   function sk_BIO_find_all(st: Pstack_st_BIO; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_BIO_sort(_para: Pstack_st_BIO): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  procedure sk_BIO_sort(_para: Pstack_st_BIO); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
   function sk_BIO_is_sorted(_para: Pstack_st_BIO): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
   function sk_BIO_dup(st: Pstack_st_BIO): Pstack_st_BIO; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
   function sk_BIO_deep_copy(st: Pstack_st_BIO; c: Tsk_BIO_compfunc; f: Tsk_BIO_freefunc): Pstack_st_BIO; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
@@ -482,26 +482,26 @@ type
   {$EXTERNALSYM sk_BIO_set_cmp_func}
   {Do not call Function LoadDeclarations. Internal use only}
   function Load_sk_BIO_num(_para: Pstack_st_BIO): TOpenSSL_C_INT; cdecl;
-  function Load_sk_BIO_value(_para: Pstack_st_BIO; _para2: TOpenSSL_C_INT): Pstack_st_BIO; cdecl;
+  function Load_sk_BIO_value(_para: Pstack_st_BIO; _para2: TOpenSSL_C_INT): PBIO; cdecl;
   function Load_sk_BIO_new(cmp: Tsk_BIO_compfunc): Pstack_st_BIO; cdecl;
   function Load_sk_BIO_new_null: Pstack_st_BIO; cdecl;
   function Load_sk_BIO_new_reserve(cmp: Tsk_BIO_compfunc; n: TOpenSSL_C_INT): Pstack_st_BIO; cdecl;
   function Load_sk_BIO_reserve(_para: Pstack_st_BIO; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_BIO_free(_para: Pstack_st_BIO): TOpenSSL_C_INT; cdecl;
-  function Load_sk_BIO_zero(_para: Pstack_st_BIO): TOpenSSL_C_INT; cdecl;
-  function Load_sk_BIO_delete(st: Pstack_st_BIO; loc: TOpenSSL_C_INT): Pstack_st_BIO; cdecl;
-  function Load_sk_BIO_delete_ptr(st: Pstack_st_BIO; ptr: Pstack_st_BIO): Pstack_st_BIO; cdecl;
+  procedure Load_sk_BIO_free(_para: Pstack_st_BIO); cdecl;
+  procedure Load_sk_BIO_zero(_para: Pstack_st_BIO); cdecl;
+  function Load_sk_BIO_delete(st: Pstack_st_BIO; loc: TOpenSSL_C_INT): PBIO; cdecl;
+  function Load_sk_BIO_delete_ptr(st: Pstack_st_BIO; ptr: Pstack_st_BIO): PBIO; cdecl;
   function Load_sk_BIO_push(st: Pstack_st_BIO; data: pointer): TOpenSSL_C_INT; cdecl;
   function Load_sk_BIO_unshift(st: Pstack_st_BIO; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_BIO_pop(_para: Pstack_st_BIO): Pstack_st_BIO; cdecl;
-  function Load_sk_BIO_shift(_para: Pstack_st_BIO): Pstack_st_BIO; cdecl;
+  function Load_sk_BIO_pop(_para: Pstack_st_BIO): PBIO; cdecl;
+  function Load_sk_BIO_shift(_para: Pstack_st_BIO): PBIO; cdecl;
   procedure Load_sk_BIO_pop_free(st: Pstack_st_BIO; func: Tsk_BIO_freefunc); cdecl;
   function Load_sk_BIO_insert(st: Pstack_st_BIO; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
   function Load_sk_BIO_set(st: Pstack_st_BIO; i: TOpenSSL_C_INT; data: pointer): Pstack_st_BIO; cdecl;
   function Load_sk_BIO_find(st: Pstack_st_BIO; data: pointer): TOpenSSL_C_INT; cdecl;
   function Load_sk_BIO_find_ex(st: Pstack_st_BIO; data: pointer): TOpenSSL_C_INT; cdecl;
   function Load_sk_BIO_find_all(st: Pstack_st_BIO; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_BIO_sort(_para: Pstack_st_BIO): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_BIO_sort(_para: Pstack_st_BIO); cdecl;
   function Load_sk_BIO_is_sorted(_para: Pstack_st_BIO): TOpenSSL_C_INT; cdecl;
   function Load_sk_BIO_dup(st: Pstack_st_BIO): Pstack_st_BIO; cdecl;
   function Load_sk_BIO_deep_copy(st: Pstack_st_BIO; c: Tsk_BIO_compfunc; f: Tsk_BIO_freefunc): Pstack_st_BIO; cdecl;
@@ -509,26 +509,26 @@ type
 
 var
   sk_BIO_num: function(_para: Pstack_st_BIO): TOpenSSL_C_INT; cdecl = Load_sk_BIO_num;
-  sk_BIO_value: function(_para: Pstack_st_BIO; _para2: TOpenSSL_C_INT): Pstack_st_BIO; cdecl = Load_sk_BIO_value;
+  sk_BIO_value: function(_para: Pstack_st_BIO; _para2: TOpenSSL_C_INT): PBIO; cdecl = Load_sk_BIO_value;
   sk_BIO_new: function(cmp: Tsk_BIO_compfunc): Pstack_st_BIO; cdecl = Load_sk_BIO_new;
   sk_BIO_new_null: function: Pstack_st_BIO; cdecl = Load_sk_BIO_new_null;
   sk_BIO_new_reserve: function(cmp: Tsk_BIO_compfunc; n: TOpenSSL_C_INT): Pstack_st_BIO; cdecl = Load_sk_BIO_new_reserve;
   sk_BIO_reserve: function(_para: Pstack_st_BIO; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_BIO_reserve;
-  sk_BIO_free: function(_para: Pstack_st_BIO): TOpenSSL_C_INT; cdecl = Load_sk_BIO_free;
-  sk_BIO_zero: function(_para: Pstack_st_BIO): TOpenSSL_C_INT; cdecl = Load_sk_BIO_zero;
-  sk_BIO_delete: function(st: Pstack_st_BIO; loc: TOpenSSL_C_INT): Pstack_st_BIO; cdecl = Load_sk_BIO_delete;
-  sk_BIO_delete_ptr: function(st: Pstack_st_BIO; ptr: Pstack_st_BIO): Pstack_st_BIO; cdecl = Load_sk_BIO_delete_ptr;
+  sk_BIO_free: procedure(_para: Pstack_st_BIO); cdecl = Load_sk_BIO_free;
+  sk_BIO_zero: procedure(_para: Pstack_st_BIO); cdecl = Load_sk_BIO_zero;
+  sk_BIO_delete: function(st: Pstack_st_BIO; loc: TOpenSSL_C_INT): PBIO; cdecl = Load_sk_BIO_delete;
+  sk_BIO_delete_ptr: function(st: Pstack_st_BIO; ptr: Pstack_st_BIO): PBIO; cdecl = Load_sk_BIO_delete_ptr;
   sk_BIO_push: function(st: Pstack_st_BIO; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_BIO_push;
   sk_BIO_unshift: function(st: Pstack_st_BIO; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_BIO_unshift;
-  sk_BIO_pop: function(_para: Pstack_st_BIO): Pstack_st_BIO; cdecl = Load_sk_BIO_pop;
-  sk_BIO_shift: function(_para: Pstack_st_BIO): Pstack_st_BIO; cdecl = Load_sk_BIO_shift;
+  sk_BIO_pop: function(_para: Pstack_st_BIO): PBIO; cdecl = Load_sk_BIO_pop;
+  sk_BIO_shift: function(_para: Pstack_st_BIO): PBIO; cdecl = Load_sk_BIO_shift;
   sk_BIO_pop_free: procedure(st: Pstack_st_BIO; func: Tsk_BIO_freefunc); cdecl = Load_sk_BIO_pop_free;
   sk_BIO_insert: function(st: Pstack_st_BIO; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_BIO_insert;
   sk_BIO_set: function(st: Pstack_st_BIO; i: TOpenSSL_C_INT; data: pointer): Pstack_st_BIO; cdecl = Load_sk_BIO_set;
   sk_BIO_find: function(st: Pstack_st_BIO; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_BIO_find;
   sk_BIO_find_ex: function(st: Pstack_st_BIO; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_BIO_find_ex;
   sk_BIO_find_all: function(st: Pstack_st_BIO; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_BIO_find_all;
-  sk_BIO_sort: function(_para: Pstack_st_BIO): TOpenSSL_C_INT; cdecl = Load_sk_BIO_sort;
+  sk_BIO_sort: procedure(_para: Pstack_st_BIO); cdecl = Load_sk_BIO_sort;
   sk_BIO_is_sorted: function(_para: Pstack_st_BIO): TOpenSSL_C_INT; cdecl = Load_sk_BIO_is_sorted;
   sk_BIO_dup: function(st: Pstack_st_BIO): Pstack_st_BIO; cdecl = Load_sk_BIO_dup;
   sk_BIO_deep_copy: function(st: Pstack_st_BIO; c: Tsk_BIO_compfunc; f: Tsk_BIO_freefunc): Pstack_st_BIO; cdecl = Load_sk_BIO_deep_copy;
@@ -2949,7 +2949,7 @@ begin
   Result := sk_BIO_num(_para);
 end;
 
-function Load_sk_BIO_value(_para: Pstack_st_BIO; _para2: TOpenSSL_C_INT): Pstack_st_BIO; cdecl;
+function Load_sk_BIO_value(_para: Pstack_st_BIO; _para2: TOpenSSL_C_INT): PBIO; cdecl;
 begin
   sk_BIO_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_BIO_value) then
@@ -2989,23 +2989,23 @@ begin
   Result := sk_BIO_reserve(_para, n);
 end;
 
-function Load_sk_BIO_free(_para: Pstack_st_BIO): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_BIO_free(_para: Pstack_st_BIO); cdecl;
 begin
   sk_BIO_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_BIO_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
-  Result := sk_BIO_free(_para);
+  sk_BIO_free(_para);
 end;
 
-function Load_sk_BIO_zero(_para: Pstack_st_BIO): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_BIO_zero(_para: Pstack_st_BIO); cdecl;
 begin
   sk_BIO_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_BIO_zero) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
-  Result := sk_BIO_zero(_para);
+  sk_BIO_zero(_para);
 end;
 
-function Load_sk_BIO_delete(st: Pstack_st_BIO; loc: TOpenSSL_C_INT): Pstack_st_BIO; cdecl;
+function Load_sk_BIO_delete(st: Pstack_st_BIO; loc: TOpenSSL_C_INT): PBIO; cdecl;
 begin
   sk_BIO_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_BIO_delete) then
@@ -3013,7 +3013,7 @@ begin
   Result := sk_BIO_delete(st, loc);
 end;
 
-function Load_sk_BIO_delete_ptr(st: Pstack_st_BIO; ptr: Pstack_st_BIO): Pstack_st_BIO; cdecl;
+function Load_sk_BIO_delete_ptr(st: Pstack_st_BIO; ptr: Pstack_st_BIO): PBIO; cdecl;
 begin
   sk_BIO_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_BIO_delete_ptr) then
@@ -3037,7 +3037,7 @@ begin
   Result := sk_BIO_unshift(st, data);
 end;
 
-function Load_sk_BIO_pop(_para: Pstack_st_BIO): Pstack_st_BIO; cdecl;
+function Load_sk_BIO_pop(_para: Pstack_st_BIO): PBIO; cdecl;
 begin
   sk_BIO_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_BIO_pop) then
@@ -3045,7 +3045,7 @@ begin
   Result := sk_BIO_pop(_para);
 end;
 
-function Load_sk_BIO_shift(_para: Pstack_st_BIO): Pstack_st_BIO; cdecl;
+function Load_sk_BIO_shift(_para: Pstack_st_BIO): PBIO; cdecl;
 begin
   sk_BIO_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_BIO_shift) then
@@ -3101,12 +3101,12 @@ begin
   Result := sk_BIO_find_all(st, data, pnum);
 end;
 
-function Load_sk_BIO_sort(_para: Pstack_st_BIO): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_BIO_sort(_para: Pstack_st_BIO); cdecl;
 begin
   sk_BIO_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_BIO_sort) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
-  Result := sk_BIO_sort(_para);
+  sk_BIO_sort(_para);
 end;
 
 function Load_sk_BIO_is_sorted(_para: Pstack_st_BIO): TOpenSSL_C_INT; cdecl;

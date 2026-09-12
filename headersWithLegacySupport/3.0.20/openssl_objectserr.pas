@@ -18,7 +18,7 @@
 unit openssl_objectserr;
 
 {
-  Generated from OpenSSL 3.0.20 Header File objectserr.h - Tue 19 May 14:25:16 BST 2026
+  Generated from OpenSSL 3.0.20 Header File objectserr.h - Sat 12 Sep 14:59:10 BST 2026
   With Legacy Support Option
 }
 

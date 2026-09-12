@@ -18,7 +18,7 @@
 unit openssl_engine;
 
 {
-  Generated from OpenSSL 3.5.6 Header File engine.h - Tue 19 May 14:27:40 BST 2026
+  Generated from OpenSSL 3.5.6 Header File engine.h - Sat 12 Sep 15:01:39 BST 2026
 }
 
 {$IFNDEF FPC}

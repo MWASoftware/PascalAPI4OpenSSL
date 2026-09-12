@@ -18,7 +18,7 @@
 unit openssl_ocsperr;
 
 {
-  Generated from OpenSSL 3.0.20 Header File ocsperr.h - Tue 19 May 14:25:19 BST 2026
+  Generated from OpenSSL 3.0.20 Header File ocsperr.h - Sat 12 Sep 14:59:13 BST 2026
   With Legacy Support Option
 }
 

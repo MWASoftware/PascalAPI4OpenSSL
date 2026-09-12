@@ -18,7 +18,7 @@
 unit openssl_comperr;
 
 {
-  Generated from OpenSSL 3.6.2 Header File comperr.h - Tue 19 May 14:29:38 BST 2026
+  Generated from OpenSSL 3.6.2 Header File comperr.h - Sat 12 Sep 15:03:59 BST 2026
 }
 
 {$IFNDEF FPC}

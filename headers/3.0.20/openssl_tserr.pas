@@ -18,7 +18,7 @@
 unit openssl_tserr;
 
 {
-  Generated from OpenSSL 3.0.20 Header File tserr.h - Tue 19 May 14:16:47 BST 2026
+  Generated from OpenSSL 3.0.20 Header File tserr.h - Sat 12 Sep 14:56:17 BST 2026
 }
 
 {$IFNDEF FPC}

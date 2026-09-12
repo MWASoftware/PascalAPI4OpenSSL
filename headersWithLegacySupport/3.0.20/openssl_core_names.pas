@@ -18,7 +18,7 @@
 unit openssl_core_names;
 
 {
-  Generated from OpenSSL 3.0.20 Header File core_names.h - Tue 19 May 14:24:48 BST 2026
+  Generated from OpenSSL 3.0.20 Header File core_names.h - Sat 12 Sep 14:58:37 BST 2026
   With Legacy Support Option
 }
 

@@ -18,7 +18,7 @@
 unit openssl_txt_db;
 
 {
-  Generated from OpenSSL 3.0.20 Header File txt_db.h - Tue 19 May 14:16:50 BST 2026
+  Generated from OpenSSL 3.0.20 Header File txt_db.h - Sat 12 Sep 14:56:21 BST 2026
 }
 
 {$IFNDEF FPC}

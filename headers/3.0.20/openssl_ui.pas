@@ -18,7 +18,7 @@
 unit openssl_ui;
 
 {
-  Generated from OpenSSL 3.0.20 Header File ui.h - Tue 19 May 14:16:52 BST 2026
+  Generated from OpenSSL 3.0.20 Header File ui.h - Sat 12 Sep 14:56:24 BST 2026
 }
 
 {$IFNDEF FPC}
@@ -583,26 +583,26 @@ type
   function ossl_check_UI_STRING_freefunc_type(fr: Tsk_UI_STRING_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
   {$ifdef OPENSSL_STATIC_LINK_MODEL}
   function sk_UI_STRING_num(_para: Pstack_st_UI_STRING): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_UI_STRING_value(_para: Pstack_st_UI_STRING; _para2: TOpenSSL_C_INT): Pstack_st_UI_STRING; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_UI_STRING_value(_para: Pstack_st_UI_STRING; _para2: TOpenSSL_C_INT): PUI_STRING; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_UI_STRING_new(cmp: Tsk_UI_STRING_compfunc): Pstack_st_UI_STRING; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_UI_STRING_new_null: Pstack_st_UI_STRING; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_UI_STRING_new_reserve(cmp: Tsk_UI_STRING_compfunc; n: TOpenSSL_C_INT): Pstack_st_UI_STRING; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
   function sk_UI_STRING_reserve(_para: Pstack_st_UI_STRING; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_UI_STRING_free(_para: Pstack_st_UI_STRING): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_UI_STRING_zero(_para: Pstack_st_UI_STRING): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_UI_STRING_delete(st: Pstack_st_UI_STRING; loc: TOpenSSL_C_INT): Pstack_st_UI_STRING; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_UI_STRING_delete_ptr(st: Pstack_st_UI_STRING; ptr: Pstack_st_UI_STRING): Pstack_st_UI_STRING; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  procedure sk_UI_STRING_free(_para: Pstack_st_UI_STRING); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_UI_STRING_zero(_para: Pstack_st_UI_STRING); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_UI_STRING_delete(st: Pstack_st_UI_STRING; loc: TOpenSSL_C_INT): PUI_STRING; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_UI_STRING_delete_ptr(st: Pstack_st_UI_STRING; ptr: Pstack_st_UI_STRING): PUI_STRING; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
   function sk_UI_STRING_push(st: Pstack_st_UI_STRING; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
   function sk_UI_STRING_unshift(st: Pstack_st_UI_STRING; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_UI_STRING_pop(_para: Pstack_st_UI_STRING): Pstack_st_UI_STRING; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_UI_STRING_shift(_para: Pstack_st_UI_STRING): Pstack_st_UI_STRING; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  function sk_UI_STRING_pop(_para: Pstack_st_UI_STRING): PUI_STRING; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_UI_STRING_shift(_para: Pstack_st_UI_STRING): PUI_STRING; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
   procedure sk_UI_STRING_pop_free(st: Pstack_st_UI_STRING; func: Tsk_UI_STRING_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
   function sk_UI_STRING_insert(st: Pstack_st_UI_STRING; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
   function sk_UI_STRING_set(st: Pstack_st_UI_STRING; i: TOpenSSL_C_INT; data: pointer): Pstack_st_UI_STRING; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
   function sk_UI_STRING_find(st: Pstack_st_UI_STRING; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
   function sk_UI_STRING_find_ex(st: Pstack_st_UI_STRING; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
   function sk_UI_STRING_find_all(st: Pstack_st_UI_STRING; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_UI_STRING_sort(_para: Pstack_st_UI_STRING): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  procedure sk_UI_STRING_sort(_para: Pstack_st_UI_STRING); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
   function sk_UI_STRING_is_sorted(_para: Pstack_st_UI_STRING): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
   function sk_UI_STRING_dup(st: Pstack_st_UI_STRING): Pstack_st_UI_STRING; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
   function sk_UI_STRING_deep_copy(st: Pstack_st_UI_STRING; c: Tsk_UI_STRING_compfunc; f: Tsk_UI_STRING_freefunc): Pstack_st_UI_STRING; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
@@ -640,26 +640,26 @@ type
   {$EXTERNALSYM sk_UI_STRING_set_cmp_func}
   {Do not call Function LoadDeclarations. Internal use only}
   function Load_sk_UI_STRING_num(_para: Pstack_st_UI_STRING): TOpenSSL_C_INT; cdecl;
-  function Load_sk_UI_STRING_value(_para: Pstack_st_UI_STRING; _para2: TOpenSSL_C_INT): Pstack_st_UI_STRING; cdecl;
+  function Load_sk_UI_STRING_value(_para: Pstack_st_UI_STRING; _para2: TOpenSSL_C_INT): PUI_STRING; cdecl;
   function Load_sk_UI_STRING_new(cmp: Tsk_UI_STRING_compfunc): Pstack_st_UI_STRING; cdecl;
   function Load_sk_UI_STRING_new_null: Pstack_st_UI_STRING; cdecl;
   function Load_sk_UI_STRING_new_reserve(cmp: Tsk_UI_STRING_compfunc; n: TOpenSSL_C_INT): Pstack_st_UI_STRING; cdecl;
   function Load_sk_UI_STRING_reserve(_para: Pstack_st_UI_STRING; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_UI_STRING_free(_para: Pstack_st_UI_STRING): TOpenSSL_C_INT; cdecl;
-  function Load_sk_UI_STRING_zero(_para: Pstack_st_UI_STRING): TOpenSSL_C_INT; cdecl;
-  function Load_sk_UI_STRING_delete(st: Pstack_st_UI_STRING; loc: TOpenSSL_C_INT): Pstack_st_UI_STRING; cdecl;
-  function Load_sk_UI_STRING_delete_ptr(st: Pstack_st_UI_STRING; ptr: Pstack_st_UI_STRING): Pstack_st_UI_STRING; cdecl;
+  procedure Load_sk_UI_STRING_free(_para: Pstack_st_UI_STRING); cdecl;
+  procedure Load_sk_UI_STRING_zero(_para: Pstack_st_UI_STRING); cdecl;
+  function Load_sk_UI_STRING_delete(st: Pstack_st_UI_STRING; loc: TOpenSSL_C_INT): PUI_STRING; cdecl;
+  function Load_sk_UI_STRING_delete_ptr(st: Pstack_st_UI_STRING; ptr: Pstack_st_UI_STRING): PUI_STRING; cdecl;
   function Load_sk_UI_STRING_push(st: Pstack_st_UI_STRING; data: pointer): TOpenSSL_C_INT; cdecl;
   function Load_sk_UI_STRING_unshift(st: Pstack_st_UI_STRING; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_UI_STRING_pop(_para: Pstack_st_UI_STRING): Pstack_st_UI_STRING; cdecl;
-  function Load_sk_UI_STRING_shift(_para: Pstack_st_UI_STRING): Pstack_st_UI_STRING; cdecl;
+  function Load_sk_UI_STRING_pop(_para: Pstack_st_UI_STRING): PUI_STRING; cdecl;
+  function Load_sk_UI_STRING_shift(_para: Pstack_st_UI_STRING): PUI_STRING; cdecl;
   procedure Load_sk_UI_STRING_pop_free(st: Pstack_st_UI_STRING; func: Tsk_UI_STRING_freefunc); cdecl;
   function Load_sk_UI_STRING_insert(st: Pstack_st_UI_STRING; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
   function Load_sk_UI_STRING_set(st: Pstack_st_UI_STRING; i: TOpenSSL_C_INT; data: pointer): Pstack_st_UI_STRING; cdecl;
   function Load_sk_UI_STRING_find(st: Pstack_st_UI_STRING; data: pointer): TOpenSSL_C_INT; cdecl;
   function Load_sk_UI_STRING_find_ex(st: Pstack_st_UI_STRING; data: pointer): TOpenSSL_C_INT; cdecl;
   function Load_sk_UI_STRING_find_all(st: Pstack_st_UI_STRING; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_UI_STRING_sort(_para: Pstack_st_UI_STRING): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_UI_STRING_sort(_para: Pstack_st_UI_STRING); cdecl;
   function Load_sk_UI_STRING_is_sorted(_para: Pstack_st_UI_STRING): TOpenSSL_C_INT; cdecl;
   function Load_sk_UI_STRING_dup(st: Pstack_st_UI_STRING): Pstack_st_UI_STRING; cdecl;
   function Load_sk_UI_STRING_deep_copy(st: Pstack_st_UI_STRING; c: Tsk_UI_STRING_compfunc; f: Tsk_UI_STRING_freefunc): Pstack_st_UI_STRING; cdecl;
@@ -667,26 +667,26 @@ type
 
 var
   sk_UI_STRING_num: function(_para: Pstack_st_UI_STRING): TOpenSSL_C_INT; cdecl = Load_sk_UI_STRING_num;
-  sk_UI_STRING_value: function(_para: Pstack_st_UI_STRING; _para2: TOpenSSL_C_INT): Pstack_st_UI_STRING; cdecl = Load_sk_UI_STRING_value;
+  sk_UI_STRING_value: function(_para: Pstack_st_UI_STRING; _para2: TOpenSSL_C_INT): PUI_STRING; cdecl = Load_sk_UI_STRING_value;
   sk_UI_STRING_new: function(cmp: Tsk_UI_STRING_compfunc): Pstack_st_UI_STRING; cdecl = Load_sk_UI_STRING_new;
   sk_UI_STRING_new_null: function: Pstack_st_UI_STRING; cdecl = Load_sk_UI_STRING_new_null;
   sk_UI_STRING_new_reserve: function(cmp: Tsk_UI_STRING_compfunc; n: TOpenSSL_C_INT): Pstack_st_UI_STRING; cdecl = Load_sk_UI_STRING_new_reserve;
   sk_UI_STRING_reserve: function(_para: Pstack_st_UI_STRING; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_UI_STRING_reserve;
-  sk_UI_STRING_free: function(_para: Pstack_st_UI_STRING): TOpenSSL_C_INT; cdecl = Load_sk_UI_STRING_free;
-  sk_UI_STRING_zero: function(_para: Pstack_st_UI_STRING): TOpenSSL_C_INT; cdecl = Load_sk_UI_STRING_zero;
-  sk_UI_STRING_delete: function(st: Pstack_st_UI_STRING; loc: TOpenSSL_C_INT): Pstack_st_UI_STRING; cdecl = Load_sk_UI_STRING_delete;
-  sk_UI_STRING_delete_ptr: function(st: Pstack_st_UI_STRING; ptr: Pstack_st_UI_STRING): Pstack_st_UI_STRING; cdecl = Load_sk_UI_STRING_delete_ptr;
+  sk_UI_STRING_free: procedure(_para: Pstack_st_UI_STRING); cdecl = Load_sk_UI_STRING_free;
+  sk_UI_STRING_zero: procedure(_para: Pstack_st_UI_STRING); cdecl = Load_sk_UI_STRING_zero;
+  sk_UI_STRING_delete: function(st: Pstack_st_UI_STRING; loc: TOpenSSL_C_INT): PUI_STRING; cdecl = Load_sk_UI_STRING_delete;
+  sk_UI_STRING_delete_ptr: function(st: Pstack_st_UI_STRING; ptr: Pstack_st_UI_STRING): PUI_STRING; cdecl = Load_sk_UI_STRING_delete_ptr;
   sk_UI_STRING_push: function(st: Pstack_st_UI_STRING; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_UI_STRING_push;
   sk_UI_STRING_unshift: function(st: Pstack_st_UI_STRING; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_UI_STRING_unshift;
-  sk_UI_STRING_pop: function(_para: Pstack_st_UI_STRING): Pstack_st_UI_STRING; cdecl = Load_sk_UI_STRING_pop;
-  sk_UI_STRING_shift: function(_para: Pstack_st_UI_STRING): Pstack_st_UI_STRING; cdecl = Load_sk_UI_STRING_shift;
+  sk_UI_STRING_pop: function(_para: Pstack_st_UI_STRING): PUI_STRING; cdecl = Load_sk_UI_STRING_pop;
+  sk_UI_STRING_shift: function(_para: Pstack_st_UI_STRING): PUI_STRING; cdecl = Load_sk_UI_STRING_shift;
   sk_UI_STRING_pop_free: procedure(st: Pstack_st_UI_STRING; func: Tsk_UI_STRING_freefunc); cdecl = Load_sk_UI_STRING_pop_free;
   sk_UI_STRING_insert: function(st: Pstack_st_UI_STRING; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_UI_STRING_insert;
   sk_UI_STRING_set: function(st: Pstack_st_UI_STRING; i: TOpenSSL_C_INT; data: pointer): Pstack_st_UI_STRING; cdecl = Load_sk_UI_STRING_set;
   sk_UI_STRING_find: function(st: Pstack_st_UI_STRING; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_UI_STRING_find;
   sk_UI_STRING_find_ex: function(st: Pstack_st_UI_STRING; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_UI_STRING_find_ex;
   sk_UI_STRING_find_all: function(st: Pstack_st_UI_STRING; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_UI_STRING_find_all;
-  sk_UI_STRING_sort: function(_para: Pstack_st_UI_STRING): TOpenSSL_C_INT; cdecl = Load_sk_UI_STRING_sort;
+  sk_UI_STRING_sort: procedure(_para: Pstack_st_UI_STRING); cdecl = Load_sk_UI_STRING_sort;
   sk_UI_STRING_is_sorted: function(_para: Pstack_st_UI_STRING): TOpenSSL_C_INT; cdecl = Load_sk_UI_STRING_is_sorted;
   sk_UI_STRING_dup: function(st: Pstack_st_UI_STRING): Pstack_st_UI_STRING; cdecl = Load_sk_UI_STRING_dup;
   sk_UI_STRING_deep_copy: function(st: Pstack_st_UI_STRING; c: Tsk_UI_STRING_compfunc; f: Tsk_UI_STRING_freefunc): Pstack_st_UI_STRING; cdecl = Load_sk_UI_STRING_deep_copy;
@@ -1424,7 +1424,7 @@ begin
   Result := sk_UI_STRING_num(_para);
 end;
 
-function Load_sk_UI_STRING_value(_para: Pstack_st_UI_STRING; _para2: TOpenSSL_C_INT): Pstack_st_UI_STRING; cdecl;
+function Load_sk_UI_STRING_value(_para: Pstack_st_UI_STRING; _para2: TOpenSSL_C_INT): PUI_STRING; cdecl;
 begin
   sk_UI_STRING_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_UI_STRING_value) then
@@ -1464,23 +1464,23 @@ begin
   Result := sk_UI_STRING_reserve(_para, n);
 end;
 
-function Load_sk_UI_STRING_free(_para: Pstack_st_UI_STRING): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_UI_STRING_free(_para: Pstack_st_UI_STRING); cdecl;
 begin
   sk_UI_STRING_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_UI_STRING_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
-  Result := sk_UI_STRING_free(_para);
+  sk_UI_STRING_free(_para);
 end;
 
-function Load_sk_UI_STRING_zero(_para: Pstack_st_UI_STRING): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_UI_STRING_zero(_para: Pstack_st_UI_STRING); cdecl;
 begin
   sk_UI_STRING_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_UI_STRING_zero) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
-  Result := sk_UI_STRING_zero(_para);
+  sk_UI_STRING_zero(_para);
 end;
 
-function Load_sk_UI_STRING_delete(st: Pstack_st_UI_STRING; loc: TOpenSSL_C_INT): Pstack_st_UI_STRING; cdecl;
+function Load_sk_UI_STRING_delete(st: Pstack_st_UI_STRING; loc: TOpenSSL_C_INT): PUI_STRING; cdecl;
 begin
   sk_UI_STRING_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_UI_STRING_delete) then
@@ -1488,7 +1488,7 @@ begin
   Result := sk_UI_STRING_delete(st, loc);
 end;
 
-function Load_sk_UI_STRING_delete_ptr(st: Pstack_st_UI_STRING; ptr: Pstack_st_UI_STRING): Pstack_st_UI_STRING; cdecl;
+function Load_sk_UI_STRING_delete_ptr(st: Pstack_st_UI_STRING; ptr: Pstack_st_UI_STRING): PUI_STRING; cdecl;
 begin
   sk_UI_STRING_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_UI_STRING_delete_ptr) then
@@ -1512,7 +1512,7 @@ begin
   Result := sk_UI_STRING_unshift(st, data);
 end;
 
-function Load_sk_UI_STRING_pop(_para: Pstack_st_UI_STRING): Pstack_st_UI_STRING; cdecl;
+function Load_sk_UI_STRING_pop(_para: Pstack_st_UI_STRING): PUI_STRING; cdecl;
 begin
   sk_UI_STRING_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_UI_STRING_pop) then
@@ -1520,7 +1520,7 @@ begin
   Result := sk_UI_STRING_pop(_para);
 end;
 
-function Load_sk_UI_STRING_shift(_para: Pstack_st_UI_STRING): Pstack_st_UI_STRING; cdecl;
+function Load_sk_UI_STRING_shift(_para: Pstack_st_UI_STRING): PUI_STRING; cdecl;
 begin
   sk_UI_STRING_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_UI_STRING_shift) then
@@ -1576,12 +1576,12 @@ begin
   Result := sk_UI_STRING_find_all(st, data, pnum);
 end;
 
-function Load_sk_UI_STRING_sort(_para: Pstack_st_UI_STRING): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_UI_STRING_sort(_para: Pstack_st_UI_STRING); cdecl;
 begin
   sk_UI_STRING_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_UI_STRING_sort) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
-  Result := sk_UI_STRING_sort(_para);
+  sk_UI_STRING_sort(_para);
 end;
 
 function Load_sk_UI_STRING_is_sorted(_para: Pstack_st_UI_STRING): TOpenSSL_C_INT; cdecl;

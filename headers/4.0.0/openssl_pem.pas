@@ -18,7 +18,7 @@
 unit openssl_pem;
 
 {
-  Generated from OpenSSL 4.0.0 Header File pem.h - Tue 19 May 14:33:01 BST 2026
+  Generated from OpenSSL 4.0.0 Header File pem.h - Sat 12 Sep 15:07:52 BST 2026
 }
 
 {$IFNDEF FPC}

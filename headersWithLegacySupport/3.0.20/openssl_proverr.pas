@@ -18,7 +18,7 @@
 unit openssl_proverr;
 
 {
-  Generated from OpenSSL 3.0.20 Header File proverr.h - Tue 19 May 14:25:29 BST 2026
+  Generated from OpenSSL 3.0.20 Header File proverr.h - Sat 12 Sep 14:59:25 BST 2026
   With Legacy Support Option
 }
 

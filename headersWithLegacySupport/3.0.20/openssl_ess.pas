@@ -18,7 +18,7 @@
 unit openssl_ess;
 
 {
-  Generated from OpenSSL 3.0.20 Header File ess.h - Tue 19 May 14:25:08 BST 2026
+  Generated from OpenSSL 3.0.20 Header File ess.h - Sat 12 Sep 14:59:00 BST 2026
   With Legacy Support Option
 }
 

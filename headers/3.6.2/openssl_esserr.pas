@@ -18,7 +18,7 @@
 unit openssl_esserr;
 
 {
-  Generated from OpenSSL 3.6.2 Header File esserr.h - Tue 19 May 14:30:03 BST 2026
+  Generated from OpenSSL 3.6.2 Header File esserr.h - Sat 12 Sep 15:04:30 BST 2026
 }
 
 {$IFNDEF FPC}

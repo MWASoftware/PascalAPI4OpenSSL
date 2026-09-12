@@ -18,7 +18,7 @@
 unit openssl_srp;
 
 {
-  Generated from OpenSSL 3.0.20 Header File srp.h - Tue 19 May 14:16:30 BST 2026
+  Generated from OpenSSL 3.0.20 Header File srp.h - Sat 12 Sep 14:55:57 BST 2026
 }
 
 {$IFNDEF FPC}
@@ -204,28 +204,28 @@ type
   function ossl_check_SRP_user_pwd_copyfunc_type(cpy: Tsk_SRP_user_pwd_copyfunc): TOPENSSL_sk_copyfunc{Has C Attribute: unused}; inline;
   function ossl_check_SRP_user_pwd_freefunc_type(fr: Tsk_SRP_user_pwd_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
       {$ifdef OPENSSL_STATIC_LINK_MODEL}
-  function sk_SRP_user_pwd_num(_para: Pstack_st_SRP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_num';
-  function sk_SRP_user_pwd_value(_para: Pstack_st_SRP; _para2: TOpenSSL_C_INT): Pstack_st_SRP_user_pwd; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_value';
+  procedure sk_SRP_user_pwd_num(_para: Pstack_st_SRP); cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_num';
+  function sk_SRP_user_pwd_value(_para: Pstack_st_SRP; _para2: TOpenSSL_C_INT): PSRP_user_pwd; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_value';
   function sk_SRP_user_pwd_new(cmp: Tsk_SRP_compfunc): Pstack_st_SRP_user_pwd; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_new';
   function sk_SRP_user_pwd_new_null: Pstack_st_SRP_user_pwd; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_new_null';
   function sk_SRP_user_pwd_new_reserve(cmp: Tsk_SRP_compfunc; n: TOpenSSL_C_INT): Pstack_st_SRP_user_pwd; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_new_reserve';
   function sk_SRP_user_pwd_reserve(_para: Pstack_st_SRP; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_reserve';
-  function sk_SRP_user_pwd_free(_para: Pstack_st_SRP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_free';
-  function sk_SRP_user_pwd_zero(_para: Pstack_st_SRP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_zero';
-  function sk_SRP_user_pwd_delete(st: Pstack_st_SRP; loc: TOpenSSL_C_INT): Pstack_st_SRP_user_pwd; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_delete';
-  function sk_SRP_user_pwd_delete_ptr(st: Pstack_st_SRP; ptr: Pstack_st_SRP): Pstack_st_SRP_user_pwd; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_delete_ptr';
+  procedure sk_SRP_user_pwd_free(_para: Pstack_st_SRP); cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_free';
+  procedure sk_SRP_user_pwd_zero(_para: Pstack_st_SRP); cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_zero';
+  function sk_SRP_user_pwd_delete(st: Pstack_st_SRP; loc: TOpenSSL_C_INT): PSRP_user_pwd; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_delete';
+  function sk_SRP_user_pwd_delete_ptr(st: Pstack_st_SRP; ptr: Pstack_st_SRP): PSRP_user_pwd; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_delete_ptr';
   function sk_SRP_user_pwd_push(st: Pstack_st_SRP; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_push';
   function sk_SRP_user_pwd_unshift(st: Pstack_st_SRP; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_unshift';
-  function sk_SRP_user_pwd_pop(_para: Pstack_st_SRP): Pstack_st_SRP_user_pwd; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_pop';
-  function sk_SRP_user_pwd_shift(_para: Pstack_st_SRP): Pstack_st_SRP_user_pwd; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_shift';
+  function sk_SRP_user_pwd_pop(_para: Pstack_st_SRP): PSRP_user_pwd; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_pop';
+  function sk_SRP_user_pwd_shift(_para: Pstack_st_SRP): PSRP_user_pwd; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_shift';
   procedure sk_SRP_user_pwd_pop_free(st: Pstack_st_SRP; func: Tsk_SRP_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_pop_free';
   function sk_SRP_user_pwd_insert(st: Pstack_st_SRP; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_insert';
   function sk_SRP_user_pwd_set(st: Pstack_st_SRP; i: TOpenSSL_C_INT; data: pointer): Pstack_st_SRP_user_pwd; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_set';
   function sk_SRP_user_pwd_find(st: Pstack_st_SRP; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_find';
   function sk_SRP_user_pwd_find_ex(st: Pstack_st_SRP; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_find_ex';
   function sk_SRP_user_pwd_find_all(st: Pstack_st_SRP; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_find_all';
-  function sk_SRP_user_pwd_sort(_para: Pstack_st_SRP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_sort';
-  function sk_SRP_user_pwd_is_sorted(_para: Pstack_st_SRP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_is_sorted';
+  procedure sk_SRP_user_pwd_sort(_para: Pstack_st_SRP); cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_sort';
+  procedure sk_SRP_user_pwd_is_sorted(_para: Pstack_st_SRP); cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_is_sorted';
   function sk_SRP_user_pwd_dup(st: Pstack_st_SRP): Pstack_st_SRP_user_pwd; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_dup';
   function sk_SRP_user_pwd_deep_copy(st: Pstack_st_SRP; c: Tsk_SRP_compfunc; f: Tsk_SRP_freefunc): Pstack_st_SRP_user_pwd; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_deep_copy';
   function sk_SRP_user_pwd_set_cmp_func(st: Pstack_st_SRP; cmp: Tsk_SRP_compfunc): Tsk_SRP_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_user_pwd_set_cmp_func';
@@ -271,28 +271,28 @@ type
   {$EXTERNALSYM SRP_user_pwd_set1_ids}
   {$EXTERNALSYM SRP_user_pwd_set0_sv}
   {Do not call Function LoadDeclarations. Internal use only}
-  function Load_sk_SRP_user_pwd_num(_para: Pstack_st_SRP): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SRP_user_pwd_value(_para: Pstack_st_SRP; _para2: TOpenSSL_C_INT): Pstack_st_SRP_user_pwd; cdecl;
+  procedure Load_sk_SRP_user_pwd_num(_para: Pstack_st_SRP); cdecl;
+  function Load_sk_SRP_user_pwd_value(_para: Pstack_st_SRP; _para2: TOpenSSL_C_INT): PSRP_user_pwd; cdecl;
   function Load_sk_SRP_user_pwd_new(cmp: Tsk_SRP_compfunc): Pstack_st_SRP_user_pwd; cdecl;
   function Load_sk_SRP_user_pwd_new_null: Pstack_st_SRP_user_pwd; cdecl;
   function Load_sk_SRP_user_pwd_new_reserve(cmp: Tsk_SRP_compfunc; n: TOpenSSL_C_INT): Pstack_st_SRP_user_pwd; cdecl;
   function Load_sk_SRP_user_pwd_reserve(_para: Pstack_st_SRP; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SRP_user_pwd_free(_para: Pstack_st_SRP): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SRP_user_pwd_zero(_para: Pstack_st_SRP): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SRP_user_pwd_delete(st: Pstack_st_SRP; loc: TOpenSSL_C_INT): Pstack_st_SRP_user_pwd; cdecl;
-  function Load_sk_SRP_user_pwd_delete_ptr(st: Pstack_st_SRP; ptr: Pstack_st_SRP): Pstack_st_SRP_user_pwd; cdecl;
+  procedure Load_sk_SRP_user_pwd_free(_para: Pstack_st_SRP); cdecl;
+  procedure Load_sk_SRP_user_pwd_zero(_para: Pstack_st_SRP); cdecl;
+  function Load_sk_SRP_user_pwd_delete(st: Pstack_st_SRP; loc: TOpenSSL_C_INT): PSRP_user_pwd; cdecl;
+  function Load_sk_SRP_user_pwd_delete_ptr(st: Pstack_st_SRP; ptr: Pstack_st_SRP): PSRP_user_pwd; cdecl;
   function Load_sk_SRP_user_pwd_push(st: Pstack_st_SRP; data: pointer): TOpenSSL_C_INT; cdecl;
   function Load_sk_SRP_user_pwd_unshift(st: Pstack_st_SRP; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SRP_user_pwd_pop(_para: Pstack_st_SRP): Pstack_st_SRP_user_pwd; cdecl;
-  function Load_sk_SRP_user_pwd_shift(_para: Pstack_st_SRP): Pstack_st_SRP_user_pwd; cdecl;
+  function Load_sk_SRP_user_pwd_pop(_para: Pstack_st_SRP): PSRP_user_pwd; cdecl;
+  function Load_sk_SRP_user_pwd_shift(_para: Pstack_st_SRP): PSRP_user_pwd; cdecl;
   procedure Load_sk_SRP_user_pwd_pop_free(st: Pstack_st_SRP; func: Tsk_SRP_freefunc); cdecl;
   function Load_sk_SRP_user_pwd_insert(st: Pstack_st_SRP; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
   function Load_sk_SRP_user_pwd_set(st: Pstack_st_SRP; i: TOpenSSL_C_INT; data: pointer): Pstack_st_SRP_user_pwd; cdecl;
   function Load_sk_SRP_user_pwd_find(st: Pstack_st_SRP; data: pointer): TOpenSSL_C_INT; cdecl;
   function Load_sk_SRP_user_pwd_find_ex(st: Pstack_st_SRP; data: pointer): TOpenSSL_C_INT; cdecl;
   function Load_sk_SRP_user_pwd_find_all(st: Pstack_st_SRP; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SRP_user_pwd_sort(_para: Pstack_st_SRP): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SRP_user_pwd_is_sorted(_para: Pstack_st_SRP): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_SRP_user_pwd_sort(_para: Pstack_st_SRP); cdecl;
+  procedure Load_sk_SRP_user_pwd_is_sorted(_para: Pstack_st_SRP); cdecl;
   function Load_sk_SRP_user_pwd_dup(st: Pstack_st_SRP): Pstack_st_SRP_user_pwd; cdecl;
   function Load_sk_SRP_user_pwd_deep_copy(st: Pstack_st_SRP; c: Tsk_SRP_compfunc; f: Tsk_SRP_freefunc): Pstack_st_SRP_user_pwd; cdecl;
   function Load_sk_SRP_user_pwd_set_cmp_func(st: Pstack_st_SRP; cmp: Tsk_SRP_compfunc): Tsk_SRP_compfunc; cdecl;
@@ -303,28 +303,28 @@ type
   function Load_SRP_user_pwd_set0_sv(user_pwd: PSRP_user_pwd; s: PBIGNUM; v: PBIGNUM): TOpenSSL_C_INT; cdecl;
 
 var
-  sk_SRP_user_pwd_num: function(_para: Pstack_st_SRP): TOpenSSL_C_INT; cdecl = Load_sk_SRP_user_pwd_num;
-  sk_SRP_user_pwd_value: function(_para: Pstack_st_SRP; _para2: TOpenSSL_C_INT): Pstack_st_SRP_user_pwd; cdecl = Load_sk_SRP_user_pwd_value;
+  sk_SRP_user_pwd_num: procedure(_para: Pstack_st_SRP); cdecl = Load_sk_SRP_user_pwd_num;
+  sk_SRP_user_pwd_value: function(_para: Pstack_st_SRP; _para2: TOpenSSL_C_INT): PSRP_user_pwd; cdecl = Load_sk_SRP_user_pwd_value;
   sk_SRP_user_pwd_new: function(cmp: Tsk_SRP_compfunc): Pstack_st_SRP_user_pwd; cdecl = Load_sk_SRP_user_pwd_new;
   sk_SRP_user_pwd_new_null: function: Pstack_st_SRP_user_pwd; cdecl = Load_sk_SRP_user_pwd_new_null;
   sk_SRP_user_pwd_new_reserve: function(cmp: Tsk_SRP_compfunc; n: TOpenSSL_C_INT): Pstack_st_SRP_user_pwd; cdecl = Load_sk_SRP_user_pwd_new_reserve;
   sk_SRP_user_pwd_reserve: function(_para: Pstack_st_SRP; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SRP_user_pwd_reserve;
-  sk_SRP_user_pwd_free: function(_para: Pstack_st_SRP): TOpenSSL_C_INT; cdecl = Load_sk_SRP_user_pwd_free;
-  sk_SRP_user_pwd_zero: function(_para: Pstack_st_SRP): TOpenSSL_C_INT; cdecl = Load_sk_SRP_user_pwd_zero;
-  sk_SRP_user_pwd_delete: function(st: Pstack_st_SRP; loc: TOpenSSL_C_INT): Pstack_st_SRP_user_pwd; cdecl = Load_sk_SRP_user_pwd_delete;
-  sk_SRP_user_pwd_delete_ptr: function(st: Pstack_st_SRP; ptr: Pstack_st_SRP): Pstack_st_SRP_user_pwd; cdecl = Load_sk_SRP_user_pwd_delete_ptr;
+  sk_SRP_user_pwd_free: procedure(_para: Pstack_st_SRP); cdecl = Load_sk_SRP_user_pwd_free;
+  sk_SRP_user_pwd_zero: procedure(_para: Pstack_st_SRP); cdecl = Load_sk_SRP_user_pwd_zero;
+  sk_SRP_user_pwd_delete: function(st: Pstack_st_SRP; loc: TOpenSSL_C_INT): PSRP_user_pwd; cdecl = Load_sk_SRP_user_pwd_delete;
+  sk_SRP_user_pwd_delete_ptr: function(st: Pstack_st_SRP; ptr: Pstack_st_SRP): PSRP_user_pwd; cdecl = Load_sk_SRP_user_pwd_delete_ptr;
   sk_SRP_user_pwd_push: function(st: Pstack_st_SRP; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_SRP_user_pwd_push;
   sk_SRP_user_pwd_unshift: function(st: Pstack_st_SRP; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_SRP_user_pwd_unshift;
-  sk_SRP_user_pwd_pop: function(_para: Pstack_st_SRP): Pstack_st_SRP_user_pwd; cdecl = Load_sk_SRP_user_pwd_pop;
-  sk_SRP_user_pwd_shift: function(_para: Pstack_st_SRP): Pstack_st_SRP_user_pwd; cdecl = Load_sk_SRP_user_pwd_shift;
+  sk_SRP_user_pwd_pop: function(_para: Pstack_st_SRP): PSRP_user_pwd; cdecl = Load_sk_SRP_user_pwd_pop;
+  sk_SRP_user_pwd_shift: function(_para: Pstack_st_SRP): PSRP_user_pwd; cdecl = Load_sk_SRP_user_pwd_shift;
   sk_SRP_user_pwd_pop_free: procedure(st: Pstack_st_SRP; func: Tsk_SRP_freefunc); cdecl = Load_sk_SRP_user_pwd_pop_free;
   sk_SRP_user_pwd_insert: function(st: Pstack_st_SRP; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SRP_user_pwd_insert;
   sk_SRP_user_pwd_set: function(st: Pstack_st_SRP; i: TOpenSSL_C_INT; data: pointer): Pstack_st_SRP_user_pwd; cdecl = Load_sk_SRP_user_pwd_set;
   sk_SRP_user_pwd_find: function(st: Pstack_st_SRP; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_SRP_user_pwd_find;
   sk_SRP_user_pwd_find_ex: function(st: Pstack_st_SRP; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_SRP_user_pwd_find_ex;
   sk_SRP_user_pwd_find_all: function(st: Pstack_st_SRP; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SRP_user_pwd_find_all;
-  sk_SRP_user_pwd_sort: function(_para: Pstack_st_SRP): TOpenSSL_C_INT; cdecl = Load_sk_SRP_user_pwd_sort;
-  sk_SRP_user_pwd_is_sorted: function(_para: Pstack_st_SRP): TOpenSSL_C_INT; cdecl = Load_sk_SRP_user_pwd_is_sorted;
+  sk_SRP_user_pwd_sort: procedure(_para: Pstack_st_SRP); cdecl = Load_sk_SRP_user_pwd_sort;
+  sk_SRP_user_pwd_is_sorted: procedure(_para: Pstack_st_SRP); cdecl = Load_sk_SRP_user_pwd_is_sorted;
   sk_SRP_user_pwd_dup: function(st: Pstack_st_SRP): Pstack_st_SRP_user_pwd; cdecl = Load_sk_SRP_user_pwd_dup;
   sk_SRP_user_pwd_deep_copy: function(st: Pstack_st_SRP; c: Tsk_SRP_compfunc; f: Tsk_SRP_freefunc): Pstack_st_SRP_user_pwd; cdecl = Load_sk_SRP_user_pwd_deep_copy;
   sk_SRP_user_pwd_set_cmp_func: function(st: Pstack_st_SRP; cmp: Tsk_SRP_compfunc): Tsk_SRP_compfunc; cdecl = Load_sk_SRP_user_pwd_set_cmp_func;
@@ -793,15 +793,15 @@ end;
 {$ifndef OPENSSL_STATIC_LINK_MODEL}
 {$ifndef  OPENSSL_NO_SRP}
     {$ifndef  OPENSSL_NO_DEPRECATED_3_0}
-function Load_sk_SRP_user_pwd_num(_para: Pstack_st_SRP): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_SRP_user_pwd_num(_para: Pstack_st_SRP); cdecl;
 begin
   sk_SRP_user_pwd_num := LoadLibCryptoFunction('OPENSSL_sk_user_pwd_num');
   if not assigned(sk_SRP_user_pwd_num) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_user_pwd_num');
-  Result := sk_SRP_user_pwd_num(_para);
+  sk_SRP_user_pwd_num(_para);
 end;
 
-function Load_sk_SRP_user_pwd_value(_para: Pstack_st_SRP; _para2: TOpenSSL_C_INT): Pstack_st_SRP_user_pwd; cdecl;
+function Load_sk_SRP_user_pwd_value(_para: Pstack_st_SRP; _para2: TOpenSSL_C_INT): PSRP_user_pwd; cdecl;
 begin
   sk_SRP_user_pwd_value := LoadLibCryptoFunction('OPENSSL_sk_user_pwd_value');
   if not assigned(sk_SRP_user_pwd_value) then
@@ -841,23 +841,23 @@ begin
   Result := sk_SRP_user_pwd_reserve(_para, n);
 end;
 
-function Load_sk_SRP_user_pwd_free(_para: Pstack_st_SRP): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_SRP_user_pwd_free(_para: Pstack_st_SRP); cdecl;
 begin
   sk_SRP_user_pwd_free := LoadLibCryptoFunction('OPENSSL_sk_user_pwd_free');
   if not assigned(sk_SRP_user_pwd_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_user_pwd_free');
-  Result := sk_SRP_user_pwd_free(_para);
+  sk_SRP_user_pwd_free(_para);
 end;
 
-function Load_sk_SRP_user_pwd_zero(_para: Pstack_st_SRP): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_SRP_user_pwd_zero(_para: Pstack_st_SRP); cdecl;
 begin
   sk_SRP_user_pwd_zero := LoadLibCryptoFunction('OPENSSL_sk_user_pwd_zero');
   if not assigned(sk_SRP_user_pwd_zero) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_user_pwd_zero');
-  Result := sk_SRP_user_pwd_zero(_para);
+  sk_SRP_user_pwd_zero(_para);
 end;
 
-function Load_sk_SRP_user_pwd_delete(st: Pstack_st_SRP; loc: TOpenSSL_C_INT): Pstack_st_SRP_user_pwd; cdecl;
+function Load_sk_SRP_user_pwd_delete(st: Pstack_st_SRP; loc: TOpenSSL_C_INT): PSRP_user_pwd; cdecl;
 begin
   sk_SRP_user_pwd_delete := LoadLibCryptoFunction('OPENSSL_sk_user_pwd_delete');
   if not assigned(sk_SRP_user_pwd_delete) then
@@ -865,7 +865,7 @@ begin
   Result := sk_SRP_user_pwd_delete(st, loc);
 end;
 
-function Load_sk_SRP_user_pwd_delete_ptr(st: Pstack_st_SRP; ptr: Pstack_st_SRP): Pstack_st_SRP_user_pwd; cdecl;
+function Load_sk_SRP_user_pwd_delete_ptr(st: Pstack_st_SRP; ptr: Pstack_st_SRP): PSRP_user_pwd; cdecl;
 begin
   sk_SRP_user_pwd_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_user_pwd_delete_ptr');
   if not assigned(sk_SRP_user_pwd_delete_ptr) then
@@ -889,7 +889,7 @@ begin
   Result := sk_SRP_user_pwd_unshift(st, data);
 end;
 
-function Load_sk_SRP_user_pwd_pop(_para: Pstack_st_SRP): Pstack_st_SRP_user_pwd; cdecl;
+function Load_sk_SRP_user_pwd_pop(_para: Pstack_st_SRP): PSRP_user_pwd; cdecl;
 begin
   sk_SRP_user_pwd_pop := LoadLibCryptoFunction('OPENSSL_sk_user_pwd_pop');
   if not assigned(sk_SRP_user_pwd_pop) then
@@ -897,7 +897,7 @@ begin
   Result := sk_SRP_user_pwd_pop(_para);
 end;
 
-function Load_sk_SRP_user_pwd_shift(_para: Pstack_st_SRP): Pstack_st_SRP_user_pwd; cdecl;
+function Load_sk_SRP_user_pwd_shift(_para: Pstack_st_SRP): PSRP_user_pwd; cdecl;
 begin
   sk_SRP_user_pwd_shift := LoadLibCryptoFunction('OPENSSL_sk_user_pwd_shift');
   if not assigned(sk_SRP_user_pwd_shift) then
@@ -953,20 +953,20 @@ begin
   Result := sk_SRP_user_pwd_find_all(st, data, pnum);
 end;
 
-function Load_sk_SRP_user_pwd_sort(_para: Pstack_st_SRP): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_SRP_user_pwd_sort(_para: Pstack_st_SRP); cdecl;
 begin
   sk_SRP_user_pwd_sort := LoadLibCryptoFunction('OPENSSL_sk_user_pwd_sort');
   if not assigned(sk_SRP_user_pwd_sort) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_user_pwd_sort');
-  Result := sk_SRP_user_pwd_sort(_para);
+  sk_SRP_user_pwd_sort(_para);
 end;
 
-function Load_sk_SRP_user_pwd_is_sorted(_para: Pstack_st_SRP): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_SRP_user_pwd_is_sorted(_para: Pstack_st_SRP); cdecl;
 begin
   sk_SRP_user_pwd_is_sorted := LoadLibCryptoFunction('OPENSSL_sk_user_pwd_is_sorted');
   if not assigned(sk_SRP_user_pwd_is_sorted) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_user_pwd_is_sorted');
-  Result := sk_SRP_user_pwd_is_sorted(_para);
+  sk_SRP_user_pwd_is_sorted(_para);
 end;
 
 function Load_sk_SRP_user_pwd_dup(st: Pstack_st_SRP): Pstack_st_SRP_user_pwd; cdecl;

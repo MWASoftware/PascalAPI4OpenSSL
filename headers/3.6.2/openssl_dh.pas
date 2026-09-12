@@ -18,7 +18,7 @@
 unit openssl_dh;
 
 {
-  Generated from OpenSSL 3.6.2 Header File dh.h - Tue 19 May 14:29:52 BST 2026
+  Generated from OpenSSL 3.6.2 Header File dh.h - Sat 12 Sep 15:04:17 BST 2026
 }
 
 {$IFNDEF FPC}

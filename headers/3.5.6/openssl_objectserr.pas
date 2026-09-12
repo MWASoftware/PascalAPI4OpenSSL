@@ -18,7 +18,7 @@
 unit openssl_objectserr;
 
 {
-  Generated from OpenSSL 3.5.6 Header File objectserr.h - Tue 19 May 14:27:55 BST 2026
+  Generated from OpenSSL 3.5.6 Header File objectserr.h - Sat 12 Sep 15:01:57 BST 2026
 }
 
 {$IFNDEF FPC}

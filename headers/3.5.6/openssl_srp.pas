@@ -18,7 +18,7 @@
 unit openssl_srp;
 
 {
-  Generated from OpenSSL 3.5.6 Header File srp.h - Tue 19 May 14:28:18 BST 2026
+  Generated from OpenSSL 3.5.6 Header File srp.h - Sat 12 Sep 15:02:25 BST 2026
 }
 
 {$IFNDEF FPC}

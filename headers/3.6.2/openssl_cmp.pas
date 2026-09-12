@@ -18,7 +18,7 @@
 unit openssl_cmp;
 
 {
-  Generated from OpenSSL 3.6.2 Header File cmp.h - Tue 19 May 14:29:32 BST 2026
+  Generated from OpenSSL 3.6.2 Header File cmp.h - Sat 12 Sep 15:03:52 BST 2026
 }
 
 {$IFNDEF FPC}

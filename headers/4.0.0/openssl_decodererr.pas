@@ -18,7 +18,7 @@
 unit openssl_decodererr;
 
 {
-  Generated from OpenSSL 4.0.0 Header File decodererr.h - Tue 19 May 14:32:23 BST 2026
+  Generated from OpenSSL 4.0.0 Header File decodererr.h - Sat 12 Sep 15:07:07 BST 2026
 }
 
 {$IFNDEF FPC}

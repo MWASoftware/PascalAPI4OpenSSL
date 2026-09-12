@@ -18,7 +18,7 @@
 unit openssl_asyncerr;
 
 {
-  Generated from OpenSSL 3.0.20 Header File asyncerr.h - Tue 19 May 14:24:31 BST 2026
+  Generated from OpenSSL 3.0.20 Header File asyncerr.h - Sat 12 Sep 14:58:17 BST 2026
   With Legacy Support Option
 }
 

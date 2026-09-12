@@ -18,7 +18,7 @@
 unit openssl_quic;
 
 {
-  Generated from OpenSSL 3.5.6 Header File quic.h - Tue 19 May 14:28:12 BST 2026
+  Generated from OpenSSL 3.5.6 Header File quic.h - Sat 12 Sep 15:02:18 BST 2026
 }
 
 {$IFNDEF FPC}

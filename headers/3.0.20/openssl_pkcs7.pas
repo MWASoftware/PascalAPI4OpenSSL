@@ -18,7 +18,7 @@
 unit openssl_pkcs7;
 
 {
-  Generated from OpenSSL 3.0.20 Header File pkcs7.h - Tue 19 May 14:16:23 BST 2026
+  Generated from OpenSSL 3.0.20 Header File pkcs7.h - Sat 12 Sep 14:55:49 BST 2026
 }
 
 {$IFNDEF FPC}
@@ -120,26 +120,26 @@ type
   function ossl_check_PKCS7_SIGNER_INFO_freefunc_type(fr: Tsk_PKCS7_SIGNER_INFO_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
   {$ifdef OPENSSL_STATIC_LINK_MODEL}
   function sk_PKCS7_SIGNER_INFO_num(_para: Pstack_st_PKCS7_SIGNER_INFO): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_PKCS7_SIGNER_INFO_value(_para: Pstack_st_PKCS7_SIGNER_INFO; _para2: TOpenSSL_C_INT): Pstack_st_PKCS7_SIGNER_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_PKCS7_SIGNER_INFO_value(_para: Pstack_st_PKCS7_SIGNER_INFO; _para2: TOpenSSL_C_INT): PPKCS7_SIGNER_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_PKCS7_SIGNER_INFO_new(cmp: Tsk_PKCS7_SIGNER_INFO_compfunc): Pstack_st_PKCS7_SIGNER_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_PKCS7_SIGNER_INFO_new_null: Pstack_st_PKCS7_SIGNER_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_PKCS7_SIGNER_INFO_new_reserve(cmp: Tsk_PKCS7_SIGNER_INFO_compfunc; n: TOpenSSL_C_INT): Pstack_st_PKCS7_SIGNER_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
   function sk_PKCS7_SIGNER_INFO_reserve(_para: Pstack_st_PKCS7_SIGNER_INFO; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_PKCS7_SIGNER_INFO_free(_para: Pstack_st_PKCS7_SIGNER_INFO): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_PKCS7_SIGNER_INFO_zero(_para: Pstack_st_PKCS7_SIGNER_INFO): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_PKCS7_SIGNER_INFO_delete(st: Pstack_st_PKCS7_SIGNER_INFO; loc: TOpenSSL_C_INT): Pstack_st_PKCS7_SIGNER_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_PKCS7_SIGNER_INFO_delete_ptr(st: Pstack_st_PKCS7_SIGNER_INFO; ptr: Pstack_st_PKCS7_SIGNER_INFO): Pstack_st_PKCS7_SIGNER_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  procedure sk_PKCS7_SIGNER_INFO_free(_para: Pstack_st_PKCS7_SIGNER_INFO); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_PKCS7_SIGNER_INFO_zero(_para: Pstack_st_PKCS7_SIGNER_INFO); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_PKCS7_SIGNER_INFO_delete(st: Pstack_st_PKCS7_SIGNER_INFO; loc: TOpenSSL_C_INT): PPKCS7_SIGNER_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_PKCS7_SIGNER_INFO_delete_ptr(st: Pstack_st_PKCS7_SIGNER_INFO; ptr: Pstack_st_PKCS7_SIGNER_INFO): PPKCS7_SIGNER_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
   function sk_PKCS7_SIGNER_INFO_push(st: Pstack_st_PKCS7_SIGNER_INFO; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
   function sk_PKCS7_SIGNER_INFO_unshift(st: Pstack_st_PKCS7_SIGNER_INFO; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_PKCS7_SIGNER_INFO_pop(_para: Pstack_st_PKCS7_SIGNER_INFO): Pstack_st_PKCS7_SIGNER_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_PKCS7_SIGNER_INFO_shift(_para: Pstack_st_PKCS7_SIGNER_INFO): Pstack_st_PKCS7_SIGNER_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  function sk_PKCS7_SIGNER_INFO_pop(_para: Pstack_st_PKCS7_SIGNER_INFO): PPKCS7_SIGNER_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_PKCS7_SIGNER_INFO_shift(_para: Pstack_st_PKCS7_SIGNER_INFO): PPKCS7_SIGNER_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
   procedure sk_PKCS7_SIGNER_INFO_pop_free(st: Pstack_st_PKCS7_SIGNER_INFO; func: Tsk_PKCS7_SIGNER_INFO_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
   function sk_PKCS7_SIGNER_INFO_insert(st: Pstack_st_PKCS7_SIGNER_INFO; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
   function sk_PKCS7_SIGNER_INFO_set(st: Pstack_st_PKCS7_SIGNER_INFO; i: TOpenSSL_C_INT; data: pointer): Pstack_st_PKCS7_SIGNER_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
   function sk_PKCS7_SIGNER_INFO_find(st: Pstack_st_PKCS7_SIGNER_INFO; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
   function sk_PKCS7_SIGNER_INFO_find_ex(st: Pstack_st_PKCS7_SIGNER_INFO; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
   function sk_PKCS7_SIGNER_INFO_find_all(st: Pstack_st_PKCS7_SIGNER_INFO; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_PKCS7_SIGNER_INFO_sort(_para: Pstack_st_PKCS7_SIGNER_INFO): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  procedure sk_PKCS7_SIGNER_INFO_sort(_para: Pstack_st_PKCS7_SIGNER_INFO); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
   function sk_PKCS7_SIGNER_INFO_is_sorted(_para: Pstack_st_PKCS7_SIGNER_INFO): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
   function sk_PKCS7_SIGNER_INFO_dup(st: Pstack_st_PKCS7_SIGNER_INFO): Pstack_st_PKCS7_SIGNER_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
   function sk_PKCS7_SIGNER_INFO_deep_copy(st: Pstack_st_PKCS7_SIGNER_INFO; c: Tsk_PKCS7_SIGNER_INFO_compfunc; f: Tsk_PKCS7_SIGNER_INFO_freefunc): Pstack_st_PKCS7_SIGNER_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
@@ -177,26 +177,26 @@ type
   {$EXTERNALSYM sk_PKCS7_SIGNER_INFO_set_cmp_func}
   {Do not call Function LoadDeclarations. Internal use only}
   function Load_sk_PKCS7_SIGNER_INFO_num(_para: Pstack_st_PKCS7_SIGNER_INFO): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS7_SIGNER_INFO_value(_para: Pstack_st_PKCS7_SIGNER_INFO; _para2: TOpenSSL_C_INT): Pstack_st_PKCS7_SIGNER_INFO; cdecl;
+  function Load_sk_PKCS7_SIGNER_INFO_value(_para: Pstack_st_PKCS7_SIGNER_INFO; _para2: TOpenSSL_C_INT): PPKCS7_SIGNER_INFO; cdecl;
   function Load_sk_PKCS7_SIGNER_INFO_new(cmp: Tsk_PKCS7_SIGNER_INFO_compfunc): Pstack_st_PKCS7_SIGNER_INFO; cdecl;
   function Load_sk_PKCS7_SIGNER_INFO_new_null: Pstack_st_PKCS7_SIGNER_INFO; cdecl;
   function Load_sk_PKCS7_SIGNER_INFO_new_reserve(cmp: Tsk_PKCS7_SIGNER_INFO_compfunc; n: TOpenSSL_C_INT): Pstack_st_PKCS7_SIGNER_INFO; cdecl;
   function Load_sk_PKCS7_SIGNER_INFO_reserve(_para: Pstack_st_PKCS7_SIGNER_INFO; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS7_SIGNER_INFO_free(_para: Pstack_st_PKCS7_SIGNER_INFO): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS7_SIGNER_INFO_zero(_para: Pstack_st_PKCS7_SIGNER_INFO): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS7_SIGNER_INFO_delete(st: Pstack_st_PKCS7_SIGNER_INFO; loc: TOpenSSL_C_INT): Pstack_st_PKCS7_SIGNER_INFO; cdecl;
-  function Load_sk_PKCS7_SIGNER_INFO_delete_ptr(st: Pstack_st_PKCS7_SIGNER_INFO; ptr: Pstack_st_PKCS7_SIGNER_INFO): Pstack_st_PKCS7_SIGNER_INFO; cdecl;
+  procedure Load_sk_PKCS7_SIGNER_INFO_free(_para: Pstack_st_PKCS7_SIGNER_INFO); cdecl;
+  procedure Load_sk_PKCS7_SIGNER_INFO_zero(_para: Pstack_st_PKCS7_SIGNER_INFO); cdecl;
+  function Load_sk_PKCS7_SIGNER_INFO_delete(st: Pstack_st_PKCS7_SIGNER_INFO; loc: TOpenSSL_C_INT): PPKCS7_SIGNER_INFO; cdecl;
+  function Load_sk_PKCS7_SIGNER_INFO_delete_ptr(st: Pstack_st_PKCS7_SIGNER_INFO; ptr: Pstack_st_PKCS7_SIGNER_INFO): PPKCS7_SIGNER_INFO; cdecl;
   function Load_sk_PKCS7_SIGNER_INFO_push(st: Pstack_st_PKCS7_SIGNER_INFO; data: pointer): TOpenSSL_C_INT; cdecl;
   function Load_sk_PKCS7_SIGNER_INFO_unshift(st: Pstack_st_PKCS7_SIGNER_INFO; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS7_SIGNER_INFO_pop(_para: Pstack_st_PKCS7_SIGNER_INFO): Pstack_st_PKCS7_SIGNER_INFO; cdecl;
-  function Load_sk_PKCS7_SIGNER_INFO_shift(_para: Pstack_st_PKCS7_SIGNER_INFO): Pstack_st_PKCS7_SIGNER_INFO; cdecl;
+  function Load_sk_PKCS7_SIGNER_INFO_pop(_para: Pstack_st_PKCS7_SIGNER_INFO): PPKCS7_SIGNER_INFO; cdecl;
+  function Load_sk_PKCS7_SIGNER_INFO_shift(_para: Pstack_st_PKCS7_SIGNER_INFO): PPKCS7_SIGNER_INFO; cdecl;
   procedure Load_sk_PKCS7_SIGNER_INFO_pop_free(st: Pstack_st_PKCS7_SIGNER_INFO; func: Tsk_PKCS7_SIGNER_INFO_freefunc); cdecl;
   function Load_sk_PKCS7_SIGNER_INFO_insert(st: Pstack_st_PKCS7_SIGNER_INFO; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
   function Load_sk_PKCS7_SIGNER_INFO_set(st: Pstack_st_PKCS7_SIGNER_INFO; i: TOpenSSL_C_INT; data: pointer): Pstack_st_PKCS7_SIGNER_INFO; cdecl;
   function Load_sk_PKCS7_SIGNER_INFO_find(st: Pstack_st_PKCS7_SIGNER_INFO; data: pointer): TOpenSSL_C_INT; cdecl;
   function Load_sk_PKCS7_SIGNER_INFO_find_ex(st: Pstack_st_PKCS7_SIGNER_INFO; data: pointer): TOpenSSL_C_INT; cdecl;
   function Load_sk_PKCS7_SIGNER_INFO_find_all(st: Pstack_st_PKCS7_SIGNER_INFO; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS7_SIGNER_INFO_sort(_para: Pstack_st_PKCS7_SIGNER_INFO): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_PKCS7_SIGNER_INFO_sort(_para: Pstack_st_PKCS7_SIGNER_INFO); cdecl;
   function Load_sk_PKCS7_SIGNER_INFO_is_sorted(_para: Pstack_st_PKCS7_SIGNER_INFO): TOpenSSL_C_INT; cdecl;
   function Load_sk_PKCS7_SIGNER_INFO_dup(st: Pstack_st_PKCS7_SIGNER_INFO): Pstack_st_PKCS7_SIGNER_INFO; cdecl;
   function Load_sk_PKCS7_SIGNER_INFO_deep_copy(st: Pstack_st_PKCS7_SIGNER_INFO; c: Tsk_PKCS7_SIGNER_INFO_compfunc; f: Tsk_PKCS7_SIGNER_INFO_freefunc): Pstack_st_PKCS7_SIGNER_INFO; cdecl;
@@ -204,26 +204,26 @@ type
 
 var
   sk_PKCS7_SIGNER_INFO_num: function(_para: Pstack_st_PKCS7_SIGNER_INFO): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_SIGNER_INFO_num;
-  sk_PKCS7_SIGNER_INFO_value: function(_para: Pstack_st_PKCS7_SIGNER_INFO; _para2: TOpenSSL_C_INT): Pstack_st_PKCS7_SIGNER_INFO; cdecl = Load_sk_PKCS7_SIGNER_INFO_value;
+  sk_PKCS7_SIGNER_INFO_value: function(_para: Pstack_st_PKCS7_SIGNER_INFO; _para2: TOpenSSL_C_INT): PPKCS7_SIGNER_INFO; cdecl = Load_sk_PKCS7_SIGNER_INFO_value;
   sk_PKCS7_SIGNER_INFO_new: function(cmp: Tsk_PKCS7_SIGNER_INFO_compfunc): Pstack_st_PKCS7_SIGNER_INFO; cdecl = Load_sk_PKCS7_SIGNER_INFO_new;
   sk_PKCS7_SIGNER_INFO_new_null: function: Pstack_st_PKCS7_SIGNER_INFO; cdecl = Load_sk_PKCS7_SIGNER_INFO_new_null;
   sk_PKCS7_SIGNER_INFO_new_reserve: function(cmp: Tsk_PKCS7_SIGNER_INFO_compfunc; n: TOpenSSL_C_INT): Pstack_st_PKCS7_SIGNER_INFO; cdecl = Load_sk_PKCS7_SIGNER_INFO_new_reserve;
   sk_PKCS7_SIGNER_INFO_reserve: function(_para: Pstack_st_PKCS7_SIGNER_INFO; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_SIGNER_INFO_reserve;
-  sk_PKCS7_SIGNER_INFO_free: function(_para: Pstack_st_PKCS7_SIGNER_INFO): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_SIGNER_INFO_free;
-  sk_PKCS7_SIGNER_INFO_zero: function(_para: Pstack_st_PKCS7_SIGNER_INFO): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_SIGNER_INFO_zero;
-  sk_PKCS7_SIGNER_INFO_delete: function(st: Pstack_st_PKCS7_SIGNER_INFO; loc: TOpenSSL_C_INT): Pstack_st_PKCS7_SIGNER_INFO; cdecl = Load_sk_PKCS7_SIGNER_INFO_delete;
-  sk_PKCS7_SIGNER_INFO_delete_ptr: function(st: Pstack_st_PKCS7_SIGNER_INFO; ptr: Pstack_st_PKCS7_SIGNER_INFO): Pstack_st_PKCS7_SIGNER_INFO; cdecl = Load_sk_PKCS7_SIGNER_INFO_delete_ptr;
+  sk_PKCS7_SIGNER_INFO_free: procedure(_para: Pstack_st_PKCS7_SIGNER_INFO); cdecl = Load_sk_PKCS7_SIGNER_INFO_free;
+  sk_PKCS7_SIGNER_INFO_zero: procedure(_para: Pstack_st_PKCS7_SIGNER_INFO); cdecl = Load_sk_PKCS7_SIGNER_INFO_zero;
+  sk_PKCS7_SIGNER_INFO_delete: function(st: Pstack_st_PKCS7_SIGNER_INFO; loc: TOpenSSL_C_INT): PPKCS7_SIGNER_INFO; cdecl = Load_sk_PKCS7_SIGNER_INFO_delete;
+  sk_PKCS7_SIGNER_INFO_delete_ptr: function(st: Pstack_st_PKCS7_SIGNER_INFO; ptr: Pstack_st_PKCS7_SIGNER_INFO): PPKCS7_SIGNER_INFO; cdecl = Load_sk_PKCS7_SIGNER_INFO_delete_ptr;
   sk_PKCS7_SIGNER_INFO_push: function(st: Pstack_st_PKCS7_SIGNER_INFO; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_SIGNER_INFO_push;
   sk_PKCS7_SIGNER_INFO_unshift: function(st: Pstack_st_PKCS7_SIGNER_INFO; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_SIGNER_INFO_unshift;
-  sk_PKCS7_SIGNER_INFO_pop: function(_para: Pstack_st_PKCS7_SIGNER_INFO): Pstack_st_PKCS7_SIGNER_INFO; cdecl = Load_sk_PKCS7_SIGNER_INFO_pop;
-  sk_PKCS7_SIGNER_INFO_shift: function(_para: Pstack_st_PKCS7_SIGNER_INFO): Pstack_st_PKCS7_SIGNER_INFO; cdecl = Load_sk_PKCS7_SIGNER_INFO_shift;
+  sk_PKCS7_SIGNER_INFO_pop: function(_para: Pstack_st_PKCS7_SIGNER_INFO): PPKCS7_SIGNER_INFO; cdecl = Load_sk_PKCS7_SIGNER_INFO_pop;
+  sk_PKCS7_SIGNER_INFO_shift: function(_para: Pstack_st_PKCS7_SIGNER_INFO): PPKCS7_SIGNER_INFO; cdecl = Load_sk_PKCS7_SIGNER_INFO_shift;
   sk_PKCS7_SIGNER_INFO_pop_free: procedure(st: Pstack_st_PKCS7_SIGNER_INFO; func: Tsk_PKCS7_SIGNER_INFO_freefunc); cdecl = Load_sk_PKCS7_SIGNER_INFO_pop_free;
   sk_PKCS7_SIGNER_INFO_insert: function(st: Pstack_st_PKCS7_SIGNER_INFO; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_SIGNER_INFO_insert;
   sk_PKCS7_SIGNER_INFO_set: function(st: Pstack_st_PKCS7_SIGNER_INFO; i: TOpenSSL_C_INT; data: pointer): Pstack_st_PKCS7_SIGNER_INFO; cdecl = Load_sk_PKCS7_SIGNER_INFO_set;
   sk_PKCS7_SIGNER_INFO_find: function(st: Pstack_st_PKCS7_SIGNER_INFO; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_SIGNER_INFO_find;
   sk_PKCS7_SIGNER_INFO_find_ex: function(st: Pstack_st_PKCS7_SIGNER_INFO; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_SIGNER_INFO_find_ex;
   sk_PKCS7_SIGNER_INFO_find_all: function(st: Pstack_st_PKCS7_SIGNER_INFO; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_SIGNER_INFO_find_all;
-  sk_PKCS7_SIGNER_INFO_sort: function(_para: Pstack_st_PKCS7_SIGNER_INFO): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_SIGNER_INFO_sort;
+  sk_PKCS7_SIGNER_INFO_sort: procedure(_para: Pstack_st_PKCS7_SIGNER_INFO); cdecl = Load_sk_PKCS7_SIGNER_INFO_sort;
   sk_PKCS7_SIGNER_INFO_is_sorted: function(_para: Pstack_st_PKCS7_SIGNER_INFO): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_SIGNER_INFO_is_sorted;
   sk_PKCS7_SIGNER_INFO_dup: function(st: Pstack_st_PKCS7_SIGNER_INFO): Pstack_st_PKCS7_SIGNER_INFO; cdecl = Load_sk_PKCS7_SIGNER_INFO_dup;
   sk_PKCS7_SIGNER_INFO_deep_copy: function(st: Pstack_st_PKCS7_SIGNER_INFO; c: Tsk_PKCS7_SIGNER_INFO_compfunc; f: Tsk_PKCS7_SIGNER_INFO_freefunc): Pstack_st_PKCS7_SIGNER_INFO; cdecl = Load_sk_PKCS7_SIGNER_INFO_deep_copy;
@@ -272,26 +272,26 @@ type
   function ossl_check_PKCS7_RECIP_INFO_freefunc_type(fr: Tsk_PKCS7_RECIP_INFO_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
   {$ifdef OPENSSL_STATIC_LINK_MODEL}
   function sk_PKCS7_RECIP_INFO_num(_para: Pstack_st_PKCS7_RECIP_INFO): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_PKCS7_RECIP_INFO_value(_para: Pstack_st_PKCS7_RECIP_INFO; _para2: TOpenSSL_C_INT): Pstack_st_PKCS7_RECIP_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_PKCS7_RECIP_INFO_value(_para: Pstack_st_PKCS7_RECIP_INFO; _para2: TOpenSSL_C_INT): PPKCS7_RECIP_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_PKCS7_RECIP_INFO_new(cmp: Tsk_PKCS7_RECIP_INFO_compfunc): Pstack_st_PKCS7_RECIP_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_PKCS7_RECIP_INFO_new_null: Pstack_st_PKCS7_RECIP_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_PKCS7_RECIP_INFO_new_reserve(cmp: Tsk_PKCS7_RECIP_INFO_compfunc; n: TOpenSSL_C_INT): Pstack_st_PKCS7_RECIP_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
   function sk_PKCS7_RECIP_INFO_reserve(_para: Pstack_st_PKCS7_RECIP_INFO; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_PKCS7_RECIP_INFO_free(_para: Pstack_st_PKCS7_RECIP_INFO): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_PKCS7_RECIP_INFO_zero(_para: Pstack_st_PKCS7_RECIP_INFO): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_PKCS7_RECIP_INFO_delete(st: Pstack_st_PKCS7_RECIP_INFO; loc: TOpenSSL_C_INT): Pstack_st_PKCS7_RECIP_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_PKCS7_RECIP_INFO_delete_ptr(st: Pstack_st_PKCS7_RECIP_INFO; ptr: Pstack_st_PKCS7_RECIP_INFO): Pstack_st_PKCS7_RECIP_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  procedure sk_PKCS7_RECIP_INFO_free(_para: Pstack_st_PKCS7_RECIP_INFO); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_PKCS7_RECIP_INFO_zero(_para: Pstack_st_PKCS7_RECIP_INFO); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_PKCS7_RECIP_INFO_delete(st: Pstack_st_PKCS7_RECIP_INFO; loc: TOpenSSL_C_INT): PPKCS7_RECIP_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_PKCS7_RECIP_INFO_delete_ptr(st: Pstack_st_PKCS7_RECIP_INFO; ptr: Pstack_st_PKCS7_RECIP_INFO): PPKCS7_RECIP_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
   function sk_PKCS7_RECIP_INFO_push(st: Pstack_st_PKCS7_RECIP_INFO; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
   function sk_PKCS7_RECIP_INFO_unshift(st: Pstack_st_PKCS7_RECIP_INFO; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_PKCS7_RECIP_INFO_pop(_para: Pstack_st_PKCS7_RECIP_INFO): Pstack_st_PKCS7_RECIP_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_PKCS7_RECIP_INFO_shift(_para: Pstack_st_PKCS7_RECIP_INFO): Pstack_st_PKCS7_RECIP_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  function sk_PKCS7_RECIP_INFO_pop(_para: Pstack_st_PKCS7_RECIP_INFO): PPKCS7_RECIP_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_PKCS7_RECIP_INFO_shift(_para: Pstack_st_PKCS7_RECIP_INFO): PPKCS7_RECIP_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
   procedure sk_PKCS7_RECIP_INFO_pop_free(st: Pstack_st_PKCS7_RECIP_INFO; func: Tsk_PKCS7_RECIP_INFO_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
   function sk_PKCS7_RECIP_INFO_insert(st: Pstack_st_PKCS7_RECIP_INFO; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
   function sk_PKCS7_RECIP_INFO_set(st: Pstack_st_PKCS7_RECIP_INFO; i: TOpenSSL_C_INT; data: pointer): Pstack_st_PKCS7_RECIP_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
   function sk_PKCS7_RECIP_INFO_find(st: Pstack_st_PKCS7_RECIP_INFO; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
   function sk_PKCS7_RECIP_INFO_find_ex(st: Pstack_st_PKCS7_RECIP_INFO; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
   function sk_PKCS7_RECIP_INFO_find_all(st: Pstack_st_PKCS7_RECIP_INFO; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_PKCS7_RECIP_INFO_sort(_para: Pstack_st_PKCS7_RECIP_INFO): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  procedure sk_PKCS7_RECIP_INFO_sort(_para: Pstack_st_PKCS7_RECIP_INFO); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
   function sk_PKCS7_RECIP_INFO_is_sorted(_para: Pstack_st_PKCS7_RECIP_INFO): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
   function sk_PKCS7_RECIP_INFO_dup(st: Pstack_st_PKCS7_RECIP_INFO): Pstack_st_PKCS7_RECIP_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
   function sk_PKCS7_RECIP_INFO_deep_copy(st: Pstack_st_PKCS7_RECIP_INFO; c: Tsk_PKCS7_RECIP_INFO_compfunc; f: Tsk_PKCS7_RECIP_INFO_freefunc): Pstack_st_PKCS7_RECIP_INFO; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
@@ -325,26 +325,26 @@ type
   {$EXTERNALSYM sk_PKCS7_RECIP_INFO_set_cmp_func}
   {Do not call Function LoadDeclarations. Internal use only}
   function Load_sk_PKCS7_RECIP_INFO_num(_para: Pstack_st_PKCS7_RECIP_INFO): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS7_RECIP_INFO_value(_para: Pstack_st_PKCS7_RECIP_INFO; _para2: TOpenSSL_C_INT): Pstack_st_PKCS7_RECIP_INFO; cdecl;
+  function Load_sk_PKCS7_RECIP_INFO_value(_para: Pstack_st_PKCS7_RECIP_INFO; _para2: TOpenSSL_C_INT): PPKCS7_RECIP_INFO; cdecl;
   function Load_sk_PKCS7_RECIP_INFO_new(cmp: Tsk_PKCS7_RECIP_INFO_compfunc): Pstack_st_PKCS7_RECIP_INFO; cdecl;
   function Load_sk_PKCS7_RECIP_INFO_new_null: Pstack_st_PKCS7_RECIP_INFO; cdecl;
   function Load_sk_PKCS7_RECIP_INFO_new_reserve(cmp: Tsk_PKCS7_RECIP_INFO_compfunc; n: TOpenSSL_C_INT): Pstack_st_PKCS7_RECIP_INFO; cdecl;
   function Load_sk_PKCS7_RECIP_INFO_reserve(_para: Pstack_st_PKCS7_RECIP_INFO; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS7_RECIP_INFO_free(_para: Pstack_st_PKCS7_RECIP_INFO): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS7_RECIP_INFO_zero(_para: Pstack_st_PKCS7_RECIP_INFO): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS7_RECIP_INFO_delete(st: Pstack_st_PKCS7_RECIP_INFO; loc: TOpenSSL_C_INT): Pstack_st_PKCS7_RECIP_INFO; cdecl;
-  function Load_sk_PKCS7_RECIP_INFO_delete_ptr(st: Pstack_st_PKCS7_RECIP_INFO; ptr: Pstack_st_PKCS7_RECIP_INFO): Pstack_st_PKCS7_RECIP_INFO; cdecl;
+  procedure Load_sk_PKCS7_RECIP_INFO_free(_para: Pstack_st_PKCS7_RECIP_INFO); cdecl;
+  procedure Load_sk_PKCS7_RECIP_INFO_zero(_para: Pstack_st_PKCS7_RECIP_INFO); cdecl;
+  function Load_sk_PKCS7_RECIP_INFO_delete(st: Pstack_st_PKCS7_RECIP_INFO; loc: TOpenSSL_C_INT): PPKCS7_RECIP_INFO; cdecl;
+  function Load_sk_PKCS7_RECIP_INFO_delete_ptr(st: Pstack_st_PKCS7_RECIP_INFO; ptr: Pstack_st_PKCS7_RECIP_INFO): PPKCS7_RECIP_INFO; cdecl;
   function Load_sk_PKCS7_RECIP_INFO_push(st: Pstack_st_PKCS7_RECIP_INFO; data: pointer): TOpenSSL_C_INT; cdecl;
   function Load_sk_PKCS7_RECIP_INFO_unshift(st: Pstack_st_PKCS7_RECIP_INFO; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS7_RECIP_INFO_pop(_para: Pstack_st_PKCS7_RECIP_INFO): Pstack_st_PKCS7_RECIP_INFO; cdecl;
-  function Load_sk_PKCS7_RECIP_INFO_shift(_para: Pstack_st_PKCS7_RECIP_INFO): Pstack_st_PKCS7_RECIP_INFO; cdecl;
+  function Load_sk_PKCS7_RECIP_INFO_pop(_para: Pstack_st_PKCS7_RECIP_INFO): PPKCS7_RECIP_INFO; cdecl;
+  function Load_sk_PKCS7_RECIP_INFO_shift(_para: Pstack_st_PKCS7_RECIP_INFO): PPKCS7_RECIP_INFO; cdecl;
   procedure Load_sk_PKCS7_RECIP_INFO_pop_free(st: Pstack_st_PKCS7_RECIP_INFO; func: Tsk_PKCS7_RECIP_INFO_freefunc); cdecl;
   function Load_sk_PKCS7_RECIP_INFO_insert(st: Pstack_st_PKCS7_RECIP_INFO; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
   function Load_sk_PKCS7_RECIP_INFO_set(st: Pstack_st_PKCS7_RECIP_INFO; i: TOpenSSL_C_INT; data: pointer): Pstack_st_PKCS7_RECIP_INFO; cdecl;
   function Load_sk_PKCS7_RECIP_INFO_find(st: Pstack_st_PKCS7_RECIP_INFO; data: pointer): TOpenSSL_C_INT; cdecl;
   function Load_sk_PKCS7_RECIP_INFO_find_ex(st: Pstack_st_PKCS7_RECIP_INFO; data: pointer): TOpenSSL_C_INT; cdecl;
   function Load_sk_PKCS7_RECIP_INFO_find_all(st: Pstack_st_PKCS7_RECIP_INFO; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS7_RECIP_INFO_sort(_para: Pstack_st_PKCS7_RECIP_INFO): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_PKCS7_RECIP_INFO_sort(_para: Pstack_st_PKCS7_RECIP_INFO); cdecl;
   function Load_sk_PKCS7_RECIP_INFO_is_sorted(_para: Pstack_st_PKCS7_RECIP_INFO): TOpenSSL_C_INT; cdecl;
   function Load_sk_PKCS7_RECIP_INFO_dup(st: Pstack_st_PKCS7_RECIP_INFO): Pstack_st_PKCS7_RECIP_INFO; cdecl;
   function Load_sk_PKCS7_RECIP_INFO_deep_copy(st: Pstack_st_PKCS7_RECIP_INFO; c: Tsk_PKCS7_RECIP_INFO_compfunc; f: Tsk_PKCS7_RECIP_INFO_freefunc): Pstack_st_PKCS7_RECIP_INFO; cdecl;
@@ -352,26 +352,26 @@ type
 
 var
   sk_PKCS7_RECIP_INFO_num: function(_para: Pstack_st_PKCS7_RECIP_INFO): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_RECIP_INFO_num;
-  sk_PKCS7_RECIP_INFO_value: function(_para: Pstack_st_PKCS7_RECIP_INFO; _para2: TOpenSSL_C_INT): Pstack_st_PKCS7_RECIP_INFO; cdecl = Load_sk_PKCS7_RECIP_INFO_value;
+  sk_PKCS7_RECIP_INFO_value: function(_para: Pstack_st_PKCS7_RECIP_INFO; _para2: TOpenSSL_C_INT): PPKCS7_RECIP_INFO; cdecl = Load_sk_PKCS7_RECIP_INFO_value;
   sk_PKCS7_RECIP_INFO_new: function(cmp: Tsk_PKCS7_RECIP_INFO_compfunc): Pstack_st_PKCS7_RECIP_INFO; cdecl = Load_sk_PKCS7_RECIP_INFO_new;
   sk_PKCS7_RECIP_INFO_new_null: function: Pstack_st_PKCS7_RECIP_INFO; cdecl = Load_sk_PKCS7_RECIP_INFO_new_null;
   sk_PKCS7_RECIP_INFO_new_reserve: function(cmp: Tsk_PKCS7_RECIP_INFO_compfunc; n: TOpenSSL_C_INT): Pstack_st_PKCS7_RECIP_INFO; cdecl = Load_sk_PKCS7_RECIP_INFO_new_reserve;
   sk_PKCS7_RECIP_INFO_reserve: function(_para: Pstack_st_PKCS7_RECIP_INFO; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_RECIP_INFO_reserve;
-  sk_PKCS7_RECIP_INFO_free: function(_para: Pstack_st_PKCS7_RECIP_INFO): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_RECIP_INFO_free;
-  sk_PKCS7_RECIP_INFO_zero: function(_para: Pstack_st_PKCS7_RECIP_INFO): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_RECIP_INFO_zero;
-  sk_PKCS7_RECIP_INFO_delete: function(st: Pstack_st_PKCS7_RECIP_INFO; loc: TOpenSSL_C_INT): Pstack_st_PKCS7_RECIP_INFO; cdecl = Load_sk_PKCS7_RECIP_INFO_delete;
-  sk_PKCS7_RECIP_INFO_delete_ptr: function(st: Pstack_st_PKCS7_RECIP_INFO; ptr: Pstack_st_PKCS7_RECIP_INFO): Pstack_st_PKCS7_RECIP_INFO; cdecl = Load_sk_PKCS7_RECIP_INFO_delete_ptr;
+  sk_PKCS7_RECIP_INFO_free: procedure(_para: Pstack_st_PKCS7_RECIP_INFO); cdecl = Load_sk_PKCS7_RECIP_INFO_free;
+  sk_PKCS7_RECIP_INFO_zero: procedure(_para: Pstack_st_PKCS7_RECIP_INFO); cdecl = Load_sk_PKCS7_RECIP_INFO_zero;
+  sk_PKCS7_RECIP_INFO_delete: function(st: Pstack_st_PKCS7_RECIP_INFO; loc: TOpenSSL_C_INT): PPKCS7_RECIP_INFO; cdecl = Load_sk_PKCS7_RECIP_INFO_delete;
+  sk_PKCS7_RECIP_INFO_delete_ptr: function(st: Pstack_st_PKCS7_RECIP_INFO; ptr: Pstack_st_PKCS7_RECIP_INFO): PPKCS7_RECIP_INFO; cdecl = Load_sk_PKCS7_RECIP_INFO_delete_ptr;
   sk_PKCS7_RECIP_INFO_push: function(st: Pstack_st_PKCS7_RECIP_INFO; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_RECIP_INFO_push;
   sk_PKCS7_RECIP_INFO_unshift: function(st: Pstack_st_PKCS7_RECIP_INFO; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_RECIP_INFO_unshift;
-  sk_PKCS7_RECIP_INFO_pop: function(_para: Pstack_st_PKCS7_RECIP_INFO): Pstack_st_PKCS7_RECIP_INFO; cdecl = Load_sk_PKCS7_RECIP_INFO_pop;
-  sk_PKCS7_RECIP_INFO_shift: function(_para: Pstack_st_PKCS7_RECIP_INFO): Pstack_st_PKCS7_RECIP_INFO; cdecl = Load_sk_PKCS7_RECIP_INFO_shift;
+  sk_PKCS7_RECIP_INFO_pop: function(_para: Pstack_st_PKCS7_RECIP_INFO): PPKCS7_RECIP_INFO; cdecl = Load_sk_PKCS7_RECIP_INFO_pop;
+  sk_PKCS7_RECIP_INFO_shift: function(_para: Pstack_st_PKCS7_RECIP_INFO): PPKCS7_RECIP_INFO; cdecl = Load_sk_PKCS7_RECIP_INFO_shift;
   sk_PKCS7_RECIP_INFO_pop_free: procedure(st: Pstack_st_PKCS7_RECIP_INFO; func: Tsk_PKCS7_RECIP_INFO_freefunc); cdecl = Load_sk_PKCS7_RECIP_INFO_pop_free;
   sk_PKCS7_RECIP_INFO_insert: function(st: Pstack_st_PKCS7_RECIP_INFO; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_RECIP_INFO_insert;
   sk_PKCS7_RECIP_INFO_set: function(st: Pstack_st_PKCS7_RECIP_INFO; i: TOpenSSL_C_INT; data: pointer): Pstack_st_PKCS7_RECIP_INFO; cdecl = Load_sk_PKCS7_RECIP_INFO_set;
   sk_PKCS7_RECIP_INFO_find: function(st: Pstack_st_PKCS7_RECIP_INFO; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_RECIP_INFO_find;
   sk_PKCS7_RECIP_INFO_find_ex: function(st: Pstack_st_PKCS7_RECIP_INFO; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_RECIP_INFO_find_ex;
   sk_PKCS7_RECIP_INFO_find_all: function(st: Pstack_st_PKCS7_RECIP_INFO; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_RECIP_INFO_find_all;
-  sk_PKCS7_RECIP_INFO_sort: function(_para: Pstack_st_PKCS7_RECIP_INFO): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_RECIP_INFO_sort;
+  sk_PKCS7_RECIP_INFO_sort: procedure(_para: Pstack_st_PKCS7_RECIP_INFO); cdecl = Load_sk_PKCS7_RECIP_INFO_sort;
   sk_PKCS7_RECIP_INFO_is_sorted: function(_para: Pstack_st_PKCS7_RECIP_INFO): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_RECIP_INFO_is_sorted;
   sk_PKCS7_RECIP_INFO_dup: function(st: Pstack_st_PKCS7_RECIP_INFO): Pstack_st_PKCS7_RECIP_INFO; cdecl = Load_sk_PKCS7_RECIP_INFO_dup;
   sk_PKCS7_RECIP_INFO_deep_copy: function(st: Pstack_st_PKCS7_RECIP_INFO; c: Tsk_PKCS7_RECIP_INFO_compfunc; f: Tsk_PKCS7_RECIP_INFO_freefunc): Pstack_st_PKCS7_RECIP_INFO; cdecl = Load_sk_PKCS7_RECIP_INFO_deep_copy;
@@ -521,26 +521,26 @@ type
   function ossl_check_PKCS7_freefunc_type(fr: Tsk_PKCS7_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
   {$ifdef OPENSSL_STATIC_LINK_MODEL}
   function sk_PKCS7_num(_para: Pstack_st_PKCS7): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_PKCS7_value(_para: Pstack_st_PKCS7; _para2: TOpenSSL_C_INT): Pstack_st_PKCS7; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_PKCS7_value(_para: Pstack_st_PKCS7; _para2: TOpenSSL_C_INT): PPKCS7; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_PKCS7_new(cmp: Tsk_PKCS7_compfunc): Pstack_st_PKCS7; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_PKCS7_new_null: Pstack_st_PKCS7; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_PKCS7_new_reserve(cmp: Tsk_PKCS7_compfunc; n: TOpenSSL_C_INT): Pstack_st_PKCS7; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
   function sk_PKCS7_reserve(_para: Pstack_st_PKCS7; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_PKCS7_free(_para: Pstack_st_PKCS7): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_PKCS7_zero(_para: Pstack_st_PKCS7): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_PKCS7_delete(st: Pstack_st_PKCS7; loc: TOpenSSL_C_INT): Pstack_st_PKCS7; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_PKCS7_delete_ptr(st: Pstack_st_PKCS7; ptr: Pstack_st_PKCS7): Pstack_st_PKCS7; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  procedure sk_PKCS7_free(_para: Pstack_st_PKCS7); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_PKCS7_zero(_para: Pstack_st_PKCS7); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_PKCS7_delete(st: Pstack_st_PKCS7; loc: TOpenSSL_C_INT): PPKCS7; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_PKCS7_delete_ptr(st: Pstack_st_PKCS7; ptr: Pstack_st_PKCS7): PPKCS7; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
   function sk_PKCS7_push(st: Pstack_st_PKCS7; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
   function sk_PKCS7_unshift(st: Pstack_st_PKCS7; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_PKCS7_pop(_para: Pstack_st_PKCS7): Pstack_st_PKCS7; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_PKCS7_shift(_para: Pstack_st_PKCS7): Pstack_st_PKCS7; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  function sk_PKCS7_pop(_para: Pstack_st_PKCS7): PPKCS7; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_PKCS7_shift(_para: Pstack_st_PKCS7): PPKCS7; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
   procedure sk_PKCS7_pop_free(st: Pstack_st_PKCS7; func: Tsk_PKCS7_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
   function sk_PKCS7_insert(st: Pstack_st_PKCS7; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
   function sk_PKCS7_set(st: Pstack_st_PKCS7; i: TOpenSSL_C_INT; data: pointer): Pstack_st_PKCS7; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
   function sk_PKCS7_find(st: Pstack_st_PKCS7; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
   function sk_PKCS7_find_ex(st: Pstack_st_PKCS7; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
   function sk_PKCS7_find_all(st: Pstack_st_PKCS7; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_PKCS7_sort(_para: Pstack_st_PKCS7): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  procedure sk_PKCS7_sort(_para: Pstack_st_PKCS7); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
   function sk_PKCS7_is_sorted(_para: Pstack_st_PKCS7): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
   function sk_PKCS7_dup(st: Pstack_st_PKCS7): Pstack_st_PKCS7; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
   function sk_PKCS7_deep_copy(st: Pstack_st_PKCS7; c: Tsk_PKCS7_compfunc; f: Tsk_PKCS7_freefunc): Pstack_st_PKCS7; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
@@ -574,26 +574,26 @@ type
   {$EXTERNALSYM sk_PKCS7_set_cmp_func}
   {Do not call Function LoadDeclarations. Internal use only}
   function Load_sk_PKCS7_num(_para: Pstack_st_PKCS7): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS7_value(_para: Pstack_st_PKCS7; _para2: TOpenSSL_C_INT): Pstack_st_PKCS7; cdecl;
+  function Load_sk_PKCS7_value(_para: Pstack_st_PKCS7; _para2: TOpenSSL_C_INT): PPKCS7; cdecl;
   function Load_sk_PKCS7_new(cmp: Tsk_PKCS7_compfunc): Pstack_st_PKCS7; cdecl;
   function Load_sk_PKCS7_new_null: Pstack_st_PKCS7; cdecl;
   function Load_sk_PKCS7_new_reserve(cmp: Tsk_PKCS7_compfunc; n: TOpenSSL_C_INT): Pstack_st_PKCS7; cdecl;
   function Load_sk_PKCS7_reserve(_para: Pstack_st_PKCS7; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS7_free(_para: Pstack_st_PKCS7): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS7_zero(_para: Pstack_st_PKCS7): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS7_delete(st: Pstack_st_PKCS7; loc: TOpenSSL_C_INT): Pstack_st_PKCS7; cdecl;
-  function Load_sk_PKCS7_delete_ptr(st: Pstack_st_PKCS7; ptr: Pstack_st_PKCS7): Pstack_st_PKCS7; cdecl;
+  procedure Load_sk_PKCS7_free(_para: Pstack_st_PKCS7); cdecl;
+  procedure Load_sk_PKCS7_zero(_para: Pstack_st_PKCS7); cdecl;
+  function Load_sk_PKCS7_delete(st: Pstack_st_PKCS7; loc: TOpenSSL_C_INT): PPKCS7; cdecl;
+  function Load_sk_PKCS7_delete_ptr(st: Pstack_st_PKCS7; ptr: Pstack_st_PKCS7): PPKCS7; cdecl;
   function Load_sk_PKCS7_push(st: Pstack_st_PKCS7; data: pointer): TOpenSSL_C_INT; cdecl;
   function Load_sk_PKCS7_unshift(st: Pstack_st_PKCS7; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS7_pop(_para: Pstack_st_PKCS7): Pstack_st_PKCS7; cdecl;
-  function Load_sk_PKCS7_shift(_para: Pstack_st_PKCS7): Pstack_st_PKCS7; cdecl;
+  function Load_sk_PKCS7_pop(_para: Pstack_st_PKCS7): PPKCS7; cdecl;
+  function Load_sk_PKCS7_shift(_para: Pstack_st_PKCS7): PPKCS7; cdecl;
   procedure Load_sk_PKCS7_pop_free(st: Pstack_st_PKCS7; func: Tsk_PKCS7_freefunc); cdecl;
   function Load_sk_PKCS7_insert(st: Pstack_st_PKCS7; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
   function Load_sk_PKCS7_set(st: Pstack_st_PKCS7; i: TOpenSSL_C_INT; data: pointer): Pstack_st_PKCS7; cdecl;
   function Load_sk_PKCS7_find(st: Pstack_st_PKCS7; data: pointer): TOpenSSL_C_INT; cdecl;
   function Load_sk_PKCS7_find_ex(st: Pstack_st_PKCS7; data: pointer): TOpenSSL_C_INT; cdecl;
   function Load_sk_PKCS7_find_all(st: Pstack_st_PKCS7; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS7_sort(_para: Pstack_st_PKCS7): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_PKCS7_sort(_para: Pstack_st_PKCS7); cdecl;
   function Load_sk_PKCS7_is_sorted(_para: Pstack_st_PKCS7): TOpenSSL_C_INT; cdecl;
   function Load_sk_PKCS7_dup(st: Pstack_st_PKCS7): Pstack_st_PKCS7; cdecl;
   function Load_sk_PKCS7_deep_copy(st: Pstack_st_PKCS7; c: Tsk_PKCS7_compfunc; f: Tsk_PKCS7_freefunc): Pstack_st_PKCS7; cdecl;
@@ -601,26 +601,26 @@ type
 
 var
   sk_PKCS7_num: function(_para: Pstack_st_PKCS7): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_num;
-  sk_PKCS7_value: function(_para: Pstack_st_PKCS7; _para2: TOpenSSL_C_INT): Pstack_st_PKCS7; cdecl = Load_sk_PKCS7_value;
+  sk_PKCS7_value: function(_para: Pstack_st_PKCS7; _para2: TOpenSSL_C_INT): PPKCS7; cdecl = Load_sk_PKCS7_value;
   sk_PKCS7_new: function(cmp: Tsk_PKCS7_compfunc): Pstack_st_PKCS7; cdecl = Load_sk_PKCS7_new;
   sk_PKCS7_new_null: function: Pstack_st_PKCS7; cdecl = Load_sk_PKCS7_new_null;
   sk_PKCS7_new_reserve: function(cmp: Tsk_PKCS7_compfunc; n: TOpenSSL_C_INT): Pstack_st_PKCS7; cdecl = Load_sk_PKCS7_new_reserve;
   sk_PKCS7_reserve: function(_para: Pstack_st_PKCS7; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_reserve;
-  sk_PKCS7_free: function(_para: Pstack_st_PKCS7): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_free;
-  sk_PKCS7_zero: function(_para: Pstack_st_PKCS7): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_zero;
-  sk_PKCS7_delete: function(st: Pstack_st_PKCS7; loc: TOpenSSL_C_INT): Pstack_st_PKCS7; cdecl = Load_sk_PKCS7_delete;
-  sk_PKCS7_delete_ptr: function(st: Pstack_st_PKCS7; ptr: Pstack_st_PKCS7): Pstack_st_PKCS7; cdecl = Load_sk_PKCS7_delete_ptr;
+  sk_PKCS7_free: procedure(_para: Pstack_st_PKCS7); cdecl = Load_sk_PKCS7_free;
+  sk_PKCS7_zero: procedure(_para: Pstack_st_PKCS7); cdecl = Load_sk_PKCS7_zero;
+  sk_PKCS7_delete: function(st: Pstack_st_PKCS7; loc: TOpenSSL_C_INT): PPKCS7; cdecl = Load_sk_PKCS7_delete;
+  sk_PKCS7_delete_ptr: function(st: Pstack_st_PKCS7; ptr: Pstack_st_PKCS7): PPKCS7; cdecl = Load_sk_PKCS7_delete_ptr;
   sk_PKCS7_push: function(st: Pstack_st_PKCS7; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_push;
   sk_PKCS7_unshift: function(st: Pstack_st_PKCS7; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_unshift;
-  sk_PKCS7_pop: function(_para: Pstack_st_PKCS7): Pstack_st_PKCS7; cdecl = Load_sk_PKCS7_pop;
-  sk_PKCS7_shift: function(_para: Pstack_st_PKCS7): Pstack_st_PKCS7; cdecl = Load_sk_PKCS7_shift;
+  sk_PKCS7_pop: function(_para: Pstack_st_PKCS7): PPKCS7; cdecl = Load_sk_PKCS7_pop;
+  sk_PKCS7_shift: function(_para: Pstack_st_PKCS7): PPKCS7; cdecl = Load_sk_PKCS7_shift;
   sk_PKCS7_pop_free: procedure(st: Pstack_st_PKCS7; func: Tsk_PKCS7_freefunc); cdecl = Load_sk_PKCS7_pop_free;
   sk_PKCS7_insert: function(st: Pstack_st_PKCS7; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_insert;
   sk_PKCS7_set: function(st: Pstack_st_PKCS7; i: TOpenSSL_C_INT; data: pointer): Pstack_st_PKCS7; cdecl = Load_sk_PKCS7_set;
   sk_PKCS7_find: function(st: Pstack_st_PKCS7; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_find;
   sk_PKCS7_find_ex: function(st: Pstack_st_PKCS7; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_find_ex;
   sk_PKCS7_find_all: function(st: Pstack_st_PKCS7; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_find_all;
-  sk_PKCS7_sort: function(_para: Pstack_st_PKCS7): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_sort;
+  sk_PKCS7_sort: procedure(_para: Pstack_st_PKCS7); cdecl = Load_sk_PKCS7_sort;
   sk_PKCS7_is_sorted: function(_para: Pstack_st_PKCS7): TOpenSSL_C_INT; cdecl = Load_sk_PKCS7_is_sorted;
   sk_PKCS7_dup: function(st: Pstack_st_PKCS7): Pstack_st_PKCS7; cdecl = Load_sk_PKCS7_dup;
   sk_PKCS7_deep_copy: function(st: Pstack_st_PKCS7; c: Tsk_PKCS7_compfunc; f: Tsk_PKCS7_freefunc): Pstack_st_PKCS7; cdecl = Load_sk_PKCS7_deep_copy;
@@ -1327,7 +1327,7 @@ begin
   Result := sk_PKCS7_SIGNER_INFO_num(_para);
 end;
 
-function Load_sk_PKCS7_SIGNER_INFO_value(_para: Pstack_st_PKCS7_SIGNER_INFO; _para2: TOpenSSL_C_INT): Pstack_st_PKCS7_SIGNER_INFO; cdecl;
+function Load_sk_PKCS7_SIGNER_INFO_value(_para: Pstack_st_PKCS7_SIGNER_INFO; _para2: TOpenSSL_C_INT): PPKCS7_SIGNER_INFO; cdecl;
 begin
   sk_PKCS7_SIGNER_INFO_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_PKCS7_SIGNER_INFO_value) then
@@ -1367,23 +1367,23 @@ begin
   Result := sk_PKCS7_SIGNER_INFO_reserve(_para, n);
 end;
 
-function Load_sk_PKCS7_SIGNER_INFO_free(_para: Pstack_st_PKCS7_SIGNER_INFO): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_PKCS7_SIGNER_INFO_free(_para: Pstack_st_PKCS7_SIGNER_INFO); cdecl;
 begin
   sk_PKCS7_SIGNER_INFO_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_PKCS7_SIGNER_INFO_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
-  Result := sk_PKCS7_SIGNER_INFO_free(_para);
+  sk_PKCS7_SIGNER_INFO_free(_para);
 end;
 
-function Load_sk_PKCS7_SIGNER_INFO_zero(_para: Pstack_st_PKCS7_SIGNER_INFO): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_PKCS7_SIGNER_INFO_zero(_para: Pstack_st_PKCS7_SIGNER_INFO); cdecl;
 begin
   sk_PKCS7_SIGNER_INFO_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_PKCS7_SIGNER_INFO_zero) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
-  Result := sk_PKCS7_SIGNER_INFO_zero(_para);
+  sk_PKCS7_SIGNER_INFO_zero(_para);
 end;
 
-function Load_sk_PKCS7_SIGNER_INFO_delete(st: Pstack_st_PKCS7_SIGNER_INFO; loc: TOpenSSL_C_INT): Pstack_st_PKCS7_SIGNER_INFO; cdecl;
+function Load_sk_PKCS7_SIGNER_INFO_delete(st: Pstack_st_PKCS7_SIGNER_INFO; loc: TOpenSSL_C_INT): PPKCS7_SIGNER_INFO; cdecl;
 begin
   sk_PKCS7_SIGNER_INFO_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_PKCS7_SIGNER_INFO_delete) then
@@ -1391,7 +1391,7 @@ begin
   Result := sk_PKCS7_SIGNER_INFO_delete(st, loc);
 end;
 
-function Load_sk_PKCS7_SIGNER_INFO_delete_ptr(st: Pstack_st_PKCS7_SIGNER_INFO; ptr: Pstack_st_PKCS7_SIGNER_INFO): Pstack_st_PKCS7_SIGNER_INFO; cdecl;
+function Load_sk_PKCS7_SIGNER_INFO_delete_ptr(st: Pstack_st_PKCS7_SIGNER_INFO; ptr: Pstack_st_PKCS7_SIGNER_INFO): PPKCS7_SIGNER_INFO; cdecl;
 begin
   sk_PKCS7_SIGNER_INFO_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_PKCS7_SIGNER_INFO_delete_ptr) then
@@ -1415,7 +1415,7 @@ begin
   Result := sk_PKCS7_SIGNER_INFO_unshift(st, data);
 end;
 
-function Load_sk_PKCS7_SIGNER_INFO_pop(_para: Pstack_st_PKCS7_SIGNER_INFO): Pstack_st_PKCS7_SIGNER_INFO; cdecl;
+function Load_sk_PKCS7_SIGNER_INFO_pop(_para: Pstack_st_PKCS7_SIGNER_INFO): PPKCS7_SIGNER_INFO; cdecl;
 begin
   sk_PKCS7_SIGNER_INFO_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_PKCS7_SIGNER_INFO_pop) then
@@ -1423,7 +1423,7 @@ begin
   Result := sk_PKCS7_SIGNER_INFO_pop(_para);
 end;
 
-function Load_sk_PKCS7_SIGNER_INFO_shift(_para: Pstack_st_PKCS7_SIGNER_INFO): Pstack_st_PKCS7_SIGNER_INFO; cdecl;
+function Load_sk_PKCS7_SIGNER_INFO_shift(_para: Pstack_st_PKCS7_SIGNER_INFO): PPKCS7_SIGNER_INFO; cdecl;
 begin
   sk_PKCS7_SIGNER_INFO_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_PKCS7_SIGNER_INFO_shift) then
@@ -1479,12 +1479,12 @@ begin
   Result := sk_PKCS7_SIGNER_INFO_find_all(st, data, pnum);
 end;
 
-function Load_sk_PKCS7_SIGNER_INFO_sort(_para: Pstack_st_PKCS7_SIGNER_INFO): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_PKCS7_SIGNER_INFO_sort(_para: Pstack_st_PKCS7_SIGNER_INFO); cdecl;
 begin
   sk_PKCS7_SIGNER_INFO_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_PKCS7_SIGNER_INFO_sort) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
-  Result := sk_PKCS7_SIGNER_INFO_sort(_para);
+  sk_PKCS7_SIGNER_INFO_sort(_para);
 end;
 
 function Load_sk_PKCS7_SIGNER_INFO_is_sorted(_para: Pstack_st_PKCS7_SIGNER_INFO): TOpenSSL_C_INT; cdecl;
@@ -1527,7 +1527,7 @@ begin
   Result := sk_PKCS7_RECIP_INFO_num(_para);
 end;
 
-function Load_sk_PKCS7_RECIP_INFO_value(_para: Pstack_st_PKCS7_RECIP_INFO; _para2: TOpenSSL_C_INT): Pstack_st_PKCS7_RECIP_INFO; cdecl;
+function Load_sk_PKCS7_RECIP_INFO_value(_para: Pstack_st_PKCS7_RECIP_INFO; _para2: TOpenSSL_C_INT): PPKCS7_RECIP_INFO; cdecl;
 begin
   sk_PKCS7_RECIP_INFO_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_PKCS7_RECIP_INFO_value) then
@@ -1567,23 +1567,23 @@ begin
   Result := sk_PKCS7_RECIP_INFO_reserve(_para, n);
 end;
 
-function Load_sk_PKCS7_RECIP_INFO_free(_para: Pstack_st_PKCS7_RECIP_INFO): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_PKCS7_RECIP_INFO_free(_para: Pstack_st_PKCS7_RECIP_INFO); cdecl;
 begin
   sk_PKCS7_RECIP_INFO_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_PKCS7_RECIP_INFO_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
-  Result := sk_PKCS7_RECIP_INFO_free(_para);
+  sk_PKCS7_RECIP_INFO_free(_para);
 end;
 
-function Load_sk_PKCS7_RECIP_INFO_zero(_para: Pstack_st_PKCS7_RECIP_INFO): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_PKCS7_RECIP_INFO_zero(_para: Pstack_st_PKCS7_RECIP_INFO); cdecl;
 begin
   sk_PKCS7_RECIP_INFO_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_PKCS7_RECIP_INFO_zero) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
-  Result := sk_PKCS7_RECIP_INFO_zero(_para);
+  sk_PKCS7_RECIP_INFO_zero(_para);
 end;
 
-function Load_sk_PKCS7_RECIP_INFO_delete(st: Pstack_st_PKCS7_RECIP_INFO; loc: TOpenSSL_C_INT): Pstack_st_PKCS7_RECIP_INFO; cdecl;
+function Load_sk_PKCS7_RECIP_INFO_delete(st: Pstack_st_PKCS7_RECIP_INFO; loc: TOpenSSL_C_INT): PPKCS7_RECIP_INFO; cdecl;
 begin
   sk_PKCS7_RECIP_INFO_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_PKCS7_RECIP_INFO_delete) then
@@ -1591,7 +1591,7 @@ begin
   Result := sk_PKCS7_RECIP_INFO_delete(st, loc);
 end;
 
-function Load_sk_PKCS7_RECIP_INFO_delete_ptr(st: Pstack_st_PKCS7_RECIP_INFO; ptr: Pstack_st_PKCS7_RECIP_INFO): Pstack_st_PKCS7_RECIP_INFO; cdecl;
+function Load_sk_PKCS7_RECIP_INFO_delete_ptr(st: Pstack_st_PKCS7_RECIP_INFO; ptr: Pstack_st_PKCS7_RECIP_INFO): PPKCS7_RECIP_INFO; cdecl;
 begin
   sk_PKCS7_RECIP_INFO_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_PKCS7_RECIP_INFO_delete_ptr) then
@@ -1615,7 +1615,7 @@ begin
   Result := sk_PKCS7_RECIP_INFO_unshift(st, data);
 end;
 
-function Load_sk_PKCS7_RECIP_INFO_pop(_para: Pstack_st_PKCS7_RECIP_INFO): Pstack_st_PKCS7_RECIP_INFO; cdecl;
+function Load_sk_PKCS7_RECIP_INFO_pop(_para: Pstack_st_PKCS7_RECIP_INFO): PPKCS7_RECIP_INFO; cdecl;
 begin
   sk_PKCS7_RECIP_INFO_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_PKCS7_RECIP_INFO_pop) then
@@ -1623,7 +1623,7 @@ begin
   Result := sk_PKCS7_RECIP_INFO_pop(_para);
 end;
 
-function Load_sk_PKCS7_RECIP_INFO_shift(_para: Pstack_st_PKCS7_RECIP_INFO): Pstack_st_PKCS7_RECIP_INFO; cdecl;
+function Load_sk_PKCS7_RECIP_INFO_shift(_para: Pstack_st_PKCS7_RECIP_INFO): PPKCS7_RECIP_INFO; cdecl;
 begin
   sk_PKCS7_RECIP_INFO_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_PKCS7_RECIP_INFO_shift) then
@@ -1679,12 +1679,12 @@ begin
   Result := sk_PKCS7_RECIP_INFO_find_all(st, data, pnum);
 end;
 
-function Load_sk_PKCS7_RECIP_INFO_sort(_para: Pstack_st_PKCS7_RECIP_INFO): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_PKCS7_RECIP_INFO_sort(_para: Pstack_st_PKCS7_RECIP_INFO); cdecl;
 begin
   sk_PKCS7_RECIP_INFO_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_PKCS7_RECIP_INFO_sort) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
-  Result := sk_PKCS7_RECIP_INFO_sort(_para);
+  sk_PKCS7_RECIP_INFO_sort(_para);
 end;
 
 function Load_sk_PKCS7_RECIP_INFO_is_sorted(_para: Pstack_st_PKCS7_RECIP_INFO): TOpenSSL_C_INT; cdecl;
@@ -1727,7 +1727,7 @@ begin
   Result := sk_PKCS7_num(_para);
 end;
 
-function Load_sk_PKCS7_value(_para: Pstack_st_PKCS7; _para2: TOpenSSL_C_INT): Pstack_st_PKCS7; cdecl;
+function Load_sk_PKCS7_value(_para: Pstack_st_PKCS7; _para2: TOpenSSL_C_INT): PPKCS7; cdecl;
 begin
   sk_PKCS7_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_PKCS7_value) then
@@ -1767,23 +1767,23 @@ begin
   Result := sk_PKCS7_reserve(_para, n);
 end;
 
-function Load_sk_PKCS7_free(_para: Pstack_st_PKCS7): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_PKCS7_free(_para: Pstack_st_PKCS7); cdecl;
 begin
   sk_PKCS7_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_PKCS7_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
-  Result := sk_PKCS7_free(_para);
+  sk_PKCS7_free(_para);
 end;
 
-function Load_sk_PKCS7_zero(_para: Pstack_st_PKCS7): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_PKCS7_zero(_para: Pstack_st_PKCS7); cdecl;
 begin
   sk_PKCS7_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_PKCS7_zero) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
-  Result := sk_PKCS7_zero(_para);
+  sk_PKCS7_zero(_para);
 end;
 
-function Load_sk_PKCS7_delete(st: Pstack_st_PKCS7; loc: TOpenSSL_C_INT): Pstack_st_PKCS7; cdecl;
+function Load_sk_PKCS7_delete(st: Pstack_st_PKCS7; loc: TOpenSSL_C_INT): PPKCS7; cdecl;
 begin
   sk_PKCS7_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_PKCS7_delete) then
@@ -1791,7 +1791,7 @@ begin
   Result := sk_PKCS7_delete(st, loc);
 end;
 
-function Load_sk_PKCS7_delete_ptr(st: Pstack_st_PKCS7; ptr: Pstack_st_PKCS7): Pstack_st_PKCS7; cdecl;
+function Load_sk_PKCS7_delete_ptr(st: Pstack_st_PKCS7; ptr: Pstack_st_PKCS7): PPKCS7; cdecl;
 begin
   sk_PKCS7_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_PKCS7_delete_ptr) then
@@ -1815,7 +1815,7 @@ begin
   Result := sk_PKCS7_unshift(st, data);
 end;
 
-function Load_sk_PKCS7_pop(_para: Pstack_st_PKCS7): Pstack_st_PKCS7; cdecl;
+function Load_sk_PKCS7_pop(_para: Pstack_st_PKCS7): PPKCS7; cdecl;
 begin
   sk_PKCS7_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_PKCS7_pop) then
@@ -1823,7 +1823,7 @@ begin
   Result := sk_PKCS7_pop(_para);
 end;
 
-function Load_sk_PKCS7_shift(_para: Pstack_st_PKCS7): Pstack_st_PKCS7; cdecl;
+function Load_sk_PKCS7_shift(_para: Pstack_st_PKCS7): PPKCS7; cdecl;
 begin
   sk_PKCS7_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_PKCS7_shift) then
@@ -1879,12 +1879,12 @@ begin
   Result := sk_PKCS7_find_all(st, data, pnum);
 end;
 
-function Load_sk_PKCS7_sort(_para: Pstack_st_PKCS7): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_PKCS7_sort(_para: Pstack_st_PKCS7); cdecl;
 begin
   sk_PKCS7_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_PKCS7_sort) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
-  Result := sk_PKCS7_sort(_para);
+  sk_PKCS7_sort(_para);
 end;
 
 function Load_sk_PKCS7_is_sorted(_para: Pstack_st_PKCS7): TOpenSSL_C_INT; cdecl;

@@ -18,7 +18,7 @@
 unit openssl_ts;
 
 {
-  Generated from OpenSSL 3.6.2 Header File ts.h - Tue 19 May 14:31:03 BST 2026
+  Generated from OpenSSL 3.6.2 Header File ts.h - Sat 12 Sep 15:05:39 BST 2026
 }
 
 {$IFNDEF FPC}

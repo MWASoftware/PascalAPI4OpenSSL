@@ -18,7 +18,7 @@
 unit openssl_pkcs12err;
 
 {
-  Generated from OpenSSL 4.0.0 Header File pkcs12err.h - Tue 19 May 14:33:01 BST 2026
+  Generated from OpenSSL 4.0.0 Header File pkcs12err.h - Sat 12 Sep 15:07:53 BST 2026
 }
 
 {$IFNDEF FPC}

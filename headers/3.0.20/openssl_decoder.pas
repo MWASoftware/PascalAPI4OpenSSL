@@ -18,7 +18,7 @@
 unit openssl_decoder;
 
 {
-  Generated from OpenSSL 3.0.20 Header File decoder.h - Tue 19 May 14:15:50 BST 2026
+  Generated from OpenSSL 3.0.20 Header File decoder.h - Sat 12 Sep 14:55:09 BST 2026
 }
 
 {$IFNDEF FPC}

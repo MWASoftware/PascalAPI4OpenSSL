@@ -18,7 +18,7 @@
 unit openssl_des;
 
 {
-  Generated from OpenSSL 4.0.0 Header File des.h - Tue 19 May 14:32:24 BST 2026
+  Generated from OpenSSL 4.0.0 Header File des.h - Sat 12 Sep 15:07:08 BST 2026
 }
 
 {$IFNDEF FPC}

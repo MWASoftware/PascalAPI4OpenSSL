@@ -18,7 +18,7 @@
 unit openssl_ess;
 
 {
-  Generated from OpenSSL 3.6.2 Header File ess.h - Tue 19 May 14:30:05 BST 2026
+  Generated from OpenSSL 3.6.2 Header File ess.h - Sat 12 Sep 15:04:32 BST 2026
 }
 
 {$IFNDEF FPC}

@@ -18,7 +18,7 @@
 unit openssl_ecdsa;
 
 {
-  Generated from OpenSSL 3.5.6 Header File ecdsa.h - Tue 19 May 14:27:35 BST 2026
+  Generated from OpenSSL 3.5.6 Header File ecdsa.h - Sat 12 Sep 15:01:33 BST 2026
 }
 
 {$IFNDEF FPC}

@@ -18,7 +18,7 @@
 unit openssl_ui;
 
 {
-  Generated from OpenSSL 3.6.2 Header File ui.h - Tue 19 May 14:31:07 BST 2026
+  Generated from OpenSSL 3.6.2 Header File ui.h - Sat 12 Sep 15:05:44 BST 2026
 }
 
 {$IFNDEF FPC}

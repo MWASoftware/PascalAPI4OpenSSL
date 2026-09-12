@@ -18,7 +18,7 @@
 unit openssl_core_dispatch;
 
 {
-  Generated from OpenSSL 4.0.0 Header File core_dispatch.h - Tue 19 May 14:32:14 BST 2026
+  Generated from OpenSSL 4.0.0 Header File core_dispatch.h - Sat 12 Sep 15:06:57 BST 2026
 }
 
 {$IFNDEF FPC}

@@ -18,7 +18,7 @@
 unit openssl_sha;
 
 {
-  Generated from OpenSSL 4.0.0 Header File sha.h - Tue 19 May 14:33:14 BST 2026
+  Generated from OpenSSL 4.0.0 Header File sha.h - Sat 12 Sep 15:08:07 BST 2026
 }
 
 {$IFNDEF FPC}

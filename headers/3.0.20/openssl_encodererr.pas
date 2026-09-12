@@ -18,7 +18,7 @@
 unit openssl_encodererr;
 
 {
-  Generated from OpenSSL 3.0.20 Header File encodererr.h - Tue 19 May 14:15:56 BST 2026
+  Generated from OpenSSL 3.0.20 Header File encodererr.h - Sat 12 Sep 14:55:17 BST 2026
 }
 
 {$IFNDEF FPC}

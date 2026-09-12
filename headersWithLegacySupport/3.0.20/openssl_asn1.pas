@@ -18,7 +18,7 @@
 unit openssl_asn1;
 
 {
-  Generated from OpenSSL 3.0.20 Header File asn1.h - Tue 19 May 14:24:29 BST 2026
+  Generated from OpenSSL 3.0.20 Header File asn1.h - Sat 12 Sep 14:58:14 BST 2026
   With Legacy Support Option
 }
 

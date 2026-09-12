@@ -18,7 +18,7 @@
 unit openssl_bio;
 
 {
-  Generated from OpenSSL 4.0.0 Header File bio.h - Tue 19 May 14:31:56 BST 2026
+  Generated from OpenSSL 4.0.0 Header File bio.h - Sat 12 Sep 15:06:36 BST 2026
 }
 
 {$IFNDEF FPC}

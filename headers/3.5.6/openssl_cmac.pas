@@ -18,7 +18,7 @@
 unit openssl_cmac;
 
 {
-  Generated from OpenSSL 3.5.6 Header File cmac.h - Tue 19 May 14:27:09 BST 2026
+  Generated from OpenSSL 3.5.6 Header File cmac.h - Sat 12 Sep 15:01:02 BST 2026
 }
 
 {$IFNDEF FPC}

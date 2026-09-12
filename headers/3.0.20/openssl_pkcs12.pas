@@ -18,7 +18,7 @@
 unit openssl_pkcs12;
 
 {
-  Generated from OpenSSL 3.0.20 Header File pkcs12.h - Tue 19 May 14:16:22 BST 2026
+  Generated from OpenSSL 3.0.20 Header File pkcs12.h - Sat 12 Sep 14:55:48 BST 2026
 }
 
 {$IFNDEF FPC}
@@ -143,26 +143,26 @@ type
   function ossl_check_PKCS12_SAFEBAG_freefunc_type(fr: Tsk_PKCS12_SAFEBAG_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
   {$ifdef OPENSSL_STATIC_LINK_MODEL}
   function sk_PKCS12_SAFEBAG_num(_para: Pstack_st_PKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_PKCS12_SAFEBAG_value(_para: Pstack_st_PKCS12_SAFEBAG; _para2: TOpenSSL_C_INT): Pstack_st_PKCS12_SAFEBAG; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_PKCS12_SAFEBAG_value(_para: Pstack_st_PKCS12_SAFEBAG; _para2: TOpenSSL_C_INT): PPKCS12_SAFEBAG; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_PKCS12_SAFEBAG_new(cmp: Tsk_PKCS12_SAFEBAG_compfunc): Pstack_st_PKCS12_SAFEBAG; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_PKCS12_SAFEBAG_new_null: Pstack_st_PKCS12_SAFEBAG; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_PKCS12_SAFEBAG_new_reserve(cmp: Tsk_PKCS12_SAFEBAG_compfunc; n: TOpenSSL_C_INT): Pstack_st_PKCS12_SAFEBAG; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
   function sk_PKCS12_SAFEBAG_reserve(_para: Pstack_st_PKCS12_SAFEBAG; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_PKCS12_SAFEBAG_free(_para: Pstack_st_PKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_PKCS12_SAFEBAG_zero(_para: Pstack_st_PKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_PKCS12_SAFEBAG_delete(st: Pstack_st_PKCS12_SAFEBAG; loc: TOpenSSL_C_INT): Pstack_st_PKCS12_SAFEBAG; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_PKCS12_SAFEBAG_delete_ptr(st: Pstack_st_PKCS12_SAFEBAG; ptr: Pstack_st_PKCS12_SAFEBAG): Pstack_st_PKCS12_SAFEBAG; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  procedure sk_PKCS12_SAFEBAG_free(_para: Pstack_st_PKCS12_SAFEBAG); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_PKCS12_SAFEBAG_zero(_para: Pstack_st_PKCS12_SAFEBAG); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_PKCS12_SAFEBAG_delete(st: Pstack_st_PKCS12_SAFEBAG; loc: TOpenSSL_C_INT): PPKCS12_SAFEBAG; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_PKCS12_SAFEBAG_delete_ptr(st: Pstack_st_PKCS12_SAFEBAG; ptr: Pstack_st_PKCS12_SAFEBAG): PPKCS12_SAFEBAG; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
   function sk_PKCS12_SAFEBAG_push(st: Pstack_st_PKCS12_SAFEBAG; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
   function sk_PKCS12_SAFEBAG_unshift(st: Pstack_st_PKCS12_SAFEBAG; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_PKCS12_SAFEBAG_pop(_para: Pstack_st_PKCS12_SAFEBAG): Pstack_st_PKCS12_SAFEBAG; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_PKCS12_SAFEBAG_shift(_para: Pstack_st_PKCS12_SAFEBAG): Pstack_st_PKCS12_SAFEBAG; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  function sk_PKCS12_SAFEBAG_pop(_para: Pstack_st_PKCS12_SAFEBAG): PPKCS12_SAFEBAG; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_PKCS12_SAFEBAG_shift(_para: Pstack_st_PKCS12_SAFEBAG): PPKCS12_SAFEBAG; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
   procedure sk_PKCS12_SAFEBAG_pop_free(st: Pstack_st_PKCS12_SAFEBAG; func: Tsk_PKCS12_SAFEBAG_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
   function sk_PKCS12_SAFEBAG_insert(st: Pstack_st_PKCS12_SAFEBAG; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
   function sk_PKCS12_SAFEBAG_set(st: Pstack_st_PKCS12_SAFEBAG; i: TOpenSSL_C_INT; data: pointer): Pstack_st_PKCS12_SAFEBAG; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
   function sk_PKCS12_SAFEBAG_find(st: Pstack_st_PKCS12_SAFEBAG; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
   function sk_PKCS12_SAFEBAG_find_ex(st: Pstack_st_PKCS12_SAFEBAG; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
   function sk_PKCS12_SAFEBAG_find_all(st: Pstack_st_PKCS12_SAFEBAG; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_PKCS12_SAFEBAG_sort(_para: Pstack_st_PKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  procedure sk_PKCS12_SAFEBAG_sort(_para: Pstack_st_PKCS12_SAFEBAG); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
   function sk_PKCS12_SAFEBAG_is_sorted(_para: Pstack_st_PKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
   function sk_PKCS12_SAFEBAG_dup(st: Pstack_st_PKCS12_SAFEBAG): Pstack_st_PKCS12_SAFEBAG; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
   function sk_PKCS12_SAFEBAG_deep_copy(st: Pstack_st_PKCS12_SAFEBAG; c: Tsk_PKCS12_SAFEBAG_compfunc; f: Tsk_PKCS12_SAFEBAG_freefunc): Pstack_st_PKCS12_SAFEBAG; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
@@ -196,26 +196,26 @@ type
   {$EXTERNALSYM sk_PKCS12_SAFEBAG_set_cmp_func}
   {Do not call Function LoadDeclarations. Internal use only}
   function Load_sk_PKCS12_SAFEBAG_num(_para: Pstack_st_PKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS12_SAFEBAG_value(_para: Pstack_st_PKCS12_SAFEBAG; _para2: TOpenSSL_C_INT): Pstack_st_PKCS12_SAFEBAG; cdecl;
+  function Load_sk_PKCS12_SAFEBAG_value(_para: Pstack_st_PKCS12_SAFEBAG; _para2: TOpenSSL_C_INT): PPKCS12_SAFEBAG; cdecl;
   function Load_sk_PKCS12_SAFEBAG_new(cmp: Tsk_PKCS12_SAFEBAG_compfunc): Pstack_st_PKCS12_SAFEBAG; cdecl;
   function Load_sk_PKCS12_SAFEBAG_new_null: Pstack_st_PKCS12_SAFEBAG; cdecl;
   function Load_sk_PKCS12_SAFEBAG_new_reserve(cmp: Tsk_PKCS12_SAFEBAG_compfunc; n: TOpenSSL_C_INT): Pstack_st_PKCS12_SAFEBAG; cdecl;
   function Load_sk_PKCS12_SAFEBAG_reserve(_para: Pstack_st_PKCS12_SAFEBAG; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS12_SAFEBAG_free(_para: Pstack_st_PKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS12_SAFEBAG_zero(_para: Pstack_st_PKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS12_SAFEBAG_delete(st: Pstack_st_PKCS12_SAFEBAG; loc: TOpenSSL_C_INT): Pstack_st_PKCS12_SAFEBAG; cdecl;
-  function Load_sk_PKCS12_SAFEBAG_delete_ptr(st: Pstack_st_PKCS12_SAFEBAG; ptr: Pstack_st_PKCS12_SAFEBAG): Pstack_st_PKCS12_SAFEBAG; cdecl;
+  procedure Load_sk_PKCS12_SAFEBAG_free(_para: Pstack_st_PKCS12_SAFEBAG); cdecl;
+  procedure Load_sk_PKCS12_SAFEBAG_zero(_para: Pstack_st_PKCS12_SAFEBAG); cdecl;
+  function Load_sk_PKCS12_SAFEBAG_delete(st: Pstack_st_PKCS12_SAFEBAG; loc: TOpenSSL_C_INT): PPKCS12_SAFEBAG; cdecl;
+  function Load_sk_PKCS12_SAFEBAG_delete_ptr(st: Pstack_st_PKCS12_SAFEBAG; ptr: Pstack_st_PKCS12_SAFEBAG): PPKCS12_SAFEBAG; cdecl;
   function Load_sk_PKCS12_SAFEBAG_push(st: Pstack_st_PKCS12_SAFEBAG; data: pointer): TOpenSSL_C_INT; cdecl;
   function Load_sk_PKCS12_SAFEBAG_unshift(st: Pstack_st_PKCS12_SAFEBAG; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS12_SAFEBAG_pop(_para: Pstack_st_PKCS12_SAFEBAG): Pstack_st_PKCS12_SAFEBAG; cdecl;
-  function Load_sk_PKCS12_SAFEBAG_shift(_para: Pstack_st_PKCS12_SAFEBAG): Pstack_st_PKCS12_SAFEBAG; cdecl;
+  function Load_sk_PKCS12_SAFEBAG_pop(_para: Pstack_st_PKCS12_SAFEBAG): PPKCS12_SAFEBAG; cdecl;
+  function Load_sk_PKCS12_SAFEBAG_shift(_para: Pstack_st_PKCS12_SAFEBAG): PPKCS12_SAFEBAG; cdecl;
   procedure Load_sk_PKCS12_SAFEBAG_pop_free(st: Pstack_st_PKCS12_SAFEBAG; func: Tsk_PKCS12_SAFEBAG_freefunc); cdecl;
   function Load_sk_PKCS12_SAFEBAG_insert(st: Pstack_st_PKCS12_SAFEBAG; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
   function Load_sk_PKCS12_SAFEBAG_set(st: Pstack_st_PKCS12_SAFEBAG; i: TOpenSSL_C_INT; data: pointer): Pstack_st_PKCS12_SAFEBAG; cdecl;
   function Load_sk_PKCS12_SAFEBAG_find(st: Pstack_st_PKCS12_SAFEBAG; data: pointer): TOpenSSL_C_INT; cdecl;
   function Load_sk_PKCS12_SAFEBAG_find_ex(st: Pstack_st_PKCS12_SAFEBAG; data: pointer): TOpenSSL_C_INT; cdecl;
   function Load_sk_PKCS12_SAFEBAG_find_all(st: Pstack_st_PKCS12_SAFEBAG; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_PKCS12_SAFEBAG_sort(_para: Pstack_st_PKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_PKCS12_SAFEBAG_sort(_para: Pstack_st_PKCS12_SAFEBAG); cdecl;
   function Load_sk_PKCS12_SAFEBAG_is_sorted(_para: Pstack_st_PKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl;
   function Load_sk_PKCS12_SAFEBAG_dup(st: Pstack_st_PKCS12_SAFEBAG): Pstack_st_PKCS12_SAFEBAG; cdecl;
   function Load_sk_PKCS12_SAFEBAG_deep_copy(st: Pstack_st_PKCS12_SAFEBAG; c: Tsk_PKCS12_SAFEBAG_compfunc; f: Tsk_PKCS12_SAFEBAG_freefunc): Pstack_st_PKCS12_SAFEBAG; cdecl;
@@ -223,26 +223,26 @@ type
 
 var
   sk_PKCS12_SAFEBAG_num: function(_para: Pstack_st_PKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl = Load_sk_PKCS12_SAFEBAG_num;
-  sk_PKCS12_SAFEBAG_value: function(_para: Pstack_st_PKCS12_SAFEBAG; _para2: TOpenSSL_C_INT): Pstack_st_PKCS12_SAFEBAG; cdecl = Load_sk_PKCS12_SAFEBAG_value;
+  sk_PKCS12_SAFEBAG_value: function(_para: Pstack_st_PKCS12_SAFEBAG; _para2: TOpenSSL_C_INT): PPKCS12_SAFEBAG; cdecl = Load_sk_PKCS12_SAFEBAG_value;
   sk_PKCS12_SAFEBAG_new: function(cmp: Tsk_PKCS12_SAFEBAG_compfunc): Pstack_st_PKCS12_SAFEBAG; cdecl = Load_sk_PKCS12_SAFEBAG_new;
   sk_PKCS12_SAFEBAG_new_null: function: Pstack_st_PKCS12_SAFEBAG; cdecl = Load_sk_PKCS12_SAFEBAG_new_null;
   sk_PKCS12_SAFEBAG_new_reserve: function(cmp: Tsk_PKCS12_SAFEBAG_compfunc; n: TOpenSSL_C_INT): Pstack_st_PKCS12_SAFEBAG; cdecl = Load_sk_PKCS12_SAFEBAG_new_reserve;
   sk_PKCS12_SAFEBAG_reserve: function(_para: Pstack_st_PKCS12_SAFEBAG; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_PKCS12_SAFEBAG_reserve;
-  sk_PKCS12_SAFEBAG_free: function(_para: Pstack_st_PKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl = Load_sk_PKCS12_SAFEBAG_free;
-  sk_PKCS12_SAFEBAG_zero: function(_para: Pstack_st_PKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl = Load_sk_PKCS12_SAFEBAG_zero;
-  sk_PKCS12_SAFEBAG_delete: function(st: Pstack_st_PKCS12_SAFEBAG; loc: TOpenSSL_C_INT): Pstack_st_PKCS12_SAFEBAG; cdecl = Load_sk_PKCS12_SAFEBAG_delete;
-  sk_PKCS12_SAFEBAG_delete_ptr: function(st: Pstack_st_PKCS12_SAFEBAG; ptr: Pstack_st_PKCS12_SAFEBAG): Pstack_st_PKCS12_SAFEBAG; cdecl = Load_sk_PKCS12_SAFEBAG_delete_ptr;
+  sk_PKCS12_SAFEBAG_free: procedure(_para: Pstack_st_PKCS12_SAFEBAG); cdecl = Load_sk_PKCS12_SAFEBAG_free;
+  sk_PKCS12_SAFEBAG_zero: procedure(_para: Pstack_st_PKCS12_SAFEBAG); cdecl = Load_sk_PKCS12_SAFEBAG_zero;
+  sk_PKCS12_SAFEBAG_delete: function(st: Pstack_st_PKCS12_SAFEBAG; loc: TOpenSSL_C_INT): PPKCS12_SAFEBAG; cdecl = Load_sk_PKCS12_SAFEBAG_delete;
+  sk_PKCS12_SAFEBAG_delete_ptr: function(st: Pstack_st_PKCS12_SAFEBAG; ptr: Pstack_st_PKCS12_SAFEBAG): PPKCS12_SAFEBAG; cdecl = Load_sk_PKCS12_SAFEBAG_delete_ptr;
   sk_PKCS12_SAFEBAG_push: function(st: Pstack_st_PKCS12_SAFEBAG; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_PKCS12_SAFEBAG_push;
   sk_PKCS12_SAFEBAG_unshift: function(st: Pstack_st_PKCS12_SAFEBAG; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_PKCS12_SAFEBAG_unshift;
-  sk_PKCS12_SAFEBAG_pop: function(_para: Pstack_st_PKCS12_SAFEBAG): Pstack_st_PKCS12_SAFEBAG; cdecl = Load_sk_PKCS12_SAFEBAG_pop;
-  sk_PKCS12_SAFEBAG_shift: function(_para: Pstack_st_PKCS12_SAFEBAG): Pstack_st_PKCS12_SAFEBAG; cdecl = Load_sk_PKCS12_SAFEBAG_shift;
+  sk_PKCS12_SAFEBAG_pop: function(_para: Pstack_st_PKCS12_SAFEBAG): PPKCS12_SAFEBAG; cdecl = Load_sk_PKCS12_SAFEBAG_pop;
+  sk_PKCS12_SAFEBAG_shift: function(_para: Pstack_st_PKCS12_SAFEBAG): PPKCS12_SAFEBAG; cdecl = Load_sk_PKCS12_SAFEBAG_shift;
   sk_PKCS12_SAFEBAG_pop_free: procedure(st: Pstack_st_PKCS12_SAFEBAG; func: Tsk_PKCS12_SAFEBAG_freefunc); cdecl = Load_sk_PKCS12_SAFEBAG_pop_free;
   sk_PKCS12_SAFEBAG_insert: function(st: Pstack_st_PKCS12_SAFEBAG; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_PKCS12_SAFEBAG_insert;
   sk_PKCS12_SAFEBAG_set: function(st: Pstack_st_PKCS12_SAFEBAG; i: TOpenSSL_C_INT; data: pointer): Pstack_st_PKCS12_SAFEBAG; cdecl = Load_sk_PKCS12_SAFEBAG_set;
   sk_PKCS12_SAFEBAG_find: function(st: Pstack_st_PKCS12_SAFEBAG; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_PKCS12_SAFEBAG_find;
   sk_PKCS12_SAFEBAG_find_ex: function(st: Pstack_st_PKCS12_SAFEBAG; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_PKCS12_SAFEBAG_find_ex;
   sk_PKCS12_SAFEBAG_find_all: function(st: Pstack_st_PKCS12_SAFEBAG; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_PKCS12_SAFEBAG_find_all;
-  sk_PKCS12_SAFEBAG_sort: function(_para: Pstack_st_PKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl = Load_sk_PKCS12_SAFEBAG_sort;
+  sk_PKCS12_SAFEBAG_sort: procedure(_para: Pstack_st_PKCS12_SAFEBAG); cdecl = Load_sk_PKCS12_SAFEBAG_sort;
   sk_PKCS12_SAFEBAG_is_sorted: function(_para: Pstack_st_PKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl = Load_sk_PKCS12_SAFEBAG_is_sorted;
   sk_PKCS12_SAFEBAG_dup: function(st: Pstack_st_PKCS12_SAFEBAG): Pstack_st_PKCS12_SAFEBAG; cdecl = Load_sk_PKCS12_SAFEBAG_dup;
   sk_PKCS12_SAFEBAG_deep_copy: function(st: Pstack_st_PKCS12_SAFEBAG; c: Tsk_PKCS12_SAFEBAG_compfunc; f: Tsk_PKCS12_SAFEBAG_freefunc): Pstack_st_PKCS12_SAFEBAG; cdecl = Load_sk_PKCS12_SAFEBAG_deep_copy;
@@ -916,7 +916,7 @@ begin
   Result := sk_PKCS12_SAFEBAG_num(_para);
 end;
 
-function Load_sk_PKCS12_SAFEBAG_value(_para: Pstack_st_PKCS12_SAFEBAG; _para2: TOpenSSL_C_INT): Pstack_st_PKCS12_SAFEBAG; cdecl;
+function Load_sk_PKCS12_SAFEBAG_value(_para: Pstack_st_PKCS12_SAFEBAG; _para2: TOpenSSL_C_INT): PPKCS12_SAFEBAG; cdecl;
 begin
   sk_PKCS12_SAFEBAG_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_PKCS12_SAFEBAG_value) then
@@ -956,23 +956,23 @@ begin
   Result := sk_PKCS12_SAFEBAG_reserve(_para, n);
 end;
 
-function Load_sk_PKCS12_SAFEBAG_free(_para: Pstack_st_PKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_PKCS12_SAFEBAG_free(_para: Pstack_st_PKCS12_SAFEBAG); cdecl;
 begin
   sk_PKCS12_SAFEBAG_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_PKCS12_SAFEBAG_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
-  Result := sk_PKCS12_SAFEBAG_free(_para);
+  sk_PKCS12_SAFEBAG_free(_para);
 end;
 
-function Load_sk_PKCS12_SAFEBAG_zero(_para: Pstack_st_PKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_PKCS12_SAFEBAG_zero(_para: Pstack_st_PKCS12_SAFEBAG); cdecl;
 begin
   sk_PKCS12_SAFEBAG_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_PKCS12_SAFEBAG_zero) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
-  Result := sk_PKCS12_SAFEBAG_zero(_para);
+  sk_PKCS12_SAFEBAG_zero(_para);
 end;
 
-function Load_sk_PKCS12_SAFEBAG_delete(st: Pstack_st_PKCS12_SAFEBAG; loc: TOpenSSL_C_INT): Pstack_st_PKCS12_SAFEBAG; cdecl;
+function Load_sk_PKCS12_SAFEBAG_delete(st: Pstack_st_PKCS12_SAFEBAG; loc: TOpenSSL_C_INT): PPKCS12_SAFEBAG; cdecl;
 begin
   sk_PKCS12_SAFEBAG_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_PKCS12_SAFEBAG_delete) then
@@ -980,7 +980,7 @@ begin
   Result := sk_PKCS12_SAFEBAG_delete(st, loc);
 end;
 
-function Load_sk_PKCS12_SAFEBAG_delete_ptr(st: Pstack_st_PKCS12_SAFEBAG; ptr: Pstack_st_PKCS12_SAFEBAG): Pstack_st_PKCS12_SAFEBAG; cdecl;
+function Load_sk_PKCS12_SAFEBAG_delete_ptr(st: Pstack_st_PKCS12_SAFEBAG; ptr: Pstack_st_PKCS12_SAFEBAG): PPKCS12_SAFEBAG; cdecl;
 begin
   sk_PKCS12_SAFEBAG_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_PKCS12_SAFEBAG_delete_ptr) then
@@ -1004,7 +1004,7 @@ begin
   Result := sk_PKCS12_SAFEBAG_unshift(st, data);
 end;
 
-function Load_sk_PKCS12_SAFEBAG_pop(_para: Pstack_st_PKCS12_SAFEBAG): Pstack_st_PKCS12_SAFEBAG; cdecl;
+function Load_sk_PKCS12_SAFEBAG_pop(_para: Pstack_st_PKCS12_SAFEBAG): PPKCS12_SAFEBAG; cdecl;
 begin
   sk_PKCS12_SAFEBAG_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_PKCS12_SAFEBAG_pop) then
@@ -1012,7 +1012,7 @@ begin
   Result := sk_PKCS12_SAFEBAG_pop(_para);
 end;
 
-function Load_sk_PKCS12_SAFEBAG_shift(_para: Pstack_st_PKCS12_SAFEBAG): Pstack_st_PKCS12_SAFEBAG; cdecl;
+function Load_sk_PKCS12_SAFEBAG_shift(_para: Pstack_st_PKCS12_SAFEBAG): PPKCS12_SAFEBAG; cdecl;
 begin
   sk_PKCS12_SAFEBAG_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_PKCS12_SAFEBAG_shift) then
@@ -1068,12 +1068,12 @@ begin
   Result := sk_PKCS12_SAFEBAG_find_all(st, data, pnum);
 end;
 
-function Load_sk_PKCS12_SAFEBAG_sort(_para: Pstack_st_PKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_PKCS12_SAFEBAG_sort(_para: Pstack_st_PKCS12_SAFEBAG); cdecl;
 begin
   sk_PKCS12_SAFEBAG_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_PKCS12_SAFEBAG_sort) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
-  Result := sk_PKCS12_SAFEBAG_sort(_para);
+  sk_PKCS12_SAFEBAG_sort(_para);
 end;
 
 function Load_sk_PKCS12_SAFEBAG_is_sorted(_para: Pstack_st_PKCS12_SAFEBAG): TOpenSSL_C_INT; cdecl;

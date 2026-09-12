@@ -18,7 +18,7 @@
 unit openssl_ecerr;
 
 {
-  Generated from OpenSSL 3.6.2 Header File ecerr.h - Tue 19 May 14:29:56 BST 2026
+  Generated from OpenSSL 3.6.2 Header File ecerr.h - Sat 12 Sep 15:04:21 BST 2026
 }
 
 {$IFNDEF FPC}

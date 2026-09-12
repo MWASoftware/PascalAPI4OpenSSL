@@ -18,7 +18,7 @@
 unit openssl_objectserr;
 
 {
-  Generated from OpenSSL 3.0.20 Header File objectserr.h - Tue 19 May 14:16:11 BST 2026
+  Generated from OpenSSL 3.0.20 Header File objectserr.h - Sat 12 Sep 14:55:34 BST 2026
 }
 
 {$IFNDEF FPC}

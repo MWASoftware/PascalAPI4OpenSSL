@@ -18,7 +18,7 @@
 unit openssl_dtls1;
 
 {
-  Generated from OpenSSL 3.6.2 Header File dtls1.h - Tue 19 May 14:29:54 BST 2026
+  Generated from OpenSSL 3.6.2 Header File dtls1.h - Sat 12 Sep 15:04:18 BST 2026
 }
 
 {$IFNDEF FPC}

@@ -18,7 +18,7 @@
 unit openssl_x509err;
 
 {
-  Generated from OpenSSL 4.0.0 Header File x509err.h - Tue 19 May 14:33:44 BST 2026
+  Generated from OpenSSL 4.0.0 Header File x509err.h - Sat 12 Sep 15:08:43 BST 2026
 }
 
 {$IFNDEF FPC}

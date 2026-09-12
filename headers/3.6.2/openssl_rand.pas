@@ -18,7 +18,7 @@
 unit openssl_rand;
 
 {
-  Generated from OpenSSL 3.6.2 Header File rand.h - Tue 19 May 14:30:36 BST 2026
+  Generated from OpenSSL 3.6.2 Header File rand.h - Sat 12 Sep 15:05:08 BST 2026
 }
 
 {$IFNDEF FPC}

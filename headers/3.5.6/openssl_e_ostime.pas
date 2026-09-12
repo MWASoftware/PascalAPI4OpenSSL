@@ -18,7 +18,7 @@
 unit openssl_e_ostime;
 
 {
-  Generated from OpenSSL 3.5.6 Header File e_ostime.h - Tue 19 May 14:27:41 BST 2026
+  Generated from OpenSSL 3.5.6 Header File e_ostime.h - Sat 12 Sep 15:01:40 BST 2026
 }
 
 {$IFNDEF FPC}

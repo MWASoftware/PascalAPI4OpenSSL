@@ -18,7 +18,7 @@
 unit openssl_x509;
 
 {
-  Generated from OpenSSL 4.0.0 Header File x509.h - Tue 19 May 14:33:46 BST 2026
+  Generated from OpenSSL 4.0.0 Header File x509.h - Sat 12 Sep 15:08:45 BST 2026
 }
 
 {$IFNDEF FPC}

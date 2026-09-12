@@ -18,7 +18,7 @@
 unit openssl_conftypes;
 
 {
-  Generated from OpenSSL 3.5.6 Header File conftypes.h - Tue 19 May 14:27:21 BST 2026
+  Generated from OpenSSL 3.5.6 Header File conftypes.h - Sat 12 Sep 15:01:16 BST 2026
 }
 
 {$IFNDEF FPC}

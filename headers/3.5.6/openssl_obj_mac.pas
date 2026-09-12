@@ -18,7 +18,7 @@
 unit openssl_obj_mac;
 
 {
-  Generated from OpenSSL 3.5.6 Header File obj_mac.h - Tue 19 May 14:27:56 BST 2026
+  Generated from OpenSSL 3.5.6 Header File obj_mac.h - Sat 12 Sep 15:01:59 BST 2026
 }
 
 {$IFNDEF FPC}

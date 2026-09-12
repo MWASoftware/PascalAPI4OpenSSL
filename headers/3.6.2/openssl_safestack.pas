@@ -18,7 +18,7 @@
 unit openssl_safestack;
 
 {
-  Generated from OpenSSL 3.6.2 Header File safestack.h - Tue 19 May 14:30:38 BST 2026
+  Generated from OpenSSL 3.6.2 Header File safestack.h - Sat 12 Sep 15:05:10 BST 2026
 }
 
 {$IFNDEF FPC}

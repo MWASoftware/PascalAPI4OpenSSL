@@ -18,7 +18,7 @@
 unit openssl_asyncerr;
 
 {
-  Generated from OpenSSL 3.0.20 Header File asyncerr.h - Tue 19 May 14:15:26 BST 2026
+  Generated from OpenSSL 3.0.20 Header File asyncerr.h - Sat 12 Sep 14:54:41 BST 2026
 }
 
 {$IFNDEF FPC}

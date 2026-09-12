@@ -18,7 +18,7 @@
 unit openssl_async;
 
 {
-  Generated from OpenSSL 4.0.0 Header File async.h - Tue 19 May 14:31:55 BST 2026
+  Generated from OpenSSL 4.0.0 Header File async.h - Sat 12 Sep 15:06:35 BST 2026
 }
 
 {$IFNDEF FPC}
