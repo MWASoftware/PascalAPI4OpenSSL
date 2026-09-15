@@ -18,7 +18,7 @@
 unit openssl_ocsperr;
 
 {
-  Generated from OpenSSL 3.6.2 Header File ocsperr.h - Sat 12 Sep 15:04:49 BST 2026
+  Generated from OpenSSL 3.6.2 Header File ocsperr.h - Tue 15 Sep 14:40:07 BST 2026
 }
 
 {$IFNDEF FPC}

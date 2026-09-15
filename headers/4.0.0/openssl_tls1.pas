@@ -18,7 +18,7 @@
 unit openssl_tls1;
 
 {
-  Generated from OpenSSL 4.0.0 Header File tls1.h - Sat 12 Sep 15:08:27 BST 2026
+  Generated from OpenSSL 4.0.0 Header File tls1.h - Tue 15 Sep 14:43:43 BST 2026
 }
 
 {$IFNDEF FPC}

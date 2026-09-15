@@ -18,7 +18,7 @@
 unit openssl_core_object;
 
 {
-  Generated from OpenSSL 3.5.6 Header File core_object.h - Sat 12 Sep 15:01:18 BST 2026
+  Generated from OpenSSL 3.5.6 Header File core_object.h - Tue 15 Sep 14:36:25 BST 2026
 }
 
 {$IFNDEF FPC}

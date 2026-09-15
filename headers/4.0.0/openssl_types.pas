@@ -18,7 +18,7 @@
 unit openssl_types;
 
 {
-  Generated from OpenSSL 4.0.0 Header File types.h - Sat 12 Sep 15:08:36 BST 2026
+  Generated from OpenSSL 4.0.0 Header File types.h - Tue 15 Sep 14:43:53 BST 2026
 }
 
 {$IFNDEF FPC}

@@ -18,7 +18,7 @@
 unit openssl_stack;
 
 {
-  Generated from OpenSSL 3.6.2 Header File stack.h - Sat 12 Sep 15:05:25 BST 2026
+  Generated from OpenSSL 3.6.2 Header File stack.h - Tue 15 Sep 14:40:44 BST 2026
 }
 
 {$IFNDEF FPC}

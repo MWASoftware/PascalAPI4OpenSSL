@@ -18,7 +18,7 @@
 unit openssl_trace;
 
 {
-  Generated from OpenSSL 3.6.2 Header File trace.h - Sat 12 Sep 15:05:36 BST 2026
+  Generated from OpenSSL 3.6.2 Header File trace.h - Tue 15 Sep 14:40:54 BST 2026
 }
 
 {$IFNDEF FPC}

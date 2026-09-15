@@ -18,7 +18,7 @@
 unit openssl_ec;
 
 {
-  Generated from OpenSSL 3.0.20 Header File ec.h - Sat 12 Sep 14:55:17 BST 2026
+  Generated from OpenSSL 3.0.20 Header File ec.h - Tue 15 Sep 14:30:11 BST 2026
 }
 
 {$IFNDEF FPC}

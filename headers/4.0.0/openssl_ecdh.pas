@@ -18,7 +18,7 @@
 unit openssl_ecdh;
 
 {
-  Generated from OpenSSL 4.0.0 Header File ecdh.h - Sat 12 Sep 15:07:12 BST 2026
+  Generated from OpenSSL 4.0.0 Header File ecdh.h - Tue 15 Sep 14:42:28 BST 2026
 }
 
 {$IFNDEF FPC}

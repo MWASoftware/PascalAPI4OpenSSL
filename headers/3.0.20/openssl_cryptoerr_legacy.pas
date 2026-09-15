@@ -18,7 +18,7 @@
 unit openssl_cryptoerr_legacy;
 
 {
-  Generated from OpenSSL 3.0.20 Header File cryptoerr_legacy.h - Sat 12 Sep 14:55:05 BST 2026
+  Generated from OpenSSL 3.0.20 Header File cryptoerr_legacy.h - Tue 15 Sep 14:29:59 BST 2026
 }
 
 {$IFNDEF FPC}

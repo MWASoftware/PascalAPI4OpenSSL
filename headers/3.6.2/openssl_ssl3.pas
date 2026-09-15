@@ -18,7 +18,7 @@
 unit openssl_ssl3;
 
 {
-  Generated from OpenSSL 3.6.2 Header File ssl3.h - Sat 12 Sep 15:05:19 BST 2026
+  Generated from OpenSSL 3.6.2 Header File ssl3.h - Tue 15 Sep 14:40:38 BST 2026
 }
 
 {$IFNDEF FPC}

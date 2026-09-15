@@ -18,7 +18,7 @@
 unit openssl_ess;
 
 {
-  Generated from OpenSSL 3.5.6 Header File ess.h - Sat 12 Sep 15:01:44 BST 2026
+  Generated from OpenSSL 3.5.6 Header File ess.h - Tue 15 Sep 14:36:51 BST 2026
 }
 
 {$IFNDEF FPC}
@@ -88,31 +88,31 @@ type
   function ossl_check_ESS_CERT_ID_copyfunc_type(cpy: Tsk_ESS_CERT_ID_copyfunc): TOPENSSL_sk_copyfunc{Has C Attribute: unused}; inline;
   function ossl_check_ESS_CERT_ID_freefunc_type(fr: Tsk_ESS_CERT_ID_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
   {$ifdef OPENSSL_STATIC_LINK_MODEL}
-  function sk_ESS_CERT_ID_num(_para: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_ESS_CERT_ID_value(_para: Pstack_st_ESS_CERT_ID; _para2: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_ESS_CERT_ID_num(sk: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
+  function sk_ESS_CERT_ID_value(sk: Pstack_st_ESS_CERT_ID; idx: TOpenSSL_C_INT): PESS_CERT_ID; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_ESS_CERT_ID_new(cmp: Tsk_ESS_CERT_ID_compfunc): Pstack_st_ESS_CERT_ID; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_ESS_CERT_ID_new_null: Pstack_st_ESS_CERT_ID; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_ESS_CERT_ID_new_reserve(cmp: Tsk_ESS_CERT_ID_compfunc; n: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
-  function sk_ESS_CERT_ID_reserve(_para: Pstack_st_ESS_CERT_ID; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_ESS_CERT_ID_free(_para: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_ESS_CERT_ID_zero(_para: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_ESS_CERT_ID_delete(st: Pstack_st_ESS_CERT_ID; loc: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_ESS_CERT_ID_delete_ptr(st: Pstack_st_ESS_CERT_ID; ptr: Pstack_st_ESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
-  function sk_ESS_CERT_ID_push(st: Pstack_st_ESS_CERT_ID; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
-  function sk_ESS_CERT_ID_unshift(st: Pstack_st_ESS_CERT_ID; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_ESS_CERT_ID_pop(_para: Pstack_st_ESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_ESS_CERT_ID_shift(_para: Pstack_st_ESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
-  procedure sk_ESS_CERT_ID_pop_free(st: Pstack_st_ESS_CERT_ID; func: Tsk_ESS_CERT_ID_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
-  function sk_ESS_CERT_ID_insert(st: Pstack_st_ESS_CERT_ID; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
-  function sk_ESS_CERT_ID_set(st: Pstack_st_ESS_CERT_ID; i: TOpenSSL_C_INT; data: pointer): Pstack_st_ESS_CERT_ID; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
-  function sk_ESS_CERT_ID_find(st: Pstack_st_ESS_CERT_ID; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
-  function sk_ESS_CERT_ID_find_ex(st: Pstack_st_ESS_CERT_ID; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
-  function sk_ESS_CERT_ID_find_all(st: Pstack_st_ESS_CERT_ID; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_ESS_CERT_ID_sort(_para: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
-  function sk_ESS_CERT_ID_is_sorted(_para: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
-  function sk_ESS_CERT_ID_dup(st: Pstack_st_ESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
-  function sk_ESS_CERT_ID_deep_copy(st: Pstack_st_ESS_CERT_ID; c: Tsk_ESS_CERT_ID_compfunc; f: Tsk_ESS_CERT_ID_freefunc): Pstack_st_ESS_CERT_ID; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
-  function sk_ESS_CERT_ID_set_cmp_func(st: Pstack_st_ESS_CERT_ID; cmp: Tsk_ESS_CERT_ID_compfunc): Tsk_ESS_CERT_ID_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
+  function sk_ESS_CERT_ID_reserve(sk: Pstack_st_ESS_CERT_ID; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
+  procedure sk_ESS_CERT_ID_free(sk: Pstack_st_ESS_CERT_ID); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_ESS_CERT_ID_zero(sk: Pstack_st_ESS_CERT_ID); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_ESS_CERT_ID_delete(sk: Pstack_st_ESS_CERT_ID; i: TOpenSSL_C_INT): PESS_CERT_ID; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_ESS_CERT_ID_delete_ptr(sk: Pstack_st_ESS_CERT_ID; ptr: PESS_CERT_ID): PESS_CERT_ID; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  function sk_ESS_CERT_ID_push(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
+  function sk_ESS_CERT_ID_unshift(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
+  function sk_ESS_CERT_ID_pop(sk: Pstack_st_ESS_CERT_ID): PESS_CERT_ID; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_ESS_CERT_ID_shift(sk: Pstack_st_ESS_CERT_ID): PESS_CERT_ID; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  procedure sk_ESS_CERT_ID_pop_free(sk: Pstack_st_ESS_CERT_ID; func: Tsk_ESS_CERT_ID_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
+  function sk_ESS_CERT_ID_insert(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
+  function sk_ESS_CERT_ID_set(sk: Pstack_st_ESS_CERT_ID; i: TOpenSSL_C_INT; data: PESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
+  function sk_ESS_CERT_ID_find(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
+  function sk_ESS_CERT_ID_find_ex(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
+  function sk_ESS_CERT_ID_find_all(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
+  procedure sk_ESS_CERT_ID_sort(sk: Pstack_st_ESS_CERT_ID); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  function sk_ESS_CERT_ID_is_sorted(sk: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
+  function sk_ESS_CERT_ID_dup(sk: Pstack_st_ESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
+  function sk_ESS_CERT_ID_deep_copy(sk: Pstack_st_ESS_CERT_ID; c: Tsk_ESS_CERT_ID_copyfunc; f: Tsk_ESS_CERT_ID_freefunc): Pstack_st_ESS_CERT_ID; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
+  function sk_ESS_CERT_ID_set_cmp_func(sk: Pstack_st_ESS_CERT_ID; cmp: Tsk_ESS_CERT_ID_compfunc): Tsk_ESS_CERT_ID_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
   { clang-format on }
   {$else}
   { The EXTERNALSYM directive is ignored by FPC, however, it is used by Delphi as follows:
@@ -145,58 +145,58 @@ type
   {$EXTERNALSYM sk_ESS_CERT_ID_deep_copy}
   {$EXTERNALSYM sk_ESS_CERT_ID_set_cmp_func}
   {Do not call Function LoadDeclarations. Internal use only}
-  function Load_sk_ESS_CERT_ID_num(_para: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_value(_para: Pstack_st_ESS_CERT_ID; _para2: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID; cdecl;
+  function Load_sk_ESS_CERT_ID_num(sk: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl;
+  function Load_sk_ESS_CERT_ID_value(sk: Pstack_st_ESS_CERT_ID; idx: TOpenSSL_C_INT): PESS_CERT_ID; cdecl;
   function Load_sk_ESS_CERT_ID_new(cmp: Tsk_ESS_CERT_ID_compfunc): Pstack_st_ESS_CERT_ID; cdecl;
   function Load_sk_ESS_CERT_ID_new_null: Pstack_st_ESS_CERT_ID; cdecl;
   function Load_sk_ESS_CERT_ID_new_reserve(cmp: Tsk_ESS_CERT_ID_compfunc; n: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID; cdecl;
-  function Load_sk_ESS_CERT_ID_reserve(_para: Pstack_st_ESS_CERT_ID; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_free(_para: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_zero(_para: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_delete(st: Pstack_st_ESS_CERT_ID; loc: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID; cdecl;
-  function Load_sk_ESS_CERT_ID_delete_ptr(st: Pstack_st_ESS_CERT_ID; ptr: Pstack_st_ESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl;
-  function Load_sk_ESS_CERT_ID_push(st: Pstack_st_ESS_CERT_ID; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_unshift(st: Pstack_st_ESS_CERT_ID; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_pop(_para: Pstack_st_ESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl;
-  function Load_sk_ESS_CERT_ID_shift(_para: Pstack_st_ESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl;
-  procedure Load_sk_ESS_CERT_ID_pop_free(st: Pstack_st_ESS_CERT_ID; func: Tsk_ESS_CERT_ID_freefunc); cdecl;
-  function Load_sk_ESS_CERT_ID_insert(st: Pstack_st_ESS_CERT_ID; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_set(st: Pstack_st_ESS_CERT_ID; i: TOpenSSL_C_INT; data: pointer): Pstack_st_ESS_CERT_ID; cdecl;
-  function Load_sk_ESS_CERT_ID_find(st: Pstack_st_ESS_CERT_ID; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_find_ex(st: Pstack_st_ESS_CERT_ID; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_find_all(st: Pstack_st_ESS_CERT_ID; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_sort(_para: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_is_sorted(_para: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_dup(st: Pstack_st_ESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl;
-  function Load_sk_ESS_CERT_ID_deep_copy(st: Pstack_st_ESS_CERT_ID; c: Tsk_ESS_CERT_ID_compfunc; f: Tsk_ESS_CERT_ID_freefunc): Pstack_st_ESS_CERT_ID; cdecl;
-  function Load_sk_ESS_CERT_ID_set_cmp_func(st: Pstack_st_ESS_CERT_ID; cmp: Tsk_ESS_CERT_ID_compfunc): Tsk_ESS_CERT_ID_compfunc; cdecl;
+  function Load_sk_ESS_CERT_ID_reserve(sk: Pstack_st_ESS_CERT_ID; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_ESS_CERT_ID_free(sk: Pstack_st_ESS_CERT_ID); cdecl;
+  procedure Load_sk_ESS_CERT_ID_zero(sk: Pstack_st_ESS_CERT_ID); cdecl;
+  function Load_sk_ESS_CERT_ID_delete(sk: Pstack_st_ESS_CERT_ID; i: TOpenSSL_C_INT): PESS_CERT_ID; cdecl;
+  function Load_sk_ESS_CERT_ID_delete_ptr(sk: Pstack_st_ESS_CERT_ID; ptr: PESS_CERT_ID): PESS_CERT_ID; cdecl;
+  function Load_sk_ESS_CERT_ID_push(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID): TOpenSSL_C_INT; cdecl;
+  function Load_sk_ESS_CERT_ID_unshift(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID): TOpenSSL_C_INT; cdecl;
+  function Load_sk_ESS_CERT_ID_pop(sk: Pstack_st_ESS_CERT_ID): PESS_CERT_ID; cdecl;
+  function Load_sk_ESS_CERT_ID_shift(sk: Pstack_st_ESS_CERT_ID): PESS_CERT_ID; cdecl;
+  procedure Load_sk_ESS_CERT_ID_pop_free(sk: Pstack_st_ESS_CERT_ID; func: Tsk_ESS_CERT_ID_freefunc); cdecl;
+  function Load_sk_ESS_CERT_ID_insert(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_ESS_CERT_ID_set(sk: Pstack_st_ESS_CERT_ID; i: TOpenSSL_C_INT; data: PESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl;
+  function Load_sk_ESS_CERT_ID_find(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID): TOpenSSL_C_INT; cdecl;
+  function Load_sk_ESS_CERT_ID_find_ex(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID): TOpenSSL_C_INT; cdecl;
+  function Load_sk_ESS_CERT_ID_find_all(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_ESS_CERT_ID_sort(sk: Pstack_st_ESS_CERT_ID); cdecl;
+  function Load_sk_ESS_CERT_ID_is_sorted(sk: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl;
+  function Load_sk_ESS_CERT_ID_dup(sk: Pstack_st_ESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl;
+  function Load_sk_ESS_CERT_ID_deep_copy(sk: Pstack_st_ESS_CERT_ID; c: Tsk_ESS_CERT_ID_copyfunc; f: Tsk_ESS_CERT_ID_freefunc): Pstack_st_ESS_CERT_ID; cdecl;
+  function Load_sk_ESS_CERT_ID_set_cmp_func(sk: Pstack_st_ESS_CERT_ID; cmp: Tsk_ESS_CERT_ID_compfunc): Tsk_ESS_CERT_ID_compfunc; cdecl;
 
 var
-  sk_ESS_CERT_ID_num: function(_para: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_num;
-  sk_ESS_CERT_ID_value: function(_para: Pstack_st_ESS_CERT_ID; _para2: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID; cdecl = Load_sk_ESS_CERT_ID_value;
+  sk_ESS_CERT_ID_num: function(sk: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_num;
+  sk_ESS_CERT_ID_value: function(sk: Pstack_st_ESS_CERT_ID; idx: TOpenSSL_C_INT): PESS_CERT_ID; cdecl = Load_sk_ESS_CERT_ID_value;
   sk_ESS_CERT_ID_new: function(cmp: Tsk_ESS_CERT_ID_compfunc): Pstack_st_ESS_CERT_ID; cdecl = Load_sk_ESS_CERT_ID_new;
   sk_ESS_CERT_ID_new_null: function: Pstack_st_ESS_CERT_ID; cdecl = Load_sk_ESS_CERT_ID_new_null;
   sk_ESS_CERT_ID_new_reserve: function(cmp: Tsk_ESS_CERT_ID_compfunc; n: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID; cdecl = Load_sk_ESS_CERT_ID_new_reserve;
-  sk_ESS_CERT_ID_reserve: function(_para: Pstack_st_ESS_CERT_ID; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_reserve;
-  sk_ESS_CERT_ID_free: function(_para: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_free;
-  sk_ESS_CERT_ID_zero: function(_para: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_zero;
-  sk_ESS_CERT_ID_delete: function(st: Pstack_st_ESS_CERT_ID; loc: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID; cdecl = Load_sk_ESS_CERT_ID_delete;
-  sk_ESS_CERT_ID_delete_ptr: function(st: Pstack_st_ESS_CERT_ID; ptr: Pstack_st_ESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl = Load_sk_ESS_CERT_ID_delete_ptr;
-  sk_ESS_CERT_ID_push: function(st: Pstack_st_ESS_CERT_ID; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_push;
-  sk_ESS_CERT_ID_unshift: function(st: Pstack_st_ESS_CERT_ID; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_unshift;
-  sk_ESS_CERT_ID_pop: function(_para: Pstack_st_ESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl = Load_sk_ESS_CERT_ID_pop;
-  sk_ESS_CERT_ID_shift: function(_para: Pstack_st_ESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl = Load_sk_ESS_CERT_ID_shift;
-  sk_ESS_CERT_ID_pop_free: procedure(st: Pstack_st_ESS_CERT_ID; func: Tsk_ESS_CERT_ID_freefunc); cdecl = Load_sk_ESS_CERT_ID_pop_free;
-  sk_ESS_CERT_ID_insert: function(st: Pstack_st_ESS_CERT_ID; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_insert;
-  sk_ESS_CERT_ID_set: function(st: Pstack_st_ESS_CERT_ID; i: TOpenSSL_C_INT; data: pointer): Pstack_st_ESS_CERT_ID; cdecl = Load_sk_ESS_CERT_ID_set;
-  sk_ESS_CERT_ID_find: function(st: Pstack_st_ESS_CERT_ID; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_find;
-  sk_ESS_CERT_ID_find_ex: function(st: Pstack_st_ESS_CERT_ID; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_find_ex;
-  sk_ESS_CERT_ID_find_all: function(st: Pstack_st_ESS_CERT_ID; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_find_all;
-  sk_ESS_CERT_ID_sort: function(_para: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_sort;
-  sk_ESS_CERT_ID_is_sorted: function(_para: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_is_sorted;
-  sk_ESS_CERT_ID_dup: function(st: Pstack_st_ESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl = Load_sk_ESS_CERT_ID_dup;
-  sk_ESS_CERT_ID_deep_copy: function(st: Pstack_st_ESS_CERT_ID; c: Tsk_ESS_CERT_ID_compfunc; f: Tsk_ESS_CERT_ID_freefunc): Pstack_st_ESS_CERT_ID; cdecl = Load_sk_ESS_CERT_ID_deep_copy;
-  sk_ESS_CERT_ID_set_cmp_func: function(st: Pstack_st_ESS_CERT_ID; cmp: Tsk_ESS_CERT_ID_compfunc): Tsk_ESS_CERT_ID_compfunc; cdecl = Load_sk_ESS_CERT_ID_set_cmp_func;
+  sk_ESS_CERT_ID_reserve: function(sk: Pstack_st_ESS_CERT_ID; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_reserve;
+  sk_ESS_CERT_ID_free: procedure(sk: Pstack_st_ESS_CERT_ID); cdecl = Load_sk_ESS_CERT_ID_free;
+  sk_ESS_CERT_ID_zero: procedure(sk: Pstack_st_ESS_CERT_ID); cdecl = Load_sk_ESS_CERT_ID_zero;
+  sk_ESS_CERT_ID_delete: function(sk: Pstack_st_ESS_CERT_ID; i: TOpenSSL_C_INT): PESS_CERT_ID; cdecl = Load_sk_ESS_CERT_ID_delete;
+  sk_ESS_CERT_ID_delete_ptr: function(sk: Pstack_st_ESS_CERT_ID; ptr: PESS_CERT_ID): PESS_CERT_ID; cdecl = Load_sk_ESS_CERT_ID_delete_ptr;
+  sk_ESS_CERT_ID_push: function(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_push;
+  sk_ESS_CERT_ID_unshift: function(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_unshift;
+  sk_ESS_CERT_ID_pop: function(sk: Pstack_st_ESS_CERT_ID): PESS_CERT_ID; cdecl = Load_sk_ESS_CERT_ID_pop;
+  sk_ESS_CERT_ID_shift: function(sk: Pstack_st_ESS_CERT_ID): PESS_CERT_ID; cdecl = Load_sk_ESS_CERT_ID_shift;
+  sk_ESS_CERT_ID_pop_free: procedure(sk: Pstack_st_ESS_CERT_ID; func: Tsk_ESS_CERT_ID_freefunc); cdecl = Load_sk_ESS_CERT_ID_pop_free;
+  sk_ESS_CERT_ID_insert: function(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_insert;
+  sk_ESS_CERT_ID_set: function(sk: Pstack_st_ESS_CERT_ID; i: TOpenSSL_C_INT; data: PESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl = Load_sk_ESS_CERT_ID_set;
+  sk_ESS_CERT_ID_find: function(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_find;
+  sk_ESS_CERT_ID_find_ex: function(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_find_ex;
+  sk_ESS_CERT_ID_find_all: function(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_find_all;
+  sk_ESS_CERT_ID_sort: procedure(sk: Pstack_st_ESS_CERT_ID); cdecl = Load_sk_ESS_CERT_ID_sort;
+  sk_ESS_CERT_ID_is_sorted: function(sk: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_is_sorted;
+  sk_ESS_CERT_ID_dup: function(sk: Pstack_st_ESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl = Load_sk_ESS_CERT_ID_dup;
+  sk_ESS_CERT_ID_deep_copy: function(sk: Pstack_st_ESS_CERT_ID; c: Tsk_ESS_CERT_ID_copyfunc; f: Tsk_ESS_CERT_ID_freefunc): Pstack_st_ESS_CERT_ID; cdecl = Load_sk_ESS_CERT_ID_deep_copy;
+  sk_ESS_CERT_ID_set_cmp_func: function(sk: Pstack_st_ESS_CERT_ID; cmp: Tsk_ESS_CERT_ID_compfunc): Tsk_ESS_CERT_ID_compfunc; cdecl = Load_sk_ESS_CERT_ID_set_cmp_func;
   { clang-format on }
   {$endif} {OPENSSL_STATIC_LINK_MODEL}
 
@@ -239,31 +239,31 @@ type
   function ossl_check_ESS_CERT_ID_V2_copyfunc_type(cpy: Tsk_ESS_CERT_ID_V2_copyfunc): TOPENSSL_sk_copyfunc{Has C Attribute: unused}; inline;
   function ossl_check_ESS_CERT_ID_V2_freefunc_type(fr: Tsk_ESS_CERT_ID_V2_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
   {$ifdef OPENSSL_STATIC_LINK_MODEL}
-  function sk_ESS_CERT_ID_V2_num(_para: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_ESS_CERT_ID_V2_value(_para: Pstack_st_ESS_CERT_ID_V2; _para2: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID_V2; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_ESS_CERT_ID_V2_num(sk: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
+  function sk_ESS_CERT_ID_V2_value(sk: Pstack_st_ESS_CERT_ID_V2; idx: TOpenSSL_C_INT): PESS_CERT_ID_V2; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_ESS_CERT_ID_V2_new(cmp: Tsk_ESS_CERT_ID_V2_compfunc): Pstack_st_ESS_CERT_ID_V2; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_ESS_CERT_ID_V2_new_null: Pstack_st_ESS_CERT_ID_V2; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_ESS_CERT_ID_V2_new_reserve(cmp: Tsk_ESS_CERT_ID_V2_compfunc; n: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID_V2; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
-  function sk_ESS_CERT_ID_V2_reserve(_para: Pstack_st_ESS_CERT_ID_V2; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_ESS_CERT_ID_V2_free(_para: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_ESS_CERT_ID_V2_zero(_para: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_ESS_CERT_ID_V2_delete(st: Pstack_st_ESS_CERT_ID_V2; loc: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID_V2; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_ESS_CERT_ID_V2_delete_ptr(st: Pstack_st_ESS_CERT_ID_V2; ptr: Pstack_st_ESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
-  function sk_ESS_CERT_ID_V2_push(st: Pstack_st_ESS_CERT_ID_V2; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
-  function sk_ESS_CERT_ID_V2_unshift(st: Pstack_st_ESS_CERT_ID_V2; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_ESS_CERT_ID_V2_pop(_para: Pstack_st_ESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_ESS_CERT_ID_V2_shift(_para: Pstack_st_ESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
-  procedure sk_ESS_CERT_ID_V2_pop_free(st: Pstack_st_ESS_CERT_ID_V2; func: Tsk_ESS_CERT_ID_V2_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
-  function sk_ESS_CERT_ID_V2_insert(st: Pstack_st_ESS_CERT_ID_V2; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
-  function sk_ESS_CERT_ID_V2_set(st: Pstack_st_ESS_CERT_ID_V2; i: TOpenSSL_C_INT; data: pointer): Pstack_st_ESS_CERT_ID_V2; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
-  function sk_ESS_CERT_ID_V2_find(st: Pstack_st_ESS_CERT_ID_V2; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
-  function sk_ESS_CERT_ID_V2_find_ex(st: Pstack_st_ESS_CERT_ID_V2; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
-  function sk_ESS_CERT_ID_V2_find_all(st: Pstack_st_ESS_CERT_ID_V2; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_ESS_CERT_ID_V2_sort(_para: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
-  function sk_ESS_CERT_ID_V2_is_sorted(_para: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
-  function sk_ESS_CERT_ID_V2_dup(st: Pstack_st_ESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
-  function sk_ESS_CERT_ID_V2_deep_copy(st: Pstack_st_ESS_CERT_ID_V2; c: Tsk_ESS_CERT_ID_V2_compfunc; f: Tsk_ESS_CERT_ID_V2_freefunc): Pstack_st_ESS_CERT_ID_V2; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
-  function sk_ESS_CERT_ID_V2_set_cmp_func(st: Pstack_st_ESS_CERT_ID_V2; cmp: Tsk_ESS_CERT_ID_V2_compfunc): Tsk_ESS_CERT_ID_V2_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
+  function sk_ESS_CERT_ID_V2_reserve(sk: Pstack_st_ESS_CERT_ID_V2; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
+  procedure sk_ESS_CERT_ID_V2_free(sk: Pstack_st_ESS_CERT_ID_V2); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_ESS_CERT_ID_V2_zero(sk: Pstack_st_ESS_CERT_ID_V2); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_ESS_CERT_ID_V2_delete(sk: Pstack_st_ESS_CERT_ID_V2; i: TOpenSSL_C_INT): PESS_CERT_ID_V2; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_ESS_CERT_ID_V2_delete_ptr(sk: Pstack_st_ESS_CERT_ID_V2; ptr: PESS_CERT_ID_V2): PESS_CERT_ID_V2; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  function sk_ESS_CERT_ID_V2_push(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
+  function sk_ESS_CERT_ID_V2_unshift(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
+  function sk_ESS_CERT_ID_V2_pop(sk: Pstack_st_ESS_CERT_ID_V2): PESS_CERT_ID_V2; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_ESS_CERT_ID_V2_shift(sk: Pstack_st_ESS_CERT_ID_V2): PESS_CERT_ID_V2; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  procedure sk_ESS_CERT_ID_V2_pop_free(sk: Pstack_st_ESS_CERT_ID_V2; func: Tsk_ESS_CERT_ID_V2_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
+  function sk_ESS_CERT_ID_V2_insert(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
+  function sk_ESS_CERT_ID_V2_set(sk: Pstack_st_ESS_CERT_ID_V2; i: TOpenSSL_C_INT; data: PESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
+  function sk_ESS_CERT_ID_V2_find(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
+  function sk_ESS_CERT_ID_V2_find_ex(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
+  function sk_ESS_CERT_ID_V2_find_all(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
+  procedure sk_ESS_CERT_ID_V2_sort(sk: Pstack_st_ESS_CERT_ID_V2); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  function sk_ESS_CERT_ID_V2_is_sorted(sk: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
+  function sk_ESS_CERT_ID_V2_dup(sk: Pstack_st_ESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
+  function sk_ESS_CERT_ID_V2_deep_copy(sk: Pstack_st_ESS_CERT_ID_V2; c: Tsk_ESS_CERT_ID_V2_copyfunc; f: Tsk_ESS_CERT_ID_V2_freefunc): Pstack_st_ESS_CERT_ID_V2; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
+  function sk_ESS_CERT_ID_V2_set_cmp_func(sk: Pstack_st_ESS_CERT_ID_V2; cmp: Tsk_ESS_CERT_ID_V2_compfunc): Tsk_ESS_CERT_ID_V2_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
   { clang-format on }
   function ESS_ISSUER_SERIAL_new: PESS_ISSUER_SERIAL; cdecl; external CLibCrypto name 'ESS_ISSUER_SERIAL_new';
   procedure ESS_ISSUER_SERIAL_free(a: PESS_ISSUER_SERIAL); cdecl; external CLibCrypto name 'ESS_ISSUER_SERIAL_free';
@@ -352,31 +352,31 @@ type
   {$EXTERNALSYM OSSL_ESS_signing_cert_v2_new_init}
   {$EXTERNALSYM OSSL_ESS_check_signing_certs}
   {Do not call Function LoadDeclarations. Internal use only}
-  function Load_sk_ESS_CERT_ID_V2_num(_para: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_V2_value(_para: Pstack_st_ESS_CERT_ID_V2; _para2: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID_V2; cdecl;
+  function Load_sk_ESS_CERT_ID_V2_num(sk: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
+  function Load_sk_ESS_CERT_ID_V2_value(sk: Pstack_st_ESS_CERT_ID_V2; idx: TOpenSSL_C_INT): PESS_CERT_ID_V2; cdecl;
   function Load_sk_ESS_CERT_ID_V2_new(cmp: Tsk_ESS_CERT_ID_V2_compfunc): Pstack_st_ESS_CERT_ID_V2; cdecl;
   function Load_sk_ESS_CERT_ID_V2_new_null: Pstack_st_ESS_CERT_ID_V2; cdecl;
   function Load_sk_ESS_CERT_ID_V2_new_reserve(cmp: Tsk_ESS_CERT_ID_V2_compfunc; n: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID_V2; cdecl;
-  function Load_sk_ESS_CERT_ID_V2_reserve(_para: Pstack_st_ESS_CERT_ID_V2; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_V2_free(_para: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_V2_zero(_para: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_V2_delete(st: Pstack_st_ESS_CERT_ID_V2; loc: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID_V2; cdecl;
-  function Load_sk_ESS_CERT_ID_V2_delete_ptr(st: Pstack_st_ESS_CERT_ID_V2; ptr: Pstack_st_ESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl;
-  function Load_sk_ESS_CERT_ID_V2_push(st: Pstack_st_ESS_CERT_ID_V2; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_V2_unshift(st: Pstack_st_ESS_CERT_ID_V2; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_V2_pop(_para: Pstack_st_ESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl;
-  function Load_sk_ESS_CERT_ID_V2_shift(_para: Pstack_st_ESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl;
-  procedure Load_sk_ESS_CERT_ID_V2_pop_free(st: Pstack_st_ESS_CERT_ID_V2; func: Tsk_ESS_CERT_ID_V2_freefunc); cdecl;
-  function Load_sk_ESS_CERT_ID_V2_insert(st: Pstack_st_ESS_CERT_ID_V2; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_V2_set(st: Pstack_st_ESS_CERT_ID_V2; i: TOpenSSL_C_INT; data: pointer): Pstack_st_ESS_CERT_ID_V2; cdecl;
-  function Load_sk_ESS_CERT_ID_V2_find(st: Pstack_st_ESS_CERT_ID_V2; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_V2_find_ex(st: Pstack_st_ESS_CERT_ID_V2; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_V2_find_all(st: Pstack_st_ESS_CERT_ID_V2; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_V2_sort(_para: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_V2_is_sorted(_para: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
-  function Load_sk_ESS_CERT_ID_V2_dup(st: Pstack_st_ESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl;
-  function Load_sk_ESS_CERT_ID_V2_deep_copy(st: Pstack_st_ESS_CERT_ID_V2; c: Tsk_ESS_CERT_ID_V2_compfunc; f: Tsk_ESS_CERT_ID_V2_freefunc): Pstack_st_ESS_CERT_ID_V2; cdecl;
-  function Load_sk_ESS_CERT_ID_V2_set_cmp_func(st: Pstack_st_ESS_CERT_ID_V2; cmp: Tsk_ESS_CERT_ID_V2_compfunc): Tsk_ESS_CERT_ID_V2_compfunc; cdecl;
+  function Load_sk_ESS_CERT_ID_V2_reserve(sk: Pstack_st_ESS_CERT_ID_V2; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_ESS_CERT_ID_V2_free(sk: Pstack_st_ESS_CERT_ID_V2); cdecl;
+  procedure Load_sk_ESS_CERT_ID_V2_zero(sk: Pstack_st_ESS_CERT_ID_V2); cdecl;
+  function Load_sk_ESS_CERT_ID_V2_delete(sk: Pstack_st_ESS_CERT_ID_V2; i: TOpenSSL_C_INT): PESS_CERT_ID_V2; cdecl;
+  function Load_sk_ESS_CERT_ID_V2_delete_ptr(sk: Pstack_st_ESS_CERT_ID_V2; ptr: PESS_CERT_ID_V2): PESS_CERT_ID_V2; cdecl;
+  function Load_sk_ESS_CERT_ID_V2_push(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
+  function Load_sk_ESS_CERT_ID_V2_unshift(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
+  function Load_sk_ESS_CERT_ID_V2_pop(sk: Pstack_st_ESS_CERT_ID_V2): PESS_CERT_ID_V2; cdecl;
+  function Load_sk_ESS_CERT_ID_V2_shift(sk: Pstack_st_ESS_CERT_ID_V2): PESS_CERT_ID_V2; cdecl;
+  procedure Load_sk_ESS_CERT_ID_V2_pop_free(sk: Pstack_st_ESS_CERT_ID_V2; func: Tsk_ESS_CERT_ID_V2_freefunc); cdecl;
+  function Load_sk_ESS_CERT_ID_V2_insert(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_ESS_CERT_ID_V2_set(sk: Pstack_st_ESS_CERT_ID_V2; i: TOpenSSL_C_INT; data: PESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl;
+  function Load_sk_ESS_CERT_ID_V2_find(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
+  function Load_sk_ESS_CERT_ID_V2_find_ex(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
+  function Load_sk_ESS_CERT_ID_V2_find_all(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_ESS_CERT_ID_V2_sort(sk: Pstack_st_ESS_CERT_ID_V2); cdecl;
+  function Load_sk_ESS_CERT_ID_V2_is_sorted(sk: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
+  function Load_sk_ESS_CERT_ID_V2_dup(sk: Pstack_st_ESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl;
+  function Load_sk_ESS_CERT_ID_V2_deep_copy(sk: Pstack_st_ESS_CERT_ID_V2; c: Tsk_ESS_CERT_ID_V2_copyfunc; f: Tsk_ESS_CERT_ID_V2_freefunc): Pstack_st_ESS_CERT_ID_V2; cdecl;
+  function Load_sk_ESS_CERT_ID_V2_set_cmp_func(sk: Pstack_st_ESS_CERT_ID_V2; cmp: Tsk_ESS_CERT_ID_V2_compfunc): Tsk_ESS_CERT_ID_V2_compfunc; cdecl;
   function Load_ESS_ISSUER_SERIAL_new: PESS_ISSUER_SERIAL; cdecl;
   procedure Load_ESS_ISSUER_SERIAL_free(a: PESS_ISSUER_SERIAL); cdecl;
   function Load_d2i_ESS_ISSUER_SERIAL(a: PPESS_ISSUER_SERIAL; in_: PPbyte; len: TOpenSSL_C_INT): PESS_ISSUER_SERIAL; cdecl;
@@ -409,31 +409,31 @@ type
   function Load_OSSL_ESS_check_signing_certs(ss: PESS_SIGNING_CERT; ssv2: PESS_SIGNING_CERT_V2; chain: Pstack_st_X509; require_signing_cert: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 
 var
-  sk_ESS_CERT_ID_V2_num: function(_para: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_V2_num;
-  sk_ESS_CERT_ID_V2_value: function(_para: Pstack_st_ESS_CERT_ID_V2; _para2: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID_V2; cdecl = Load_sk_ESS_CERT_ID_V2_value;
+  sk_ESS_CERT_ID_V2_num: function(sk: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_V2_num;
+  sk_ESS_CERT_ID_V2_value: function(sk: Pstack_st_ESS_CERT_ID_V2; idx: TOpenSSL_C_INT): PESS_CERT_ID_V2; cdecl = Load_sk_ESS_CERT_ID_V2_value;
   sk_ESS_CERT_ID_V2_new: function(cmp: Tsk_ESS_CERT_ID_V2_compfunc): Pstack_st_ESS_CERT_ID_V2; cdecl = Load_sk_ESS_CERT_ID_V2_new;
   sk_ESS_CERT_ID_V2_new_null: function: Pstack_st_ESS_CERT_ID_V2; cdecl = Load_sk_ESS_CERT_ID_V2_new_null;
   sk_ESS_CERT_ID_V2_new_reserve: function(cmp: Tsk_ESS_CERT_ID_V2_compfunc; n: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID_V2; cdecl = Load_sk_ESS_CERT_ID_V2_new_reserve;
-  sk_ESS_CERT_ID_V2_reserve: function(_para: Pstack_st_ESS_CERT_ID_V2; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_V2_reserve;
-  sk_ESS_CERT_ID_V2_free: function(_para: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_V2_free;
-  sk_ESS_CERT_ID_V2_zero: function(_para: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_V2_zero;
-  sk_ESS_CERT_ID_V2_delete: function(st: Pstack_st_ESS_CERT_ID_V2; loc: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID_V2; cdecl = Load_sk_ESS_CERT_ID_V2_delete;
-  sk_ESS_CERT_ID_V2_delete_ptr: function(st: Pstack_st_ESS_CERT_ID_V2; ptr: Pstack_st_ESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl = Load_sk_ESS_CERT_ID_V2_delete_ptr;
-  sk_ESS_CERT_ID_V2_push: function(st: Pstack_st_ESS_CERT_ID_V2; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_V2_push;
-  sk_ESS_CERT_ID_V2_unshift: function(st: Pstack_st_ESS_CERT_ID_V2; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_V2_unshift;
-  sk_ESS_CERT_ID_V2_pop: function(_para: Pstack_st_ESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl = Load_sk_ESS_CERT_ID_V2_pop;
-  sk_ESS_CERT_ID_V2_shift: function(_para: Pstack_st_ESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl = Load_sk_ESS_CERT_ID_V2_shift;
-  sk_ESS_CERT_ID_V2_pop_free: procedure(st: Pstack_st_ESS_CERT_ID_V2; func: Tsk_ESS_CERT_ID_V2_freefunc); cdecl = Load_sk_ESS_CERT_ID_V2_pop_free;
-  sk_ESS_CERT_ID_V2_insert: function(st: Pstack_st_ESS_CERT_ID_V2; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_V2_insert;
-  sk_ESS_CERT_ID_V2_set: function(st: Pstack_st_ESS_CERT_ID_V2; i: TOpenSSL_C_INT; data: pointer): Pstack_st_ESS_CERT_ID_V2; cdecl = Load_sk_ESS_CERT_ID_V2_set;
-  sk_ESS_CERT_ID_V2_find: function(st: Pstack_st_ESS_CERT_ID_V2; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_V2_find;
-  sk_ESS_CERT_ID_V2_find_ex: function(st: Pstack_st_ESS_CERT_ID_V2; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_V2_find_ex;
-  sk_ESS_CERT_ID_V2_find_all: function(st: Pstack_st_ESS_CERT_ID_V2; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_V2_find_all;
-  sk_ESS_CERT_ID_V2_sort: function(_para: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_V2_sort;
-  sk_ESS_CERT_ID_V2_is_sorted: function(_para: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_V2_is_sorted;
-  sk_ESS_CERT_ID_V2_dup: function(st: Pstack_st_ESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl = Load_sk_ESS_CERT_ID_V2_dup;
-  sk_ESS_CERT_ID_V2_deep_copy: function(st: Pstack_st_ESS_CERT_ID_V2; c: Tsk_ESS_CERT_ID_V2_compfunc; f: Tsk_ESS_CERT_ID_V2_freefunc): Pstack_st_ESS_CERT_ID_V2; cdecl = Load_sk_ESS_CERT_ID_V2_deep_copy;
-  sk_ESS_CERT_ID_V2_set_cmp_func: function(st: Pstack_st_ESS_CERT_ID_V2; cmp: Tsk_ESS_CERT_ID_V2_compfunc): Tsk_ESS_CERT_ID_V2_compfunc; cdecl = Load_sk_ESS_CERT_ID_V2_set_cmp_func;
+  sk_ESS_CERT_ID_V2_reserve: function(sk: Pstack_st_ESS_CERT_ID_V2; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_V2_reserve;
+  sk_ESS_CERT_ID_V2_free: procedure(sk: Pstack_st_ESS_CERT_ID_V2); cdecl = Load_sk_ESS_CERT_ID_V2_free;
+  sk_ESS_CERT_ID_V2_zero: procedure(sk: Pstack_st_ESS_CERT_ID_V2); cdecl = Load_sk_ESS_CERT_ID_V2_zero;
+  sk_ESS_CERT_ID_V2_delete: function(sk: Pstack_st_ESS_CERT_ID_V2; i: TOpenSSL_C_INT): PESS_CERT_ID_V2; cdecl = Load_sk_ESS_CERT_ID_V2_delete;
+  sk_ESS_CERT_ID_V2_delete_ptr: function(sk: Pstack_st_ESS_CERT_ID_V2; ptr: PESS_CERT_ID_V2): PESS_CERT_ID_V2; cdecl = Load_sk_ESS_CERT_ID_V2_delete_ptr;
+  sk_ESS_CERT_ID_V2_push: function(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_V2_push;
+  sk_ESS_CERT_ID_V2_unshift: function(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_V2_unshift;
+  sk_ESS_CERT_ID_V2_pop: function(sk: Pstack_st_ESS_CERT_ID_V2): PESS_CERT_ID_V2; cdecl = Load_sk_ESS_CERT_ID_V2_pop;
+  sk_ESS_CERT_ID_V2_shift: function(sk: Pstack_st_ESS_CERT_ID_V2): PESS_CERT_ID_V2; cdecl = Load_sk_ESS_CERT_ID_V2_shift;
+  sk_ESS_CERT_ID_V2_pop_free: procedure(sk: Pstack_st_ESS_CERT_ID_V2; func: Tsk_ESS_CERT_ID_V2_freefunc); cdecl = Load_sk_ESS_CERT_ID_V2_pop_free;
+  sk_ESS_CERT_ID_V2_insert: function(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_V2_insert;
+  sk_ESS_CERT_ID_V2_set: function(sk: Pstack_st_ESS_CERT_ID_V2; i: TOpenSSL_C_INT; data: PESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl = Load_sk_ESS_CERT_ID_V2_set;
+  sk_ESS_CERT_ID_V2_find: function(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_V2_find;
+  sk_ESS_CERT_ID_V2_find_ex: function(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_V2_find_ex;
+  sk_ESS_CERT_ID_V2_find_all: function(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_V2_find_all;
+  sk_ESS_CERT_ID_V2_sort: procedure(sk: Pstack_st_ESS_CERT_ID_V2); cdecl = Load_sk_ESS_CERT_ID_V2_sort;
+  sk_ESS_CERT_ID_V2_is_sorted: function(sk: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl = Load_sk_ESS_CERT_ID_V2_is_sorted;
+  sk_ESS_CERT_ID_V2_dup: function(sk: Pstack_st_ESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl = Load_sk_ESS_CERT_ID_V2_dup;
+  sk_ESS_CERT_ID_V2_deep_copy: function(sk: Pstack_st_ESS_CERT_ID_V2; c: Tsk_ESS_CERT_ID_V2_copyfunc; f: Tsk_ESS_CERT_ID_V2_freefunc): Pstack_st_ESS_CERT_ID_V2; cdecl = Load_sk_ESS_CERT_ID_V2_deep_copy;
+  sk_ESS_CERT_ID_V2_set_cmp_func: function(sk: Pstack_st_ESS_CERT_ID_V2; cmp: Tsk_ESS_CERT_ID_V2_compfunc): Tsk_ESS_CERT_ID_V2_compfunc; cdecl = Load_sk_ESS_CERT_ID_V2_set_cmp_func;
   { clang-format on }
   ESS_ISSUER_SERIAL_new: function: PESS_ISSUER_SERIAL; cdecl = Load_ESS_ISSUER_SERIAL_new;
   ESS_ISSUER_SERIAL_free: procedure(a: PESS_ISSUER_SERIAL); cdecl = Load_ESS_ISSUER_SERIAL_free;
@@ -567,20 +567,20 @@ begin
 end;
 
 {$ifndef OPENSSL_STATIC_LINK_MODEL}
-function Load_sk_ESS_CERT_ID_num(_para: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl;
+function Load_sk_ESS_CERT_ID_num(sk: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl;
 begin
   sk_ESS_CERT_ID_num := LoadLibCryptoFunction('OPENSSL_sk_num');
   if not assigned(sk_ESS_CERT_ID_num) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_num');
-  Result := sk_ESS_CERT_ID_num(_para);
+  Result := sk_ESS_CERT_ID_num(sk);
 end;
 
-function Load_sk_ESS_CERT_ID_value(_para: Pstack_st_ESS_CERT_ID; _para2: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID; cdecl;
+function Load_sk_ESS_CERT_ID_value(sk: Pstack_st_ESS_CERT_ID; idx: TOpenSSL_C_INT): PESS_CERT_ID; cdecl;
 begin
   sk_ESS_CERT_ID_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_ESS_CERT_ID_value) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_value');
-  Result := sk_ESS_CERT_ID_value(_para, _para2);
+  Result := sk_ESS_CERT_ID_value(sk, idx);
 end;
 
 function Load_sk_ESS_CERT_ID_new(cmp: Tsk_ESS_CERT_ID_compfunc): Pstack_st_ESS_CERT_ID; cdecl;
@@ -607,180 +607,180 @@ begin
   Result := sk_ESS_CERT_ID_new_reserve(cmp, n);
 end;
 
-function Load_sk_ESS_CERT_ID_reserve(_para: Pstack_st_ESS_CERT_ID; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_ESS_CERT_ID_reserve(sk: Pstack_st_ESS_CERT_ID; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_ESS_CERT_ID_reserve := LoadLibCryptoFunction('OPENSSL_sk_reserve');
   if not assigned(sk_ESS_CERT_ID_reserve) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_reserve');
-  Result := sk_ESS_CERT_ID_reserve(_para, n);
+  Result := sk_ESS_CERT_ID_reserve(sk, n);
 end;
 
-function Load_sk_ESS_CERT_ID_free(_para: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_ESS_CERT_ID_free(sk: Pstack_st_ESS_CERT_ID); cdecl;
 begin
   sk_ESS_CERT_ID_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_ESS_CERT_ID_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
-  Result := sk_ESS_CERT_ID_free(_para);
+  sk_ESS_CERT_ID_free(sk);
 end;
 
-function Load_sk_ESS_CERT_ID_zero(_para: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_ESS_CERT_ID_zero(sk: Pstack_st_ESS_CERT_ID); cdecl;
 begin
   sk_ESS_CERT_ID_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_ESS_CERT_ID_zero) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
-  Result := sk_ESS_CERT_ID_zero(_para);
+  sk_ESS_CERT_ID_zero(sk);
 end;
 
-function Load_sk_ESS_CERT_ID_delete(st: Pstack_st_ESS_CERT_ID; loc: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID; cdecl;
+function Load_sk_ESS_CERT_ID_delete(sk: Pstack_st_ESS_CERT_ID; i: TOpenSSL_C_INT): PESS_CERT_ID; cdecl;
 begin
   sk_ESS_CERT_ID_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_ESS_CERT_ID_delete) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete');
-  Result := sk_ESS_CERT_ID_delete(st, loc);
+  Result := sk_ESS_CERT_ID_delete(sk, i);
 end;
 
-function Load_sk_ESS_CERT_ID_delete_ptr(st: Pstack_st_ESS_CERT_ID; ptr: Pstack_st_ESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl;
+function Load_sk_ESS_CERT_ID_delete_ptr(sk: Pstack_st_ESS_CERT_ID; ptr: PESS_CERT_ID): PESS_CERT_ID; cdecl;
 begin
   sk_ESS_CERT_ID_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_ESS_CERT_ID_delete_ptr) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete_ptr');
-  Result := sk_ESS_CERT_ID_delete_ptr(st, ptr);
+  Result := sk_ESS_CERT_ID_delete_ptr(sk, ptr);
 end;
 
-function Load_sk_ESS_CERT_ID_push(st: Pstack_st_ESS_CERT_ID; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_ESS_CERT_ID_push(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID): TOpenSSL_C_INT; cdecl;
 begin
   sk_ESS_CERT_ID_push := LoadLibCryptoFunction('OPENSSL_sk_push');
   if not assigned(sk_ESS_CERT_ID_push) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_push');
-  Result := sk_ESS_CERT_ID_push(st, data);
+  Result := sk_ESS_CERT_ID_push(sk, data);
 end;
 
-function Load_sk_ESS_CERT_ID_unshift(st: Pstack_st_ESS_CERT_ID; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_ESS_CERT_ID_unshift(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID): TOpenSSL_C_INT; cdecl;
 begin
   sk_ESS_CERT_ID_unshift := LoadLibCryptoFunction('OPENSSL_sk_unshift');
   if not assigned(sk_ESS_CERT_ID_unshift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_unshift');
-  Result := sk_ESS_CERT_ID_unshift(st, data);
+  Result := sk_ESS_CERT_ID_unshift(sk, data);
 end;
 
-function Load_sk_ESS_CERT_ID_pop(_para: Pstack_st_ESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl;
+function Load_sk_ESS_CERT_ID_pop(sk: Pstack_st_ESS_CERT_ID): PESS_CERT_ID; cdecl;
 begin
   sk_ESS_CERT_ID_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_ESS_CERT_ID_pop) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop');
-  Result := sk_ESS_CERT_ID_pop(_para);
+  Result := sk_ESS_CERT_ID_pop(sk);
 end;
 
-function Load_sk_ESS_CERT_ID_shift(_para: Pstack_st_ESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl;
+function Load_sk_ESS_CERT_ID_shift(sk: Pstack_st_ESS_CERT_ID): PESS_CERT_ID; cdecl;
 begin
   sk_ESS_CERT_ID_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_ESS_CERT_ID_shift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_shift');
-  Result := sk_ESS_CERT_ID_shift(_para);
+  Result := sk_ESS_CERT_ID_shift(sk);
 end;
 
-procedure Load_sk_ESS_CERT_ID_pop_free(st: Pstack_st_ESS_CERT_ID; func: Tsk_ESS_CERT_ID_freefunc); cdecl;
+procedure Load_sk_ESS_CERT_ID_pop_free(sk: Pstack_st_ESS_CERT_ID; func: Tsk_ESS_CERT_ID_freefunc); cdecl;
 begin
   sk_ESS_CERT_ID_pop_free := LoadLibCryptoFunction('OPENSSL_sk_pop_free');
   if not assigned(sk_ESS_CERT_ID_pop_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop_free');
-  sk_ESS_CERT_ID_pop_free(st, func);
+  sk_ESS_CERT_ID_pop_free(sk, func);
 end;
 
-function Load_sk_ESS_CERT_ID_insert(st: Pstack_st_ESS_CERT_ID; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_ESS_CERT_ID_insert(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_ESS_CERT_ID_insert := LoadLibCryptoFunction('OPENSSL_sk_insert');
   if not assigned(sk_ESS_CERT_ID_insert) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_insert');
-  Result := sk_ESS_CERT_ID_insert(st, data, where);
+  Result := sk_ESS_CERT_ID_insert(sk, data, where);
 end;
 
-function Load_sk_ESS_CERT_ID_set(st: Pstack_st_ESS_CERT_ID; i: TOpenSSL_C_INT; data: pointer): Pstack_st_ESS_CERT_ID; cdecl;
+function Load_sk_ESS_CERT_ID_set(sk: Pstack_st_ESS_CERT_ID; i: TOpenSSL_C_INT; data: PESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl;
 begin
   sk_ESS_CERT_ID_set := LoadLibCryptoFunction('OPENSSL_sk_set');
   if not assigned(sk_ESS_CERT_ID_set) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set');
-  Result := sk_ESS_CERT_ID_set(st, i, data);
+  Result := sk_ESS_CERT_ID_set(sk, i, data);
 end;
 
-function Load_sk_ESS_CERT_ID_find(st: Pstack_st_ESS_CERT_ID; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_ESS_CERT_ID_find(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID): TOpenSSL_C_INT; cdecl;
 begin
   sk_ESS_CERT_ID_find := LoadLibCryptoFunction('OPENSSL_sk_find');
   if not assigned(sk_ESS_CERT_ID_find) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find');
-  Result := sk_ESS_CERT_ID_find(st, data);
+  Result := sk_ESS_CERT_ID_find(sk, data);
 end;
 
-function Load_sk_ESS_CERT_ID_find_ex(st: Pstack_st_ESS_CERT_ID; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_ESS_CERT_ID_find_ex(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID): TOpenSSL_C_INT; cdecl;
 begin
   sk_ESS_CERT_ID_find_ex := LoadLibCryptoFunction('OPENSSL_sk_find_ex');
   if not assigned(sk_ESS_CERT_ID_find_ex) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_ex');
-  Result := sk_ESS_CERT_ID_find_ex(st, data);
+  Result := sk_ESS_CERT_ID_find_ex(sk, data);
 end;
 
-function Load_sk_ESS_CERT_ID_find_all(st: Pstack_st_ESS_CERT_ID; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_ESS_CERT_ID_find_all(sk: Pstack_st_ESS_CERT_ID; data: PESS_CERT_ID; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_ESS_CERT_ID_find_all := LoadLibCryptoFunction('OPENSSL_sk_find_all');
   if not assigned(sk_ESS_CERT_ID_find_all) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_all');
-  Result := sk_ESS_CERT_ID_find_all(st, data, pnum);
+  Result := sk_ESS_CERT_ID_find_all(sk, data, pnum);
 end;
 
-function Load_sk_ESS_CERT_ID_sort(_para: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_ESS_CERT_ID_sort(sk: Pstack_st_ESS_CERT_ID); cdecl;
 begin
   sk_ESS_CERT_ID_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_ESS_CERT_ID_sort) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
-  Result := sk_ESS_CERT_ID_sort(_para);
+  sk_ESS_CERT_ID_sort(sk);
 end;
 
-function Load_sk_ESS_CERT_ID_is_sorted(_para: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl;
+function Load_sk_ESS_CERT_ID_is_sorted(sk: Pstack_st_ESS_CERT_ID): TOpenSSL_C_INT; cdecl;
 begin
   sk_ESS_CERT_ID_is_sorted := LoadLibCryptoFunction('OPENSSL_sk_is_sorted');
   if not assigned(sk_ESS_CERT_ID_is_sorted) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_is_sorted');
-  Result := sk_ESS_CERT_ID_is_sorted(_para);
+  Result := sk_ESS_CERT_ID_is_sorted(sk);
 end;
 
-function Load_sk_ESS_CERT_ID_dup(st: Pstack_st_ESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl;
+function Load_sk_ESS_CERT_ID_dup(sk: Pstack_st_ESS_CERT_ID): Pstack_st_ESS_CERT_ID; cdecl;
 begin
   sk_ESS_CERT_ID_dup := LoadLibCryptoFunction('OPENSSL_sk_dup');
   if not assigned(sk_ESS_CERT_ID_dup) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_dup');
-  Result := sk_ESS_CERT_ID_dup(st);
+  Result := sk_ESS_CERT_ID_dup(sk);
 end;
 
-function Load_sk_ESS_CERT_ID_deep_copy(st: Pstack_st_ESS_CERT_ID; c: Tsk_ESS_CERT_ID_compfunc; f: Tsk_ESS_CERT_ID_freefunc): Pstack_st_ESS_CERT_ID; cdecl;
+function Load_sk_ESS_CERT_ID_deep_copy(sk: Pstack_st_ESS_CERT_ID; c: Tsk_ESS_CERT_ID_copyfunc; f: Tsk_ESS_CERT_ID_freefunc): Pstack_st_ESS_CERT_ID; cdecl;
 begin
   sk_ESS_CERT_ID_deep_copy := LoadLibCryptoFunction('OPENSSL_sk_deep_copy');
   if not assigned(sk_ESS_CERT_ID_deep_copy) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_deep_copy');
-  Result := sk_ESS_CERT_ID_deep_copy(st, c, f);
+  Result := sk_ESS_CERT_ID_deep_copy(sk, c, f);
 end;
 
-function Load_sk_ESS_CERT_ID_set_cmp_func(st: Pstack_st_ESS_CERT_ID; cmp: Tsk_ESS_CERT_ID_compfunc): Tsk_ESS_CERT_ID_compfunc; cdecl;
+function Load_sk_ESS_CERT_ID_set_cmp_func(sk: Pstack_st_ESS_CERT_ID; cmp: Tsk_ESS_CERT_ID_compfunc): Tsk_ESS_CERT_ID_compfunc; cdecl;
 begin
   sk_ESS_CERT_ID_set_cmp_func := LoadLibCryptoFunction('OPENSSL_sk_set_cmp_func');
   if not assigned(sk_ESS_CERT_ID_set_cmp_func) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set_cmp_func');
-  Result := sk_ESS_CERT_ID_set_cmp_func(st, cmp);
+  Result := sk_ESS_CERT_ID_set_cmp_func(sk, cmp);
 end;
 
-function Load_sk_ESS_CERT_ID_V2_num(_para: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
+function Load_sk_ESS_CERT_ID_V2_num(sk: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
 begin
   sk_ESS_CERT_ID_V2_num := LoadLibCryptoFunction('OPENSSL_sk_num');
   if not assigned(sk_ESS_CERT_ID_V2_num) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_num');
-  Result := sk_ESS_CERT_ID_V2_num(_para);
+  Result := sk_ESS_CERT_ID_V2_num(sk);
 end;
 
-function Load_sk_ESS_CERT_ID_V2_value(_para: Pstack_st_ESS_CERT_ID_V2; _para2: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID_V2; cdecl;
+function Load_sk_ESS_CERT_ID_V2_value(sk: Pstack_st_ESS_CERT_ID_V2; idx: TOpenSSL_C_INT): PESS_CERT_ID_V2; cdecl;
 begin
   sk_ESS_CERT_ID_V2_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_ESS_CERT_ID_V2_value) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_value');
-  Result := sk_ESS_CERT_ID_V2_value(_para, _para2);
+  Result := sk_ESS_CERT_ID_V2_value(sk, idx);
 end;
 
 function Load_sk_ESS_CERT_ID_V2_new(cmp: Tsk_ESS_CERT_ID_V2_compfunc): Pstack_st_ESS_CERT_ID_V2; cdecl;
@@ -807,164 +807,164 @@ begin
   Result := sk_ESS_CERT_ID_V2_new_reserve(cmp, n);
 end;
 
-function Load_sk_ESS_CERT_ID_V2_reserve(_para: Pstack_st_ESS_CERT_ID_V2; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_ESS_CERT_ID_V2_reserve(sk: Pstack_st_ESS_CERT_ID_V2; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_ESS_CERT_ID_V2_reserve := LoadLibCryptoFunction('OPENSSL_sk_reserve');
   if not assigned(sk_ESS_CERT_ID_V2_reserve) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_reserve');
-  Result := sk_ESS_CERT_ID_V2_reserve(_para, n);
+  Result := sk_ESS_CERT_ID_V2_reserve(sk, n);
 end;
 
-function Load_sk_ESS_CERT_ID_V2_free(_para: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_ESS_CERT_ID_V2_free(sk: Pstack_st_ESS_CERT_ID_V2); cdecl;
 begin
   sk_ESS_CERT_ID_V2_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_ESS_CERT_ID_V2_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
-  Result := sk_ESS_CERT_ID_V2_free(_para);
+  sk_ESS_CERT_ID_V2_free(sk);
 end;
 
-function Load_sk_ESS_CERT_ID_V2_zero(_para: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_ESS_CERT_ID_V2_zero(sk: Pstack_st_ESS_CERT_ID_V2); cdecl;
 begin
   sk_ESS_CERT_ID_V2_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_ESS_CERT_ID_V2_zero) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
-  Result := sk_ESS_CERT_ID_V2_zero(_para);
+  sk_ESS_CERT_ID_V2_zero(sk);
 end;
 
-function Load_sk_ESS_CERT_ID_V2_delete(st: Pstack_st_ESS_CERT_ID_V2; loc: TOpenSSL_C_INT): Pstack_st_ESS_CERT_ID_V2; cdecl;
+function Load_sk_ESS_CERT_ID_V2_delete(sk: Pstack_st_ESS_CERT_ID_V2; i: TOpenSSL_C_INT): PESS_CERT_ID_V2; cdecl;
 begin
   sk_ESS_CERT_ID_V2_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_ESS_CERT_ID_V2_delete) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete');
-  Result := sk_ESS_CERT_ID_V2_delete(st, loc);
+  Result := sk_ESS_CERT_ID_V2_delete(sk, i);
 end;
 
-function Load_sk_ESS_CERT_ID_V2_delete_ptr(st: Pstack_st_ESS_CERT_ID_V2; ptr: Pstack_st_ESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl;
+function Load_sk_ESS_CERT_ID_V2_delete_ptr(sk: Pstack_st_ESS_CERT_ID_V2; ptr: PESS_CERT_ID_V2): PESS_CERT_ID_V2; cdecl;
 begin
   sk_ESS_CERT_ID_V2_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_ESS_CERT_ID_V2_delete_ptr) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete_ptr');
-  Result := sk_ESS_CERT_ID_V2_delete_ptr(st, ptr);
+  Result := sk_ESS_CERT_ID_V2_delete_ptr(sk, ptr);
 end;
 
-function Load_sk_ESS_CERT_ID_V2_push(st: Pstack_st_ESS_CERT_ID_V2; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_ESS_CERT_ID_V2_push(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
 begin
   sk_ESS_CERT_ID_V2_push := LoadLibCryptoFunction('OPENSSL_sk_push');
   if not assigned(sk_ESS_CERT_ID_V2_push) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_push');
-  Result := sk_ESS_CERT_ID_V2_push(st, data);
+  Result := sk_ESS_CERT_ID_V2_push(sk, data);
 end;
 
-function Load_sk_ESS_CERT_ID_V2_unshift(st: Pstack_st_ESS_CERT_ID_V2; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_ESS_CERT_ID_V2_unshift(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
 begin
   sk_ESS_CERT_ID_V2_unshift := LoadLibCryptoFunction('OPENSSL_sk_unshift');
   if not assigned(sk_ESS_CERT_ID_V2_unshift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_unshift');
-  Result := sk_ESS_CERT_ID_V2_unshift(st, data);
+  Result := sk_ESS_CERT_ID_V2_unshift(sk, data);
 end;
 
-function Load_sk_ESS_CERT_ID_V2_pop(_para: Pstack_st_ESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl;
+function Load_sk_ESS_CERT_ID_V2_pop(sk: Pstack_st_ESS_CERT_ID_V2): PESS_CERT_ID_V2; cdecl;
 begin
   sk_ESS_CERT_ID_V2_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_ESS_CERT_ID_V2_pop) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop');
-  Result := sk_ESS_CERT_ID_V2_pop(_para);
+  Result := sk_ESS_CERT_ID_V2_pop(sk);
 end;
 
-function Load_sk_ESS_CERT_ID_V2_shift(_para: Pstack_st_ESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl;
+function Load_sk_ESS_CERT_ID_V2_shift(sk: Pstack_st_ESS_CERT_ID_V2): PESS_CERT_ID_V2; cdecl;
 begin
   sk_ESS_CERT_ID_V2_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_ESS_CERT_ID_V2_shift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_shift');
-  Result := sk_ESS_CERT_ID_V2_shift(_para);
+  Result := sk_ESS_CERT_ID_V2_shift(sk);
 end;
 
-procedure Load_sk_ESS_CERT_ID_V2_pop_free(st: Pstack_st_ESS_CERT_ID_V2; func: Tsk_ESS_CERT_ID_V2_freefunc); cdecl;
+procedure Load_sk_ESS_CERT_ID_V2_pop_free(sk: Pstack_st_ESS_CERT_ID_V2; func: Tsk_ESS_CERT_ID_V2_freefunc); cdecl;
 begin
   sk_ESS_CERT_ID_V2_pop_free := LoadLibCryptoFunction('OPENSSL_sk_pop_free');
   if not assigned(sk_ESS_CERT_ID_V2_pop_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop_free');
-  sk_ESS_CERT_ID_V2_pop_free(st, func);
+  sk_ESS_CERT_ID_V2_pop_free(sk, func);
 end;
 
-function Load_sk_ESS_CERT_ID_V2_insert(st: Pstack_st_ESS_CERT_ID_V2; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_ESS_CERT_ID_V2_insert(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_ESS_CERT_ID_V2_insert := LoadLibCryptoFunction('OPENSSL_sk_insert');
   if not assigned(sk_ESS_CERT_ID_V2_insert) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_insert');
-  Result := sk_ESS_CERT_ID_V2_insert(st, data, where);
+  Result := sk_ESS_CERT_ID_V2_insert(sk, data, where);
 end;
 
-function Load_sk_ESS_CERT_ID_V2_set(st: Pstack_st_ESS_CERT_ID_V2; i: TOpenSSL_C_INT; data: pointer): Pstack_st_ESS_CERT_ID_V2; cdecl;
+function Load_sk_ESS_CERT_ID_V2_set(sk: Pstack_st_ESS_CERT_ID_V2; i: TOpenSSL_C_INT; data: PESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl;
 begin
   sk_ESS_CERT_ID_V2_set := LoadLibCryptoFunction('OPENSSL_sk_set');
   if not assigned(sk_ESS_CERT_ID_V2_set) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set');
-  Result := sk_ESS_CERT_ID_V2_set(st, i, data);
+  Result := sk_ESS_CERT_ID_V2_set(sk, i, data);
 end;
 
-function Load_sk_ESS_CERT_ID_V2_find(st: Pstack_st_ESS_CERT_ID_V2; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_ESS_CERT_ID_V2_find(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
 begin
   sk_ESS_CERT_ID_V2_find := LoadLibCryptoFunction('OPENSSL_sk_find');
   if not assigned(sk_ESS_CERT_ID_V2_find) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find');
-  Result := sk_ESS_CERT_ID_V2_find(st, data);
+  Result := sk_ESS_CERT_ID_V2_find(sk, data);
 end;
 
-function Load_sk_ESS_CERT_ID_V2_find_ex(st: Pstack_st_ESS_CERT_ID_V2; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_ESS_CERT_ID_V2_find_ex(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
 begin
   sk_ESS_CERT_ID_V2_find_ex := LoadLibCryptoFunction('OPENSSL_sk_find_ex');
   if not assigned(sk_ESS_CERT_ID_V2_find_ex) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_ex');
-  Result := sk_ESS_CERT_ID_V2_find_ex(st, data);
+  Result := sk_ESS_CERT_ID_V2_find_ex(sk, data);
 end;
 
-function Load_sk_ESS_CERT_ID_V2_find_all(st: Pstack_st_ESS_CERT_ID_V2; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_ESS_CERT_ID_V2_find_all(sk: Pstack_st_ESS_CERT_ID_V2; data: PESS_CERT_ID_V2; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_ESS_CERT_ID_V2_find_all := LoadLibCryptoFunction('OPENSSL_sk_find_all');
   if not assigned(sk_ESS_CERT_ID_V2_find_all) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_all');
-  Result := sk_ESS_CERT_ID_V2_find_all(st, data, pnum);
+  Result := sk_ESS_CERT_ID_V2_find_all(sk, data, pnum);
 end;
 
-function Load_sk_ESS_CERT_ID_V2_sort(_para: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_ESS_CERT_ID_V2_sort(sk: Pstack_st_ESS_CERT_ID_V2); cdecl;
 begin
   sk_ESS_CERT_ID_V2_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_ESS_CERT_ID_V2_sort) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
-  Result := sk_ESS_CERT_ID_V2_sort(_para);
+  sk_ESS_CERT_ID_V2_sort(sk);
 end;
 
-function Load_sk_ESS_CERT_ID_V2_is_sorted(_para: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
+function Load_sk_ESS_CERT_ID_V2_is_sorted(sk: Pstack_st_ESS_CERT_ID_V2): TOpenSSL_C_INT; cdecl;
 begin
   sk_ESS_CERT_ID_V2_is_sorted := LoadLibCryptoFunction('OPENSSL_sk_is_sorted');
   if not assigned(sk_ESS_CERT_ID_V2_is_sorted) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_is_sorted');
-  Result := sk_ESS_CERT_ID_V2_is_sorted(_para);
+  Result := sk_ESS_CERT_ID_V2_is_sorted(sk);
 end;
 
-function Load_sk_ESS_CERT_ID_V2_dup(st: Pstack_st_ESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl;
+function Load_sk_ESS_CERT_ID_V2_dup(sk: Pstack_st_ESS_CERT_ID_V2): Pstack_st_ESS_CERT_ID_V2; cdecl;
 begin
   sk_ESS_CERT_ID_V2_dup := LoadLibCryptoFunction('OPENSSL_sk_dup');
   if not assigned(sk_ESS_CERT_ID_V2_dup) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_dup');
-  Result := sk_ESS_CERT_ID_V2_dup(st);
+  Result := sk_ESS_CERT_ID_V2_dup(sk);
 end;
 
-function Load_sk_ESS_CERT_ID_V2_deep_copy(st: Pstack_st_ESS_CERT_ID_V2; c: Tsk_ESS_CERT_ID_V2_compfunc; f: Tsk_ESS_CERT_ID_V2_freefunc): Pstack_st_ESS_CERT_ID_V2; cdecl;
+function Load_sk_ESS_CERT_ID_V2_deep_copy(sk: Pstack_st_ESS_CERT_ID_V2; c: Tsk_ESS_CERT_ID_V2_copyfunc; f: Tsk_ESS_CERT_ID_V2_freefunc): Pstack_st_ESS_CERT_ID_V2; cdecl;
 begin
   sk_ESS_CERT_ID_V2_deep_copy := LoadLibCryptoFunction('OPENSSL_sk_deep_copy');
   if not assigned(sk_ESS_CERT_ID_V2_deep_copy) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_deep_copy');
-  Result := sk_ESS_CERT_ID_V2_deep_copy(st, c, f);
+  Result := sk_ESS_CERT_ID_V2_deep_copy(sk, c, f);
 end;
 
-function Load_sk_ESS_CERT_ID_V2_set_cmp_func(st: Pstack_st_ESS_CERT_ID_V2; cmp: Tsk_ESS_CERT_ID_V2_compfunc): Tsk_ESS_CERT_ID_V2_compfunc; cdecl;
+function Load_sk_ESS_CERT_ID_V2_set_cmp_func(sk: Pstack_st_ESS_CERT_ID_V2; cmp: Tsk_ESS_CERT_ID_V2_compfunc): Tsk_ESS_CERT_ID_V2_compfunc; cdecl;
 begin
   sk_ESS_CERT_ID_V2_set_cmp_func := LoadLibCryptoFunction('OPENSSL_sk_set_cmp_func');
   if not assigned(sk_ESS_CERT_ID_V2_set_cmp_func) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set_cmp_func');
-  Result := sk_ESS_CERT_ID_V2_set_cmp_func(st, cmp);
+  Result := sk_ESS_CERT_ID_V2_set_cmp_func(sk, cmp);
 end;
 
 function Load_ESS_ISSUER_SERIAL_new: PESS_ISSUER_SERIAL; cdecl;

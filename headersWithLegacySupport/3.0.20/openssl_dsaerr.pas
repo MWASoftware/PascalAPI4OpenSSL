@@ -18,7 +18,7 @@
 unit openssl_dsaerr;
 
 {
-  Generated from OpenSSL 3.0.20 Header File dsaerr.h - Sat 12 Sep 14:58:47 BST 2026
+  Generated from OpenSSL 3.0.20 Header File dsaerr.h - Tue 15 Sep 14:34:13 BST 2026
   With Legacy Support Option
 }
 

@@ -18,7 +18,7 @@
 unit openssl_ssl2;
 
 {
-  Generated from OpenSSL 3.6.2 Header File ssl2.h - Sat 12 Sep 15:05:17 BST 2026
+  Generated from OpenSSL 3.6.2 Header File ssl2.h - Tue 15 Sep 14:40:35 BST 2026
 }
 
 {$IFNDEF FPC}

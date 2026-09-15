@@ -18,7 +18,7 @@
 unit openssl_comp;
 
 {
-  Generated from OpenSSL 4.0.0 Header File comp.h - Sat 12 Sep 15:06:52 BST 2026
+  Generated from OpenSSL 4.0.0 Header File comp.h - Tue 15 Sep 14:42:07 BST 2026
 }
 
 {$IFNDEF FPC}
@@ -189,31 +189,31 @@ type
   function ossl_check_SSL_COMP_copyfunc_type(cpy: Tsk_SSL_COMP_copyfunc): TOPENSSL_sk_copyfunc{Has C Attribute: unused}; inline;
   function ossl_check_SSL_COMP_freefunc_type(fr: Tsk_SSL_COMP_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
   {$ifdef OPENSSL_STATIC_LINK_MODEL}
-  function sk_SSL_COMP_num(_para: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_SSL_COMP_value(_para: Pstack_st_SSL_COMP; _para2: TOpenSSL_C_INT): Pstack_st_SSL_COMP; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_SSL_COMP_num(sk: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
+  function sk_SSL_COMP_value(sk: Pstack_st_SSL_COMP; idx: TOpenSSL_C_INT): PSSL_COMP; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_SSL_COMP_new(cmp: Tsk_SSL_COMP_compfunc): Pstack_st_SSL_COMP; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_SSL_COMP_new_null: Pstack_st_SSL_COMP; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_SSL_COMP_new_reserve(cmp: Tsk_SSL_COMP_compfunc; n: TOpenSSL_C_INT): Pstack_st_SSL_COMP; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
-  function sk_SSL_COMP_reserve(_para: Pstack_st_SSL_COMP; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_SSL_COMP_free(_para: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_SSL_COMP_zero(_para: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_SSL_COMP_delete(st: Pstack_st_SSL_COMP; loc: TOpenSSL_C_INT): Pstack_st_SSL_COMP; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_SSL_COMP_delete_ptr(st: Pstack_st_SSL_COMP; ptr: Pstack_st_SSL_COMP): Pstack_st_SSL_COMP; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
-  function sk_SSL_COMP_push(st: Pstack_st_SSL_COMP; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
-  function sk_SSL_COMP_unshift(st: Pstack_st_SSL_COMP; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_SSL_COMP_pop(_para: Pstack_st_SSL_COMP): Pstack_st_SSL_COMP; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_SSL_COMP_shift(_para: Pstack_st_SSL_COMP): Pstack_st_SSL_COMP; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
-  procedure sk_SSL_COMP_pop_free(st: Pstack_st_SSL_COMP; func: Tsk_SSL_COMP_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
-  function sk_SSL_COMP_insert(st: Pstack_st_SSL_COMP; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
-  function sk_SSL_COMP_set(st: Pstack_st_SSL_COMP; i: TOpenSSL_C_INT; data: pointer): Pstack_st_SSL_COMP; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
-  function sk_SSL_COMP_find(st: Pstack_st_SSL_COMP; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
-  function sk_SSL_COMP_find_ex(st: Pstack_st_SSL_COMP; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
-  function sk_SSL_COMP_find_all(st: Pstack_st_SSL_COMP; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_SSL_COMP_sort(_para: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
-  function sk_SSL_COMP_is_sorted(_para: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
-  function sk_SSL_COMP_dup(st: Pstack_st_SSL_COMP): Pstack_st_SSL_COMP; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
-  function sk_SSL_COMP_deep_copy(st: Pstack_st_SSL_COMP; c: Tsk_SSL_COMP_compfunc; f: Tsk_SSL_COMP_freefunc): Pstack_st_SSL_COMP; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
-  function sk_SSL_COMP_set_cmp_func(st: Pstack_st_SSL_COMP; cmp: Tsk_SSL_COMP_compfunc): Tsk_SSL_COMP_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
+  function sk_SSL_COMP_reserve(sk: Pstack_st_SSL_COMP; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
+  procedure sk_SSL_COMP_free(sk: Pstack_st_SSL_COMP); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_SSL_COMP_zero(sk: Pstack_st_SSL_COMP); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_SSL_COMP_delete(sk: Pstack_st_SSL_COMP; i: TOpenSSL_C_INT): PSSL_COMP; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_SSL_COMP_delete_ptr(sk: Pstack_st_SSL_COMP; ptr: PSSL_COMP): PSSL_COMP; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  function sk_SSL_COMP_push(sk: Pstack_st_SSL_COMP; data: PSSL_COMP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
+  function sk_SSL_COMP_unshift(sk: Pstack_st_SSL_COMP; data: PSSL_COMP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
+  function sk_SSL_COMP_pop(sk: Pstack_st_SSL_COMP): PSSL_COMP; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_SSL_COMP_shift(sk: Pstack_st_SSL_COMP): PSSL_COMP; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  procedure sk_SSL_COMP_pop_free(sk: Pstack_st_SSL_COMP; func: Tsk_SSL_COMP_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
+  function sk_SSL_COMP_insert(sk: Pstack_st_SSL_COMP; data: PSSL_COMP; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
+  function sk_SSL_COMP_set(sk: Pstack_st_SSL_COMP; i: TOpenSSL_C_INT; data: PSSL_COMP): Pstack_st_SSL_COMP; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
+  function sk_SSL_COMP_find(sk: Pstack_st_SSL_COMP; data: PSSL_COMP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
+  function sk_SSL_COMP_find_ex(sk: Pstack_st_SSL_COMP; data: PSSL_COMP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
+  function sk_SSL_COMP_find_all(sk: Pstack_st_SSL_COMP; data: PSSL_COMP; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
+  procedure sk_SSL_COMP_sort(sk: Pstack_st_SSL_COMP); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  function sk_SSL_COMP_is_sorted(sk: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
+  function sk_SSL_COMP_dup(sk: Pstack_st_SSL_COMP): Pstack_st_SSL_COMP; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
+  function sk_SSL_COMP_deep_copy(sk: Pstack_st_SSL_COMP; c: Tsk_SSL_COMP_copyfunc; f: Tsk_SSL_COMP_freefunc): Pstack_st_SSL_COMP; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
+  function sk_SSL_COMP_set_cmp_func(sk: Pstack_st_SSL_COMP; cmp: Tsk_SSL_COMP_compfunc): Tsk_SSL_COMP_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
   { clang-format on }
   {$else}
   {$EXTERNALSYM sk_SSL_COMP_num}
@@ -242,58 +242,58 @@ type
   {$EXTERNALSYM sk_SSL_COMP_deep_copy}
   {$EXTERNALSYM sk_SSL_COMP_set_cmp_func}
   {Do not call Function LoadDeclarations. Internal use only}
-  function Load_sk_SSL_COMP_num(_para: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_COMP_value(_para: Pstack_st_SSL_COMP; _para2: TOpenSSL_C_INT): Pstack_st_SSL_COMP; cdecl;
+  function Load_sk_SSL_COMP_num(sk: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SSL_COMP_value(sk: Pstack_st_SSL_COMP; idx: TOpenSSL_C_INT): PSSL_COMP; cdecl;
   function Load_sk_SSL_COMP_new(cmp: Tsk_SSL_COMP_compfunc): Pstack_st_SSL_COMP; cdecl;
   function Load_sk_SSL_COMP_new_null: Pstack_st_SSL_COMP; cdecl;
   function Load_sk_SSL_COMP_new_reserve(cmp: Tsk_SSL_COMP_compfunc; n: TOpenSSL_C_INT): Pstack_st_SSL_COMP; cdecl;
-  function Load_sk_SSL_COMP_reserve(_para: Pstack_st_SSL_COMP; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_COMP_free(_para: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_COMP_zero(_para: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_COMP_delete(st: Pstack_st_SSL_COMP; loc: TOpenSSL_C_INT): Pstack_st_SSL_COMP; cdecl;
-  function Load_sk_SSL_COMP_delete_ptr(st: Pstack_st_SSL_COMP; ptr: Pstack_st_SSL_COMP): Pstack_st_SSL_COMP; cdecl;
-  function Load_sk_SSL_COMP_push(st: Pstack_st_SSL_COMP; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_COMP_unshift(st: Pstack_st_SSL_COMP; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_COMP_pop(_para: Pstack_st_SSL_COMP): Pstack_st_SSL_COMP; cdecl;
-  function Load_sk_SSL_COMP_shift(_para: Pstack_st_SSL_COMP): Pstack_st_SSL_COMP; cdecl;
-  procedure Load_sk_SSL_COMP_pop_free(st: Pstack_st_SSL_COMP; func: Tsk_SSL_COMP_freefunc); cdecl;
-  function Load_sk_SSL_COMP_insert(st: Pstack_st_SSL_COMP; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_COMP_set(st: Pstack_st_SSL_COMP; i: TOpenSSL_C_INT; data: pointer): Pstack_st_SSL_COMP; cdecl;
-  function Load_sk_SSL_COMP_find(st: Pstack_st_SSL_COMP; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_COMP_find_ex(st: Pstack_st_SSL_COMP; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_COMP_find_all(st: Pstack_st_SSL_COMP; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_COMP_sort(_para: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_COMP_is_sorted(_para: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_COMP_dup(st: Pstack_st_SSL_COMP): Pstack_st_SSL_COMP; cdecl;
-  function Load_sk_SSL_COMP_deep_copy(st: Pstack_st_SSL_COMP; c: Tsk_SSL_COMP_compfunc; f: Tsk_SSL_COMP_freefunc): Pstack_st_SSL_COMP; cdecl;
-  function Load_sk_SSL_COMP_set_cmp_func(st: Pstack_st_SSL_COMP; cmp: Tsk_SSL_COMP_compfunc): Tsk_SSL_COMP_compfunc; cdecl;
+  function Load_sk_SSL_COMP_reserve(sk: Pstack_st_SSL_COMP; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_SSL_COMP_free(sk: Pstack_st_SSL_COMP); cdecl;
+  procedure Load_sk_SSL_COMP_zero(sk: Pstack_st_SSL_COMP); cdecl;
+  function Load_sk_SSL_COMP_delete(sk: Pstack_st_SSL_COMP; i: TOpenSSL_C_INT): PSSL_COMP; cdecl;
+  function Load_sk_SSL_COMP_delete_ptr(sk: Pstack_st_SSL_COMP; ptr: PSSL_COMP): PSSL_COMP; cdecl;
+  function Load_sk_SSL_COMP_push(sk: Pstack_st_SSL_COMP; data: PSSL_COMP): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SSL_COMP_unshift(sk: Pstack_st_SSL_COMP; data: PSSL_COMP): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SSL_COMP_pop(sk: Pstack_st_SSL_COMP): PSSL_COMP; cdecl;
+  function Load_sk_SSL_COMP_shift(sk: Pstack_st_SSL_COMP): PSSL_COMP; cdecl;
+  procedure Load_sk_SSL_COMP_pop_free(sk: Pstack_st_SSL_COMP; func: Tsk_SSL_COMP_freefunc); cdecl;
+  function Load_sk_SSL_COMP_insert(sk: Pstack_st_SSL_COMP; data: PSSL_COMP; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SSL_COMP_set(sk: Pstack_st_SSL_COMP; i: TOpenSSL_C_INT; data: PSSL_COMP): Pstack_st_SSL_COMP; cdecl;
+  function Load_sk_SSL_COMP_find(sk: Pstack_st_SSL_COMP; data: PSSL_COMP): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SSL_COMP_find_ex(sk: Pstack_st_SSL_COMP; data: PSSL_COMP): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SSL_COMP_find_all(sk: Pstack_st_SSL_COMP; data: PSSL_COMP; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_SSL_COMP_sort(sk: Pstack_st_SSL_COMP); cdecl;
+  function Load_sk_SSL_COMP_is_sorted(sk: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SSL_COMP_dup(sk: Pstack_st_SSL_COMP): Pstack_st_SSL_COMP; cdecl;
+  function Load_sk_SSL_COMP_deep_copy(sk: Pstack_st_SSL_COMP; c: Tsk_SSL_COMP_copyfunc; f: Tsk_SSL_COMP_freefunc): Pstack_st_SSL_COMP; cdecl;
+  function Load_sk_SSL_COMP_set_cmp_func(sk: Pstack_st_SSL_COMP; cmp: Tsk_SSL_COMP_compfunc): Tsk_SSL_COMP_compfunc; cdecl;
 
 var
-  sk_SSL_COMP_num: function(_para: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl = Load_sk_SSL_COMP_num;
-  sk_SSL_COMP_value: function(_para: Pstack_st_SSL_COMP; _para2: TOpenSSL_C_INT): Pstack_st_SSL_COMP; cdecl = Load_sk_SSL_COMP_value;
+  sk_SSL_COMP_num: function(sk: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl = Load_sk_SSL_COMP_num;
+  sk_SSL_COMP_value: function(sk: Pstack_st_SSL_COMP; idx: TOpenSSL_C_INT): PSSL_COMP; cdecl = Load_sk_SSL_COMP_value;
   sk_SSL_COMP_new: function(cmp: Tsk_SSL_COMP_compfunc): Pstack_st_SSL_COMP; cdecl = Load_sk_SSL_COMP_new;
   sk_SSL_COMP_new_null: function: Pstack_st_SSL_COMP; cdecl = Load_sk_SSL_COMP_new_null;
   sk_SSL_COMP_new_reserve: function(cmp: Tsk_SSL_COMP_compfunc; n: TOpenSSL_C_INT): Pstack_st_SSL_COMP; cdecl = Load_sk_SSL_COMP_new_reserve;
-  sk_SSL_COMP_reserve: function(_para: Pstack_st_SSL_COMP; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SSL_COMP_reserve;
-  sk_SSL_COMP_free: function(_para: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl = Load_sk_SSL_COMP_free;
-  sk_SSL_COMP_zero: function(_para: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl = Load_sk_SSL_COMP_zero;
-  sk_SSL_COMP_delete: function(st: Pstack_st_SSL_COMP; loc: TOpenSSL_C_INT): Pstack_st_SSL_COMP; cdecl = Load_sk_SSL_COMP_delete;
-  sk_SSL_COMP_delete_ptr: function(st: Pstack_st_SSL_COMP; ptr: Pstack_st_SSL_COMP): Pstack_st_SSL_COMP; cdecl = Load_sk_SSL_COMP_delete_ptr;
-  sk_SSL_COMP_push: function(st: Pstack_st_SSL_COMP; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_SSL_COMP_push;
-  sk_SSL_COMP_unshift: function(st: Pstack_st_SSL_COMP; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_SSL_COMP_unshift;
-  sk_SSL_COMP_pop: function(_para: Pstack_st_SSL_COMP): Pstack_st_SSL_COMP; cdecl = Load_sk_SSL_COMP_pop;
-  sk_SSL_COMP_shift: function(_para: Pstack_st_SSL_COMP): Pstack_st_SSL_COMP; cdecl = Load_sk_SSL_COMP_shift;
-  sk_SSL_COMP_pop_free: procedure(st: Pstack_st_SSL_COMP; func: Tsk_SSL_COMP_freefunc); cdecl = Load_sk_SSL_COMP_pop_free;
-  sk_SSL_COMP_insert: function(st: Pstack_st_SSL_COMP; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SSL_COMP_insert;
-  sk_SSL_COMP_set: function(st: Pstack_st_SSL_COMP; i: TOpenSSL_C_INT; data: pointer): Pstack_st_SSL_COMP; cdecl = Load_sk_SSL_COMP_set;
-  sk_SSL_COMP_find: function(st: Pstack_st_SSL_COMP; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_SSL_COMP_find;
-  sk_SSL_COMP_find_ex: function(st: Pstack_st_SSL_COMP; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_SSL_COMP_find_ex;
-  sk_SSL_COMP_find_all: function(st: Pstack_st_SSL_COMP; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SSL_COMP_find_all;
-  sk_SSL_COMP_sort: function(_para: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl = Load_sk_SSL_COMP_sort;
-  sk_SSL_COMP_is_sorted: function(_para: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl = Load_sk_SSL_COMP_is_sorted;
-  sk_SSL_COMP_dup: function(st: Pstack_st_SSL_COMP): Pstack_st_SSL_COMP; cdecl = Load_sk_SSL_COMP_dup;
-  sk_SSL_COMP_deep_copy: function(st: Pstack_st_SSL_COMP; c: Tsk_SSL_COMP_compfunc; f: Tsk_SSL_COMP_freefunc): Pstack_st_SSL_COMP; cdecl = Load_sk_SSL_COMP_deep_copy;
-  sk_SSL_COMP_set_cmp_func: function(st: Pstack_st_SSL_COMP; cmp: Tsk_SSL_COMP_compfunc): Tsk_SSL_COMP_compfunc; cdecl = Load_sk_SSL_COMP_set_cmp_func;
+  sk_SSL_COMP_reserve: function(sk: Pstack_st_SSL_COMP; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SSL_COMP_reserve;
+  sk_SSL_COMP_free: procedure(sk: Pstack_st_SSL_COMP); cdecl = Load_sk_SSL_COMP_free;
+  sk_SSL_COMP_zero: procedure(sk: Pstack_st_SSL_COMP); cdecl = Load_sk_SSL_COMP_zero;
+  sk_SSL_COMP_delete: function(sk: Pstack_st_SSL_COMP; i: TOpenSSL_C_INT): PSSL_COMP; cdecl = Load_sk_SSL_COMP_delete;
+  sk_SSL_COMP_delete_ptr: function(sk: Pstack_st_SSL_COMP; ptr: PSSL_COMP): PSSL_COMP; cdecl = Load_sk_SSL_COMP_delete_ptr;
+  sk_SSL_COMP_push: function(sk: Pstack_st_SSL_COMP; data: PSSL_COMP): TOpenSSL_C_INT; cdecl = Load_sk_SSL_COMP_push;
+  sk_SSL_COMP_unshift: function(sk: Pstack_st_SSL_COMP; data: PSSL_COMP): TOpenSSL_C_INT; cdecl = Load_sk_SSL_COMP_unshift;
+  sk_SSL_COMP_pop: function(sk: Pstack_st_SSL_COMP): PSSL_COMP; cdecl = Load_sk_SSL_COMP_pop;
+  sk_SSL_COMP_shift: function(sk: Pstack_st_SSL_COMP): PSSL_COMP; cdecl = Load_sk_SSL_COMP_shift;
+  sk_SSL_COMP_pop_free: procedure(sk: Pstack_st_SSL_COMP; func: Tsk_SSL_COMP_freefunc); cdecl = Load_sk_SSL_COMP_pop_free;
+  sk_SSL_COMP_insert: function(sk: Pstack_st_SSL_COMP; data: PSSL_COMP; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SSL_COMP_insert;
+  sk_SSL_COMP_set: function(sk: Pstack_st_SSL_COMP; i: TOpenSSL_C_INT; data: PSSL_COMP): Pstack_st_SSL_COMP; cdecl = Load_sk_SSL_COMP_set;
+  sk_SSL_COMP_find: function(sk: Pstack_st_SSL_COMP; data: PSSL_COMP): TOpenSSL_C_INT; cdecl = Load_sk_SSL_COMP_find;
+  sk_SSL_COMP_find_ex: function(sk: Pstack_st_SSL_COMP; data: PSSL_COMP): TOpenSSL_C_INT; cdecl = Load_sk_SSL_COMP_find_ex;
+  sk_SSL_COMP_find_all: function(sk: Pstack_st_SSL_COMP; data: PSSL_COMP; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SSL_COMP_find_all;
+  sk_SSL_COMP_sort: procedure(sk: Pstack_st_SSL_COMP); cdecl = Load_sk_SSL_COMP_sort;
+  sk_SSL_COMP_is_sorted: function(sk: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl = Load_sk_SSL_COMP_is_sorted;
+  sk_SSL_COMP_dup: function(sk: Pstack_st_SSL_COMP): Pstack_st_SSL_COMP; cdecl = Load_sk_SSL_COMP_dup;
+  sk_SSL_COMP_deep_copy: function(sk: Pstack_st_SSL_COMP; c: Tsk_SSL_COMP_copyfunc; f: Tsk_SSL_COMP_freefunc): Pstack_st_SSL_COMP; cdecl = Load_sk_SSL_COMP_deep_copy;
+  sk_SSL_COMP_set_cmp_func: function(sk: Pstack_st_SSL_COMP; cmp: Tsk_SSL_COMP_compfunc): Tsk_SSL_COMP_compfunc; cdecl = Load_sk_SSL_COMP_set_cmp_func;
   { clang-format on }
   {$endif} {OPENSSL_STATIC_LINK_MODEL}
 {$endif}
@@ -530,20 +530,20 @@ end;
 
     {$endif} {OPENSSL_BIO_H}
 {$endif} { OPENSSL_NO_COMP}
-function Load_sk_SSL_COMP_num(_para: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl;
+function Load_sk_SSL_COMP_num(sk: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl;
 begin
   sk_SSL_COMP_num := LoadLibCryptoFunction('OPENSSL_sk_num');
   if not assigned(sk_SSL_COMP_num) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_num');
-  Result := sk_SSL_COMP_num(_para);
+  Result := sk_SSL_COMP_num(sk);
 end;
 
-function Load_sk_SSL_COMP_value(_para: Pstack_st_SSL_COMP; _para2: TOpenSSL_C_INT): Pstack_st_SSL_COMP; cdecl;
+function Load_sk_SSL_COMP_value(sk: Pstack_st_SSL_COMP; idx: TOpenSSL_C_INT): PSSL_COMP; cdecl;
 begin
   sk_SSL_COMP_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_SSL_COMP_value) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_value');
-  Result := sk_SSL_COMP_value(_para, _para2);
+  Result := sk_SSL_COMP_value(sk, idx);
 end;
 
 function Load_sk_SSL_COMP_new(cmp: Tsk_SSL_COMP_compfunc): Pstack_st_SSL_COMP; cdecl;
@@ -570,164 +570,164 @@ begin
   Result := sk_SSL_COMP_new_reserve(cmp, n);
 end;
 
-function Load_sk_SSL_COMP_reserve(_para: Pstack_st_SSL_COMP; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_SSL_COMP_reserve(sk: Pstack_st_SSL_COMP; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_SSL_COMP_reserve := LoadLibCryptoFunction('OPENSSL_sk_reserve');
   if not assigned(sk_SSL_COMP_reserve) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_reserve');
-  Result := sk_SSL_COMP_reserve(_para, n);
+  Result := sk_SSL_COMP_reserve(sk, n);
 end;
 
-function Load_sk_SSL_COMP_free(_para: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_SSL_COMP_free(sk: Pstack_st_SSL_COMP); cdecl;
 begin
   sk_SSL_COMP_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_SSL_COMP_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
-  Result := sk_SSL_COMP_free(_para);
+  sk_SSL_COMP_free(sk);
 end;
 
-function Load_sk_SSL_COMP_zero(_para: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_SSL_COMP_zero(sk: Pstack_st_SSL_COMP); cdecl;
 begin
   sk_SSL_COMP_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_SSL_COMP_zero) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
-  Result := sk_SSL_COMP_zero(_para);
+  sk_SSL_COMP_zero(sk);
 end;
 
-function Load_sk_SSL_COMP_delete(st: Pstack_st_SSL_COMP; loc: TOpenSSL_C_INT): Pstack_st_SSL_COMP; cdecl;
+function Load_sk_SSL_COMP_delete(sk: Pstack_st_SSL_COMP; i: TOpenSSL_C_INT): PSSL_COMP; cdecl;
 begin
   sk_SSL_COMP_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_SSL_COMP_delete) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete');
-  Result := sk_SSL_COMP_delete(st, loc);
+  Result := sk_SSL_COMP_delete(sk, i);
 end;
 
-function Load_sk_SSL_COMP_delete_ptr(st: Pstack_st_SSL_COMP; ptr: Pstack_st_SSL_COMP): Pstack_st_SSL_COMP; cdecl;
+function Load_sk_SSL_COMP_delete_ptr(sk: Pstack_st_SSL_COMP; ptr: PSSL_COMP): PSSL_COMP; cdecl;
 begin
   sk_SSL_COMP_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_SSL_COMP_delete_ptr) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete_ptr');
-  Result := sk_SSL_COMP_delete_ptr(st, ptr);
+  Result := sk_SSL_COMP_delete_ptr(sk, ptr);
 end;
 
-function Load_sk_SSL_COMP_push(st: Pstack_st_SSL_COMP; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_SSL_COMP_push(sk: Pstack_st_SSL_COMP; data: PSSL_COMP): TOpenSSL_C_INT; cdecl;
 begin
   sk_SSL_COMP_push := LoadLibCryptoFunction('OPENSSL_sk_push');
   if not assigned(sk_SSL_COMP_push) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_push');
-  Result := sk_SSL_COMP_push(st, data);
+  Result := sk_SSL_COMP_push(sk, data);
 end;
 
-function Load_sk_SSL_COMP_unshift(st: Pstack_st_SSL_COMP; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_SSL_COMP_unshift(sk: Pstack_st_SSL_COMP; data: PSSL_COMP): TOpenSSL_C_INT; cdecl;
 begin
   sk_SSL_COMP_unshift := LoadLibCryptoFunction('OPENSSL_sk_unshift');
   if not assigned(sk_SSL_COMP_unshift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_unshift');
-  Result := sk_SSL_COMP_unshift(st, data);
+  Result := sk_SSL_COMP_unshift(sk, data);
 end;
 
-function Load_sk_SSL_COMP_pop(_para: Pstack_st_SSL_COMP): Pstack_st_SSL_COMP; cdecl;
+function Load_sk_SSL_COMP_pop(sk: Pstack_st_SSL_COMP): PSSL_COMP; cdecl;
 begin
   sk_SSL_COMP_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_SSL_COMP_pop) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop');
-  Result := sk_SSL_COMP_pop(_para);
+  Result := sk_SSL_COMP_pop(sk);
 end;
 
-function Load_sk_SSL_COMP_shift(_para: Pstack_st_SSL_COMP): Pstack_st_SSL_COMP; cdecl;
+function Load_sk_SSL_COMP_shift(sk: Pstack_st_SSL_COMP): PSSL_COMP; cdecl;
 begin
   sk_SSL_COMP_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_SSL_COMP_shift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_shift');
-  Result := sk_SSL_COMP_shift(_para);
+  Result := sk_SSL_COMP_shift(sk);
 end;
 
-procedure Load_sk_SSL_COMP_pop_free(st: Pstack_st_SSL_COMP; func: Tsk_SSL_COMP_freefunc); cdecl;
+procedure Load_sk_SSL_COMP_pop_free(sk: Pstack_st_SSL_COMP; func: Tsk_SSL_COMP_freefunc); cdecl;
 begin
   sk_SSL_COMP_pop_free := LoadLibCryptoFunction('OPENSSL_sk_pop_free');
   if not assigned(sk_SSL_COMP_pop_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop_free');
-  sk_SSL_COMP_pop_free(st, func);
+  sk_SSL_COMP_pop_free(sk, func);
 end;
 
-function Load_sk_SSL_COMP_insert(st: Pstack_st_SSL_COMP; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_SSL_COMP_insert(sk: Pstack_st_SSL_COMP; data: PSSL_COMP; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_SSL_COMP_insert := LoadLibCryptoFunction('OPENSSL_sk_insert');
   if not assigned(sk_SSL_COMP_insert) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_insert');
-  Result := sk_SSL_COMP_insert(st, data, where);
+  Result := sk_SSL_COMP_insert(sk, data, where);
 end;
 
-function Load_sk_SSL_COMP_set(st: Pstack_st_SSL_COMP; i: TOpenSSL_C_INT; data: pointer): Pstack_st_SSL_COMP; cdecl;
+function Load_sk_SSL_COMP_set(sk: Pstack_st_SSL_COMP; i: TOpenSSL_C_INT; data: PSSL_COMP): Pstack_st_SSL_COMP; cdecl;
 begin
   sk_SSL_COMP_set := LoadLibCryptoFunction('OPENSSL_sk_set');
   if not assigned(sk_SSL_COMP_set) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set');
-  Result := sk_SSL_COMP_set(st, i, data);
+  Result := sk_SSL_COMP_set(sk, i, data);
 end;
 
-function Load_sk_SSL_COMP_find(st: Pstack_st_SSL_COMP; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_SSL_COMP_find(sk: Pstack_st_SSL_COMP; data: PSSL_COMP): TOpenSSL_C_INT; cdecl;
 begin
   sk_SSL_COMP_find := LoadLibCryptoFunction('OPENSSL_sk_find');
   if not assigned(sk_SSL_COMP_find) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find');
-  Result := sk_SSL_COMP_find(st, data);
+  Result := sk_SSL_COMP_find(sk, data);
 end;
 
-function Load_sk_SSL_COMP_find_ex(st: Pstack_st_SSL_COMP; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_SSL_COMP_find_ex(sk: Pstack_st_SSL_COMP; data: PSSL_COMP): TOpenSSL_C_INT; cdecl;
 begin
   sk_SSL_COMP_find_ex := LoadLibCryptoFunction('OPENSSL_sk_find_ex');
   if not assigned(sk_SSL_COMP_find_ex) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_ex');
-  Result := sk_SSL_COMP_find_ex(st, data);
+  Result := sk_SSL_COMP_find_ex(sk, data);
 end;
 
-function Load_sk_SSL_COMP_find_all(st: Pstack_st_SSL_COMP; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_SSL_COMP_find_all(sk: Pstack_st_SSL_COMP; data: PSSL_COMP; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_SSL_COMP_find_all := LoadLibCryptoFunction('OPENSSL_sk_find_all');
   if not assigned(sk_SSL_COMP_find_all) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_all');
-  Result := sk_SSL_COMP_find_all(st, data, pnum);
+  Result := sk_SSL_COMP_find_all(sk, data, pnum);
 end;
 
-function Load_sk_SSL_COMP_sort(_para: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_SSL_COMP_sort(sk: Pstack_st_SSL_COMP); cdecl;
 begin
   sk_SSL_COMP_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_SSL_COMP_sort) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
-  Result := sk_SSL_COMP_sort(_para);
+  sk_SSL_COMP_sort(sk);
 end;
 
-function Load_sk_SSL_COMP_is_sorted(_para: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl;
+function Load_sk_SSL_COMP_is_sorted(sk: Pstack_st_SSL_COMP): TOpenSSL_C_INT; cdecl;
 begin
   sk_SSL_COMP_is_sorted := LoadLibCryptoFunction('OPENSSL_sk_is_sorted');
   if not assigned(sk_SSL_COMP_is_sorted) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_is_sorted');
-  Result := sk_SSL_COMP_is_sorted(_para);
+  Result := sk_SSL_COMP_is_sorted(sk);
 end;
 
-function Load_sk_SSL_COMP_dup(st: Pstack_st_SSL_COMP): Pstack_st_SSL_COMP; cdecl;
+function Load_sk_SSL_COMP_dup(sk: Pstack_st_SSL_COMP): Pstack_st_SSL_COMP; cdecl;
 begin
   sk_SSL_COMP_dup := LoadLibCryptoFunction('OPENSSL_sk_dup');
   if not assigned(sk_SSL_COMP_dup) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_dup');
-  Result := sk_SSL_COMP_dup(st);
+  Result := sk_SSL_COMP_dup(sk);
 end;
 
-function Load_sk_SSL_COMP_deep_copy(st: Pstack_st_SSL_COMP; c: Tsk_SSL_COMP_compfunc; f: Tsk_SSL_COMP_freefunc): Pstack_st_SSL_COMP; cdecl;
+function Load_sk_SSL_COMP_deep_copy(sk: Pstack_st_SSL_COMP; c: Tsk_SSL_COMP_copyfunc; f: Tsk_SSL_COMP_freefunc): Pstack_st_SSL_COMP; cdecl;
 begin
   sk_SSL_COMP_deep_copy := LoadLibCryptoFunction('OPENSSL_sk_deep_copy');
   if not assigned(sk_SSL_COMP_deep_copy) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_deep_copy');
-  Result := sk_SSL_COMP_deep_copy(st, c, f);
+  Result := sk_SSL_COMP_deep_copy(sk, c, f);
 end;
 
-function Load_sk_SSL_COMP_set_cmp_func(st: Pstack_st_SSL_COMP; cmp: Tsk_SSL_COMP_compfunc): Tsk_SSL_COMP_compfunc; cdecl;
+function Load_sk_SSL_COMP_set_cmp_func(sk: Pstack_st_SSL_COMP; cmp: Tsk_SSL_COMP_compfunc): Tsk_SSL_COMP_compfunc; cdecl;
 begin
   sk_SSL_COMP_set_cmp_func := LoadLibCryptoFunction('OPENSSL_sk_set_cmp_func');
   if not assigned(sk_SSL_COMP_set_cmp_func) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set_cmp_func');
-  Result := sk_SSL_COMP_set_cmp_func(st, cmp);
+  Result := sk_SSL_COMP_set_cmp_func(sk, cmp);
 end;
 
 procedure Load;

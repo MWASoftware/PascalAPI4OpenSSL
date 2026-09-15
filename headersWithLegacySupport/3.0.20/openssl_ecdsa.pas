@@ -18,7 +18,7 @@
 unit openssl_ecdsa;
 
 {
-  Generated from OpenSSL 3.0.20 Header File ecdsa.h - Sat 12 Sep 14:58:50 BST 2026
+  Generated from OpenSSL 3.0.20 Header File ecdsa.h - Tue 15 Sep 14:34:16 BST 2026
   With Legacy Support Option
 }
 

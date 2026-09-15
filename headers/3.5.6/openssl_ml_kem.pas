@@ -18,7 +18,7 @@
 unit openssl_ml_kem;
 
 {
-  Generated from OpenSSL 3.5.6 Header File ml_kem.h - Sat 12 Sep 15:01:56 BST 2026
+  Generated from OpenSSL 3.5.6 Header File ml_kem.h - Tue 15 Sep 14:37:03 BST 2026
 }
 
 {$IFNDEF FPC}

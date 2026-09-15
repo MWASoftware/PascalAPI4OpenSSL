@@ -18,7 +18,7 @@
 unit openssl_self_test;
 
 {
-  Generated from OpenSSL 3.6.2 Header File self_test.h - Sat 12 Sep 15:05:12 BST 2026
+  Generated from OpenSSL 3.6.2 Header File self_test.h - Tue 15 Sep 14:40:30 BST 2026
 }
 
 {$IFNDEF FPC}

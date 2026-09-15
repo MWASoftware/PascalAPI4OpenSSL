@@ -18,7 +18,7 @@
 unit openssl_ecdh;
 
 {
-  Generated from OpenSSL 3.0.20 Header File ecdh.h - Sat 12 Sep 14:58:49 BST 2026
+  Generated from OpenSSL 3.0.20 Header File ecdh.h - Tue 15 Sep 14:34:15 BST 2026
   With Legacy Support Option
 }
 

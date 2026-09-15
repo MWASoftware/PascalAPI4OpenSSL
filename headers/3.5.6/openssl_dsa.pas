@@ -18,7 +18,7 @@
 unit openssl_dsa;
 
 {
-  Generated from OpenSSL 3.5.6 Header File dsa.h - Sat 12 Sep 15:01:30 BST 2026
+  Generated from OpenSSL 3.5.6 Header File dsa.h - Tue 15 Sep 14:36:38 BST 2026
 }
 
 {$IFNDEF FPC}

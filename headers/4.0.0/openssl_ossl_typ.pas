@@ -18,7 +18,7 @@
 unit openssl_ossl_typ;
 
 {
-  Generated from OpenSSL 4.0.0 Header File ossl_typ.h - Sat 12 Sep 15:07:47 BST 2026
+  Generated from OpenSSL 4.0.0 Header File ossl_typ.h - Tue 15 Sep 14:43:03 BST 2026
 }
 
 {$IFNDEF FPC}

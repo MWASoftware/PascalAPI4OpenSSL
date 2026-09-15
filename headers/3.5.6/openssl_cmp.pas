@@ -18,7 +18,7 @@
 unit openssl_cmp;
 
 {
-  Generated from OpenSSL 3.5.6 Header File cmp.h - Sat 12 Sep 15:01:05 BST 2026
+  Generated from OpenSSL 3.5.6 Header File cmp.h - Tue 15 Sep 14:36:12 BST 2026
 }
 
 {$IFNDEF FPC}
@@ -379,31 +379,31 @@ type
   function ossl_check_OSSL_CMP_CERTSTATUS_copyfunc_type(cpy: Tsk_OSSL_CMP_CERTSTATUS_copyfunc): TOPENSSL_sk_copyfunc{Has C Attribute: unused}; inline;
   function ossl_check_OSSL_CMP_CERTSTATUS_freefunc_type(fr: Tsk_OSSL_CMP_CERTSTATUS_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
     {$ifdef OPENSSL_STATIC_LINK_MODEL}
-  function sk_OSSL_CMP_CERTSTATUS_num(_para: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_OSSL_CMP_CERTSTATUS_value(_para: Pstack_st_OSSL_CMP_CERTSTATUS; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_OSSL_CMP_CERTSTATUS_num(sk: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
+  function sk_OSSL_CMP_CERTSTATUS_value(sk: Pstack_st_OSSL_CMP_CERTSTATUS; idx: TOpenSSL_C_INT): POSSL_CMP_CERTSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_OSSL_CMP_CERTSTATUS_new(cmp: Tsk_OSSL_CMP_CERTSTATUS_compfunc): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_OSSL_CMP_CERTSTATUS_new_null: Pstack_st_OSSL_CMP_CERTSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_OSSL_CMP_CERTSTATUS_new_reserve(cmp: Tsk_OSSL_CMP_CERTSTATUS_compfunc; n: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
-  function sk_OSSL_CMP_CERTSTATUS_reserve(_para: Pstack_st_OSSL_CMP_CERTSTATUS; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_OSSL_CMP_CERTSTATUS_free(_para: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_OSSL_CMP_CERTSTATUS_zero(_para: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_OSSL_CMP_CERTSTATUS_delete(st: Pstack_st_OSSL_CMP_CERTSTATUS; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_OSSL_CMP_CERTSTATUS_delete_ptr(st: Pstack_st_OSSL_CMP_CERTSTATUS; ptr: Pstack_st_OSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
-  function sk_OSSL_CMP_CERTSTATUS_push(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
-  function sk_OSSL_CMP_CERTSTATUS_unshift(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_OSSL_CMP_CERTSTATUS_pop(_para: Pstack_st_OSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_OSSL_CMP_CERTSTATUS_shift(_para: Pstack_st_OSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
-  procedure sk_OSSL_CMP_CERTSTATUS_pop_free(st: Pstack_st_OSSL_CMP_CERTSTATUS; func: Tsk_OSSL_CMP_CERTSTATUS_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
-  function sk_OSSL_CMP_CERTSTATUS_insert(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
-  function sk_OSSL_CMP_CERTSTATUS_set(st: Pstack_st_OSSL_CMP_CERTSTATUS; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
-  function sk_OSSL_CMP_CERTSTATUS_find(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
-  function sk_OSSL_CMP_CERTSTATUS_find_ex(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
-  function sk_OSSL_CMP_CERTSTATUS_find_all(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_OSSL_CMP_CERTSTATUS_sort(_para: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
-  function sk_OSSL_CMP_CERTSTATUS_is_sorted(_para: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
-  function sk_OSSL_CMP_CERTSTATUS_dup(st: Pstack_st_OSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
-  function sk_OSSL_CMP_CERTSTATUS_deep_copy(st: Pstack_st_OSSL_CMP_CERTSTATUS; c: Tsk_OSSL_CMP_CERTSTATUS_compfunc; f: Tsk_OSSL_CMP_CERTSTATUS_freefunc): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
-  function sk_OSSL_CMP_CERTSTATUS_set_cmp_func(st: Pstack_st_OSSL_CMP_CERTSTATUS; cmp: Tsk_OSSL_CMP_CERTSTATUS_compfunc): Tsk_OSSL_CMP_CERTSTATUS_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
+  function sk_OSSL_CMP_CERTSTATUS_reserve(sk: Pstack_st_OSSL_CMP_CERTSTATUS; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
+  procedure sk_OSSL_CMP_CERTSTATUS_free(sk: Pstack_st_OSSL_CMP_CERTSTATUS); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_OSSL_CMP_CERTSTATUS_zero(sk: Pstack_st_OSSL_CMP_CERTSTATUS); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_OSSL_CMP_CERTSTATUS_delete(sk: Pstack_st_OSSL_CMP_CERTSTATUS; i: TOpenSSL_C_INT): POSSL_CMP_CERTSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_OSSL_CMP_CERTSTATUS_delete_ptr(sk: Pstack_st_OSSL_CMP_CERTSTATUS; ptr: POSSL_CMP_CERTSTATUS): POSSL_CMP_CERTSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  function sk_OSSL_CMP_CERTSTATUS_push(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
+  function sk_OSSL_CMP_CERTSTATUS_unshift(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
+  function sk_OSSL_CMP_CERTSTATUS_pop(sk: Pstack_st_OSSL_CMP_CERTSTATUS): POSSL_CMP_CERTSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_OSSL_CMP_CERTSTATUS_shift(sk: Pstack_st_OSSL_CMP_CERTSTATUS): POSSL_CMP_CERTSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  procedure sk_OSSL_CMP_CERTSTATUS_pop_free(sk: Pstack_st_OSSL_CMP_CERTSTATUS; func: Tsk_OSSL_CMP_CERTSTATUS_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
+  function sk_OSSL_CMP_CERTSTATUS_insert(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
+  function sk_OSSL_CMP_CERTSTATUS_set(sk: Pstack_st_OSSL_CMP_CERTSTATUS; i: TOpenSSL_C_INT; data: POSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
+  function sk_OSSL_CMP_CERTSTATUS_find(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
+  function sk_OSSL_CMP_CERTSTATUS_find_ex(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
+  function sk_OSSL_CMP_CERTSTATUS_find_all(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
+  procedure sk_OSSL_CMP_CERTSTATUS_sort(sk: Pstack_st_OSSL_CMP_CERTSTATUS); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  function sk_OSSL_CMP_CERTSTATUS_is_sorted(sk: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
+  function sk_OSSL_CMP_CERTSTATUS_dup(sk: Pstack_st_OSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
+  function sk_OSSL_CMP_CERTSTATUS_deep_copy(sk: Pstack_st_OSSL_CMP_CERTSTATUS; c: Tsk_OSSL_CMP_CERTSTATUS_copyfunc; f: Tsk_OSSL_CMP_CERTSTATUS_freefunc): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
+  function sk_OSSL_CMP_CERTSTATUS_set_cmp_func(sk: Pstack_st_OSSL_CMP_CERTSTATUS; cmp: Tsk_OSSL_CMP_CERTSTATUS_compfunc): Tsk_OSSL_CMP_CERTSTATUS_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
   { clang-format on }
     {$else}
   {$EXTERNALSYM sk_OSSL_CMP_CERTSTATUS_num}
@@ -432,58 +432,58 @@ type
   {$EXTERNALSYM sk_OSSL_CMP_CERTSTATUS_deep_copy}
   {$EXTERNALSYM sk_OSSL_CMP_CERTSTATUS_set_cmp_func}
   {Do not call Function LoadDeclarations. Internal use only}
-  function Load_sk_OSSL_CMP_CERTSTATUS_num(_para: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTSTATUS_value(_para: Pstack_st_OSSL_CMP_CERTSTATUS; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
+  function Load_sk_OSSL_CMP_CERTSTATUS_num(sk: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CERTSTATUS_value(sk: Pstack_st_OSSL_CMP_CERTSTATUS; idx: TOpenSSL_C_INT): POSSL_CMP_CERTSTATUS; cdecl;
   function Load_sk_OSSL_CMP_CERTSTATUS_new(cmp: Tsk_OSSL_CMP_CERTSTATUS_compfunc): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
   function Load_sk_OSSL_CMP_CERTSTATUS_new_null: Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
   function Load_sk_OSSL_CMP_CERTSTATUS_new_reserve(cmp: Tsk_OSSL_CMP_CERTSTATUS_compfunc; n: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
-  function Load_sk_OSSL_CMP_CERTSTATUS_reserve(_para: Pstack_st_OSSL_CMP_CERTSTATUS; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTSTATUS_free(_para: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTSTATUS_zero(_para: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTSTATUS_delete(st: Pstack_st_OSSL_CMP_CERTSTATUS; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
-  function Load_sk_OSSL_CMP_CERTSTATUS_delete_ptr(st: Pstack_st_OSSL_CMP_CERTSTATUS; ptr: Pstack_st_OSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
-  function Load_sk_OSSL_CMP_CERTSTATUS_push(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTSTATUS_unshift(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTSTATUS_pop(_para: Pstack_st_OSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
-  function Load_sk_OSSL_CMP_CERTSTATUS_shift(_para: Pstack_st_OSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
-  procedure Load_sk_OSSL_CMP_CERTSTATUS_pop_free(st: Pstack_st_OSSL_CMP_CERTSTATUS; func: Tsk_OSSL_CMP_CERTSTATUS_freefunc); cdecl;
-  function Load_sk_OSSL_CMP_CERTSTATUS_insert(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTSTATUS_set(st: Pstack_st_OSSL_CMP_CERTSTATUS; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
-  function Load_sk_OSSL_CMP_CERTSTATUS_find(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTSTATUS_find_ex(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTSTATUS_find_all(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTSTATUS_sort(_para: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTSTATUS_is_sorted(_para: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTSTATUS_dup(st: Pstack_st_OSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
-  function Load_sk_OSSL_CMP_CERTSTATUS_deep_copy(st: Pstack_st_OSSL_CMP_CERTSTATUS; c: Tsk_OSSL_CMP_CERTSTATUS_compfunc; f: Tsk_OSSL_CMP_CERTSTATUS_freefunc): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
-  function Load_sk_OSSL_CMP_CERTSTATUS_set_cmp_func(st: Pstack_st_OSSL_CMP_CERTSTATUS; cmp: Tsk_OSSL_CMP_CERTSTATUS_compfunc): Tsk_OSSL_CMP_CERTSTATUS_compfunc; cdecl;
+  function Load_sk_OSSL_CMP_CERTSTATUS_reserve(sk: Pstack_st_OSSL_CMP_CERTSTATUS; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_OSSL_CMP_CERTSTATUS_free(sk: Pstack_st_OSSL_CMP_CERTSTATUS); cdecl;
+  procedure Load_sk_OSSL_CMP_CERTSTATUS_zero(sk: Pstack_st_OSSL_CMP_CERTSTATUS); cdecl;
+  function Load_sk_OSSL_CMP_CERTSTATUS_delete(sk: Pstack_st_OSSL_CMP_CERTSTATUS; i: TOpenSSL_C_INT): POSSL_CMP_CERTSTATUS; cdecl;
+  function Load_sk_OSSL_CMP_CERTSTATUS_delete_ptr(sk: Pstack_st_OSSL_CMP_CERTSTATUS; ptr: POSSL_CMP_CERTSTATUS): POSSL_CMP_CERTSTATUS; cdecl;
+  function Load_sk_OSSL_CMP_CERTSTATUS_push(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CERTSTATUS_unshift(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CERTSTATUS_pop(sk: Pstack_st_OSSL_CMP_CERTSTATUS): POSSL_CMP_CERTSTATUS; cdecl;
+  function Load_sk_OSSL_CMP_CERTSTATUS_shift(sk: Pstack_st_OSSL_CMP_CERTSTATUS): POSSL_CMP_CERTSTATUS; cdecl;
+  procedure Load_sk_OSSL_CMP_CERTSTATUS_pop_free(sk: Pstack_st_OSSL_CMP_CERTSTATUS; func: Tsk_OSSL_CMP_CERTSTATUS_freefunc); cdecl;
+  function Load_sk_OSSL_CMP_CERTSTATUS_insert(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CERTSTATUS_set(sk: Pstack_st_OSSL_CMP_CERTSTATUS; i: TOpenSSL_C_INT; data: POSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
+  function Load_sk_OSSL_CMP_CERTSTATUS_find(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CERTSTATUS_find_ex(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CERTSTATUS_find_all(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_OSSL_CMP_CERTSTATUS_sort(sk: Pstack_st_OSSL_CMP_CERTSTATUS); cdecl;
+  function Load_sk_OSSL_CMP_CERTSTATUS_is_sorted(sk: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CERTSTATUS_dup(sk: Pstack_st_OSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
+  function Load_sk_OSSL_CMP_CERTSTATUS_deep_copy(sk: Pstack_st_OSSL_CMP_CERTSTATUS; c: Tsk_OSSL_CMP_CERTSTATUS_copyfunc; f: Tsk_OSSL_CMP_CERTSTATUS_freefunc): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
+  function Load_sk_OSSL_CMP_CERTSTATUS_set_cmp_func(sk: Pstack_st_OSSL_CMP_CERTSTATUS; cmp: Tsk_OSSL_CMP_CERTSTATUS_compfunc): Tsk_OSSL_CMP_CERTSTATUS_compfunc; cdecl;
 
 var
-  sk_OSSL_CMP_CERTSTATUS_num: function(_para: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_num;
-  sk_OSSL_CMP_CERTSTATUS_value: function(_para: Pstack_st_OSSL_CMP_CERTSTATUS; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_value;
+  sk_OSSL_CMP_CERTSTATUS_num: function(sk: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_num;
+  sk_OSSL_CMP_CERTSTATUS_value: function(sk: Pstack_st_OSSL_CMP_CERTSTATUS; idx: TOpenSSL_C_INT): POSSL_CMP_CERTSTATUS; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_value;
   sk_OSSL_CMP_CERTSTATUS_new: function(cmp: Tsk_OSSL_CMP_CERTSTATUS_compfunc): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_new;
   sk_OSSL_CMP_CERTSTATUS_new_null: function: Pstack_st_OSSL_CMP_CERTSTATUS; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_new_null;
   sk_OSSL_CMP_CERTSTATUS_new_reserve: function(cmp: Tsk_OSSL_CMP_CERTSTATUS_compfunc; n: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_new_reserve;
-  sk_OSSL_CMP_CERTSTATUS_reserve: function(_para: Pstack_st_OSSL_CMP_CERTSTATUS; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_reserve;
-  sk_OSSL_CMP_CERTSTATUS_free: function(_para: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_free;
-  sk_OSSL_CMP_CERTSTATUS_zero: function(_para: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_zero;
-  sk_OSSL_CMP_CERTSTATUS_delete: function(st: Pstack_st_OSSL_CMP_CERTSTATUS; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_delete;
-  sk_OSSL_CMP_CERTSTATUS_delete_ptr: function(st: Pstack_st_OSSL_CMP_CERTSTATUS; ptr: Pstack_st_OSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_delete_ptr;
-  sk_OSSL_CMP_CERTSTATUS_push: function(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_push;
-  sk_OSSL_CMP_CERTSTATUS_unshift: function(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_unshift;
-  sk_OSSL_CMP_CERTSTATUS_pop: function(_para: Pstack_st_OSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_pop;
-  sk_OSSL_CMP_CERTSTATUS_shift: function(_para: Pstack_st_OSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_shift;
-  sk_OSSL_CMP_CERTSTATUS_pop_free: procedure(st: Pstack_st_OSSL_CMP_CERTSTATUS; func: Tsk_OSSL_CMP_CERTSTATUS_freefunc); cdecl = Load_sk_OSSL_CMP_CERTSTATUS_pop_free;
-  sk_OSSL_CMP_CERTSTATUS_insert: function(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_insert;
-  sk_OSSL_CMP_CERTSTATUS_set: function(st: Pstack_st_OSSL_CMP_CERTSTATUS; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_set;
-  sk_OSSL_CMP_CERTSTATUS_find: function(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_find;
-  sk_OSSL_CMP_CERTSTATUS_find_ex: function(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_find_ex;
-  sk_OSSL_CMP_CERTSTATUS_find_all: function(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_find_all;
-  sk_OSSL_CMP_CERTSTATUS_sort: function(_para: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_sort;
-  sk_OSSL_CMP_CERTSTATUS_is_sorted: function(_para: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_is_sorted;
-  sk_OSSL_CMP_CERTSTATUS_dup: function(st: Pstack_st_OSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_dup;
-  sk_OSSL_CMP_CERTSTATUS_deep_copy: function(st: Pstack_st_OSSL_CMP_CERTSTATUS; c: Tsk_OSSL_CMP_CERTSTATUS_compfunc; f: Tsk_OSSL_CMP_CERTSTATUS_freefunc): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_deep_copy;
-  sk_OSSL_CMP_CERTSTATUS_set_cmp_func: function(st: Pstack_st_OSSL_CMP_CERTSTATUS; cmp: Tsk_OSSL_CMP_CERTSTATUS_compfunc): Tsk_OSSL_CMP_CERTSTATUS_compfunc; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_set_cmp_func;
+  sk_OSSL_CMP_CERTSTATUS_reserve: function(sk: Pstack_st_OSSL_CMP_CERTSTATUS; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_reserve;
+  sk_OSSL_CMP_CERTSTATUS_free: procedure(sk: Pstack_st_OSSL_CMP_CERTSTATUS); cdecl = Load_sk_OSSL_CMP_CERTSTATUS_free;
+  sk_OSSL_CMP_CERTSTATUS_zero: procedure(sk: Pstack_st_OSSL_CMP_CERTSTATUS); cdecl = Load_sk_OSSL_CMP_CERTSTATUS_zero;
+  sk_OSSL_CMP_CERTSTATUS_delete: function(sk: Pstack_st_OSSL_CMP_CERTSTATUS; i: TOpenSSL_C_INT): POSSL_CMP_CERTSTATUS; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_delete;
+  sk_OSSL_CMP_CERTSTATUS_delete_ptr: function(sk: Pstack_st_OSSL_CMP_CERTSTATUS; ptr: POSSL_CMP_CERTSTATUS): POSSL_CMP_CERTSTATUS; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_delete_ptr;
+  sk_OSSL_CMP_CERTSTATUS_push: function(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_push;
+  sk_OSSL_CMP_CERTSTATUS_unshift: function(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_unshift;
+  sk_OSSL_CMP_CERTSTATUS_pop: function(sk: Pstack_st_OSSL_CMP_CERTSTATUS): POSSL_CMP_CERTSTATUS; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_pop;
+  sk_OSSL_CMP_CERTSTATUS_shift: function(sk: Pstack_st_OSSL_CMP_CERTSTATUS): POSSL_CMP_CERTSTATUS; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_shift;
+  sk_OSSL_CMP_CERTSTATUS_pop_free: procedure(sk: Pstack_st_OSSL_CMP_CERTSTATUS; func: Tsk_OSSL_CMP_CERTSTATUS_freefunc); cdecl = Load_sk_OSSL_CMP_CERTSTATUS_pop_free;
+  sk_OSSL_CMP_CERTSTATUS_insert: function(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_insert;
+  sk_OSSL_CMP_CERTSTATUS_set: function(sk: Pstack_st_OSSL_CMP_CERTSTATUS; i: TOpenSSL_C_INT; data: POSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_set;
+  sk_OSSL_CMP_CERTSTATUS_find: function(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_find;
+  sk_OSSL_CMP_CERTSTATUS_find_ex: function(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_find_ex;
+  sk_OSSL_CMP_CERTSTATUS_find_all: function(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_find_all;
+  sk_OSSL_CMP_CERTSTATUS_sort: procedure(sk: Pstack_st_OSSL_CMP_CERTSTATUS); cdecl = Load_sk_OSSL_CMP_CERTSTATUS_sort;
+  sk_OSSL_CMP_CERTSTATUS_is_sorted: function(sk: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_is_sorted;
+  sk_OSSL_CMP_CERTSTATUS_dup: function(sk: Pstack_st_OSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_dup;
+  sk_OSSL_CMP_CERTSTATUS_deep_copy: function(sk: Pstack_st_OSSL_CMP_CERTSTATUS; c: Tsk_OSSL_CMP_CERTSTATUS_copyfunc; f: Tsk_OSSL_CMP_CERTSTATUS_freefunc): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_deep_copy;
+  sk_OSSL_CMP_CERTSTATUS_set_cmp_func: function(sk: Pstack_st_OSSL_CMP_CERTSTATUS; cmp: Tsk_OSSL_CMP_CERTSTATUS_compfunc): Tsk_OSSL_CMP_CERTSTATUS_compfunc; cdecl = Load_sk_OSSL_CMP_CERTSTATUS_set_cmp_func;
   { clang-format on }
     {$endif} {OPENSSL_STATIC_LINK_MODEL}
 
@@ -538,31 +538,31 @@ type
   function ossl_check_OSSL_CMP_ITAV_copyfunc_type(cpy: Tsk_OSSL_CMP_ITAV_copyfunc): TOPENSSL_sk_copyfunc{Has C Attribute: unused}; inline;
   function ossl_check_OSSL_CMP_ITAV_freefunc_type(fr: Tsk_OSSL_CMP_ITAV_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
     {$ifdef OPENSSL_STATIC_LINK_MODEL}
-  function sk_OSSL_CMP_ITAV_num(_para: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_OSSL_CMP_ITAV_value(_para: Pstack_st_OSSL_CMP_ITAV; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_ITAV; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_OSSL_CMP_ITAV_num(sk: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
+  function sk_OSSL_CMP_ITAV_value(sk: Pstack_st_OSSL_CMP_ITAV; idx: TOpenSSL_C_INT): POSSL_CMP_ITAV; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_OSSL_CMP_ITAV_new(cmp: Tsk_OSSL_CMP_ITAV_compfunc): Pstack_st_OSSL_CMP_ITAV; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_OSSL_CMP_ITAV_new_null: Pstack_st_OSSL_CMP_ITAV; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_OSSL_CMP_ITAV_new_reserve(cmp: Tsk_OSSL_CMP_ITAV_compfunc; n: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_ITAV; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
-  function sk_OSSL_CMP_ITAV_reserve(_para: Pstack_st_OSSL_CMP_ITAV; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_OSSL_CMP_ITAV_free(_para: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_OSSL_CMP_ITAV_zero(_para: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_OSSL_CMP_ITAV_delete(st: Pstack_st_OSSL_CMP_ITAV; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_ITAV; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_OSSL_CMP_ITAV_delete_ptr(st: Pstack_st_OSSL_CMP_ITAV; ptr: Pstack_st_OSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
-  function sk_OSSL_CMP_ITAV_push(st: Pstack_st_OSSL_CMP_ITAV; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
-  function sk_OSSL_CMP_ITAV_unshift(st: Pstack_st_OSSL_CMP_ITAV; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_OSSL_CMP_ITAV_pop(_para: Pstack_st_OSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_OSSL_CMP_ITAV_shift(_para: Pstack_st_OSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
-  procedure sk_OSSL_CMP_ITAV_pop_free(st: Pstack_st_OSSL_CMP_ITAV; func: Tsk_OSSL_CMP_ITAV_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
-  function sk_OSSL_CMP_ITAV_insert(st: Pstack_st_OSSL_CMP_ITAV; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
-  function sk_OSSL_CMP_ITAV_set(st: Pstack_st_OSSL_CMP_ITAV; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_ITAV; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
-  function sk_OSSL_CMP_ITAV_find(st: Pstack_st_OSSL_CMP_ITAV; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
-  function sk_OSSL_CMP_ITAV_find_ex(st: Pstack_st_OSSL_CMP_ITAV; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
-  function sk_OSSL_CMP_ITAV_find_all(st: Pstack_st_OSSL_CMP_ITAV; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_OSSL_CMP_ITAV_sort(_para: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
-  function sk_OSSL_CMP_ITAV_is_sorted(_para: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
-  function sk_OSSL_CMP_ITAV_dup(st: Pstack_st_OSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
-  function sk_OSSL_CMP_ITAV_deep_copy(st: Pstack_st_OSSL_CMP_ITAV; c: Tsk_OSSL_CMP_ITAV_compfunc; f: Tsk_OSSL_CMP_ITAV_freefunc): Pstack_st_OSSL_CMP_ITAV; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
-  function sk_OSSL_CMP_ITAV_set_cmp_func(st: Pstack_st_OSSL_CMP_ITAV; cmp: Tsk_OSSL_CMP_ITAV_compfunc): Tsk_OSSL_CMP_ITAV_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
+  function sk_OSSL_CMP_ITAV_reserve(sk: Pstack_st_OSSL_CMP_ITAV; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
+  procedure sk_OSSL_CMP_ITAV_free(sk: Pstack_st_OSSL_CMP_ITAV); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_OSSL_CMP_ITAV_zero(sk: Pstack_st_OSSL_CMP_ITAV); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_OSSL_CMP_ITAV_delete(sk: Pstack_st_OSSL_CMP_ITAV; i: TOpenSSL_C_INT): POSSL_CMP_ITAV; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_OSSL_CMP_ITAV_delete_ptr(sk: Pstack_st_OSSL_CMP_ITAV; ptr: POSSL_CMP_ITAV): POSSL_CMP_ITAV; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  function sk_OSSL_CMP_ITAV_push(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
+  function sk_OSSL_CMP_ITAV_unshift(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
+  function sk_OSSL_CMP_ITAV_pop(sk: Pstack_st_OSSL_CMP_ITAV): POSSL_CMP_ITAV; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_OSSL_CMP_ITAV_shift(sk: Pstack_st_OSSL_CMP_ITAV): POSSL_CMP_ITAV; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  procedure sk_OSSL_CMP_ITAV_pop_free(sk: Pstack_st_OSSL_CMP_ITAV; func: Tsk_OSSL_CMP_ITAV_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
+  function sk_OSSL_CMP_ITAV_insert(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
+  function sk_OSSL_CMP_ITAV_set(sk: Pstack_st_OSSL_CMP_ITAV; i: TOpenSSL_C_INT; data: POSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
+  function sk_OSSL_CMP_ITAV_find(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
+  function sk_OSSL_CMP_ITAV_find_ex(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
+  function sk_OSSL_CMP_ITAV_find_all(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
+  procedure sk_OSSL_CMP_ITAV_sort(sk: Pstack_st_OSSL_CMP_ITAV); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  function sk_OSSL_CMP_ITAV_is_sorted(sk: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
+  function sk_OSSL_CMP_ITAV_dup(sk: Pstack_st_OSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
+  function sk_OSSL_CMP_ITAV_deep_copy(sk: Pstack_st_OSSL_CMP_ITAV; c: Tsk_OSSL_CMP_ITAV_copyfunc; f: Tsk_OSSL_CMP_ITAV_freefunc): Pstack_st_OSSL_CMP_ITAV; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
+  function sk_OSSL_CMP_ITAV_set_cmp_func(sk: Pstack_st_OSSL_CMP_ITAV; cmp: Tsk_OSSL_CMP_ITAV_compfunc): Tsk_OSSL_CMP_ITAV_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
   { clang-format on }
     {$else}
   {$EXTERNALSYM sk_OSSL_CMP_ITAV_num}
@@ -591,58 +591,58 @@ type
   {$EXTERNALSYM sk_OSSL_CMP_ITAV_deep_copy}
   {$EXTERNALSYM sk_OSSL_CMP_ITAV_set_cmp_func}
   {Do not call Function LoadDeclarations. Internal use only}
-  function Load_sk_OSSL_CMP_ITAV_num(_para: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_ITAV_value(_para: Pstack_st_OSSL_CMP_ITAV; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_ITAV; cdecl;
+  function Load_sk_OSSL_CMP_ITAV_num(sk: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_ITAV_value(sk: Pstack_st_OSSL_CMP_ITAV; idx: TOpenSSL_C_INT): POSSL_CMP_ITAV; cdecl;
   function Load_sk_OSSL_CMP_ITAV_new(cmp: Tsk_OSSL_CMP_ITAV_compfunc): Pstack_st_OSSL_CMP_ITAV; cdecl;
   function Load_sk_OSSL_CMP_ITAV_new_null: Pstack_st_OSSL_CMP_ITAV; cdecl;
   function Load_sk_OSSL_CMP_ITAV_new_reserve(cmp: Tsk_OSSL_CMP_ITAV_compfunc; n: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_ITAV; cdecl;
-  function Load_sk_OSSL_CMP_ITAV_reserve(_para: Pstack_st_OSSL_CMP_ITAV; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_ITAV_free(_para: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_ITAV_zero(_para: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_ITAV_delete(st: Pstack_st_OSSL_CMP_ITAV; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_ITAV; cdecl;
-  function Load_sk_OSSL_CMP_ITAV_delete_ptr(st: Pstack_st_OSSL_CMP_ITAV; ptr: Pstack_st_OSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl;
-  function Load_sk_OSSL_CMP_ITAV_push(st: Pstack_st_OSSL_CMP_ITAV; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_ITAV_unshift(st: Pstack_st_OSSL_CMP_ITAV; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_ITAV_pop(_para: Pstack_st_OSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl;
-  function Load_sk_OSSL_CMP_ITAV_shift(_para: Pstack_st_OSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl;
-  procedure Load_sk_OSSL_CMP_ITAV_pop_free(st: Pstack_st_OSSL_CMP_ITAV; func: Tsk_OSSL_CMP_ITAV_freefunc); cdecl;
-  function Load_sk_OSSL_CMP_ITAV_insert(st: Pstack_st_OSSL_CMP_ITAV; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_ITAV_set(st: Pstack_st_OSSL_CMP_ITAV; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_ITAV; cdecl;
-  function Load_sk_OSSL_CMP_ITAV_find(st: Pstack_st_OSSL_CMP_ITAV; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_ITAV_find_ex(st: Pstack_st_OSSL_CMP_ITAV; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_ITAV_find_all(st: Pstack_st_OSSL_CMP_ITAV; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_ITAV_sort(_para: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_ITAV_is_sorted(_para: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_ITAV_dup(st: Pstack_st_OSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl;
-  function Load_sk_OSSL_CMP_ITAV_deep_copy(st: Pstack_st_OSSL_CMP_ITAV; c: Tsk_OSSL_CMP_ITAV_compfunc; f: Tsk_OSSL_CMP_ITAV_freefunc): Pstack_st_OSSL_CMP_ITAV; cdecl;
-  function Load_sk_OSSL_CMP_ITAV_set_cmp_func(st: Pstack_st_OSSL_CMP_ITAV; cmp: Tsk_OSSL_CMP_ITAV_compfunc): Tsk_OSSL_CMP_ITAV_compfunc; cdecl;
+  function Load_sk_OSSL_CMP_ITAV_reserve(sk: Pstack_st_OSSL_CMP_ITAV; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_OSSL_CMP_ITAV_free(sk: Pstack_st_OSSL_CMP_ITAV); cdecl;
+  procedure Load_sk_OSSL_CMP_ITAV_zero(sk: Pstack_st_OSSL_CMP_ITAV); cdecl;
+  function Load_sk_OSSL_CMP_ITAV_delete(sk: Pstack_st_OSSL_CMP_ITAV; i: TOpenSSL_C_INT): POSSL_CMP_ITAV; cdecl;
+  function Load_sk_OSSL_CMP_ITAV_delete_ptr(sk: Pstack_st_OSSL_CMP_ITAV; ptr: POSSL_CMP_ITAV): POSSL_CMP_ITAV; cdecl;
+  function Load_sk_OSSL_CMP_ITAV_push(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_ITAV_unshift(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_ITAV_pop(sk: Pstack_st_OSSL_CMP_ITAV): POSSL_CMP_ITAV; cdecl;
+  function Load_sk_OSSL_CMP_ITAV_shift(sk: Pstack_st_OSSL_CMP_ITAV): POSSL_CMP_ITAV; cdecl;
+  procedure Load_sk_OSSL_CMP_ITAV_pop_free(sk: Pstack_st_OSSL_CMP_ITAV; func: Tsk_OSSL_CMP_ITAV_freefunc); cdecl;
+  function Load_sk_OSSL_CMP_ITAV_insert(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_ITAV_set(sk: Pstack_st_OSSL_CMP_ITAV; i: TOpenSSL_C_INT; data: POSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl;
+  function Load_sk_OSSL_CMP_ITAV_find(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_ITAV_find_ex(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_ITAV_find_all(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_OSSL_CMP_ITAV_sort(sk: Pstack_st_OSSL_CMP_ITAV); cdecl;
+  function Load_sk_OSSL_CMP_ITAV_is_sorted(sk: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_ITAV_dup(sk: Pstack_st_OSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl;
+  function Load_sk_OSSL_CMP_ITAV_deep_copy(sk: Pstack_st_OSSL_CMP_ITAV; c: Tsk_OSSL_CMP_ITAV_copyfunc; f: Tsk_OSSL_CMP_ITAV_freefunc): Pstack_st_OSSL_CMP_ITAV; cdecl;
+  function Load_sk_OSSL_CMP_ITAV_set_cmp_func(sk: Pstack_st_OSSL_CMP_ITAV; cmp: Tsk_OSSL_CMP_ITAV_compfunc): Tsk_OSSL_CMP_ITAV_compfunc; cdecl;
 
 var
-  sk_OSSL_CMP_ITAV_num: function(_para: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_ITAV_num;
-  sk_OSSL_CMP_ITAV_value: function(_para: Pstack_st_OSSL_CMP_ITAV; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_ITAV; cdecl = Load_sk_OSSL_CMP_ITAV_value;
+  sk_OSSL_CMP_ITAV_num: function(sk: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_ITAV_num;
+  sk_OSSL_CMP_ITAV_value: function(sk: Pstack_st_OSSL_CMP_ITAV; idx: TOpenSSL_C_INT): POSSL_CMP_ITAV; cdecl = Load_sk_OSSL_CMP_ITAV_value;
   sk_OSSL_CMP_ITAV_new: function(cmp: Tsk_OSSL_CMP_ITAV_compfunc): Pstack_st_OSSL_CMP_ITAV; cdecl = Load_sk_OSSL_CMP_ITAV_new;
   sk_OSSL_CMP_ITAV_new_null: function: Pstack_st_OSSL_CMP_ITAV; cdecl = Load_sk_OSSL_CMP_ITAV_new_null;
   sk_OSSL_CMP_ITAV_new_reserve: function(cmp: Tsk_OSSL_CMP_ITAV_compfunc; n: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_ITAV; cdecl = Load_sk_OSSL_CMP_ITAV_new_reserve;
-  sk_OSSL_CMP_ITAV_reserve: function(_para: Pstack_st_OSSL_CMP_ITAV; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_ITAV_reserve;
-  sk_OSSL_CMP_ITAV_free: function(_para: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_ITAV_free;
-  sk_OSSL_CMP_ITAV_zero: function(_para: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_ITAV_zero;
-  sk_OSSL_CMP_ITAV_delete: function(st: Pstack_st_OSSL_CMP_ITAV; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_ITAV; cdecl = Load_sk_OSSL_CMP_ITAV_delete;
-  sk_OSSL_CMP_ITAV_delete_ptr: function(st: Pstack_st_OSSL_CMP_ITAV; ptr: Pstack_st_OSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl = Load_sk_OSSL_CMP_ITAV_delete_ptr;
-  sk_OSSL_CMP_ITAV_push: function(st: Pstack_st_OSSL_CMP_ITAV; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_ITAV_push;
-  sk_OSSL_CMP_ITAV_unshift: function(st: Pstack_st_OSSL_CMP_ITAV; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_ITAV_unshift;
-  sk_OSSL_CMP_ITAV_pop: function(_para: Pstack_st_OSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl = Load_sk_OSSL_CMP_ITAV_pop;
-  sk_OSSL_CMP_ITAV_shift: function(_para: Pstack_st_OSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl = Load_sk_OSSL_CMP_ITAV_shift;
-  sk_OSSL_CMP_ITAV_pop_free: procedure(st: Pstack_st_OSSL_CMP_ITAV; func: Tsk_OSSL_CMP_ITAV_freefunc); cdecl = Load_sk_OSSL_CMP_ITAV_pop_free;
-  sk_OSSL_CMP_ITAV_insert: function(st: Pstack_st_OSSL_CMP_ITAV; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_ITAV_insert;
-  sk_OSSL_CMP_ITAV_set: function(st: Pstack_st_OSSL_CMP_ITAV; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_ITAV; cdecl = Load_sk_OSSL_CMP_ITAV_set;
-  sk_OSSL_CMP_ITAV_find: function(st: Pstack_st_OSSL_CMP_ITAV; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_ITAV_find;
-  sk_OSSL_CMP_ITAV_find_ex: function(st: Pstack_st_OSSL_CMP_ITAV; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_ITAV_find_ex;
-  sk_OSSL_CMP_ITAV_find_all: function(st: Pstack_st_OSSL_CMP_ITAV; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_ITAV_find_all;
-  sk_OSSL_CMP_ITAV_sort: function(_para: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_ITAV_sort;
-  sk_OSSL_CMP_ITAV_is_sorted: function(_para: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_ITAV_is_sorted;
-  sk_OSSL_CMP_ITAV_dup: function(st: Pstack_st_OSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl = Load_sk_OSSL_CMP_ITAV_dup;
-  sk_OSSL_CMP_ITAV_deep_copy: function(st: Pstack_st_OSSL_CMP_ITAV; c: Tsk_OSSL_CMP_ITAV_compfunc; f: Tsk_OSSL_CMP_ITAV_freefunc): Pstack_st_OSSL_CMP_ITAV; cdecl = Load_sk_OSSL_CMP_ITAV_deep_copy;
-  sk_OSSL_CMP_ITAV_set_cmp_func: function(st: Pstack_st_OSSL_CMP_ITAV; cmp: Tsk_OSSL_CMP_ITAV_compfunc): Tsk_OSSL_CMP_ITAV_compfunc; cdecl = Load_sk_OSSL_CMP_ITAV_set_cmp_func;
+  sk_OSSL_CMP_ITAV_reserve: function(sk: Pstack_st_OSSL_CMP_ITAV; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_ITAV_reserve;
+  sk_OSSL_CMP_ITAV_free: procedure(sk: Pstack_st_OSSL_CMP_ITAV); cdecl = Load_sk_OSSL_CMP_ITAV_free;
+  sk_OSSL_CMP_ITAV_zero: procedure(sk: Pstack_st_OSSL_CMP_ITAV); cdecl = Load_sk_OSSL_CMP_ITAV_zero;
+  sk_OSSL_CMP_ITAV_delete: function(sk: Pstack_st_OSSL_CMP_ITAV; i: TOpenSSL_C_INT): POSSL_CMP_ITAV; cdecl = Load_sk_OSSL_CMP_ITAV_delete;
+  sk_OSSL_CMP_ITAV_delete_ptr: function(sk: Pstack_st_OSSL_CMP_ITAV; ptr: POSSL_CMP_ITAV): POSSL_CMP_ITAV; cdecl = Load_sk_OSSL_CMP_ITAV_delete_ptr;
+  sk_OSSL_CMP_ITAV_push: function(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_ITAV_push;
+  sk_OSSL_CMP_ITAV_unshift: function(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_ITAV_unshift;
+  sk_OSSL_CMP_ITAV_pop: function(sk: Pstack_st_OSSL_CMP_ITAV): POSSL_CMP_ITAV; cdecl = Load_sk_OSSL_CMP_ITAV_pop;
+  sk_OSSL_CMP_ITAV_shift: function(sk: Pstack_st_OSSL_CMP_ITAV): POSSL_CMP_ITAV; cdecl = Load_sk_OSSL_CMP_ITAV_shift;
+  sk_OSSL_CMP_ITAV_pop_free: procedure(sk: Pstack_st_OSSL_CMP_ITAV; func: Tsk_OSSL_CMP_ITAV_freefunc); cdecl = Load_sk_OSSL_CMP_ITAV_pop_free;
+  sk_OSSL_CMP_ITAV_insert: function(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_ITAV_insert;
+  sk_OSSL_CMP_ITAV_set: function(sk: Pstack_st_OSSL_CMP_ITAV; i: TOpenSSL_C_INT; data: POSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl = Load_sk_OSSL_CMP_ITAV_set;
+  sk_OSSL_CMP_ITAV_find: function(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_ITAV_find;
+  sk_OSSL_CMP_ITAV_find_ex: function(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_ITAV_find_ex;
+  sk_OSSL_CMP_ITAV_find_all: function(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_ITAV_find_all;
+  sk_OSSL_CMP_ITAV_sort: procedure(sk: Pstack_st_OSSL_CMP_ITAV); cdecl = Load_sk_OSSL_CMP_ITAV_sort;
+  sk_OSSL_CMP_ITAV_is_sorted: function(sk: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_ITAV_is_sorted;
+  sk_OSSL_CMP_ITAV_dup: function(sk: Pstack_st_OSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl = Load_sk_OSSL_CMP_ITAV_dup;
+  sk_OSSL_CMP_ITAV_deep_copy: function(sk: Pstack_st_OSSL_CMP_ITAV; c: Tsk_OSSL_CMP_ITAV_copyfunc; f: Tsk_OSSL_CMP_ITAV_freefunc): Pstack_st_OSSL_CMP_ITAV; cdecl = Load_sk_OSSL_CMP_ITAV_deep_copy;
+  sk_OSSL_CMP_ITAV_set_cmp_func: function(sk: Pstack_st_OSSL_CMP_ITAV; cmp: Tsk_OSSL_CMP_ITAV_compfunc): Tsk_OSSL_CMP_ITAV_compfunc; cdecl = Load_sk_OSSL_CMP_ITAV_set_cmp_func;
   { clang-format on }
     {$endif} {OPENSSL_STATIC_LINK_MODEL}
 
@@ -679,31 +679,31 @@ type
   function ossl_check_OSSL_CMP_CRLSTATUS_copyfunc_type(cpy: Tsk_OSSL_CMP_CRLSTATUS_copyfunc): TOPENSSL_sk_copyfunc{Has C Attribute: unused}; inline;
   function ossl_check_OSSL_CMP_CRLSTATUS_freefunc_type(fr: Tsk_OSSL_CMP_CRLSTATUS_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
     {$ifdef OPENSSL_STATIC_LINK_MODEL}
-  function sk_OSSL_CMP_CRLSTATUS_num(_para: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_OSSL_CMP_CRLSTATUS_value(_para: Pstack_st_OSSL_CMP_CRLSTATUS; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_OSSL_CMP_CRLSTATUS_num(sk: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
+  function sk_OSSL_CMP_CRLSTATUS_value(sk: Pstack_st_OSSL_CMP_CRLSTATUS; idx: TOpenSSL_C_INT): POSSL_CMP_CRLSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_OSSL_CMP_CRLSTATUS_new(cmp: Tsk_OSSL_CMP_CRLSTATUS_compfunc): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_OSSL_CMP_CRLSTATUS_new_null: Pstack_st_OSSL_CMP_CRLSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_OSSL_CMP_CRLSTATUS_new_reserve(cmp: Tsk_OSSL_CMP_CRLSTATUS_compfunc; n: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
-  function sk_OSSL_CMP_CRLSTATUS_reserve(_para: Pstack_st_OSSL_CMP_CRLSTATUS; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_OSSL_CMP_CRLSTATUS_free(_para: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_OSSL_CMP_CRLSTATUS_zero(_para: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_OSSL_CMP_CRLSTATUS_delete(st: Pstack_st_OSSL_CMP_CRLSTATUS; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_OSSL_CMP_CRLSTATUS_delete_ptr(st: Pstack_st_OSSL_CMP_CRLSTATUS; ptr: Pstack_st_OSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
-  function sk_OSSL_CMP_CRLSTATUS_push(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
-  function sk_OSSL_CMP_CRLSTATUS_unshift(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_OSSL_CMP_CRLSTATUS_pop(_para: Pstack_st_OSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_OSSL_CMP_CRLSTATUS_shift(_para: Pstack_st_OSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
-  procedure sk_OSSL_CMP_CRLSTATUS_pop_free(st: Pstack_st_OSSL_CMP_CRLSTATUS; func: Tsk_OSSL_CMP_CRLSTATUS_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
-  function sk_OSSL_CMP_CRLSTATUS_insert(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
-  function sk_OSSL_CMP_CRLSTATUS_set(st: Pstack_st_OSSL_CMP_CRLSTATUS; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
-  function sk_OSSL_CMP_CRLSTATUS_find(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
-  function sk_OSSL_CMP_CRLSTATUS_find_ex(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
-  function sk_OSSL_CMP_CRLSTATUS_find_all(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_OSSL_CMP_CRLSTATUS_sort(_para: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
-  function sk_OSSL_CMP_CRLSTATUS_is_sorted(_para: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
-  function sk_OSSL_CMP_CRLSTATUS_dup(st: Pstack_st_OSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
-  function sk_OSSL_CMP_CRLSTATUS_deep_copy(st: Pstack_st_OSSL_CMP_CRLSTATUS; c: Tsk_OSSL_CMP_CRLSTATUS_compfunc; f: Tsk_OSSL_CMP_CRLSTATUS_freefunc): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
-  function sk_OSSL_CMP_CRLSTATUS_set_cmp_func(st: Pstack_st_OSSL_CMP_CRLSTATUS; cmp: Tsk_OSSL_CMP_CRLSTATUS_compfunc): Tsk_OSSL_CMP_CRLSTATUS_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
+  function sk_OSSL_CMP_CRLSTATUS_reserve(sk: Pstack_st_OSSL_CMP_CRLSTATUS; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
+  procedure sk_OSSL_CMP_CRLSTATUS_free(sk: Pstack_st_OSSL_CMP_CRLSTATUS); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_OSSL_CMP_CRLSTATUS_zero(sk: Pstack_st_OSSL_CMP_CRLSTATUS); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_OSSL_CMP_CRLSTATUS_delete(sk: Pstack_st_OSSL_CMP_CRLSTATUS; i: TOpenSSL_C_INT): POSSL_CMP_CRLSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_OSSL_CMP_CRLSTATUS_delete_ptr(sk: Pstack_st_OSSL_CMP_CRLSTATUS; ptr: POSSL_CMP_CRLSTATUS): POSSL_CMP_CRLSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  function sk_OSSL_CMP_CRLSTATUS_push(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
+  function sk_OSSL_CMP_CRLSTATUS_unshift(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
+  function sk_OSSL_CMP_CRLSTATUS_pop(sk: Pstack_st_OSSL_CMP_CRLSTATUS): POSSL_CMP_CRLSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_OSSL_CMP_CRLSTATUS_shift(sk: Pstack_st_OSSL_CMP_CRLSTATUS): POSSL_CMP_CRLSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  procedure sk_OSSL_CMP_CRLSTATUS_pop_free(sk: Pstack_st_OSSL_CMP_CRLSTATUS; func: Tsk_OSSL_CMP_CRLSTATUS_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
+  function sk_OSSL_CMP_CRLSTATUS_insert(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
+  function sk_OSSL_CMP_CRLSTATUS_set(sk: Pstack_st_OSSL_CMP_CRLSTATUS; i: TOpenSSL_C_INT; data: POSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
+  function sk_OSSL_CMP_CRLSTATUS_find(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
+  function sk_OSSL_CMP_CRLSTATUS_find_ex(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
+  function sk_OSSL_CMP_CRLSTATUS_find_all(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
+  procedure sk_OSSL_CMP_CRLSTATUS_sort(sk: Pstack_st_OSSL_CMP_CRLSTATUS); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  function sk_OSSL_CMP_CRLSTATUS_is_sorted(sk: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
+  function sk_OSSL_CMP_CRLSTATUS_dup(sk: Pstack_st_OSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
+  function sk_OSSL_CMP_CRLSTATUS_deep_copy(sk: Pstack_st_OSSL_CMP_CRLSTATUS; c: Tsk_OSSL_CMP_CRLSTATUS_copyfunc; f: Tsk_OSSL_CMP_CRLSTATUS_freefunc): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
+  function sk_OSSL_CMP_CRLSTATUS_set_cmp_func(sk: Pstack_st_OSSL_CMP_CRLSTATUS; cmp: Tsk_OSSL_CMP_CRLSTATUS_compfunc): Tsk_OSSL_CMP_CRLSTATUS_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
   { clang-format on }
     {$else}
   {$EXTERNALSYM sk_OSSL_CMP_CRLSTATUS_num}
@@ -732,58 +732,58 @@ type
   {$EXTERNALSYM sk_OSSL_CMP_CRLSTATUS_deep_copy}
   {$EXTERNALSYM sk_OSSL_CMP_CRLSTATUS_set_cmp_func}
   {Do not call Function LoadDeclarations. Internal use only}
-  function Load_sk_OSSL_CMP_CRLSTATUS_num(_para: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CRLSTATUS_value(_para: Pstack_st_OSSL_CMP_CRLSTATUS; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
+  function Load_sk_OSSL_CMP_CRLSTATUS_num(sk: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CRLSTATUS_value(sk: Pstack_st_OSSL_CMP_CRLSTATUS; idx: TOpenSSL_C_INT): POSSL_CMP_CRLSTATUS; cdecl;
   function Load_sk_OSSL_CMP_CRLSTATUS_new(cmp: Tsk_OSSL_CMP_CRLSTATUS_compfunc): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
   function Load_sk_OSSL_CMP_CRLSTATUS_new_null: Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
   function Load_sk_OSSL_CMP_CRLSTATUS_new_reserve(cmp: Tsk_OSSL_CMP_CRLSTATUS_compfunc; n: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
-  function Load_sk_OSSL_CMP_CRLSTATUS_reserve(_para: Pstack_st_OSSL_CMP_CRLSTATUS; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CRLSTATUS_free(_para: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CRLSTATUS_zero(_para: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CRLSTATUS_delete(st: Pstack_st_OSSL_CMP_CRLSTATUS; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
-  function Load_sk_OSSL_CMP_CRLSTATUS_delete_ptr(st: Pstack_st_OSSL_CMP_CRLSTATUS; ptr: Pstack_st_OSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
-  function Load_sk_OSSL_CMP_CRLSTATUS_push(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CRLSTATUS_unshift(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CRLSTATUS_pop(_para: Pstack_st_OSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
-  function Load_sk_OSSL_CMP_CRLSTATUS_shift(_para: Pstack_st_OSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
-  procedure Load_sk_OSSL_CMP_CRLSTATUS_pop_free(st: Pstack_st_OSSL_CMP_CRLSTATUS; func: Tsk_OSSL_CMP_CRLSTATUS_freefunc); cdecl;
-  function Load_sk_OSSL_CMP_CRLSTATUS_insert(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CRLSTATUS_set(st: Pstack_st_OSSL_CMP_CRLSTATUS; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
-  function Load_sk_OSSL_CMP_CRLSTATUS_find(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CRLSTATUS_find_ex(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CRLSTATUS_find_all(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CRLSTATUS_sort(_para: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CRLSTATUS_is_sorted(_para: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CRLSTATUS_dup(st: Pstack_st_OSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
-  function Load_sk_OSSL_CMP_CRLSTATUS_deep_copy(st: Pstack_st_OSSL_CMP_CRLSTATUS; c: Tsk_OSSL_CMP_CRLSTATUS_compfunc; f: Tsk_OSSL_CMP_CRLSTATUS_freefunc): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
-  function Load_sk_OSSL_CMP_CRLSTATUS_set_cmp_func(st: Pstack_st_OSSL_CMP_CRLSTATUS; cmp: Tsk_OSSL_CMP_CRLSTATUS_compfunc): Tsk_OSSL_CMP_CRLSTATUS_compfunc; cdecl;
+  function Load_sk_OSSL_CMP_CRLSTATUS_reserve(sk: Pstack_st_OSSL_CMP_CRLSTATUS; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_OSSL_CMP_CRLSTATUS_free(sk: Pstack_st_OSSL_CMP_CRLSTATUS); cdecl;
+  procedure Load_sk_OSSL_CMP_CRLSTATUS_zero(sk: Pstack_st_OSSL_CMP_CRLSTATUS); cdecl;
+  function Load_sk_OSSL_CMP_CRLSTATUS_delete(sk: Pstack_st_OSSL_CMP_CRLSTATUS; i: TOpenSSL_C_INT): POSSL_CMP_CRLSTATUS; cdecl;
+  function Load_sk_OSSL_CMP_CRLSTATUS_delete_ptr(sk: Pstack_st_OSSL_CMP_CRLSTATUS; ptr: POSSL_CMP_CRLSTATUS): POSSL_CMP_CRLSTATUS; cdecl;
+  function Load_sk_OSSL_CMP_CRLSTATUS_push(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CRLSTATUS_unshift(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CRLSTATUS_pop(sk: Pstack_st_OSSL_CMP_CRLSTATUS): POSSL_CMP_CRLSTATUS; cdecl;
+  function Load_sk_OSSL_CMP_CRLSTATUS_shift(sk: Pstack_st_OSSL_CMP_CRLSTATUS): POSSL_CMP_CRLSTATUS; cdecl;
+  procedure Load_sk_OSSL_CMP_CRLSTATUS_pop_free(sk: Pstack_st_OSSL_CMP_CRLSTATUS; func: Tsk_OSSL_CMP_CRLSTATUS_freefunc); cdecl;
+  function Load_sk_OSSL_CMP_CRLSTATUS_insert(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CRLSTATUS_set(sk: Pstack_st_OSSL_CMP_CRLSTATUS; i: TOpenSSL_C_INT; data: POSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
+  function Load_sk_OSSL_CMP_CRLSTATUS_find(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CRLSTATUS_find_ex(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CRLSTATUS_find_all(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_OSSL_CMP_CRLSTATUS_sort(sk: Pstack_st_OSSL_CMP_CRLSTATUS); cdecl;
+  function Load_sk_OSSL_CMP_CRLSTATUS_is_sorted(sk: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CRLSTATUS_dup(sk: Pstack_st_OSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
+  function Load_sk_OSSL_CMP_CRLSTATUS_deep_copy(sk: Pstack_st_OSSL_CMP_CRLSTATUS; c: Tsk_OSSL_CMP_CRLSTATUS_copyfunc; f: Tsk_OSSL_CMP_CRLSTATUS_freefunc): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
+  function Load_sk_OSSL_CMP_CRLSTATUS_set_cmp_func(sk: Pstack_st_OSSL_CMP_CRLSTATUS; cmp: Tsk_OSSL_CMP_CRLSTATUS_compfunc): Tsk_OSSL_CMP_CRLSTATUS_compfunc; cdecl;
 
 var
-  sk_OSSL_CMP_CRLSTATUS_num: function(_para: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_num;
-  sk_OSSL_CMP_CRLSTATUS_value: function(_para: Pstack_st_OSSL_CMP_CRLSTATUS; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_value;
+  sk_OSSL_CMP_CRLSTATUS_num: function(sk: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_num;
+  sk_OSSL_CMP_CRLSTATUS_value: function(sk: Pstack_st_OSSL_CMP_CRLSTATUS; idx: TOpenSSL_C_INT): POSSL_CMP_CRLSTATUS; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_value;
   sk_OSSL_CMP_CRLSTATUS_new: function(cmp: Tsk_OSSL_CMP_CRLSTATUS_compfunc): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_new;
   sk_OSSL_CMP_CRLSTATUS_new_null: function: Pstack_st_OSSL_CMP_CRLSTATUS; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_new_null;
   sk_OSSL_CMP_CRLSTATUS_new_reserve: function(cmp: Tsk_OSSL_CMP_CRLSTATUS_compfunc; n: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_new_reserve;
-  sk_OSSL_CMP_CRLSTATUS_reserve: function(_para: Pstack_st_OSSL_CMP_CRLSTATUS; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_reserve;
-  sk_OSSL_CMP_CRLSTATUS_free: function(_para: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_free;
-  sk_OSSL_CMP_CRLSTATUS_zero: function(_para: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_zero;
-  sk_OSSL_CMP_CRLSTATUS_delete: function(st: Pstack_st_OSSL_CMP_CRLSTATUS; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_delete;
-  sk_OSSL_CMP_CRLSTATUS_delete_ptr: function(st: Pstack_st_OSSL_CMP_CRLSTATUS; ptr: Pstack_st_OSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_delete_ptr;
-  sk_OSSL_CMP_CRLSTATUS_push: function(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_push;
-  sk_OSSL_CMP_CRLSTATUS_unshift: function(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_unshift;
-  sk_OSSL_CMP_CRLSTATUS_pop: function(_para: Pstack_st_OSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_pop;
-  sk_OSSL_CMP_CRLSTATUS_shift: function(_para: Pstack_st_OSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_shift;
-  sk_OSSL_CMP_CRLSTATUS_pop_free: procedure(st: Pstack_st_OSSL_CMP_CRLSTATUS; func: Tsk_OSSL_CMP_CRLSTATUS_freefunc); cdecl = Load_sk_OSSL_CMP_CRLSTATUS_pop_free;
-  sk_OSSL_CMP_CRLSTATUS_insert: function(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_insert;
-  sk_OSSL_CMP_CRLSTATUS_set: function(st: Pstack_st_OSSL_CMP_CRLSTATUS; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_set;
-  sk_OSSL_CMP_CRLSTATUS_find: function(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_find;
-  sk_OSSL_CMP_CRLSTATUS_find_ex: function(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_find_ex;
-  sk_OSSL_CMP_CRLSTATUS_find_all: function(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_find_all;
-  sk_OSSL_CMP_CRLSTATUS_sort: function(_para: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_sort;
-  sk_OSSL_CMP_CRLSTATUS_is_sorted: function(_para: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_is_sorted;
-  sk_OSSL_CMP_CRLSTATUS_dup: function(st: Pstack_st_OSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_dup;
-  sk_OSSL_CMP_CRLSTATUS_deep_copy: function(st: Pstack_st_OSSL_CMP_CRLSTATUS; c: Tsk_OSSL_CMP_CRLSTATUS_compfunc; f: Tsk_OSSL_CMP_CRLSTATUS_freefunc): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_deep_copy;
-  sk_OSSL_CMP_CRLSTATUS_set_cmp_func: function(st: Pstack_st_OSSL_CMP_CRLSTATUS; cmp: Tsk_OSSL_CMP_CRLSTATUS_compfunc): Tsk_OSSL_CMP_CRLSTATUS_compfunc; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_set_cmp_func;
+  sk_OSSL_CMP_CRLSTATUS_reserve: function(sk: Pstack_st_OSSL_CMP_CRLSTATUS; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_reserve;
+  sk_OSSL_CMP_CRLSTATUS_free: procedure(sk: Pstack_st_OSSL_CMP_CRLSTATUS); cdecl = Load_sk_OSSL_CMP_CRLSTATUS_free;
+  sk_OSSL_CMP_CRLSTATUS_zero: procedure(sk: Pstack_st_OSSL_CMP_CRLSTATUS); cdecl = Load_sk_OSSL_CMP_CRLSTATUS_zero;
+  sk_OSSL_CMP_CRLSTATUS_delete: function(sk: Pstack_st_OSSL_CMP_CRLSTATUS; i: TOpenSSL_C_INT): POSSL_CMP_CRLSTATUS; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_delete;
+  sk_OSSL_CMP_CRLSTATUS_delete_ptr: function(sk: Pstack_st_OSSL_CMP_CRLSTATUS; ptr: POSSL_CMP_CRLSTATUS): POSSL_CMP_CRLSTATUS; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_delete_ptr;
+  sk_OSSL_CMP_CRLSTATUS_push: function(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_push;
+  sk_OSSL_CMP_CRLSTATUS_unshift: function(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_unshift;
+  sk_OSSL_CMP_CRLSTATUS_pop: function(sk: Pstack_st_OSSL_CMP_CRLSTATUS): POSSL_CMP_CRLSTATUS; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_pop;
+  sk_OSSL_CMP_CRLSTATUS_shift: function(sk: Pstack_st_OSSL_CMP_CRLSTATUS): POSSL_CMP_CRLSTATUS; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_shift;
+  sk_OSSL_CMP_CRLSTATUS_pop_free: procedure(sk: Pstack_st_OSSL_CMP_CRLSTATUS; func: Tsk_OSSL_CMP_CRLSTATUS_freefunc); cdecl = Load_sk_OSSL_CMP_CRLSTATUS_pop_free;
+  sk_OSSL_CMP_CRLSTATUS_insert: function(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_insert;
+  sk_OSSL_CMP_CRLSTATUS_set: function(sk: Pstack_st_OSSL_CMP_CRLSTATUS; i: TOpenSSL_C_INT; data: POSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_set;
+  sk_OSSL_CMP_CRLSTATUS_find: function(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_find;
+  sk_OSSL_CMP_CRLSTATUS_find_ex: function(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_find_ex;
+  sk_OSSL_CMP_CRLSTATUS_find_all: function(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_find_all;
+  sk_OSSL_CMP_CRLSTATUS_sort: procedure(sk: Pstack_st_OSSL_CMP_CRLSTATUS); cdecl = Load_sk_OSSL_CMP_CRLSTATUS_sort;
+  sk_OSSL_CMP_CRLSTATUS_is_sorted: function(sk: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_is_sorted;
+  sk_OSSL_CMP_CRLSTATUS_dup: function(sk: Pstack_st_OSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_dup;
+  sk_OSSL_CMP_CRLSTATUS_deep_copy: function(sk: Pstack_st_OSSL_CMP_CRLSTATUS; c: Tsk_OSSL_CMP_CRLSTATUS_copyfunc; f: Tsk_OSSL_CMP_CRLSTATUS_freefunc): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_deep_copy;
+  sk_OSSL_CMP_CRLSTATUS_set_cmp_func: function(sk: Pstack_st_OSSL_CMP_CRLSTATUS; cmp: Tsk_OSSL_CMP_CRLSTATUS_compfunc): Tsk_OSSL_CMP_CRLSTATUS_compfunc; cdecl = Load_sk_OSSL_CMP_CRLSTATUS_set_cmp_func;
   { clang-format on }
     {$endif} {OPENSSL_STATIC_LINK_MODEL}
 
@@ -909,31 +909,31 @@ type
   function ossl_check_OSSL_CMP_PKISI_copyfunc_type(cpy: Tsk_OSSL_CMP_PKISI_copyfunc): TOPENSSL_sk_copyfunc{Has C Attribute: unused}; inline;
   function ossl_check_OSSL_CMP_PKISI_freefunc_type(fr: Tsk_OSSL_CMP_PKISI_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
     {$ifdef OPENSSL_STATIC_LINK_MODEL}
-  function sk_OSSL_CMP_PKISI_num(_para: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_OSSL_CMP_PKISI_value(_para: Pstack_st_OSSL_CMP_PKISI; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_PKISI; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_OSSL_CMP_PKISI_num(sk: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
+  function sk_OSSL_CMP_PKISI_value(sk: Pstack_st_OSSL_CMP_PKISI; idx: TOpenSSL_C_INT): POSSL_CMP_PKISI; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_OSSL_CMP_PKISI_new(cmp: Tsk_OSSL_CMP_PKISI_compfunc): Pstack_st_OSSL_CMP_PKISI; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_OSSL_CMP_PKISI_new_null: Pstack_st_OSSL_CMP_PKISI; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_OSSL_CMP_PKISI_new_reserve(cmp: Tsk_OSSL_CMP_PKISI_compfunc; n: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_PKISI; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
-  function sk_OSSL_CMP_PKISI_reserve(_para: Pstack_st_OSSL_CMP_PKISI; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_OSSL_CMP_PKISI_free(_para: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_OSSL_CMP_PKISI_zero(_para: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_OSSL_CMP_PKISI_delete(st: Pstack_st_OSSL_CMP_PKISI; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_PKISI; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_OSSL_CMP_PKISI_delete_ptr(st: Pstack_st_OSSL_CMP_PKISI; ptr: Pstack_st_OSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
-  function sk_OSSL_CMP_PKISI_push(st: Pstack_st_OSSL_CMP_PKISI; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
-  function sk_OSSL_CMP_PKISI_unshift(st: Pstack_st_OSSL_CMP_PKISI; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_OSSL_CMP_PKISI_pop(_para: Pstack_st_OSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_OSSL_CMP_PKISI_shift(_para: Pstack_st_OSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
-  procedure sk_OSSL_CMP_PKISI_pop_free(st: Pstack_st_OSSL_CMP_PKISI; func: Tsk_OSSL_CMP_PKISI_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
-  function sk_OSSL_CMP_PKISI_insert(st: Pstack_st_OSSL_CMP_PKISI; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
-  function sk_OSSL_CMP_PKISI_set(st: Pstack_st_OSSL_CMP_PKISI; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_PKISI; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
-  function sk_OSSL_CMP_PKISI_find(st: Pstack_st_OSSL_CMP_PKISI; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
-  function sk_OSSL_CMP_PKISI_find_ex(st: Pstack_st_OSSL_CMP_PKISI; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
-  function sk_OSSL_CMP_PKISI_find_all(st: Pstack_st_OSSL_CMP_PKISI; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_OSSL_CMP_PKISI_sort(_para: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
-  function sk_OSSL_CMP_PKISI_is_sorted(_para: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
-  function sk_OSSL_CMP_PKISI_dup(st: Pstack_st_OSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
-  function sk_OSSL_CMP_PKISI_deep_copy(st: Pstack_st_OSSL_CMP_PKISI; c: Tsk_OSSL_CMP_PKISI_compfunc; f: Tsk_OSSL_CMP_PKISI_freefunc): Pstack_st_OSSL_CMP_PKISI; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
-  function sk_OSSL_CMP_PKISI_set_cmp_func(st: Pstack_st_OSSL_CMP_PKISI; cmp: Tsk_OSSL_CMP_PKISI_compfunc): Tsk_OSSL_CMP_PKISI_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
+  function sk_OSSL_CMP_PKISI_reserve(sk: Pstack_st_OSSL_CMP_PKISI; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
+  procedure sk_OSSL_CMP_PKISI_free(sk: Pstack_st_OSSL_CMP_PKISI); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_OSSL_CMP_PKISI_zero(sk: Pstack_st_OSSL_CMP_PKISI); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_OSSL_CMP_PKISI_delete(sk: Pstack_st_OSSL_CMP_PKISI; i: TOpenSSL_C_INT): POSSL_CMP_PKISI; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_OSSL_CMP_PKISI_delete_ptr(sk: Pstack_st_OSSL_CMP_PKISI; ptr: POSSL_CMP_PKISI): POSSL_CMP_PKISI; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  function sk_OSSL_CMP_PKISI_push(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
+  function sk_OSSL_CMP_PKISI_unshift(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
+  function sk_OSSL_CMP_PKISI_pop(sk: Pstack_st_OSSL_CMP_PKISI): POSSL_CMP_PKISI; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_OSSL_CMP_PKISI_shift(sk: Pstack_st_OSSL_CMP_PKISI): POSSL_CMP_PKISI; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  procedure sk_OSSL_CMP_PKISI_pop_free(sk: Pstack_st_OSSL_CMP_PKISI; func: Tsk_OSSL_CMP_PKISI_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
+  function sk_OSSL_CMP_PKISI_insert(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
+  function sk_OSSL_CMP_PKISI_set(sk: Pstack_st_OSSL_CMP_PKISI; i: TOpenSSL_C_INT; data: POSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
+  function sk_OSSL_CMP_PKISI_find(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
+  function sk_OSSL_CMP_PKISI_find_ex(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
+  function sk_OSSL_CMP_PKISI_find_all(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
+  procedure sk_OSSL_CMP_PKISI_sort(sk: Pstack_st_OSSL_CMP_PKISI); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  function sk_OSSL_CMP_PKISI_is_sorted(sk: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
+  function sk_OSSL_CMP_PKISI_dup(sk: Pstack_st_OSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
+  function sk_OSSL_CMP_PKISI_deep_copy(sk: Pstack_st_OSSL_CMP_PKISI; c: Tsk_OSSL_CMP_PKISI_copyfunc; f: Tsk_OSSL_CMP_PKISI_freefunc): Pstack_st_OSSL_CMP_PKISI; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
+  function sk_OSSL_CMP_PKISI_set_cmp_func(sk: Pstack_st_OSSL_CMP_PKISI; cmp: Tsk_OSSL_CMP_PKISI_compfunc): Tsk_OSSL_CMP_PKISI_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
   { clang-format on }
     {$else}
   {$EXTERNALSYM sk_OSSL_CMP_PKISI_num}
@@ -962,58 +962,58 @@ type
   {$EXTERNALSYM sk_OSSL_CMP_PKISI_deep_copy}
   {$EXTERNALSYM sk_OSSL_CMP_PKISI_set_cmp_func}
   {Do not call Function LoadDeclarations. Internal use only}
-  function Load_sk_OSSL_CMP_PKISI_num(_para: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_PKISI_value(_para: Pstack_st_OSSL_CMP_PKISI; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_PKISI; cdecl;
+  function Load_sk_OSSL_CMP_PKISI_num(sk: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_PKISI_value(sk: Pstack_st_OSSL_CMP_PKISI; idx: TOpenSSL_C_INT): POSSL_CMP_PKISI; cdecl;
   function Load_sk_OSSL_CMP_PKISI_new(cmp: Tsk_OSSL_CMP_PKISI_compfunc): Pstack_st_OSSL_CMP_PKISI; cdecl;
   function Load_sk_OSSL_CMP_PKISI_new_null: Pstack_st_OSSL_CMP_PKISI; cdecl;
   function Load_sk_OSSL_CMP_PKISI_new_reserve(cmp: Tsk_OSSL_CMP_PKISI_compfunc; n: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_PKISI; cdecl;
-  function Load_sk_OSSL_CMP_PKISI_reserve(_para: Pstack_st_OSSL_CMP_PKISI; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_PKISI_free(_para: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_PKISI_zero(_para: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_PKISI_delete(st: Pstack_st_OSSL_CMP_PKISI; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_PKISI; cdecl;
-  function Load_sk_OSSL_CMP_PKISI_delete_ptr(st: Pstack_st_OSSL_CMP_PKISI; ptr: Pstack_st_OSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl;
-  function Load_sk_OSSL_CMP_PKISI_push(st: Pstack_st_OSSL_CMP_PKISI; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_PKISI_unshift(st: Pstack_st_OSSL_CMP_PKISI; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_PKISI_pop(_para: Pstack_st_OSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl;
-  function Load_sk_OSSL_CMP_PKISI_shift(_para: Pstack_st_OSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl;
-  procedure Load_sk_OSSL_CMP_PKISI_pop_free(st: Pstack_st_OSSL_CMP_PKISI; func: Tsk_OSSL_CMP_PKISI_freefunc); cdecl;
-  function Load_sk_OSSL_CMP_PKISI_insert(st: Pstack_st_OSSL_CMP_PKISI; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_PKISI_set(st: Pstack_st_OSSL_CMP_PKISI; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_PKISI; cdecl;
-  function Load_sk_OSSL_CMP_PKISI_find(st: Pstack_st_OSSL_CMP_PKISI; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_PKISI_find_ex(st: Pstack_st_OSSL_CMP_PKISI; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_PKISI_find_all(st: Pstack_st_OSSL_CMP_PKISI; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_PKISI_sort(_para: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_PKISI_is_sorted(_para: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_PKISI_dup(st: Pstack_st_OSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl;
-  function Load_sk_OSSL_CMP_PKISI_deep_copy(st: Pstack_st_OSSL_CMP_PKISI; c: Tsk_OSSL_CMP_PKISI_compfunc; f: Tsk_OSSL_CMP_PKISI_freefunc): Pstack_st_OSSL_CMP_PKISI; cdecl;
-  function Load_sk_OSSL_CMP_PKISI_set_cmp_func(st: Pstack_st_OSSL_CMP_PKISI; cmp: Tsk_OSSL_CMP_PKISI_compfunc): Tsk_OSSL_CMP_PKISI_compfunc; cdecl;
+  function Load_sk_OSSL_CMP_PKISI_reserve(sk: Pstack_st_OSSL_CMP_PKISI; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_OSSL_CMP_PKISI_free(sk: Pstack_st_OSSL_CMP_PKISI); cdecl;
+  procedure Load_sk_OSSL_CMP_PKISI_zero(sk: Pstack_st_OSSL_CMP_PKISI); cdecl;
+  function Load_sk_OSSL_CMP_PKISI_delete(sk: Pstack_st_OSSL_CMP_PKISI; i: TOpenSSL_C_INT): POSSL_CMP_PKISI; cdecl;
+  function Load_sk_OSSL_CMP_PKISI_delete_ptr(sk: Pstack_st_OSSL_CMP_PKISI; ptr: POSSL_CMP_PKISI): POSSL_CMP_PKISI; cdecl;
+  function Load_sk_OSSL_CMP_PKISI_push(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_PKISI_unshift(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_PKISI_pop(sk: Pstack_st_OSSL_CMP_PKISI): POSSL_CMP_PKISI; cdecl;
+  function Load_sk_OSSL_CMP_PKISI_shift(sk: Pstack_st_OSSL_CMP_PKISI): POSSL_CMP_PKISI; cdecl;
+  procedure Load_sk_OSSL_CMP_PKISI_pop_free(sk: Pstack_st_OSSL_CMP_PKISI; func: Tsk_OSSL_CMP_PKISI_freefunc); cdecl;
+  function Load_sk_OSSL_CMP_PKISI_insert(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_PKISI_set(sk: Pstack_st_OSSL_CMP_PKISI; i: TOpenSSL_C_INT; data: POSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl;
+  function Load_sk_OSSL_CMP_PKISI_find(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_PKISI_find_ex(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_PKISI_find_all(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_OSSL_CMP_PKISI_sort(sk: Pstack_st_OSSL_CMP_PKISI); cdecl;
+  function Load_sk_OSSL_CMP_PKISI_is_sorted(sk: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_PKISI_dup(sk: Pstack_st_OSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl;
+  function Load_sk_OSSL_CMP_PKISI_deep_copy(sk: Pstack_st_OSSL_CMP_PKISI; c: Tsk_OSSL_CMP_PKISI_copyfunc; f: Tsk_OSSL_CMP_PKISI_freefunc): Pstack_st_OSSL_CMP_PKISI; cdecl;
+  function Load_sk_OSSL_CMP_PKISI_set_cmp_func(sk: Pstack_st_OSSL_CMP_PKISI; cmp: Tsk_OSSL_CMP_PKISI_compfunc): Tsk_OSSL_CMP_PKISI_compfunc; cdecl;
 
 var
-  sk_OSSL_CMP_PKISI_num: function(_para: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_PKISI_num;
-  sk_OSSL_CMP_PKISI_value: function(_para: Pstack_st_OSSL_CMP_PKISI; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_PKISI; cdecl = Load_sk_OSSL_CMP_PKISI_value;
+  sk_OSSL_CMP_PKISI_num: function(sk: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_PKISI_num;
+  sk_OSSL_CMP_PKISI_value: function(sk: Pstack_st_OSSL_CMP_PKISI; idx: TOpenSSL_C_INT): POSSL_CMP_PKISI; cdecl = Load_sk_OSSL_CMP_PKISI_value;
   sk_OSSL_CMP_PKISI_new: function(cmp: Tsk_OSSL_CMP_PKISI_compfunc): Pstack_st_OSSL_CMP_PKISI; cdecl = Load_sk_OSSL_CMP_PKISI_new;
   sk_OSSL_CMP_PKISI_new_null: function: Pstack_st_OSSL_CMP_PKISI; cdecl = Load_sk_OSSL_CMP_PKISI_new_null;
   sk_OSSL_CMP_PKISI_new_reserve: function(cmp: Tsk_OSSL_CMP_PKISI_compfunc; n: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_PKISI; cdecl = Load_sk_OSSL_CMP_PKISI_new_reserve;
-  sk_OSSL_CMP_PKISI_reserve: function(_para: Pstack_st_OSSL_CMP_PKISI; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_PKISI_reserve;
-  sk_OSSL_CMP_PKISI_free: function(_para: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_PKISI_free;
-  sk_OSSL_CMP_PKISI_zero: function(_para: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_PKISI_zero;
-  sk_OSSL_CMP_PKISI_delete: function(st: Pstack_st_OSSL_CMP_PKISI; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_PKISI; cdecl = Load_sk_OSSL_CMP_PKISI_delete;
-  sk_OSSL_CMP_PKISI_delete_ptr: function(st: Pstack_st_OSSL_CMP_PKISI; ptr: Pstack_st_OSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl = Load_sk_OSSL_CMP_PKISI_delete_ptr;
-  sk_OSSL_CMP_PKISI_push: function(st: Pstack_st_OSSL_CMP_PKISI; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_PKISI_push;
-  sk_OSSL_CMP_PKISI_unshift: function(st: Pstack_st_OSSL_CMP_PKISI; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_PKISI_unshift;
-  sk_OSSL_CMP_PKISI_pop: function(_para: Pstack_st_OSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl = Load_sk_OSSL_CMP_PKISI_pop;
-  sk_OSSL_CMP_PKISI_shift: function(_para: Pstack_st_OSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl = Load_sk_OSSL_CMP_PKISI_shift;
-  sk_OSSL_CMP_PKISI_pop_free: procedure(st: Pstack_st_OSSL_CMP_PKISI; func: Tsk_OSSL_CMP_PKISI_freefunc); cdecl = Load_sk_OSSL_CMP_PKISI_pop_free;
-  sk_OSSL_CMP_PKISI_insert: function(st: Pstack_st_OSSL_CMP_PKISI; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_PKISI_insert;
-  sk_OSSL_CMP_PKISI_set: function(st: Pstack_st_OSSL_CMP_PKISI; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_PKISI; cdecl = Load_sk_OSSL_CMP_PKISI_set;
-  sk_OSSL_CMP_PKISI_find: function(st: Pstack_st_OSSL_CMP_PKISI; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_PKISI_find;
-  sk_OSSL_CMP_PKISI_find_ex: function(st: Pstack_st_OSSL_CMP_PKISI; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_PKISI_find_ex;
-  sk_OSSL_CMP_PKISI_find_all: function(st: Pstack_st_OSSL_CMP_PKISI; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_PKISI_find_all;
-  sk_OSSL_CMP_PKISI_sort: function(_para: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_PKISI_sort;
-  sk_OSSL_CMP_PKISI_is_sorted: function(_para: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_PKISI_is_sorted;
-  sk_OSSL_CMP_PKISI_dup: function(st: Pstack_st_OSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl = Load_sk_OSSL_CMP_PKISI_dup;
-  sk_OSSL_CMP_PKISI_deep_copy: function(st: Pstack_st_OSSL_CMP_PKISI; c: Tsk_OSSL_CMP_PKISI_compfunc; f: Tsk_OSSL_CMP_PKISI_freefunc): Pstack_st_OSSL_CMP_PKISI; cdecl = Load_sk_OSSL_CMP_PKISI_deep_copy;
-  sk_OSSL_CMP_PKISI_set_cmp_func: function(st: Pstack_st_OSSL_CMP_PKISI; cmp: Tsk_OSSL_CMP_PKISI_compfunc): Tsk_OSSL_CMP_PKISI_compfunc; cdecl = Load_sk_OSSL_CMP_PKISI_set_cmp_func;
+  sk_OSSL_CMP_PKISI_reserve: function(sk: Pstack_st_OSSL_CMP_PKISI; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_PKISI_reserve;
+  sk_OSSL_CMP_PKISI_free: procedure(sk: Pstack_st_OSSL_CMP_PKISI); cdecl = Load_sk_OSSL_CMP_PKISI_free;
+  sk_OSSL_CMP_PKISI_zero: procedure(sk: Pstack_st_OSSL_CMP_PKISI); cdecl = Load_sk_OSSL_CMP_PKISI_zero;
+  sk_OSSL_CMP_PKISI_delete: function(sk: Pstack_st_OSSL_CMP_PKISI; i: TOpenSSL_C_INT): POSSL_CMP_PKISI; cdecl = Load_sk_OSSL_CMP_PKISI_delete;
+  sk_OSSL_CMP_PKISI_delete_ptr: function(sk: Pstack_st_OSSL_CMP_PKISI; ptr: POSSL_CMP_PKISI): POSSL_CMP_PKISI; cdecl = Load_sk_OSSL_CMP_PKISI_delete_ptr;
+  sk_OSSL_CMP_PKISI_push: function(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_PKISI_push;
+  sk_OSSL_CMP_PKISI_unshift: function(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_PKISI_unshift;
+  sk_OSSL_CMP_PKISI_pop: function(sk: Pstack_st_OSSL_CMP_PKISI): POSSL_CMP_PKISI; cdecl = Load_sk_OSSL_CMP_PKISI_pop;
+  sk_OSSL_CMP_PKISI_shift: function(sk: Pstack_st_OSSL_CMP_PKISI): POSSL_CMP_PKISI; cdecl = Load_sk_OSSL_CMP_PKISI_shift;
+  sk_OSSL_CMP_PKISI_pop_free: procedure(sk: Pstack_st_OSSL_CMP_PKISI; func: Tsk_OSSL_CMP_PKISI_freefunc); cdecl = Load_sk_OSSL_CMP_PKISI_pop_free;
+  sk_OSSL_CMP_PKISI_insert: function(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_PKISI_insert;
+  sk_OSSL_CMP_PKISI_set: function(sk: Pstack_st_OSSL_CMP_PKISI; i: TOpenSSL_C_INT; data: POSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl = Load_sk_OSSL_CMP_PKISI_set;
+  sk_OSSL_CMP_PKISI_find: function(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_PKISI_find;
+  sk_OSSL_CMP_PKISI_find_ex: function(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_PKISI_find_ex;
+  sk_OSSL_CMP_PKISI_find_all: function(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_PKISI_find_all;
+  sk_OSSL_CMP_PKISI_sort: procedure(sk: Pstack_st_OSSL_CMP_PKISI); cdecl = Load_sk_OSSL_CMP_PKISI_sort;
+  sk_OSSL_CMP_PKISI_is_sorted: function(sk: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_PKISI_is_sorted;
+  sk_OSSL_CMP_PKISI_dup: function(sk: Pstack_st_OSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl = Load_sk_OSSL_CMP_PKISI_dup;
+  sk_OSSL_CMP_PKISI_deep_copy: function(sk: Pstack_st_OSSL_CMP_PKISI; c: Tsk_OSSL_CMP_PKISI_copyfunc; f: Tsk_OSSL_CMP_PKISI_freefunc): Pstack_st_OSSL_CMP_PKISI; cdecl = Load_sk_OSSL_CMP_PKISI_deep_copy;
+  sk_OSSL_CMP_PKISI_set_cmp_func: function(sk: Pstack_st_OSSL_CMP_PKISI; cmp: Tsk_OSSL_CMP_PKISI_compfunc): Tsk_OSSL_CMP_PKISI_compfunc; cdecl = Load_sk_OSSL_CMP_PKISI_set_cmp_func;
   { clang-format on }
     {$endif} {OPENSSL_STATIC_LINK_MODEL}
 
@@ -1050,31 +1050,31 @@ type
   function ossl_check_OSSL_CMP_CERTREPMESSAGE_copyfunc_type(cpy: Tsk_OSSL_CMP_CERTREPMESSAGE_copyfunc): TOPENSSL_sk_copyfunc{Has C Attribute: unused}; inline;
   function ossl_check_OSSL_CMP_CERTREPMESSAGE_freefunc_type(fr: Tsk_OSSL_CMP_CERTREPMESSAGE_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
     {$ifdef OPENSSL_STATIC_LINK_MODEL}
-  function sk_OSSL_CMP_CERTREPMESSAGE_num(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_OSSL_CMP_CERTREPMESSAGE_value(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_OSSL_CMP_CERTREPMESSAGE_num(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
+  function sk_OSSL_CMP_CERTREPMESSAGE_value(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; idx: TOpenSSL_C_INT): POSSL_CMP_CERTREPMESSAGE; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_OSSL_CMP_CERTREPMESSAGE_new(cmp: Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_OSSL_CMP_CERTREPMESSAGE_new_null: Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_OSSL_CMP_CERTREPMESSAGE_new_reserve(cmp: Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc; n: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
-  function sk_OSSL_CMP_CERTREPMESSAGE_reserve(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_OSSL_CMP_CERTREPMESSAGE_free(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_OSSL_CMP_CERTREPMESSAGE_zero(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_OSSL_CMP_CERTREPMESSAGE_delete(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_OSSL_CMP_CERTREPMESSAGE_delete_ptr(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; ptr: Pstack_st_OSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
-  function sk_OSSL_CMP_CERTREPMESSAGE_push(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
-  function sk_OSSL_CMP_CERTREPMESSAGE_unshift(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_OSSL_CMP_CERTREPMESSAGE_pop(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_OSSL_CMP_CERTREPMESSAGE_shift(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
-  procedure sk_OSSL_CMP_CERTREPMESSAGE_pop_free(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; func: Tsk_OSSL_CMP_CERTREPMESSAGE_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
-  function sk_OSSL_CMP_CERTREPMESSAGE_insert(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
-  function sk_OSSL_CMP_CERTREPMESSAGE_set(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
-  function sk_OSSL_CMP_CERTREPMESSAGE_find(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
-  function sk_OSSL_CMP_CERTREPMESSAGE_find_ex(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
-  function sk_OSSL_CMP_CERTREPMESSAGE_find_all(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_OSSL_CMP_CERTREPMESSAGE_sort(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
-  function sk_OSSL_CMP_CERTREPMESSAGE_is_sorted(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
-  function sk_OSSL_CMP_CERTREPMESSAGE_dup(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
-  function sk_OSSL_CMP_CERTREPMESSAGE_deep_copy(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; c: Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc; f: Tsk_OSSL_CMP_CERTREPMESSAGE_freefunc): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
-  function sk_OSSL_CMP_CERTREPMESSAGE_set_cmp_func(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; cmp: Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc): Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
+  function sk_OSSL_CMP_CERTREPMESSAGE_reserve(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
+  procedure sk_OSSL_CMP_CERTREPMESSAGE_free(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_OSSL_CMP_CERTREPMESSAGE_zero(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_OSSL_CMP_CERTREPMESSAGE_delete(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; i: TOpenSSL_C_INT): POSSL_CMP_CERTREPMESSAGE; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_OSSL_CMP_CERTREPMESSAGE_delete_ptr(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; ptr: POSSL_CMP_CERTREPMESSAGE): POSSL_CMP_CERTREPMESSAGE; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  function sk_OSSL_CMP_CERTREPMESSAGE_push(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
+  function sk_OSSL_CMP_CERTREPMESSAGE_unshift(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
+  function sk_OSSL_CMP_CERTREPMESSAGE_pop(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE): POSSL_CMP_CERTREPMESSAGE; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_OSSL_CMP_CERTREPMESSAGE_shift(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE): POSSL_CMP_CERTREPMESSAGE; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  procedure sk_OSSL_CMP_CERTREPMESSAGE_pop_free(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; func: Tsk_OSSL_CMP_CERTREPMESSAGE_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
+  function sk_OSSL_CMP_CERTREPMESSAGE_insert(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
+  function sk_OSSL_CMP_CERTREPMESSAGE_set(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; i: TOpenSSL_C_INT; data: POSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
+  function sk_OSSL_CMP_CERTREPMESSAGE_find(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
+  function sk_OSSL_CMP_CERTREPMESSAGE_find_ex(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
+  function sk_OSSL_CMP_CERTREPMESSAGE_find_all(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
+  procedure sk_OSSL_CMP_CERTREPMESSAGE_sort(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  function sk_OSSL_CMP_CERTREPMESSAGE_is_sorted(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
+  function sk_OSSL_CMP_CERTREPMESSAGE_dup(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
+  function sk_OSSL_CMP_CERTREPMESSAGE_deep_copy(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; c: Tsk_OSSL_CMP_CERTREPMESSAGE_copyfunc; f: Tsk_OSSL_CMP_CERTREPMESSAGE_freefunc): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
+  function sk_OSSL_CMP_CERTREPMESSAGE_set_cmp_func(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; cmp: Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc): Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
   { clang-format on }
     {$else}
   {$EXTERNALSYM sk_OSSL_CMP_CERTREPMESSAGE_num}
@@ -1103,58 +1103,58 @@ type
   {$EXTERNALSYM sk_OSSL_CMP_CERTREPMESSAGE_deep_copy}
   {$EXTERNALSYM sk_OSSL_CMP_CERTREPMESSAGE_set_cmp_func}
   {Do not call Function LoadDeclarations. Internal use only}
-  function Load_sk_OSSL_CMP_CERTREPMESSAGE_num(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTREPMESSAGE_value(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
+  function Load_sk_OSSL_CMP_CERTREPMESSAGE_num(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CERTREPMESSAGE_value(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; idx: TOpenSSL_C_INT): POSSL_CMP_CERTREPMESSAGE; cdecl;
   function Load_sk_OSSL_CMP_CERTREPMESSAGE_new(cmp: Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
   function Load_sk_OSSL_CMP_CERTREPMESSAGE_new_null: Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
   function Load_sk_OSSL_CMP_CERTREPMESSAGE_new_reserve(cmp: Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc; n: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
-  function Load_sk_OSSL_CMP_CERTREPMESSAGE_reserve(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTREPMESSAGE_free(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTREPMESSAGE_zero(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTREPMESSAGE_delete(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
-  function Load_sk_OSSL_CMP_CERTREPMESSAGE_delete_ptr(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; ptr: Pstack_st_OSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
-  function Load_sk_OSSL_CMP_CERTREPMESSAGE_push(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTREPMESSAGE_unshift(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTREPMESSAGE_pop(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
-  function Load_sk_OSSL_CMP_CERTREPMESSAGE_shift(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
-  procedure Load_sk_OSSL_CMP_CERTREPMESSAGE_pop_free(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; func: Tsk_OSSL_CMP_CERTREPMESSAGE_freefunc); cdecl;
-  function Load_sk_OSSL_CMP_CERTREPMESSAGE_insert(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTREPMESSAGE_set(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
-  function Load_sk_OSSL_CMP_CERTREPMESSAGE_find(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTREPMESSAGE_find_ex(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTREPMESSAGE_find_all(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTREPMESSAGE_sort(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTREPMESSAGE_is_sorted(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTREPMESSAGE_dup(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
-  function Load_sk_OSSL_CMP_CERTREPMESSAGE_deep_copy(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; c: Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc; f: Tsk_OSSL_CMP_CERTREPMESSAGE_freefunc): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
-  function Load_sk_OSSL_CMP_CERTREPMESSAGE_set_cmp_func(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; cmp: Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc): Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc; cdecl;
+  function Load_sk_OSSL_CMP_CERTREPMESSAGE_reserve(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_OSSL_CMP_CERTREPMESSAGE_free(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE); cdecl;
+  procedure Load_sk_OSSL_CMP_CERTREPMESSAGE_zero(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE); cdecl;
+  function Load_sk_OSSL_CMP_CERTREPMESSAGE_delete(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; i: TOpenSSL_C_INT): POSSL_CMP_CERTREPMESSAGE; cdecl;
+  function Load_sk_OSSL_CMP_CERTREPMESSAGE_delete_ptr(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; ptr: POSSL_CMP_CERTREPMESSAGE): POSSL_CMP_CERTREPMESSAGE; cdecl;
+  function Load_sk_OSSL_CMP_CERTREPMESSAGE_push(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CERTREPMESSAGE_unshift(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CERTREPMESSAGE_pop(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE): POSSL_CMP_CERTREPMESSAGE; cdecl;
+  function Load_sk_OSSL_CMP_CERTREPMESSAGE_shift(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE): POSSL_CMP_CERTREPMESSAGE; cdecl;
+  procedure Load_sk_OSSL_CMP_CERTREPMESSAGE_pop_free(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; func: Tsk_OSSL_CMP_CERTREPMESSAGE_freefunc); cdecl;
+  function Load_sk_OSSL_CMP_CERTREPMESSAGE_insert(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CERTREPMESSAGE_set(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; i: TOpenSSL_C_INT; data: POSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
+  function Load_sk_OSSL_CMP_CERTREPMESSAGE_find(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CERTREPMESSAGE_find_ex(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CERTREPMESSAGE_find_all(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_OSSL_CMP_CERTREPMESSAGE_sort(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE); cdecl;
+  function Load_sk_OSSL_CMP_CERTREPMESSAGE_is_sorted(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CERTREPMESSAGE_dup(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
+  function Load_sk_OSSL_CMP_CERTREPMESSAGE_deep_copy(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; c: Tsk_OSSL_CMP_CERTREPMESSAGE_copyfunc; f: Tsk_OSSL_CMP_CERTREPMESSAGE_freefunc): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
+  function Load_sk_OSSL_CMP_CERTREPMESSAGE_set_cmp_func(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; cmp: Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc): Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc; cdecl;
 
 var
-  sk_OSSL_CMP_CERTREPMESSAGE_num: function(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_num;
-  sk_OSSL_CMP_CERTREPMESSAGE_value: function(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_value;
+  sk_OSSL_CMP_CERTREPMESSAGE_num: function(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_num;
+  sk_OSSL_CMP_CERTREPMESSAGE_value: function(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; idx: TOpenSSL_C_INT): POSSL_CMP_CERTREPMESSAGE; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_value;
   sk_OSSL_CMP_CERTREPMESSAGE_new: function(cmp: Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_new;
   sk_OSSL_CMP_CERTREPMESSAGE_new_null: function: Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_new_null;
   sk_OSSL_CMP_CERTREPMESSAGE_new_reserve: function(cmp: Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc; n: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_new_reserve;
-  sk_OSSL_CMP_CERTREPMESSAGE_reserve: function(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_reserve;
-  sk_OSSL_CMP_CERTREPMESSAGE_free: function(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_free;
-  sk_OSSL_CMP_CERTREPMESSAGE_zero: function(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_zero;
-  sk_OSSL_CMP_CERTREPMESSAGE_delete: function(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_delete;
-  sk_OSSL_CMP_CERTREPMESSAGE_delete_ptr: function(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; ptr: Pstack_st_OSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_delete_ptr;
-  sk_OSSL_CMP_CERTREPMESSAGE_push: function(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_push;
-  sk_OSSL_CMP_CERTREPMESSAGE_unshift: function(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_unshift;
-  sk_OSSL_CMP_CERTREPMESSAGE_pop: function(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_pop;
-  sk_OSSL_CMP_CERTREPMESSAGE_shift: function(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_shift;
-  sk_OSSL_CMP_CERTREPMESSAGE_pop_free: procedure(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; func: Tsk_OSSL_CMP_CERTREPMESSAGE_freefunc); cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_pop_free;
-  sk_OSSL_CMP_CERTREPMESSAGE_insert: function(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_insert;
-  sk_OSSL_CMP_CERTREPMESSAGE_set: function(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_set;
-  sk_OSSL_CMP_CERTREPMESSAGE_find: function(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_find;
-  sk_OSSL_CMP_CERTREPMESSAGE_find_ex: function(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_find_ex;
-  sk_OSSL_CMP_CERTREPMESSAGE_find_all: function(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_find_all;
-  sk_OSSL_CMP_CERTREPMESSAGE_sort: function(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_sort;
-  sk_OSSL_CMP_CERTREPMESSAGE_is_sorted: function(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_is_sorted;
-  sk_OSSL_CMP_CERTREPMESSAGE_dup: function(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_dup;
-  sk_OSSL_CMP_CERTREPMESSAGE_deep_copy: function(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; c: Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc; f: Tsk_OSSL_CMP_CERTREPMESSAGE_freefunc): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_deep_copy;
-  sk_OSSL_CMP_CERTREPMESSAGE_set_cmp_func: function(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; cmp: Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc): Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_set_cmp_func;
+  sk_OSSL_CMP_CERTREPMESSAGE_reserve: function(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_reserve;
+  sk_OSSL_CMP_CERTREPMESSAGE_free: procedure(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE); cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_free;
+  sk_OSSL_CMP_CERTREPMESSAGE_zero: procedure(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE); cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_zero;
+  sk_OSSL_CMP_CERTREPMESSAGE_delete: function(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; i: TOpenSSL_C_INT): POSSL_CMP_CERTREPMESSAGE; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_delete;
+  sk_OSSL_CMP_CERTREPMESSAGE_delete_ptr: function(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; ptr: POSSL_CMP_CERTREPMESSAGE): POSSL_CMP_CERTREPMESSAGE; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_delete_ptr;
+  sk_OSSL_CMP_CERTREPMESSAGE_push: function(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_push;
+  sk_OSSL_CMP_CERTREPMESSAGE_unshift: function(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_unshift;
+  sk_OSSL_CMP_CERTREPMESSAGE_pop: function(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE): POSSL_CMP_CERTREPMESSAGE; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_pop;
+  sk_OSSL_CMP_CERTREPMESSAGE_shift: function(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE): POSSL_CMP_CERTREPMESSAGE; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_shift;
+  sk_OSSL_CMP_CERTREPMESSAGE_pop_free: procedure(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; func: Tsk_OSSL_CMP_CERTREPMESSAGE_freefunc); cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_pop_free;
+  sk_OSSL_CMP_CERTREPMESSAGE_insert: function(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_insert;
+  sk_OSSL_CMP_CERTREPMESSAGE_set: function(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; i: TOpenSSL_C_INT; data: POSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_set;
+  sk_OSSL_CMP_CERTREPMESSAGE_find: function(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_find;
+  sk_OSSL_CMP_CERTREPMESSAGE_find_ex: function(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_find_ex;
+  sk_OSSL_CMP_CERTREPMESSAGE_find_all: function(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_find_all;
+  sk_OSSL_CMP_CERTREPMESSAGE_sort: procedure(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE); cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_sort;
+  sk_OSSL_CMP_CERTREPMESSAGE_is_sorted: function(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_is_sorted;
+  sk_OSSL_CMP_CERTREPMESSAGE_dup: function(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_dup;
+  sk_OSSL_CMP_CERTREPMESSAGE_deep_copy: function(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; c: Tsk_OSSL_CMP_CERTREPMESSAGE_copyfunc; f: Tsk_OSSL_CMP_CERTREPMESSAGE_freefunc): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_deep_copy;
+  sk_OSSL_CMP_CERTREPMESSAGE_set_cmp_func: function(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; cmp: Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc): Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc; cdecl = Load_sk_OSSL_CMP_CERTREPMESSAGE_set_cmp_func;
   { clang-format on }
     {$endif} {OPENSSL_STATIC_LINK_MODEL}
 
@@ -1203,31 +1203,31 @@ type
   function ossl_check_OSSL_CMP_CERTRESPONSE_copyfunc_type(cpy: Tsk_OSSL_CMP_CERTRESPONSE_copyfunc): TOPENSSL_sk_copyfunc{Has C Attribute: unused}; inline;
   function ossl_check_OSSL_CMP_CERTRESPONSE_freefunc_type(fr: Tsk_OSSL_CMP_CERTRESPONSE_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
     {$ifdef OPENSSL_STATIC_LINK_MODEL}
-  function sk_OSSL_CMP_CERTRESPONSE_num(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_OSSL_CMP_CERTRESPONSE_value(_para: Pstack_st_OSSL_CMP_CERTRESPONSE; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_OSSL_CMP_CERTRESPONSE_num(sk: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
+  function sk_OSSL_CMP_CERTRESPONSE_value(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; idx: TOpenSSL_C_INT): POSSL_CMP_CERTRESPONSE; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_OSSL_CMP_CERTRESPONSE_new(cmp: Tsk_OSSL_CMP_CERTRESPONSE_compfunc): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_OSSL_CMP_CERTRESPONSE_new_null: Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_OSSL_CMP_CERTRESPONSE_new_reserve(cmp: Tsk_OSSL_CMP_CERTRESPONSE_compfunc; n: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
-  function sk_OSSL_CMP_CERTRESPONSE_reserve(_para: Pstack_st_OSSL_CMP_CERTRESPONSE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_OSSL_CMP_CERTRESPONSE_free(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_OSSL_CMP_CERTRESPONSE_zero(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_OSSL_CMP_CERTRESPONSE_delete(st: Pstack_st_OSSL_CMP_CERTRESPONSE; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_OSSL_CMP_CERTRESPONSE_delete_ptr(st: Pstack_st_OSSL_CMP_CERTRESPONSE; ptr: Pstack_st_OSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
-  function sk_OSSL_CMP_CERTRESPONSE_push(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
-  function sk_OSSL_CMP_CERTRESPONSE_unshift(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_OSSL_CMP_CERTRESPONSE_pop(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_OSSL_CMP_CERTRESPONSE_shift(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
-  procedure sk_OSSL_CMP_CERTRESPONSE_pop_free(st: Pstack_st_OSSL_CMP_CERTRESPONSE; func: Tsk_OSSL_CMP_CERTRESPONSE_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
-  function sk_OSSL_CMP_CERTRESPONSE_insert(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
-  function sk_OSSL_CMP_CERTRESPONSE_set(st: Pstack_st_OSSL_CMP_CERTRESPONSE; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
-  function sk_OSSL_CMP_CERTRESPONSE_find(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
-  function sk_OSSL_CMP_CERTRESPONSE_find_ex(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
-  function sk_OSSL_CMP_CERTRESPONSE_find_all(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_OSSL_CMP_CERTRESPONSE_sort(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
-  function sk_OSSL_CMP_CERTRESPONSE_is_sorted(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
-  function sk_OSSL_CMP_CERTRESPONSE_dup(st: Pstack_st_OSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
-  function sk_OSSL_CMP_CERTRESPONSE_deep_copy(st: Pstack_st_OSSL_CMP_CERTRESPONSE; c: Tsk_OSSL_CMP_CERTRESPONSE_compfunc; f: Tsk_OSSL_CMP_CERTRESPONSE_freefunc): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
-  function sk_OSSL_CMP_CERTRESPONSE_set_cmp_func(st: Pstack_st_OSSL_CMP_CERTRESPONSE; cmp: Tsk_OSSL_CMP_CERTRESPONSE_compfunc): Tsk_OSSL_CMP_CERTRESPONSE_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
+  function sk_OSSL_CMP_CERTRESPONSE_reserve(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
+  procedure sk_OSSL_CMP_CERTRESPONSE_free(sk: Pstack_st_OSSL_CMP_CERTRESPONSE); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_OSSL_CMP_CERTRESPONSE_zero(sk: Pstack_st_OSSL_CMP_CERTRESPONSE); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_OSSL_CMP_CERTRESPONSE_delete(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; i: TOpenSSL_C_INT): POSSL_CMP_CERTRESPONSE; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_OSSL_CMP_CERTRESPONSE_delete_ptr(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; ptr: POSSL_CMP_CERTRESPONSE): POSSL_CMP_CERTRESPONSE; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  function sk_OSSL_CMP_CERTRESPONSE_push(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
+  function sk_OSSL_CMP_CERTRESPONSE_unshift(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
+  function sk_OSSL_CMP_CERTRESPONSE_pop(sk: Pstack_st_OSSL_CMP_CERTRESPONSE): POSSL_CMP_CERTRESPONSE; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_OSSL_CMP_CERTRESPONSE_shift(sk: Pstack_st_OSSL_CMP_CERTRESPONSE): POSSL_CMP_CERTRESPONSE; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  procedure sk_OSSL_CMP_CERTRESPONSE_pop_free(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; func: Tsk_OSSL_CMP_CERTRESPONSE_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
+  function sk_OSSL_CMP_CERTRESPONSE_insert(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
+  function sk_OSSL_CMP_CERTRESPONSE_set(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; i: TOpenSSL_C_INT; data: POSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
+  function sk_OSSL_CMP_CERTRESPONSE_find(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
+  function sk_OSSL_CMP_CERTRESPONSE_find_ex(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
+  function sk_OSSL_CMP_CERTRESPONSE_find_all(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
+  procedure sk_OSSL_CMP_CERTRESPONSE_sort(sk: Pstack_st_OSSL_CMP_CERTRESPONSE); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  function sk_OSSL_CMP_CERTRESPONSE_is_sorted(sk: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
+  function sk_OSSL_CMP_CERTRESPONSE_dup(sk: Pstack_st_OSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
+  function sk_OSSL_CMP_CERTRESPONSE_deep_copy(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; c: Tsk_OSSL_CMP_CERTRESPONSE_copyfunc; f: Tsk_OSSL_CMP_CERTRESPONSE_freefunc): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
+  function sk_OSSL_CMP_CERTRESPONSE_set_cmp_func(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; cmp: Tsk_OSSL_CMP_CERTRESPONSE_compfunc): Tsk_OSSL_CMP_CERTRESPONSE_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
   { clang-format on }
     {$else}
   {$EXTERNALSYM sk_OSSL_CMP_CERTRESPONSE_num}
@@ -1256,58 +1256,58 @@ type
   {$EXTERNALSYM sk_OSSL_CMP_CERTRESPONSE_deep_copy}
   {$EXTERNALSYM sk_OSSL_CMP_CERTRESPONSE_set_cmp_func}
   {Do not call Function LoadDeclarations. Internal use only}
-  function Load_sk_OSSL_CMP_CERTRESPONSE_num(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTRESPONSE_value(_para: Pstack_st_OSSL_CMP_CERTRESPONSE; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
+  function Load_sk_OSSL_CMP_CERTRESPONSE_num(sk: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CERTRESPONSE_value(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; idx: TOpenSSL_C_INT): POSSL_CMP_CERTRESPONSE; cdecl;
   function Load_sk_OSSL_CMP_CERTRESPONSE_new(cmp: Tsk_OSSL_CMP_CERTRESPONSE_compfunc): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
   function Load_sk_OSSL_CMP_CERTRESPONSE_new_null: Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
   function Load_sk_OSSL_CMP_CERTRESPONSE_new_reserve(cmp: Tsk_OSSL_CMP_CERTRESPONSE_compfunc; n: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
-  function Load_sk_OSSL_CMP_CERTRESPONSE_reserve(_para: Pstack_st_OSSL_CMP_CERTRESPONSE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTRESPONSE_free(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTRESPONSE_zero(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTRESPONSE_delete(st: Pstack_st_OSSL_CMP_CERTRESPONSE; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
-  function Load_sk_OSSL_CMP_CERTRESPONSE_delete_ptr(st: Pstack_st_OSSL_CMP_CERTRESPONSE; ptr: Pstack_st_OSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
-  function Load_sk_OSSL_CMP_CERTRESPONSE_push(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTRESPONSE_unshift(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTRESPONSE_pop(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
-  function Load_sk_OSSL_CMP_CERTRESPONSE_shift(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
-  procedure Load_sk_OSSL_CMP_CERTRESPONSE_pop_free(st: Pstack_st_OSSL_CMP_CERTRESPONSE; func: Tsk_OSSL_CMP_CERTRESPONSE_freefunc); cdecl;
-  function Load_sk_OSSL_CMP_CERTRESPONSE_insert(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTRESPONSE_set(st: Pstack_st_OSSL_CMP_CERTRESPONSE; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
-  function Load_sk_OSSL_CMP_CERTRESPONSE_find(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTRESPONSE_find_ex(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTRESPONSE_find_all(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTRESPONSE_sort(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTRESPONSE_is_sorted(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
-  function Load_sk_OSSL_CMP_CERTRESPONSE_dup(st: Pstack_st_OSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
-  function Load_sk_OSSL_CMP_CERTRESPONSE_deep_copy(st: Pstack_st_OSSL_CMP_CERTRESPONSE; c: Tsk_OSSL_CMP_CERTRESPONSE_compfunc; f: Tsk_OSSL_CMP_CERTRESPONSE_freefunc): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
-  function Load_sk_OSSL_CMP_CERTRESPONSE_set_cmp_func(st: Pstack_st_OSSL_CMP_CERTRESPONSE; cmp: Tsk_OSSL_CMP_CERTRESPONSE_compfunc): Tsk_OSSL_CMP_CERTRESPONSE_compfunc; cdecl;
+  function Load_sk_OSSL_CMP_CERTRESPONSE_reserve(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_OSSL_CMP_CERTRESPONSE_free(sk: Pstack_st_OSSL_CMP_CERTRESPONSE); cdecl;
+  procedure Load_sk_OSSL_CMP_CERTRESPONSE_zero(sk: Pstack_st_OSSL_CMP_CERTRESPONSE); cdecl;
+  function Load_sk_OSSL_CMP_CERTRESPONSE_delete(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; i: TOpenSSL_C_INT): POSSL_CMP_CERTRESPONSE; cdecl;
+  function Load_sk_OSSL_CMP_CERTRESPONSE_delete_ptr(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; ptr: POSSL_CMP_CERTRESPONSE): POSSL_CMP_CERTRESPONSE; cdecl;
+  function Load_sk_OSSL_CMP_CERTRESPONSE_push(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CERTRESPONSE_unshift(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CERTRESPONSE_pop(sk: Pstack_st_OSSL_CMP_CERTRESPONSE): POSSL_CMP_CERTRESPONSE; cdecl;
+  function Load_sk_OSSL_CMP_CERTRESPONSE_shift(sk: Pstack_st_OSSL_CMP_CERTRESPONSE): POSSL_CMP_CERTRESPONSE; cdecl;
+  procedure Load_sk_OSSL_CMP_CERTRESPONSE_pop_free(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; func: Tsk_OSSL_CMP_CERTRESPONSE_freefunc); cdecl;
+  function Load_sk_OSSL_CMP_CERTRESPONSE_insert(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CERTRESPONSE_set(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; i: TOpenSSL_C_INT; data: POSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
+  function Load_sk_OSSL_CMP_CERTRESPONSE_find(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CERTRESPONSE_find_ex(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CERTRESPONSE_find_all(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_OSSL_CMP_CERTRESPONSE_sort(sk: Pstack_st_OSSL_CMP_CERTRESPONSE); cdecl;
+  function Load_sk_OSSL_CMP_CERTRESPONSE_is_sorted(sk: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
+  function Load_sk_OSSL_CMP_CERTRESPONSE_dup(sk: Pstack_st_OSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
+  function Load_sk_OSSL_CMP_CERTRESPONSE_deep_copy(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; c: Tsk_OSSL_CMP_CERTRESPONSE_copyfunc; f: Tsk_OSSL_CMP_CERTRESPONSE_freefunc): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
+  function Load_sk_OSSL_CMP_CERTRESPONSE_set_cmp_func(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; cmp: Tsk_OSSL_CMP_CERTRESPONSE_compfunc): Tsk_OSSL_CMP_CERTRESPONSE_compfunc; cdecl;
 
 var
-  sk_OSSL_CMP_CERTRESPONSE_num: function(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_num;
-  sk_OSSL_CMP_CERTRESPONSE_value: function(_para: Pstack_st_OSSL_CMP_CERTRESPONSE; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_value;
+  sk_OSSL_CMP_CERTRESPONSE_num: function(sk: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_num;
+  sk_OSSL_CMP_CERTRESPONSE_value: function(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; idx: TOpenSSL_C_INT): POSSL_CMP_CERTRESPONSE; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_value;
   sk_OSSL_CMP_CERTRESPONSE_new: function(cmp: Tsk_OSSL_CMP_CERTRESPONSE_compfunc): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_new;
   sk_OSSL_CMP_CERTRESPONSE_new_null: function: Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_new_null;
   sk_OSSL_CMP_CERTRESPONSE_new_reserve: function(cmp: Tsk_OSSL_CMP_CERTRESPONSE_compfunc; n: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_new_reserve;
-  sk_OSSL_CMP_CERTRESPONSE_reserve: function(_para: Pstack_st_OSSL_CMP_CERTRESPONSE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_reserve;
-  sk_OSSL_CMP_CERTRESPONSE_free: function(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_free;
-  sk_OSSL_CMP_CERTRESPONSE_zero: function(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_zero;
-  sk_OSSL_CMP_CERTRESPONSE_delete: function(st: Pstack_st_OSSL_CMP_CERTRESPONSE; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_delete;
-  sk_OSSL_CMP_CERTRESPONSE_delete_ptr: function(st: Pstack_st_OSSL_CMP_CERTRESPONSE; ptr: Pstack_st_OSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_delete_ptr;
-  sk_OSSL_CMP_CERTRESPONSE_push: function(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_push;
-  sk_OSSL_CMP_CERTRESPONSE_unshift: function(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_unshift;
-  sk_OSSL_CMP_CERTRESPONSE_pop: function(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_pop;
-  sk_OSSL_CMP_CERTRESPONSE_shift: function(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_shift;
-  sk_OSSL_CMP_CERTRESPONSE_pop_free: procedure(st: Pstack_st_OSSL_CMP_CERTRESPONSE; func: Tsk_OSSL_CMP_CERTRESPONSE_freefunc); cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_pop_free;
-  sk_OSSL_CMP_CERTRESPONSE_insert: function(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_insert;
-  sk_OSSL_CMP_CERTRESPONSE_set: function(st: Pstack_st_OSSL_CMP_CERTRESPONSE; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_set;
-  sk_OSSL_CMP_CERTRESPONSE_find: function(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_find;
-  sk_OSSL_CMP_CERTRESPONSE_find_ex: function(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_find_ex;
-  sk_OSSL_CMP_CERTRESPONSE_find_all: function(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_find_all;
-  sk_OSSL_CMP_CERTRESPONSE_sort: function(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_sort;
-  sk_OSSL_CMP_CERTRESPONSE_is_sorted: function(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_is_sorted;
-  sk_OSSL_CMP_CERTRESPONSE_dup: function(st: Pstack_st_OSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_dup;
-  sk_OSSL_CMP_CERTRESPONSE_deep_copy: function(st: Pstack_st_OSSL_CMP_CERTRESPONSE; c: Tsk_OSSL_CMP_CERTRESPONSE_compfunc; f: Tsk_OSSL_CMP_CERTRESPONSE_freefunc): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_deep_copy;
-  sk_OSSL_CMP_CERTRESPONSE_set_cmp_func: function(st: Pstack_st_OSSL_CMP_CERTRESPONSE; cmp: Tsk_OSSL_CMP_CERTRESPONSE_compfunc): Tsk_OSSL_CMP_CERTRESPONSE_compfunc; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_set_cmp_func;
+  sk_OSSL_CMP_CERTRESPONSE_reserve: function(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_reserve;
+  sk_OSSL_CMP_CERTRESPONSE_free: procedure(sk: Pstack_st_OSSL_CMP_CERTRESPONSE); cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_free;
+  sk_OSSL_CMP_CERTRESPONSE_zero: procedure(sk: Pstack_st_OSSL_CMP_CERTRESPONSE); cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_zero;
+  sk_OSSL_CMP_CERTRESPONSE_delete: function(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; i: TOpenSSL_C_INT): POSSL_CMP_CERTRESPONSE; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_delete;
+  sk_OSSL_CMP_CERTRESPONSE_delete_ptr: function(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; ptr: POSSL_CMP_CERTRESPONSE): POSSL_CMP_CERTRESPONSE; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_delete_ptr;
+  sk_OSSL_CMP_CERTRESPONSE_push: function(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_push;
+  sk_OSSL_CMP_CERTRESPONSE_unshift: function(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_unshift;
+  sk_OSSL_CMP_CERTRESPONSE_pop: function(sk: Pstack_st_OSSL_CMP_CERTRESPONSE): POSSL_CMP_CERTRESPONSE; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_pop;
+  sk_OSSL_CMP_CERTRESPONSE_shift: function(sk: Pstack_st_OSSL_CMP_CERTRESPONSE): POSSL_CMP_CERTRESPONSE; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_shift;
+  sk_OSSL_CMP_CERTRESPONSE_pop_free: procedure(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; func: Tsk_OSSL_CMP_CERTRESPONSE_freefunc); cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_pop_free;
+  sk_OSSL_CMP_CERTRESPONSE_insert: function(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_insert;
+  sk_OSSL_CMP_CERTRESPONSE_set: function(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; i: TOpenSSL_C_INT; data: POSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_set;
+  sk_OSSL_CMP_CERTRESPONSE_find: function(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_find;
+  sk_OSSL_CMP_CERTRESPONSE_find_ex: function(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_find_ex;
+  sk_OSSL_CMP_CERTRESPONSE_find_all: function(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_find_all;
+  sk_OSSL_CMP_CERTRESPONSE_sort: procedure(sk: Pstack_st_OSSL_CMP_CERTRESPONSE); cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_sort;
+  sk_OSSL_CMP_CERTRESPONSE_is_sorted: function(sk: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_is_sorted;
+  sk_OSSL_CMP_CERTRESPONSE_dup: function(sk: Pstack_st_OSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_dup;
+  sk_OSSL_CMP_CERTRESPONSE_deep_copy: function(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; c: Tsk_OSSL_CMP_CERTRESPONSE_copyfunc; f: Tsk_OSSL_CMP_CERTRESPONSE_freefunc): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_deep_copy;
+  sk_OSSL_CMP_CERTRESPONSE_set_cmp_func: function(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; cmp: Tsk_OSSL_CMP_CERTRESPONSE_compfunc): Tsk_OSSL_CMP_CERTRESPONSE_compfunc; cdecl = Load_sk_OSSL_CMP_CERTRESPONSE_set_cmp_func;
   { clang-format on }
     {$endif} {OPENSSL_STATIC_LINK_MODEL}
 
@@ -2455,20 +2455,20 @@ begin
   Result := OSSL_CMP_MSG_it;
 end;
 
-function Load_sk_OSSL_CMP_CERTSTATUS_num(_para: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTSTATUS_num(sk: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_num := LoadLibCryptoFunction('OPENSSL_sk_num');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_num) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_num');
-  Result := sk_OSSL_CMP_CERTSTATUS_num(_para);
+  Result := sk_OSSL_CMP_CERTSTATUS_num(sk);
 end;
 
-function Load_sk_OSSL_CMP_CERTSTATUS_value(_para: Pstack_st_OSSL_CMP_CERTSTATUS; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
+function Load_sk_OSSL_CMP_CERTSTATUS_value(sk: Pstack_st_OSSL_CMP_CERTSTATUS; idx: TOpenSSL_C_INT): POSSL_CMP_CERTSTATUS; cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_value) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_value');
-  Result := sk_OSSL_CMP_CERTSTATUS_value(_para, _para2);
+  Result := sk_OSSL_CMP_CERTSTATUS_value(sk, idx);
 end;
 
 function Load_sk_OSSL_CMP_CERTSTATUS_new(cmp: Tsk_OSSL_CMP_CERTSTATUS_compfunc): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
@@ -2495,164 +2495,164 @@ begin
   Result := sk_OSSL_CMP_CERTSTATUS_new_reserve(cmp, n);
 end;
 
-function Load_sk_OSSL_CMP_CERTSTATUS_reserve(_para: Pstack_st_OSSL_CMP_CERTSTATUS; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTSTATUS_reserve(sk: Pstack_st_OSSL_CMP_CERTSTATUS; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_reserve := LoadLibCryptoFunction('OPENSSL_sk_reserve');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_reserve) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_reserve');
-  Result := sk_OSSL_CMP_CERTSTATUS_reserve(_para, n);
+  Result := sk_OSSL_CMP_CERTSTATUS_reserve(sk, n);
 end;
 
-function Load_sk_OSSL_CMP_CERTSTATUS_free(_para: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_OSSL_CMP_CERTSTATUS_free(sk: Pstack_st_OSSL_CMP_CERTSTATUS); cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
-  Result := sk_OSSL_CMP_CERTSTATUS_free(_para);
+  sk_OSSL_CMP_CERTSTATUS_free(sk);
 end;
 
-function Load_sk_OSSL_CMP_CERTSTATUS_zero(_para: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_OSSL_CMP_CERTSTATUS_zero(sk: Pstack_st_OSSL_CMP_CERTSTATUS); cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_zero) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
-  Result := sk_OSSL_CMP_CERTSTATUS_zero(_para);
+  sk_OSSL_CMP_CERTSTATUS_zero(sk);
 end;
 
-function Load_sk_OSSL_CMP_CERTSTATUS_delete(st: Pstack_st_OSSL_CMP_CERTSTATUS; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
+function Load_sk_OSSL_CMP_CERTSTATUS_delete(sk: Pstack_st_OSSL_CMP_CERTSTATUS; i: TOpenSSL_C_INT): POSSL_CMP_CERTSTATUS; cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_delete) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete');
-  Result := sk_OSSL_CMP_CERTSTATUS_delete(st, loc);
+  Result := sk_OSSL_CMP_CERTSTATUS_delete(sk, i);
 end;
 
-function Load_sk_OSSL_CMP_CERTSTATUS_delete_ptr(st: Pstack_st_OSSL_CMP_CERTSTATUS; ptr: Pstack_st_OSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
+function Load_sk_OSSL_CMP_CERTSTATUS_delete_ptr(sk: Pstack_st_OSSL_CMP_CERTSTATUS; ptr: POSSL_CMP_CERTSTATUS): POSSL_CMP_CERTSTATUS; cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_delete_ptr) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete_ptr');
-  Result := sk_OSSL_CMP_CERTSTATUS_delete_ptr(st, ptr);
+  Result := sk_OSSL_CMP_CERTSTATUS_delete_ptr(sk, ptr);
 end;
 
-function Load_sk_OSSL_CMP_CERTSTATUS_push(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTSTATUS_push(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_push := LoadLibCryptoFunction('OPENSSL_sk_push');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_push) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_push');
-  Result := sk_OSSL_CMP_CERTSTATUS_push(st, data);
+  Result := sk_OSSL_CMP_CERTSTATUS_push(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_CERTSTATUS_unshift(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTSTATUS_unshift(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_unshift := LoadLibCryptoFunction('OPENSSL_sk_unshift');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_unshift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_unshift');
-  Result := sk_OSSL_CMP_CERTSTATUS_unshift(st, data);
+  Result := sk_OSSL_CMP_CERTSTATUS_unshift(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_CERTSTATUS_pop(_para: Pstack_st_OSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
+function Load_sk_OSSL_CMP_CERTSTATUS_pop(sk: Pstack_st_OSSL_CMP_CERTSTATUS): POSSL_CMP_CERTSTATUS; cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_pop) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop');
-  Result := sk_OSSL_CMP_CERTSTATUS_pop(_para);
+  Result := sk_OSSL_CMP_CERTSTATUS_pop(sk);
 end;
 
-function Load_sk_OSSL_CMP_CERTSTATUS_shift(_para: Pstack_st_OSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
+function Load_sk_OSSL_CMP_CERTSTATUS_shift(sk: Pstack_st_OSSL_CMP_CERTSTATUS): POSSL_CMP_CERTSTATUS; cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_shift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_shift');
-  Result := sk_OSSL_CMP_CERTSTATUS_shift(_para);
+  Result := sk_OSSL_CMP_CERTSTATUS_shift(sk);
 end;
 
-procedure Load_sk_OSSL_CMP_CERTSTATUS_pop_free(st: Pstack_st_OSSL_CMP_CERTSTATUS; func: Tsk_OSSL_CMP_CERTSTATUS_freefunc); cdecl;
+procedure Load_sk_OSSL_CMP_CERTSTATUS_pop_free(sk: Pstack_st_OSSL_CMP_CERTSTATUS; func: Tsk_OSSL_CMP_CERTSTATUS_freefunc); cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_pop_free := LoadLibCryptoFunction('OPENSSL_sk_pop_free');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_pop_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop_free');
-  sk_OSSL_CMP_CERTSTATUS_pop_free(st, func);
+  sk_OSSL_CMP_CERTSTATUS_pop_free(sk, func);
 end;
 
-function Load_sk_OSSL_CMP_CERTSTATUS_insert(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTSTATUS_insert(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_insert := LoadLibCryptoFunction('OPENSSL_sk_insert');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_insert) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_insert');
-  Result := sk_OSSL_CMP_CERTSTATUS_insert(st, data, where);
+  Result := sk_OSSL_CMP_CERTSTATUS_insert(sk, data, where);
 end;
 
-function Load_sk_OSSL_CMP_CERTSTATUS_set(st: Pstack_st_OSSL_CMP_CERTSTATUS; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
+function Load_sk_OSSL_CMP_CERTSTATUS_set(sk: Pstack_st_OSSL_CMP_CERTSTATUS; i: TOpenSSL_C_INT; data: POSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_set := LoadLibCryptoFunction('OPENSSL_sk_set');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_set) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set');
-  Result := sk_OSSL_CMP_CERTSTATUS_set(st, i, data);
+  Result := sk_OSSL_CMP_CERTSTATUS_set(sk, i, data);
 end;
 
-function Load_sk_OSSL_CMP_CERTSTATUS_find(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTSTATUS_find(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_find := LoadLibCryptoFunction('OPENSSL_sk_find');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_find) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find');
-  Result := sk_OSSL_CMP_CERTSTATUS_find(st, data);
+  Result := sk_OSSL_CMP_CERTSTATUS_find(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_CERTSTATUS_find_ex(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTSTATUS_find_ex(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_find_ex := LoadLibCryptoFunction('OPENSSL_sk_find_ex');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_find_ex) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_ex');
-  Result := sk_OSSL_CMP_CERTSTATUS_find_ex(st, data);
+  Result := sk_OSSL_CMP_CERTSTATUS_find_ex(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_CERTSTATUS_find_all(st: Pstack_st_OSSL_CMP_CERTSTATUS; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTSTATUS_find_all(sk: Pstack_st_OSSL_CMP_CERTSTATUS; data: POSSL_CMP_CERTSTATUS; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_find_all := LoadLibCryptoFunction('OPENSSL_sk_find_all');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_find_all) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_all');
-  Result := sk_OSSL_CMP_CERTSTATUS_find_all(st, data, pnum);
+  Result := sk_OSSL_CMP_CERTSTATUS_find_all(sk, data, pnum);
 end;
 
-function Load_sk_OSSL_CMP_CERTSTATUS_sort(_para: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_OSSL_CMP_CERTSTATUS_sort(sk: Pstack_st_OSSL_CMP_CERTSTATUS); cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_sort) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
-  Result := sk_OSSL_CMP_CERTSTATUS_sort(_para);
+  sk_OSSL_CMP_CERTSTATUS_sort(sk);
 end;
 
-function Load_sk_OSSL_CMP_CERTSTATUS_is_sorted(_para: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTSTATUS_is_sorted(sk: Pstack_st_OSSL_CMP_CERTSTATUS): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_is_sorted := LoadLibCryptoFunction('OPENSSL_sk_is_sorted');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_is_sorted) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_is_sorted');
-  Result := sk_OSSL_CMP_CERTSTATUS_is_sorted(_para);
+  Result := sk_OSSL_CMP_CERTSTATUS_is_sorted(sk);
 end;
 
-function Load_sk_OSSL_CMP_CERTSTATUS_dup(st: Pstack_st_OSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
+function Load_sk_OSSL_CMP_CERTSTATUS_dup(sk: Pstack_st_OSSL_CMP_CERTSTATUS): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_dup := LoadLibCryptoFunction('OPENSSL_sk_dup');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_dup) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_dup');
-  Result := sk_OSSL_CMP_CERTSTATUS_dup(st);
+  Result := sk_OSSL_CMP_CERTSTATUS_dup(sk);
 end;
 
-function Load_sk_OSSL_CMP_CERTSTATUS_deep_copy(st: Pstack_st_OSSL_CMP_CERTSTATUS; c: Tsk_OSSL_CMP_CERTSTATUS_compfunc; f: Tsk_OSSL_CMP_CERTSTATUS_freefunc): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
+function Load_sk_OSSL_CMP_CERTSTATUS_deep_copy(sk: Pstack_st_OSSL_CMP_CERTSTATUS; c: Tsk_OSSL_CMP_CERTSTATUS_copyfunc; f: Tsk_OSSL_CMP_CERTSTATUS_freefunc): Pstack_st_OSSL_CMP_CERTSTATUS; cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_deep_copy := LoadLibCryptoFunction('OPENSSL_sk_deep_copy');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_deep_copy) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_deep_copy');
-  Result := sk_OSSL_CMP_CERTSTATUS_deep_copy(st, c, f);
+  Result := sk_OSSL_CMP_CERTSTATUS_deep_copy(sk, c, f);
 end;
 
-function Load_sk_OSSL_CMP_CERTSTATUS_set_cmp_func(st: Pstack_st_OSSL_CMP_CERTSTATUS; cmp: Tsk_OSSL_CMP_CERTSTATUS_compfunc): Tsk_OSSL_CMP_CERTSTATUS_compfunc; cdecl;
+function Load_sk_OSSL_CMP_CERTSTATUS_set_cmp_func(sk: Pstack_st_OSSL_CMP_CERTSTATUS; cmp: Tsk_OSSL_CMP_CERTSTATUS_compfunc): Tsk_OSSL_CMP_CERTSTATUS_compfunc; cdecl;
 begin
   sk_OSSL_CMP_CERTSTATUS_set_cmp_func := LoadLibCryptoFunction('OPENSSL_sk_set_cmp_func');
   if not assigned(sk_OSSL_CMP_CERTSTATUS_set_cmp_func) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set_cmp_func');
-  Result := sk_OSSL_CMP_CERTSTATUS_set_cmp_func(st, cmp);
+  Result := sk_OSSL_CMP_CERTSTATUS_set_cmp_func(sk, cmp);
 end;
 
 function Load_OSSL_CMP_ITAV_dup(a: POSSL_CMP_ITAV): POSSL_CMP_ITAV; cdecl;
@@ -2663,20 +2663,20 @@ begin
   Result := OSSL_CMP_ITAV_dup(a);
 end;
 
-function Load_sk_OSSL_CMP_ITAV_num(_para: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_ITAV_num(sk: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_ITAV_num := LoadLibCryptoFunction('OPENSSL_sk_num');
   if not assigned(sk_OSSL_CMP_ITAV_num) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_num');
-  Result := sk_OSSL_CMP_ITAV_num(_para);
+  Result := sk_OSSL_CMP_ITAV_num(sk);
 end;
 
-function Load_sk_OSSL_CMP_ITAV_value(_para: Pstack_st_OSSL_CMP_ITAV; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_ITAV; cdecl;
+function Load_sk_OSSL_CMP_ITAV_value(sk: Pstack_st_OSSL_CMP_ITAV; idx: TOpenSSL_C_INT): POSSL_CMP_ITAV; cdecl;
 begin
   sk_OSSL_CMP_ITAV_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_OSSL_CMP_ITAV_value) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_value');
-  Result := sk_OSSL_CMP_ITAV_value(_para, _para2);
+  Result := sk_OSSL_CMP_ITAV_value(sk, idx);
 end;
 
 function Load_sk_OSSL_CMP_ITAV_new(cmp: Tsk_OSSL_CMP_ITAV_compfunc): Pstack_st_OSSL_CMP_ITAV; cdecl;
@@ -2703,180 +2703,180 @@ begin
   Result := sk_OSSL_CMP_ITAV_new_reserve(cmp, n);
 end;
 
-function Load_sk_OSSL_CMP_ITAV_reserve(_para: Pstack_st_OSSL_CMP_ITAV; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_ITAV_reserve(sk: Pstack_st_OSSL_CMP_ITAV; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_ITAV_reserve := LoadLibCryptoFunction('OPENSSL_sk_reserve');
   if not assigned(sk_OSSL_CMP_ITAV_reserve) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_reserve');
-  Result := sk_OSSL_CMP_ITAV_reserve(_para, n);
+  Result := sk_OSSL_CMP_ITAV_reserve(sk, n);
 end;
 
-function Load_sk_OSSL_CMP_ITAV_free(_para: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_OSSL_CMP_ITAV_free(sk: Pstack_st_OSSL_CMP_ITAV); cdecl;
 begin
   sk_OSSL_CMP_ITAV_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_OSSL_CMP_ITAV_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
-  Result := sk_OSSL_CMP_ITAV_free(_para);
+  sk_OSSL_CMP_ITAV_free(sk);
 end;
 
-function Load_sk_OSSL_CMP_ITAV_zero(_para: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_OSSL_CMP_ITAV_zero(sk: Pstack_st_OSSL_CMP_ITAV); cdecl;
 begin
   sk_OSSL_CMP_ITAV_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_OSSL_CMP_ITAV_zero) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
-  Result := sk_OSSL_CMP_ITAV_zero(_para);
+  sk_OSSL_CMP_ITAV_zero(sk);
 end;
 
-function Load_sk_OSSL_CMP_ITAV_delete(st: Pstack_st_OSSL_CMP_ITAV; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_ITAV; cdecl;
+function Load_sk_OSSL_CMP_ITAV_delete(sk: Pstack_st_OSSL_CMP_ITAV; i: TOpenSSL_C_INT): POSSL_CMP_ITAV; cdecl;
 begin
   sk_OSSL_CMP_ITAV_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_OSSL_CMP_ITAV_delete) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete');
-  Result := sk_OSSL_CMP_ITAV_delete(st, loc);
+  Result := sk_OSSL_CMP_ITAV_delete(sk, i);
 end;
 
-function Load_sk_OSSL_CMP_ITAV_delete_ptr(st: Pstack_st_OSSL_CMP_ITAV; ptr: Pstack_st_OSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl;
+function Load_sk_OSSL_CMP_ITAV_delete_ptr(sk: Pstack_st_OSSL_CMP_ITAV; ptr: POSSL_CMP_ITAV): POSSL_CMP_ITAV; cdecl;
 begin
   sk_OSSL_CMP_ITAV_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_OSSL_CMP_ITAV_delete_ptr) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete_ptr');
-  Result := sk_OSSL_CMP_ITAV_delete_ptr(st, ptr);
+  Result := sk_OSSL_CMP_ITAV_delete_ptr(sk, ptr);
 end;
 
-function Load_sk_OSSL_CMP_ITAV_push(st: Pstack_st_OSSL_CMP_ITAV; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_ITAV_push(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_ITAV_push := LoadLibCryptoFunction('OPENSSL_sk_push');
   if not assigned(sk_OSSL_CMP_ITAV_push) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_push');
-  Result := sk_OSSL_CMP_ITAV_push(st, data);
+  Result := sk_OSSL_CMP_ITAV_push(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_ITAV_unshift(st: Pstack_st_OSSL_CMP_ITAV; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_ITAV_unshift(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_ITAV_unshift := LoadLibCryptoFunction('OPENSSL_sk_unshift');
   if not assigned(sk_OSSL_CMP_ITAV_unshift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_unshift');
-  Result := sk_OSSL_CMP_ITAV_unshift(st, data);
+  Result := sk_OSSL_CMP_ITAV_unshift(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_ITAV_pop(_para: Pstack_st_OSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl;
+function Load_sk_OSSL_CMP_ITAV_pop(sk: Pstack_st_OSSL_CMP_ITAV): POSSL_CMP_ITAV; cdecl;
 begin
   sk_OSSL_CMP_ITAV_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_OSSL_CMP_ITAV_pop) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop');
-  Result := sk_OSSL_CMP_ITAV_pop(_para);
+  Result := sk_OSSL_CMP_ITAV_pop(sk);
 end;
 
-function Load_sk_OSSL_CMP_ITAV_shift(_para: Pstack_st_OSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl;
+function Load_sk_OSSL_CMP_ITAV_shift(sk: Pstack_st_OSSL_CMP_ITAV): POSSL_CMP_ITAV; cdecl;
 begin
   sk_OSSL_CMP_ITAV_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_OSSL_CMP_ITAV_shift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_shift');
-  Result := sk_OSSL_CMP_ITAV_shift(_para);
+  Result := sk_OSSL_CMP_ITAV_shift(sk);
 end;
 
-procedure Load_sk_OSSL_CMP_ITAV_pop_free(st: Pstack_st_OSSL_CMP_ITAV; func: Tsk_OSSL_CMP_ITAV_freefunc); cdecl;
+procedure Load_sk_OSSL_CMP_ITAV_pop_free(sk: Pstack_st_OSSL_CMP_ITAV; func: Tsk_OSSL_CMP_ITAV_freefunc); cdecl;
 begin
   sk_OSSL_CMP_ITAV_pop_free := LoadLibCryptoFunction('OPENSSL_sk_pop_free');
   if not assigned(sk_OSSL_CMP_ITAV_pop_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop_free');
-  sk_OSSL_CMP_ITAV_pop_free(st, func);
+  sk_OSSL_CMP_ITAV_pop_free(sk, func);
 end;
 
-function Load_sk_OSSL_CMP_ITAV_insert(st: Pstack_st_OSSL_CMP_ITAV; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_ITAV_insert(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_ITAV_insert := LoadLibCryptoFunction('OPENSSL_sk_insert');
   if not assigned(sk_OSSL_CMP_ITAV_insert) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_insert');
-  Result := sk_OSSL_CMP_ITAV_insert(st, data, where);
+  Result := sk_OSSL_CMP_ITAV_insert(sk, data, where);
 end;
 
-function Load_sk_OSSL_CMP_ITAV_set(st: Pstack_st_OSSL_CMP_ITAV; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_ITAV; cdecl;
+function Load_sk_OSSL_CMP_ITAV_set(sk: Pstack_st_OSSL_CMP_ITAV; i: TOpenSSL_C_INT; data: POSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl;
 begin
   sk_OSSL_CMP_ITAV_set := LoadLibCryptoFunction('OPENSSL_sk_set');
   if not assigned(sk_OSSL_CMP_ITAV_set) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set');
-  Result := sk_OSSL_CMP_ITAV_set(st, i, data);
+  Result := sk_OSSL_CMP_ITAV_set(sk, i, data);
 end;
 
-function Load_sk_OSSL_CMP_ITAV_find(st: Pstack_st_OSSL_CMP_ITAV; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_ITAV_find(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_ITAV_find := LoadLibCryptoFunction('OPENSSL_sk_find');
   if not assigned(sk_OSSL_CMP_ITAV_find) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find');
-  Result := sk_OSSL_CMP_ITAV_find(st, data);
+  Result := sk_OSSL_CMP_ITAV_find(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_ITAV_find_ex(st: Pstack_st_OSSL_CMP_ITAV; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_ITAV_find_ex(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_ITAV_find_ex := LoadLibCryptoFunction('OPENSSL_sk_find_ex');
   if not assigned(sk_OSSL_CMP_ITAV_find_ex) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_ex');
-  Result := sk_OSSL_CMP_ITAV_find_ex(st, data);
+  Result := sk_OSSL_CMP_ITAV_find_ex(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_ITAV_find_all(st: Pstack_st_OSSL_CMP_ITAV; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_ITAV_find_all(sk: Pstack_st_OSSL_CMP_ITAV; data: POSSL_CMP_ITAV; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_ITAV_find_all := LoadLibCryptoFunction('OPENSSL_sk_find_all');
   if not assigned(sk_OSSL_CMP_ITAV_find_all) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_all');
-  Result := sk_OSSL_CMP_ITAV_find_all(st, data, pnum);
+  Result := sk_OSSL_CMP_ITAV_find_all(sk, data, pnum);
 end;
 
-function Load_sk_OSSL_CMP_ITAV_sort(_para: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_OSSL_CMP_ITAV_sort(sk: Pstack_st_OSSL_CMP_ITAV); cdecl;
 begin
   sk_OSSL_CMP_ITAV_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_OSSL_CMP_ITAV_sort) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
-  Result := sk_OSSL_CMP_ITAV_sort(_para);
+  sk_OSSL_CMP_ITAV_sort(sk);
 end;
 
-function Load_sk_OSSL_CMP_ITAV_is_sorted(_para: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_ITAV_is_sorted(sk: Pstack_st_OSSL_CMP_ITAV): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_ITAV_is_sorted := LoadLibCryptoFunction('OPENSSL_sk_is_sorted');
   if not assigned(sk_OSSL_CMP_ITAV_is_sorted) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_is_sorted');
-  Result := sk_OSSL_CMP_ITAV_is_sorted(_para);
+  Result := sk_OSSL_CMP_ITAV_is_sorted(sk);
 end;
 
-function Load_sk_OSSL_CMP_ITAV_dup(st: Pstack_st_OSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl;
+function Load_sk_OSSL_CMP_ITAV_dup(sk: Pstack_st_OSSL_CMP_ITAV): Pstack_st_OSSL_CMP_ITAV; cdecl;
 begin
   sk_OSSL_CMP_ITAV_dup := LoadLibCryptoFunction('OPENSSL_sk_dup');
   if not assigned(sk_OSSL_CMP_ITAV_dup) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_dup');
-  Result := sk_OSSL_CMP_ITAV_dup(st);
+  Result := sk_OSSL_CMP_ITAV_dup(sk);
 end;
 
-function Load_sk_OSSL_CMP_ITAV_deep_copy(st: Pstack_st_OSSL_CMP_ITAV; c: Tsk_OSSL_CMP_ITAV_compfunc; f: Tsk_OSSL_CMP_ITAV_freefunc): Pstack_st_OSSL_CMP_ITAV; cdecl;
+function Load_sk_OSSL_CMP_ITAV_deep_copy(sk: Pstack_st_OSSL_CMP_ITAV; c: Tsk_OSSL_CMP_ITAV_copyfunc; f: Tsk_OSSL_CMP_ITAV_freefunc): Pstack_st_OSSL_CMP_ITAV; cdecl;
 begin
   sk_OSSL_CMP_ITAV_deep_copy := LoadLibCryptoFunction('OPENSSL_sk_deep_copy');
   if not assigned(sk_OSSL_CMP_ITAV_deep_copy) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_deep_copy');
-  Result := sk_OSSL_CMP_ITAV_deep_copy(st, c, f);
+  Result := sk_OSSL_CMP_ITAV_deep_copy(sk, c, f);
 end;
 
-function Load_sk_OSSL_CMP_ITAV_set_cmp_func(st: Pstack_st_OSSL_CMP_ITAV; cmp: Tsk_OSSL_CMP_ITAV_compfunc): Tsk_OSSL_CMP_ITAV_compfunc; cdecl;
+function Load_sk_OSSL_CMP_ITAV_set_cmp_func(sk: Pstack_st_OSSL_CMP_ITAV; cmp: Tsk_OSSL_CMP_ITAV_compfunc): Tsk_OSSL_CMP_ITAV_compfunc; cdecl;
 begin
   sk_OSSL_CMP_ITAV_set_cmp_func := LoadLibCryptoFunction('OPENSSL_sk_set_cmp_func');
   if not assigned(sk_OSSL_CMP_ITAV_set_cmp_func) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set_cmp_func');
-  Result := sk_OSSL_CMP_ITAV_set_cmp_func(st, cmp);
+  Result := sk_OSSL_CMP_ITAV_set_cmp_func(sk, cmp);
 end;
 
-function Load_sk_OSSL_CMP_CRLSTATUS_num(_para: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CRLSTATUS_num(sk: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_num := LoadLibCryptoFunction('OPENSSL_sk_num');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_num) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_num');
-  Result := sk_OSSL_CMP_CRLSTATUS_num(_para);
+  Result := sk_OSSL_CMP_CRLSTATUS_num(sk);
 end;
 
-function Load_sk_OSSL_CMP_CRLSTATUS_value(_para: Pstack_st_OSSL_CMP_CRLSTATUS; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
+function Load_sk_OSSL_CMP_CRLSTATUS_value(sk: Pstack_st_OSSL_CMP_CRLSTATUS; idx: TOpenSSL_C_INT): POSSL_CMP_CRLSTATUS; cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_value) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_value');
-  Result := sk_OSSL_CMP_CRLSTATUS_value(_para, _para2);
+  Result := sk_OSSL_CMP_CRLSTATUS_value(sk, idx);
 end;
 
 function Load_sk_OSSL_CMP_CRLSTATUS_new(cmp: Tsk_OSSL_CMP_CRLSTATUS_compfunc): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
@@ -2903,164 +2903,164 @@ begin
   Result := sk_OSSL_CMP_CRLSTATUS_new_reserve(cmp, n);
 end;
 
-function Load_sk_OSSL_CMP_CRLSTATUS_reserve(_para: Pstack_st_OSSL_CMP_CRLSTATUS; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CRLSTATUS_reserve(sk: Pstack_st_OSSL_CMP_CRLSTATUS; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_reserve := LoadLibCryptoFunction('OPENSSL_sk_reserve');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_reserve) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_reserve');
-  Result := sk_OSSL_CMP_CRLSTATUS_reserve(_para, n);
+  Result := sk_OSSL_CMP_CRLSTATUS_reserve(sk, n);
 end;
 
-function Load_sk_OSSL_CMP_CRLSTATUS_free(_para: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_OSSL_CMP_CRLSTATUS_free(sk: Pstack_st_OSSL_CMP_CRLSTATUS); cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
-  Result := sk_OSSL_CMP_CRLSTATUS_free(_para);
+  sk_OSSL_CMP_CRLSTATUS_free(sk);
 end;
 
-function Load_sk_OSSL_CMP_CRLSTATUS_zero(_para: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_OSSL_CMP_CRLSTATUS_zero(sk: Pstack_st_OSSL_CMP_CRLSTATUS); cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_zero) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
-  Result := sk_OSSL_CMP_CRLSTATUS_zero(_para);
+  sk_OSSL_CMP_CRLSTATUS_zero(sk);
 end;
 
-function Load_sk_OSSL_CMP_CRLSTATUS_delete(st: Pstack_st_OSSL_CMP_CRLSTATUS; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
+function Load_sk_OSSL_CMP_CRLSTATUS_delete(sk: Pstack_st_OSSL_CMP_CRLSTATUS; i: TOpenSSL_C_INT): POSSL_CMP_CRLSTATUS; cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_delete) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete');
-  Result := sk_OSSL_CMP_CRLSTATUS_delete(st, loc);
+  Result := sk_OSSL_CMP_CRLSTATUS_delete(sk, i);
 end;
 
-function Load_sk_OSSL_CMP_CRLSTATUS_delete_ptr(st: Pstack_st_OSSL_CMP_CRLSTATUS; ptr: Pstack_st_OSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
+function Load_sk_OSSL_CMP_CRLSTATUS_delete_ptr(sk: Pstack_st_OSSL_CMP_CRLSTATUS; ptr: POSSL_CMP_CRLSTATUS): POSSL_CMP_CRLSTATUS; cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_delete_ptr) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete_ptr');
-  Result := sk_OSSL_CMP_CRLSTATUS_delete_ptr(st, ptr);
+  Result := sk_OSSL_CMP_CRLSTATUS_delete_ptr(sk, ptr);
 end;
 
-function Load_sk_OSSL_CMP_CRLSTATUS_push(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CRLSTATUS_push(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_push := LoadLibCryptoFunction('OPENSSL_sk_push');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_push) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_push');
-  Result := sk_OSSL_CMP_CRLSTATUS_push(st, data);
+  Result := sk_OSSL_CMP_CRLSTATUS_push(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_CRLSTATUS_unshift(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CRLSTATUS_unshift(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_unshift := LoadLibCryptoFunction('OPENSSL_sk_unshift');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_unshift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_unshift');
-  Result := sk_OSSL_CMP_CRLSTATUS_unshift(st, data);
+  Result := sk_OSSL_CMP_CRLSTATUS_unshift(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_CRLSTATUS_pop(_para: Pstack_st_OSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
+function Load_sk_OSSL_CMP_CRLSTATUS_pop(sk: Pstack_st_OSSL_CMP_CRLSTATUS): POSSL_CMP_CRLSTATUS; cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_pop) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop');
-  Result := sk_OSSL_CMP_CRLSTATUS_pop(_para);
+  Result := sk_OSSL_CMP_CRLSTATUS_pop(sk);
 end;
 
-function Load_sk_OSSL_CMP_CRLSTATUS_shift(_para: Pstack_st_OSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
+function Load_sk_OSSL_CMP_CRLSTATUS_shift(sk: Pstack_st_OSSL_CMP_CRLSTATUS): POSSL_CMP_CRLSTATUS; cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_shift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_shift');
-  Result := sk_OSSL_CMP_CRLSTATUS_shift(_para);
+  Result := sk_OSSL_CMP_CRLSTATUS_shift(sk);
 end;
 
-procedure Load_sk_OSSL_CMP_CRLSTATUS_pop_free(st: Pstack_st_OSSL_CMP_CRLSTATUS; func: Tsk_OSSL_CMP_CRLSTATUS_freefunc); cdecl;
+procedure Load_sk_OSSL_CMP_CRLSTATUS_pop_free(sk: Pstack_st_OSSL_CMP_CRLSTATUS; func: Tsk_OSSL_CMP_CRLSTATUS_freefunc); cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_pop_free := LoadLibCryptoFunction('OPENSSL_sk_pop_free');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_pop_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop_free');
-  sk_OSSL_CMP_CRLSTATUS_pop_free(st, func);
+  sk_OSSL_CMP_CRLSTATUS_pop_free(sk, func);
 end;
 
-function Load_sk_OSSL_CMP_CRLSTATUS_insert(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CRLSTATUS_insert(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_insert := LoadLibCryptoFunction('OPENSSL_sk_insert');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_insert) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_insert');
-  Result := sk_OSSL_CMP_CRLSTATUS_insert(st, data, where);
+  Result := sk_OSSL_CMP_CRLSTATUS_insert(sk, data, where);
 end;
 
-function Load_sk_OSSL_CMP_CRLSTATUS_set(st: Pstack_st_OSSL_CMP_CRLSTATUS; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
+function Load_sk_OSSL_CMP_CRLSTATUS_set(sk: Pstack_st_OSSL_CMP_CRLSTATUS; i: TOpenSSL_C_INT; data: POSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_set := LoadLibCryptoFunction('OPENSSL_sk_set');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_set) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set');
-  Result := sk_OSSL_CMP_CRLSTATUS_set(st, i, data);
+  Result := sk_OSSL_CMP_CRLSTATUS_set(sk, i, data);
 end;
 
-function Load_sk_OSSL_CMP_CRLSTATUS_find(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CRLSTATUS_find(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_find := LoadLibCryptoFunction('OPENSSL_sk_find');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_find) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find');
-  Result := sk_OSSL_CMP_CRLSTATUS_find(st, data);
+  Result := sk_OSSL_CMP_CRLSTATUS_find(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_CRLSTATUS_find_ex(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CRLSTATUS_find_ex(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_find_ex := LoadLibCryptoFunction('OPENSSL_sk_find_ex');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_find_ex) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_ex');
-  Result := sk_OSSL_CMP_CRLSTATUS_find_ex(st, data);
+  Result := sk_OSSL_CMP_CRLSTATUS_find_ex(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_CRLSTATUS_find_all(st: Pstack_st_OSSL_CMP_CRLSTATUS; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CRLSTATUS_find_all(sk: Pstack_st_OSSL_CMP_CRLSTATUS; data: POSSL_CMP_CRLSTATUS; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_find_all := LoadLibCryptoFunction('OPENSSL_sk_find_all');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_find_all) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_all');
-  Result := sk_OSSL_CMP_CRLSTATUS_find_all(st, data, pnum);
+  Result := sk_OSSL_CMP_CRLSTATUS_find_all(sk, data, pnum);
 end;
 
-function Load_sk_OSSL_CMP_CRLSTATUS_sort(_para: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_OSSL_CMP_CRLSTATUS_sort(sk: Pstack_st_OSSL_CMP_CRLSTATUS); cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_sort) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
-  Result := sk_OSSL_CMP_CRLSTATUS_sort(_para);
+  sk_OSSL_CMP_CRLSTATUS_sort(sk);
 end;
 
-function Load_sk_OSSL_CMP_CRLSTATUS_is_sorted(_para: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CRLSTATUS_is_sorted(sk: Pstack_st_OSSL_CMP_CRLSTATUS): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_is_sorted := LoadLibCryptoFunction('OPENSSL_sk_is_sorted');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_is_sorted) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_is_sorted');
-  Result := sk_OSSL_CMP_CRLSTATUS_is_sorted(_para);
+  Result := sk_OSSL_CMP_CRLSTATUS_is_sorted(sk);
 end;
 
-function Load_sk_OSSL_CMP_CRLSTATUS_dup(st: Pstack_st_OSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
+function Load_sk_OSSL_CMP_CRLSTATUS_dup(sk: Pstack_st_OSSL_CMP_CRLSTATUS): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_dup := LoadLibCryptoFunction('OPENSSL_sk_dup');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_dup) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_dup');
-  Result := sk_OSSL_CMP_CRLSTATUS_dup(st);
+  Result := sk_OSSL_CMP_CRLSTATUS_dup(sk);
 end;
 
-function Load_sk_OSSL_CMP_CRLSTATUS_deep_copy(st: Pstack_st_OSSL_CMP_CRLSTATUS; c: Tsk_OSSL_CMP_CRLSTATUS_compfunc; f: Tsk_OSSL_CMP_CRLSTATUS_freefunc): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
+function Load_sk_OSSL_CMP_CRLSTATUS_deep_copy(sk: Pstack_st_OSSL_CMP_CRLSTATUS; c: Tsk_OSSL_CMP_CRLSTATUS_copyfunc; f: Tsk_OSSL_CMP_CRLSTATUS_freefunc): Pstack_st_OSSL_CMP_CRLSTATUS; cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_deep_copy := LoadLibCryptoFunction('OPENSSL_sk_deep_copy');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_deep_copy) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_deep_copy');
-  Result := sk_OSSL_CMP_CRLSTATUS_deep_copy(st, c, f);
+  Result := sk_OSSL_CMP_CRLSTATUS_deep_copy(sk, c, f);
 end;
 
-function Load_sk_OSSL_CMP_CRLSTATUS_set_cmp_func(st: Pstack_st_OSSL_CMP_CRLSTATUS; cmp: Tsk_OSSL_CMP_CRLSTATUS_compfunc): Tsk_OSSL_CMP_CRLSTATUS_compfunc; cdecl;
+function Load_sk_OSSL_CMP_CRLSTATUS_set_cmp_func(sk: Pstack_st_OSSL_CMP_CRLSTATUS; cmp: Tsk_OSSL_CMP_CRLSTATUS_compfunc): Tsk_OSSL_CMP_CRLSTATUS_compfunc; cdecl;
 begin
   sk_OSSL_CMP_CRLSTATUS_set_cmp_func := LoadLibCryptoFunction('OPENSSL_sk_set_cmp_func');
   if not assigned(sk_OSSL_CMP_CRLSTATUS_set_cmp_func) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set_cmp_func');
-  Result := sk_OSSL_CMP_CRLSTATUS_set_cmp_func(st, cmp);
+  Result := sk_OSSL_CMP_CRLSTATUS_set_cmp_func(sk, cmp);
 end;
 
 function Load_OSSL_CMP_ATAVS_new: POSSL_CMP_ATAVS; cdecl;
@@ -3151,20 +3151,20 @@ begin
   Result := OSSL_CMP_PKISI_dup(a);
 end;
 
-function Load_sk_OSSL_CMP_PKISI_num(_para: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_PKISI_num(sk: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_PKISI_num := LoadLibCryptoFunction('OPENSSL_sk_num');
   if not assigned(sk_OSSL_CMP_PKISI_num) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_num');
-  Result := sk_OSSL_CMP_PKISI_num(_para);
+  Result := sk_OSSL_CMP_PKISI_num(sk);
 end;
 
-function Load_sk_OSSL_CMP_PKISI_value(_para: Pstack_st_OSSL_CMP_PKISI; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_PKISI; cdecl;
+function Load_sk_OSSL_CMP_PKISI_value(sk: Pstack_st_OSSL_CMP_PKISI; idx: TOpenSSL_C_INT): POSSL_CMP_PKISI; cdecl;
 begin
   sk_OSSL_CMP_PKISI_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_OSSL_CMP_PKISI_value) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_value');
-  Result := sk_OSSL_CMP_PKISI_value(_para, _para2);
+  Result := sk_OSSL_CMP_PKISI_value(sk, idx);
 end;
 
 function Load_sk_OSSL_CMP_PKISI_new(cmp: Tsk_OSSL_CMP_PKISI_compfunc): Pstack_st_OSSL_CMP_PKISI; cdecl;
@@ -3191,180 +3191,180 @@ begin
   Result := sk_OSSL_CMP_PKISI_new_reserve(cmp, n);
 end;
 
-function Load_sk_OSSL_CMP_PKISI_reserve(_para: Pstack_st_OSSL_CMP_PKISI; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_PKISI_reserve(sk: Pstack_st_OSSL_CMP_PKISI; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_PKISI_reserve := LoadLibCryptoFunction('OPENSSL_sk_reserve');
   if not assigned(sk_OSSL_CMP_PKISI_reserve) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_reserve');
-  Result := sk_OSSL_CMP_PKISI_reserve(_para, n);
+  Result := sk_OSSL_CMP_PKISI_reserve(sk, n);
 end;
 
-function Load_sk_OSSL_CMP_PKISI_free(_para: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_OSSL_CMP_PKISI_free(sk: Pstack_st_OSSL_CMP_PKISI); cdecl;
 begin
   sk_OSSL_CMP_PKISI_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_OSSL_CMP_PKISI_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
-  Result := sk_OSSL_CMP_PKISI_free(_para);
+  sk_OSSL_CMP_PKISI_free(sk);
 end;
 
-function Load_sk_OSSL_CMP_PKISI_zero(_para: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_OSSL_CMP_PKISI_zero(sk: Pstack_st_OSSL_CMP_PKISI); cdecl;
 begin
   sk_OSSL_CMP_PKISI_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_OSSL_CMP_PKISI_zero) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
-  Result := sk_OSSL_CMP_PKISI_zero(_para);
+  sk_OSSL_CMP_PKISI_zero(sk);
 end;
 
-function Load_sk_OSSL_CMP_PKISI_delete(st: Pstack_st_OSSL_CMP_PKISI; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_PKISI; cdecl;
+function Load_sk_OSSL_CMP_PKISI_delete(sk: Pstack_st_OSSL_CMP_PKISI; i: TOpenSSL_C_INT): POSSL_CMP_PKISI; cdecl;
 begin
   sk_OSSL_CMP_PKISI_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_OSSL_CMP_PKISI_delete) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete');
-  Result := sk_OSSL_CMP_PKISI_delete(st, loc);
+  Result := sk_OSSL_CMP_PKISI_delete(sk, i);
 end;
 
-function Load_sk_OSSL_CMP_PKISI_delete_ptr(st: Pstack_st_OSSL_CMP_PKISI; ptr: Pstack_st_OSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl;
+function Load_sk_OSSL_CMP_PKISI_delete_ptr(sk: Pstack_st_OSSL_CMP_PKISI; ptr: POSSL_CMP_PKISI): POSSL_CMP_PKISI; cdecl;
 begin
   sk_OSSL_CMP_PKISI_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_OSSL_CMP_PKISI_delete_ptr) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete_ptr');
-  Result := sk_OSSL_CMP_PKISI_delete_ptr(st, ptr);
+  Result := sk_OSSL_CMP_PKISI_delete_ptr(sk, ptr);
 end;
 
-function Load_sk_OSSL_CMP_PKISI_push(st: Pstack_st_OSSL_CMP_PKISI; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_PKISI_push(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_PKISI_push := LoadLibCryptoFunction('OPENSSL_sk_push');
   if not assigned(sk_OSSL_CMP_PKISI_push) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_push');
-  Result := sk_OSSL_CMP_PKISI_push(st, data);
+  Result := sk_OSSL_CMP_PKISI_push(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_PKISI_unshift(st: Pstack_st_OSSL_CMP_PKISI; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_PKISI_unshift(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_PKISI_unshift := LoadLibCryptoFunction('OPENSSL_sk_unshift');
   if not assigned(sk_OSSL_CMP_PKISI_unshift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_unshift');
-  Result := sk_OSSL_CMP_PKISI_unshift(st, data);
+  Result := sk_OSSL_CMP_PKISI_unshift(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_PKISI_pop(_para: Pstack_st_OSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl;
+function Load_sk_OSSL_CMP_PKISI_pop(sk: Pstack_st_OSSL_CMP_PKISI): POSSL_CMP_PKISI; cdecl;
 begin
   sk_OSSL_CMP_PKISI_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_OSSL_CMP_PKISI_pop) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop');
-  Result := sk_OSSL_CMP_PKISI_pop(_para);
+  Result := sk_OSSL_CMP_PKISI_pop(sk);
 end;
 
-function Load_sk_OSSL_CMP_PKISI_shift(_para: Pstack_st_OSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl;
+function Load_sk_OSSL_CMP_PKISI_shift(sk: Pstack_st_OSSL_CMP_PKISI): POSSL_CMP_PKISI; cdecl;
 begin
   sk_OSSL_CMP_PKISI_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_OSSL_CMP_PKISI_shift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_shift');
-  Result := sk_OSSL_CMP_PKISI_shift(_para);
+  Result := sk_OSSL_CMP_PKISI_shift(sk);
 end;
 
-procedure Load_sk_OSSL_CMP_PKISI_pop_free(st: Pstack_st_OSSL_CMP_PKISI; func: Tsk_OSSL_CMP_PKISI_freefunc); cdecl;
+procedure Load_sk_OSSL_CMP_PKISI_pop_free(sk: Pstack_st_OSSL_CMP_PKISI; func: Tsk_OSSL_CMP_PKISI_freefunc); cdecl;
 begin
   sk_OSSL_CMP_PKISI_pop_free := LoadLibCryptoFunction('OPENSSL_sk_pop_free');
   if not assigned(sk_OSSL_CMP_PKISI_pop_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop_free');
-  sk_OSSL_CMP_PKISI_pop_free(st, func);
+  sk_OSSL_CMP_PKISI_pop_free(sk, func);
 end;
 
-function Load_sk_OSSL_CMP_PKISI_insert(st: Pstack_st_OSSL_CMP_PKISI; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_PKISI_insert(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_PKISI_insert := LoadLibCryptoFunction('OPENSSL_sk_insert');
   if not assigned(sk_OSSL_CMP_PKISI_insert) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_insert');
-  Result := sk_OSSL_CMP_PKISI_insert(st, data, where);
+  Result := sk_OSSL_CMP_PKISI_insert(sk, data, where);
 end;
 
-function Load_sk_OSSL_CMP_PKISI_set(st: Pstack_st_OSSL_CMP_PKISI; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_PKISI; cdecl;
+function Load_sk_OSSL_CMP_PKISI_set(sk: Pstack_st_OSSL_CMP_PKISI; i: TOpenSSL_C_INT; data: POSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl;
 begin
   sk_OSSL_CMP_PKISI_set := LoadLibCryptoFunction('OPENSSL_sk_set');
   if not assigned(sk_OSSL_CMP_PKISI_set) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set');
-  Result := sk_OSSL_CMP_PKISI_set(st, i, data);
+  Result := sk_OSSL_CMP_PKISI_set(sk, i, data);
 end;
 
-function Load_sk_OSSL_CMP_PKISI_find(st: Pstack_st_OSSL_CMP_PKISI; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_PKISI_find(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_PKISI_find := LoadLibCryptoFunction('OPENSSL_sk_find');
   if not assigned(sk_OSSL_CMP_PKISI_find) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find');
-  Result := sk_OSSL_CMP_PKISI_find(st, data);
+  Result := sk_OSSL_CMP_PKISI_find(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_PKISI_find_ex(st: Pstack_st_OSSL_CMP_PKISI; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_PKISI_find_ex(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_PKISI_find_ex := LoadLibCryptoFunction('OPENSSL_sk_find_ex');
   if not assigned(sk_OSSL_CMP_PKISI_find_ex) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_ex');
-  Result := sk_OSSL_CMP_PKISI_find_ex(st, data);
+  Result := sk_OSSL_CMP_PKISI_find_ex(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_PKISI_find_all(st: Pstack_st_OSSL_CMP_PKISI; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_PKISI_find_all(sk: Pstack_st_OSSL_CMP_PKISI; data: POSSL_CMP_PKISI; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_PKISI_find_all := LoadLibCryptoFunction('OPENSSL_sk_find_all');
   if not assigned(sk_OSSL_CMP_PKISI_find_all) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_all');
-  Result := sk_OSSL_CMP_PKISI_find_all(st, data, pnum);
+  Result := sk_OSSL_CMP_PKISI_find_all(sk, data, pnum);
 end;
 
-function Load_sk_OSSL_CMP_PKISI_sort(_para: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_OSSL_CMP_PKISI_sort(sk: Pstack_st_OSSL_CMP_PKISI); cdecl;
 begin
   sk_OSSL_CMP_PKISI_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_OSSL_CMP_PKISI_sort) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
-  Result := sk_OSSL_CMP_PKISI_sort(_para);
+  sk_OSSL_CMP_PKISI_sort(sk);
 end;
 
-function Load_sk_OSSL_CMP_PKISI_is_sorted(_para: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_PKISI_is_sorted(sk: Pstack_st_OSSL_CMP_PKISI): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_PKISI_is_sorted := LoadLibCryptoFunction('OPENSSL_sk_is_sorted');
   if not assigned(sk_OSSL_CMP_PKISI_is_sorted) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_is_sorted');
-  Result := sk_OSSL_CMP_PKISI_is_sorted(_para);
+  Result := sk_OSSL_CMP_PKISI_is_sorted(sk);
 end;
 
-function Load_sk_OSSL_CMP_PKISI_dup(st: Pstack_st_OSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl;
+function Load_sk_OSSL_CMP_PKISI_dup(sk: Pstack_st_OSSL_CMP_PKISI): Pstack_st_OSSL_CMP_PKISI; cdecl;
 begin
   sk_OSSL_CMP_PKISI_dup := LoadLibCryptoFunction('OPENSSL_sk_dup');
   if not assigned(sk_OSSL_CMP_PKISI_dup) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_dup');
-  Result := sk_OSSL_CMP_PKISI_dup(st);
+  Result := sk_OSSL_CMP_PKISI_dup(sk);
 end;
 
-function Load_sk_OSSL_CMP_PKISI_deep_copy(st: Pstack_st_OSSL_CMP_PKISI; c: Tsk_OSSL_CMP_PKISI_compfunc; f: Tsk_OSSL_CMP_PKISI_freefunc): Pstack_st_OSSL_CMP_PKISI; cdecl;
+function Load_sk_OSSL_CMP_PKISI_deep_copy(sk: Pstack_st_OSSL_CMP_PKISI; c: Tsk_OSSL_CMP_PKISI_copyfunc; f: Tsk_OSSL_CMP_PKISI_freefunc): Pstack_st_OSSL_CMP_PKISI; cdecl;
 begin
   sk_OSSL_CMP_PKISI_deep_copy := LoadLibCryptoFunction('OPENSSL_sk_deep_copy');
   if not assigned(sk_OSSL_CMP_PKISI_deep_copy) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_deep_copy');
-  Result := sk_OSSL_CMP_PKISI_deep_copy(st, c, f);
+  Result := sk_OSSL_CMP_PKISI_deep_copy(sk, c, f);
 end;
 
-function Load_sk_OSSL_CMP_PKISI_set_cmp_func(st: Pstack_st_OSSL_CMP_PKISI; cmp: Tsk_OSSL_CMP_PKISI_compfunc): Tsk_OSSL_CMP_PKISI_compfunc; cdecl;
+function Load_sk_OSSL_CMP_PKISI_set_cmp_func(sk: Pstack_st_OSSL_CMP_PKISI; cmp: Tsk_OSSL_CMP_PKISI_compfunc): Tsk_OSSL_CMP_PKISI_compfunc; cdecl;
 begin
   sk_OSSL_CMP_PKISI_set_cmp_func := LoadLibCryptoFunction('OPENSSL_sk_set_cmp_func');
   if not assigned(sk_OSSL_CMP_PKISI_set_cmp_func) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set_cmp_func');
-  Result := sk_OSSL_CMP_PKISI_set_cmp_func(st, cmp);
+  Result := sk_OSSL_CMP_PKISI_set_cmp_func(sk, cmp);
 end;
 
-function Load_sk_OSSL_CMP_CERTREPMESSAGE_num(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTREPMESSAGE_num(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_num := LoadLibCryptoFunction('OPENSSL_sk_num');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_num) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_num');
-  Result := sk_OSSL_CMP_CERTREPMESSAGE_num(_para);
+  Result := sk_OSSL_CMP_CERTREPMESSAGE_num(sk);
 end;
 
-function Load_sk_OSSL_CMP_CERTREPMESSAGE_value(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
+function Load_sk_OSSL_CMP_CERTREPMESSAGE_value(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; idx: TOpenSSL_C_INT): POSSL_CMP_CERTREPMESSAGE; cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_value) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_value');
-  Result := sk_OSSL_CMP_CERTREPMESSAGE_value(_para, _para2);
+  Result := sk_OSSL_CMP_CERTREPMESSAGE_value(sk, idx);
 end;
 
 function Load_sk_OSSL_CMP_CERTREPMESSAGE_new(cmp: Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
@@ -3391,180 +3391,180 @@ begin
   Result := sk_OSSL_CMP_CERTREPMESSAGE_new_reserve(cmp, n);
 end;
 
-function Load_sk_OSSL_CMP_CERTREPMESSAGE_reserve(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTREPMESSAGE_reserve(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_reserve := LoadLibCryptoFunction('OPENSSL_sk_reserve');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_reserve) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_reserve');
-  Result := sk_OSSL_CMP_CERTREPMESSAGE_reserve(_para, n);
+  Result := sk_OSSL_CMP_CERTREPMESSAGE_reserve(sk, n);
 end;
 
-function Load_sk_OSSL_CMP_CERTREPMESSAGE_free(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_OSSL_CMP_CERTREPMESSAGE_free(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE); cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
-  Result := sk_OSSL_CMP_CERTREPMESSAGE_free(_para);
+  sk_OSSL_CMP_CERTREPMESSAGE_free(sk);
 end;
 
-function Load_sk_OSSL_CMP_CERTREPMESSAGE_zero(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_OSSL_CMP_CERTREPMESSAGE_zero(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE); cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_zero) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
-  Result := sk_OSSL_CMP_CERTREPMESSAGE_zero(_para);
+  sk_OSSL_CMP_CERTREPMESSAGE_zero(sk);
 end;
 
-function Load_sk_OSSL_CMP_CERTREPMESSAGE_delete(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
+function Load_sk_OSSL_CMP_CERTREPMESSAGE_delete(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; i: TOpenSSL_C_INT): POSSL_CMP_CERTREPMESSAGE; cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_delete) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete');
-  Result := sk_OSSL_CMP_CERTREPMESSAGE_delete(st, loc);
+  Result := sk_OSSL_CMP_CERTREPMESSAGE_delete(sk, i);
 end;
 
-function Load_sk_OSSL_CMP_CERTREPMESSAGE_delete_ptr(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; ptr: Pstack_st_OSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
+function Load_sk_OSSL_CMP_CERTREPMESSAGE_delete_ptr(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; ptr: POSSL_CMP_CERTREPMESSAGE): POSSL_CMP_CERTREPMESSAGE; cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_delete_ptr) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete_ptr');
-  Result := sk_OSSL_CMP_CERTREPMESSAGE_delete_ptr(st, ptr);
+  Result := sk_OSSL_CMP_CERTREPMESSAGE_delete_ptr(sk, ptr);
 end;
 
-function Load_sk_OSSL_CMP_CERTREPMESSAGE_push(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTREPMESSAGE_push(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_push := LoadLibCryptoFunction('OPENSSL_sk_push');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_push) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_push');
-  Result := sk_OSSL_CMP_CERTREPMESSAGE_push(st, data);
+  Result := sk_OSSL_CMP_CERTREPMESSAGE_push(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_CERTREPMESSAGE_unshift(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTREPMESSAGE_unshift(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_unshift := LoadLibCryptoFunction('OPENSSL_sk_unshift');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_unshift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_unshift');
-  Result := sk_OSSL_CMP_CERTREPMESSAGE_unshift(st, data);
+  Result := sk_OSSL_CMP_CERTREPMESSAGE_unshift(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_CERTREPMESSAGE_pop(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
+function Load_sk_OSSL_CMP_CERTREPMESSAGE_pop(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE): POSSL_CMP_CERTREPMESSAGE; cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_pop) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop');
-  Result := sk_OSSL_CMP_CERTREPMESSAGE_pop(_para);
+  Result := sk_OSSL_CMP_CERTREPMESSAGE_pop(sk);
 end;
 
-function Load_sk_OSSL_CMP_CERTREPMESSAGE_shift(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
+function Load_sk_OSSL_CMP_CERTREPMESSAGE_shift(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE): POSSL_CMP_CERTREPMESSAGE; cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_shift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_shift');
-  Result := sk_OSSL_CMP_CERTREPMESSAGE_shift(_para);
+  Result := sk_OSSL_CMP_CERTREPMESSAGE_shift(sk);
 end;
 
-procedure Load_sk_OSSL_CMP_CERTREPMESSAGE_pop_free(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; func: Tsk_OSSL_CMP_CERTREPMESSAGE_freefunc); cdecl;
+procedure Load_sk_OSSL_CMP_CERTREPMESSAGE_pop_free(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; func: Tsk_OSSL_CMP_CERTREPMESSAGE_freefunc); cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_pop_free := LoadLibCryptoFunction('OPENSSL_sk_pop_free');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_pop_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop_free');
-  sk_OSSL_CMP_CERTREPMESSAGE_pop_free(st, func);
+  sk_OSSL_CMP_CERTREPMESSAGE_pop_free(sk, func);
 end;
 
-function Load_sk_OSSL_CMP_CERTREPMESSAGE_insert(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTREPMESSAGE_insert(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_insert := LoadLibCryptoFunction('OPENSSL_sk_insert');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_insert) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_insert');
-  Result := sk_OSSL_CMP_CERTREPMESSAGE_insert(st, data, where);
+  Result := sk_OSSL_CMP_CERTREPMESSAGE_insert(sk, data, where);
 end;
 
-function Load_sk_OSSL_CMP_CERTREPMESSAGE_set(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
+function Load_sk_OSSL_CMP_CERTREPMESSAGE_set(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; i: TOpenSSL_C_INT; data: POSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_set := LoadLibCryptoFunction('OPENSSL_sk_set');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_set) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set');
-  Result := sk_OSSL_CMP_CERTREPMESSAGE_set(st, i, data);
+  Result := sk_OSSL_CMP_CERTREPMESSAGE_set(sk, i, data);
 end;
 
-function Load_sk_OSSL_CMP_CERTREPMESSAGE_find(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTREPMESSAGE_find(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_find := LoadLibCryptoFunction('OPENSSL_sk_find');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_find) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find');
-  Result := sk_OSSL_CMP_CERTREPMESSAGE_find(st, data);
+  Result := sk_OSSL_CMP_CERTREPMESSAGE_find(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_CERTREPMESSAGE_find_ex(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTREPMESSAGE_find_ex(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_find_ex := LoadLibCryptoFunction('OPENSSL_sk_find_ex');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_find_ex) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_ex');
-  Result := sk_OSSL_CMP_CERTREPMESSAGE_find_ex(st, data);
+  Result := sk_OSSL_CMP_CERTREPMESSAGE_find_ex(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_CERTREPMESSAGE_find_all(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTREPMESSAGE_find_all(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; data: POSSL_CMP_CERTREPMESSAGE; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_find_all := LoadLibCryptoFunction('OPENSSL_sk_find_all');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_find_all) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_all');
-  Result := sk_OSSL_CMP_CERTREPMESSAGE_find_all(st, data, pnum);
+  Result := sk_OSSL_CMP_CERTREPMESSAGE_find_all(sk, data, pnum);
 end;
 
-function Load_sk_OSSL_CMP_CERTREPMESSAGE_sort(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_OSSL_CMP_CERTREPMESSAGE_sort(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE); cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_sort) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
-  Result := sk_OSSL_CMP_CERTREPMESSAGE_sort(_para);
+  sk_OSSL_CMP_CERTREPMESSAGE_sort(sk);
 end;
 
-function Load_sk_OSSL_CMP_CERTREPMESSAGE_is_sorted(_para: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTREPMESSAGE_is_sorted(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_is_sorted := LoadLibCryptoFunction('OPENSSL_sk_is_sorted');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_is_sorted) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_is_sorted');
-  Result := sk_OSSL_CMP_CERTREPMESSAGE_is_sorted(_para);
+  Result := sk_OSSL_CMP_CERTREPMESSAGE_is_sorted(sk);
 end;
 
-function Load_sk_OSSL_CMP_CERTREPMESSAGE_dup(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
+function Load_sk_OSSL_CMP_CERTREPMESSAGE_dup(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_dup := LoadLibCryptoFunction('OPENSSL_sk_dup');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_dup) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_dup');
-  Result := sk_OSSL_CMP_CERTREPMESSAGE_dup(st);
+  Result := sk_OSSL_CMP_CERTREPMESSAGE_dup(sk);
 end;
 
-function Load_sk_OSSL_CMP_CERTREPMESSAGE_deep_copy(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; c: Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc; f: Tsk_OSSL_CMP_CERTREPMESSAGE_freefunc): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
+function Load_sk_OSSL_CMP_CERTREPMESSAGE_deep_copy(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; c: Tsk_OSSL_CMP_CERTREPMESSAGE_copyfunc; f: Tsk_OSSL_CMP_CERTREPMESSAGE_freefunc): Pstack_st_OSSL_CMP_CERTREPMESSAGE; cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_deep_copy := LoadLibCryptoFunction('OPENSSL_sk_deep_copy');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_deep_copy) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_deep_copy');
-  Result := sk_OSSL_CMP_CERTREPMESSAGE_deep_copy(st, c, f);
+  Result := sk_OSSL_CMP_CERTREPMESSAGE_deep_copy(sk, c, f);
 end;
 
-function Load_sk_OSSL_CMP_CERTREPMESSAGE_set_cmp_func(st: Pstack_st_OSSL_CMP_CERTREPMESSAGE; cmp: Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc): Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc; cdecl;
+function Load_sk_OSSL_CMP_CERTREPMESSAGE_set_cmp_func(sk: Pstack_st_OSSL_CMP_CERTREPMESSAGE; cmp: Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc): Tsk_OSSL_CMP_CERTREPMESSAGE_compfunc; cdecl;
 begin
   sk_OSSL_CMP_CERTREPMESSAGE_set_cmp_func := LoadLibCryptoFunction('OPENSSL_sk_set_cmp_func');
   if not assigned(sk_OSSL_CMP_CERTREPMESSAGE_set_cmp_func) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set_cmp_func');
-  Result := sk_OSSL_CMP_CERTREPMESSAGE_set_cmp_func(st, cmp);
+  Result := sk_OSSL_CMP_CERTREPMESSAGE_set_cmp_func(sk, cmp);
 end;
 
-function Load_sk_OSSL_CMP_CERTRESPONSE_num(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTRESPONSE_num(sk: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_num := LoadLibCryptoFunction('OPENSSL_sk_num');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_num) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_num');
-  Result := sk_OSSL_CMP_CERTRESPONSE_num(_para);
+  Result := sk_OSSL_CMP_CERTRESPONSE_num(sk);
 end;
 
-function Load_sk_OSSL_CMP_CERTRESPONSE_value(_para: Pstack_st_OSSL_CMP_CERTRESPONSE; _para2: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
+function Load_sk_OSSL_CMP_CERTRESPONSE_value(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; idx: TOpenSSL_C_INT): POSSL_CMP_CERTRESPONSE; cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_value) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_value');
-  Result := sk_OSSL_CMP_CERTRESPONSE_value(_para, _para2);
+  Result := sk_OSSL_CMP_CERTRESPONSE_value(sk, idx);
 end;
 
 function Load_sk_OSSL_CMP_CERTRESPONSE_new(cmp: Tsk_OSSL_CMP_CERTRESPONSE_compfunc): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
@@ -3591,164 +3591,164 @@ begin
   Result := sk_OSSL_CMP_CERTRESPONSE_new_reserve(cmp, n);
 end;
 
-function Load_sk_OSSL_CMP_CERTRESPONSE_reserve(_para: Pstack_st_OSSL_CMP_CERTRESPONSE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTRESPONSE_reserve(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_reserve := LoadLibCryptoFunction('OPENSSL_sk_reserve');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_reserve) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_reserve');
-  Result := sk_OSSL_CMP_CERTRESPONSE_reserve(_para, n);
+  Result := sk_OSSL_CMP_CERTRESPONSE_reserve(sk, n);
 end;
 
-function Load_sk_OSSL_CMP_CERTRESPONSE_free(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_OSSL_CMP_CERTRESPONSE_free(sk: Pstack_st_OSSL_CMP_CERTRESPONSE); cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
-  Result := sk_OSSL_CMP_CERTRESPONSE_free(_para);
+  sk_OSSL_CMP_CERTRESPONSE_free(sk);
 end;
 
-function Load_sk_OSSL_CMP_CERTRESPONSE_zero(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_OSSL_CMP_CERTRESPONSE_zero(sk: Pstack_st_OSSL_CMP_CERTRESPONSE); cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_zero) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
-  Result := sk_OSSL_CMP_CERTRESPONSE_zero(_para);
+  sk_OSSL_CMP_CERTRESPONSE_zero(sk);
 end;
 
-function Load_sk_OSSL_CMP_CERTRESPONSE_delete(st: Pstack_st_OSSL_CMP_CERTRESPONSE; loc: TOpenSSL_C_INT): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
+function Load_sk_OSSL_CMP_CERTRESPONSE_delete(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; i: TOpenSSL_C_INT): POSSL_CMP_CERTRESPONSE; cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_delete) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete');
-  Result := sk_OSSL_CMP_CERTRESPONSE_delete(st, loc);
+  Result := sk_OSSL_CMP_CERTRESPONSE_delete(sk, i);
 end;
 
-function Load_sk_OSSL_CMP_CERTRESPONSE_delete_ptr(st: Pstack_st_OSSL_CMP_CERTRESPONSE; ptr: Pstack_st_OSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
+function Load_sk_OSSL_CMP_CERTRESPONSE_delete_ptr(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; ptr: POSSL_CMP_CERTRESPONSE): POSSL_CMP_CERTRESPONSE; cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_delete_ptr) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete_ptr');
-  Result := sk_OSSL_CMP_CERTRESPONSE_delete_ptr(st, ptr);
+  Result := sk_OSSL_CMP_CERTRESPONSE_delete_ptr(sk, ptr);
 end;
 
-function Load_sk_OSSL_CMP_CERTRESPONSE_push(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTRESPONSE_push(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_push := LoadLibCryptoFunction('OPENSSL_sk_push');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_push) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_push');
-  Result := sk_OSSL_CMP_CERTRESPONSE_push(st, data);
+  Result := sk_OSSL_CMP_CERTRESPONSE_push(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_CERTRESPONSE_unshift(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTRESPONSE_unshift(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_unshift := LoadLibCryptoFunction('OPENSSL_sk_unshift');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_unshift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_unshift');
-  Result := sk_OSSL_CMP_CERTRESPONSE_unshift(st, data);
+  Result := sk_OSSL_CMP_CERTRESPONSE_unshift(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_CERTRESPONSE_pop(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
+function Load_sk_OSSL_CMP_CERTRESPONSE_pop(sk: Pstack_st_OSSL_CMP_CERTRESPONSE): POSSL_CMP_CERTRESPONSE; cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_pop) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop');
-  Result := sk_OSSL_CMP_CERTRESPONSE_pop(_para);
+  Result := sk_OSSL_CMP_CERTRESPONSE_pop(sk);
 end;
 
-function Load_sk_OSSL_CMP_CERTRESPONSE_shift(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
+function Load_sk_OSSL_CMP_CERTRESPONSE_shift(sk: Pstack_st_OSSL_CMP_CERTRESPONSE): POSSL_CMP_CERTRESPONSE; cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_shift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_shift');
-  Result := sk_OSSL_CMP_CERTRESPONSE_shift(_para);
+  Result := sk_OSSL_CMP_CERTRESPONSE_shift(sk);
 end;
 
-procedure Load_sk_OSSL_CMP_CERTRESPONSE_pop_free(st: Pstack_st_OSSL_CMP_CERTRESPONSE; func: Tsk_OSSL_CMP_CERTRESPONSE_freefunc); cdecl;
+procedure Load_sk_OSSL_CMP_CERTRESPONSE_pop_free(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; func: Tsk_OSSL_CMP_CERTRESPONSE_freefunc); cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_pop_free := LoadLibCryptoFunction('OPENSSL_sk_pop_free');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_pop_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop_free');
-  sk_OSSL_CMP_CERTRESPONSE_pop_free(st, func);
+  sk_OSSL_CMP_CERTRESPONSE_pop_free(sk, func);
 end;
 
-function Load_sk_OSSL_CMP_CERTRESPONSE_insert(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTRESPONSE_insert(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_insert := LoadLibCryptoFunction('OPENSSL_sk_insert');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_insert) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_insert');
-  Result := sk_OSSL_CMP_CERTRESPONSE_insert(st, data, where);
+  Result := sk_OSSL_CMP_CERTRESPONSE_insert(sk, data, where);
 end;
 
-function Load_sk_OSSL_CMP_CERTRESPONSE_set(st: Pstack_st_OSSL_CMP_CERTRESPONSE; i: TOpenSSL_C_INT; data: pointer): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
+function Load_sk_OSSL_CMP_CERTRESPONSE_set(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; i: TOpenSSL_C_INT; data: POSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_set := LoadLibCryptoFunction('OPENSSL_sk_set');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_set) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set');
-  Result := sk_OSSL_CMP_CERTRESPONSE_set(st, i, data);
+  Result := sk_OSSL_CMP_CERTRESPONSE_set(sk, i, data);
 end;
 
-function Load_sk_OSSL_CMP_CERTRESPONSE_find(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTRESPONSE_find(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_find := LoadLibCryptoFunction('OPENSSL_sk_find');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_find) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find');
-  Result := sk_OSSL_CMP_CERTRESPONSE_find(st, data);
+  Result := sk_OSSL_CMP_CERTRESPONSE_find(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_CERTRESPONSE_find_ex(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTRESPONSE_find_ex(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_find_ex := LoadLibCryptoFunction('OPENSSL_sk_find_ex');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_find_ex) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_ex');
-  Result := sk_OSSL_CMP_CERTRESPONSE_find_ex(st, data);
+  Result := sk_OSSL_CMP_CERTRESPONSE_find_ex(sk, data);
 end;
 
-function Load_sk_OSSL_CMP_CERTRESPONSE_find_all(st: Pstack_st_OSSL_CMP_CERTRESPONSE; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTRESPONSE_find_all(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; data: POSSL_CMP_CERTRESPONSE; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_find_all := LoadLibCryptoFunction('OPENSSL_sk_find_all');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_find_all) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_all');
-  Result := sk_OSSL_CMP_CERTRESPONSE_find_all(st, data, pnum);
+  Result := sk_OSSL_CMP_CERTRESPONSE_find_all(sk, data, pnum);
 end;
 
-function Load_sk_OSSL_CMP_CERTRESPONSE_sort(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_OSSL_CMP_CERTRESPONSE_sort(sk: Pstack_st_OSSL_CMP_CERTRESPONSE); cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_sort) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
-  Result := sk_OSSL_CMP_CERTRESPONSE_sort(_para);
+  sk_OSSL_CMP_CERTRESPONSE_sort(sk);
 end;
 
-function Load_sk_OSSL_CMP_CERTRESPONSE_is_sorted(_para: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
+function Load_sk_OSSL_CMP_CERTRESPONSE_is_sorted(sk: Pstack_st_OSSL_CMP_CERTRESPONSE): TOpenSSL_C_INT; cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_is_sorted := LoadLibCryptoFunction('OPENSSL_sk_is_sorted');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_is_sorted) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_is_sorted');
-  Result := sk_OSSL_CMP_CERTRESPONSE_is_sorted(_para);
+  Result := sk_OSSL_CMP_CERTRESPONSE_is_sorted(sk);
 end;
 
-function Load_sk_OSSL_CMP_CERTRESPONSE_dup(st: Pstack_st_OSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
+function Load_sk_OSSL_CMP_CERTRESPONSE_dup(sk: Pstack_st_OSSL_CMP_CERTRESPONSE): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_dup := LoadLibCryptoFunction('OPENSSL_sk_dup');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_dup) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_dup');
-  Result := sk_OSSL_CMP_CERTRESPONSE_dup(st);
+  Result := sk_OSSL_CMP_CERTRESPONSE_dup(sk);
 end;
 
-function Load_sk_OSSL_CMP_CERTRESPONSE_deep_copy(st: Pstack_st_OSSL_CMP_CERTRESPONSE; c: Tsk_OSSL_CMP_CERTRESPONSE_compfunc; f: Tsk_OSSL_CMP_CERTRESPONSE_freefunc): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
+function Load_sk_OSSL_CMP_CERTRESPONSE_deep_copy(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; c: Tsk_OSSL_CMP_CERTRESPONSE_copyfunc; f: Tsk_OSSL_CMP_CERTRESPONSE_freefunc): Pstack_st_OSSL_CMP_CERTRESPONSE; cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_deep_copy := LoadLibCryptoFunction('OPENSSL_sk_deep_copy');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_deep_copy) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_deep_copy');
-  Result := sk_OSSL_CMP_CERTRESPONSE_deep_copy(st, c, f);
+  Result := sk_OSSL_CMP_CERTRESPONSE_deep_copy(sk, c, f);
 end;
 
-function Load_sk_OSSL_CMP_CERTRESPONSE_set_cmp_func(st: Pstack_st_OSSL_CMP_CERTRESPONSE; cmp: Tsk_OSSL_CMP_CERTRESPONSE_compfunc): Tsk_OSSL_CMP_CERTRESPONSE_compfunc; cdecl;
+function Load_sk_OSSL_CMP_CERTRESPONSE_set_cmp_func(sk: Pstack_st_OSSL_CMP_CERTRESPONSE; cmp: Tsk_OSSL_CMP_CERTRESPONSE_compfunc): Tsk_OSSL_CMP_CERTRESPONSE_compfunc; cdecl;
 begin
   sk_OSSL_CMP_CERTRESPONSE_set_cmp_func := LoadLibCryptoFunction('OPENSSL_sk_set_cmp_func');
   if not assigned(sk_OSSL_CMP_CERTRESPONSE_set_cmp_func) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set_cmp_func');
-  Result := sk_OSSL_CMP_CERTRESPONSE_set_cmp_func(st, cmp);
+  Result := sk_OSSL_CMP_CERTRESPONSE_set_cmp_func(sk, cmp);
 end;
 
 function Load_OSSL_CMP_ITAV_create(type_: PASN1_OBJECT; value: PASN1_TYPE): POSSL_CMP_ITAV; cdecl;

@@ -18,7 +18,7 @@
 unit openssl_buffer;
 
 {
-  Generated from OpenSSL 3.0.20 Header File buffer.h - Sat 12 Sep 14:58:21 BST 2026
+  Generated from OpenSSL 3.0.20 Header File buffer.h - Tue 15 Sep 14:33:47 BST 2026
   With Legacy Support Option
 }
 

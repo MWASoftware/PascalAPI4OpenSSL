@@ -18,7 +18,7 @@
 unit openssl_lhash;
 
 {
-  Generated from OpenSSL 3.0.20 Header File lhash.h - Sat 12 Sep 14:55:32 BST 2026
+  Generated from OpenSSL 3.0.20 Header File lhash.h - Tue 15 Sep 14:30:27 BST 2026
 }
 
 {$IFNDEF FPC}

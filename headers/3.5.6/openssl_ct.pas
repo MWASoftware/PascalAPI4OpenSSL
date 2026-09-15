@@ -18,7 +18,7 @@
 unit openssl_ct;
 
 {
-  Generated from OpenSSL 3.5.6 Header File ct.h - Sat 12 Sep 15:01:26 BST 2026
+  Generated from OpenSSL 3.5.6 Header File ct.h - Tue 15 Sep 14:36:33 BST 2026
 }
 
 {$IFNDEF FPC}
@@ -87,31 +87,31 @@ type
   function ossl_check_SCT_copyfunc_type(cpy: Tsk_SCT_copyfunc): TOPENSSL_sk_copyfunc{Has C Attribute: unused}; inline;
   function ossl_check_SCT_freefunc_type(fr: Tsk_SCT_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
     {$ifdef OPENSSL_STATIC_LINK_MODEL}
-  function sk_SCT_num(_para: Pstack_st_SCT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_SCT_value(_para: Pstack_st_SCT; _para2: TOpenSSL_C_INT): Pstack_st_SCT; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_SCT_num(sk: Pstack_st_SCT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
+  function sk_SCT_value(sk: Pstack_st_SCT; idx: TOpenSSL_C_INT): PSCT; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_SCT_new(cmp: Tsk_SCT_compfunc): Pstack_st_SCT; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_SCT_new_null: Pstack_st_SCT; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_SCT_new_reserve(cmp: Tsk_SCT_compfunc; n: TOpenSSL_C_INT): Pstack_st_SCT; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
-  function sk_SCT_reserve(_para: Pstack_st_SCT; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_SCT_free(_para: Pstack_st_SCT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_SCT_zero(_para: Pstack_st_SCT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_SCT_delete(st: Pstack_st_SCT; loc: TOpenSSL_C_INT): Pstack_st_SCT; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_SCT_delete_ptr(st: Pstack_st_SCT; ptr: Pstack_st_SCT): Pstack_st_SCT; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
-  function sk_SCT_push(st: Pstack_st_SCT; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
-  function sk_SCT_unshift(st: Pstack_st_SCT; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_SCT_pop(_para: Pstack_st_SCT): Pstack_st_SCT; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_SCT_shift(_para: Pstack_st_SCT): Pstack_st_SCT; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
-  procedure sk_SCT_pop_free(st: Pstack_st_SCT; func: Tsk_SCT_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
-  function sk_SCT_insert(st: Pstack_st_SCT; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
-  function sk_SCT_set(st: Pstack_st_SCT; i: TOpenSSL_C_INT; data: pointer): Pstack_st_SCT; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
-  function sk_SCT_find(st: Pstack_st_SCT; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
-  function sk_SCT_find_ex(st: Pstack_st_SCT; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
-  function sk_SCT_find_all(st: Pstack_st_SCT; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_SCT_sort(_para: Pstack_st_SCT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
-  function sk_SCT_is_sorted(_para: Pstack_st_SCT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
-  function sk_SCT_dup(st: Pstack_st_SCT): Pstack_st_SCT; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
-  function sk_SCT_deep_copy(st: Pstack_st_SCT; c: Tsk_SCT_compfunc; f: Tsk_SCT_freefunc): Pstack_st_SCT; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
-  function sk_SCT_set_cmp_func(st: Pstack_st_SCT; cmp: Tsk_SCT_compfunc): Tsk_SCT_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
+  function sk_SCT_reserve(sk: Pstack_st_SCT; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
+  procedure sk_SCT_free(sk: Pstack_st_SCT); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_SCT_zero(sk: Pstack_st_SCT); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_SCT_delete(sk: Pstack_st_SCT; i: TOpenSSL_C_INT): PSCT; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_SCT_delete_ptr(sk: Pstack_st_SCT; ptr: PSCT): PSCT; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  function sk_SCT_push(sk: Pstack_st_SCT; data: PSCT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
+  function sk_SCT_unshift(sk: Pstack_st_SCT; data: PSCT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
+  function sk_SCT_pop(sk: Pstack_st_SCT): PSCT; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_SCT_shift(sk: Pstack_st_SCT): PSCT; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  procedure sk_SCT_pop_free(sk: Pstack_st_SCT; func: Tsk_SCT_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
+  function sk_SCT_insert(sk: Pstack_st_SCT; data: PSCT; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
+  function sk_SCT_set(sk: Pstack_st_SCT; i: TOpenSSL_C_INT; data: PSCT): Pstack_st_SCT; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
+  function sk_SCT_find(sk: Pstack_st_SCT; data: PSCT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
+  function sk_SCT_find_ex(sk: Pstack_st_SCT; data: PSCT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
+  function sk_SCT_find_all(sk: Pstack_st_SCT; data: PSCT; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
+  procedure sk_SCT_sort(sk: Pstack_st_SCT); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  function sk_SCT_is_sorted(sk: Pstack_st_SCT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
+  function sk_SCT_dup(sk: Pstack_st_SCT): Pstack_st_SCT; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
+  function sk_SCT_deep_copy(sk: Pstack_st_SCT; c: Tsk_SCT_copyfunc; f: Tsk_SCT_freefunc): Pstack_st_SCT; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
+  function sk_SCT_set_cmp_func(sk: Pstack_st_SCT; cmp: Tsk_SCT_compfunc): Tsk_SCT_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
     {$else}
   { The EXTERNALSYM directive is ignored by FPC, however, it is used by Delphi as follows:
 
@@ -143,58 +143,58 @@ type
   {$EXTERNALSYM sk_SCT_deep_copy}
   {$EXTERNALSYM sk_SCT_set_cmp_func}
   {Do not call Function LoadDeclarations. Internal use only}
-  function Load_sk_SCT_num(_para: Pstack_st_SCT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SCT_value(_para: Pstack_st_SCT; _para2: TOpenSSL_C_INT): Pstack_st_SCT; cdecl;
+  function Load_sk_SCT_num(sk: Pstack_st_SCT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SCT_value(sk: Pstack_st_SCT; idx: TOpenSSL_C_INT): PSCT; cdecl;
   function Load_sk_SCT_new(cmp: Tsk_SCT_compfunc): Pstack_st_SCT; cdecl;
   function Load_sk_SCT_new_null: Pstack_st_SCT; cdecl;
   function Load_sk_SCT_new_reserve(cmp: Tsk_SCT_compfunc; n: TOpenSSL_C_INT): Pstack_st_SCT; cdecl;
-  function Load_sk_SCT_reserve(_para: Pstack_st_SCT; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SCT_free(_para: Pstack_st_SCT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SCT_zero(_para: Pstack_st_SCT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SCT_delete(st: Pstack_st_SCT; loc: TOpenSSL_C_INT): Pstack_st_SCT; cdecl;
-  function Load_sk_SCT_delete_ptr(st: Pstack_st_SCT; ptr: Pstack_st_SCT): Pstack_st_SCT; cdecl;
-  function Load_sk_SCT_push(st: Pstack_st_SCT; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SCT_unshift(st: Pstack_st_SCT; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SCT_pop(_para: Pstack_st_SCT): Pstack_st_SCT; cdecl;
-  function Load_sk_SCT_shift(_para: Pstack_st_SCT): Pstack_st_SCT; cdecl;
-  procedure Load_sk_SCT_pop_free(st: Pstack_st_SCT; func: Tsk_SCT_freefunc); cdecl;
-  function Load_sk_SCT_insert(st: Pstack_st_SCT; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SCT_set(st: Pstack_st_SCT; i: TOpenSSL_C_INT; data: pointer): Pstack_st_SCT; cdecl;
-  function Load_sk_SCT_find(st: Pstack_st_SCT; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SCT_find_ex(st: Pstack_st_SCT; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SCT_find_all(st: Pstack_st_SCT; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SCT_sort(_para: Pstack_st_SCT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SCT_is_sorted(_para: Pstack_st_SCT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SCT_dup(st: Pstack_st_SCT): Pstack_st_SCT; cdecl;
-  function Load_sk_SCT_deep_copy(st: Pstack_st_SCT; c: Tsk_SCT_compfunc; f: Tsk_SCT_freefunc): Pstack_st_SCT; cdecl;
-  function Load_sk_SCT_set_cmp_func(st: Pstack_st_SCT; cmp: Tsk_SCT_compfunc): Tsk_SCT_compfunc; cdecl;
+  function Load_sk_SCT_reserve(sk: Pstack_st_SCT; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_SCT_free(sk: Pstack_st_SCT); cdecl;
+  procedure Load_sk_SCT_zero(sk: Pstack_st_SCT); cdecl;
+  function Load_sk_SCT_delete(sk: Pstack_st_SCT; i: TOpenSSL_C_INT): PSCT; cdecl;
+  function Load_sk_SCT_delete_ptr(sk: Pstack_st_SCT; ptr: PSCT): PSCT; cdecl;
+  function Load_sk_SCT_push(sk: Pstack_st_SCT; data: PSCT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SCT_unshift(sk: Pstack_st_SCT; data: PSCT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SCT_pop(sk: Pstack_st_SCT): PSCT; cdecl;
+  function Load_sk_SCT_shift(sk: Pstack_st_SCT): PSCT; cdecl;
+  procedure Load_sk_SCT_pop_free(sk: Pstack_st_SCT; func: Tsk_SCT_freefunc); cdecl;
+  function Load_sk_SCT_insert(sk: Pstack_st_SCT; data: PSCT; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SCT_set(sk: Pstack_st_SCT; i: TOpenSSL_C_INT; data: PSCT): Pstack_st_SCT; cdecl;
+  function Load_sk_SCT_find(sk: Pstack_st_SCT; data: PSCT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SCT_find_ex(sk: Pstack_st_SCT; data: PSCT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SCT_find_all(sk: Pstack_st_SCT; data: PSCT; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_SCT_sort(sk: Pstack_st_SCT); cdecl;
+  function Load_sk_SCT_is_sorted(sk: Pstack_st_SCT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SCT_dup(sk: Pstack_st_SCT): Pstack_st_SCT; cdecl;
+  function Load_sk_SCT_deep_copy(sk: Pstack_st_SCT; c: Tsk_SCT_copyfunc; f: Tsk_SCT_freefunc): Pstack_st_SCT; cdecl;
+  function Load_sk_SCT_set_cmp_func(sk: Pstack_st_SCT; cmp: Tsk_SCT_compfunc): Tsk_SCT_compfunc; cdecl;
 
 var
-  sk_SCT_num: function(_para: Pstack_st_SCT): TOpenSSL_C_INT; cdecl = Load_sk_SCT_num;
-  sk_SCT_value: function(_para: Pstack_st_SCT; _para2: TOpenSSL_C_INT): Pstack_st_SCT; cdecl = Load_sk_SCT_value;
+  sk_SCT_num: function(sk: Pstack_st_SCT): TOpenSSL_C_INT; cdecl = Load_sk_SCT_num;
+  sk_SCT_value: function(sk: Pstack_st_SCT; idx: TOpenSSL_C_INT): PSCT; cdecl = Load_sk_SCT_value;
   sk_SCT_new: function(cmp: Tsk_SCT_compfunc): Pstack_st_SCT; cdecl = Load_sk_SCT_new;
   sk_SCT_new_null: function: Pstack_st_SCT; cdecl = Load_sk_SCT_new_null;
   sk_SCT_new_reserve: function(cmp: Tsk_SCT_compfunc; n: TOpenSSL_C_INT): Pstack_st_SCT; cdecl = Load_sk_SCT_new_reserve;
-  sk_SCT_reserve: function(_para: Pstack_st_SCT; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SCT_reserve;
-  sk_SCT_free: function(_para: Pstack_st_SCT): TOpenSSL_C_INT; cdecl = Load_sk_SCT_free;
-  sk_SCT_zero: function(_para: Pstack_st_SCT): TOpenSSL_C_INT; cdecl = Load_sk_SCT_zero;
-  sk_SCT_delete: function(st: Pstack_st_SCT; loc: TOpenSSL_C_INT): Pstack_st_SCT; cdecl = Load_sk_SCT_delete;
-  sk_SCT_delete_ptr: function(st: Pstack_st_SCT; ptr: Pstack_st_SCT): Pstack_st_SCT; cdecl = Load_sk_SCT_delete_ptr;
-  sk_SCT_push: function(st: Pstack_st_SCT; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_SCT_push;
-  sk_SCT_unshift: function(st: Pstack_st_SCT; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_SCT_unshift;
-  sk_SCT_pop: function(_para: Pstack_st_SCT): Pstack_st_SCT; cdecl = Load_sk_SCT_pop;
-  sk_SCT_shift: function(_para: Pstack_st_SCT): Pstack_st_SCT; cdecl = Load_sk_SCT_shift;
-  sk_SCT_pop_free: procedure(st: Pstack_st_SCT; func: Tsk_SCT_freefunc); cdecl = Load_sk_SCT_pop_free;
-  sk_SCT_insert: function(st: Pstack_st_SCT; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SCT_insert;
-  sk_SCT_set: function(st: Pstack_st_SCT; i: TOpenSSL_C_INT; data: pointer): Pstack_st_SCT; cdecl = Load_sk_SCT_set;
-  sk_SCT_find: function(st: Pstack_st_SCT; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_SCT_find;
-  sk_SCT_find_ex: function(st: Pstack_st_SCT; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_SCT_find_ex;
-  sk_SCT_find_all: function(st: Pstack_st_SCT; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SCT_find_all;
-  sk_SCT_sort: function(_para: Pstack_st_SCT): TOpenSSL_C_INT; cdecl = Load_sk_SCT_sort;
-  sk_SCT_is_sorted: function(_para: Pstack_st_SCT): TOpenSSL_C_INT; cdecl = Load_sk_SCT_is_sorted;
-  sk_SCT_dup: function(st: Pstack_st_SCT): Pstack_st_SCT; cdecl = Load_sk_SCT_dup;
-  sk_SCT_deep_copy: function(st: Pstack_st_SCT; c: Tsk_SCT_compfunc; f: Tsk_SCT_freefunc): Pstack_st_SCT; cdecl = Load_sk_SCT_deep_copy;
-  sk_SCT_set_cmp_func: function(st: Pstack_st_SCT; cmp: Tsk_SCT_compfunc): Tsk_SCT_compfunc; cdecl = Load_sk_SCT_set_cmp_func;
+  sk_SCT_reserve: function(sk: Pstack_st_SCT; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SCT_reserve;
+  sk_SCT_free: procedure(sk: Pstack_st_SCT); cdecl = Load_sk_SCT_free;
+  sk_SCT_zero: procedure(sk: Pstack_st_SCT); cdecl = Load_sk_SCT_zero;
+  sk_SCT_delete: function(sk: Pstack_st_SCT; i: TOpenSSL_C_INT): PSCT; cdecl = Load_sk_SCT_delete;
+  sk_SCT_delete_ptr: function(sk: Pstack_st_SCT; ptr: PSCT): PSCT; cdecl = Load_sk_SCT_delete_ptr;
+  sk_SCT_push: function(sk: Pstack_st_SCT; data: PSCT): TOpenSSL_C_INT; cdecl = Load_sk_SCT_push;
+  sk_SCT_unshift: function(sk: Pstack_st_SCT; data: PSCT): TOpenSSL_C_INT; cdecl = Load_sk_SCT_unshift;
+  sk_SCT_pop: function(sk: Pstack_st_SCT): PSCT; cdecl = Load_sk_SCT_pop;
+  sk_SCT_shift: function(sk: Pstack_st_SCT): PSCT; cdecl = Load_sk_SCT_shift;
+  sk_SCT_pop_free: procedure(sk: Pstack_st_SCT; func: Tsk_SCT_freefunc); cdecl = Load_sk_SCT_pop_free;
+  sk_SCT_insert: function(sk: Pstack_st_SCT; data: PSCT; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SCT_insert;
+  sk_SCT_set: function(sk: Pstack_st_SCT; i: TOpenSSL_C_INT; data: PSCT): Pstack_st_SCT; cdecl = Load_sk_SCT_set;
+  sk_SCT_find: function(sk: Pstack_st_SCT; data: PSCT): TOpenSSL_C_INT; cdecl = Load_sk_SCT_find;
+  sk_SCT_find_ex: function(sk: Pstack_st_SCT; data: PSCT): TOpenSSL_C_INT; cdecl = Load_sk_SCT_find_ex;
+  sk_SCT_find_all: function(sk: Pstack_st_SCT; data: PSCT; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SCT_find_all;
+  sk_SCT_sort: procedure(sk: Pstack_st_SCT); cdecl = Load_sk_SCT_sort;
+  sk_SCT_is_sorted: function(sk: Pstack_st_SCT): TOpenSSL_C_INT; cdecl = Load_sk_SCT_is_sorted;
+  sk_SCT_dup: function(sk: Pstack_st_SCT): Pstack_st_SCT; cdecl = Load_sk_SCT_dup;
+  sk_SCT_deep_copy: function(sk: Pstack_st_SCT; c: Tsk_SCT_copyfunc; f: Tsk_SCT_freefunc): Pstack_st_SCT; cdecl = Load_sk_SCT_deep_copy;
+  sk_SCT_set_cmp_func: function(sk: Pstack_st_SCT; cmp: Tsk_SCT_compfunc): Tsk_SCT_compfunc; cdecl = Load_sk_SCT_set_cmp_func;
     {$endif} {OPENSSL_STATIC_LINK_MODEL}
 
 type
@@ -223,31 +223,31 @@ type
   function ossl_check_CTLOG_copyfunc_type(cpy: Tsk_CTLOG_copyfunc): TOPENSSL_sk_copyfunc{Has C Attribute: unused}; inline;
   function ossl_check_CTLOG_freefunc_type(fr: Tsk_CTLOG_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
     {$ifdef OPENSSL_STATIC_LINK_MODEL}
-  function sk_CTLOG_num(_para: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_CTLOG_value(_para: Pstack_st_CTLOG; _para2: TOpenSSL_C_INT): Pstack_st_CTLOG; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_CTLOG_num(sk: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
+  function sk_CTLOG_value(sk: Pstack_st_CTLOG; idx: TOpenSSL_C_INT): PCTLOG; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_CTLOG_new(cmp: Tsk_CTLOG_compfunc): Pstack_st_CTLOG; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_CTLOG_new_null: Pstack_st_CTLOG; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_CTLOG_new_reserve(cmp: Tsk_CTLOG_compfunc; n: TOpenSSL_C_INT): Pstack_st_CTLOG; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
-  function sk_CTLOG_reserve(_para: Pstack_st_CTLOG; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_CTLOG_free(_para: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_CTLOG_zero(_para: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_CTLOG_delete(st: Pstack_st_CTLOG; loc: TOpenSSL_C_INT): Pstack_st_CTLOG; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_CTLOG_delete_ptr(st: Pstack_st_CTLOG; ptr: Pstack_st_CTLOG): Pstack_st_CTLOG; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
-  function sk_CTLOG_push(st: Pstack_st_CTLOG; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
-  function sk_CTLOG_unshift(st: Pstack_st_CTLOG; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_CTLOG_pop(_para: Pstack_st_CTLOG): Pstack_st_CTLOG; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_CTLOG_shift(_para: Pstack_st_CTLOG): Pstack_st_CTLOG; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
-  procedure sk_CTLOG_pop_free(st: Pstack_st_CTLOG; func: Tsk_CTLOG_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
-  function sk_CTLOG_insert(st: Pstack_st_CTLOG; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
-  function sk_CTLOG_set(st: Pstack_st_CTLOG; i: TOpenSSL_C_INT; data: pointer): Pstack_st_CTLOG; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
-  function sk_CTLOG_find(st: Pstack_st_CTLOG; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
-  function sk_CTLOG_find_ex(st: Pstack_st_CTLOG; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
-  function sk_CTLOG_find_all(st: Pstack_st_CTLOG; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_CTLOG_sort(_para: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
-  function sk_CTLOG_is_sorted(_para: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
-  function sk_CTLOG_dup(st: Pstack_st_CTLOG): Pstack_st_CTLOG; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
-  function sk_CTLOG_deep_copy(st: Pstack_st_CTLOG; c: Tsk_CTLOG_compfunc; f: Tsk_CTLOG_freefunc): Pstack_st_CTLOG; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
-  function sk_CTLOG_set_cmp_func(st: Pstack_st_CTLOG; cmp: Tsk_CTLOG_compfunc): Tsk_CTLOG_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
+  function sk_CTLOG_reserve(sk: Pstack_st_CTLOG; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
+  procedure sk_CTLOG_free(sk: Pstack_st_CTLOG); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_CTLOG_zero(sk: Pstack_st_CTLOG); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_CTLOG_delete(sk: Pstack_st_CTLOG; i: TOpenSSL_C_INT): PCTLOG; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_CTLOG_delete_ptr(sk: Pstack_st_CTLOG; ptr: PCTLOG): PCTLOG; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  function sk_CTLOG_push(sk: Pstack_st_CTLOG; data: PCTLOG): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
+  function sk_CTLOG_unshift(sk: Pstack_st_CTLOG; data: PCTLOG): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
+  function sk_CTLOG_pop(sk: Pstack_st_CTLOG): PCTLOG; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_CTLOG_shift(sk: Pstack_st_CTLOG): PCTLOG; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  procedure sk_CTLOG_pop_free(sk: Pstack_st_CTLOG; func: Tsk_CTLOG_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
+  function sk_CTLOG_insert(sk: Pstack_st_CTLOG; data: PCTLOG; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
+  function sk_CTLOG_set(sk: Pstack_st_CTLOG; i: TOpenSSL_C_INT; data: PCTLOG): Pstack_st_CTLOG; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
+  function sk_CTLOG_find(sk: Pstack_st_CTLOG; data: PCTLOG): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
+  function sk_CTLOG_find_ex(sk: Pstack_st_CTLOG; data: PCTLOG): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
+  function sk_CTLOG_find_all(sk: Pstack_st_CTLOG; data: PCTLOG; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
+  procedure sk_CTLOG_sort(sk: Pstack_st_CTLOG); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  function sk_CTLOG_is_sorted(sk: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
+  function sk_CTLOG_dup(sk: Pstack_st_CTLOG): Pstack_st_CTLOG; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
+  function sk_CTLOG_deep_copy(sk: Pstack_st_CTLOG; c: Tsk_CTLOG_copyfunc; f: Tsk_CTLOG_freefunc): Pstack_st_CTLOG; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
+  function sk_CTLOG_set_cmp_func(sk: Pstack_st_CTLOG; cmp: Tsk_CTLOG_compfunc): Tsk_CTLOG_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
   { clang-format on }
     {$else}
   {$EXTERNALSYM sk_CTLOG_num}
@@ -276,58 +276,58 @@ type
   {$EXTERNALSYM sk_CTLOG_deep_copy}
   {$EXTERNALSYM sk_CTLOG_set_cmp_func}
   {Do not call Function LoadDeclarations. Internal use only}
-  function Load_sk_CTLOG_num(_para: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl;
-  function Load_sk_CTLOG_value(_para: Pstack_st_CTLOG; _para2: TOpenSSL_C_INT): Pstack_st_CTLOG; cdecl;
+  function Load_sk_CTLOG_num(sk: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl;
+  function Load_sk_CTLOG_value(sk: Pstack_st_CTLOG; idx: TOpenSSL_C_INT): PCTLOG; cdecl;
   function Load_sk_CTLOG_new(cmp: Tsk_CTLOG_compfunc): Pstack_st_CTLOG; cdecl;
   function Load_sk_CTLOG_new_null: Pstack_st_CTLOG; cdecl;
   function Load_sk_CTLOG_new_reserve(cmp: Tsk_CTLOG_compfunc; n: TOpenSSL_C_INT): Pstack_st_CTLOG; cdecl;
-  function Load_sk_CTLOG_reserve(_para: Pstack_st_CTLOG; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_CTLOG_free(_para: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl;
-  function Load_sk_CTLOG_zero(_para: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl;
-  function Load_sk_CTLOG_delete(st: Pstack_st_CTLOG; loc: TOpenSSL_C_INT): Pstack_st_CTLOG; cdecl;
-  function Load_sk_CTLOG_delete_ptr(st: Pstack_st_CTLOG; ptr: Pstack_st_CTLOG): Pstack_st_CTLOG; cdecl;
-  function Load_sk_CTLOG_push(st: Pstack_st_CTLOG; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_CTLOG_unshift(st: Pstack_st_CTLOG; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_CTLOG_pop(_para: Pstack_st_CTLOG): Pstack_st_CTLOG; cdecl;
-  function Load_sk_CTLOG_shift(_para: Pstack_st_CTLOG): Pstack_st_CTLOG; cdecl;
-  procedure Load_sk_CTLOG_pop_free(st: Pstack_st_CTLOG; func: Tsk_CTLOG_freefunc); cdecl;
-  function Load_sk_CTLOG_insert(st: Pstack_st_CTLOG; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_CTLOG_set(st: Pstack_st_CTLOG; i: TOpenSSL_C_INT; data: pointer): Pstack_st_CTLOG; cdecl;
-  function Load_sk_CTLOG_find(st: Pstack_st_CTLOG; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_CTLOG_find_ex(st: Pstack_st_CTLOG; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_CTLOG_find_all(st: Pstack_st_CTLOG; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_CTLOG_sort(_para: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl;
-  function Load_sk_CTLOG_is_sorted(_para: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl;
-  function Load_sk_CTLOG_dup(st: Pstack_st_CTLOG): Pstack_st_CTLOG; cdecl;
-  function Load_sk_CTLOG_deep_copy(st: Pstack_st_CTLOG; c: Tsk_CTLOG_compfunc; f: Tsk_CTLOG_freefunc): Pstack_st_CTLOG; cdecl;
-  function Load_sk_CTLOG_set_cmp_func(st: Pstack_st_CTLOG; cmp: Tsk_CTLOG_compfunc): Tsk_CTLOG_compfunc; cdecl;
+  function Load_sk_CTLOG_reserve(sk: Pstack_st_CTLOG; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_CTLOG_free(sk: Pstack_st_CTLOG); cdecl;
+  procedure Load_sk_CTLOG_zero(sk: Pstack_st_CTLOG); cdecl;
+  function Load_sk_CTLOG_delete(sk: Pstack_st_CTLOG; i: TOpenSSL_C_INT): PCTLOG; cdecl;
+  function Load_sk_CTLOG_delete_ptr(sk: Pstack_st_CTLOG; ptr: PCTLOG): PCTLOG; cdecl;
+  function Load_sk_CTLOG_push(sk: Pstack_st_CTLOG; data: PCTLOG): TOpenSSL_C_INT; cdecl;
+  function Load_sk_CTLOG_unshift(sk: Pstack_st_CTLOG; data: PCTLOG): TOpenSSL_C_INT; cdecl;
+  function Load_sk_CTLOG_pop(sk: Pstack_st_CTLOG): PCTLOG; cdecl;
+  function Load_sk_CTLOG_shift(sk: Pstack_st_CTLOG): PCTLOG; cdecl;
+  procedure Load_sk_CTLOG_pop_free(sk: Pstack_st_CTLOG; func: Tsk_CTLOG_freefunc); cdecl;
+  function Load_sk_CTLOG_insert(sk: Pstack_st_CTLOG; data: PCTLOG; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_CTLOG_set(sk: Pstack_st_CTLOG; i: TOpenSSL_C_INT; data: PCTLOG): Pstack_st_CTLOG; cdecl;
+  function Load_sk_CTLOG_find(sk: Pstack_st_CTLOG; data: PCTLOG): TOpenSSL_C_INT; cdecl;
+  function Load_sk_CTLOG_find_ex(sk: Pstack_st_CTLOG; data: PCTLOG): TOpenSSL_C_INT; cdecl;
+  function Load_sk_CTLOG_find_all(sk: Pstack_st_CTLOG; data: PCTLOG; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_CTLOG_sort(sk: Pstack_st_CTLOG); cdecl;
+  function Load_sk_CTLOG_is_sorted(sk: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl;
+  function Load_sk_CTLOG_dup(sk: Pstack_st_CTLOG): Pstack_st_CTLOG; cdecl;
+  function Load_sk_CTLOG_deep_copy(sk: Pstack_st_CTLOG; c: Tsk_CTLOG_copyfunc; f: Tsk_CTLOG_freefunc): Pstack_st_CTLOG; cdecl;
+  function Load_sk_CTLOG_set_cmp_func(sk: Pstack_st_CTLOG; cmp: Tsk_CTLOG_compfunc): Tsk_CTLOG_compfunc; cdecl;
 
 var
-  sk_CTLOG_num: function(_para: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl = Load_sk_CTLOG_num;
-  sk_CTLOG_value: function(_para: Pstack_st_CTLOG; _para2: TOpenSSL_C_INT): Pstack_st_CTLOG; cdecl = Load_sk_CTLOG_value;
+  sk_CTLOG_num: function(sk: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl = Load_sk_CTLOG_num;
+  sk_CTLOG_value: function(sk: Pstack_st_CTLOG; idx: TOpenSSL_C_INT): PCTLOG; cdecl = Load_sk_CTLOG_value;
   sk_CTLOG_new: function(cmp: Tsk_CTLOG_compfunc): Pstack_st_CTLOG; cdecl = Load_sk_CTLOG_new;
   sk_CTLOG_new_null: function: Pstack_st_CTLOG; cdecl = Load_sk_CTLOG_new_null;
   sk_CTLOG_new_reserve: function(cmp: Tsk_CTLOG_compfunc; n: TOpenSSL_C_INT): Pstack_st_CTLOG; cdecl = Load_sk_CTLOG_new_reserve;
-  sk_CTLOG_reserve: function(_para: Pstack_st_CTLOG; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_CTLOG_reserve;
-  sk_CTLOG_free: function(_para: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl = Load_sk_CTLOG_free;
-  sk_CTLOG_zero: function(_para: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl = Load_sk_CTLOG_zero;
-  sk_CTLOG_delete: function(st: Pstack_st_CTLOG; loc: TOpenSSL_C_INT): Pstack_st_CTLOG; cdecl = Load_sk_CTLOG_delete;
-  sk_CTLOG_delete_ptr: function(st: Pstack_st_CTLOG; ptr: Pstack_st_CTLOG): Pstack_st_CTLOG; cdecl = Load_sk_CTLOG_delete_ptr;
-  sk_CTLOG_push: function(st: Pstack_st_CTLOG; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_CTLOG_push;
-  sk_CTLOG_unshift: function(st: Pstack_st_CTLOG; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_CTLOG_unshift;
-  sk_CTLOG_pop: function(_para: Pstack_st_CTLOG): Pstack_st_CTLOG; cdecl = Load_sk_CTLOG_pop;
-  sk_CTLOG_shift: function(_para: Pstack_st_CTLOG): Pstack_st_CTLOG; cdecl = Load_sk_CTLOG_shift;
-  sk_CTLOG_pop_free: procedure(st: Pstack_st_CTLOG; func: Tsk_CTLOG_freefunc); cdecl = Load_sk_CTLOG_pop_free;
-  sk_CTLOG_insert: function(st: Pstack_st_CTLOG; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_CTLOG_insert;
-  sk_CTLOG_set: function(st: Pstack_st_CTLOG; i: TOpenSSL_C_INT; data: pointer): Pstack_st_CTLOG; cdecl = Load_sk_CTLOG_set;
-  sk_CTLOG_find: function(st: Pstack_st_CTLOG; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_CTLOG_find;
-  sk_CTLOG_find_ex: function(st: Pstack_st_CTLOG; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_CTLOG_find_ex;
-  sk_CTLOG_find_all: function(st: Pstack_st_CTLOG; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_CTLOG_find_all;
-  sk_CTLOG_sort: function(_para: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl = Load_sk_CTLOG_sort;
-  sk_CTLOG_is_sorted: function(_para: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl = Load_sk_CTLOG_is_sorted;
-  sk_CTLOG_dup: function(st: Pstack_st_CTLOG): Pstack_st_CTLOG; cdecl = Load_sk_CTLOG_dup;
-  sk_CTLOG_deep_copy: function(st: Pstack_st_CTLOG; c: Tsk_CTLOG_compfunc; f: Tsk_CTLOG_freefunc): Pstack_st_CTLOG; cdecl = Load_sk_CTLOG_deep_copy;
-  sk_CTLOG_set_cmp_func: function(st: Pstack_st_CTLOG; cmp: Tsk_CTLOG_compfunc): Tsk_CTLOG_compfunc; cdecl = Load_sk_CTLOG_set_cmp_func;
+  sk_CTLOG_reserve: function(sk: Pstack_st_CTLOG; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_CTLOG_reserve;
+  sk_CTLOG_free: procedure(sk: Pstack_st_CTLOG); cdecl = Load_sk_CTLOG_free;
+  sk_CTLOG_zero: procedure(sk: Pstack_st_CTLOG); cdecl = Load_sk_CTLOG_zero;
+  sk_CTLOG_delete: function(sk: Pstack_st_CTLOG; i: TOpenSSL_C_INT): PCTLOG; cdecl = Load_sk_CTLOG_delete;
+  sk_CTLOG_delete_ptr: function(sk: Pstack_st_CTLOG; ptr: PCTLOG): PCTLOG; cdecl = Load_sk_CTLOG_delete_ptr;
+  sk_CTLOG_push: function(sk: Pstack_st_CTLOG; data: PCTLOG): TOpenSSL_C_INT; cdecl = Load_sk_CTLOG_push;
+  sk_CTLOG_unshift: function(sk: Pstack_st_CTLOG; data: PCTLOG): TOpenSSL_C_INT; cdecl = Load_sk_CTLOG_unshift;
+  sk_CTLOG_pop: function(sk: Pstack_st_CTLOG): PCTLOG; cdecl = Load_sk_CTLOG_pop;
+  sk_CTLOG_shift: function(sk: Pstack_st_CTLOG): PCTLOG; cdecl = Load_sk_CTLOG_shift;
+  sk_CTLOG_pop_free: procedure(sk: Pstack_st_CTLOG; func: Tsk_CTLOG_freefunc); cdecl = Load_sk_CTLOG_pop_free;
+  sk_CTLOG_insert: function(sk: Pstack_st_CTLOG; data: PCTLOG; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_CTLOG_insert;
+  sk_CTLOG_set: function(sk: Pstack_st_CTLOG; i: TOpenSSL_C_INT; data: PCTLOG): Pstack_st_CTLOG; cdecl = Load_sk_CTLOG_set;
+  sk_CTLOG_find: function(sk: Pstack_st_CTLOG; data: PCTLOG): TOpenSSL_C_INT; cdecl = Load_sk_CTLOG_find;
+  sk_CTLOG_find_ex: function(sk: Pstack_st_CTLOG; data: PCTLOG): TOpenSSL_C_INT; cdecl = Load_sk_CTLOG_find_ex;
+  sk_CTLOG_find_all: function(sk: Pstack_st_CTLOG; data: PCTLOG; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_CTLOG_find_all;
+  sk_CTLOG_sort: procedure(sk: Pstack_st_CTLOG); cdecl = Load_sk_CTLOG_sort;
+  sk_CTLOG_is_sorted: function(sk: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl = Load_sk_CTLOG_is_sorted;
+  sk_CTLOG_dup: function(sk: Pstack_st_CTLOG): Pstack_st_CTLOG; cdecl = Load_sk_CTLOG_dup;
+  sk_CTLOG_deep_copy: function(sk: Pstack_st_CTLOG; c: Tsk_CTLOG_copyfunc; f: Tsk_CTLOG_freefunc): Pstack_st_CTLOG; cdecl = Load_sk_CTLOG_deep_copy;
+  sk_CTLOG_set_cmp_func: function(sk: Pstack_st_CTLOG; cmp: Tsk_CTLOG_compfunc): Tsk_CTLOG_compfunc; cdecl = Load_sk_CTLOG_set_cmp_func;
   { clang-format on }
     {$endif} {OPENSSL_STATIC_LINK_MODEL}
 
@@ -1310,20 +1310,20 @@ end;
 {$endif} { OPENSSL_NO_CT}
 {$ifndef OPENSSL_STATIC_LINK_MODEL}
 {$ifndef  OPENSSL_NO_CT}
-function Load_sk_SCT_num(_para: Pstack_st_SCT): TOpenSSL_C_INT; cdecl;
+function Load_sk_SCT_num(sk: Pstack_st_SCT): TOpenSSL_C_INT; cdecl;
 begin
   sk_SCT_num := LoadLibCryptoFunction('OPENSSL_sk_num');
   if not assigned(sk_SCT_num) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_num');
-  Result := sk_SCT_num(_para);
+  Result := sk_SCT_num(sk);
 end;
 
-function Load_sk_SCT_value(_para: Pstack_st_SCT; _para2: TOpenSSL_C_INT): Pstack_st_SCT; cdecl;
+function Load_sk_SCT_value(sk: Pstack_st_SCT; idx: TOpenSSL_C_INT): PSCT; cdecl;
 begin
   sk_SCT_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_SCT_value) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_value');
-  Result := sk_SCT_value(_para, _para2);
+  Result := sk_SCT_value(sk, idx);
 end;
 
 function Load_sk_SCT_new(cmp: Tsk_SCT_compfunc): Pstack_st_SCT; cdecl;
@@ -1350,180 +1350,180 @@ begin
   Result := sk_SCT_new_reserve(cmp, n);
 end;
 
-function Load_sk_SCT_reserve(_para: Pstack_st_SCT; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_SCT_reserve(sk: Pstack_st_SCT; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_SCT_reserve := LoadLibCryptoFunction('OPENSSL_sk_reserve');
   if not assigned(sk_SCT_reserve) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_reserve');
-  Result := sk_SCT_reserve(_para, n);
+  Result := sk_SCT_reserve(sk, n);
 end;
 
-function Load_sk_SCT_free(_para: Pstack_st_SCT): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_SCT_free(sk: Pstack_st_SCT); cdecl;
 begin
   sk_SCT_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_SCT_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
-  Result := sk_SCT_free(_para);
+  sk_SCT_free(sk);
 end;
 
-function Load_sk_SCT_zero(_para: Pstack_st_SCT): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_SCT_zero(sk: Pstack_st_SCT); cdecl;
 begin
   sk_SCT_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_SCT_zero) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
-  Result := sk_SCT_zero(_para);
+  sk_SCT_zero(sk);
 end;
 
-function Load_sk_SCT_delete(st: Pstack_st_SCT; loc: TOpenSSL_C_INT): Pstack_st_SCT; cdecl;
+function Load_sk_SCT_delete(sk: Pstack_st_SCT; i: TOpenSSL_C_INT): PSCT; cdecl;
 begin
   sk_SCT_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_SCT_delete) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete');
-  Result := sk_SCT_delete(st, loc);
+  Result := sk_SCT_delete(sk, i);
 end;
 
-function Load_sk_SCT_delete_ptr(st: Pstack_st_SCT; ptr: Pstack_st_SCT): Pstack_st_SCT; cdecl;
+function Load_sk_SCT_delete_ptr(sk: Pstack_st_SCT; ptr: PSCT): PSCT; cdecl;
 begin
   sk_SCT_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_SCT_delete_ptr) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete_ptr');
-  Result := sk_SCT_delete_ptr(st, ptr);
+  Result := sk_SCT_delete_ptr(sk, ptr);
 end;
 
-function Load_sk_SCT_push(st: Pstack_st_SCT; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_SCT_push(sk: Pstack_st_SCT; data: PSCT): TOpenSSL_C_INT; cdecl;
 begin
   sk_SCT_push := LoadLibCryptoFunction('OPENSSL_sk_push');
   if not assigned(sk_SCT_push) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_push');
-  Result := sk_SCT_push(st, data);
+  Result := sk_SCT_push(sk, data);
 end;
 
-function Load_sk_SCT_unshift(st: Pstack_st_SCT; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_SCT_unshift(sk: Pstack_st_SCT; data: PSCT): TOpenSSL_C_INT; cdecl;
 begin
   sk_SCT_unshift := LoadLibCryptoFunction('OPENSSL_sk_unshift');
   if not assigned(sk_SCT_unshift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_unshift');
-  Result := sk_SCT_unshift(st, data);
+  Result := sk_SCT_unshift(sk, data);
 end;
 
-function Load_sk_SCT_pop(_para: Pstack_st_SCT): Pstack_st_SCT; cdecl;
+function Load_sk_SCT_pop(sk: Pstack_st_SCT): PSCT; cdecl;
 begin
   sk_SCT_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_SCT_pop) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop');
-  Result := sk_SCT_pop(_para);
+  Result := sk_SCT_pop(sk);
 end;
 
-function Load_sk_SCT_shift(_para: Pstack_st_SCT): Pstack_st_SCT; cdecl;
+function Load_sk_SCT_shift(sk: Pstack_st_SCT): PSCT; cdecl;
 begin
   sk_SCT_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_SCT_shift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_shift');
-  Result := sk_SCT_shift(_para);
+  Result := sk_SCT_shift(sk);
 end;
 
-procedure Load_sk_SCT_pop_free(st: Pstack_st_SCT; func: Tsk_SCT_freefunc); cdecl;
+procedure Load_sk_SCT_pop_free(sk: Pstack_st_SCT; func: Tsk_SCT_freefunc); cdecl;
 begin
   sk_SCT_pop_free := LoadLibCryptoFunction('OPENSSL_sk_pop_free');
   if not assigned(sk_SCT_pop_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop_free');
-  sk_SCT_pop_free(st, func);
+  sk_SCT_pop_free(sk, func);
 end;
 
-function Load_sk_SCT_insert(st: Pstack_st_SCT; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_SCT_insert(sk: Pstack_st_SCT; data: PSCT; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_SCT_insert := LoadLibCryptoFunction('OPENSSL_sk_insert');
   if not assigned(sk_SCT_insert) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_insert');
-  Result := sk_SCT_insert(st, data, where);
+  Result := sk_SCT_insert(sk, data, where);
 end;
 
-function Load_sk_SCT_set(st: Pstack_st_SCT; i: TOpenSSL_C_INT; data: pointer): Pstack_st_SCT; cdecl;
+function Load_sk_SCT_set(sk: Pstack_st_SCT; i: TOpenSSL_C_INT; data: PSCT): Pstack_st_SCT; cdecl;
 begin
   sk_SCT_set := LoadLibCryptoFunction('OPENSSL_sk_set');
   if not assigned(sk_SCT_set) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set');
-  Result := sk_SCT_set(st, i, data);
+  Result := sk_SCT_set(sk, i, data);
 end;
 
-function Load_sk_SCT_find(st: Pstack_st_SCT; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_SCT_find(sk: Pstack_st_SCT; data: PSCT): TOpenSSL_C_INT; cdecl;
 begin
   sk_SCT_find := LoadLibCryptoFunction('OPENSSL_sk_find');
   if not assigned(sk_SCT_find) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find');
-  Result := sk_SCT_find(st, data);
+  Result := sk_SCT_find(sk, data);
 end;
 
-function Load_sk_SCT_find_ex(st: Pstack_st_SCT; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_SCT_find_ex(sk: Pstack_st_SCT; data: PSCT): TOpenSSL_C_INT; cdecl;
 begin
   sk_SCT_find_ex := LoadLibCryptoFunction('OPENSSL_sk_find_ex');
   if not assigned(sk_SCT_find_ex) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_ex');
-  Result := sk_SCT_find_ex(st, data);
+  Result := sk_SCT_find_ex(sk, data);
 end;
 
-function Load_sk_SCT_find_all(st: Pstack_st_SCT; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_SCT_find_all(sk: Pstack_st_SCT; data: PSCT; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_SCT_find_all := LoadLibCryptoFunction('OPENSSL_sk_find_all');
   if not assigned(sk_SCT_find_all) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_all');
-  Result := sk_SCT_find_all(st, data, pnum);
+  Result := sk_SCT_find_all(sk, data, pnum);
 end;
 
-function Load_sk_SCT_sort(_para: Pstack_st_SCT): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_SCT_sort(sk: Pstack_st_SCT); cdecl;
 begin
   sk_SCT_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_SCT_sort) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
-  Result := sk_SCT_sort(_para);
+  sk_SCT_sort(sk);
 end;
 
-function Load_sk_SCT_is_sorted(_para: Pstack_st_SCT): TOpenSSL_C_INT; cdecl;
+function Load_sk_SCT_is_sorted(sk: Pstack_st_SCT): TOpenSSL_C_INT; cdecl;
 begin
   sk_SCT_is_sorted := LoadLibCryptoFunction('OPENSSL_sk_is_sorted');
   if not assigned(sk_SCT_is_sorted) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_is_sorted');
-  Result := sk_SCT_is_sorted(_para);
+  Result := sk_SCT_is_sorted(sk);
 end;
 
-function Load_sk_SCT_dup(st: Pstack_st_SCT): Pstack_st_SCT; cdecl;
+function Load_sk_SCT_dup(sk: Pstack_st_SCT): Pstack_st_SCT; cdecl;
 begin
   sk_SCT_dup := LoadLibCryptoFunction('OPENSSL_sk_dup');
   if not assigned(sk_SCT_dup) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_dup');
-  Result := sk_SCT_dup(st);
+  Result := sk_SCT_dup(sk);
 end;
 
-function Load_sk_SCT_deep_copy(st: Pstack_st_SCT; c: Tsk_SCT_compfunc; f: Tsk_SCT_freefunc): Pstack_st_SCT; cdecl;
+function Load_sk_SCT_deep_copy(sk: Pstack_st_SCT; c: Tsk_SCT_copyfunc; f: Tsk_SCT_freefunc): Pstack_st_SCT; cdecl;
 begin
   sk_SCT_deep_copy := LoadLibCryptoFunction('OPENSSL_sk_deep_copy');
   if not assigned(sk_SCT_deep_copy) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_deep_copy');
-  Result := sk_SCT_deep_copy(st, c, f);
+  Result := sk_SCT_deep_copy(sk, c, f);
 end;
 
-function Load_sk_SCT_set_cmp_func(st: Pstack_st_SCT; cmp: Tsk_SCT_compfunc): Tsk_SCT_compfunc; cdecl;
+function Load_sk_SCT_set_cmp_func(sk: Pstack_st_SCT; cmp: Tsk_SCT_compfunc): Tsk_SCT_compfunc; cdecl;
 begin
   sk_SCT_set_cmp_func := LoadLibCryptoFunction('OPENSSL_sk_set_cmp_func');
   if not assigned(sk_SCT_set_cmp_func) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set_cmp_func');
-  Result := sk_SCT_set_cmp_func(st, cmp);
+  Result := sk_SCT_set_cmp_func(sk, cmp);
 end;
 
-function Load_sk_CTLOG_num(_para: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl;
+function Load_sk_CTLOG_num(sk: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl;
 begin
   sk_CTLOG_num := LoadLibCryptoFunction('OPENSSL_sk_num');
   if not assigned(sk_CTLOG_num) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_num');
-  Result := sk_CTLOG_num(_para);
+  Result := sk_CTLOG_num(sk);
 end;
 
-function Load_sk_CTLOG_value(_para: Pstack_st_CTLOG; _para2: TOpenSSL_C_INT): Pstack_st_CTLOG; cdecl;
+function Load_sk_CTLOG_value(sk: Pstack_st_CTLOG; idx: TOpenSSL_C_INT): PCTLOG; cdecl;
 begin
   sk_CTLOG_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_CTLOG_value) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_value');
-  Result := sk_CTLOG_value(_para, _para2);
+  Result := sk_CTLOG_value(sk, idx);
 end;
 
 function Load_sk_CTLOG_new(cmp: Tsk_CTLOG_compfunc): Pstack_st_CTLOG; cdecl;
@@ -1550,164 +1550,164 @@ begin
   Result := sk_CTLOG_new_reserve(cmp, n);
 end;
 
-function Load_sk_CTLOG_reserve(_para: Pstack_st_CTLOG; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_CTLOG_reserve(sk: Pstack_st_CTLOG; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_CTLOG_reserve := LoadLibCryptoFunction('OPENSSL_sk_reserve');
   if not assigned(sk_CTLOG_reserve) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_reserve');
-  Result := sk_CTLOG_reserve(_para, n);
+  Result := sk_CTLOG_reserve(sk, n);
 end;
 
-function Load_sk_CTLOG_free(_para: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_CTLOG_free(sk: Pstack_st_CTLOG); cdecl;
 begin
   sk_CTLOG_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_CTLOG_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
-  Result := sk_CTLOG_free(_para);
+  sk_CTLOG_free(sk);
 end;
 
-function Load_sk_CTLOG_zero(_para: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_CTLOG_zero(sk: Pstack_st_CTLOG); cdecl;
 begin
   sk_CTLOG_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_CTLOG_zero) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
-  Result := sk_CTLOG_zero(_para);
+  sk_CTLOG_zero(sk);
 end;
 
-function Load_sk_CTLOG_delete(st: Pstack_st_CTLOG; loc: TOpenSSL_C_INT): Pstack_st_CTLOG; cdecl;
+function Load_sk_CTLOG_delete(sk: Pstack_st_CTLOG; i: TOpenSSL_C_INT): PCTLOG; cdecl;
 begin
   sk_CTLOG_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_CTLOG_delete) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete');
-  Result := sk_CTLOG_delete(st, loc);
+  Result := sk_CTLOG_delete(sk, i);
 end;
 
-function Load_sk_CTLOG_delete_ptr(st: Pstack_st_CTLOG; ptr: Pstack_st_CTLOG): Pstack_st_CTLOG; cdecl;
+function Load_sk_CTLOG_delete_ptr(sk: Pstack_st_CTLOG; ptr: PCTLOG): PCTLOG; cdecl;
 begin
   sk_CTLOG_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_CTLOG_delete_ptr) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete_ptr');
-  Result := sk_CTLOG_delete_ptr(st, ptr);
+  Result := sk_CTLOG_delete_ptr(sk, ptr);
 end;
 
-function Load_sk_CTLOG_push(st: Pstack_st_CTLOG; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_CTLOG_push(sk: Pstack_st_CTLOG; data: PCTLOG): TOpenSSL_C_INT; cdecl;
 begin
   sk_CTLOG_push := LoadLibCryptoFunction('OPENSSL_sk_push');
   if not assigned(sk_CTLOG_push) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_push');
-  Result := sk_CTLOG_push(st, data);
+  Result := sk_CTLOG_push(sk, data);
 end;
 
-function Load_sk_CTLOG_unshift(st: Pstack_st_CTLOG; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_CTLOG_unshift(sk: Pstack_st_CTLOG; data: PCTLOG): TOpenSSL_C_INT; cdecl;
 begin
   sk_CTLOG_unshift := LoadLibCryptoFunction('OPENSSL_sk_unshift');
   if not assigned(sk_CTLOG_unshift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_unshift');
-  Result := sk_CTLOG_unshift(st, data);
+  Result := sk_CTLOG_unshift(sk, data);
 end;
 
-function Load_sk_CTLOG_pop(_para: Pstack_st_CTLOG): Pstack_st_CTLOG; cdecl;
+function Load_sk_CTLOG_pop(sk: Pstack_st_CTLOG): PCTLOG; cdecl;
 begin
   sk_CTLOG_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_CTLOG_pop) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop');
-  Result := sk_CTLOG_pop(_para);
+  Result := sk_CTLOG_pop(sk);
 end;
 
-function Load_sk_CTLOG_shift(_para: Pstack_st_CTLOG): Pstack_st_CTLOG; cdecl;
+function Load_sk_CTLOG_shift(sk: Pstack_st_CTLOG): PCTLOG; cdecl;
 begin
   sk_CTLOG_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_CTLOG_shift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_shift');
-  Result := sk_CTLOG_shift(_para);
+  Result := sk_CTLOG_shift(sk);
 end;
 
-procedure Load_sk_CTLOG_pop_free(st: Pstack_st_CTLOG; func: Tsk_CTLOG_freefunc); cdecl;
+procedure Load_sk_CTLOG_pop_free(sk: Pstack_st_CTLOG; func: Tsk_CTLOG_freefunc); cdecl;
 begin
   sk_CTLOG_pop_free := LoadLibCryptoFunction('OPENSSL_sk_pop_free');
   if not assigned(sk_CTLOG_pop_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop_free');
-  sk_CTLOG_pop_free(st, func);
+  sk_CTLOG_pop_free(sk, func);
 end;
 
-function Load_sk_CTLOG_insert(st: Pstack_st_CTLOG; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_CTLOG_insert(sk: Pstack_st_CTLOG; data: PCTLOG; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_CTLOG_insert := LoadLibCryptoFunction('OPENSSL_sk_insert');
   if not assigned(sk_CTLOG_insert) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_insert');
-  Result := sk_CTLOG_insert(st, data, where);
+  Result := sk_CTLOG_insert(sk, data, where);
 end;
 
-function Load_sk_CTLOG_set(st: Pstack_st_CTLOG; i: TOpenSSL_C_INT; data: pointer): Pstack_st_CTLOG; cdecl;
+function Load_sk_CTLOG_set(sk: Pstack_st_CTLOG; i: TOpenSSL_C_INT; data: PCTLOG): Pstack_st_CTLOG; cdecl;
 begin
   sk_CTLOG_set := LoadLibCryptoFunction('OPENSSL_sk_set');
   if not assigned(sk_CTLOG_set) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set');
-  Result := sk_CTLOG_set(st, i, data);
+  Result := sk_CTLOG_set(sk, i, data);
 end;
 
-function Load_sk_CTLOG_find(st: Pstack_st_CTLOG; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_CTLOG_find(sk: Pstack_st_CTLOG; data: PCTLOG): TOpenSSL_C_INT; cdecl;
 begin
   sk_CTLOG_find := LoadLibCryptoFunction('OPENSSL_sk_find');
   if not assigned(sk_CTLOG_find) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find');
-  Result := sk_CTLOG_find(st, data);
+  Result := sk_CTLOG_find(sk, data);
 end;
 
-function Load_sk_CTLOG_find_ex(st: Pstack_st_CTLOG; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_CTLOG_find_ex(sk: Pstack_st_CTLOG; data: PCTLOG): TOpenSSL_C_INT; cdecl;
 begin
   sk_CTLOG_find_ex := LoadLibCryptoFunction('OPENSSL_sk_find_ex');
   if not assigned(sk_CTLOG_find_ex) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_ex');
-  Result := sk_CTLOG_find_ex(st, data);
+  Result := sk_CTLOG_find_ex(sk, data);
 end;
 
-function Load_sk_CTLOG_find_all(st: Pstack_st_CTLOG; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_CTLOG_find_all(sk: Pstack_st_CTLOG; data: PCTLOG; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_CTLOG_find_all := LoadLibCryptoFunction('OPENSSL_sk_find_all');
   if not assigned(sk_CTLOG_find_all) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_all');
-  Result := sk_CTLOG_find_all(st, data, pnum);
+  Result := sk_CTLOG_find_all(sk, data, pnum);
 end;
 
-function Load_sk_CTLOG_sort(_para: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_CTLOG_sort(sk: Pstack_st_CTLOG); cdecl;
 begin
   sk_CTLOG_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_CTLOG_sort) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
-  Result := sk_CTLOG_sort(_para);
+  sk_CTLOG_sort(sk);
 end;
 
-function Load_sk_CTLOG_is_sorted(_para: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl;
+function Load_sk_CTLOG_is_sorted(sk: Pstack_st_CTLOG): TOpenSSL_C_INT; cdecl;
 begin
   sk_CTLOG_is_sorted := LoadLibCryptoFunction('OPENSSL_sk_is_sorted');
   if not assigned(sk_CTLOG_is_sorted) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_is_sorted');
-  Result := sk_CTLOG_is_sorted(_para);
+  Result := sk_CTLOG_is_sorted(sk);
 end;
 
-function Load_sk_CTLOG_dup(st: Pstack_st_CTLOG): Pstack_st_CTLOG; cdecl;
+function Load_sk_CTLOG_dup(sk: Pstack_st_CTLOG): Pstack_st_CTLOG; cdecl;
 begin
   sk_CTLOG_dup := LoadLibCryptoFunction('OPENSSL_sk_dup');
   if not assigned(sk_CTLOG_dup) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_dup');
-  Result := sk_CTLOG_dup(st);
+  Result := sk_CTLOG_dup(sk);
 end;
 
-function Load_sk_CTLOG_deep_copy(st: Pstack_st_CTLOG; c: Tsk_CTLOG_compfunc; f: Tsk_CTLOG_freefunc): Pstack_st_CTLOG; cdecl;
+function Load_sk_CTLOG_deep_copy(sk: Pstack_st_CTLOG; c: Tsk_CTLOG_copyfunc; f: Tsk_CTLOG_freefunc): Pstack_st_CTLOG; cdecl;
 begin
   sk_CTLOG_deep_copy := LoadLibCryptoFunction('OPENSSL_sk_deep_copy');
   if not assigned(sk_CTLOG_deep_copy) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_deep_copy');
-  Result := sk_CTLOG_deep_copy(st, c, f);
+  Result := sk_CTLOG_deep_copy(sk, c, f);
 end;
 
-function Load_sk_CTLOG_set_cmp_func(st: Pstack_st_CTLOG; cmp: Tsk_CTLOG_compfunc): Tsk_CTLOG_compfunc; cdecl;
+function Load_sk_CTLOG_set_cmp_func(sk: Pstack_st_CTLOG; cmp: Tsk_CTLOG_compfunc): Tsk_CTLOG_compfunc; cdecl;
 begin
   sk_CTLOG_set_cmp_func := LoadLibCryptoFunction('OPENSSL_sk_set_cmp_func');
   if not assigned(sk_CTLOG_set_cmp_func) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set_cmp_func');
-  Result := sk_CTLOG_set_cmp_func(st, cmp);
+  Result := sk_CTLOG_set_cmp_func(sk, cmp);
 end;
 
 function Load_CT_POLICY_EVAL_CTX_new_ex(libctx: POSSL_LIB_CTX; propq: PAnsiChar): PCT_POLICY_EVAL_CTX; cdecl;

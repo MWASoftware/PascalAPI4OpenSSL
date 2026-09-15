@@ -18,7 +18,7 @@
 unit openssl_camellia;
 
 {
-  Generated from OpenSSL 3.0.20 Header File camellia.h - Sat 12 Sep 14:54:46 BST 2026
+  Generated from OpenSSL 3.0.20 Header File camellia.h - Tue 15 Sep 14:29:40 BST 2026
 }
 
 {$IFNDEF FPC}

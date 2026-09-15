@@ -18,7 +18,7 @@
 unit openssl_ssl;
 
 {
-  Generated from OpenSSL 3.6.2 Header File ssl.h - Sat 12 Sep 15:05:23 BST 2026
+  Generated from OpenSSL 3.6.2 Header File ssl.h - Tue 15 Sep 14:40:41 BST 2026
 }
 
 {$IFNDEF FPC}
@@ -355,31 +355,31 @@ type
   procedure lh_SSL_SESSION_node_usage_stats_bio(lh: Plhash_st_SSL_SESSION; out_: PBIO){Has C Attribute: unused}; inline;
   procedure lh_SSL_SESSION_stats_bio(lh: Plhash_st_SSL_SESSION; out_: PBIO){Has C Attribute: unused}; inline;
   {$ifdef OPENSSL_STATIC_LINK_MODEL}
-  function sk_SRTP_PROTECTION_PROFILE_num(_para: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_SRTP_PROTECTION_PROFILE_value(_para: Pstack_st_SRTP_PROTECTION_PROFILE; _para2: TOpenSSL_C_INT): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_SRTP_PROTECTION_PROFILE_num(sk: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
+  function sk_SRTP_PROTECTION_PROFILE_value(sk: Pstack_st_SRTP_PROTECTION_PROFILE; idx: TOpenSSL_C_INT): PSRTP_PROTECTION_PROFILE; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_SRTP_PROTECTION_PROFILE_new(cmp: Tsk_SRTP_PROTECTION_PROFILE_compfunc): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_SRTP_PROTECTION_PROFILE_new_null: Pstack_st_SRTP_PROTECTION_PROFILE; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_SRTP_PROTECTION_PROFILE_new_reserve(cmp: Tsk_SRTP_PROTECTION_PROFILE_compfunc; n: TOpenSSL_C_INT): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
-  function sk_SRTP_PROTECTION_PROFILE_reserve(_para: Pstack_st_SRTP_PROTECTION_PROFILE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_SRTP_PROTECTION_PROFILE_free(_para: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_SRTP_PROTECTION_PROFILE_zero(_para: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_SRTP_PROTECTION_PROFILE_delete(st: Pstack_st_SRTP_PROTECTION_PROFILE; loc: TOpenSSL_C_INT): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_SRTP_PROTECTION_PROFILE_delete_ptr(st: Pstack_st_SRTP_PROTECTION_PROFILE; ptr: Pstack_st_SRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
-  function sk_SRTP_PROTECTION_PROFILE_push(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
-  function sk_SRTP_PROTECTION_PROFILE_unshift(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_SRTP_PROTECTION_PROFILE_pop(_para: Pstack_st_SRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_SRTP_PROTECTION_PROFILE_shift(_para: Pstack_st_SRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
-  procedure sk_SRTP_PROTECTION_PROFILE_pop_free(st: Pstack_st_SRTP_PROTECTION_PROFILE; func: Tsk_SRTP_PROTECTION_PROFILE_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
-  function sk_SRTP_PROTECTION_PROFILE_insert(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
-  function sk_SRTP_PROTECTION_PROFILE_set(st: Pstack_st_SRTP_PROTECTION_PROFILE; i: TOpenSSL_C_INT; data: pointer): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
-  function sk_SRTP_PROTECTION_PROFILE_find(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
-  function sk_SRTP_PROTECTION_PROFILE_find_ex(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
-  function sk_SRTP_PROTECTION_PROFILE_find_all(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_SRTP_PROTECTION_PROFILE_sort(_para: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
-  function sk_SRTP_PROTECTION_PROFILE_is_sorted(_para: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
-  function sk_SRTP_PROTECTION_PROFILE_dup(st: Pstack_st_SRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
-  function sk_SRTP_PROTECTION_PROFILE_deep_copy(st: Pstack_st_SRTP_PROTECTION_PROFILE; c: Tsk_SRTP_PROTECTION_PROFILE_compfunc; f: Tsk_SRTP_PROTECTION_PROFILE_freefunc): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
-  function sk_SRTP_PROTECTION_PROFILE_set_cmp_func(st: Pstack_st_SRTP_PROTECTION_PROFILE; cmp: Tsk_SRTP_PROTECTION_PROFILE_compfunc): Tsk_SRTP_PROTECTION_PROFILE_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
+  function sk_SRTP_PROTECTION_PROFILE_reserve(sk: Pstack_st_SRTP_PROTECTION_PROFILE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
+  procedure sk_SRTP_PROTECTION_PROFILE_free(sk: Pstack_st_SRTP_PROTECTION_PROFILE); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_SRTP_PROTECTION_PROFILE_zero(sk: Pstack_st_SRTP_PROTECTION_PROFILE); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_SRTP_PROTECTION_PROFILE_delete(sk: Pstack_st_SRTP_PROTECTION_PROFILE; i: TOpenSSL_C_INT): PSRTP_PROTECTION_PROFILE; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_SRTP_PROTECTION_PROFILE_delete_ptr(sk: Pstack_st_SRTP_PROTECTION_PROFILE; ptr: PSRTP_PROTECTION_PROFILE): PSRTP_PROTECTION_PROFILE; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  function sk_SRTP_PROTECTION_PROFILE_push(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
+  function sk_SRTP_PROTECTION_PROFILE_unshift(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
+  function sk_SRTP_PROTECTION_PROFILE_pop(sk: Pstack_st_SRTP_PROTECTION_PROFILE): PSRTP_PROTECTION_PROFILE; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_SRTP_PROTECTION_PROFILE_shift(sk: Pstack_st_SRTP_PROTECTION_PROFILE): PSRTP_PROTECTION_PROFILE; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  procedure sk_SRTP_PROTECTION_PROFILE_pop_free(sk: Pstack_st_SRTP_PROTECTION_PROFILE; func: Tsk_SRTP_PROTECTION_PROFILE_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
+  function sk_SRTP_PROTECTION_PROFILE_insert(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
+  function sk_SRTP_PROTECTION_PROFILE_set(sk: Pstack_st_SRTP_PROTECTION_PROFILE; i: TOpenSSL_C_INT; data: PSRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
+  function sk_SRTP_PROTECTION_PROFILE_find(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
+  function sk_SRTP_PROTECTION_PROFILE_find_ex(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
+  function sk_SRTP_PROTECTION_PROFILE_find_all(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
+  procedure sk_SRTP_PROTECTION_PROFILE_sort(sk: Pstack_st_SRTP_PROTECTION_PROFILE); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  function sk_SRTP_PROTECTION_PROFILE_is_sorted(sk: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
+  function sk_SRTP_PROTECTION_PROFILE_dup(sk: Pstack_st_SRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
+  function sk_SRTP_PROTECTION_PROFILE_deep_copy(sk: Pstack_st_SRTP_PROTECTION_PROFILE; c: Tsk_SRTP_PROTECTION_PROFILE_copyfunc; f: Tsk_SRTP_PROTECTION_PROFILE_freefunc): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
+  function sk_SRTP_PROTECTION_PROFILE_set_cmp_func(sk: Pstack_st_SRTP_PROTECTION_PROFILE; cmp: Tsk_SRTP_PROTECTION_PROFILE_compfunc): Tsk_SRTP_PROTECTION_PROFILE_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
   { clang-format on }
   {$else}
   { The EXTERNALSYM directive is ignored by FPC, however, it is used by Delphi as follows:
@@ -412,58 +412,58 @@ type
   {$EXTERNALSYM sk_SRTP_PROTECTION_PROFILE_deep_copy}
   {$EXTERNALSYM sk_SRTP_PROTECTION_PROFILE_set_cmp_func}
   {Do not call Function LoadDeclarations. Internal use only}
-  function Load_sk_SRTP_PROTECTION_PROFILE_num(_para: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SRTP_PROTECTION_PROFILE_value(_para: Pstack_st_SRTP_PROTECTION_PROFILE; _para2: TOpenSSL_C_INT): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
+  function Load_sk_SRTP_PROTECTION_PROFILE_num(sk: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SRTP_PROTECTION_PROFILE_value(sk: Pstack_st_SRTP_PROTECTION_PROFILE; idx: TOpenSSL_C_INT): PSRTP_PROTECTION_PROFILE; cdecl;
   function Load_sk_SRTP_PROTECTION_PROFILE_new(cmp: Tsk_SRTP_PROTECTION_PROFILE_compfunc): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
   function Load_sk_SRTP_PROTECTION_PROFILE_new_null: Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
   function Load_sk_SRTP_PROTECTION_PROFILE_new_reserve(cmp: Tsk_SRTP_PROTECTION_PROFILE_compfunc; n: TOpenSSL_C_INT): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
-  function Load_sk_SRTP_PROTECTION_PROFILE_reserve(_para: Pstack_st_SRTP_PROTECTION_PROFILE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SRTP_PROTECTION_PROFILE_free(_para: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SRTP_PROTECTION_PROFILE_zero(_para: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SRTP_PROTECTION_PROFILE_delete(st: Pstack_st_SRTP_PROTECTION_PROFILE; loc: TOpenSSL_C_INT): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
-  function Load_sk_SRTP_PROTECTION_PROFILE_delete_ptr(st: Pstack_st_SRTP_PROTECTION_PROFILE; ptr: Pstack_st_SRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
-  function Load_sk_SRTP_PROTECTION_PROFILE_push(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SRTP_PROTECTION_PROFILE_unshift(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SRTP_PROTECTION_PROFILE_pop(_para: Pstack_st_SRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
-  function Load_sk_SRTP_PROTECTION_PROFILE_shift(_para: Pstack_st_SRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
-  procedure Load_sk_SRTP_PROTECTION_PROFILE_pop_free(st: Pstack_st_SRTP_PROTECTION_PROFILE; func: Tsk_SRTP_PROTECTION_PROFILE_freefunc); cdecl;
-  function Load_sk_SRTP_PROTECTION_PROFILE_insert(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SRTP_PROTECTION_PROFILE_set(st: Pstack_st_SRTP_PROTECTION_PROFILE; i: TOpenSSL_C_INT; data: pointer): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
-  function Load_sk_SRTP_PROTECTION_PROFILE_find(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SRTP_PROTECTION_PROFILE_find_ex(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SRTP_PROTECTION_PROFILE_find_all(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SRTP_PROTECTION_PROFILE_sort(_para: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SRTP_PROTECTION_PROFILE_is_sorted(_para: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SRTP_PROTECTION_PROFILE_dup(st: Pstack_st_SRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
-  function Load_sk_SRTP_PROTECTION_PROFILE_deep_copy(st: Pstack_st_SRTP_PROTECTION_PROFILE; c: Tsk_SRTP_PROTECTION_PROFILE_compfunc; f: Tsk_SRTP_PROTECTION_PROFILE_freefunc): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
-  function Load_sk_SRTP_PROTECTION_PROFILE_set_cmp_func(st: Pstack_st_SRTP_PROTECTION_PROFILE; cmp: Tsk_SRTP_PROTECTION_PROFILE_compfunc): Tsk_SRTP_PROTECTION_PROFILE_compfunc; cdecl;
+  function Load_sk_SRTP_PROTECTION_PROFILE_reserve(sk: Pstack_st_SRTP_PROTECTION_PROFILE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_SRTP_PROTECTION_PROFILE_free(sk: Pstack_st_SRTP_PROTECTION_PROFILE); cdecl;
+  procedure Load_sk_SRTP_PROTECTION_PROFILE_zero(sk: Pstack_st_SRTP_PROTECTION_PROFILE); cdecl;
+  function Load_sk_SRTP_PROTECTION_PROFILE_delete(sk: Pstack_st_SRTP_PROTECTION_PROFILE; i: TOpenSSL_C_INT): PSRTP_PROTECTION_PROFILE; cdecl;
+  function Load_sk_SRTP_PROTECTION_PROFILE_delete_ptr(sk: Pstack_st_SRTP_PROTECTION_PROFILE; ptr: PSRTP_PROTECTION_PROFILE): PSRTP_PROTECTION_PROFILE; cdecl;
+  function Load_sk_SRTP_PROTECTION_PROFILE_push(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SRTP_PROTECTION_PROFILE_unshift(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SRTP_PROTECTION_PROFILE_pop(sk: Pstack_st_SRTP_PROTECTION_PROFILE): PSRTP_PROTECTION_PROFILE; cdecl;
+  function Load_sk_SRTP_PROTECTION_PROFILE_shift(sk: Pstack_st_SRTP_PROTECTION_PROFILE): PSRTP_PROTECTION_PROFILE; cdecl;
+  procedure Load_sk_SRTP_PROTECTION_PROFILE_pop_free(sk: Pstack_st_SRTP_PROTECTION_PROFILE; func: Tsk_SRTP_PROTECTION_PROFILE_freefunc); cdecl;
+  function Load_sk_SRTP_PROTECTION_PROFILE_insert(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SRTP_PROTECTION_PROFILE_set(sk: Pstack_st_SRTP_PROTECTION_PROFILE; i: TOpenSSL_C_INT; data: PSRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
+  function Load_sk_SRTP_PROTECTION_PROFILE_find(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SRTP_PROTECTION_PROFILE_find_ex(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SRTP_PROTECTION_PROFILE_find_all(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_SRTP_PROTECTION_PROFILE_sort(sk: Pstack_st_SRTP_PROTECTION_PROFILE); cdecl;
+  function Load_sk_SRTP_PROTECTION_PROFILE_is_sorted(sk: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SRTP_PROTECTION_PROFILE_dup(sk: Pstack_st_SRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
+  function Load_sk_SRTP_PROTECTION_PROFILE_deep_copy(sk: Pstack_st_SRTP_PROTECTION_PROFILE; c: Tsk_SRTP_PROTECTION_PROFILE_copyfunc; f: Tsk_SRTP_PROTECTION_PROFILE_freefunc): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
+  function Load_sk_SRTP_PROTECTION_PROFILE_set_cmp_func(sk: Pstack_st_SRTP_PROTECTION_PROFILE; cmp: Tsk_SRTP_PROTECTION_PROFILE_compfunc): Tsk_SRTP_PROTECTION_PROFILE_compfunc; cdecl;
 
 var
-  sk_SRTP_PROTECTION_PROFILE_num: function(_para: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_num;
-  sk_SRTP_PROTECTION_PROFILE_value: function(_para: Pstack_st_SRTP_PROTECTION_PROFILE; _para2: TOpenSSL_C_INT): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_value;
+  sk_SRTP_PROTECTION_PROFILE_num: function(sk: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_num;
+  sk_SRTP_PROTECTION_PROFILE_value: function(sk: Pstack_st_SRTP_PROTECTION_PROFILE; idx: TOpenSSL_C_INT): PSRTP_PROTECTION_PROFILE; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_value;
   sk_SRTP_PROTECTION_PROFILE_new: function(cmp: Tsk_SRTP_PROTECTION_PROFILE_compfunc): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_new;
   sk_SRTP_PROTECTION_PROFILE_new_null: function: Pstack_st_SRTP_PROTECTION_PROFILE; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_new_null;
   sk_SRTP_PROTECTION_PROFILE_new_reserve: function(cmp: Tsk_SRTP_PROTECTION_PROFILE_compfunc; n: TOpenSSL_C_INT): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_new_reserve;
-  sk_SRTP_PROTECTION_PROFILE_reserve: function(_para: Pstack_st_SRTP_PROTECTION_PROFILE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_reserve;
-  sk_SRTP_PROTECTION_PROFILE_free: function(_para: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_free;
-  sk_SRTP_PROTECTION_PROFILE_zero: function(_para: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_zero;
-  sk_SRTP_PROTECTION_PROFILE_delete: function(st: Pstack_st_SRTP_PROTECTION_PROFILE; loc: TOpenSSL_C_INT): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_delete;
-  sk_SRTP_PROTECTION_PROFILE_delete_ptr: function(st: Pstack_st_SRTP_PROTECTION_PROFILE; ptr: Pstack_st_SRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_delete_ptr;
-  sk_SRTP_PROTECTION_PROFILE_push: function(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_push;
-  sk_SRTP_PROTECTION_PROFILE_unshift: function(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_unshift;
-  sk_SRTP_PROTECTION_PROFILE_pop: function(_para: Pstack_st_SRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_pop;
-  sk_SRTP_PROTECTION_PROFILE_shift: function(_para: Pstack_st_SRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_shift;
-  sk_SRTP_PROTECTION_PROFILE_pop_free: procedure(st: Pstack_st_SRTP_PROTECTION_PROFILE; func: Tsk_SRTP_PROTECTION_PROFILE_freefunc); cdecl = Load_sk_SRTP_PROTECTION_PROFILE_pop_free;
-  sk_SRTP_PROTECTION_PROFILE_insert: function(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_insert;
-  sk_SRTP_PROTECTION_PROFILE_set: function(st: Pstack_st_SRTP_PROTECTION_PROFILE; i: TOpenSSL_C_INT; data: pointer): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_set;
-  sk_SRTP_PROTECTION_PROFILE_find: function(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_find;
-  sk_SRTP_PROTECTION_PROFILE_find_ex: function(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_find_ex;
-  sk_SRTP_PROTECTION_PROFILE_find_all: function(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_find_all;
-  sk_SRTP_PROTECTION_PROFILE_sort: function(_para: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_sort;
-  sk_SRTP_PROTECTION_PROFILE_is_sorted: function(_para: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_is_sorted;
-  sk_SRTP_PROTECTION_PROFILE_dup: function(st: Pstack_st_SRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_dup;
-  sk_SRTP_PROTECTION_PROFILE_deep_copy: function(st: Pstack_st_SRTP_PROTECTION_PROFILE; c: Tsk_SRTP_PROTECTION_PROFILE_compfunc; f: Tsk_SRTP_PROTECTION_PROFILE_freefunc): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_deep_copy;
-  sk_SRTP_PROTECTION_PROFILE_set_cmp_func: function(st: Pstack_st_SRTP_PROTECTION_PROFILE; cmp: Tsk_SRTP_PROTECTION_PROFILE_compfunc): Tsk_SRTP_PROTECTION_PROFILE_compfunc; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_set_cmp_func;
+  sk_SRTP_PROTECTION_PROFILE_reserve: function(sk: Pstack_st_SRTP_PROTECTION_PROFILE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_reserve;
+  sk_SRTP_PROTECTION_PROFILE_free: procedure(sk: Pstack_st_SRTP_PROTECTION_PROFILE); cdecl = Load_sk_SRTP_PROTECTION_PROFILE_free;
+  sk_SRTP_PROTECTION_PROFILE_zero: procedure(sk: Pstack_st_SRTP_PROTECTION_PROFILE); cdecl = Load_sk_SRTP_PROTECTION_PROFILE_zero;
+  sk_SRTP_PROTECTION_PROFILE_delete: function(sk: Pstack_st_SRTP_PROTECTION_PROFILE; i: TOpenSSL_C_INT): PSRTP_PROTECTION_PROFILE; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_delete;
+  sk_SRTP_PROTECTION_PROFILE_delete_ptr: function(sk: Pstack_st_SRTP_PROTECTION_PROFILE; ptr: PSRTP_PROTECTION_PROFILE): PSRTP_PROTECTION_PROFILE; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_delete_ptr;
+  sk_SRTP_PROTECTION_PROFILE_push: function(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_push;
+  sk_SRTP_PROTECTION_PROFILE_unshift: function(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_unshift;
+  sk_SRTP_PROTECTION_PROFILE_pop: function(sk: Pstack_st_SRTP_PROTECTION_PROFILE): PSRTP_PROTECTION_PROFILE; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_pop;
+  sk_SRTP_PROTECTION_PROFILE_shift: function(sk: Pstack_st_SRTP_PROTECTION_PROFILE): PSRTP_PROTECTION_PROFILE; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_shift;
+  sk_SRTP_PROTECTION_PROFILE_pop_free: procedure(sk: Pstack_st_SRTP_PROTECTION_PROFILE; func: Tsk_SRTP_PROTECTION_PROFILE_freefunc); cdecl = Load_sk_SRTP_PROTECTION_PROFILE_pop_free;
+  sk_SRTP_PROTECTION_PROFILE_insert: function(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_insert;
+  sk_SRTP_PROTECTION_PROFILE_set: function(sk: Pstack_st_SRTP_PROTECTION_PROFILE; i: TOpenSSL_C_INT; data: PSRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_set;
+  sk_SRTP_PROTECTION_PROFILE_find: function(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_find;
+  sk_SRTP_PROTECTION_PROFILE_find_ex: function(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_find_ex;
+  sk_SRTP_PROTECTION_PROFILE_find_all: function(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_find_all;
+  sk_SRTP_PROTECTION_PROFILE_sort: procedure(sk: Pstack_st_SRTP_PROTECTION_PROFILE); cdecl = Load_sk_SRTP_PROTECTION_PROFILE_sort;
+  sk_SRTP_PROTECTION_PROFILE_is_sorted: function(sk: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_is_sorted;
+  sk_SRTP_PROTECTION_PROFILE_dup: function(sk: Pstack_st_SRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_dup;
+  sk_SRTP_PROTECTION_PROFILE_deep_copy: function(sk: Pstack_st_SRTP_PROTECTION_PROFILE; c: Tsk_SRTP_PROTECTION_PROFILE_copyfunc; f: Tsk_SRTP_PROTECTION_PROFILE_freefunc): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_deep_copy;
+  sk_SRTP_PROTECTION_PROFILE_set_cmp_func: function(sk: Pstack_st_SRTP_PROTECTION_PROFILE; cmp: Tsk_SRTP_PROTECTION_PROFILE_compfunc): Tsk_SRTP_PROTECTION_PROFILE_compfunc; cdecl = Load_sk_SRTP_PROTECTION_PROFILE_set_cmp_func;
   { clang-format on }
   {$endif} {OPENSSL_STATIC_LINK_MODEL}
 
@@ -1598,31 +1598,31 @@ type
   * in VisualStudio 2015
   }
   { clang-format off }
-  function sk_SSL_CIPHER_num(_para: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_SSL_CIPHER_value(_para: Pstack_st_SSL_CIPHER; _para2: TOpenSSL_C_INT): Pstack_st_SSL_CIPHER; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_SSL_CIPHER_num(sk: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
+  function sk_SSL_CIPHER_value(sk: Pstack_st_SSL_CIPHER; idx: TOpenSSL_C_INT): PSSL_CIPHER; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_SSL_CIPHER_new(cmp: Tsk_SSL_CIPHER_compfunc): Pstack_st_SSL_CIPHER; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_SSL_CIPHER_new_null: Pstack_st_SSL_CIPHER; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_SSL_CIPHER_new_reserve(cmp: Tsk_SSL_CIPHER_compfunc; n: TOpenSSL_C_INT): Pstack_st_SSL_CIPHER; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
-  function sk_SSL_CIPHER_reserve(_para: Pstack_st_SSL_CIPHER; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_SSL_CIPHER_free(_para: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_SSL_CIPHER_zero(_para: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_SSL_CIPHER_delete(_para: Pstack_st_SSL_CIPHER; _para2: TOpenSSL_C_INT): Pstack_st_SSL_CIPHER; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_SSL_CIPHER_delete_ptr(_para: Pstack_st_SSL_CIPHER; _para2: TOpenSSL_C_INT): Pstack_st_SSL_CIPHER; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
-  function sk_SSL_CIPHER_push(st: Pstack_st_SSL_CIPHER; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
-  function sk_SSL_CIPHER_unshift(st: Pstack_st_SSL_CIPHER; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_SSL_CIPHER_pop(_para: Pstack_st_SSL_CIPHER): Pstack_st_SSL_CIPHER; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_SSL_CIPHER_shift(_para: Pstack_st_SSL_CIPHER): Pstack_st_SSL_CIPHER; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
-  procedure sk_SSL_CIPHER_pop_free(st: Pstack_st_SSL_CIPHER; func: Tsk_SSL_CIPHER_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
-  function sk_SSL_CIPHER_insert(st: Pstack_st_SSL_CIPHER; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
-  function sk_SSL_CIPHER_set(st: Pstack_st_SSL_CIPHER; i: TOpenSSL_C_INT; data: pointer): Pstack_st_SSL_CIPHER; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
-  function sk_SSL_CIPHER_find(st: Pstack_st_SSL_CIPHER; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
-  function sk_SSL_CIPHER_find_ex(st: Pstack_st_SSL_CIPHER; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
-  function sk_SSL_CIPHER_find_all(st: Pstack_st_SSL_CIPHER; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_SSL_CIPHER_sort(_para: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
-  function sk_SSL_CIPHER_is_sorted(_para: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
-  function sk_SSL_CIPHER_dup(st: Pstack_st_SSL_CIPHER): Pstack_st_SSL_CIPHER; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
-  function sk_SSL_CIPHER_deep_copy(st: Pstack_st_SSL_CIPHER; c: Tsk_SSL_CIPHER_compfunc; f: Tsk_SSL_CIPHER_freefunc): Pstack_st_SSL_CIPHER; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
-  function sk_SSL_CIPHER_set_cmp_func(st: Pstack_st_SSL_CIPHER; cmp: Tsk_SSL_CIPHER_compfunc): Tsk_SSL_CIPHER_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
+  function sk_SSL_CIPHER_reserve(sk: Pstack_st_SSL_CIPHER; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
+  procedure sk_SSL_CIPHER_free(sk: Pstack_st_SSL_CIPHER); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_SSL_CIPHER_zero(sk: Pstack_st_SSL_CIPHER); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_SSL_CIPHER_delete(sk: Pstack_st_SSL_CIPHER; i: TOpenSSL_C_INT): PSSL_CIPHER; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_SSL_CIPHER_delete_ptr(sk: Pstack_st_SSL_CIPHER; _para2: TOpenSSL_C_INT): PSSL_CIPHER; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  function sk_SSL_CIPHER_push(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
+  function sk_SSL_CIPHER_unshift(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
+  function sk_SSL_CIPHER_pop(sk: Pstack_st_SSL_CIPHER): PSSL_CIPHER; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_SSL_CIPHER_shift(sk: Pstack_st_SSL_CIPHER): PSSL_CIPHER; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  procedure sk_SSL_CIPHER_pop_free(sk: Pstack_st_SSL_CIPHER; func: Tsk_SSL_CIPHER_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
+  function sk_SSL_CIPHER_insert(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
+  function sk_SSL_CIPHER_set(sk: Pstack_st_SSL_CIPHER; i: TOpenSSL_C_INT; data: PSSL_CIPHER): Pstack_st_SSL_CIPHER; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
+  function sk_SSL_CIPHER_find(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
+  function sk_SSL_CIPHER_find_ex(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
+  function sk_SSL_CIPHER_find_all(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
+  procedure sk_SSL_CIPHER_sort(sk: Pstack_st_SSL_CIPHER); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  function sk_SSL_CIPHER_is_sorted(sk: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
+  function sk_SSL_CIPHER_dup(sk: Pstack_st_SSL_CIPHER): Pstack_st_SSL_CIPHER; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
+  function sk_SSL_CIPHER_deep_copy(sk: Pstack_st_SSL_CIPHER; c: Tsk_SSL_CIPHER_copyfunc; f: Tsk_SSL_CIPHER_freefunc): Pstack_st_SSL_CIPHER; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
+  function sk_SSL_CIPHER_set_cmp_func(sk: Pstack_st_SSL_CIPHER; cmp: Tsk_SSL_CIPHER_compfunc): Tsk_SSL_CIPHER_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
   { clang-format on }
   { compatibility }
   {$else}
@@ -1672,31 +1672,31 @@ type
   function Load_SSL_CTX_get_recv_max_early_data(ctx: PSSL_CTX): TOpenSSL_C_UINT; cdecl;
   function Load_SSL_set_recv_max_early_data(s: PSSL; recv_max_early_data: TOpenSSL_C_UINT): TOpenSSL_C_INT; cdecl;
   function Load_SSL_get_recv_max_early_data(s: PSSL): TOpenSSL_C_UINT; cdecl;
-  function Load_sk_SSL_CIPHER_num(_para: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_CIPHER_value(_para: Pstack_st_SSL_CIPHER; _para2: TOpenSSL_C_INT): Pstack_st_SSL_CIPHER; cdecl;
+  function Load_sk_SSL_CIPHER_num(sk: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SSL_CIPHER_value(sk: Pstack_st_SSL_CIPHER; idx: TOpenSSL_C_INT): PSSL_CIPHER; cdecl;
   function Load_sk_SSL_CIPHER_new(cmp: Tsk_SSL_CIPHER_compfunc): Pstack_st_SSL_CIPHER; cdecl;
   function Load_sk_SSL_CIPHER_new_null: Pstack_st_SSL_CIPHER; cdecl;
   function Load_sk_SSL_CIPHER_new_reserve(cmp: Tsk_SSL_CIPHER_compfunc; n: TOpenSSL_C_INT): Pstack_st_SSL_CIPHER; cdecl;
-  function Load_sk_SSL_CIPHER_reserve(_para: Pstack_st_SSL_CIPHER; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_CIPHER_free(_para: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_CIPHER_zero(_para: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_CIPHER_delete(_para: Pstack_st_SSL_CIPHER; _para2: TOpenSSL_C_INT): Pstack_st_SSL_CIPHER; cdecl;
-  function Load_sk_SSL_CIPHER_delete_ptr(_para: Pstack_st_SSL_CIPHER; _para2: TOpenSSL_C_INT): Pstack_st_SSL_CIPHER; cdecl;
-  function Load_sk_SSL_CIPHER_push(st: Pstack_st_SSL_CIPHER; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_CIPHER_unshift(st: Pstack_st_SSL_CIPHER; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_CIPHER_pop(_para: Pstack_st_SSL_CIPHER): Pstack_st_SSL_CIPHER; cdecl;
-  function Load_sk_SSL_CIPHER_shift(_para: Pstack_st_SSL_CIPHER): Pstack_st_SSL_CIPHER; cdecl;
-  procedure Load_sk_SSL_CIPHER_pop_free(st: Pstack_st_SSL_CIPHER; func: Tsk_SSL_CIPHER_freefunc); cdecl;
-  function Load_sk_SSL_CIPHER_insert(st: Pstack_st_SSL_CIPHER; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_CIPHER_set(st: Pstack_st_SSL_CIPHER; i: TOpenSSL_C_INT; data: pointer): Pstack_st_SSL_CIPHER; cdecl;
-  function Load_sk_SSL_CIPHER_find(st: Pstack_st_SSL_CIPHER; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_CIPHER_find_ex(st: Pstack_st_SSL_CIPHER; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_CIPHER_find_all(st: Pstack_st_SSL_CIPHER; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_CIPHER_sort(_para: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_CIPHER_is_sorted(_para: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl;
-  function Load_sk_SSL_CIPHER_dup(st: Pstack_st_SSL_CIPHER): Pstack_st_SSL_CIPHER; cdecl;
-  function Load_sk_SSL_CIPHER_deep_copy(st: Pstack_st_SSL_CIPHER; c: Tsk_SSL_CIPHER_compfunc; f: Tsk_SSL_CIPHER_freefunc): Pstack_st_SSL_CIPHER; cdecl;
-  function Load_sk_SSL_CIPHER_set_cmp_func(st: Pstack_st_SSL_CIPHER; cmp: Tsk_SSL_CIPHER_compfunc): Tsk_SSL_CIPHER_compfunc; cdecl;
+  function Load_sk_SSL_CIPHER_reserve(sk: Pstack_st_SSL_CIPHER; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_SSL_CIPHER_free(sk: Pstack_st_SSL_CIPHER); cdecl;
+  procedure Load_sk_SSL_CIPHER_zero(sk: Pstack_st_SSL_CIPHER); cdecl;
+  function Load_sk_SSL_CIPHER_delete(sk: Pstack_st_SSL_CIPHER; i: TOpenSSL_C_INT): PSSL_CIPHER; cdecl;
+  function Load_sk_SSL_CIPHER_delete_ptr(sk: Pstack_st_SSL_CIPHER; _para2: TOpenSSL_C_INT): PSSL_CIPHER; cdecl;
+  function Load_sk_SSL_CIPHER_push(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SSL_CIPHER_unshift(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SSL_CIPHER_pop(sk: Pstack_st_SSL_CIPHER): PSSL_CIPHER; cdecl;
+  function Load_sk_SSL_CIPHER_shift(sk: Pstack_st_SSL_CIPHER): PSSL_CIPHER; cdecl;
+  procedure Load_sk_SSL_CIPHER_pop_free(sk: Pstack_st_SSL_CIPHER; func: Tsk_SSL_CIPHER_freefunc); cdecl;
+  function Load_sk_SSL_CIPHER_insert(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SSL_CIPHER_set(sk: Pstack_st_SSL_CIPHER; i: TOpenSSL_C_INT; data: PSSL_CIPHER): Pstack_st_SSL_CIPHER; cdecl;
+  function Load_sk_SSL_CIPHER_find(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SSL_CIPHER_find_ex(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SSL_CIPHER_find_all(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_SSL_CIPHER_sort(sk: Pstack_st_SSL_CIPHER); cdecl;
+  function Load_sk_SSL_CIPHER_is_sorted(sk: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl;
+  function Load_sk_SSL_CIPHER_dup(sk: Pstack_st_SSL_CIPHER): Pstack_st_SSL_CIPHER; cdecl;
+  function Load_sk_SSL_CIPHER_deep_copy(sk: Pstack_st_SSL_CIPHER; c: Tsk_SSL_CIPHER_copyfunc; f: Tsk_SSL_CIPHER_freefunc): Pstack_st_SSL_CIPHER; cdecl;
+  function Load_sk_SSL_CIPHER_set_cmp_func(sk: Pstack_st_SSL_CIPHER; cmp: Tsk_SSL_CIPHER_compfunc): Tsk_SSL_CIPHER_compfunc; cdecl;
 
 var
   SSL_CTX_set_keylog_callback: procedure(ctx: PSSL_CTX; cb: TSSL_CTX_keylog_cb_func); cdecl = Load_SSL_CTX_set_keylog_callback;
@@ -1721,31 +1721,31 @@ var
   * in VisualStudio 2015
   }
   { clang-format off }
-  sk_SSL_CIPHER_num: function(_para: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl = Load_sk_SSL_CIPHER_num;
-  sk_SSL_CIPHER_value: function(_para: Pstack_st_SSL_CIPHER; _para2: TOpenSSL_C_INT): Pstack_st_SSL_CIPHER; cdecl = Load_sk_SSL_CIPHER_value;
+  sk_SSL_CIPHER_num: function(sk: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl = Load_sk_SSL_CIPHER_num;
+  sk_SSL_CIPHER_value: function(sk: Pstack_st_SSL_CIPHER; idx: TOpenSSL_C_INT): PSSL_CIPHER; cdecl = Load_sk_SSL_CIPHER_value;
   sk_SSL_CIPHER_new: function(cmp: Tsk_SSL_CIPHER_compfunc): Pstack_st_SSL_CIPHER; cdecl = Load_sk_SSL_CIPHER_new;
   sk_SSL_CIPHER_new_null: function: Pstack_st_SSL_CIPHER; cdecl = Load_sk_SSL_CIPHER_new_null;
   sk_SSL_CIPHER_new_reserve: function(cmp: Tsk_SSL_CIPHER_compfunc; n: TOpenSSL_C_INT): Pstack_st_SSL_CIPHER; cdecl = Load_sk_SSL_CIPHER_new_reserve;
-  sk_SSL_CIPHER_reserve: function(_para: Pstack_st_SSL_CIPHER; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SSL_CIPHER_reserve;
-  sk_SSL_CIPHER_free: function(_para: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl = Load_sk_SSL_CIPHER_free;
-  sk_SSL_CIPHER_zero: function(_para: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl = Load_sk_SSL_CIPHER_zero;
-  sk_SSL_CIPHER_delete: function(_para: Pstack_st_SSL_CIPHER; _para2: TOpenSSL_C_INT): Pstack_st_SSL_CIPHER; cdecl = Load_sk_SSL_CIPHER_delete;
-  sk_SSL_CIPHER_delete_ptr: function(_para: Pstack_st_SSL_CIPHER; _para2: TOpenSSL_C_INT): Pstack_st_SSL_CIPHER; cdecl = Load_sk_SSL_CIPHER_delete_ptr;
-  sk_SSL_CIPHER_push: function(st: Pstack_st_SSL_CIPHER; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_SSL_CIPHER_push;
-  sk_SSL_CIPHER_unshift: function(st: Pstack_st_SSL_CIPHER; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_SSL_CIPHER_unshift;
-  sk_SSL_CIPHER_pop: function(_para: Pstack_st_SSL_CIPHER): Pstack_st_SSL_CIPHER; cdecl = Load_sk_SSL_CIPHER_pop;
-  sk_SSL_CIPHER_shift: function(_para: Pstack_st_SSL_CIPHER): Pstack_st_SSL_CIPHER; cdecl = Load_sk_SSL_CIPHER_shift;
-  sk_SSL_CIPHER_pop_free: procedure(st: Pstack_st_SSL_CIPHER; func: Tsk_SSL_CIPHER_freefunc); cdecl = Load_sk_SSL_CIPHER_pop_free;
-  sk_SSL_CIPHER_insert: function(st: Pstack_st_SSL_CIPHER; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SSL_CIPHER_insert;
-  sk_SSL_CIPHER_set: function(st: Pstack_st_SSL_CIPHER; i: TOpenSSL_C_INT; data: pointer): Pstack_st_SSL_CIPHER; cdecl = Load_sk_SSL_CIPHER_set;
-  sk_SSL_CIPHER_find: function(st: Pstack_st_SSL_CIPHER; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_SSL_CIPHER_find;
-  sk_SSL_CIPHER_find_ex: function(st: Pstack_st_SSL_CIPHER; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_SSL_CIPHER_find_ex;
-  sk_SSL_CIPHER_find_all: function(st: Pstack_st_SSL_CIPHER; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SSL_CIPHER_find_all;
-  sk_SSL_CIPHER_sort: function(_para: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl = Load_sk_SSL_CIPHER_sort;
-  sk_SSL_CIPHER_is_sorted: function(_para: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl = Load_sk_SSL_CIPHER_is_sorted;
-  sk_SSL_CIPHER_dup: function(st: Pstack_st_SSL_CIPHER): Pstack_st_SSL_CIPHER; cdecl = Load_sk_SSL_CIPHER_dup;
-  sk_SSL_CIPHER_deep_copy: function(st: Pstack_st_SSL_CIPHER; c: Tsk_SSL_CIPHER_compfunc; f: Tsk_SSL_CIPHER_freefunc): Pstack_st_SSL_CIPHER; cdecl = Load_sk_SSL_CIPHER_deep_copy;
-  sk_SSL_CIPHER_set_cmp_func: function(st: Pstack_st_SSL_CIPHER; cmp: Tsk_SSL_CIPHER_compfunc): Tsk_SSL_CIPHER_compfunc; cdecl = Load_sk_SSL_CIPHER_set_cmp_func;
+  sk_SSL_CIPHER_reserve: function(sk: Pstack_st_SSL_CIPHER; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SSL_CIPHER_reserve;
+  sk_SSL_CIPHER_free: procedure(sk: Pstack_st_SSL_CIPHER); cdecl = Load_sk_SSL_CIPHER_free;
+  sk_SSL_CIPHER_zero: procedure(sk: Pstack_st_SSL_CIPHER); cdecl = Load_sk_SSL_CIPHER_zero;
+  sk_SSL_CIPHER_delete: function(sk: Pstack_st_SSL_CIPHER; i: TOpenSSL_C_INT): PSSL_CIPHER; cdecl = Load_sk_SSL_CIPHER_delete;
+  sk_SSL_CIPHER_delete_ptr: function(sk: Pstack_st_SSL_CIPHER; _para2: TOpenSSL_C_INT): PSSL_CIPHER; cdecl = Load_sk_SSL_CIPHER_delete_ptr;
+  sk_SSL_CIPHER_push: function(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER): TOpenSSL_C_INT; cdecl = Load_sk_SSL_CIPHER_push;
+  sk_SSL_CIPHER_unshift: function(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER): TOpenSSL_C_INT; cdecl = Load_sk_SSL_CIPHER_unshift;
+  sk_SSL_CIPHER_pop: function(sk: Pstack_st_SSL_CIPHER): PSSL_CIPHER; cdecl = Load_sk_SSL_CIPHER_pop;
+  sk_SSL_CIPHER_shift: function(sk: Pstack_st_SSL_CIPHER): PSSL_CIPHER; cdecl = Load_sk_SSL_CIPHER_shift;
+  sk_SSL_CIPHER_pop_free: procedure(sk: Pstack_st_SSL_CIPHER; func: Tsk_SSL_CIPHER_freefunc); cdecl = Load_sk_SSL_CIPHER_pop_free;
+  sk_SSL_CIPHER_insert: function(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SSL_CIPHER_insert;
+  sk_SSL_CIPHER_set: function(sk: Pstack_st_SSL_CIPHER; i: TOpenSSL_C_INT; data: PSSL_CIPHER): Pstack_st_SSL_CIPHER; cdecl = Load_sk_SSL_CIPHER_set;
+  sk_SSL_CIPHER_find: function(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER): TOpenSSL_C_INT; cdecl = Load_sk_SSL_CIPHER_find;
+  sk_SSL_CIPHER_find_ex: function(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER): TOpenSSL_C_INT; cdecl = Load_sk_SSL_CIPHER_find_ex;
+  sk_SSL_CIPHER_find_all: function(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_SSL_CIPHER_find_all;
+  sk_SSL_CIPHER_sort: procedure(sk: Pstack_st_SSL_CIPHER); cdecl = Load_sk_SSL_CIPHER_sort;
+  sk_SSL_CIPHER_is_sorted: function(sk: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl = Load_sk_SSL_CIPHER_is_sorted;
+  sk_SSL_CIPHER_dup: function(sk: Pstack_st_SSL_CIPHER): Pstack_st_SSL_CIPHER; cdecl = Load_sk_SSL_CIPHER_dup;
+  sk_SSL_CIPHER_deep_copy: function(sk: Pstack_st_SSL_CIPHER; c: Tsk_SSL_CIPHER_copyfunc; f: Tsk_SSL_CIPHER_freefunc): Pstack_st_SSL_CIPHER; cdecl = Load_sk_SSL_CIPHER_deep_copy;
+  sk_SSL_CIPHER_set_cmp_func: function(sk: Pstack_st_SSL_CIPHER; cmp: Tsk_SSL_CIPHER_compfunc): Tsk_SSL_CIPHER_compfunc; cdecl = Load_sk_SSL_CIPHER_set_cmp_func;
   { clang-format on }
   { compatibility }
   {$endif} {OPENSSL_STATIC_LINK_MODEL}
@@ -7832,20 +7832,20 @@ begin
 end;
 {$endif} { OPENSSL_NO_CT}
 {$ifndef OPENSSL_STATIC_LINK_MODEL}
-function Load_sk_SRTP_PROTECTION_PROFILE_num(_para: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
+function Load_sk_SRTP_PROTECTION_PROFILE_num(sk: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_num := LoadLibCryptoFunction('OPENSSL_sk_num');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_num) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_num');
-  Result := sk_SRTP_PROTECTION_PROFILE_num(_para);
+  Result := sk_SRTP_PROTECTION_PROFILE_num(sk);
 end;
 
-function Load_sk_SRTP_PROTECTION_PROFILE_value(_para: Pstack_st_SRTP_PROTECTION_PROFILE; _para2: TOpenSSL_C_INT): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
+function Load_sk_SRTP_PROTECTION_PROFILE_value(sk: Pstack_st_SRTP_PROTECTION_PROFILE; idx: TOpenSSL_C_INT): PSRTP_PROTECTION_PROFILE; cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_value) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_value');
-  Result := sk_SRTP_PROTECTION_PROFILE_value(_para, _para2);
+  Result := sk_SRTP_PROTECTION_PROFILE_value(sk, idx);
 end;
 
 function Load_sk_SRTP_PROTECTION_PROFILE_new(cmp: Tsk_SRTP_PROTECTION_PROFILE_compfunc): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
@@ -7872,164 +7872,164 @@ begin
   Result := sk_SRTP_PROTECTION_PROFILE_new_reserve(cmp, n);
 end;
 
-function Load_sk_SRTP_PROTECTION_PROFILE_reserve(_para: Pstack_st_SRTP_PROTECTION_PROFILE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_SRTP_PROTECTION_PROFILE_reserve(sk: Pstack_st_SRTP_PROTECTION_PROFILE; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_reserve := LoadLibCryptoFunction('OPENSSL_sk_reserve');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_reserve) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_reserve');
-  Result := sk_SRTP_PROTECTION_PROFILE_reserve(_para, n);
+  Result := sk_SRTP_PROTECTION_PROFILE_reserve(sk, n);
 end;
 
-function Load_sk_SRTP_PROTECTION_PROFILE_free(_para: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_SRTP_PROTECTION_PROFILE_free(sk: Pstack_st_SRTP_PROTECTION_PROFILE); cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
-  Result := sk_SRTP_PROTECTION_PROFILE_free(_para);
+  sk_SRTP_PROTECTION_PROFILE_free(sk);
 end;
 
-function Load_sk_SRTP_PROTECTION_PROFILE_zero(_para: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_SRTP_PROTECTION_PROFILE_zero(sk: Pstack_st_SRTP_PROTECTION_PROFILE); cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_zero) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
-  Result := sk_SRTP_PROTECTION_PROFILE_zero(_para);
+  sk_SRTP_PROTECTION_PROFILE_zero(sk);
 end;
 
-function Load_sk_SRTP_PROTECTION_PROFILE_delete(st: Pstack_st_SRTP_PROTECTION_PROFILE; loc: TOpenSSL_C_INT): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
+function Load_sk_SRTP_PROTECTION_PROFILE_delete(sk: Pstack_st_SRTP_PROTECTION_PROFILE; i: TOpenSSL_C_INT): PSRTP_PROTECTION_PROFILE; cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_delete) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete');
-  Result := sk_SRTP_PROTECTION_PROFILE_delete(st, loc);
+  Result := sk_SRTP_PROTECTION_PROFILE_delete(sk, i);
 end;
 
-function Load_sk_SRTP_PROTECTION_PROFILE_delete_ptr(st: Pstack_st_SRTP_PROTECTION_PROFILE; ptr: Pstack_st_SRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
+function Load_sk_SRTP_PROTECTION_PROFILE_delete_ptr(sk: Pstack_st_SRTP_PROTECTION_PROFILE; ptr: PSRTP_PROTECTION_PROFILE): PSRTP_PROTECTION_PROFILE; cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_delete_ptr) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete_ptr');
-  Result := sk_SRTP_PROTECTION_PROFILE_delete_ptr(st, ptr);
+  Result := sk_SRTP_PROTECTION_PROFILE_delete_ptr(sk, ptr);
 end;
 
-function Load_sk_SRTP_PROTECTION_PROFILE_push(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_SRTP_PROTECTION_PROFILE_push(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_push := LoadLibCryptoFunction('OPENSSL_sk_push');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_push) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_push');
-  Result := sk_SRTP_PROTECTION_PROFILE_push(st, data);
+  Result := sk_SRTP_PROTECTION_PROFILE_push(sk, data);
 end;
 
-function Load_sk_SRTP_PROTECTION_PROFILE_unshift(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_SRTP_PROTECTION_PROFILE_unshift(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_unshift := LoadLibCryptoFunction('OPENSSL_sk_unshift');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_unshift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_unshift');
-  Result := sk_SRTP_PROTECTION_PROFILE_unshift(st, data);
+  Result := sk_SRTP_PROTECTION_PROFILE_unshift(sk, data);
 end;
 
-function Load_sk_SRTP_PROTECTION_PROFILE_pop(_para: Pstack_st_SRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
+function Load_sk_SRTP_PROTECTION_PROFILE_pop(sk: Pstack_st_SRTP_PROTECTION_PROFILE): PSRTP_PROTECTION_PROFILE; cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_pop) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop');
-  Result := sk_SRTP_PROTECTION_PROFILE_pop(_para);
+  Result := sk_SRTP_PROTECTION_PROFILE_pop(sk);
 end;
 
-function Load_sk_SRTP_PROTECTION_PROFILE_shift(_para: Pstack_st_SRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
+function Load_sk_SRTP_PROTECTION_PROFILE_shift(sk: Pstack_st_SRTP_PROTECTION_PROFILE): PSRTP_PROTECTION_PROFILE; cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_shift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_shift');
-  Result := sk_SRTP_PROTECTION_PROFILE_shift(_para);
+  Result := sk_SRTP_PROTECTION_PROFILE_shift(sk);
 end;
 
-procedure Load_sk_SRTP_PROTECTION_PROFILE_pop_free(st: Pstack_st_SRTP_PROTECTION_PROFILE; func: Tsk_SRTP_PROTECTION_PROFILE_freefunc); cdecl;
+procedure Load_sk_SRTP_PROTECTION_PROFILE_pop_free(sk: Pstack_st_SRTP_PROTECTION_PROFILE; func: Tsk_SRTP_PROTECTION_PROFILE_freefunc); cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_pop_free := LoadLibCryptoFunction('OPENSSL_sk_pop_free');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_pop_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop_free');
-  sk_SRTP_PROTECTION_PROFILE_pop_free(st, func);
+  sk_SRTP_PROTECTION_PROFILE_pop_free(sk, func);
 end;
 
-function Load_sk_SRTP_PROTECTION_PROFILE_insert(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_SRTP_PROTECTION_PROFILE_insert(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_insert := LoadLibCryptoFunction('OPENSSL_sk_insert');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_insert) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_insert');
-  Result := sk_SRTP_PROTECTION_PROFILE_insert(st, data, where);
+  Result := sk_SRTP_PROTECTION_PROFILE_insert(sk, data, where);
 end;
 
-function Load_sk_SRTP_PROTECTION_PROFILE_set(st: Pstack_st_SRTP_PROTECTION_PROFILE; i: TOpenSSL_C_INT; data: pointer): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
+function Load_sk_SRTP_PROTECTION_PROFILE_set(sk: Pstack_st_SRTP_PROTECTION_PROFILE; i: TOpenSSL_C_INT; data: PSRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_set := LoadLibCryptoFunction('OPENSSL_sk_set');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_set) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set');
-  Result := sk_SRTP_PROTECTION_PROFILE_set(st, i, data);
+  Result := sk_SRTP_PROTECTION_PROFILE_set(sk, i, data);
 end;
 
-function Load_sk_SRTP_PROTECTION_PROFILE_find(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_SRTP_PROTECTION_PROFILE_find(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_find := LoadLibCryptoFunction('OPENSSL_sk_find');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_find) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find');
-  Result := sk_SRTP_PROTECTION_PROFILE_find(st, data);
+  Result := sk_SRTP_PROTECTION_PROFILE_find(sk, data);
 end;
 
-function Load_sk_SRTP_PROTECTION_PROFILE_find_ex(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_SRTP_PROTECTION_PROFILE_find_ex(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_find_ex := LoadLibCryptoFunction('OPENSSL_sk_find_ex');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_find_ex) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_ex');
-  Result := sk_SRTP_PROTECTION_PROFILE_find_ex(st, data);
+  Result := sk_SRTP_PROTECTION_PROFILE_find_ex(sk, data);
 end;
 
-function Load_sk_SRTP_PROTECTION_PROFILE_find_all(st: Pstack_st_SRTP_PROTECTION_PROFILE; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_SRTP_PROTECTION_PROFILE_find_all(sk: Pstack_st_SRTP_PROTECTION_PROFILE; data: PSRTP_PROTECTION_PROFILE; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_find_all := LoadLibCryptoFunction('OPENSSL_sk_find_all');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_find_all) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_all');
-  Result := sk_SRTP_PROTECTION_PROFILE_find_all(st, data, pnum);
+  Result := sk_SRTP_PROTECTION_PROFILE_find_all(sk, data, pnum);
 end;
 
-function Load_sk_SRTP_PROTECTION_PROFILE_sort(_para: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_SRTP_PROTECTION_PROFILE_sort(sk: Pstack_st_SRTP_PROTECTION_PROFILE); cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_sort) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
-  Result := sk_SRTP_PROTECTION_PROFILE_sort(_para);
+  sk_SRTP_PROTECTION_PROFILE_sort(sk);
 end;
 
-function Load_sk_SRTP_PROTECTION_PROFILE_is_sorted(_para: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
+function Load_sk_SRTP_PROTECTION_PROFILE_is_sorted(sk: Pstack_st_SRTP_PROTECTION_PROFILE): TOpenSSL_C_INT; cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_is_sorted := LoadLibCryptoFunction('OPENSSL_sk_is_sorted');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_is_sorted) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_is_sorted');
-  Result := sk_SRTP_PROTECTION_PROFILE_is_sorted(_para);
+  Result := sk_SRTP_PROTECTION_PROFILE_is_sorted(sk);
 end;
 
-function Load_sk_SRTP_PROTECTION_PROFILE_dup(st: Pstack_st_SRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
+function Load_sk_SRTP_PROTECTION_PROFILE_dup(sk: Pstack_st_SRTP_PROTECTION_PROFILE): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_dup := LoadLibCryptoFunction('OPENSSL_sk_dup');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_dup) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_dup');
-  Result := sk_SRTP_PROTECTION_PROFILE_dup(st);
+  Result := sk_SRTP_PROTECTION_PROFILE_dup(sk);
 end;
 
-function Load_sk_SRTP_PROTECTION_PROFILE_deep_copy(st: Pstack_st_SRTP_PROTECTION_PROFILE; c: Tsk_SRTP_PROTECTION_PROFILE_compfunc; f: Tsk_SRTP_PROTECTION_PROFILE_freefunc): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
+function Load_sk_SRTP_PROTECTION_PROFILE_deep_copy(sk: Pstack_st_SRTP_PROTECTION_PROFILE; c: Tsk_SRTP_PROTECTION_PROFILE_copyfunc; f: Tsk_SRTP_PROTECTION_PROFILE_freefunc): Pstack_st_SRTP_PROTECTION_PROFILE; cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_deep_copy := LoadLibCryptoFunction('OPENSSL_sk_deep_copy');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_deep_copy) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_deep_copy');
-  Result := sk_SRTP_PROTECTION_PROFILE_deep_copy(st, c, f);
+  Result := sk_SRTP_PROTECTION_PROFILE_deep_copy(sk, c, f);
 end;
 
-function Load_sk_SRTP_PROTECTION_PROFILE_set_cmp_func(st: Pstack_st_SRTP_PROTECTION_PROFILE; cmp: Tsk_SRTP_PROTECTION_PROFILE_compfunc): Tsk_SRTP_PROTECTION_PROFILE_compfunc; cdecl;
+function Load_sk_SRTP_PROTECTION_PROFILE_set_cmp_func(sk: Pstack_st_SRTP_PROTECTION_PROFILE; cmp: Tsk_SRTP_PROTECTION_PROFILE_compfunc): Tsk_SRTP_PROTECTION_PROFILE_compfunc; cdecl;
 begin
   sk_SRTP_PROTECTION_PROFILE_set_cmp_func := LoadLibCryptoFunction('OPENSSL_sk_set_cmp_func');
   if not assigned(sk_SRTP_PROTECTION_PROFILE_set_cmp_func) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set_cmp_func');
-  Result := sk_SRTP_PROTECTION_PROFILE_set_cmp_func(st, cmp);
+  Result := sk_SRTP_PROTECTION_PROFILE_set_cmp_func(sk, cmp);
 end;
 
 function Load_SSL_CTX_get_options(ctx: PSSL_CTX): TOpenSSL_C_UINT64; cdecl;
@@ -8586,20 +8586,20 @@ begin
   Result := SSL_get_recv_max_early_data(s);
 end;
 
-function Load_sk_SSL_CIPHER_num(_para: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl;
+function Load_sk_SSL_CIPHER_num(sk: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl;
 begin
   sk_SSL_CIPHER_num := LoadLibCryptoFunction('OPENSSL_sk_num');
   if not assigned(sk_SSL_CIPHER_num) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_num');
-  Result := sk_SSL_CIPHER_num(_para);
+  Result := sk_SSL_CIPHER_num(sk);
 end;
 
-function Load_sk_SSL_CIPHER_value(_para: Pstack_st_SSL_CIPHER; _para2: TOpenSSL_C_INT): Pstack_st_SSL_CIPHER; cdecl;
+function Load_sk_SSL_CIPHER_value(sk: Pstack_st_SSL_CIPHER; idx: TOpenSSL_C_INT): PSSL_CIPHER; cdecl;
 begin
   sk_SSL_CIPHER_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_SSL_CIPHER_value) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_value');
-  Result := sk_SSL_CIPHER_value(_para, _para2);
+  Result := sk_SSL_CIPHER_value(sk, idx);
 end;
 
 function Load_sk_SSL_CIPHER_new(cmp: Tsk_SSL_CIPHER_compfunc): Pstack_st_SSL_CIPHER; cdecl;
@@ -8626,164 +8626,164 @@ begin
   Result := sk_SSL_CIPHER_new_reserve(cmp, n);
 end;
 
-function Load_sk_SSL_CIPHER_reserve(_para: Pstack_st_SSL_CIPHER; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_SSL_CIPHER_reserve(sk: Pstack_st_SSL_CIPHER; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_SSL_CIPHER_reserve := LoadLibCryptoFunction('OPENSSL_sk_reserve');
   if not assigned(sk_SSL_CIPHER_reserve) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_reserve');
-  Result := sk_SSL_CIPHER_reserve(_para, n);
+  Result := sk_SSL_CIPHER_reserve(sk, n);
 end;
 
-function Load_sk_SSL_CIPHER_free(_para: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_SSL_CIPHER_free(sk: Pstack_st_SSL_CIPHER); cdecl;
 begin
   sk_SSL_CIPHER_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_SSL_CIPHER_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
-  Result := sk_SSL_CIPHER_free(_para);
+  sk_SSL_CIPHER_free(sk);
 end;
 
-function Load_sk_SSL_CIPHER_zero(_para: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_SSL_CIPHER_zero(sk: Pstack_st_SSL_CIPHER); cdecl;
 begin
   sk_SSL_CIPHER_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_SSL_CIPHER_zero) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
-  Result := sk_SSL_CIPHER_zero(_para);
+  sk_SSL_CIPHER_zero(sk);
 end;
 
-function Load_sk_SSL_CIPHER_delete(_para: Pstack_st_SSL_CIPHER; _para2: TOpenSSL_C_INT): Pstack_st_SSL_CIPHER; cdecl;
+function Load_sk_SSL_CIPHER_delete(sk: Pstack_st_SSL_CIPHER; i: TOpenSSL_C_INT): PSSL_CIPHER; cdecl;
 begin
   sk_SSL_CIPHER_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_SSL_CIPHER_delete) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete');
-  Result := sk_SSL_CIPHER_delete(_para, _para2);
+  Result := sk_SSL_CIPHER_delete(sk, i);
 end;
 
-function Load_sk_SSL_CIPHER_delete_ptr(_para: Pstack_st_SSL_CIPHER; _para2: TOpenSSL_C_INT): Pstack_st_SSL_CIPHER; cdecl;
+function Load_sk_SSL_CIPHER_delete_ptr(sk: Pstack_st_SSL_CIPHER; _para2: TOpenSSL_C_INT): PSSL_CIPHER; cdecl;
 begin
   sk_SSL_CIPHER_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_SSL_CIPHER_delete_ptr) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete_ptr');
-  Result := sk_SSL_CIPHER_delete_ptr(_para, _para2);
+  Result := sk_SSL_CIPHER_delete_ptr(sk, _para2);
 end;
 
-function Load_sk_SSL_CIPHER_push(st: Pstack_st_SSL_CIPHER; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_SSL_CIPHER_push(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER): TOpenSSL_C_INT; cdecl;
 begin
   sk_SSL_CIPHER_push := LoadLibCryptoFunction('OPENSSL_sk_push');
   if not assigned(sk_SSL_CIPHER_push) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_push');
-  Result := sk_SSL_CIPHER_push(st, data);
+  Result := sk_SSL_CIPHER_push(sk, data);
 end;
 
-function Load_sk_SSL_CIPHER_unshift(st: Pstack_st_SSL_CIPHER; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_SSL_CIPHER_unshift(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER): TOpenSSL_C_INT; cdecl;
 begin
   sk_SSL_CIPHER_unshift := LoadLibCryptoFunction('OPENSSL_sk_unshift');
   if not assigned(sk_SSL_CIPHER_unshift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_unshift');
-  Result := sk_SSL_CIPHER_unshift(st, data);
+  Result := sk_SSL_CIPHER_unshift(sk, data);
 end;
 
-function Load_sk_SSL_CIPHER_pop(_para: Pstack_st_SSL_CIPHER): Pstack_st_SSL_CIPHER; cdecl;
+function Load_sk_SSL_CIPHER_pop(sk: Pstack_st_SSL_CIPHER): PSSL_CIPHER; cdecl;
 begin
   sk_SSL_CIPHER_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_SSL_CIPHER_pop) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop');
-  Result := sk_SSL_CIPHER_pop(_para);
+  Result := sk_SSL_CIPHER_pop(sk);
 end;
 
-function Load_sk_SSL_CIPHER_shift(_para: Pstack_st_SSL_CIPHER): Pstack_st_SSL_CIPHER; cdecl;
+function Load_sk_SSL_CIPHER_shift(sk: Pstack_st_SSL_CIPHER): PSSL_CIPHER; cdecl;
 begin
   sk_SSL_CIPHER_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_SSL_CIPHER_shift) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_shift');
-  Result := sk_SSL_CIPHER_shift(_para);
+  Result := sk_SSL_CIPHER_shift(sk);
 end;
 
-procedure Load_sk_SSL_CIPHER_pop_free(st: Pstack_st_SSL_CIPHER; func: Tsk_SSL_CIPHER_freefunc); cdecl;
+procedure Load_sk_SSL_CIPHER_pop_free(sk: Pstack_st_SSL_CIPHER; func: Tsk_SSL_CIPHER_freefunc); cdecl;
 begin
   sk_SSL_CIPHER_pop_free := LoadLibCryptoFunction('OPENSSL_sk_pop_free');
   if not assigned(sk_SSL_CIPHER_pop_free) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop_free');
-  sk_SSL_CIPHER_pop_free(st, func);
+  sk_SSL_CIPHER_pop_free(sk, func);
 end;
 
-function Load_sk_SSL_CIPHER_insert(st: Pstack_st_SSL_CIPHER; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_SSL_CIPHER_insert(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_SSL_CIPHER_insert := LoadLibCryptoFunction('OPENSSL_sk_insert');
   if not assigned(sk_SSL_CIPHER_insert) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_insert');
-  Result := sk_SSL_CIPHER_insert(st, data, where);
+  Result := sk_SSL_CIPHER_insert(sk, data, where);
 end;
 
-function Load_sk_SSL_CIPHER_set(st: Pstack_st_SSL_CIPHER; i: TOpenSSL_C_INT; data: pointer): Pstack_st_SSL_CIPHER; cdecl;
+function Load_sk_SSL_CIPHER_set(sk: Pstack_st_SSL_CIPHER; i: TOpenSSL_C_INT; data: PSSL_CIPHER): Pstack_st_SSL_CIPHER; cdecl;
 begin
   sk_SSL_CIPHER_set := LoadLibCryptoFunction('OPENSSL_sk_set');
   if not assigned(sk_SSL_CIPHER_set) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set');
-  Result := sk_SSL_CIPHER_set(st, i, data);
+  Result := sk_SSL_CIPHER_set(sk, i, data);
 end;
 
-function Load_sk_SSL_CIPHER_find(st: Pstack_st_SSL_CIPHER; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_SSL_CIPHER_find(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER): TOpenSSL_C_INT; cdecl;
 begin
   sk_SSL_CIPHER_find := LoadLibCryptoFunction('OPENSSL_sk_find');
   if not assigned(sk_SSL_CIPHER_find) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find');
-  Result := sk_SSL_CIPHER_find(st, data);
+  Result := sk_SSL_CIPHER_find(sk, data);
 end;
 
-function Load_sk_SSL_CIPHER_find_ex(st: Pstack_st_SSL_CIPHER; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_SSL_CIPHER_find_ex(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER): TOpenSSL_C_INT; cdecl;
 begin
   sk_SSL_CIPHER_find_ex := LoadLibCryptoFunction('OPENSSL_sk_find_ex');
   if not assigned(sk_SSL_CIPHER_find_ex) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_ex');
-  Result := sk_SSL_CIPHER_find_ex(st, data);
+  Result := sk_SSL_CIPHER_find_ex(sk, data);
 end;
 
-function Load_sk_SSL_CIPHER_find_all(st: Pstack_st_SSL_CIPHER; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_SSL_CIPHER_find_all(sk: Pstack_st_SSL_CIPHER; data: PSSL_CIPHER; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_SSL_CIPHER_find_all := LoadLibCryptoFunction('OPENSSL_sk_find_all');
   if not assigned(sk_SSL_CIPHER_find_all) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_all');
-  Result := sk_SSL_CIPHER_find_all(st, data, pnum);
+  Result := sk_SSL_CIPHER_find_all(sk, data, pnum);
 end;
 
-function Load_sk_SSL_CIPHER_sort(_para: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_SSL_CIPHER_sort(sk: Pstack_st_SSL_CIPHER); cdecl;
 begin
   sk_SSL_CIPHER_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_SSL_CIPHER_sort) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
-  Result := sk_SSL_CIPHER_sort(_para);
+  sk_SSL_CIPHER_sort(sk);
 end;
 
-function Load_sk_SSL_CIPHER_is_sorted(_para: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl;
+function Load_sk_SSL_CIPHER_is_sorted(sk: Pstack_st_SSL_CIPHER): TOpenSSL_C_INT; cdecl;
 begin
   sk_SSL_CIPHER_is_sorted := LoadLibCryptoFunction('OPENSSL_sk_is_sorted');
   if not assigned(sk_SSL_CIPHER_is_sorted) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_is_sorted');
-  Result := sk_SSL_CIPHER_is_sorted(_para);
+  Result := sk_SSL_CIPHER_is_sorted(sk);
 end;
 
-function Load_sk_SSL_CIPHER_dup(st: Pstack_st_SSL_CIPHER): Pstack_st_SSL_CIPHER; cdecl;
+function Load_sk_SSL_CIPHER_dup(sk: Pstack_st_SSL_CIPHER): Pstack_st_SSL_CIPHER; cdecl;
 begin
   sk_SSL_CIPHER_dup := LoadLibCryptoFunction('OPENSSL_sk_dup');
   if not assigned(sk_SSL_CIPHER_dup) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_dup');
-  Result := sk_SSL_CIPHER_dup(st);
+  Result := sk_SSL_CIPHER_dup(sk);
 end;
 
-function Load_sk_SSL_CIPHER_deep_copy(st: Pstack_st_SSL_CIPHER; c: Tsk_SSL_CIPHER_compfunc; f: Tsk_SSL_CIPHER_freefunc): Pstack_st_SSL_CIPHER; cdecl;
+function Load_sk_SSL_CIPHER_deep_copy(sk: Pstack_st_SSL_CIPHER; c: Tsk_SSL_CIPHER_copyfunc; f: Tsk_SSL_CIPHER_freefunc): Pstack_st_SSL_CIPHER; cdecl;
 begin
   sk_SSL_CIPHER_deep_copy := LoadLibCryptoFunction('OPENSSL_sk_deep_copy');
   if not assigned(sk_SSL_CIPHER_deep_copy) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_deep_copy');
-  Result := sk_SSL_CIPHER_deep_copy(st, c, f);
+  Result := sk_SSL_CIPHER_deep_copy(sk, c, f);
 end;
 
-function Load_sk_SSL_CIPHER_set_cmp_func(st: Pstack_st_SSL_CIPHER; cmp: Tsk_SSL_CIPHER_compfunc): Tsk_SSL_CIPHER_compfunc; cdecl;
+function Load_sk_SSL_CIPHER_set_cmp_func(sk: Pstack_st_SSL_CIPHER; cmp: Tsk_SSL_CIPHER_compfunc): Tsk_SSL_CIPHER_compfunc; cdecl;
 begin
   sk_SSL_CIPHER_set_cmp_func := LoadLibCryptoFunction('OPENSSL_sk_set_cmp_func');
   if not assigned(sk_SSL_CIPHER_set_cmp_func) then
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set_cmp_func');
-  Result := sk_SSL_CIPHER_set_cmp_func(st, cmp);
+  Result := sk_SSL_CIPHER_set_cmp_func(sk, cmp);
 end;
 
 {$ifndef  OPENSSL_NO_DEPRECATED_1_1_0}

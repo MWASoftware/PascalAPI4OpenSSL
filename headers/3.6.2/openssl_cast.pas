@@ -18,7 +18,7 @@
 unit openssl_cast;
 
 {
-  Generated from OpenSSL 3.6.2 Header File cast.h - Sat 12 Sep 15:03:48 BST 2026
+  Generated from OpenSSL 3.6.2 Header File cast.h - Tue 15 Sep 14:39:05 BST 2026
 }
 
 {$IFNDEF FPC}

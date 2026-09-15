@@ -18,7 +18,7 @@
 unit openssl_rc4;
 
 {
-  Generated from OpenSSL 3.5.6 Header File rc4.h - Sat 12 Sep 15:02:20 BST 2026
+  Generated from OpenSSL 3.5.6 Header File rc4.h - Tue 15 Sep 14:37:27 BST 2026
 }
 
 {$IFNDEF FPC}

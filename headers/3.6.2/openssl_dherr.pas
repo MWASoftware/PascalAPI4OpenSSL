@@ -18,7 +18,7 @@
 unit openssl_dherr;
 
 {
-  Generated from OpenSSL 3.6.2 Header File dherr.h - Sat 12 Sep 15:04:16 BST 2026
+  Generated from OpenSSL 3.6.2 Header File dherr.h - Tue 15 Sep 14:39:34 BST 2026
 }
 
 {$IFNDEF FPC}

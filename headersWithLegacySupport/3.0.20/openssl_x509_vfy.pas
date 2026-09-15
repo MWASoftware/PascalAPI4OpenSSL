@@ -18,7 +18,7 @@
 unit openssl_x509_vfy;
 
 {
-  Generated from OpenSSL 3.0.20 Header File x509_vfy.h - Sat 12 Sep 15:00:11 BST 2026
+  Generated from OpenSSL 3.0.20 Header File x509_vfy.h - Tue 15 Sep 14:35:38 BST 2026
   With Legacy Support Option
 }
 
@@ -120,31 +120,31 @@ type
   function ossl_check_X509_LOOKUP_copyfunc_type(cpy: Tsk_X509_LOOKUP_copyfunc): TOPENSSL_sk_copyfunc{Has C Attribute: unused}; inline;
   function ossl_check_X509_LOOKUP_freefunc_type(fr: Tsk_X509_LOOKUP_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
   {$ifdef OPENSSL_STATIC_LINK_MODEL}
-  function sk_X509_LOOKUP_num(_para: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_X509_LOOKUP_value(_para: Pstack_st_X509_LOOKUP; _para2: TOpenSSL_C_INT): Pstack_st_X509_LOOKUP; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_X509_LOOKUP_num(sk: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
+  function sk_X509_LOOKUP_value(sk: Pstack_st_X509_LOOKUP; idx: TOpenSSL_C_INT): PX509_LOOKUP; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_X509_LOOKUP_new(cmp: Tsk_X509_LOOKUP_compfunc): Pstack_st_X509_LOOKUP; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_X509_LOOKUP_new_null: Pstack_st_X509_LOOKUP; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_X509_LOOKUP_new_reserve(cmp: Tsk_X509_LOOKUP_compfunc; n: TOpenSSL_C_INT): Pstack_st_X509_LOOKUP; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
-  function sk_X509_LOOKUP_reserve(_para: Pstack_st_X509_LOOKUP; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_X509_LOOKUP_free(_para: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_X509_LOOKUP_zero(_para: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_X509_LOOKUP_delete(st: Pstack_st_X509_LOOKUP; loc: TOpenSSL_C_INT): Pstack_st_X509_LOOKUP; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_X509_LOOKUP_delete_ptr(st: Pstack_st_X509_LOOKUP; ptr: Pstack_st_X509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
-  function sk_X509_LOOKUP_push(st: Pstack_st_X509_LOOKUP; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
-  function sk_X509_LOOKUP_unshift(st: Pstack_st_X509_LOOKUP; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_X509_LOOKUP_pop(_para: Pstack_st_X509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_X509_LOOKUP_shift(_para: Pstack_st_X509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
-  procedure sk_X509_LOOKUP_pop_free(st: Pstack_st_X509_LOOKUP; func: Tsk_X509_LOOKUP_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
-  function sk_X509_LOOKUP_insert(st: Pstack_st_X509_LOOKUP; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
-  function sk_X509_LOOKUP_set(st: Pstack_st_X509_LOOKUP; i: TOpenSSL_C_INT; data: pointer): Pstack_st_X509_LOOKUP; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
-  function sk_X509_LOOKUP_find(st: Pstack_st_X509_LOOKUP; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
-  function sk_X509_LOOKUP_find_ex(st: Pstack_st_X509_LOOKUP; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
-  function sk_X509_LOOKUP_find_all(st: Pstack_st_X509_LOOKUP; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_X509_LOOKUP_sort(_para: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
-  function sk_X509_LOOKUP_is_sorted(_para: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
-  function sk_X509_LOOKUP_dup(st: Pstack_st_X509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
-  function sk_X509_LOOKUP_deep_copy(st: Pstack_st_X509_LOOKUP; c: Tsk_X509_LOOKUP_compfunc; f: Tsk_X509_LOOKUP_freefunc): Pstack_st_X509_LOOKUP; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
-  function sk_X509_LOOKUP_set_cmp_func(st: Pstack_st_X509_LOOKUP; cmp: Tsk_X509_LOOKUP_compfunc): Tsk_X509_LOOKUP_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
+  function sk_X509_LOOKUP_reserve(sk: Pstack_st_X509_LOOKUP; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
+  procedure sk_X509_LOOKUP_free(sk: Pstack_st_X509_LOOKUP); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_X509_LOOKUP_zero(sk: Pstack_st_X509_LOOKUP); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_X509_LOOKUP_delete(sk: Pstack_st_X509_LOOKUP; i: TOpenSSL_C_INT): PX509_LOOKUP; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_X509_LOOKUP_delete_ptr(sk: Pstack_st_X509_LOOKUP; ptr: PX509_LOOKUP): PX509_LOOKUP; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  function sk_X509_LOOKUP_push(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
+  function sk_X509_LOOKUP_unshift(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
+  function sk_X509_LOOKUP_pop(sk: Pstack_st_X509_LOOKUP): PX509_LOOKUP; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_X509_LOOKUP_shift(sk: Pstack_st_X509_LOOKUP): PX509_LOOKUP; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  procedure sk_X509_LOOKUP_pop_free(sk: Pstack_st_X509_LOOKUP; func: Tsk_X509_LOOKUP_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
+  function sk_X509_LOOKUP_insert(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
+  function sk_X509_LOOKUP_set(sk: Pstack_st_X509_LOOKUP; i: TOpenSSL_C_INT; data: PX509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
+  function sk_X509_LOOKUP_find(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
+  function sk_X509_LOOKUP_find_ex(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
+  function sk_X509_LOOKUP_find_all(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
+  procedure sk_X509_LOOKUP_sort(sk: Pstack_st_X509_LOOKUP); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  function sk_X509_LOOKUP_is_sorted(sk: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
+  function sk_X509_LOOKUP_dup(sk: Pstack_st_X509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
+  function sk_X509_LOOKUP_deep_copy(sk: Pstack_st_X509_LOOKUP; c: Tsk_X509_LOOKUP_copyfunc; f: Tsk_X509_LOOKUP_freefunc): Pstack_st_X509_LOOKUP; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
+  function sk_X509_LOOKUP_set_cmp_func(sk: Pstack_st_X509_LOOKUP; cmp: Tsk_X509_LOOKUP_compfunc): Tsk_X509_LOOKUP_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
   {$else}
   { The EXTERNALSYM directive is ignored by FPC, however, it is used by Delphi as follows:
 
@@ -176,58 +176,58 @@ type
   {$EXTERNALSYM sk_X509_LOOKUP_deep_copy}
   {$EXTERNALSYM sk_X509_LOOKUP_set_cmp_func}
   {Do not call Function LoadDeclarations. Internal use only}
-  function Load_sk_X509_LOOKUP_num(_para: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_LOOKUP_value(_para: Pstack_st_X509_LOOKUP; _para2: TOpenSSL_C_INT): Pstack_st_X509_LOOKUP; cdecl;
+  function Load_sk_X509_LOOKUP_num(sk: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_LOOKUP_value(sk: Pstack_st_X509_LOOKUP; idx: TOpenSSL_C_INT): PX509_LOOKUP; cdecl;
   function Load_sk_X509_LOOKUP_new(cmp: Tsk_X509_LOOKUP_compfunc): Pstack_st_X509_LOOKUP; cdecl;
   function Load_sk_X509_LOOKUP_new_null: Pstack_st_X509_LOOKUP; cdecl;
   function Load_sk_X509_LOOKUP_new_reserve(cmp: Tsk_X509_LOOKUP_compfunc; n: TOpenSSL_C_INT): Pstack_st_X509_LOOKUP; cdecl;
-  function Load_sk_X509_LOOKUP_reserve(_para: Pstack_st_X509_LOOKUP; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_LOOKUP_free(_para: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_LOOKUP_zero(_para: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_LOOKUP_delete(st: Pstack_st_X509_LOOKUP; loc: TOpenSSL_C_INT): Pstack_st_X509_LOOKUP; cdecl;
-  function Load_sk_X509_LOOKUP_delete_ptr(st: Pstack_st_X509_LOOKUP; ptr: Pstack_st_X509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl;
-  function Load_sk_X509_LOOKUP_push(st: Pstack_st_X509_LOOKUP; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_LOOKUP_unshift(st: Pstack_st_X509_LOOKUP; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_LOOKUP_pop(_para: Pstack_st_X509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl;
-  function Load_sk_X509_LOOKUP_shift(_para: Pstack_st_X509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl;
-  procedure Load_sk_X509_LOOKUP_pop_free(st: Pstack_st_X509_LOOKUP; func: Tsk_X509_LOOKUP_freefunc); cdecl;
-  function Load_sk_X509_LOOKUP_insert(st: Pstack_st_X509_LOOKUP; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_LOOKUP_set(st: Pstack_st_X509_LOOKUP; i: TOpenSSL_C_INT; data: pointer): Pstack_st_X509_LOOKUP; cdecl;
-  function Load_sk_X509_LOOKUP_find(st: Pstack_st_X509_LOOKUP; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_LOOKUP_find_ex(st: Pstack_st_X509_LOOKUP; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_LOOKUP_find_all(st: Pstack_st_X509_LOOKUP; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_LOOKUP_sort(_para: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_LOOKUP_is_sorted(_para: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_LOOKUP_dup(st: Pstack_st_X509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl;
-  function Load_sk_X509_LOOKUP_deep_copy(st: Pstack_st_X509_LOOKUP; c: Tsk_X509_LOOKUP_compfunc; f: Tsk_X509_LOOKUP_freefunc): Pstack_st_X509_LOOKUP; cdecl;
-  function Load_sk_X509_LOOKUP_set_cmp_func(st: Pstack_st_X509_LOOKUP; cmp: Tsk_X509_LOOKUP_compfunc): Tsk_X509_LOOKUP_compfunc; cdecl;
+  function Load_sk_X509_LOOKUP_reserve(sk: Pstack_st_X509_LOOKUP; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_X509_LOOKUP_free(sk: Pstack_st_X509_LOOKUP); cdecl;
+  procedure Load_sk_X509_LOOKUP_zero(sk: Pstack_st_X509_LOOKUP); cdecl;
+  function Load_sk_X509_LOOKUP_delete(sk: Pstack_st_X509_LOOKUP; i: TOpenSSL_C_INT): PX509_LOOKUP; cdecl;
+  function Load_sk_X509_LOOKUP_delete_ptr(sk: Pstack_st_X509_LOOKUP; ptr: PX509_LOOKUP): PX509_LOOKUP; cdecl;
+  function Load_sk_X509_LOOKUP_push(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_LOOKUP_unshift(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_LOOKUP_pop(sk: Pstack_st_X509_LOOKUP): PX509_LOOKUP; cdecl;
+  function Load_sk_X509_LOOKUP_shift(sk: Pstack_st_X509_LOOKUP): PX509_LOOKUP; cdecl;
+  procedure Load_sk_X509_LOOKUP_pop_free(sk: Pstack_st_X509_LOOKUP; func: Tsk_X509_LOOKUP_freefunc); cdecl;
+  function Load_sk_X509_LOOKUP_insert(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_LOOKUP_set(sk: Pstack_st_X509_LOOKUP; i: TOpenSSL_C_INT; data: PX509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl;
+  function Load_sk_X509_LOOKUP_find(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_LOOKUP_find_ex(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_LOOKUP_find_all(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_X509_LOOKUP_sort(sk: Pstack_st_X509_LOOKUP); cdecl;
+  function Load_sk_X509_LOOKUP_is_sorted(sk: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_LOOKUP_dup(sk: Pstack_st_X509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl;
+  function Load_sk_X509_LOOKUP_deep_copy(sk: Pstack_st_X509_LOOKUP; c: Tsk_X509_LOOKUP_copyfunc; f: Tsk_X509_LOOKUP_freefunc): Pstack_st_X509_LOOKUP; cdecl;
+  function Load_sk_X509_LOOKUP_set_cmp_func(sk: Pstack_st_X509_LOOKUP; cmp: Tsk_X509_LOOKUP_compfunc): Tsk_X509_LOOKUP_compfunc; cdecl;
 
 var
-  sk_X509_LOOKUP_num: function(_para: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl = Load_sk_X509_LOOKUP_num;
-  sk_X509_LOOKUP_value: function(_para: Pstack_st_X509_LOOKUP; _para2: TOpenSSL_C_INT): Pstack_st_X509_LOOKUP; cdecl = Load_sk_X509_LOOKUP_value;
+  sk_X509_LOOKUP_num: function(sk: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl = Load_sk_X509_LOOKUP_num;
+  sk_X509_LOOKUP_value: function(sk: Pstack_st_X509_LOOKUP; idx: TOpenSSL_C_INT): PX509_LOOKUP; cdecl = Load_sk_X509_LOOKUP_value;
   sk_X509_LOOKUP_new: function(cmp: Tsk_X509_LOOKUP_compfunc): Pstack_st_X509_LOOKUP; cdecl = Load_sk_X509_LOOKUP_new;
   sk_X509_LOOKUP_new_null: function: Pstack_st_X509_LOOKUP; cdecl = Load_sk_X509_LOOKUP_new_null;
   sk_X509_LOOKUP_new_reserve: function(cmp: Tsk_X509_LOOKUP_compfunc; n: TOpenSSL_C_INT): Pstack_st_X509_LOOKUP; cdecl = Load_sk_X509_LOOKUP_new_reserve;
-  sk_X509_LOOKUP_reserve: function(_para: Pstack_st_X509_LOOKUP; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_LOOKUP_reserve;
-  sk_X509_LOOKUP_free: function(_para: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl = Load_sk_X509_LOOKUP_free;
-  sk_X509_LOOKUP_zero: function(_para: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl = Load_sk_X509_LOOKUP_zero;
-  sk_X509_LOOKUP_delete: function(st: Pstack_st_X509_LOOKUP; loc: TOpenSSL_C_INT): Pstack_st_X509_LOOKUP; cdecl = Load_sk_X509_LOOKUP_delete;
-  sk_X509_LOOKUP_delete_ptr: function(st: Pstack_st_X509_LOOKUP; ptr: Pstack_st_X509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl = Load_sk_X509_LOOKUP_delete_ptr;
-  sk_X509_LOOKUP_push: function(st: Pstack_st_X509_LOOKUP; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_X509_LOOKUP_push;
-  sk_X509_LOOKUP_unshift: function(st: Pstack_st_X509_LOOKUP; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_X509_LOOKUP_unshift;
-  sk_X509_LOOKUP_pop: function(_para: Pstack_st_X509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl = Load_sk_X509_LOOKUP_pop;
-  sk_X509_LOOKUP_shift: function(_para: Pstack_st_X509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl = Load_sk_X509_LOOKUP_shift;
-  sk_X509_LOOKUP_pop_free: procedure(st: Pstack_st_X509_LOOKUP; func: Tsk_X509_LOOKUP_freefunc); cdecl = Load_sk_X509_LOOKUP_pop_free;
-  sk_X509_LOOKUP_insert: function(st: Pstack_st_X509_LOOKUP; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_LOOKUP_insert;
-  sk_X509_LOOKUP_set: function(st: Pstack_st_X509_LOOKUP; i: TOpenSSL_C_INT; data: pointer): Pstack_st_X509_LOOKUP; cdecl = Load_sk_X509_LOOKUP_set;
-  sk_X509_LOOKUP_find: function(st: Pstack_st_X509_LOOKUP; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_X509_LOOKUP_find;
-  sk_X509_LOOKUP_find_ex: function(st: Pstack_st_X509_LOOKUP; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_X509_LOOKUP_find_ex;
-  sk_X509_LOOKUP_find_all: function(st: Pstack_st_X509_LOOKUP; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_LOOKUP_find_all;
-  sk_X509_LOOKUP_sort: function(_para: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl = Load_sk_X509_LOOKUP_sort;
-  sk_X509_LOOKUP_is_sorted: function(_para: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl = Load_sk_X509_LOOKUP_is_sorted;
-  sk_X509_LOOKUP_dup: function(st: Pstack_st_X509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl = Load_sk_X509_LOOKUP_dup;
-  sk_X509_LOOKUP_deep_copy: function(st: Pstack_st_X509_LOOKUP; c: Tsk_X509_LOOKUP_compfunc; f: Tsk_X509_LOOKUP_freefunc): Pstack_st_X509_LOOKUP; cdecl = Load_sk_X509_LOOKUP_deep_copy;
-  sk_X509_LOOKUP_set_cmp_func: function(st: Pstack_st_X509_LOOKUP; cmp: Tsk_X509_LOOKUP_compfunc): Tsk_X509_LOOKUP_compfunc; cdecl = Load_sk_X509_LOOKUP_set_cmp_func;
+  sk_X509_LOOKUP_reserve: function(sk: Pstack_st_X509_LOOKUP; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_LOOKUP_reserve;
+  sk_X509_LOOKUP_free: procedure(sk: Pstack_st_X509_LOOKUP); cdecl = Load_sk_X509_LOOKUP_free;
+  sk_X509_LOOKUP_zero: procedure(sk: Pstack_st_X509_LOOKUP); cdecl = Load_sk_X509_LOOKUP_zero;
+  sk_X509_LOOKUP_delete: function(sk: Pstack_st_X509_LOOKUP; i: TOpenSSL_C_INT): PX509_LOOKUP; cdecl = Load_sk_X509_LOOKUP_delete;
+  sk_X509_LOOKUP_delete_ptr: function(sk: Pstack_st_X509_LOOKUP; ptr: PX509_LOOKUP): PX509_LOOKUP; cdecl = Load_sk_X509_LOOKUP_delete_ptr;
+  sk_X509_LOOKUP_push: function(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP): TOpenSSL_C_INT; cdecl = Load_sk_X509_LOOKUP_push;
+  sk_X509_LOOKUP_unshift: function(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP): TOpenSSL_C_INT; cdecl = Load_sk_X509_LOOKUP_unshift;
+  sk_X509_LOOKUP_pop: function(sk: Pstack_st_X509_LOOKUP): PX509_LOOKUP; cdecl = Load_sk_X509_LOOKUP_pop;
+  sk_X509_LOOKUP_shift: function(sk: Pstack_st_X509_LOOKUP): PX509_LOOKUP; cdecl = Load_sk_X509_LOOKUP_shift;
+  sk_X509_LOOKUP_pop_free: procedure(sk: Pstack_st_X509_LOOKUP; func: Tsk_X509_LOOKUP_freefunc); cdecl = Load_sk_X509_LOOKUP_pop_free;
+  sk_X509_LOOKUP_insert: function(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_LOOKUP_insert;
+  sk_X509_LOOKUP_set: function(sk: Pstack_st_X509_LOOKUP; i: TOpenSSL_C_INT; data: PX509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl = Load_sk_X509_LOOKUP_set;
+  sk_X509_LOOKUP_find: function(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP): TOpenSSL_C_INT; cdecl = Load_sk_X509_LOOKUP_find;
+  sk_X509_LOOKUP_find_ex: function(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP): TOpenSSL_C_INT; cdecl = Load_sk_X509_LOOKUP_find_ex;
+  sk_X509_LOOKUP_find_all: function(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_LOOKUP_find_all;
+  sk_X509_LOOKUP_sort: procedure(sk: Pstack_st_X509_LOOKUP); cdecl = Load_sk_X509_LOOKUP_sort;
+  sk_X509_LOOKUP_is_sorted: function(sk: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl = Load_sk_X509_LOOKUP_is_sorted;
+  sk_X509_LOOKUP_dup: function(sk: Pstack_st_X509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl = Load_sk_X509_LOOKUP_dup;
+  sk_X509_LOOKUP_deep_copy: function(sk: Pstack_st_X509_LOOKUP; c: Tsk_X509_LOOKUP_copyfunc; f: Tsk_X509_LOOKUP_freefunc): Pstack_st_X509_LOOKUP; cdecl = Load_sk_X509_LOOKUP_deep_copy;
+  sk_X509_LOOKUP_set_cmp_func: function(sk: Pstack_st_X509_LOOKUP; cmp: Tsk_X509_LOOKUP_compfunc): Tsk_X509_LOOKUP_compfunc; cdecl = Load_sk_X509_LOOKUP_set_cmp_func;
   {$endif} {OPENSSL_STATIC_LINK_MODEL}
 
 type
@@ -256,31 +256,31 @@ type
   function ossl_check_X509_OBJECT_copyfunc_type(cpy: Tsk_X509_OBJECT_copyfunc): TOPENSSL_sk_copyfunc{Has C Attribute: unused}; inline;
   function ossl_check_X509_OBJECT_freefunc_type(fr: Tsk_X509_OBJECT_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
   {$ifdef OPENSSL_STATIC_LINK_MODEL}
-  function sk_X509_OBJECT_num(_para: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_X509_OBJECT_value(_para: Pstack_st_X509_OBJECT; _para2: TOpenSSL_C_INT): Pstack_st_X509_OBJECT; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_X509_OBJECT_num(sk: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
+  function sk_X509_OBJECT_value(sk: Pstack_st_X509_OBJECT; idx: TOpenSSL_C_INT): PX509_OBJECT; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_X509_OBJECT_new(cmp: Tsk_X509_OBJECT_compfunc): Pstack_st_X509_OBJECT; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_X509_OBJECT_new_null: Pstack_st_X509_OBJECT; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_X509_OBJECT_new_reserve(cmp: Tsk_X509_OBJECT_compfunc; n: TOpenSSL_C_INT): Pstack_st_X509_OBJECT; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
-  function sk_X509_OBJECT_reserve(_para: Pstack_st_X509_OBJECT; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_X509_OBJECT_free(_para: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_X509_OBJECT_zero(_para: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_X509_OBJECT_delete(st: Pstack_st_X509_OBJECT; loc: TOpenSSL_C_INT): Pstack_st_X509_OBJECT; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_X509_OBJECT_delete_ptr(st: Pstack_st_X509_OBJECT; ptr: Pstack_st_X509_OBJECT): Pstack_st_X509_OBJECT; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
-  function sk_X509_OBJECT_push(st: Pstack_st_X509_OBJECT; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
-  function sk_X509_OBJECT_unshift(st: Pstack_st_X509_OBJECT; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_X509_OBJECT_pop(_para: Pstack_st_X509_OBJECT): Pstack_st_X509_OBJECT; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_X509_OBJECT_shift(_para: Pstack_st_X509_OBJECT): Pstack_st_X509_OBJECT; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
-  procedure sk_X509_OBJECT_pop_free(st: Pstack_st_X509_OBJECT; func: Tsk_X509_OBJECT_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
-  function sk_X509_OBJECT_insert(st: Pstack_st_X509_OBJECT; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
-  function sk_X509_OBJECT_set(st: Pstack_st_X509_OBJECT; i: TOpenSSL_C_INT; data: pointer): Pstack_st_X509_OBJECT; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
-  function sk_X509_OBJECT_find(st: Pstack_st_X509_OBJECT; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
-  function sk_X509_OBJECT_find_ex(st: Pstack_st_X509_OBJECT; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
-  function sk_X509_OBJECT_find_all(st: Pstack_st_X509_OBJECT; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_X509_OBJECT_sort(_para: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
-  function sk_X509_OBJECT_is_sorted(_para: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
-  function sk_X509_OBJECT_dup(st: Pstack_st_X509_OBJECT): Pstack_st_X509_OBJECT; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
-  function sk_X509_OBJECT_deep_copy(st: Pstack_st_X509_OBJECT; c: Tsk_X509_OBJECT_compfunc; f: Tsk_X509_OBJECT_freefunc): Pstack_st_X509_OBJECT; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
-  function sk_X509_OBJECT_set_cmp_func(st: Pstack_st_X509_OBJECT; cmp: Tsk_X509_OBJECT_compfunc): Tsk_X509_OBJECT_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
+  function sk_X509_OBJECT_reserve(sk: Pstack_st_X509_OBJECT; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
+  procedure sk_X509_OBJECT_free(sk: Pstack_st_X509_OBJECT); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_X509_OBJECT_zero(sk: Pstack_st_X509_OBJECT); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_X509_OBJECT_delete(sk: Pstack_st_X509_OBJECT; i: TOpenSSL_C_INT): PX509_OBJECT; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_X509_OBJECT_delete_ptr(sk: Pstack_st_X509_OBJECT; ptr: PX509_OBJECT): PX509_OBJECT; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  function sk_X509_OBJECT_push(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
+  function sk_X509_OBJECT_unshift(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
+  function sk_X509_OBJECT_pop(sk: Pstack_st_X509_OBJECT): PX509_OBJECT; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_X509_OBJECT_shift(sk: Pstack_st_X509_OBJECT): PX509_OBJECT; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  procedure sk_X509_OBJECT_pop_free(sk: Pstack_st_X509_OBJECT; func: Tsk_X509_OBJECT_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
+  function sk_X509_OBJECT_insert(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
+  function sk_X509_OBJECT_set(sk: Pstack_st_X509_OBJECT; i: TOpenSSL_C_INT; data: PX509_OBJECT): Pstack_st_X509_OBJECT; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
+  function sk_X509_OBJECT_find(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
+  function sk_X509_OBJECT_find_ex(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
+  function sk_X509_OBJECT_find_all(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
+  procedure sk_X509_OBJECT_sort(sk: Pstack_st_X509_OBJECT); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  function sk_X509_OBJECT_is_sorted(sk: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
+  function sk_X509_OBJECT_dup(sk: Pstack_st_X509_OBJECT): Pstack_st_X509_OBJECT; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
+  function sk_X509_OBJECT_deep_copy(sk: Pstack_st_X509_OBJECT; c: Tsk_X509_OBJECT_copyfunc; f: Tsk_X509_OBJECT_freefunc): Pstack_st_X509_OBJECT; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
+  function sk_X509_OBJECT_set_cmp_func(sk: Pstack_st_X509_OBJECT; cmp: Tsk_X509_OBJECT_compfunc): Tsk_X509_OBJECT_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
   {$else}
   {$EXTERNALSYM sk_X509_OBJECT_num}
   {$EXTERNALSYM sk_X509_OBJECT_value}
@@ -308,58 +308,58 @@ type
   {$EXTERNALSYM sk_X509_OBJECT_deep_copy}
   {$EXTERNALSYM sk_X509_OBJECT_set_cmp_func}
   {Do not call Function LoadDeclarations. Internal use only}
-  function Load_sk_X509_OBJECT_num(_para: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_OBJECT_value(_para: Pstack_st_X509_OBJECT; _para2: TOpenSSL_C_INT): Pstack_st_X509_OBJECT; cdecl;
+  function Load_sk_X509_OBJECT_num(sk: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_OBJECT_value(sk: Pstack_st_X509_OBJECT; idx: TOpenSSL_C_INT): PX509_OBJECT; cdecl;
   function Load_sk_X509_OBJECT_new(cmp: Tsk_X509_OBJECT_compfunc): Pstack_st_X509_OBJECT; cdecl;
   function Load_sk_X509_OBJECT_new_null: Pstack_st_X509_OBJECT; cdecl;
   function Load_sk_X509_OBJECT_new_reserve(cmp: Tsk_X509_OBJECT_compfunc; n: TOpenSSL_C_INT): Pstack_st_X509_OBJECT; cdecl;
-  function Load_sk_X509_OBJECT_reserve(_para: Pstack_st_X509_OBJECT; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_OBJECT_free(_para: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_OBJECT_zero(_para: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_OBJECT_delete(st: Pstack_st_X509_OBJECT; loc: TOpenSSL_C_INT): Pstack_st_X509_OBJECT; cdecl;
-  function Load_sk_X509_OBJECT_delete_ptr(st: Pstack_st_X509_OBJECT; ptr: Pstack_st_X509_OBJECT): Pstack_st_X509_OBJECT; cdecl;
-  function Load_sk_X509_OBJECT_push(st: Pstack_st_X509_OBJECT; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_OBJECT_unshift(st: Pstack_st_X509_OBJECT; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_OBJECT_pop(_para: Pstack_st_X509_OBJECT): Pstack_st_X509_OBJECT; cdecl;
-  function Load_sk_X509_OBJECT_shift(_para: Pstack_st_X509_OBJECT): Pstack_st_X509_OBJECT; cdecl;
-  procedure Load_sk_X509_OBJECT_pop_free(st: Pstack_st_X509_OBJECT; func: Tsk_X509_OBJECT_freefunc); cdecl;
-  function Load_sk_X509_OBJECT_insert(st: Pstack_st_X509_OBJECT; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_OBJECT_set(st: Pstack_st_X509_OBJECT; i: TOpenSSL_C_INT; data: pointer): Pstack_st_X509_OBJECT; cdecl;
-  function Load_sk_X509_OBJECT_find(st: Pstack_st_X509_OBJECT; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_OBJECT_find_ex(st: Pstack_st_X509_OBJECT; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_OBJECT_find_all(st: Pstack_st_X509_OBJECT; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_OBJECT_sort(_para: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_OBJECT_is_sorted(_para: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_OBJECT_dup(st: Pstack_st_X509_OBJECT): Pstack_st_X509_OBJECT; cdecl;
-  function Load_sk_X509_OBJECT_deep_copy(st: Pstack_st_X509_OBJECT; c: Tsk_X509_OBJECT_compfunc; f: Tsk_X509_OBJECT_freefunc): Pstack_st_X509_OBJECT; cdecl;
-  function Load_sk_X509_OBJECT_set_cmp_func(st: Pstack_st_X509_OBJECT; cmp: Tsk_X509_OBJECT_compfunc): Tsk_X509_OBJECT_compfunc; cdecl;
+  function Load_sk_X509_OBJECT_reserve(sk: Pstack_st_X509_OBJECT; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_X509_OBJECT_free(sk: Pstack_st_X509_OBJECT); cdecl;
+  procedure Load_sk_X509_OBJECT_zero(sk: Pstack_st_X509_OBJECT); cdecl;
+  function Load_sk_X509_OBJECT_delete(sk: Pstack_st_X509_OBJECT; i: TOpenSSL_C_INT): PX509_OBJECT; cdecl;
+  function Load_sk_X509_OBJECT_delete_ptr(sk: Pstack_st_X509_OBJECT; ptr: PX509_OBJECT): PX509_OBJECT; cdecl;
+  function Load_sk_X509_OBJECT_push(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_OBJECT_unshift(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_OBJECT_pop(sk: Pstack_st_X509_OBJECT): PX509_OBJECT; cdecl;
+  function Load_sk_X509_OBJECT_shift(sk: Pstack_st_X509_OBJECT): PX509_OBJECT; cdecl;
+  procedure Load_sk_X509_OBJECT_pop_free(sk: Pstack_st_X509_OBJECT; func: Tsk_X509_OBJECT_freefunc); cdecl;
+  function Load_sk_X509_OBJECT_insert(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_OBJECT_set(sk: Pstack_st_X509_OBJECT; i: TOpenSSL_C_INT; data: PX509_OBJECT): Pstack_st_X509_OBJECT; cdecl;
+  function Load_sk_X509_OBJECT_find(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_OBJECT_find_ex(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_OBJECT_find_all(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_X509_OBJECT_sort(sk: Pstack_st_X509_OBJECT); cdecl;
+  function Load_sk_X509_OBJECT_is_sorted(sk: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_OBJECT_dup(sk: Pstack_st_X509_OBJECT): Pstack_st_X509_OBJECT; cdecl;
+  function Load_sk_X509_OBJECT_deep_copy(sk: Pstack_st_X509_OBJECT; c: Tsk_X509_OBJECT_copyfunc; f: Tsk_X509_OBJECT_freefunc): Pstack_st_X509_OBJECT; cdecl;
+  function Load_sk_X509_OBJECT_set_cmp_func(sk: Pstack_st_X509_OBJECT; cmp: Tsk_X509_OBJECT_compfunc): Tsk_X509_OBJECT_compfunc; cdecl;
 
 var
-  sk_X509_OBJECT_num: function(_para: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl = Load_sk_X509_OBJECT_num;
-  sk_X509_OBJECT_value: function(_para: Pstack_st_X509_OBJECT; _para2: TOpenSSL_C_INT): Pstack_st_X509_OBJECT; cdecl = Load_sk_X509_OBJECT_value;
+  sk_X509_OBJECT_num: function(sk: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl = Load_sk_X509_OBJECT_num;
+  sk_X509_OBJECT_value: function(sk: Pstack_st_X509_OBJECT; idx: TOpenSSL_C_INT): PX509_OBJECT; cdecl = Load_sk_X509_OBJECT_value;
   sk_X509_OBJECT_new: function(cmp: Tsk_X509_OBJECT_compfunc): Pstack_st_X509_OBJECT; cdecl = Load_sk_X509_OBJECT_new;
   sk_X509_OBJECT_new_null: function: Pstack_st_X509_OBJECT; cdecl = Load_sk_X509_OBJECT_new_null;
   sk_X509_OBJECT_new_reserve: function(cmp: Tsk_X509_OBJECT_compfunc; n: TOpenSSL_C_INT): Pstack_st_X509_OBJECT; cdecl = Load_sk_X509_OBJECT_new_reserve;
-  sk_X509_OBJECT_reserve: function(_para: Pstack_st_X509_OBJECT; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_OBJECT_reserve;
-  sk_X509_OBJECT_free: function(_para: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl = Load_sk_X509_OBJECT_free;
-  sk_X509_OBJECT_zero: function(_para: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl = Load_sk_X509_OBJECT_zero;
-  sk_X509_OBJECT_delete: function(st: Pstack_st_X509_OBJECT; loc: TOpenSSL_C_INT): Pstack_st_X509_OBJECT; cdecl = Load_sk_X509_OBJECT_delete;
-  sk_X509_OBJECT_delete_ptr: function(st: Pstack_st_X509_OBJECT; ptr: Pstack_st_X509_OBJECT): Pstack_st_X509_OBJECT; cdecl = Load_sk_X509_OBJECT_delete_ptr;
-  sk_X509_OBJECT_push: function(st: Pstack_st_X509_OBJECT; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_X509_OBJECT_push;
-  sk_X509_OBJECT_unshift: function(st: Pstack_st_X509_OBJECT; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_X509_OBJECT_unshift;
-  sk_X509_OBJECT_pop: function(_para: Pstack_st_X509_OBJECT): Pstack_st_X509_OBJECT; cdecl = Load_sk_X509_OBJECT_pop;
-  sk_X509_OBJECT_shift: function(_para: Pstack_st_X509_OBJECT): Pstack_st_X509_OBJECT; cdecl = Load_sk_X509_OBJECT_shift;
-  sk_X509_OBJECT_pop_free: procedure(st: Pstack_st_X509_OBJECT; func: Tsk_X509_OBJECT_freefunc); cdecl = Load_sk_X509_OBJECT_pop_free;
-  sk_X509_OBJECT_insert: function(st: Pstack_st_X509_OBJECT; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_OBJECT_insert;
-  sk_X509_OBJECT_set: function(st: Pstack_st_X509_OBJECT; i: TOpenSSL_C_INT; data: pointer): Pstack_st_X509_OBJECT; cdecl = Load_sk_X509_OBJECT_set;
-  sk_X509_OBJECT_find: function(st: Pstack_st_X509_OBJECT; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_X509_OBJECT_find;
-  sk_X509_OBJECT_find_ex: function(st: Pstack_st_X509_OBJECT; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_X509_OBJECT_find_ex;
-  sk_X509_OBJECT_find_all: function(st: Pstack_st_X509_OBJECT; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_OBJECT_find_all;
-  sk_X509_OBJECT_sort: function(_para: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl = Load_sk_X509_OBJECT_sort;
-  sk_X509_OBJECT_is_sorted: function(_para: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl = Load_sk_X509_OBJECT_is_sorted;
-  sk_X509_OBJECT_dup: function(st: Pstack_st_X509_OBJECT): Pstack_st_X509_OBJECT; cdecl = Load_sk_X509_OBJECT_dup;
-  sk_X509_OBJECT_deep_copy: function(st: Pstack_st_X509_OBJECT; c: Tsk_X509_OBJECT_compfunc; f: Tsk_X509_OBJECT_freefunc): Pstack_st_X509_OBJECT; cdecl = Load_sk_X509_OBJECT_deep_copy;
-  sk_X509_OBJECT_set_cmp_func: function(st: Pstack_st_X509_OBJECT; cmp: Tsk_X509_OBJECT_compfunc): Tsk_X509_OBJECT_compfunc; cdecl = Load_sk_X509_OBJECT_set_cmp_func;
+  sk_X509_OBJECT_reserve: function(sk: Pstack_st_X509_OBJECT; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_OBJECT_reserve;
+  sk_X509_OBJECT_free: procedure(sk: Pstack_st_X509_OBJECT); cdecl = Load_sk_X509_OBJECT_free;
+  sk_X509_OBJECT_zero: procedure(sk: Pstack_st_X509_OBJECT); cdecl = Load_sk_X509_OBJECT_zero;
+  sk_X509_OBJECT_delete: function(sk: Pstack_st_X509_OBJECT; i: TOpenSSL_C_INT): PX509_OBJECT; cdecl = Load_sk_X509_OBJECT_delete;
+  sk_X509_OBJECT_delete_ptr: function(sk: Pstack_st_X509_OBJECT; ptr: PX509_OBJECT): PX509_OBJECT; cdecl = Load_sk_X509_OBJECT_delete_ptr;
+  sk_X509_OBJECT_push: function(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT): TOpenSSL_C_INT; cdecl = Load_sk_X509_OBJECT_push;
+  sk_X509_OBJECT_unshift: function(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT): TOpenSSL_C_INT; cdecl = Load_sk_X509_OBJECT_unshift;
+  sk_X509_OBJECT_pop: function(sk: Pstack_st_X509_OBJECT): PX509_OBJECT; cdecl = Load_sk_X509_OBJECT_pop;
+  sk_X509_OBJECT_shift: function(sk: Pstack_st_X509_OBJECT): PX509_OBJECT; cdecl = Load_sk_X509_OBJECT_shift;
+  sk_X509_OBJECT_pop_free: procedure(sk: Pstack_st_X509_OBJECT; func: Tsk_X509_OBJECT_freefunc); cdecl = Load_sk_X509_OBJECT_pop_free;
+  sk_X509_OBJECT_insert: function(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_OBJECT_insert;
+  sk_X509_OBJECT_set: function(sk: Pstack_st_X509_OBJECT; i: TOpenSSL_C_INT; data: PX509_OBJECT): Pstack_st_X509_OBJECT; cdecl = Load_sk_X509_OBJECT_set;
+  sk_X509_OBJECT_find: function(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT): TOpenSSL_C_INT; cdecl = Load_sk_X509_OBJECT_find;
+  sk_X509_OBJECT_find_ex: function(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT): TOpenSSL_C_INT; cdecl = Load_sk_X509_OBJECT_find_ex;
+  sk_X509_OBJECT_find_all: function(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_OBJECT_find_all;
+  sk_X509_OBJECT_sort: procedure(sk: Pstack_st_X509_OBJECT); cdecl = Load_sk_X509_OBJECT_sort;
+  sk_X509_OBJECT_is_sorted: function(sk: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl = Load_sk_X509_OBJECT_is_sorted;
+  sk_X509_OBJECT_dup: function(sk: Pstack_st_X509_OBJECT): Pstack_st_X509_OBJECT; cdecl = Load_sk_X509_OBJECT_dup;
+  sk_X509_OBJECT_deep_copy: function(sk: Pstack_st_X509_OBJECT; c: Tsk_X509_OBJECT_copyfunc; f: Tsk_X509_OBJECT_freefunc): Pstack_st_X509_OBJECT; cdecl = Load_sk_X509_OBJECT_deep_copy;
+  sk_X509_OBJECT_set_cmp_func: function(sk: Pstack_st_X509_OBJECT; cmp: Tsk_X509_OBJECT_compfunc): Tsk_X509_OBJECT_compfunc; cdecl = Load_sk_X509_OBJECT_set_cmp_func;
   {$endif} {OPENSSL_STATIC_LINK_MODEL}
 
 type
@@ -388,31 +388,31 @@ type
   function ossl_check_X509_VERIFY_PARAM_copyfunc_type(cpy: Tsk_X509_VERIFY_PARAM_copyfunc): TOPENSSL_sk_copyfunc{Has C Attribute: unused}; inline;
   function ossl_check_X509_VERIFY_PARAM_freefunc_type(fr: Tsk_X509_VERIFY_PARAM_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
   {$ifdef OPENSSL_STATIC_LINK_MODEL}
-  function sk_X509_VERIFY_PARAM_num(_para: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_X509_VERIFY_PARAM_value(_para: Pstack_st_X509_VERIFY_PARAM; _para2: TOpenSSL_C_INT): Pstack_st_X509_VERIFY_PARAM; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_X509_VERIFY_PARAM_num(sk: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
+  function sk_X509_VERIFY_PARAM_value(sk: Pstack_st_X509_VERIFY_PARAM; idx: TOpenSSL_C_INT): PX509_VERIFY_PARAM; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_X509_VERIFY_PARAM_new(cmp: Tsk_X509_VERIFY_PARAM_compfunc): Pstack_st_X509_VERIFY_PARAM; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_X509_VERIFY_PARAM_new_null: Pstack_st_X509_VERIFY_PARAM; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_X509_VERIFY_PARAM_new_reserve(cmp: Tsk_X509_VERIFY_PARAM_compfunc; n: TOpenSSL_C_INT): Pstack_st_X509_VERIFY_PARAM; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
-  function sk_X509_VERIFY_PARAM_reserve(_para: Pstack_st_X509_VERIFY_PARAM; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_X509_VERIFY_PARAM_free(_para: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_X509_VERIFY_PARAM_zero(_para: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_X509_VERIFY_PARAM_delete(st: Pstack_st_X509_VERIFY_PARAM; loc: TOpenSSL_C_INT): Pstack_st_X509_VERIFY_PARAM; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_X509_VERIFY_PARAM_delete_ptr(st: Pstack_st_X509_VERIFY_PARAM; ptr: Pstack_st_X509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
-  function sk_X509_VERIFY_PARAM_push(st: Pstack_st_X509_VERIFY_PARAM; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
-  function sk_X509_VERIFY_PARAM_unshift(st: Pstack_st_X509_VERIFY_PARAM; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_X509_VERIFY_PARAM_pop(_para: Pstack_st_X509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_X509_VERIFY_PARAM_shift(_para: Pstack_st_X509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
-  procedure sk_X509_VERIFY_PARAM_pop_free(st: Pstack_st_X509_VERIFY_PARAM; func: Tsk_X509_VERIFY_PARAM_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
-  function sk_X509_VERIFY_PARAM_insert(st: Pstack_st_X509_VERIFY_PARAM; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
-  function sk_X509_VERIFY_PARAM_set(st: Pstack_st_X509_VERIFY_PARAM; i: TOpenSSL_C_INT; data: pointer): Pstack_st_X509_VERIFY_PARAM; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
-  function sk_X509_VERIFY_PARAM_find(st: Pstack_st_X509_VERIFY_PARAM; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
-  function sk_X509_VERIFY_PARAM_find_ex(st: Pstack_st_X509_VERIFY_PARAM; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
-  function sk_X509_VERIFY_PARAM_find_all(st: Pstack_st_X509_VERIFY_PARAM; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_X509_VERIFY_PARAM_sort(_para: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
-  function sk_X509_VERIFY_PARAM_is_sorted(_para: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
-  function sk_X509_VERIFY_PARAM_dup(st: Pstack_st_X509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
-  function sk_X509_VERIFY_PARAM_deep_copy(st: Pstack_st_X509_VERIFY_PARAM; c: Tsk_X509_VERIFY_PARAM_compfunc; f: Tsk_X509_VERIFY_PARAM_freefunc): Pstack_st_X509_VERIFY_PARAM; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
-  function sk_X509_VERIFY_PARAM_set_cmp_func(st: Pstack_st_X509_VERIFY_PARAM; cmp: Tsk_X509_VERIFY_PARAM_compfunc): Tsk_X509_VERIFY_PARAM_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
+  function sk_X509_VERIFY_PARAM_reserve(sk: Pstack_st_X509_VERIFY_PARAM; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
+  procedure sk_X509_VERIFY_PARAM_free(sk: Pstack_st_X509_VERIFY_PARAM); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_X509_VERIFY_PARAM_zero(sk: Pstack_st_X509_VERIFY_PARAM); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_X509_VERIFY_PARAM_delete(sk: Pstack_st_X509_VERIFY_PARAM; i: TOpenSSL_C_INT): PX509_VERIFY_PARAM; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_X509_VERIFY_PARAM_delete_ptr(sk: Pstack_st_X509_VERIFY_PARAM; ptr: PX509_VERIFY_PARAM): PX509_VERIFY_PARAM; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  function sk_X509_VERIFY_PARAM_push(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
+  function sk_X509_VERIFY_PARAM_unshift(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
+  function sk_X509_VERIFY_PARAM_pop(sk: Pstack_st_X509_VERIFY_PARAM): PX509_VERIFY_PARAM; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_X509_VERIFY_PARAM_shift(sk: Pstack_st_X509_VERIFY_PARAM): PX509_VERIFY_PARAM; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  procedure sk_X509_VERIFY_PARAM_pop_free(sk: Pstack_st_X509_VERIFY_PARAM; func: Tsk_X509_VERIFY_PARAM_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
+  function sk_X509_VERIFY_PARAM_insert(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
+  function sk_X509_VERIFY_PARAM_set(sk: Pstack_st_X509_VERIFY_PARAM; i: TOpenSSL_C_INT; data: PX509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
+  function sk_X509_VERIFY_PARAM_find(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
+  function sk_X509_VERIFY_PARAM_find_ex(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
+  function sk_X509_VERIFY_PARAM_find_all(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
+  procedure sk_X509_VERIFY_PARAM_sort(sk: Pstack_st_X509_VERIFY_PARAM); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  function sk_X509_VERIFY_PARAM_is_sorted(sk: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
+  function sk_X509_VERIFY_PARAM_dup(sk: Pstack_st_X509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
+  function sk_X509_VERIFY_PARAM_deep_copy(sk: Pstack_st_X509_VERIFY_PARAM; c: Tsk_X509_VERIFY_PARAM_copyfunc; f: Tsk_X509_VERIFY_PARAM_freefunc): Pstack_st_X509_VERIFY_PARAM; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
+  function sk_X509_VERIFY_PARAM_set_cmp_func(sk: Pstack_st_X509_VERIFY_PARAM; cmp: Tsk_X509_VERIFY_PARAM_compfunc): Tsk_X509_VERIFY_PARAM_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
   { clang-format on }
   { This is used for a table of trust checking functions }
   {$else}
@@ -442,58 +442,58 @@ type
   {$EXTERNALSYM sk_X509_VERIFY_PARAM_deep_copy}
   {$EXTERNALSYM sk_X509_VERIFY_PARAM_set_cmp_func}
   {Do not call Function LoadDeclarations. Internal use only}
-  function Load_sk_X509_VERIFY_PARAM_num(_para: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_VERIFY_PARAM_value(_para: Pstack_st_X509_VERIFY_PARAM; _para2: TOpenSSL_C_INT): Pstack_st_X509_VERIFY_PARAM; cdecl;
+  function Load_sk_X509_VERIFY_PARAM_num(sk: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_VERIFY_PARAM_value(sk: Pstack_st_X509_VERIFY_PARAM; idx: TOpenSSL_C_INT): PX509_VERIFY_PARAM; cdecl;
   function Load_sk_X509_VERIFY_PARAM_new(cmp: Tsk_X509_VERIFY_PARAM_compfunc): Pstack_st_X509_VERIFY_PARAM; cdecl;
   function Load_sk_X509_VERIFY_PARAM_new_null: Pstack_st_X509_VERIFY_PARAM; cdecl;
   function Load_sk_X509_VERIFY_PARAM_new_reserve(cmp: Tsk_X509_VERIFY_PARAM_compfunc; n: TOpenSSL_C_INT): Pstack_st_X509_VERIFY_PARAM; cdecl;
-  function Load_sk_X509_VERIFY_PARAM_reserve(_para: Pstack_st_X509_VERIFY_PARAM; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_VERIFY_PARAM_free(_para: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_VERIFY_PARAM_zero(_para: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_VERIFY_PARAM_delete(st: Pstack_st_X509_VERIFY_PARAM; loc: TOpenSSL_C_INT): Pstack_st_X509_VERIFY_PARAM; cdecl;
-  function Load_sk_X509_VERIFY_PARAM_delete_ptr(st: Pstack_st_X509_VERIFY_PARAM; ptr: Pstack_st_X509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl;
-  function Load_sk_X509_VERIFY_PARAM_push(st: Pstack_st_X509_VERIFY_PARAM; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_VERIFY_PARAM_unshift(st: Pstack_st_X509_VERIFY_PARAM; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_VERIFY_PARAM_pop(_para: Pstack_st_X509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl;
-  function Load_sk_X509_VERIFY_PARAM_shift(_para: Pstack_st_X509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl;
-  procedure Load_sk_X509_VERIFY_PARAM_pop_free(st: Pstack_st_X509_VERIFY_PARAM; func: Tsk_X509_VERIFY_PARAM_freefunc); cdecl;
-  function Load_sk_X509_VERIFY_PARAM_insert(st: Pstack_st_X509_VERIFY_PARAM; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_VERIFY_PARAM_set(st: Pstack_st_X509_VERIFY_PARAM; i: TOpenSSL_C_INT; data: pointer): Pstack_st_X509_VERIFY_PARAM; cdecl;
-  function Load_sk_X509_VERIFY_PARAM_find(st: Pstack_st_X509_VERIFY_PARAM; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_VERIFY_PARAM_find_ex(st: Pstack_st_X509_VERIFY_PARAM; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_VERIFY_PARAM_find_all(st: Pstack_st_X509_VERIFY_PARAM; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_VERIFY_PARAM_sort(_para: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_VERIFY_PARAM_is_sorted(_para: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_VERIFY_PARAM_dup(st: Pstack_st_X509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl;
-  function Load_sk_X509_VERIFY_PARAM_deep_copy(st: Pstack_st_X509_VERIFY_PARAM; c: Tsk_X509_VERIFY_PARAM_compfunc; f: Tsk_X509_VERIFY_PARAM_freefunc): Pstack_st_X509_VERIFY_PARAM; cdecl;
-  function Load_sk_X509_VERIFY_PARAM_set_cmp_func(st: Pstack_st_X509_VERIFY_PARAM; cmp: Tsk_X509_VERIFY_PARAM_compfunc): Tsk_X509_VERIFY_PARAM_compfunc; cdecl;
+  function Load_sk_X509_VERIFY_PARAM_reserve(sk: Pstack_st_X509_VERIFY_PARAM; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_X509_VERIFY_PARAM_free(sk: Pstack_st_X509_VERIFY_PARAM); cdecl;
+  procedure Load_sk_X509_VERIFY_PARAM_zero(sk: Pstack_st_X509_VERIFY_PARAM); cdecl;
+  function Load_sk_X509_VERIFY_PARAM_delete(sk: Pstack_st_X509_VERIFY_PARAM; i: TOpenSSL_C_INT): PX509_VERIFY_PARAM; cdecl;
+  function Load_sk_X509_VERIFY_PARAM_delete_ptr(sk: Pstack_st_X509_VERIFY_PARAM; ptr: PX509_VERIFY_PARAM): PX509_VERIFY_PARAM; cdecl;
+  function Load_sk_X509_VERIFY_PARAM_push(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_VERIFY_PARAM_unshift(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_VERIFY_PARAM_pop(sk: Pstack_st_X509_VERIFY_PARAM): PX509_VERIFY_PARAM; cdecl;
+  function Load_sk_X509_VERIFY_PARAM_shift(sk: Pstack_st_X509_VERIFY_PARAM): PX509_VERIFY_PARAM; cdecl;
+  procedure Load_sk_X509_VERIFY_PARAM_pop_free(sk: Pstack_st_X509_VERIFY_PARAM; func: Tsk_X509_VERIFY_PARAM_freefunc); cdecl;
+  function Load_sk_X509_VERIFY_PARAM_insert(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_VERIFY_PARAM_set(sk: Pstack_st_X509_VERIFY_PARAM; i: TOpenSSL_C_INT; data: PX509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl;
+  function Load_sk_X509_VERIFY_PARAM_find(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_VERIFY_PARAM_find_ex(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_VERIFY_PARAM_find_all(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_X509_VERIFY_PARAM_sort(sk: Pstack_st_X509_VERIFY_PARAM); cdecl;
+  function Load_sk_X509_VERIFY_PARAM_is_sorted(sk: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_VERIFY_PARAM_dup(sk: Pstack_st_X509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl;
+  function Load_sk_X509_VERIFY_PARAM_deep_copy(sk: Pstack_st_X509_VERIFY_PARAM; c: Tsk_X509_VERIFY_PARAM_copyfunc; f: Tsk_X509_VERIFY_PARAM_freefunc): Pstack_st_X509_VERIFY_PARAM; cdecl;
+  function Load_sk_X509_VERIFY_PARAM_set_cmp_func(sk: Pstack_st_X509_VERIFY_PARAM; cmp: Tsk_X509_VERIFY_PARAM_compfunc): Tsk_X509_VERIFY_PARAM_compfunc; cdecl;
 
 var
-  sk_X509_VERIFY_PARAM_num: function(_para: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl = Load_sk_X509_VERIFY_PARAM_num;
-  sk_X509_VERIFY_PARAM_value: function(_para: Pstack_st_X509_VERIFY_PARAM; _para2: TOpenSSL_C_INT): Pstack_st_X509_VERIFY_PARAM; cdecl = Load_sk_X509_VERIFY_PARAM_value;
+  sk_X509_VERIFY_PARAM_num: function(sk: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl = Load_sk_X509_VERIFY_PARAM_num;
+  sk_X509_VERIFY_PARAM_value: function(sk: Pstack_st_X509_VERIFY_PARAM; idx: TOpenSSL_C_INT): PX509_VERIFY_PARAM; cdecl = Load_sk_X509_VERIFY_PARAM_value;
   sk_X509_VERIFY_PARAM_new: function(cmp: Tsk_X509_VERIFY_PARAM_compfunc): Pstack_st_X509_VERIFY_PARAM; cdecl = Load_sk_X509_VERIFY_PARAM_new;
   sk_X509_VERIFY_PARAM_new_null: function: Pstack_st_X509_VERIFY_PARAM; cdecl = Load_sk_X509_VERIFY_PARAM_new_null;
   sk_X509_VERIFY_PARAM_new_reserve: function(cmp: Tsk_X509_VERIFY_PARAM_compfunc; n: TOpenSSL_C_INT): Pstack_st_X509_VERIFY_PARAM; cdecl = Load_sk_X509_VERIFY_PARAM_new_reserve;
-  sk_X509_VERIFY_PARAM_reserve: function(_para: Pstack_st_X509_VERIFY_PARAM; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_VERIFY_PARAM_reserve;
-  sk_X509_VERIFY_PARAM_free: function(_para: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl = Load_sk_X509_VERIFY_PARAM_free;
-  sk_X509_VERIFY_PARAM_zero: function(_para: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl = Load_sk_X509_VERIFY_PARAM_zero;
-  sk_X509_VERIFY_PARAM_delete: function(st: Pstack_st_X509_VERIFY_PARAM; loc: TOpenSSL_C_INT): Pstack_st_X509_VERIFY_PARAM; cdecl = Load_sk_X509_VERIFY_PARAM_delete;
-  sk_X509_VERIFY_PARAM_delete_ptr: function(st: Pstack_st_X509_VERIFY_PARAM; ptr: Pstack_st_X509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl = Load_sk_X509_VERIFY_PARAM_delete_ptr;
-  sk_X509_VERIFY_PARAM_push: function(st: Pstack_st_X509_VERIFY_PARAM; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_X509_VERIFY_PARAM_push;
-  sk_X509_VERIFY_PARAM_unshift: function(st: Pstack_st_X509_VERIFY_PARAM; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_X509_VERIFY_PARAM_unshift;
-  sk_X509_VERIFY_PARAM_pop: function(_para: Pstack_st_X509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl = Load_sk_X509_VERIFY_PARAM_pop;
-  sk_X509_VERIFY_PARAM_shift: function(_para: Pstack_st_X509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl = Load_sk_X509_VERIFY_PARAM_shift;
-  sk_X509_VERIFY_PARAM_pop_free: procedure(st: Pstack_st_X509_VERIFY_PARAM; func: Tsk_X509_VERIFY_PARAM_freefunc); cdecl = Load_sk_X509_VERIFY_PARAM_pop_free;
-  sk_X509_VERIFY_PARAM_insert: function(st: Pstack_st_X509_VERIFY_PARAM; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_VERIFY_PARAM_insert;
-  sk_X509_VERIFY_PARAM_set: function(st: Pstack_st_X509_VERIFY_PARAM; i: TOpenSSL_C_INT; data: pointer): Pstack_st_X509_VERIFY_PARAM; cdecl = Load_sk_X509_VERIFY_PARAM_set;
-  sk_X509_VERIFY_PARAM_find: function(st: Pstack_st_X509_VERIFY_PARAM; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_X509_VERIFY_PARAM_find;
-  sk_X509_VERIFY_PARAM_find_ex: function(st: Pstack_st_X509_VERIFY_PARAM; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_X509_VERIFY_PARAM_find_ex;
-  sk_X509_VERIFY_PARAM_find_all: function(st: Pstack_st_X509_VERIFY_PARAM; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_VERIFY_PARAM_find_all;
-  sk_X509_VERIFY_PARAM_sort: function(_para: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl = Load_sk_X509_VERIFY_PARAM_sort;
-  sk_X509_VERIFY_PARAM_is_sorted: function(_para: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl = Load_sk_X509_VERIFY_PARAM_is_sorted;
-  sk_X509_VERIFY_PARAM_dup: function(st: Pstack_st_X509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl = Load_sk_X509_VERIFY_PARAM_dup;
-  sk_X509_VERIFY_PARAM_deep_copy: function(st: Pstack_st_X509_VERIFY_PARAM; c: Tsk_X509_VERIFY_PARAM_compfunc; f: Tsk_X509_VERIFY_PARAM_freefunc): Pstack_st_X509_VERIFY_PARAM; cdecl = Load_sk_X509_VERIFY_PARAM_deep_copy;
-  sk_X509_VERIFY_PARAM_set_cmp_func: function(st: Pstack_st_X509_VERIFY_PARAM; cmp: Tsk_X509_VERIFY_PARAM_compfunc): Tsk_X509_VERIFY_PARAM_compfunc; cdecl = Load_sk_X509_VERIFY_PARAM_set_cmp_func;
+  sk_X509_VERIFY_PARAM_reserve: function(sk: Pstack_st_X509_VERIFY_PARAM; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_VERIFY_PARAM_reserve;
+  sk_X509_VERIFY_PARAM_free: procedure(sk: Pstack_st_X509_VERIFY_PARAM); cdecl = Load_sk_X509_VERIFY_PARAM_free;
+  sk_X509_VERIFY_PARAM_zero: procedure(sk: Pstack_st_X509_VERIFY_PARAM); cdecl = Load_sk_X509_VERIFY_PARAM_zero;
+  sk_X509_VERIFY_PARAM_delete: function(sk: Pstack_st_X509_VERIFY_PARAM; i: TOpenSSL_C_INT): PX509_VERIFY_PARAM; cdecl = Load_sk_X509_VERIFY_PARAM_delete;
+  sk_X509_VERIFY_PARAM_delete_ptr: function(sk: Pstack_st_X509_VERIFY_PARAM; ptr: PX509_VERIFY_PARAM): PX509_VERIFY_PARAM; cdecl = Load_sk_X509_VERIFY_PARAM_delete_ptr;
+  sk_X509_VERIFY_PARAM_push: function(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl = Load_sk_X509_VERIFY_PARAM_push;
+  sk_X509_VERIFY_PARAM_unshift: function(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl = Load_sk_X509_VERIFY_PARAM_unshift;
+  sk_X509_VERIFY_PARAM_pop: function(sk: Pstack_st_X509_VERIFY_PARAM): PX509_VERIFY_PARAM; cdecl = Load_sk_X509_VERIFY_PARAM_pop;
+  sk_X509_VERIFY_PARAM_shift: function(sk: Pstack_st_X509_VERIFY_PARAM): PX509_VERIFY_PARAM; cdecl = Load_sk_X509_VERIFY_PARAM_shift;
+  sk_X509_VERIFY_PARAM_pop_free: procedure(sk: Pstack_st_X509_VERIFY_PARAM; func: Tsk_X509_VERIFY_PARAM_freefunc); cdecl = Load_sk_X509_VERIFY_PARAM_pop_free;
+  sk_X509_VERIFY_PARAM_insert: function(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_VERIFY_PARAM_insert;
+  sk_X509_VERIFY_PARAM_set: function(sk: Pstack_st_X509_VERIFY_PARAM; i: TOpenSSL_C_INT; data: PX509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl = Load_sk_X509_VERIFY_PARAM_set;
+  sk_X509_VERIFY_PARAM_find: function(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl = Load_sk_X509_VERIFY_PARAM_find;
+  sk_X509_VERIFY_PARAM_find_ex: function(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl = Load_sk_X509_VERIFY_PARAM_find_ex;
+  sk_X509_VERIFY_PARAM_find_all: function(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_VERIFY_PARAM_find_all;
+  sk_X509_VERIFY_PARAM_sort: procedure(sk: Pstack_st_X509_VERIFY_PARAM); cdecl = Load_sk_X509_VERIFY_PARAM_sort;
+  sk_X509_VERIFY_PARAM_is_sorted: function(sk: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl = Load_sk_X509_VERIFY_PARAM_is_sorted;
+  sk_X509_VERIFY_PARAM_dup: function(sk: Pstack_st_X509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl = Load_sk_X509_VERIFY_PARAM_dup;
+  sk_X509_VERIFY_PARAM_deep_copy: function(sk: Pstack_st_X509_VERIFY_PARAM; c: Tsk_X509_VERIFY_PARAM_copyfunc; f: Tsk_X509_VERIFY_PARAM_freefunc): Pstack_st_X509_VERIFY_PARAM; cdecl = Load_sk_X509_VERIFY_PARAM_deep_copy;
+  sk_X509_VERIFY_PARAM_set_cmp_func: function(sk: Pstack_st_X509_VERIFY_PARAM; cmp: Tsk_X509_VERIFY_PARAM_compfunc): Tsk_X509_VERIFY_PARAM_compfunc; cdecl = Load_sk_X509_VERIFY_PARAM_set_cmp_func;
   { clang-format on }
   { This is used for a table of trust checking functions }
   {$endif} {OPENSSL_STATIC_LINK_MODEL}
@@ -541,31 +541,31 @@ type
   function ossl_check_X509_TRUST_copyfunc_type(cpy: Tsk_X509_TRUST_copyfunc): TOPENSSL_sk_copyfunc{Has C Attribute: unused}; inline;
   function ossl_check_X509_TRUST_freefunc_type(fr: Tsk_X509_TRUST_freefunc): TOPENSSL_sk_freefunc{Has C Attribute: unused}; inline;
   {$ifdef OPENSSL_STATIC_LINK_MODEL}
-  function sk_X509_TRUST_num(_para: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
-  function sk_X509_TRUST_value(_para: Pstack_st_X509_TRUST; _para2: TOpenSSL_C_INT): Pstack_st_X509_TRUST; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
+  function sk_X509_TRUST_num(sk: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_num';
+  function sk_X509_TRUST_value(sk: Pstack_st_X509_TRUST; idx: TOpenSSL_C_INT): PX509_TRUST; cdecl; external CLibCrypto name 'OPENSSL_sk_value';
   function sk_X509_TRUST_new(cmp: Tsk_X509_TRUST_compfunc): Pstack_st_X509_TRUST; cdecl; external CLibCrypto name 'OPENSSL_sk_new';
   function sk_X509_TRUST_new_null: Pstack_st_X509_TRUST; cdecl; external CLibCrypto name 'OPENSSL_sk_new_null';
   function sk_X509_TRUST_new_reserve(cmp: Tsk_X509_TRUST_compfunc; n: TOpenSSL_C_INT): Pstack_st_X509_TRUST; cdecl; external CLibCrypto name 'OPENSSL_sk_new_reserve';
-  function sk_X509_TRUST_reserve(_para: Pstack_st_X509_TRUST; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
-  function sk_X509_TRUST_free(_para: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_free';
-  function sk_X509_TRUST_zero(_para: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
-  function sk_X509_TRUST_delete(st: Pstack_st_X509_TRUST; loc: TOpenSSL_C_INT): Pstack_st_X509_TRUST; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
-  function sk_X509_TRUST_delete_ptr(st: Pstack_st_X509_TRUST; ptr: Pstack_st_X509_TRUST): Pstack_st_X509_TRUST; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
-  function sk_X509_TRUST_push(st: Pstack_st_X509_TRUST; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
-  function sk_X509_TRUST_unshift(st: Pstack_st_X509_TRUST; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
-  function sk_X509_TRUST_pop(_para: Pstack_st_X509_TRUST): Pstack_st_X509_TRUST; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
-  function sk_X509_TRUST_shift(_para: Pstack_st_X509_TRUST): Pstack_st_X509_TRUST; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
-  procedure sk_X509_TRUST_pop_free(st: Pstack_st_X509_TRUST; func: Tsk_X509_TRUST_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
-  function sk_X509_TRUST_insert(st: Pstack_st_X509_TRUST; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
-  function sk_X509_TRUST_set(st: Pstack_st_X509_TRUST; i: TOpenSSL_C_INT; data: pointer): Pstack_st_X509_TRUST; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
-  function sk_X509_TRUST_find(st: Pstack_st_X509_TRUST; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
-  function sk_X509_TRUST_find_ex(st: Pstack_st_X509_TRUST; data: pointer): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
-  function sk_X509_TRUST_find_all(st: Pstack_st_X509_TRUST; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
-  function sk_X509_TRUST_sort(_para: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
-  function sk_X509_TRUST_is_sorted(_para: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
-  function sk_X509_TRUST_dup(st: Pstack_st_X509_TRUST): Pstack_st_X509_TRUST; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
-  function sk_X509_TRUST_deep_copy(st: Pstack_st_X509_TRUST; c: Tsk_X509_TRUST_compfunc; f: Tsk_X509_TRUST_freefunc): Pstack_st_X509_TRUST; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
-  function sk_X509_TRUST_set_cmp_func(st: Pstack_st_X509_TRUST; cmp: Tsk_X509_TRUST_compfunc): Tsk_X509_TRUST_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
+  function sk_X509_TRUST_reserve(sk: Pstack_st_X509_TRUST; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_reserve';
+  procedure sk_X509_TRUST_free(sk: Pstack_st_X509_TRUST); cdecl; external CLibCrypto name 'OPENSSL_sk_free';
+  procedure sk_X509_TRUST_zero(sk: Pstack_st_X509_TRUST); cdecl; external CLibCrypto name 'OPENSSL_sk_zero';
+  function sk_X509_TRUST_delete(sk: Pstack_st_X509_TRUST; i: TOpenSSL_C_INT): PX509_TRUST; cdecl; external CLibCrypto name 'OPENSSL_sk_delete';
+  function sk_X509_TRUST_delete_ptr(sk: Pstack_st_X509_TRUST; ptr: PX509_TRUST): PX509_TRUST; cdecl; external CLibCrypto name 'OPENSSL_sk_delete_ptr';
+  function sk_X509_TRUST_push(sk: Pstack_st_X509_TRUST; data: PX509_TRUST): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_push';
+  function sk_X509_TRUST_unshift(sk: Pstack_st_X509_TRUST; data: PX509_TRUST): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_unshift';
+  function sk_X509_TRUST_pop(sk: Pstack_st_X509_TRUST): PX509_TRUST; cdecl; external CLibCrypto name 'OPENSSL_sk_pop';
+  function sk_X509_TRUST_shift(sk: Pstack_st_X509_TRUST): PX509_TRUST; cdecl; external CLibCrypto name 'OPENSSL_sk_shift';
+  procedure sk_X509_TRUST_pop_free(sk: Pstack_st_X509_TRUST; func: Tsk_X509_TRUST_freefunc); cdecl; external CLibCrypto name 'OPENSSL_sk_pop_free';
+  function sk_X509_TRUST_insert(sk: Pstack_st_X509_TRUST; data: PX509_TRUST; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_insert';
+  function sk_X509_TRUST_set(sk: Pstack_st_X509_TRUST; i: TOpenSSL_C_INT; data: PX509_TRUST): Pstack_st_X509_TRUST; cdecl; external CLibCrypto name 'OPENSSL_sk_set';
+  function sk_X509_TRUST_find(sk: Pstack_st_X509_TRUST; data: PX509_TRUST): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find';
+  function sk_X509_TRUST_find_ex(sk: Pstack_st_X509_TRUST; data: PX509_TRUST): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_ex';
+  function sk_X509_TRUST_find_all(sk: Pstack_st_X509_TRUST; data: PX509_TRUST; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_find_all';
+  procedure sk_X509_TRUST_sort(sk: Pstack_st_X509_TRUST); cdecl; external CLibCrypto name 'OPENSSL_sk_sort';
+  function sk_X509_TRUST_is_sorted(sk: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl; external CLibCrypto name 'OPENSSL_sk_is_sorted';
+  function sk_X509_TRUST_dup(sk: Pstack_st_X509_TRUST): Pstack_st_X509_TRUST; cdecl; external CLibCrypto name 'OPENSSL_sk_dup';
+  function sk_X509_TRUST_deep_copy(sk: Pstack_st_X509_TRUST; c: Tsk_X509_TRUST_copyfunc; f: Tsk_X509_TRUST_freefunc): Pstack_st_X509_TRUST; cdecl; external CLibCrypto name 'OPENSSL_sk_deep_copy';
+  function sk_X509_TRUST_set_cmp_func(sk: Pstack_st_X509_TRUST; cmp: Tsk_X509_TRUST_compfunc): Tsk_X509_TRUST_compfunc; cdecl; external CLibCrypto name 'OPENSSL_sk_set_cmp_func';
   { clang-format on }
   { standard trust ids }
   {$else}
@@ -595,58 +595,58 @@ type
   {$EXTERNALSYM sk_X509_TRUST_deep_copy}
   {$EXTERNALSYM sk_X509_TRUST_set_cmp_func}
   {Do not call Function LoadDeclarations. Internal use only}
-  function Load_sk_X509_TRUST_num(_para: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_TRUST_value(_para: Pstack_st_X509_TRUST; _para2: TOpenSSL_C_INT): Pstack_st_X509_TRUST; cdecl;
+  function Load_sk_X509_TRUST_num(sk: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_TRUST_value(sk: Pstack_st_X509_TRUST; idx: TOpenSSL_C_INT): PX509_TRUST; cdecl;
   function Load_sk_X509_TRUST_new(cmp: Tsk_X509_TRUST_compfunc): Pstack_st_X509_TRUST; cdecl;
   function Load_sk_X509_TRUST_new_null: Pstack_st_X509_TRUST; cdecl;
   function Load_sk_X509_TRUST_new_reserve(cmp: Tsk_X509_TRUST_compfunc; n: TOpenSSL_C_INT): Pstack_st_X509_TRUST; cdecl;
-  function Load_sk_X509_TRUST_reserve(_para: Pstack_st_X509_TRUST; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_TRUST_free(_para: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_TRUST_zero(_para: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_TRUST_delete(st: Pstack_st_X509_TRUST; loc: TOpenSSL_C_INT): Pstack_st_X509_TRUST; cdecl;
-  function Load_sk_X509_TRUST_delete_ptr(st: Pstack_st_X509_TRUST; ptr: Pstack_st_X509_TRUST): Pstack_st_X509_TRUST; cdecl;
-  function Load_sk_X509_TRUST_push(st: Pstack_st_X509_TRUST; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_TRUST_unshift(st: Pstack_st_X509_TRUST; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_TRUST_pop(_para: Pstack_st_X509_TRUST): Pstack_st_X509_TRUST; cdecl;
-  function Load_sk_X509_TRUST_shift(_para: Pstack_st_X509_TRUST): Pstack_st_X509_TRUST; cdecl;
-  procedure Load_sk_X509_TRUST_pop_free(st: Pstack_st_X509_TRUST; func: Tsk_X509_TRUST_freefunc); cdecl;
-  function Load_sk_X509_TRUST_insert(st: Pstack_st_X509_TRUST; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_TRUST_set(st: Pstack_st_X509_TRUST; i: TOpenSSL_C_INT; data: pointer): Pstack_st_X509_TRUST; cdecl;
-  function Load_sk_X509_TRUST_find(st: Pstack_st_X509_TRUST; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_TRUST_find_ex(st: Pstack_st_X509_TRUST; data: pointer): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_TRUST_find_all(st: Pstack_st_X509_TRUST; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_TRUST_sort(_para: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_TRUST_is_sorted(_para: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl;
-  function Load_sk_X509_TRUST_dup(st: Pstack_st_X509_TRUST): Pstack_st_X509_TRUST; cdecl;
-  function Load_sk_X509_TRUST_deep_copy(st: Pstack_st_X509_TRUST; c: Tsk_X509_TRUST_compfunc; f: Tsk_X509_TRUST_freefunc): Pstack_st_X509_TRUST; cdecl;
-  function Load_sk_X509_TRUST_set_cmp_func(st: Pstack_st_X509_TRUST; cmp: Tsk_X509_TRUST_compfunc): Tsk_X509_TRUST_compfunc; cdecl;
+  function Load_sk_X509_TRUST_reserve(sk: Pstack_st_X509_TRUST; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_X509_TRUST_free(sk: Pstack_st_X509_TRUST); cdecl;
+  procedure Load_sk_X509_TRUST_zero(sk: Pstack_st_X509_TRUST); cdecl;
+  function Load_sk_X509_TRUST_delete(sk: Pstack_st_X509_TRUST; i: TOpenSSL_C_INT): PX509_TRUST; cdecl;
+  function Load_sk_X509_TRUST_delete_ptr(sk: Pstack_st_X509_TRUST; ptr: PX509_TRUST): PX509_TRUST; cdecl;
+  function Load_sk_X509_TRUST_push(sk: Pstack_st_X509_TRUST; data: PX509_TRUST): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_TRUST_unshift(sk: Pstack_st_X509_TRUST; data: PX509_TRUST): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_TRUST_pop(sk: Pstack_st_X509_TRUST): PX509_TRUST; cdecl;
+  function Load_sk_X509_TRUST_shift(sk: Pstack_st_X509_TRUST): PX509_TRUST; cdecl;
+  procedure Load_sk_X509_TRUST_pop_free(sk: Pstack_st_X509_TRUST; func: Tsk_X509_TRUST_freefunc); cdecl;
+  function Load_sk_X509_TRUST_insert(sk: Pstack_st_X509_TRUST; data: PX509_TRUST; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_TRUST_set(sk: Pstack_st_X509_TRUST; i: TOpenSSL_C_INT; data: PX509_TRUST): Pstack_st_X509_TRUST; cdecl;
+  function Load_sk_X509_TRUST_find(sk: Pstack_st_X509_TRUST; data: PX509_TRUST): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_TRUST_find_ex(sk: Pstack_st_X509_TRUST; data: PX509_TRUST): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_TRUST_find_all(sk: Pstack_st_X509_TRUST; data: PX509_TRUST; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+  procedure Load_sk_X509_TRUST_sort(sk: Pstack_st_X509_TRUST); cdecl;
+  function Load_sk_X509_TRUST_is_sorted(sk: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl;
+  function Load_sk_X509_TRUST_dup(sk: Pstack_st_X509_TRUST): Pstack_st_X509_TRUST; cdecl;
+  function Load_sk_X509_TRUST_deep_copy(sk: Pstack_st_X509_TRUST; c: Tsk_X509_TRUST_copyfunc; f: Tsk_X509_TRUST_freefunc): Pstack_st_X509_TRUST; cdecl;
+  function Load_sk_X509_TRUST_set_cmp_func(sk: Pstack_st_X509_TRUST; cmp: Tsk_X509_TRUST_compfunc): Tsk_X509_TRUST_compfunc; cdecl;
 
 var
-  sk_X509_TRUST_num: function(_para: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl = Load_sk_X509_TRUST_num;
-  sk_X509_TRUST_value: function(_para: Pstack_st_X509_TRUST; _para2: TOpenSSL_C_INT): Pstack_st_X509_TRUST; cdecl = Load_sk_X509_TRUST_value;
+  sk_X509_TRUST_num: function(sk: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl = Load_sk_X509_TRUST_num;
+  sk_X509_TRUST_value: function(sk: Pstack_st_X509_TRUST; idx: TOpenSSL_C_INT): PX509_TRUST; cdecl = Load_sk_X509_TRUST_value;
   sk_X509_TRUST_new: function(cmp: Tsk_X509_TRUST_compfunc): Pstack_st_X509_TRUST; cdecl = Load_sk_X509_TRUST_new;
   sk_X509_TRUST_new_null: function: Pstack_st_X509_TRUST; cdecl = Load_sk_X509_TRUST_new_null;
   sk_X509_TRUST_new_reserve: function(cmp: Tsk_X509_TRUST_compfunc; n: TOpenSSL_C_INT): Pstack_st_X509_TRUST; cdecl = Load_sk_X509_TRUST_new_reserve;
-  sk_X509_TRUST_reserve: function(_para: Pstack_st_X509_TRUST; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_TRUST_reserve;
-  sk_X509_TRUST_free: function(_para: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl = Load_sk_X509_TRUST_free;
-  sk_X509_TRUST_zero: function(_para: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl = Load_sk_X509_TRUST_zero;
-  sk_X509_TRUST_delete: function(st: Pstack_st_X509_TRUST; loc: TOpenSSL_C_INT): Pstack_st_X509_TRUST; cdecl = Load_sk_X509_TRUST_delete;
-  sk_X509_TRUST_delete_ptr: function(st: Pstack_st_X509_TRUST; ptr: Pstack_st_X509_TRUST): Pstack_st_X509_TRUST; cdecl = Load_sk_X509_TRUST_delete_ptr;
-  sk_X509_TRUST_push: function(st: Pstack_st_X509_TRUST; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_X509_TRUST_push;
-  sk_X509_TRUST_unshift: function(st: Pstack_st_X509_TRUST; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_X509_TRUST_unshift;
-  sk_X509_TRUST_pop: function(_para: Pstack_st_X509_TRUST): Pstack_st_X509_TRUST; cdecl = Load_sk_X509_TRUST_pop;
-  sk_X509_TRUST_shift: function(_para: Pstack_st_X509_TRUST): Pstack_st_X509_TRUST; cdecl = Load_sk_X509_TRUST_shift;
-  sk_X509_TRUST_pop_free: procedure(st: Pstack_st_X509_TRUST; func: Tsk_X509_TRUST_freefunc); cdecl = Load_sk_X509_TRUST_pop_free;
-  sk_X509_TRUST_insert: function(st: Pstack_st_X509_TRUST; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_TRUST_insert;
-  sk_X509_TRUST_set: function(st: Pstack_st_X509_TRUST; i: TOpenSSL_C_INT; data: pointer): Pstack_st_X509_TRUST; cdecl = Load_sk_X509_TRUST_set;
-  sk_X509_TRUST_find: function(st: Pstack_st_X509_TRUST; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_X509_TRUST_find;
-  sk_X509_TRUST_find_ex: function(st: Pstack_st_X509_TRUST; data: pointer): TOpenSSL_C_INT; cdecl = Load_sk_X509_TRUST_find_ex;
-  sk_X509_TRUST_find_all: function(st: Pstack_st_X509_TRUST; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_TRUST_find_all;
-  sk_X509_TRUST_sort: function(_para: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl = Load_sk_X509_TRUST_sort;
-  sk_X509_TRUST_is_sorted: function(_para: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl = Load_sk_X509_TRUST_is_sorted;
-  sk_X509_TRUST_dup: function(st: Pstack_st_X509_TRUST): Pstack_st_X509_TRUST; cdecl = Load_sk_X509_TRUST_dup;
-  sk_X509_TRUST_deep_copy: function(st: Pstack_st_X509_TRUST; c: Tsk_X509_TRUST_compfunc; f: Tsk_X509_TRUST_freefunc): Pstack_st_X509_TRUST; cdecl = Load_sk_X509_TRUST_deep_copy;
-  sk_X509_TRUST_set_cmp_func: function(st: Pstack_st_X509_TRUST; cmp: Tsk_X509_TRUST_compfunc): Tsk_X509_TRUST_compfunc; cdecl = Load_sk_X509_TRUST_set_cmp_func;
+  sk_X509_TRUST_reserve: function(sk: Pstack_st_X509_TRUST; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_TRUST_reserve;
+  sk_X509_TRUST_free: procedure(sk: Pstack_st_X509_TRUST); cdecl = Load_sk_X509_TRUST_free;
+  sk_X509_TRUST_zero: procedure(sk: Pstack_st_X509_TRUST); cdecl = Load_sk_X509_TRUST_zero;
+  sk_X509_TRUST_delete: function(sk: Pstack_st_X509_TRUST; i: TOpenSSL_C_INT): PX509_TRUST; cdecl = Load_sk_X509_TRUST_delete;
+  sk_X509_TRUST_delete_ptr: function(sk: Pstack_st_X509_TRUST; ptr: PX509_TRUST): PX509_TRUST; cdecl = Load_sk_X509_TRUST_delete_ptr;
+  sk_X509_TRUST_push: function(sk: Pstack_st_X509_TRUST; data: PX509_TRUST): TOpenSSL_C_INT; cdecl = Load_sk_X509_TRUST_push;
+  sk_X509_TRUST_unshift: function(sk: Pstack_st_X509_TRUST; data: PX509_TRUST): TOpenSSL_C_INT; cdecl = Load_sk_X509_TRUST_unshift;
+  sk_X509_TRUST_pop: function(sk: Pstack_st_X509_TRUST): PX509_TRUST; cdecl = Load_sk_X509_TRUST_pop;
+  sk_X509_TRUST_shift: function(sk: Pstack_st_X509_TRUST): PX509_TRUST; cdecl = Load_sk_X509_TRUST_shift;
+  sk_X509_TRUST_pop_free: procedure(sk: Pstack_st_X509_TRUST; func: Tsk_X509_TRUST_freefunc); cdecl = Load_sk_X509_TRUST_pop_free;
+  sk_X509_TRUST_insert: function(sk: Pstack_st_X509_TRUST; data: PX509_TRUST; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_TRUST_insert;
+  sk_X509_TRUST_set: function(sk: Pstack_st_X509_TRUST; i: TOpenSSL_C_INT; data: PX509_TRUST): Pstack_st_X509_TRUST; cdecl = Load_sk_X509_TRUST_set;
+  sk_X509_TRUST_find: function(sk: Pstack_st_X509_TRUST; data: PX509_TRUST): TOpenSSL_C_INT; cdecl = Load_sk_X509_TRUST_find;
+  sk_X509_TRUST_find_ex: function(sk: Pstack_st_X509_TRUST; data: PX509_TRUST): TOpenSSL_C_INT; cdecl = Load_sk_X509_TRUST_find_ex;
+  sk_X509_TRUST_find_all: function(sk: Pstack_st_X509_TRUST; data: PX509_TRUST; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl = Load_sk_X509_TRUST_find_all;
+  sk_X509_TRUST_sort: procedure(sk: Pstack_st_X509_TRUST); cdecl = Load_sk_X509_TRUST_sort;
+  sk_X509_TRUST_is_sorted: function(sk: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl = Load_sk_X509_TRUST_is_sorted;
+  sk_X509_TRUST_dup: function(sk: Pstack_st_X509_TRUST): Pstack_st_X509_TRUST; cdecl = Load_sk_X509_TRUST_dup;
+  sk_X509_TRUST_deep_copy: function(sk: Pstack_st_X509_TRUST; c: Tsk_X509_TRUST_copyfunc; f: Tsk_X509_TRUST_freefunc): Pstack_st_X509_TRUST; cdecl = Load_sk_X509_TRUST_deep_copy;
+  sk_X509_TRUST_set_cmp_func: function(sk: Pstack_st_X509_TRUST; cmp: Tsk_X509_TRUST_compfunc): Tsk_X509_TRUST_compfunc; cdecl = Load_sk_X509_TRUST_set_cmp_func;
   { clang-format on }
   { standard trust ids }
   {$endif} {OPENSSL_STATIC_LINK_MODEL}
@@ -2448,7 +2448,7 @@ begin
 end;
 {$include legacy_x509_vfy.inc}
 {$ifndef OPENSSL_STATIC_LINK_MODEL}
-function Load_sk_X509_LOOKUP_num(_para: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_LOOKUP_num(sk: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_LOOKUP_num := LoadLibCryptoFunction('OPENSSL_sk_num');
   if not assigned(sk_X509_LOOKUP_num) then
@@ -2457,10 +2457,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_num');
     {$ifend}
-  Result := sk_X509_LOOKUP_num(_para);
+  Result := sk_X509_LOOKUP_num(sk);
 end;
 
-function Load_sk_X509_LOOKUP_value(_para: Pstack_st_X509_LOOKUP; _para2: TOpenSSL_C_INT): Pstack_st_X509_LOOKUP; cdecl;
+function Load_sk_X509_LOOKUP_value(sk: Pstack_st_X509_LOOKUP; idx: TOpenSSL_C_INT): PX509_LOOKUP; cdecl;
 begin
   sk_X509_LOOKUP_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_X509_LOOKUP_value) then
@@ -2469,7 +2469,7 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_value');
     {$ifend}
-  Result := sk_X509_LOOKUP_value(_para, _para2);
+  Result := sk_X509_LOOKUP_value(sk, idx);
 end;
 
 function Load_sk_X509_LOOKUP_new(cmp: Tsk_X509_LOOKUP_compfunc): Pstack_st_X509_LOOKUP; cdecl;
@@ -2508,7 +2508,7 @@ begin
   Result := sk_X509_LOOKUP_new_reserve(cmp, n);
 end;
 
-function Load_sk_X509_LOOKUP_reserve(_para: Pstack_st_X509_LOOKUP; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_LOOKUP_reserve(sk: Pstack_st_X509_LOOKUP; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_LOOKUP_reserve := LoadLibCryptoFunction('OPENSSL_sk_reserve');
   if not assigned(sk_X509_LOOKUP_reserve) then
@@ -2517,10 +2517,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_reserve');
     {$ifend}
-  Result := sk_X509_LOOKUP_reserve(_para, n);
+  Result := sk_X509_LOOKUP_reserve(sk, n);
 end;
 
-function Load_sk_X509_LOOKUP_free(_para: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_X509_LOOKUP_free(sk: Pstack_st_X509_LOOKUP); cdecl;
 begin
   sk_X509_LOOKUP_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_X509_LOOKUP_free) then
@@ -2529,10 +2529,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
     {$ifend}
-  Result := sk_X509_LOOKUP_free(_para);
+  sk_X509_LOOKUP_free(sk);
 end;
 
-function Load_sk_X509_LOOKUP_zero(_para: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_X509_LOOKUP_zero(sk: Pstack_st_X509_LOOKUP); cdecl;
 begin
   sk_X509_LOOKUP_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_X509_LOOKUP_zero) then
@@ -2541,10 +2541,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
     {$ifend}
-  Result := sk_X509_LOOKUP_zero(_para);
+  sk_X509_LOOKUP_zero(sk);
 end;
 
-function Load_sk_X509_LOOKUP_delete(st: Pstack_st_X509_LOOKUP; loc: TOpenSSL_C_INT): Pstack_st_X509_LOOKUP; cdecl;
+function Load_sk_X509_LOOKUP_delete(sk: Pstack_st_X509_LOOKUP; i: TOpenSSL_C_INT): PX509_LOOKUP; cdecl;
 begin
   sk_X509_LOOKUP_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_X509_LOOKUP_delete) then
@@ -2553,10 +2553,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete');
     {$ifend}
-  Result := sk_X509_LOOKUP_delete(st, loc);
+  Result := sk_X509_LOOKUP_delete(sk, i);
 end;
 
-function Load_sk_X509_LOOKUP_delete_ptr(st: Pstack_st_X509_LOOKUP; ptr: Pstack_st_X509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl;
+function Load_sk_X509_LOOKUP_delete_ptr(sk: Pstack_st_X509_LOOKUP; ptr: PX509_LOOKUP): PX509_LOOKUP; cdecl;
 begin
   sk_X509_LOOKUP_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_X509_LOOKUP_delete_ptr) then
@@ -2565,10 +2565,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete_ptr');
     {$ifend}
-  Result := sk_X509_LOOKUP_delete_ptr(st, ptr);
+  Result := sk_X509_LOOKUP_delete_ptr(sk, ptr);
 end;
 
-function Load_sk_X509_LOOKUP_push(st: Pstack_st_X509_LOOKUP; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_LOOKUP_push(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_LOOKUP_push := LoadLibCryptoFunction('OPENSSL_sk_push');
   if not assigned(sk_X509_LOOKUP_push) then
@@ -2577,10 +2577,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_push');
     {$ifend}
-  Result := sk_X509_LOOKUP_push(st, data);
+  Result := sk_X509_LOOKUP_push(sk, data);
 end;
 
-function Load_sk_X509_LOOKUP_unshift(st: Pstack_st_X509_LOOKUP; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_LOOKUP_unshift(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_LOOKUP_unshift := LoadLibCryptoFunction('OPENSSL_sk_unshift');
   if not assigned(sk_X509_LOOKUP_unshift) then
@@ -2589,10 +2589,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_unshift');
     {$ifend}
-  Result := sk_X509_LOOKUP_unshift(st, data);
+  Result := sk_X509_LOOKUP_unshift(sk, data);
 end;
 
-function Load_sk_X509_LOOKUP_pop(_para: Pstack_st_X509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl;
+function Load_sk_X509_LOOKUP_pop(sk: Pstack_st_X509_LOOKUP): PX509_LOOKUP; cdecl;
 begin
   sk_X509_LOOKUP_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_X509_LOOKUP_pop) then
@@ -2601,10 +2601,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop');
     {$ifend}
-  Result := sk_X509_LOOKUP_pop(_para);
+  Result := sk_X509_LOOKUP_pop(sk);
 end;
 
-function Load_sk_X509_LOOKUP_shift(_para: Pstack_st_X509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl;
+function Load_sk_X509_LOOKUP_shift(sk: Pstack_st_X509_LOOKUP): PX509_LOOKUP; cdecl;
 begin
   sk_X509_LOOKUP_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_X509_LOOKUP_shift) then
@@ -2613,10 +2613,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_shift');
     {$ifend}
-  Result := sk_X509_LOOKUP_shift(_para);
+  Result := sk_X509_LOOKUP_shift(sk);
 end;
 
-procedure Load_sk_X509_LOOKUP_pop_free(st: Pstack_st_X509_LOOKUP; func: Tsk_X509_LOOKUP_freefunc); cdecl;
+procedure Load_sk_X509_LOOKUP_pop_free(sk: Pstack_st_X509_LOOKUP; func: Tsk_X509_LOOKUP_freefunc); cdecl;
 begin
   sk_X509_LOOKUP_pop_free := LoadLibCryptoFunction('OPENSSL_sk_pop_free');
   if not assigned(sk_X509_LOOKUP_pop_free) then
@@ -2625,10 +2625,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop_free');
     {$ifend}
-  sk_X509_LOOKUP_pop_free(st, func);
+  sk_X509_LOOKUP_pop_free(sk, func);
 end;
 
-function Load_sk_X509_LOOKUP_insert(st: Pstack_st_X509_LOOKUP; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_LOOKUP_insert(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_LOOKUP_insert := LoadLibCryptoFunction('OPENSSL_sk_insert');
   if not assigned(sk_X509_LOOKUP_insert) then
@@ -2637,10 +2637,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_insert');
     {$ifend}
-  Result := sk_X509_LOOKUP_insert(st, data, where);
+  Result := sk_X509_LOOKUP_insert(sk, data, where);
 end;
 
-function Load_sk_X509_LOOKUP_set(st: Pstack_st_X509_LOOKUP; i: TOpenSSL_C_INT; data: pointer): Pstack_st_X509_LOOKUP; cdecl;
+function Load_sk_X509_LOOKUP_set(sk: Pstack_st_X509_LOOKUP; i: TOpenSSL_C_INT; data: PX509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl;
 begin
   sk_X509_LOOKUP_set := LoadLibCryptoFunction('OPENSSL_sk_set');
   if not assigned(sk_X509_LOOKUP_set) then
@@ -2649,10 +2649,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set');
     {$ifend}
-  Result := sk_X509_LOOKUP_set(st, i, data);
+  Result := sk_X509_LOOKUP_set(sk, i, data);
 end;
 
-function Load_sk_X509_LOOKUP_find(st: Pstack_st_X509_LOOKUP; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_LOOKUP_find(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_LOOKUP_find := LoadLibCryptoFunction('OPENSSL_sk_find');
   if not assigned(sk_X509_LOOKUP_find) then
@@ -2661,10 +2661,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find');
     {$ifend}
-  Result := sk_X509_LOOKUP_find(st, data);
+  Result := sk_X509_LOOKUP_find(sk, data);
 end;
 
-function Load_sk_X509_LOOKUP_find_ex(st: Pstack_st_X509_LOOKUP; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_LOOKUP_find_ex(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_LOOKUP_find_ex := LoadLibCryptoFunction('OPENSSL_sk_find_ex');
   if not assigned(sk_X509_LOOKUP_find_ex) then
@@ -2673,10 +2673,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_ex');
     {$ifend}
-  Result := sk_X509_LOOKUP_find_ex(st, data);
+  Result := sk_X509_LOOKUP_find_ex(sk, data);
 end;
 
-function Load_sk_X509_LOOKUP_find_all(st: Pstack_st_X509_LOOKUP; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_LOOKUP_find_all(sk: Pstack_st_X509_LOOKUP; data: PX509_LOOKUP; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_LOOKUP_find_all := LoadLibCryptoFunction('OPENSSL_sk_find_all');
   if not assigned(sk_X509_LOOKUP_find_all) then
@@ -2685,10 +2685,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_all');
     {$ifend}
-  Result := sk_X509_LOOKUP_find_all(st, data, pnum);
+  Result := sk_X509_LOOKUP_find_all(sk, data, pnum);
 end;
 
-function Load_sk_X509_LOOKUP_sort(_para: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_X509_LOOKUP_sort(sk: Pstack_st_X509_LOOKUP); cdecl;
 begin
   sk_X509_LOOKUP_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_X509_LOOKUP_sort) then
@@ -2697,10 +2697,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
     {$ifend}
-  Result := sk_X509_LOOKUP_sort(_para);
+  sk_X509_LOOKUP_sort(sk);
 end;
 
-function Load_sk_X509_LOOKUP_is_sorted(_para: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_LOOKUP_is_sorted(sk: Pstack_st_X509_LOOKUP): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_LOOKUP_is_sorted := LoadLibCryptoFunction('OPENSSL_sk_is_sorted');
   if not assigned(sk_X509_LOOKUP_is_sorted) then
@@ -2709,10 +2709,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_is_sorted');
     {$ifend}
-  Result := sk_X509_LOOKUP_is_sorted(_para);
+  Result := sk_X509_LOOKUP_is_sorted(sk);
 end;
 
-function Load_sk_X509_LOOKUP_dup(st: Pstack_st_X509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl;
+function Load_sk_X509_LOOKUP_dup(sk: Pstack_st_X509_LOOKUP): Pstack_st_X509_LOOKUP; cdecl;
 begin
   sk_X509_LOOKUP_dup := LoadLibCryptoFunction('OPENSSL_sk_dup');
   if not assigned(sk_X509_LOOKUP_dup) then
@@ -2721,10 +2721,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_dup');
     {$ifend}
-  Result := sk_X509_LOOKUP_dup(st);
+  Result := sk_X509_LOOKUP_dup(sk);
 end;
 
-function Load_sk_X509_LOOKUP_deep_copy(st: Pstack_st_X509_LOOKUP; c: Tsk_X509_LOOKUP_compfunc; f: Tsk_X509_LOOKUP_freefunc): Pstack_st_X509_LOOKUP; cdecl;
+function Load_sk_X509_LOOKUP_deep_copy(sk: Pstack_st_X509_LOOKUP; c: Tsk_X509_LOOKUP_copyfunc; f: Tsk_X509_LOOKUP_freefunc): Pstack_st_X509_LOOKUP; cdecl;
 begin
   sk_X509_LOOKUP_deep_copy := LoadLibCryptoFunction('OPENSSL_sk_deep_copy');
   if not assigned(sk_X509_LOOKUP_deep_copy) then
@@ -2733,10 +2733,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_deep_copy');
     {$ifend}
-  Result := sk_X509_LOOKUP_deep_copy(st, c, f);
+  Result := sk_X509_LOOKUP_deep_copy(sk, c, f);
 end;
 
-function Load_sk_X509_LOOKUP_set_cmp_func(st: Pstack_st_X509_LOOKUP; cmp: Tsk_X509_LOOKUP_compfunc): Tsk_X509_LOOKUP_compfunc; cdecl;
+function Load_sk_X509_LOOKUP_set_cmp_func(sk: Pstack_st_X509_LOOKUP; cmp: Tsk_X509_LOOKUP_compfunc): Tsk_X509_LOOKUP_compfunc; cdecl;
 begin
   sk_X509_LOOKUP_set_cmp_func := LoadLibCryptoFunction('OPENSSL_sk_set_cmp_func');
   if not assigned(sk_X509_LOOKUP_set_cmp_func) then
@@ -2745,10 +2745,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set_cmp_func');
     {$ifend}
-  Result := sk_X509_LOOKUP_set_cmp_func(st, cmp);
+  Result := sk_X509_LOOKUP_set_cmp_func(sk, cmp);
 end;
 
-function Load_sk_X509_OBJECT_num(_para: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_OBJECT_num(sk: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_OBJECT_num := LoadLibCryptoFunction('OPENSSL_sk_num');
   if not assigned(sk_X509_OBJECT_num) then
@@ -2757,10 +2757,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_num');
     {$ifend}
-  Result := sk_X509_OBJECT_num(_para);
+  Result := sk_X509_OBJECT_num(sk);
 end;
 
-function Load_sk_X509_OBJECT_value(_para: Pstack_st_X509_OBJECT; _para2: TOpenSSL_C_INT): Pstack_st_X509_OBJECT; cdecl;
+function Load_sk_X509_OBJECT_value(sk: Pstack_st_X509_OBJECT; idx: TOpenSSL_C_INT): PX509_OBJECT; cdecl;
 begin
   sk_X509_OBJECT_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_X509_OBJECT_value) then
@@ -2769,7 +2769,7 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_value');
     {$ifend}
-  Result := sk_X509_OBJECT_value(_para, _para2);
+  Result := sk_X509_OBJECT_value(sk, idx);
 end;
 
 function Load_sk_X509_OBJECT_new(cmp: Tsk_X509_OBJECT_compfunc): Pstack_st_X509_OBJECT; cdecl;
@@ -2808,7 +2808,7 @@ begin
   Result := sk_X509_OBJECT_new_reserve(cmp, n);
 end;
 
-function Load_sk_X509_OBJECT_reserve(_para: Pstack_st_X509_OBJECT; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_OBJECT_reserve(sk: Pstack_st_X509_OBJECT; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_OBJECT_reserve := LoadLibCryptoFunction('OPENSSL_sk_reserve');
   if not assigned(sk_X509_OBJECT_reserve) then
@@ -2817,10 +2817,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_reserve');
     {$ifend}
-  Result := sk_X509_OBJECT_reserve(_para, n);
+  Result := sk_X509_OBJECT_reserve(sk, n);
 end;
 
-function Load_sk_X509_OBJECT_free(_para: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_X509_OBJECT_free(sk: Pstack_st_X509_OBJECT); cdecl;
 begin
   sk_X509_OBJECT_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_X509_OBJECT_free) then
@@ -2829,10 +2829,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
     {$ifend}
-  Result := sk_X509_OBJECT_free(_para);
+  sk_X509_OBJECT_free(sk);
 end;
 
-function Load_sk_X509_OBJECT_zero(_para: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_X509_OBJECT_zero(sk: Pstack_st_X509_OBJECT); cdecl;
 begin
   sk_X509_OBJECT_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_X509_OBJECT_zero) then
@@ -2841,10 +2841,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
     {$ifend}
-  Result := sk_X509_OBJECT_zero(_para);
+  sk_X509_OBJECT_zero(sk);
 end;
 
-function Load_sk_X509_OBJECT_delete(st: Pstack_st_X509_OBJECT; loc: TOpenSSL_C_INT): Pstack_st_X509_OBJECT; cdecl;
+function Load_sk_X509_OBJECT_delete(sk: Pstack_st_X509_OBJECT; i: TOpenSSL_C_INT): PX509_OBJECT; cdecl;
 begin
   sk_X509_OBJECT_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_X509_OBJECT_delete) then
@@ -2853,10 +2853,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete');
     {$ifend}
-  Result := sk_X509_OBJECT_delete(st, loc);
+  Result := sk_X509_OBJECT_delete(sk, i);
 end;
 
-function Load_sk_X509_OBJECT_delete_ptr(st: Pstack_st_X509_OBJECT; ptr: Pstack_st_X509_OBJECT): Pstack_st_X509_OBJECT; cdecl;
+function Load_sk_X509_OBJECT_delete_ptr(sk: Pstack_st_X509_OBJECT; ptr: PX509_OBJECT): PX509_OBJECT; cdecl;
 begin
   sk_X509_OBJECT_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_X509_OBJECT_delete_ptr) then
@@ -2865,10 +2865,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete_ptr');
     {$ifend}
-  Result := sk_X509_OBJECT_delete_ptr(st, ptr);
+  Result := sk_X509_OBJECT_delete_ptr(sk, ptr);
 end;
 
-function Load_sk_X509_OBJECT_push(st: Pstack_st_X509_OBJECT; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_OBJECT_push(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_OBJECT_push := LoadLibCryptoFunction('OPENSSL_sk_push');
   if not assigned(sk_X509_OBJECT_push) then
@@ -2877,10 +2877,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_push');
     {$ifend}
-  Result := sk_X509_OBJECT_push(st, data);
+  Result := sk_X509_OBJECT_push(sk, data);
 end;
 
-function Load_sk_X509_OBJECT_unshift(st: Pstack_st_X509_OBJECT; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_OBJECT_unshift(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_OBJECT_unshift := LoadLibCryptoFunction('OPENSSL_sk_unshift');
   if not assigned(sk_X509_OBJECT_unshift) then
@@ -2889,10 +2889,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_unshift');
     {$ifend}
-  Result := sk_X509_OBJECT_unshift(st, data);
+  Result := sk_X509_OBJECT_unshift(sk, data);
 end;
 
-function Load_sk_X509_OBJECT_pop(_para: Pstack_st_X509_OBJECT): Pstack_st_X509_OBJECT; cdecl;
+function Load_sk_X509_OBJECT_pop(sk: Pstack_st_X509_OBJECT): PX509_OBJECT; cdecl;
 begin
   sk_X509_OBJECT_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_X509_OBJECT_pop) then
@@ -2901,10 +2901,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop');
     {$ifend}
-  Result := sk_X509_OBJECT_pop(_para);
+  Result := sk_X509_OBJECT_pop(sk);
 end;
 
-function Load_sk_X509_OBJECT_shift(_para: Pstack_st_X509_OBJECT): Pstack_st_X509_OBJECT; cdecl;
+function Load_sk_X509_OBJECT_shift(sk: Pstack_st_X509_OBJECT): PX509_OBJECT; cdecl;
 begin
   sk_X509_OBJECT_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_X509_OBJECT_shift) then
@@ -2913,10 +2913,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_shift');
     {$ifend}
-  Result := sk_X509_OBJECT_shift(_para);
+  Result := sk_X509_OBJECT_shift(sk);
 end;
 
-procedure Load_sk_X509_OBJECT_pop_free(st: Pstack_st_X509_OBJECT; func: Tsk_X509_OBJECT_freefunc); cdecl;
+procedure Load_sk_X509_OBJECT_pop_free(sk: Pstack_st_X509_OBJECT; func: Tsk_X509_OBJECT_freefunc); cdecl;
 begin
   sk_X509_OBJECT_pop_free := LoadLibCryptoFunction('OPENSSL_sk_pop_free');
   if not assigned(sk_X509_OBJECT_pop_free) then
@@ -2925,10 +2925,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop_free');
     {$ifend}
-  sk_X509_OBJECT_pop_free(st, func);
+  sk_X509_OBJECT_pop_free(sk, func);
 end;
 
-function Load_sk_X509_OBJECT_insert(st: Pstack_st_X509_OBJECT; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_OBJECT_insert(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_OBJECT_insert := LoadLibCryptoFunction('OPENSSL_sk_insert');
   if not assigned(sk_X509_OBJECT_insert) then
@@ -2937,10 +2937,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_insert');
     {$ifend}
-  Result := sk_X509_OBJECT_insert(st, data, where);
+  Result := sk_X509_OBJECT_insert(sk, data, where);
 end;
 
-function Load_sk_X509_OBJECT_set(st: Pstack_st_X509_OBJECT; i: TOpenSSL_C_INT; data: pointer): Pstack_st_X509_OBJECT; cdecl;
+function Load_sk_X509_OBJECT_set(sk: Pstack_st_X509_OBJECT; i: TOpenSSL_C_INT; data: PX509_OBJECT): Pstack_st_X509_OBJECT; cdecl;
 begin
   sk_X509_OBJECT_set := LoadLibCryptoFunction('OPENSSL_sk_set');
   if not assigned(sk_X509_OBJECT_set) then
@@ -2949,10 +2949,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set');
     {$ifend}
-  Result := sk_X509_OBJECT_set(st, i, data);
+  Result := sk_X509_OBJECT_set(sk, i, data);
 end;
 
-function Load_sk_X509_OBJECT_find(st: Pstack_st_X509_OBJECT; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_OBJECT_find(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_OBJECT_find := LoadLibCryptoFunction('OPENSSL_sk_find');
   if not assigned(sk_X509_OBJECT_find) then
@@ -2961,10 +2961,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find');
     {$ifend}
-  Result := sk_X509_OBJECT_find(st, data);
+  Result := sk_X509_OBJECT_find(sk, data);
 end;
 
-function Load_sk_X509_OBJECT_find_ex(st: Pstack_st_X509_OBJECT; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_OBJECT_find_ex(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_OBJECT_find_ex := LoadLibCryptoFunction('OPENSSL_sk_find_ex');
   if not assigned(sk_X509_OBJECT_find_ex) then
@@ -2973,10 +2973,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_ex');
     {$ifend}
-  Result := sk_X509_OBJECT_find_ex(st, data);
+  Result := sk_X509_OBJECT_find_ex(sk, data);
 end;
 
-function Load_sk_X509_OBJECT_find_all(st: Pstack_st_X509_OBJECT; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_OBJECT_find_all(sk: Pstack_st_X509_OBJECT; data: PX509_OBJECT; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_OBJECT_find_all := LoadLibCryptoFunction('OPENSSL_sk_find_all');
   if not assigned(sk_X509_OBJECT_find_all) then
@@ -2985,10 +2985,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_all');
     {$ifend}
-  Result := sk_X509_OBJECT_find_all(st, data, pnum);
+  Result := sk_X509_OBJECT_find_all(sk, data, pnum);
 end;
 
-function Load_sk_X509_OBJECT_sort(_para: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_X509_OBJECT_sort(sk: Pstack_st_X509_OBJECT); cdecl;
 begin
   sk_X509_OBJECT_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_X509_OBJECT_sort) then
@@ -2997,10 +2997,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
     {$ifend}
-  Result := sk_X509_OBJECT_sort(_para);
+  sk_X509_OBJECT_sort(sk);
 end;
 
-function Load_sk_X509_OBJECT_is_sorted(_para: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_OBJECT_is_sorted(sk: Pstack_st_X509_OBJECT): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_OBJECT_is_sorted := LoadLibCryptoFunction('OPENSSL_sk_is_sorted');
   if not assigned(sk_X509_OBJECT_is_sorted) then
@@ -3009,10 +3009,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_is_sorted');
     {$ifend}
-  Result := sk_X509_OBJECT_is_sorted(_para);
+  Result := sk_X509_OBJECT_is_sorted(sk);
 end;
 
-function Load_sk_X509_OBJECT_dup(st: Pstack_st_X509_OBJECT): Pstack_st_X509_OBJECT; cdecl;
+function Load_sk_X509_OBJECT_dup(sk: Pstack_st_X509_OBJECT): Pstack_st_X509_OBJECT; cdecl;
 begin
   sk_X509_OBJECT_dup := LoadLibCryptoFunction('OPENSSL_sk_dup');
   if not assigned(sk_X509_OBJECT_dup) then
@@ -3021,10 +3021,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_dup');
     {$ifend}
-  Result := sk_X509_OBJECT_dup(st);
+  Result := sk_X509_OBJECT_dup(sk);
 end;
 
-function Load_sk_X509_OBJECT_deep_copy(st: Pstack_st_X509_OBJECT; c: Tsk_X509_OBJECT_compfunc; f: Tsk_X509_OBJECT_freefunc): Pstack_st_X509_OBJECT; cdecl;
+function Load_sk_X509_OBJECT_deep_copy(sk: Pstack_st_X509_OBJECT; c: Tsk_X509_OBJECT_copyfunc; f: Tsk_X509_OBJECT_freefunc): Pstack_st_X509_OBJECT; cdecl;
 begin
   sk_X509_OBJECT_deep_copy := LoadLibCryptoFunction('OPENSSL_sk_deep_copy');
   if not assigned(sk_X509_OBJECT_deep_copy) then
@@ -3033,10 +3033,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_deep_copy');
     {$ifend}
-  Result := sk_X509_OBJECT_deep_copy(st, c, f);
+  Result := sk_X509_OBJECT_deep_copy(sk, c, f);
 end;
 
-function Load_sk_X509_OBJECT_set_cmp_func(st: Pstack_st_X509_OBJECT; cmp: Tsk_X509_OBJECT_compfunc): Tsk_X509_OBJECT_compfunc; cdecl;
+function Load_sk_X509_OBJECT_set_cmp_func(sk: Pstack_st_X509_OBJECT; cmp: Tsk_X509_OBJECT_compfunc): Tsk_X509_OBJECT_compfunc; cdecl;
 begin
   sk_X509_OBJECT_set_cmp_func := LoadLibCryptoFunction('OPENSSL_sk_set_cmp_func');
   if not assigned(sk_X509_OBJECT_set_cmp_func) then
@@ -3045,10 +3045,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set_cmp_func');
     {$ifend}
-  Result := sk_X509_OBJECT_set_cmp_func(st, cmp);
+  Result := sk_X509_OBJECT_set_cmp_func(sk, cmp);
 end;
 
-function Load_sk_X509_VERIFY_PARAM_num(_para: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_VERIFY_PARAM_num(sk: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_VERIFY_PARAM_num := LoadLibCryptoFunction('OPENSSL_sk_num');
   if not assigned(sk_X509_VERIFY_PARAM_num) then
@@ -3057,10 +3057,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_num');
     {$ifend}
-  Result := sk_X509_VERIFY_PARAM_num(_para);
+  Result := sk_X509_VERIFY_PARAM_num(sk);
 end;
 
-function Load_sk_X509_VERIFY_PARAM_value(_para: Pstack_st_X509_VERIFY_PARAM; _para2: TOpenSSL_C_INT): Pstack_st_X509_VERIFY_PARAM; cdecl;
+function Load_sk_X509_VERIFY_PARAM_value(sk: Pstack_st_X509_VERIFY_PARAM; idx: TOpenSSL_C_INT): PX509_VERIFY_PARAM; cdecl;
 begin
   sk_X509_VERIFY_PARAM_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_X509_VERIFY_PARAM_value) then
@@ -3069,7 +3069,7 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_value');
     {$ifend}
-  Result := sk_X509_VERIFY_PARAM_value(_para, _para2);
+  Result := sk_X509_VERIFY_PARAM_value(sk, idx);
 end;
 
 function Load_sk_X509_VERIFY_PARAM_new(cmp: Tsk_X509_VERIFY_PARAM_compfunc): Pstack_st_X509_VERIFY_PARAM; cdecl;
@@ -3108,7 +3108,7 @@ begin
   Result := sk_X509_VERIFY_PARAM_new_reserve(cmp, n);
 end;
 
-function Load_sk_X509_VERIFY_PARAM_reserve(_para: Pstack_st_X509_VERIFY_PARAM; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_VERIFY_PARAM_reserve(sk: Pstack_st_X509_VERIFY_PARAM; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_VERIFY_PARAM_reserve := LoadLibCryptoFunction('OPENSSL_sk_reserve');
   if not assigned(sk_X509_VERIFY_PARAM_reserve) then
@@ -3117,10 +3117,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_reserve');
     {$ifend}
-  Result := sk_X509_VERIFY_PARAM_reserve(_para, n);
+  Result := sk_X509_VERIFY_PARAM_reserve(sk, n);
 end;
 
-function Load_sk_X509_VERIFY_PARAM_free(_para: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_X509_VERIFY_PARAM_free(sk: Pstack_st_X509_VERIFY_PARAM); cdecl;
 begin
   sk_X509_VERIFY_PARAM_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_X509_VERIFY_PARAM_free) then
@@ -3129,10 +3129,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
     {$ifend}
-  Result := sk_X509_VERIFY_PARAM_free(_para);
+  sk_X509_VERIFY_PARAM_free(sk);
 end;
 
-function Load_sk_X509_VERIFY_PARAM_zero(_para: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_X509_VERIFY_PARAM_zero(sk: Pstack_st_X509_VERIFY_PARAM); cdecl;
 begin
   sk_X509_VERIFY_PARAM_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_X509_VERIFY_PARAM_zero) then
@@ -3141,10 +3141,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
     {$ifend}
-  Result := sk_X509_VERIFY_PARAM_zero(_para);
+  sk_X509_VERIFY_PARAM_zero(sk);
 end;
 
-function Load_sk_X509_VERIFY_PARAM_delete(st: Pstack_st_X509_VERIFY_PARAM; loc: TOpenSSL_C_INT): Pstack_st_X509_VERIFY_PARAM; cdecl;
+function Load_sk_X509_VERIFY_PARAM_delete(sk: Pstack_st_X509_VERIFY_PARAM; i: TOpenSSL_C_INT): PX509_VERIFY_PARAM; cdecl;
 begin
   sk_X509_VERIFY_PARAM_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_X509_VERIFY_PARAM_delete) then
@@ -3153,10 +3153,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete');
     {$ifend}
-  Result := sk_X509_VERIFY_PARAM_delete(st, loc);
+  Result := sk_X509_VERIFY_PARAM_delete(sk, i);
 end;
 
-function Load_sk_X509_VERIFY_PARAM_delete_ptr(st: Pstack_st_X509_VERIFY_PARAM; ptr: Pstack_st_X509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl;
+function Load_sk_X509_VERIFY_PARAM_delete_ptr(sk: Pstack_st_X509_VERIFY_PARAM; ptr: PX509_VERIFY_PARAM): PX509_VERIFY_PARAM; cdecl;
 begin
   sk_X509_VERIFY_PARAM_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_X509_VERIFY_PARAM_delete_ptr) then
@@ -3165,10 +3165,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete_ptr');
     {$ifend}
-  Result := sk_X509_VERIFY_PARAM_delete_ptr(st, ptr);
+  Result := sk_X509_VERIFY_PARAM_delete_ptr(sk, ptr);
 end;
 
-function Load_sk_X509_VERIFY_PARAM_push(st: Pstack_st_X509_VERIFY_PARAM; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_VERIFY_PARAM_push(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_VERIFY_PARAM_push := LoadLibCryptoFunction('OPENSSL_sk_push');
   if not assigned(sk_X509_VERIFY_PARAM_push) then
@@ -3177,10 +3177,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_push');
     {$ifend}
-  Result := sk_X509_VERIFY_PARAM_push(st, data);
+  Result := sk_X509_VERIFY_PARAM_push(sk, data);
 end;
 
-function Load_sk_X509_VERIFY_PARAM_unshift(st: Pstack_st_X509_VERIFY_PARAM; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_VERIFY_PARAM_unshift(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_VERIFY_PARAM_unshift := LoadLibCryptoFunction('OPENSSL_sk_unshift');
   if not assigned(sk_X509_VERIFY_PARAM_unshift) then
@@ -3189,10 +3189,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_unshift');
     {$ifend}
-  Result := sk_X509_VERIFY_PARAM_unshift(st, data);
+  Result := sk_X509_VERIFY_PARAM_unshift(sk, data);
 end;
 
-function Load_sk_X509_VERIFY_PARAM_pop(_para: Pstack_st_X509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl;
+function Load_sk_X509_VERIFY_PARAM_pop(sk: Pstack_st_X509_VERIFY_PARAM): PX509_VERIFY_PARAM; cdecl;
 begin
   sk_X509_VERIFY_PARAM_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_X509_VERIFY_PARAM_pop) then
@@ -3201,10 +3201,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop');
     {$ifend}
-  Result := sk_X509_VERIFY_PARAM_pop(_para);
+  Result := sk_X509_VERIFY_PARAM_pop(sk);
 end;
 
-function Load_sk_X509_VERIFY_PARAM_shift(_para: Pstack_st_X509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl;
+function Load_sk_X509_VERIFY_PARAM_shift(sk: Pstack_st_X509_VERIFY_PARAM): PX509_VERIFY_PARAM; cdecl;
 begin
   sk_X509_VERIFY_PARAM_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_X509_VERIFY_PARAM_shift) then
@@ -3213,10 +3213,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_shift');
     {$ifend}
-  Result := sk_X509_VERIFY_PARAM_shift(_para);
+  Result := sk_X509_VERIFY_PARAM_shift(sk);
 end;
 
-procedure Load_sk_X509_VERIFY_PARAM_pop_free(st: Pstack_st_X509_VERIFY_PARAM; func: Tsk_X509_VERIFY_PARAM_freefunc); cdecl;
+procedure Load_sk_X509_VERIFY_PARAM_pop_free(sk: Pstack_st_X509_VERIFY_PARAM; func: Tsk_X509_VERIFY_PARAM_freefunc); cdecl;
 begin
   sk_X509_VERIFY_PARAM_pop_free := LoadLibCryptoFunction('OPENSSL_sk_pop_free');
   if not assigned(sk_X509_VERIFY_PARAM_pop_free) then
@@ -3225,10 +3225,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop_free');
     {$ifend}
-  sk_X509_VERIFY_PARAM_pop_free(st, func);
+  sk_X509_VERIFY_PARAM_pop_free(sk, func);
 end;
 
-function Load_sk_X509_VERIFY_PARAM_insert(st: Pstack_st_X509_VERIFY_PARAM; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_VERIFY_PARAM_insert(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_VERIFY_PARAM_insert := LoadLibCryptoFunction('OPENSSL_sk_insert');
   if not assigned(sk_X509_VERIFY_PARAM_insert) then
@@ -3237,10 +3237,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_insert');
     {$ifend}
-  Result := sk_X509_VERIFY_PARAM_insert(st, data, where);
+  Result := sk_X509_VERIFY_PARAM_insert(sk, data, where);
 end;
 
-function Load_sk_X509_VERIFY_PARAM_set(st: Pstack_st_X509_VERIFY_PARAM; i: TOpenSSL_C_INT; data: pointer): Pstack_st_X509_VERIFY_PARAM; cdecl;
+function Load_sk_X509_VERIFY_PARAM_set(sk: Pstack_st_X509_VERIFY_PARAM; i: TOpenSSL_C_INT; data: PX509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl;
 begin
   sk_X509_VERIFY_PARAM_set := LoadLibCryptoFunction('OPENSSL_sk_set');
   if not assigned(sk_X509_VERIFY_PARAM_set) then
@@ -3249,10 +3249,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set');
     {$ifend}
-  Result := sk_X509_VERIFY_PARAM_set(st, i, data);
+  Result := sk_X509_VERIFY_PARAM_set(sk, i, data);
 end;
 
-function Load_sk_X509_VERIFY_PARAM_find(st: Pstack_st_X509_VERIFY_PARAM; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_VERIFY_PARAM_find(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_VERIFY_PARAM_find := LoadLibCryptoFunction('OPENSSL_sk_find');
   if not assigned(sk_X509_VERIFY_PARAM_find) then
@@ -3261,10 +3261,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find');
     {$ifend}
-  Result := sk_X509_VERIFY_PARAM_find(st, data);
+  Result := sk_X509_VERIFY_PARAM_find(sk, data);
 end;
 
-function Load_sk_X509_VERIFY_PARAM_find_ex(st: Pstack_st_X509_VERIFY_PARAM; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_VERIFY_PARAM_find_ex(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_VERIFY_PARAM_find_ex := LoadLibCryptoFunction('OPENSSL_sk_find_ex');
   if not assigned(sk_X509_VERIFY_PARAM_find_ex) then
@@ -3273,10 +3273,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_ex');
     {$ifend}
-  Result := sk_X509_VERIFY_PARAM_find_ex(st, data);
+  Result := sk_X509_VERIFY_PARAM_find_ex(sk, data);
 end;
 
-function Load_sk_X509_VERIFY_PARAM_find_all(st: Pstack_st_X509_VERIFY_PARAM; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_VERIFY_PARAM_find_all(sk: Pstack_st_X509_VERIFY_PARAM; data: PX509_VERIFY_PARAM; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_VERIFY_PARAM_find_all := LoadLibCryptoFunction('OPENSSL_sk_find_all');
   if not assigned(sk_X509_VERIFY_PARAM_find_all) then
@@ -3285,10 +3285,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_all');
     {$ifend}
-  Result := sk_X509_VERIFY_PARAM_find_all(st, data, pnum);
+  Result := sk_X509_VERIFY_PARAM_find_all(sk, data, pnum);
 end;
 
-function Load_sk_X509_VERIFY_PARAM_sort(_para: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_X509_VERIFY_PARAM_sort(sk: Pstack_st_X509_VERIFY_PARAM); cdecl;
 begin
   sk_X509_VERIFY_PARAM_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_X509_VERIFY_PARAM_sort) then
@@ -3297,10 +3297,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
     {$ifend}
-  Result := sk_X509_VERIFY_PARAM_sort(_para);
+  sk_X509_VERIFY_PARAM_sort(sk);
 end;
 
-function Load_sk_X509_VERIFY_PARAM_is_sorted(_para: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_VERIFY_PARAM_is_sorted(sk: Pstack_st_X509_VERIFY_PARAM): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_VERIFY_PARAM_is_sorted := LoadLibCryptoFunction('OPENSSL_sk_is_sorted');
   if not assigned(sk_X509_VERIFY_PARAM_is_sorted) then
@@ -3309,10 +3309,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_is_sorted');
     {$ifend}
-  Result := sk_X509_VERIFY_PARAM_is_sorted(_para);
+  Result := sk_X509_VERIFY_PARAM_is_sorted(sk);
 end;
 
-function Load_sk_X509_VERIFY_PARAM_dup(st: Pstack_st_X509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl;
+function Load_sk_X509_VERIFY_PARAM_dup(sk: Pstack_st_X509_VERIFY_PARAM): Pstack_st_X509_VERIFY_PARAM; cdecl;
 begin
   sk_X509_VERIFY_PARAM_dup := LoadLibCryptoFunction('OPENSSL_sk_dup');
   if not assigned(sk_X509_VERIFY_PARAM_dup) then
@@ -3321,10 +3321,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_dup');
     {$ifend}
-  Result := sk_X509_VERIFY_PARAM_dup(st);
+  Result := sk_X509_VERIFY_PARAM_dup(sk);
 end;
 
-function Load_sk_X509_VERIFY_PARAM_deep_copy(st: Pstack_st_X509_VERIFY_PARAM; c: Tsk_X509_VERIFY_PARAM_compfunc; f: Tsk_X509_VERIFY_PARAM_freefunc): Pstack_st_X509_VERIFY_PARAM; cdecl;
+function Load_sk_X509_VERIFY_PARAM_deep_copy(sk: Pstack_st_X509_VERIFY_PARAM; c: Tsk_X509_VERIFY_PARAM_copyfunc; f: Tsk_X509_VERIFY_PARAM_freefunc): Pstack_st_X509_VERIFY_PARAM; cdecl;
 begin
   sk_X509_VERIFY_PARAM_deep_copy := LoadLibCryptoFunction('OPENSSL_sk_deep_copy');
   if not assigned(sk_X509_VERIFY_PARAM_deep_copy) then
@@ -3333,10 +3333,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_deep_copy');
     {$ifend}
-  Result := sk_X509_VERIFY_PARAM_deep_copy(st, c, f);
+  Result := sk_X509_VERIFY_PARAM_deep_copy(sk, c, f);
 end;
 
-function Load_sk_X509_VERIFY_PARAM_set_cmp_func(st: Pstack_st_X509_VERIFY_PARAM; cmp: Tsk_X509_VERIFY_PARAM_compfunc): Tsk_X509_VERIFY_PARAM_compfunc; cdecl;
+function Load_sk_X509_VERIFY_PARAM_set_cmp_func(sk: Pstack_st_X509_VERIFY_PARAM; cmp: Tsk_X509_VERIFY_PARAM_compfunc): Tsk_X509_VERIFY_PARAM_compfunc; cdecl;
 begin
   sk_X509_VERIFY_PARAM_set_cmp_func := LoadLibCryptoFunction('OPENSSL_sk_set_cmp_func');
   if not assigned(sk_X509_VERIFY_PARAM_set_cmp_func) then
@@ -3345,10 +3345,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set_cmp_func');
     {$ifend}
-  Result := sk_X509_VERIFY_PARAM_set_cmp_func(st, cmp);
+  Result := sk_X509_VERIFY_PARAM_set_cmp_func(sk, cmp);
 end;
 
-function Load_sk_X509_TRUST_num(_para: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_TRUST_num(sk: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_TRUST_num := LoadLibCryptoFunction('OPENSSL_sk_num');
   if not assigned(sk_X509_TRUST_num) then
@@ -3357,10 +3357,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_num');
     {$ifend}
-  Result := sk_X509_TRUST_num(_para);
+  Result := sk_X509_TRUST_num(sk);
 end;
 
-function Load_sk_X509_TRUST_value(_para: Pstack_st_X509_TRUST; _para2: TOpenSSL_C_INT): Pstack_st_X509_TRUST; cdecl;
+function Load_sk_X509_TRUST_value(sk: Pstack_st_X509_TRUST; idx: TOpenSSL_C_INT): PX509_TRUST; cdecl;
 begin
   sk_X509_TRUST_value := LoadLibCryptoFunction('OPENSSL_sk_value');
   if not assigned(sk_X509_TRUST_value) then
@@ -3369,7 +3369,7 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_value');
     {$ifend}
-  Result := sk_X509_TRUST_value(_para, _para2);
+  Result := sk_X509_TRUST_value(sk, idx);
 end;
 
 function Load_sk_X509_TRUST_new(cmp: Tsk_X509_TRUST_compfunc): Pstack_st_X509_TRUST; cdecl;
@@ -3408,7 +3408,7 @@ begin
   Result := sk_X509_TRUST_new_reserve(cmp, n);
 end;
 
-function Load_sk_X509_TRUST_reserve(_para: Pstack_st_X509_TRUST; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_TRUST_reserve(sk: Pstack_st_X509_TRUST; n: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_TRUST_reserve := LoadLibCryptoFunction('OPENSSL_sk_reserve');
   if not assigned(sk_X509_TRUST_reserve) then
@@ -3417,10 +3417,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_reserve');
     {$ifend}
-  Result := sk_X509_TRUST_reserve(_para, n);
+  Result := sk_X509_TRUST_reserve(sk, n);
 end;
 
-function Load_sk_X509_TRUST_free(_para: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_X509_TRUST_free(sk: Pstack_st_X509_TRUST); cdecl;
 begin
   sk_X509_TRUST_free := LoadLibCryptoFunction('OPENSSL_sk_free');
   if not assigned(sk_X509_TRUST_free) then
@@ -3429,10 +3429,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_free');
     {$ifend}
-  Result := sk_X509_TRUST_free(_para);
+  sk_X509_TRUST_free(sk);
 end;
 
-function Load_sk_X509_TRUST_zero(_para: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_X509_TRUST_zero(sk: Pstack_st_X509_TRUST); cdecl;
 begin
   sk_X509_TRUST_zero := LoadLibCryptoFunction('OPENSSL_sk_zero');
   if not assigned(sk_X509_TRUST_zero) then
@@ -3441,10 +3441,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_zero');
     {$ifend}
-  Result := sk_X509_TRUST_zero(_para);
+  sk_X509_TRUST_zero(sk);
 end;
 
-function Load_sk_X509_TRUST_delete(st: Pstack_st_X509_TRUST; loc: TOpenSSL_C_INT): Pstack_st_X509_TRUST; cdecl;
+function Load_sk_X509_TRUST_delete(sk: Pstack_st_X509_TRUST; i: TOpenSSL_C_INT): PX509_TRUST; cdecl;
 begin
   sk_X509_TRUST_delete := LoadLibCryptoFunction('OPENSSL_sk_delete');
   if not assigned(sk_X509_TRUST_delete) then
@@ -3453,10 +3453,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete');
     {$ifend}
-  Result := sk_X509_TRUST_delete(st, loc);
+  Result := sk_X509_TRUST_delete(sk, i);
 end;
 
-function Load_sk_X509_TRUST_delete_ptr(st: Pstack_st_X509_TRUST; ptr: Pstack_st_X509_TRUST): Pstack_st_X509_TRUST; cdecl;
+function Load_sk_X509_TRUST_delete_ptr(sk: Pstack_st_X509_TRUST; ptr: PX509_TRUST): PX509_TRUST; cdecl;
 begin
   sk_X509_TRUST_delete_ptr := LoadLibCryptoFunction('OPENSSL_sk_delete_ptr');
   if not assigned(sk_X509_TRUST_delete_ptr) then
@@ -3465,10 +3465,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_delete_ptr');
     {$ifend}
-  Result := sk_X509_TRUST_delete_ptr(st, ptr);
+  Result := sk_X509_TRUST_delete_ptr(sk, ptr);
 end;
 
-function Load_sk_X509_TRUST_push(st: Pstack_st_X509_TRUST; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_TRUST_push(sk: Pstack_st_X509_TRUST; data: PX509_TRUST): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_TRUST_push := LoadLibCryptoFunction('OPENSSL_sk_push');
   if not assigned(sk_X509_TRUST_push) then
@@ -3477,10 +3477,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_push');
     {$ifend}
-  Result := sk_X509_TRUST_push(st, data);
+  Result := sk_X509_TRUST_push(sk, data);
 end;
 
-function Load_sk_X509_TRUST_unshift(st: Pstack_st_X509_TRUST; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_TRUST_unshift(sk: Pstack_st_X509_TRUST; data: PX509_TRUST): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_TRUST_unshift := LoadLibCryptoFunction('OPENSSL_sk_unshift');
   if not assigned(sk_X509_TRUST_unshift) then
@@ -3489,10 +3489,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_unshift');
     {$ifend}
-  Result := sk_X509_TRUST_unshift(st, data);
+  Result := sk_X509_TRUST_unshift(sk, data);
 end;
 
-function Load_sk_X509_TRUST_pop(_para: Pstack_st_X509_TRUST): Pstack_st_X509_TRUST; cdecl;
+function Load_sk_X509_TRUST_pop(sk: Pstack_st_X509_TRUST): PX509_TRUST; cdecl;
 begin
   sk_X509_TRUST_pop := LoadLibCryptoFunction('OPENSSL_sk_pop');
   if not assigned(sk_X509_TRUST_pop) then
@@ -3501,10 +3501,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop');
     {$ifend}
-  Result := sk_X509_TRUST_pop(_para);
+  Result := sk_X509_TRUST_pop(sk);
 end;
 
-function Load_sk_X509_TRUST_shift(_para: Pstack_st_X509_TRUST): Pstack_st_X509_TRUST; cdecl;
+function Load_sk_X509_TRUST_shift(sk: Pstack_st_X509_TRUST): PX509_TRUST; cdecl;
 begin
   sk_X509_TRUST_shift := LoadLibCryptoFunction('OPENSSL_sk_shift');
   if not assigned(sk_X509_TRUST_shift) then
@@ -3513,10 +3513,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_shift');
     {$ifend}
-  Result := sk_X509_TRUST_shift(_para);
+  Result := sk_X509_TRUST_shift(sk);
 end;
 
-procedure Load_sk_X509_TRUST_pop_free(st: Pstack_st_X509_TRUST; func: Tsk_X509_TRUST_freefunc); cdecl;
+procedure Load_sk_X509_TRUST_pop_free(sk: Pstack_st_X509_TRUST; func: Tsk_X509_TRUST_freefunc); cdecl;
 begin
   sk_X509_TRUST_pop_free := LoadLibCryptoFunction('OPENSSL_sk_pop_free');
   if not assigned(sk_X509_TRUST_pop_free) then
@@ -3525,10 +3525,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_pop_free');
     {$ifend}
-  sk_X509_TRUST_pop_free(st, func);
+  sk_X509_TRUST_pop_free(sk, func);
 end;
 
-function Load_sk_X509_TRUST_insert(st: Pstack_st_X509_TRUST; data: pointer; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_TRUST_insert(sk: Pstack_st_X509_TRUST; data: PX509_TRUST; where: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_TRUST_insert := LoadLibCryptoFunction('OPENSSL_sk_insert');
   if not assigned(sk_X509_TRUST_insert) then
@@ -3537,10 +3537,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_insert');
     {$ifend}
-  Result := sk_X509_TRUST_insert(st, data, where);
+  Result := sk_X509_TRUST_insert(sk, data, where);
 end;
 
-function Load_sk_X509_TRUST_set(st: Pstack_st_X509_TRUST; i: TOpenSSL_C_INT; data: pointer): Pstack_st_X509_TRUST; cdecl;
+function Load_sk_X509_TRUST_set(sk: Pstack_st_X509_TRUST; i: TOpenSSL_C_INT; data: PX509_TRUST): Pstack_st_X509_TRUST; cdecl;
 begin
   sk_X509_TRUST_set := LoadLibCryptoFunction('OPENSSL_sk_set');
   if not assigned(sk_X509_TRUST_set) then
@@ -3549,10 +3549,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set');
     {$ifend}
-  Result := sk_X509_TRUST_set(st, i, data);
+  Result := sk_X509_TRUST_set(sk, i, data);
 end;
 
-function Load_sk_X509_TRUST_find(st: Pstack_st_X509_TRUST; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_TRUST_find(sk: Pstack_st_X509_TRUST; data: PX509_TRUST): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_TRUST_find := LoadLibCryptoFunction('OPENSSL_sk_find');
   if not assigned(sk_X509_TRUST_find) then
@@ -3561,10 +3561,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find');
     {$ifend}
-  Result := sk_X509_TRUST_find(st, data);
+  Result := sk_X509_TRUST_find(sk, data);
 end;
 
-function Load_sk_X509_TRUST_find_ex(st: Pstack_st_X509_TRUST; data: pointer): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_TRUST_find_ex(sk: Pstack_st_X509_TRUST; data: PX509_TRUST): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_TRUST_find_ex := LoadLibCryptoFunction('OPENSSL_sk_find_ex');
   if not assigned(sk_X509_TRUST_find_ex) then
@@ -3573,10 +3573,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_ex');
     {$ifend}
-  Result := sk_X509_TRUST_find_ex(st, data);
+  Result := sk_X509_TRUST_find_ex(sk, data);
 end;
 
-function Load_sk_X509_TRUST_find_all(st: Pstack_st_X509_TRUST; data: pointer; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_TRUST_find_all(sk: Pstack_st_X509_TRUST; data: PX509_TRUST; pnum: POpenSSL_C_INT): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_TRUST_find_all := LoadLibCryptoFunction('OPENSSL_sk_find_all');
   if not assigned(sk_X509_TRUST_find_all) then
@@ -3585,10 +3585,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_find_all');
     {$ifend}
-  Result := sk_X509_TRUST_find_all(st, data, pnum);
+  Result := sk_X509_TRUST_find_all(sk, data, pnum);
 end;
 
-function Load_sk_X509_TRUST_sort(_para: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl;
+procedure Load_sk_X509_TRUST_sort(sk: Pstack_st_X509_TRUST); cdecl;
 begin
   sk_X509_TRUST_sort := LoadLibCryptoFunction('OPENSSL_sk_sort');
   if not assigned(sk_X509_TRUST_sort) then
@@ -3597,10 +3597,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_sort');
     {$ifend}
-  Result := sk_X509_TRUST_sort(_para);
+  sk_X509_TRUST_sort(sk);
 end;
 
-function Load_sk_X509_TRUST_is_sorted(_para: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl;
+function Load_sk_X509_TRUST_is_sorted(sk: Pstack_st_X509_TRUST): TOpenSSL_C_INT; cdecl;
 begin
   sk_X509_TRUST_is_sorted := LoadLibCryptoFunction('OPENSSL_sk_is_sorted');
   if not assigned(sk_X509_TRUST_is_sorted) then
@@ -3609,10 +3609,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_is_sorted');
     {$ifend}
-  Result := sk_X509_TRUST_is_sorted(_para);
+  Result := sk_X509_TRUST_is_sorted(sk);
 end;
 
-function Load_sk_X509_TRUST_dup(st: Pstack_st_X509_TRUST): Pstack_st_X509_TRUST; cdecl;
+function Load_sk_X509_TRUST_dup(sk: Pstack_st_X509_TRUST): Pstack_st_X509_TRUST; cdecl;
 begin
   sk_X509_TRUST_dup := LoadLibCryptoFunction('OPENSSL_sk_dup');
   if not assigned(sk_X509_TRUST_dup) then
@@ -3621,10 +3621,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_dup');
     {$ifend}
-  Result := sk_X509_TRUST_dup(st);
+  Result := sk_X509_TRUST_dup(sk);
 end;
 
-function Load_sk_X509_TRUST_deep_copy(st: Pstack_st_X509_TRUST; c: Tsk_X509_TRUST_compfunc; f: Tsk_X509_TRUST_freefunc): Pstack_st_X509_TRUST; cdecl;
+function Load_sk_X509_TRUST_deep_copy(sk: Pstack_st_X509_TRUST; c: Tsk_X509_TRUST_copyfunc; f: Tsk_X509_TRUST_freefunc): Pstack_st_X509_TRUST; cdecl;
 begin
   sk_X509_TRUST_deep_copy := LoadLibCryptoFunction('OPENSSL_sk_deep_copy');
   if not assigned(sk_X509_TRUST_deep_copy) then
@@ -3633,10 +3633,10 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_deep_copy');
     {$ifend}
-  Result := sk_X509_TRUST_deep_copy(st, c, f);
+  Result := sk_X509_TRUST_deep_copy(sk, c, f);
 end;
 
-function Load_sk_X509_TRUST_set_cmp_func(st: Pstack_st_X509_TRUST; cmp: Tsk_X509_TRUST_compfunc): Tsk_X509_TRUST_compfunc; cdecl;
+function Load_sk_X509_TRUST_set_cmp_func(sk: Pstack_st_X509_TRUST; cmp: Tsk_X509_TRUST_compfunc): Tsk_X509_TRUST_compfunc; cdecl;
 begin
   sk_X509_TRUST_set_cmp_func := LoadLibCryptoFunction('OPENSSL_sk_set_cmp_func');
   if not assigned(sk_X509_TRUST_set_cmp_func) then
@@ -3645,7 +3645,7 @@ begin
     {$else}
     EOpenSSLAPIFunctionNotPresent.RaiseException('OPENSSL_sk_set_cmp_func');
     {$ifend}
-  Result := sk_X509_TRUST_set_cmp_func(st, cmp);
+  Result := sk_X509_TRUST_set_cmp_func(sk, cmp);
 end;
 
 function Load_X509_TRUST_set(t: POpenSSL_C_INT; trust: TOpenSSL_C_INT): TOpenSSL_C_INT; cdecl;

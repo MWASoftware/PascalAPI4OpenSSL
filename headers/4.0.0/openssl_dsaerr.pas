@@ -18,7 +18,7 @@
 unit openssl_dsaerr;
 
 {
-  Generated from OpenSSL 4.0.0 Header File dsaerr.h - Sat 12 Sep 15:07:10 BST 2026
+  Generated from OpenSSL 4.0.0 Header File dsaerr.h - Tue 15 Sep 14:42:25 BST 2026
 }
 
 {$IFNDEF FPC}
