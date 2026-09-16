@@ -1,5 +1,5 @@
 --- /home/tony/SoftwareDev/external/openssl/openssl-3.6.2/include/openssl/e_os2.h	2026-04-07 13:17:57.000000000 +0100
-+++ e_os2.tmp	2026-05-19 11:12:35.707271368 +0100
++++ e_os2.tmp	2026-09-16 15:11:49.366244786 +0100
 @@ -207,7 +207,7 @@
  #elif defined(_POSIX_SSIZE_MAX)
  #define OSSL_SSIZE_MAX _POSIX_SSIZE_MAX

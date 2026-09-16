@@ -1,5 +1,5 @@
 --- /home/tony/SoftwareDev/external/openssl/openssl-3.6.2/include/openssl/rand.h	2026-04-07 13:17:57.000000000 +0100
-+++ rand.tmp	2026-05-19 11:12:35.733271341 +0100
++++ rand.tmp	2026-09-16 15:11:49.396244784 +0100
 @@ -96,7 +96,7 @@
  void RAND_keep_random_devices_open(int keep);
  

@@ -1,5 +1,5 @@
 --- /home/tony/SoftwareDev/external/openssl/openssl-3.6.2/include/openssl/ssl3.h	2026-04-07 13:17:57.000000000 +0100
-+++ ssl3.tmp	2026-05-19 11:12:35.754271319 +0100
++++ ssl3.tmp	2026-09-16 15:11:49.420244782 +0100
 @@ -151,10 +151,10 @@
   */
  #define SSL3_ALIGN_PAYLOAD 8

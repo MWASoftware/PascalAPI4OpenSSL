@@ -1,5 +1,5 @@
 --- /home/tony/SoftwareDev/external/openssl/openssl-3.6.2/include/openssl/ebcdic.h	2026-04-07 13:17:57.000000000 +0100
-+++ ebcdic.tmp	2026-05-19 11:12:35.702271373 +0100
++++ ebcdic.tmp	2026-09-16 15:11:49.360244786 +0100
 @@ -23,10 +23,10 @@
  #endif
  

@@ -1,5 +1,5 @@
 --- /home/tony/SoftwareDev/external/openssl/openssl-3.6.2/include/openssl/tls1.h	2026-04-07 13:17:57.000000000 +0100
-+++ tls1.tmp	2026-05-19 11:12:35.766271307 +0100
++++ tls1.tmp	2026-09-16 15:11:49.434244780 +0100
 @@ -1085,8 +1085,8 @@
  #define TLS1_TXT_ECDH_RSA_WITH_AES_256_GCM_SHA384 "ECDH-RSA-AES256-GCM-SHA384"
  

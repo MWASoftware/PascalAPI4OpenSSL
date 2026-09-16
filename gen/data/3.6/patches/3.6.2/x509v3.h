@@ -1,5 +1,5 @@
 --- /home/tony/SoftwareDev/external/openssl/openssl-3.6.2/include/openssl/x509v3.h	2026-05-16 11:56:04.677334784 +0100
-+++ x509v3.tmp	2026-05-19 11:12:35.778271295 +0100
++++ x509v3.tmp	2026-09-16 15:11:49.447244779 +0100
 @@ -91,12 +91,12 @@
  } X509V3_CONF_METHOD;
  

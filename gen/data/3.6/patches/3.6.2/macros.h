@@ -1,5 +1,5 @@
 --- /home/tony/SoftwareDev/external/openssl/openssl-3.6.2/include/openssl/macros.h	2026-04-07 13:17:57.000000000 +0100
-+++ macros.tmp	2026-05-19 11:12:35.717271358 +0100
++++ macros.tmp	2026-09-16 15:11:49.378244785 +0100
 @@ -11,7 +11,7 @@
  #define OPENSSL_MACROS_H
  #pragma once

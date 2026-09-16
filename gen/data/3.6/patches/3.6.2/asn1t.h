@@ -1,5 +1,5 @@
 --- /home/tony/SoftwareDev/external/openssl/openssl-3.6.2/include/openssl/asn1t.h	2026-05-16 11:56:02.922333293 +0100
-+++ asn1t.tmp	2026-05-19 11:12:35.665271410 +0100
++++ asn1t.tmp	2026-09-16 15:11:49.316244790 +0100
 @@ -485,8 +485,8 @@
  
  /* Macro to extract ASN1_ITEM and ASN1_ADB pointer from ASN1_TEMPLATE */

@@ -1,5 +1,5 @@
 --- /home/tony/SoftwareDev/external/openssl/openssl-3.6.2/include/openssl/crmf.h	2026-05-16 11:56:03.410333708 +0100
-+++ crmf.tmp	2026-05-19 11:12:35.692271383 +0100
++++ crmf.tmp	2026-09-16 15:11:49.348244787 +0100
 @@ -272,6 +272,15 @@
  OSSL_CRMF_ENCRYPTEDKEY *OSSL_CRMF_ENCRYPTEDKEY_init_envdata(CMS_EnvelopedData *envdata);
  #endif

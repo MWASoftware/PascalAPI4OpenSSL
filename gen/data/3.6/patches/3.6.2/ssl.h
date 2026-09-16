@@ -1,5 +1,5 @@
 --- /home/tony/SoftwareDev/external/openssl/openssl-3.6.2/include/openssl/ssl.h	2026-05-16 11:56:04.322334483 +0100
-+++ ssl.tmp	2026-05-19 11:12:35.760271314 +0100
++++ ssl.tmp	2026-09-16 15:11:49.427244781 +0100
 @@ -240,13 +240,9 @@
  
  STACK_OF(SSL_CIPHER);

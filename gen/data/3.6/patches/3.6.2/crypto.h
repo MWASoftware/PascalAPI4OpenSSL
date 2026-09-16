@@ -1,5 +1,5 @@
 --- /home/tony/SoftwareDev/external/openssl/openssl-3.6.2/include/openssl/crypto.h	2026-05-16 11:56:03.481333768 +0100
-+++ crypto.tmp	2026-05-19 11:12:35.697271378 +0100
++++ crypto.tmp	2026-09-16 15:11:49.354244787 +0100
 @@ -36,7 +36,7 @@
  #include <openssl/safestack.h>
  #include <openssl/opensslv.h>

@@ -1,5 +1,5 @@
 --- /home/tony/SoftwareDev/external/openssl/openssl-3.6.2/include/openssl/asn1.h	2026-05-16 11:56:02.850333231 +0100
-+++ asn1.tmp	2026-05-19 11:12:35.658271417 +0100
++++ asn1.tmp	2026-09-16 15:11:49.310244790 +0100
 @@ -183,6 +183,7 @@
  #define ASN1_STRING_FLAG_MSTRING 0x040
  /* String is embedded and only content should be freed */

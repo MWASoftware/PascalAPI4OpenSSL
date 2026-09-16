@@ -1,5 +1,5 @@
 --- /home/tony/SoftwareDev/external/openssl/openssl-3.6.2/include/openssl/srtp.h	2026-04-07 13:17:57.000000000 +0100
-+++ srtp.tmp	2026-05-19 11:12:35.749271325 +0100
++++ srtp.tmp	2026-09-16 15:11:49.414244782 +0100
 @@ -39,6 +39,15 @@
  #define SRTP_AEAD_AES_128_GCM 0x0007
  #define SRTP_AEAD_AES_256_GCM 0x0008

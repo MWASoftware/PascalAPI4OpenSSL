@@ -1,5 +1,5 @@
 --- /home/tony/SoftwareDev/external/openssl/openssl-3.6.2/include/openssl/byteorder.h	2026-04-07 13:17:57.000000000 +0100
-+++ byteorder.tmp	2026-05-19 11:12:35.676271399 +0100
++++ byteorder.tmp	2026-09-16 15:11:49.328244789 +0100
 @@ -20,6 +20,7 @@
   * swapping is required, or a suitable swap instruction is available.
   */

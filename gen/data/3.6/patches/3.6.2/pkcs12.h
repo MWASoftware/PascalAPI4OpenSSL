@@ -1,5 +1,5 @@
 --- /home/tony/SoftwareDev/external/openssl/openssl-3.6.2/include/openssl/pkcs12.h	2026-05-16 11:56:04.037334241 +0100
-+++ pkcs12.tmp	2026-05-19 11:12:35.722271352 +0100
++++ pkcs12.tmp	2026-09-16 15:11:49.384244785 +0100
 @@ -55,10 +55,6 @@
  #define PKCS12_SALT_LEN 16
  #endif

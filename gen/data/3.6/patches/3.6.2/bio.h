@@ -1,5 +1,5 @@
 --- /home/tony/SoftwareDev/external/openssl/openssl-3.6.2/include/openssl/bio.h	2026-05-16 11:56:02.992333353 +0100
-+++ bio.tmp	2026-05-19 11:12:35.671271404 +0100
++++ bio.tmp	2026-09-16 15:11:49.322244789 +0100
 @@ -333,7 +333,7 @@
  int BIO_method_type(const BIO *b);
  

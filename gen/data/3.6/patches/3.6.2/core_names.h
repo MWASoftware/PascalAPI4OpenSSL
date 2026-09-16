@@ -1,5 +1,5 @@
 --- /home/tony/SoftwareDev/external/openssl/openssl-3.6.2/include/openssl/core_names.h	2026-05-16 11:56:03.341333649 +0100
-+++ core_names.tmp	2026-05-19 11:19:28.265846217 +0100
++++ core_names.tmp	2026-09-16 15:11:49.341244788 +0100
 @@ -1,4 +1,4 @@
 -/*
 +/*-

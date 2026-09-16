@@ -1,5 +1,5 @@
 --- /home/tony/SoftwareDev/external/openssl/openssl-3.6.2/include/openssl/err.h	2026-05-16 11:56:03.620333887 +0100
-+++ err.tmp	2026-05-19 11:12:35.712271363 +0100
++++ err.tmp	2026-09-16 15:11:49.372244785 +0100
 @@ -261,12 +261,12 @@
      return errcode & ERR_REASON_MASK;
  }

@@ -1,5 +1,5 @@
 --- /home/tony/SoftwareDev/external/openssl/openssl-3.6.2/include/openssl/cmp.h	2026-05-16 11:56:03.063333413 +0100
-+++ cmp.tmp	2026-05-19 11:12:35.681271394 +0100
++++ cmp.tmp	2026-09-16 15:11:49.335244788 +0100
 @@ -138,9 +138,9 @@
  #define OSSL_CMP_PKIFAILUREINFO_MAX 26
  #define OSSL_CMP_PKIFAILUREINFO_MAX_BIT_PATTERN \

@@ -1,5 +1,5 @@
 --- /home/tony/SoftwareDev/external/openssl/openssl-3.6.2/include/openssl/types.h	2026-04-07 13:17:57.000000000 +0100
-+++ types.tmp	2026-05-19 11:12:35.772271301 +0100
++++ types.tmp	2026-09-16 15:11:49.440244780 +0100
 @@ -39,28 +39,24 @@
  #define OSSL_FUTURE_CONST
  #endif

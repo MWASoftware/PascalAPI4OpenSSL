@@ -1,5 +1,5 @@
 --- /home/tony/SoftwareDev/external/openssl/openssl-3.6.2/include/openssl/pkcs7.h	2026-05-16 11:56:04.107334300 +0100
-+++ pkcs7.tmp	2026-05-19 11:12:35.727271347 +0100
++++ pkcs7.tmp	2026-09-16 15:11:49.390244784 +0100
 @@ -191,9 +191,6 @@
       */
      unsigned char *asn1;
